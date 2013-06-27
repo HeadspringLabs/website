@@ -1,0 +1,40 @@
+---
+layout: post
+title: Developing ASP.NET MVC with Visual Web Developer Express 2010
+tags:
+- Developer Deep Dive
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '16'
+  s2mail: 'yes'
+  dsq_thread_id: '832991723'
+  _aioseop_keywords: Visual Web Developer,Express,2010,vwd,asp.net mvc,mvc
+  _aioseop_description: Visual Web Developer Express 2010 supports ASP.NET MVC 3.
+  _aioseop_title: Develop ASP.NET MVC with Visual Web Developer Express 2010
+  _podPressPostSpecific: a:6:{s:15:"itunes:subtitle";s:15:"##PostExcerpt##";s:14:"itunes:summary";s:15:"##PostExcerpt##";s:15:"itunes:keywords";s:17:"##WordPressCats##";s:13:"itunes:author";s:10:"##Global##";s:15:"itunes:explicit";s:7:"Default";s:12:"itunes:block";s:7:"Default";}
+---
+When the “Express” line of Visual Studio products was introduced with Visual Studio 2008, the Web Developer tool was a one-trick pony.  You could create a web site, and that was pretty much it.  No support for groupings of projects into solutions.  In other words, you couldn’t create libraries at the same time as the web site.
+
+When ASP.NET came on the scene, this posed a problem.  MVC required web application projects, not the web site directory.  Visual Web Developer was enhanced a few times along with the way, and now it is a much more usable package.<!--more-->
+<h1>Capabilities of Visual Web Developer</h1>
+First, you can install Visual Web Developer for free using the Web Platform Installer.  In real terms, don’t try installing it by itself.  You will find yourself tracking down NuGet, SP1, MVC toolkit refresh, etc.  Just go to <a href="http://www.asp.net/vwd">this link to install</a>.
+
+<a href="http://www.headspring.com/wp-content/uploads/2011/07/image.png"><img style="margin-left: 0px; margin-right: 0px; border: 0px;" src="http://www.headspring.com/wp-content/uploads/2011/07/image_thumb.png" alt="image" width="442" height="323" align="right" border="0" /></a>
+
+After you install and run for the first time, go ahead and create your ASP.NET MVC 3 project.  I selected the “Internet Application” project because it wires up forms authentication for me and gives me a start controller and view.
+
+You can see in this picture that I’m looking at the home controller’s index view that uses the new Razor syntax.
+
+You can also see that the Solution Explorer supports class library projects.
+
+Another new feature of VWD 2010 is that is supports “Extensions”.  This is an extensibility point.  The NuGet package is implemented as an extension.
+
+<a href="http://www.headspring.com/wp-content/uploads/2011/07/image1.png"><img style="margin: 0px 5px 0px 0px; border: 0px;" src="http://www.headspring.com/wp-content/uploads/2011/07/image_thumb1.png" alt="image" width="341" height="237" align="left" border="0" /></a>
+
+There are many other extensions that can be installed to enhance the capabilities of VWD 2010.  Unfortunately, <a href="http://www.jetbrains.com/resharper/">ReSharper</a> is not one of these.  (By the way, if you haven’t yet installed ReSharper 6, you should do that now.  It provides fabulous support for ASP.NET MVC and Razor views).
+
+At <a href="http://www.headspring.com">Headspring</a>, we still use the full Visual Studio 2010 for custom application development because we really like the extra capabilities, but if you are looking to get started with MVC websites on .Net, go for VWD first.
+
+&nbsp;

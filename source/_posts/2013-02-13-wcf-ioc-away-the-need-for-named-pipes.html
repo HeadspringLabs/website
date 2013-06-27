@@ -1,0 +1,62 @@
+---
+layout: post
+title: WCF IOC Away the need for Named Pipes
+tags:
+- Blog
+- dependency injection
+- Developer Deep Dive
+- Named Pipes
+- WCF
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '42'
+  dsq_thread_id: '1081495920'
+  _podPressPostSpecific: a:6:{s:15:"itunes:subtitle";s:15:"##PostExcerpt##";s:14:"itunes:summary";s:15:"##PostExcerpt##";s:15:"itunes:keywords";s:17:"##WordPressCats##";s:13:"itunes:author";s:10:"##Global##";s:15:"itunes:explicit";s:7:"Default";s:12:"itunes:block";s:7:"Default";}
+---
+The NetNamedPipeBinding is the optimized binding for on-machine communication.  For most WCF implementations I have seen WCF is really only there to help facilitate RPC (Remote Procedure Calls).  When WCF is simply a way to segment your service layer into an optionally distributed deployment architecture there may be a much better way.  WCF has additional overhead that seams useless if the code is being executed on the same machine.  IOC (Inversion of Control) using DI (Dependency Injection) provides a relatively simple way to avoid WCF all together.
+
+Lets take a simple WCF Service Contract for Customers.
+[gist id=4945825]
+
+The client creates a proxy and through WCF configuration the proper binding can be used to communicate with the Service.  In order to make the client know where the service is without hardcoding this you would have the following configuration settings.
+<pre class="csharpcode">  <span class="kwrd">&lt;</span><span class="html">system.serviceModel</span><span class="kwrd">&gt;</span>
+    <span class="kwrd">&lt;</span><span class="html">bindings</span><span class="kwrd">&gt;</span>
+      <span class="kwrd">&lt;</span><span class="html">basicHttpBinding</span><span class="kwrd">&gt;</span>
+        <span class="kwrd">&lt;</span><span class="html">binding</span> <span class="attr">name</span><span class="kwrd">="BasicHttpBinding_ICustomerService"</span> <span class="kwrd">/&gt;</span>
+      <span class="kwrd">&lt;/</span><span class="html">basicHttpBinding</span><span class="kwrd">&gt;</span>
+    <span class="kwrd">&lt;/</span><span class="html">bindings</span><span class="kwrd">&gt;</span>
+    <span class="kwrd">&lt;</span><span class="html">client</span><span class="kwrd">&gt;</span>
+      <span class="kwrd">&lt;</span><span class="html">endpoint</span> <span class="attr">address</span><span class="kwrd">="http://localhost:26859/CustomerService.svc"</span>
+        <span class="attr">binding</span><span class="kwrd">="basicHttpBinding"</span> <span class="attr">bindingConfiguration</span><span class="kwrd">="BasicHttpBinding_ICustomerService"</span>
+        <span class="attr">contract</span><span class="kwrd">="OptionalWCF.Contracts.ICustomerService"</span> <span class="attr">name</span><span class="kwrd">="BasicHttpBinding_IUserProfileService"</span> <span class="kwrd">/&gt;</span>
+    <span class="kwrd">&lt;/</span><span class="html">client</span><span class="kwrd">&gt;</span>
+  <span class="kwrd">&lt;/</span><span class="html">system.serviceModel</span><span class="kwrd">&gt;</span></pre>
+Most clients stop there rather than have a explicit setting for NetNamedPipes.  If they decided to “Optimize” they could add the WCF configuration endpoint for NetNamedPipes and modify the Service to expose a NetNamedPipe endpoint.  Now the client can use the NetNamedPipe endpoint and the performance has been improved.  In reality the performance between NetTcp and NetNamedPipe is rather minimal with a slighter advantage over BasicHttp.  The most optimal invocation is in-process so why not just go around WCF all together.  We already have the interface separation that DI can use and either way if we want optimal performance we will be tweaking configuration files for different deployment environments.
+
+For this blog I choose StructureMap as my DI library.  My client Code only needs to get a handle to the interface.
+<div class="csharpcode">
+<pre class="alt">var customerServices = ObjectFactory.GetInstance&lt;ICustomerService&gt;();</pre>
+</div>
+The client is configured to either use WCF or use the direct reference to the service implementation of the service Contract.
+<pre class="csharpcode"><span class="kwrd">&lt;</span><span class="html">StructureMap</span> <span class="attr">MementoStyle</span><span class="kwrd">="Attribute"</span><span class="kwrd">&gt;</span>
+    <span class="rem">&lt;!-- WCF Service Through Proxy --&gt;</span>
+    <span class="kwrd">&lt;</span><span class="html">DefaultInstance</span>
+      <span class="attr">PluginType</span><span class="kwrd">="OptionalWCF.Contracts.ICustomerService, OptionalWCF"</span>
+      <span class="attr">PluggedType</span><span class="kwrd">="OptionalWCF.Client.CustomerServiceProxyWrapper, OptionalWCF.Client"</span>
+      <span class="attr">Scope</span><span class="kwrd">="Singleton"</span>
+      <span class="kwrd">/&gt;</span>
+
+    <span class="rem">&lt;!--Real Service--&gt;</span>
+    <span class="rem">&lt;!--&lt;DefaultInstance</span>
+<span class="rem">      PluginType="OptionalWCF.Contracts.ICustomerService, OptionalWCF"</span>
+<span class="rem">      PluggedType="OptionalWCF.ServiceImpl.CustomerService, OptionalWCF.ServiceImpl"</span>
+<span class="rem">      Scope="Singleton"</span>
+<span class="rem">      /&gt;--&gt;</span>
+<span class="kwrd">&lt;/</span><span class="html">StructureMap</span><span class="kwrd">&gt;</span></pre>
+Now if the client is running on the same machine WCF is discarded.  If the service is moved to another machine with a simple configuration file tweak WCF is used.  The clients code is none the wiser.
+
+This pattern can be extending to support duplex communication by using .Net events instead of exposing the callback contracts to the clients.  I plan on writing an additional blog to cover this topic.
+
+The full source to this post can be downloaded here <a href="http://www.headspring.com/wp-content/uploads/2013/02/OptionalWCF.zip">OptionalWCF</a>

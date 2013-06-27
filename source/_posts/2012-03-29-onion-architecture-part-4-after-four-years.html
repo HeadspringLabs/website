@@ -1,0 +1,51 @@
+---
+layout: post
+title: ! 'Onion Architecture: part 4 - after four years'
+tags:
+- architecture
+- design
+- Developer Deep Dive
+- MVC
+- onion
+- patterns
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '22'
+  s2mail: 'yes'
+  _aioseop_keywords: onion architecture, onion, architecture, design
+  _aioseop_description: follow up on onion architecture after four years of experience
+    with the architecture pattern
+  _aioseop_title: Onion Architecture part 4 after four years
+  dsq_thread_id: '831893080'
+---
+In 2008, I coined a new pattern name called Onion Architecture.  You can read the previous parts here: <a href="http://jeffreypalermo.com/blog/the-onion-architecture-part-1/">part 1</a>, <a href="http://jeffreypalermo.com/blog/the-onion-architecture-part-2/">part 2</a>, <a href="http://jeffreypalermo.com/blog/the-onion-architecture-part-3/">part 3</a>.  Over these four years, I’ve spoken about this pattern at user groups, conferences, and it’s even published in one of the chapters of <a href="http://manning.com/palermo3">ASP.NET MVC in Action</a> from <a href="http://manning.com/palermo3">Manning</a>.
+
+I’ve been overwhelmed by the traction this pattern name has enjoyed.  Folks from all over the country have written about and have talked about the pattern.  Some of the ones I’ve noticed are here (please comment with more – I welcome it).<!--more-->
+<ul>
+	<li><a href="http://ayende.com/blog/3464/onion-architecture">Ayende Rahien’s opinion on Onion Architecture</a></li>
+	<li><a href="http://www.cunningclinton.com/post/2011/07/19/Onion-Architecture.aspx">“Cunning” Clinton’s view</a></li>
+	<li><a href="http://blog.tonysneed.com/2011/10/08/peeling-back-the-onion-architecture/">Tony Sneed’s view and code sample</a></li>
+	<li><a href="http://stackoverflow.com/questions/tagged/onion-architecture">StackOverflow questions on Onion Architecture</a></li>
+	<li><a href="http://chicagoalt.net/event/july-2011-meeting-onion-architecture-with-asp-net-mvc">Matt Hidinger’s Chicago .Net User Group video presentation on OA</a></li>
+	<li><a href="http://stackoverflow.com/questions/9732747/what-type-of-architecture-is-this-called/9933371#9933371">One interesting StackOverflow question.</a></li>
+</ul>
+&nbsp;
+
+Back in 2008, I defined four tenets of Onion Architecture:
+<ul>
+	<li><em>The application is built around an independent object model</em></li>
+	<li><em>Inner layers define interfaces.  Outer layers implement interfaces</em></li>
+	<li><em>Direction of coupling is toward the center</em></li>
+	<li><em>All application core code can be compiled and run separate from infrastructure</em></li>
+</ul>
+&nbsp;
+
+Although there has been significant adoption of this pattern, I have received countless questions about how to implement it in various environments.  I mostly get asked about how it relates to domain-driven design.  First, onion architecture works well with and without DDD patterns.  It works well with CQRS, forms over data, and DDD.  It is merely an architectural pattern where the core object model is represented in a way that does not accept dependencies on less stable code.
+
+<a href="http://codecampserver.codeplex.com/">CodeCampServer</a> was an original sample of onion architecture, but it also grew as a sample of how to do ASP.NET MVC in various ways, how to use Portable Areas, and how to use <a href="http://mvccontrib.org">MvcContrib</a> features like input builders.  If you are just looking for onion architecture, it has too much going on.  <a href="https://bitbucket.org/jeffreypalermo/onion-architecture">I have pushed a much simpler solution</a> that represents onion architecture concepts.  I have intentionally not included a UI input form or an IoC container, which most people associate with onion architecture.  Onion architecture works just fine without the likes of StructureMap or Castle Windsor.  Please check out the code here and let me know if this presents a simple approach – that is the goal.
+
+When there is enough interest, I will continue this series with more parts.  CQRS definitely deserves some addressing within this architecture, and so do object models that support task-based UIs.
+
+Get the code <a href="https://bitbucket.org/jeffreypalermo/onion-architecture">here at my BitBucket repository</a>.

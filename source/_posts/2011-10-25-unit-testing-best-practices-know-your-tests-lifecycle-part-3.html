@@ -1,0 +1,50 @@
+---
+layout: post
+title: ! 'Unit Testing Best Practices: Know Your Test’s Lifecycle, Part 3'
+tags:
+- Developer Deep Dive
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '4'
+  _wp_old_slug: unit-testing-best-practices-know-your-test%e2%80%99s-lifecycle-part-3
+  dsq_thread_id: '832903759'
+---
+This will be my last post on unit test lifecycle management. In previous posts, we <a title="Unit Testing Best Practices: Know your test’s lifecycle, Part 1" href="http://www.headspring.com/2011/08/unit-testing-best-practices-know-your-tests-lifecycle-part-1">learned how individual unit tests and test fixtures are run</a>, and <a title="Unit Testing Best Practices: Know Your Test’s Lifecycle, Part 2" href="http://www.headspring.com/2011/09/unit-testing-best-practices-know-your-tests-lifecycle-part-2">how test invocation is affected when test fixtures are derived from an abstract base fixture class</a>. In this installation, we're going to learn how to manage code that runs before and after groups of test fixtures.
+
+Sometimes, you need some code to run before or after a set of test fixtures. I tend to encounter this scenario frequently with integration and system tests. For example, if you're using <a href="http://seleniumhq.org/">Selenium</a> to run your full system tests through the <a href="http://seleniumhq.org/projects/webdriver/">Selenium Web Driver</a>, you need to make sure that the Selenium server is running before you run any of your tests. You could do this on the build server by extending your build script with a "StartSelenium" task, and then remind all your developers to start the server themselves before they run the tests directly. But wouldn't it be better to guarantee directly that, every time those ui tests get run, that the selenium server was active? AND, as a bonus, wouldn't it be great if the selenium server was shut down when the tests finished?<!--more-->
+
+Another case where this need shows up is in database-coupled integration tests. These kinds of tests often suffer from unintended order dependencies - one set of tests end up assuming that some data introduced by an earlier set of tests will be present in the database, and then those tests fail if you run them in isolation.
+
+Another approach I often see people take is to have a "special" test fixture  that performs all their database initialization and initial data loading. That test fixture might look like this:
+
+[gist id=1313334 file=SampleDataLoader.cs]
+
+The Explicit attribute means that the test fixture is not run if you execute all the tests in the assembly by default. Typically a test like this would be run by invoking the nunit console runner from an automated build to run only tests in the "DataLoader" category.
+
+That's not bad, but again - what happens on developer system when you forget to run the dataloader tests first? Or, what do you do when you've got different sets of tests that need different default data? You definitely don't want each individual test or fixture going through an entire, scorched-earth style recreation of the entire database just to get to a clean state, do you?
+
+Fortunately, NUnit provides a not-well-known, but powerful, soltuion for executing code before and after <em>any</em> tests run - the SetUpFixture. It doesn't have the greatest name in the world, as it's easily confused with TestFixtureSetup. The difference is that SetUpFixture runs around <em>all</em> the fixtures within the same namespace. SetUpFixture classes defined outside of a namespace will run before any tests in the entire assembly. Here's a sample:
+
+[gist id=1313334 file=SetUpFixtureSample.cs]
+
+Which produces this output:
+
+[gist id=1313334 file=SetUpFixtureSampleOutput.txt]
+
+As you can see, the SetUpFixture classes exhibit the same nesting that we've come to expect from constructors, Dispose methods, SetUp, and TearDown atributes. As with basic test fixtures, I recommend that you use the construct/dispose pattern for SetUpFixture classes, and avoid the SetUp and TearDown-attributed methods. There's no need for the extra layer of initialization.
+
+Also note that SetUpFixture class construction and disposal is nested by namespace. If you have two of them in the same namespace though, order of execution between the two could be non-deterministic.
+
+One of the great things about these SetUp fixture classes is that they run whenever tests in the same namespace are executed, regardless of how many tests within that namespace you happen to be running. The important thing is that your context of execution is always going to be firmly established, even if you're only running one test. Andy, by establishing the right part of your entire testing context at the right leve, you can dramatically decrease the test time for expensive tests. For example, you could rebuild the whole test database in a SetUpFixture defined at the assembly level, and then establish and remove different sets of test data for related tests, organized by namespaces. This might look like this:
+
+[gist id=1313334 file=SetUpFixtureDatabaseExample.cs]
+
+Which of course produces the following output:
+
+[gist id=1313334 file=SetUpFixtureDatabaseExampleOutput.txt]
+
+The outermost SetUpFixture ensures that you always start from a known state, by dropping and rebuilding the test database. We open up a transaction within the namespace SetUpFixture's constructor, and roll it back in the corresponding Dispose method. This technique can help ensure that your integration tests don't develop unintended order dependencies by relying on data injected by other, previously run tests. Once all the tests in that namespace have run, all the database changes get rolled back. Now the next set of tests can start from a known data state again.
+
+SetUpFixtures, by virtue of being run outside of, and around, all of your unit test fixtures, give you a lot of options in structuring the runtime context in which your unit tests execute. They can be a very powerful tool in your testing toolbelt. Hopefully this introduction to NUnit SetUpFixtures gives you some ideas on how you can re-structure and streamline your own test management - especially for those more challenging scenarios, like UI and integration tests.

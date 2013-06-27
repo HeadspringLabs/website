@@ -1,0 +1,136 @@
+---
+layout: post
+title: What is incremental feature development and why is it important in managing
+  scope?
+tags: []
+status: pending
+type: post
+published: false
+meta:
+  _edit_last: '4'
+---
+<img style="margin: 2px 0px 12px 5px; float: right;" src="http://blogs.headspring.com/content/binary/milestones.gif" alt="milestones" border="0" />
+
+Software development is very different from physical engineering projects. In building
+a bridge, first of all, one needs to span a valley or a river in some fashion to set
+a foundation from the start of the bridge to the end of the bridge, followed by building
+some scaffolding and layering on asphalt. There is a specific order that you need
+to build horizontal layers in because of the physical materials that you're working
+with, and not a single car can drive across the bridge until you at least have one
+lane of asphalt poured and the bridge stable. Software, in contrast, has very different
+physical materials to such an extent that the "materials" aren't really physical at
+all. (It's computer behavior.)
+
+This gives us a possibility that is perhaps a little bit hard to understand at first.
+That is the possibility that we need not construct the software in horizontal layers
+and that we instead have the option to construct software in vertical slices. Imagine
+if a custom home builder could create the master bedroom of your new house, get the
+electricity working along with the plumbing and lighting, and even finish the sheetrock
+and painting allowing you to start sleeping in your master bedroom when not even the
+concrete slab for the rest of your home is yet poured. Such a master bedroom would
+be a vertical slice of your home. While the materials don't allow this approach in
+home construction, it is absolutely possible in software construction.<!--more-->
+<div style="height: 450px;"><img style="margin: 2px 0px; float: left;" src="http://blogs.headspring.com/content/binary/buildvertically.gif" alt="build vertically" border="0" />
+<div style="width: 345px; float: right; height: 440px;">
+
+An order processing system which will be used by people who oversee taking orders,
+a shipping department that is going to ship the orders, and an inventory department
+that is going to react to the orders (and keep itself stocked by ordering from a distributor
+or manufacturer) can serve as a good example for illustrating the practical application
+of vertical construction. Assume that the business either doesn't have existing software
+or that each department has an isolated system and that while the business is not
+as efficient as it could be it is nonetheless operational. In the name of a companywide
+system it would be a workable solution to first bring up maybe just an inventory system,
+or the first few critical features of an inventory application, for just the inventory
+department to start using. The sales department and the shipping department would
+continue on with their current processes and they wouldn't benefit from any new software
+for a time, but one set of users in the inventory department would be able to start
+deriving business value from the features delivered.
+<ul>
+	<li>The software isn't done. It's not anywhere near completion, but it can start providing
+value to the business.</li>
+	<li>It can start providing a return on a portion of the investment far before you even
+get halfway done with the entire system.</li>
+	<li>The "materials" give us a lot of flexibility for achieving a return on investment
+much sooner than so in physical engineering or construction projects.</li>
+</ul>
+</div>
+</div>
+The process may allow you to mitigate some risk. It is common and correct that once
+a piece of software is developed that it is released and used a little bit (whether
+it is in testing or actually piloted) to vet sooner rather than later when all the
+other pieces may work off of it or meet the particular feature. You've got a key piece
+of functionality you may actually use to see if it is going to suffice and if it embodies
+the characteristics and goals you stated in the specifications.
+
+You also have the ability to check an overall vision against it and say:
+<div style="background-image: url('http://blogs.headspring.com/content/binary/discussion.gif'); padding-bottom: 0px; line-height: 24px; padding-left: 15px; width: 203px; padding-right: 243px; height: 447px; color: #ffffff; font-size: 18px; padding-top: 9px;">
+<div>"This is very important, but I think we're going to be going this way instead."</div>
+</div>
+Maybe a new process or some other interesting constraints have come into the business
+altering course. Maybe the company has acquired another company in the process of
+the development and thus processes may need to work a little bit differently and thus
+the stakeholders can see that in front of them and say:
+<div style="background-image: url('http://blogs.headspring.com/content/binary/insight.gif'); padding-bottom: 0px; line-height: 24px; padding-left: 171px; width: 203px; padding-right: 215px; height: 420px; color: #ffffff; font-size: 18px; padding-top: 9px;">
+<div>"Ah, here is where we need to modify things so let's go ahead and bring that
+in right now."</div>
+</div>
+That might be something that could be much more difficult or costly to do later in
+the game when you have a number of other pieces in play and the production code is
+close to a full-fledged product.
+<h2>Going back to the house analogy...</h2>
+Should I build my bedroom picture perfect, putting in the ceiling fan, the crown molding,
+the fancy mirrors, and the fancy bed spreads, before I build my kitchen?
+
+One can do it that way or one can build out the bedroom just enough to start sleeping
+there. In software it really depends on the business theme. For instance, if the goal
+is to get the inventory department up and running punctually, managing suppliers with
+much paperwork, and there is a real need to automate the tasks, the requirements can
+be met in a barebones fashion just to solve the immediate pain point before immediately
+turning on order processing for a product catalog. Alternatively, if one were to start
+with an online catalog before going on to an inventory system, one may decide that,
+because the online product catalog is public-facing and is going to be an interface
+point with customers, that it is best to put in all the bells and whistles to make
+the online catalog look really polished, putting in all of the usability features
+so that customers have the best experience possible moving through your product catalogue
+in an effort to encourage purchasing by giving them the confidence that they are dealing
+with a reputable vendor. So depending on the business scene one may decide to put
+in crown molding and all of the trimmings or that it is a better use of money just
+to put up basic sheet rock in the bedroom for a while and invest in some other areas,
+getting those functional, before coming back to the bedroom to put on some finishing
+touches.
+
+<img style="margin: 2px 0px 12px 10px; float: right;" src="http://blogs.headspring.com/content/binary/flexibility.jpg" alt="flexibility" border="0" />
+
+Because the materials are so pliable, you have the flexibility in software to decide
+and determine where you are going to get the best return on investment dollars and
+the way in which you spend those dollars.
+
+But, isn't it dangerous to change software in going back and adding on other features
+afterwards? Isn't it typical to see problems introduced when retouching software that
+has been working for a little while?
+<h2>The Clay Analogy</h2>
+If you build with clay that dries quickly, when you try to change it later it's going
+to crack, but if you build in such a way that the structure remains flexible and you
+use a higher quality clay that doesn't dry into a brittle, fragile artifact, then
+you can custom flex it.
+<h2>Now how do these analogies turn into reality?</h2>
+It's your software engineering technique. The materials require software engineering
+to be kept so flexible and so pliable.
+
+It's different from civil engineering where we value rigidity. (We value a strong
+foundation. We value those steel I-beams that are going to resist bending and are
+going to stand for decades to come.) In software we loathe rigidity. We loathe those
+features that cannot be changed.
+
+Without touching too heavily on technical terms, there is a principal called the Open-Closed
+Principal which specifies a method by which the behavior of a system can be changed
+and modified without having to rip out other pieces of code. This is an example of
+a specific technique that can be employed within a software engineering team that
+allows a team to continually modify the behavior of the software over time without
+having to demolish the kitchen to change the kitchen's cabinets.
+
+Software is very interesting because the materials are so different from those of
+the physical world, and it does require a trained engineer to use the materials well.
+
+<img src="http://blogs.headspring.com/aggbug.ashx?id=dc303a3e-fe11-4b9f-b50f-161ac0df42b9" alt="" width="0" height="0" />

@@ -1,0 +1,54 @@
+---
+layout: post
+title: Customizing Visual Studio With External Tools, Part 3
+tags:
+- Developer Deep Dive
+- tools
+- Visual Studio
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '23'
+  s2mail: 'yes'
+  _aioseop_keywords: context, context menu, visual studio, tools, external tools,
+    command, custom tool
+  _aioseop_description: Customize Visual Studio With External Tools by adding your
+    own custom tools to the context menu, so when you right-click on a file in the
+    solution explorer (or other places) you’re tools are right there for use.
+  _aioseop_title: Customizing Visual Studio With External Tools, Part 3
+  dsq_thread_id: '832108245'
+---
+In my previous posts (<a title="Customizing Visual Studio With External Tools, Part 1" href="http://www.headspring.com/2012/01/customizing-visual-studio-with-external-tools-part-1">part 1</a>, <a title="Customizing Visual Studio With External Tools, Part 2" href="http://www.headspring.com/2012/01/customizing-visual-studio-with-external-tools-part-2">part 2</a>) I showed you how to create external tools and add them to a custom tool bar. In this post we will go the next logical step and add them to the context menu, so when you right-click on a file in the solution explorer (or other places) you’re tools are right there for use.
+
+If you’ve been following along, you’ll have noticed that customizing Visual Studio in these ways is a bit cumbersome. Creating context menus are no better considering there are a ton of <em>different</em> menus depending on the <em>context</em> that you’ll have to independently configure.
+
+<!--more-->
+<h2>Creating a right-click, Open in Notepad context menu</h2>
+Lets start with a simple example: creating a new context menu to open the selected document in Notepad++ by using the external tool we previously created to open files in Notepad++. Here’s what we’re going to create:
+
+<img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0pt none;" src="http://www.headspring.com/wp-content/uploads/2012/01/image9.png" alt="Visual Studio open in notepad context menu" width="358" height="126" border="0" />
+
+Go to Tools &gt; Customize, or right-click in the toolbar area and click “Customize…” to open the familiar customization dialog. Go to the “Commands” tab and select the radio button for Context menu and expand the drop down list. Brace yourself, because what you’ll see is <em>every single context menu and sub-menu</em> in Visual Studio. And herein lies the pain of creating a context menu – you have to configure it for each <em>context</em> it may need to be used in. You’ll see the menus are separated by the symbol “|” which denotes a sub-menu.
+
+If you select “Project and Solution Context Menus” the “Controls:” list will show all of the context menus related to Projects and Solutions (a Project menu, Solution Folder menu, and so on). The Project menu is thus in the drop down list as “Project and Solution Context Menus | Project” and it has a controls and sub-menus itself. It’s a little confusing but once you poke around you’ll get the hang of it.
+
+<img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0pt none;" src="http://www.headspring.com/wp-content/uploads/2012/01/image10.png" alt="List of context menus" width="421" height="354" border="0" />
+
+Above I have highlighted the “Project and Solution Context Menus | Item” menu, which is the context menu that appears when you right click a file in the solution explorer. Once this is selected, click “Add Command…” and find the external tool associated with the command you previously created in <a title="Customizing Visual Studio With External Tools, Part 1" href="http://www.headspring.com/2012/01/customizing-visual-studio-with-external-tools-part-1">part 1</a>. It will be in the “Tools” category. You can then click on “Modify Selection” and rename the command.
+
+<img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0pt none;" src="http://www.headspring.com/wp-content/uploads/2012/01/image11.png" alt="Adding commands to a context menu" width="398" height="270" border="0" />
+
+A final, optional step is to create a new “group” for you command(s). Select the command just under the one you added (“Open” in this case) and click “Modify Selection” on it and the “Begin a Group” selection will be available. Click it and a group separator will be created under your command:
+
+<img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0pt none;" src="http://www.headspring.com/wp-content/uploads/2012/01/image12.png" alt="Context menu command in a group" width="265" height="66" border="0" />
+
+You’re done! Close out all the dialogs and right click on a file in the solution explorer and it’ll open up in Notepad++ for editing.
+<h2>Creating a context sub-menu</h2>
+You can create a sub-menu much the same way. Select the menu it belongs in and instead of adding a command, click the “Add New Menu” button. You can rename it the same way you renamed your external command above. Once renamed and placed in the order you wish, it’s time to add commands to it. Because I just added a new menu to the “Project and Solution Context Menus | Item” menu, it will now appear in the context menu drop down list, and we have to select it there in order to add commands to it:
+
+<img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0pt none;" src="http://www.headspring.com/wp-content/uploads/2012/01/image13.png" alt="Creating a sub-menu within a context menu" width="370" height="92" border="0" />
+
+I’ve added the Explorer and Notepad++ commands that I created in <a title="Customizing Visual Studio With External Tools, Part 1" href="http://www.headspring.com/2012/01/customizing-visual-studio-with-external-tools-part-1">part 1</a> in the “My Menu” I created. Now I have these commands available to files in the Solution Explorer in their own sub-menu!
+
+<img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0pt none;" src="http://www.headspring.com/wp-content/uploads/2012/01/image14.png" alt="A custom context menu" width="476" height="101" border="0" />

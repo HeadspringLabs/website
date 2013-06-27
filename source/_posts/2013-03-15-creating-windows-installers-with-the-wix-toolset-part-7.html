@@ -1,0 +1,80 @@
+---
+layout: post
+title: Creating Windows Installers with the WiX Toolset Part 7
+tags:
+- Blog
+- Developer Deep Dive
+- windows installer
+- WiX
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '27'
+  dsq_thread_id: '1140032393'
+  _aioseop_keywords: ! 'Windows installer, WiX, candle, light, votive, '
+  _aioseop_description: This post explains how to create an MSI installer from the
+    WiX files you’ve written from either the command line or within Visual Studio.
+  _aioseop_title: Compiling WiX from command line or Visual Studio
+  _podPressPostSpecific: a:6:{s:15:"itunes:subtitle";s:15:"##PostExcerpt##";s:14:"itunes:summary";s:15:"##PostExcerpt##";s:15:"itunes:keywords";s:17:"##WordPressCats##";s:13:"itunes:author";s:10:"##Global##";s:15:"itunes:explicit";s:7:"Default";s:12:"itunes:block";s:7:"Default";}
+---
+<address>This article is part of a series exploring how to create installers for Windows software.  Here's the complete contents of the series.</address><address><a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-01/">Part 1 – What Kinds of Software Projects Benefit From an Installer?</a>
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-02/">Part 2 – An Overview Of Windows Installer and its Features</a>
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-03/">Part 3 – Tooling Options for Building Installers</a>
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-04/">Part 4 – The Windows Installer Runtime Sequence</a>
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-5/">Part 5 – The Contents of an MSI</a>
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-6/">Part 6 – The Structure of a WiX File</a>
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-7/">Part 7 – Generating an MSI Package From Your WiX</a>
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-8/">Part 8 – Troubleshooting Installer Runtime Problems</a>
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-summary/">Part 9 - Summary</a>
+</address><br/>
+This post explains how to create an MSI installer from the WiX files you’ve written from either the command line or within Visual Studio.
+<h2>The Missing Magic</h2>
+So we’ve discussed how an MSI is an installer package that Windows can process and taken a peek at what the insides of an MSI looks like, and then we’ve examined a simple WiX file that can be used to create an MSI and how WiX schema is heavily tied to the entities of Windows Installer.  But we don’t quite have the complete picture yet – how do we magically get our MSI once we’ve authored some WiX?
+<h2><a href="http://www.headspring.com/wp-content/uploads/2013/03/magicHappensHere.png"><img class="alignnone size-full wp-image-6459" alt="magicHappensHere" src="http://www.headspring.com/wp-content/uploads/2013/03/magicHappensHere.png" width="800" height="233" />
+</a>It's Just A Compiler</h2>
+So the answer is 42.  <a href="http://en.wikipedia.org/wiki/Answer_to_The_Ultimate_Question_of_Life,_the_Universe,_and_Everything#Answer_to_the_Ultimate_Question_of_Life.2C_the_Universe.2C_and_Everything_.2842.29">Just kidding.</a>  The answer is that the WiX toolset comes with its own compiler and linker tools.  If you’ve ever set up an automated build, this is the WiX equivalent of MsBuild.exe (or if you’re really hard core, csc.exe).  Most of the tooling in WiX is related to candles in some fashion (WiX sounds like “wicks”, the burning portion of a candle), so you might find it amusing to learn the name of the compiler is “candle”, and the linker is called “light”.
+
+<a href="http://www.headspring.com/wp-content/uploads/2013/03/candleAndLight.png"><img class="alignnone size-full wp-image-6460" alt="candleAndLight" src="http://www.headspring.com/wp-content/uploads/2013/03/candleAndLight.png" width="499" height="299" /></a>
+
+There are two ways you can run the compiler:  through the command line, or as an integrated extension of Visual Studio.  I’ll discuss both below.
+<h2>From the Command Line</h2>
+This is my preferred method.  Usually when I’m building an installer, I’ve had to do some PowerShell scripting to stage the output that I want to be packaged up by the installer.  This is usually artifacts like help files, shortcut icons, and so forth.  This is also the primary method for getting an installer compilation rolled into your automated build (you might be able to use Votive with TFS, you’ll have to verify that with someone that willingly uses TFS).
+
+Invocation looks something like this in a simple bat file:
+<pre>rem If we don't specify an output directory, the wixobj files will get dumped in the current working directory of the bat file</pre>
+<pre>tools\wix\candle.exe src\installer\HelloWorld.wxs -out artifacts\wix\</pre>
+<pre>tools\wix\light.exe artifacts\wix\HelloWorld.wixobj -out artifacts\wix\HelloWorld.msi</pre>
+<pre></pre>
+<pre>rem Move the final output for exposure to CI build or shared network folder</pre>
+<pre>copy artifacts\wix\HelloWorld.msi artifacts\installer</pre>
+<h2> Inside Visual Studio</h2>
+The WiX tooling comes with a Visual Studio extension called Votive.  I mentioned it earlier how you can use it to get IntelliSense when editing your WiX files.  Votive also makes it possible to compile your WiX when doing a build in Visual Studio.
+
+If you examine the properties of your WiX project, you’ll find a host of options for controlling your compilation.
+
+The Installer tab lets you name your output file, and choose alternate output types if you happen to need something besides MSI (if you don’t know otherwise, then stick with MSI).
+
+<a href="http://www.headspring.com/wp-content/uploads/2013/03/buildTab.png"><img class="alignnone size-large wp-image-6461" alt="buildTab" src="http://www.headspring.com/wp-content/uploads/2013/03/buildTab-970x335.png" width="970" height="335" /></a>
+
+&nbsp;
+
+The Build tab allows you to specify values for your preprocessor variables (WiX supports preprocessing similar to C and C++ compilers), and where to place your output.
+
+<a href="http://www.headspring.com/wp-content/uploads/2013/03/buildTab1.png"><img class="alignnone size-full wp-image-6462" alt="buildTab" src="http://www.headspring.com/wp-content/uploads/2013/03/buildTab1.png" width="673" height="642" /></a>
+
+&nbsp;
+
+The Tool Settings tab can be used to ignore ICE validation on your package (although I’d suggest leaving it on, you always want to know about potential problems), and pass additional arguments to the compiler and linker.
+
+<a href="http://www.headspring.com/wp-content/uploads/2013/03/toolSettings.png"><img class="alignnone size-full wp-image-6463" alt="toolSettings" src="http://www.headspring.com/wp-content/uploads/2013/03/toolSettings.png" width="655" height="521" /></a>
+
+&nbsp;
+
+When you compile the project in Visual Studio, if you look carefully at the build output you’ll see that it’s simply invoking candle and light for you under the hood:
+
+<a href="http://www.headspring.com/wp-content/uploads/2013/03/votiveOutput.png"><img class="alignnone size-large wp-image-6464" alt="votiveOutput" src="http://www.headspring.com/wp-content/uploads/2013/03/votiveOutput-970x158.png" width="970" height="158" /></a>
+
+&nbsp;
+
+If you do use Votive, you probably won’t want to build the installer in debug configuration.  Otherwise you’ll have to wait for an installer to build every time you recompile the solution.

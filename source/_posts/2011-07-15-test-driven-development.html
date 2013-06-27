@@ -1,0 +1,43 @@
+---
+layout: post
+title: Test-driven development
+tags:
+- Developer Deep Dive
+- duo
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '16'
+  _thumbnail_id: '426'
+  dsq_thread_id: '839547261'
+  _podPressPostSpecific: a:6:{s:15:"itunes:subtitle";s:15:"##PostExcerpt##";s:14:"itunes:summary";s:15:"##PostExcerpt##";s:15:"itunes:keywords";s:17:"##WordPressCats##";s:13:"itunes:author";s:10:"##Global##";s:15:"itunes:explicit";s:7:"Default";s:12:"itunes:block";s:7:"Default";}
+---
+[caption id="attachment_426" align="alignright" width="300"]<img class="size-medium wp-image-426" title="RubeGoldberg" alt="" src="http://www.headspring.com/wp-content/uploads/2011/07/RubeGoldberg-300x184.gif" width="300" height="184" /> A as you raise spoon of soup to your mouth B it pulls the string C thereby jerking the ladle D which throws the cracker E past the parrot which jumps F causing the perch to tilt G upsetting seeds H into the pail I adding the extra weight to pull the cord J which opens and lights the automatic cigar lighter K setting off the rocket L which causes the sickle M to cut the string allowing the napkin to swing wiping off your chin[/caption]
+
+TDD is an excellent safeguard against bugs. Why is test-driven development specifically vital in Agile development?
+
+The hardest part of implementing a new feature is keeping all of the existing features working.
+
+Software can be very complicated, and if you were trying to visualize it, although I don't like to compare the software we build to a Rube Goldberg machine, you might be able to think of it in those terms, in that if you have a device which works in just such a way and then you add to it there is a good chance that it will no longer continue to work like it did.<!--more-->
+
+What test-driven development allows you to do is to essentially lock into place the features that you've built that you know were working, so that in the future if anything you change would affect the functionality of those features you'll get a report on that within an hour or two at the most. Then you can take corrective action without having to do exhaustive testing on the system, which, when a system becomes significant, can actually become almost impossible to do by humans.
+
+I think anyone that's been in software development, who has done a software project, either internally or with a partner, has probably experienced bugs and defects. Typically you'll see those when you add a feature and a couple of things break that used to work. That happens a lot. It is a trapping of development.
+
+Whether it is in<a href="http://www.headspring.com/resources/whitepapers/" target="_blank"> Agile development</a> methodology or whether it's in something else it is critical to make sure the software quality is present as one works into the future in enhancing or adding to the system.
+
+Typically, a lot of the systems that we see are pretty critical to running a client's business or to executing projects. They are something that helps businesses, from a technology side, have an advantage over their competition or deliver their services faster or better or in a more streamlined manner. When you have a system like that, that is that critical, you can't afford to have downtime. You can't afford to add a feature and then have ten things that used to work break, and so test-driven development is important because it helps mitigate the risk and helps issues come to the surface much more quickly before they've reached production or affected customer service negatively.
+
+Specifically with regards to Agile, test-driven development allows you to change the system which is the whole basis for Agile development in the first place. (Without going into the long explanation of Agile essentially it means that instead of waiting for a year to release the software you'll wait a month with the expectation that you'll change it again each month and release it again. Because you're iterating on functionality development, you're going to be changing existing functionality over and over again until you get to your ultimate goals.) Having a system that you can change quickly is critical to Agile development.
+<h2>The Gotcha Question (and its answer)</h2>
+Given the protections of TDD, why should stakeholders feel the need to manually test or demo code or to kick the tires at any level whatsoever?
+
+One of the misperceptions about test-driven development is that it results in 100% defect-free software, and that's actually not the case, because the software you write is only as good as the ways you think to test it. You might think of the same thing for perhaps a building in that a building's strength is only as good as the weight against it, testing it, and if you don't plan for a certain type of event, like an earthquake or a strong wind from a certain angle, then the building could potentially fail because the tests the building was put through did not account for the scenario. It is the same with software.
+<ul>
+	<li>The advantage of TDD is that when you do discover that defect, you can write a test to expose the defect, correct the defect, and never see it again.</li>
+	<li>The introduction of defects is actually not the biggest problem. The biggest problem is the introduction of defects over and over again as you maintain the software that can really kill the software's budget and thus the effectiveness of an organization's operations.</li>
+</ul>
+I think there are certain things that tests can't account for and it deals with the user interaction side of applications. It's important for clients to test the system or use it just to make sure that it functions how they thought it would. Chances are really good that when a client conceives of a new piece of functionality, or a new idea, that they see it working in their head one way, but once they actually use it they realize they've learned new things that they didn't know before and that they'll want to implement some changes to that end. So, while the software can work exactly as it was designed to work, it might not be quite right for the business goals or the goals of the client, and so, just from that standpoint alone, making sure that the software is aligned with business goals and not with mean functional specifications is really important.
+
+A test does not guarantee that there are zero defects. It just guarantees that there are no defects in the, in the ways the system is being tested. But, as the system matures and is tested and put through more and more rigorous paces, TDD essentially just cuts out a lot of wasted time that you might have otherwise accrued. Without getting too philosophical, because humans create software and humans are flawed, software, in a sense, will always be somewhat flawed, but that doesn’t mean you shouldn't enforce strict engineering principles to try to improve the quality of what you create.

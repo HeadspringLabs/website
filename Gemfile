@@ -1,4 +1,5 @@
 source "http://rubygems.org"
+ruby "1.9.3"
 
 group :development do
   gem 'rake', '~> 0.9'
@@ -16,3 +17,4 @@ group :development do
 end
 
 gem 'sinatra', '~> 1.4.2'
+gem 'rack-jekyll'

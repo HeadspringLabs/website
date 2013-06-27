@@ -1,0 +1,113 @@
+---
+layout: post
+title: ! 'Unit Testing Best Practices: Know Your Test’s Lifecycle, Part 2'
+tags:
+- agile benefits
+- best practices
+- Developer Deep Dive
+- unit testing
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '4'
+  _wp_old_slug: unit-testing-best-practices-know-your-test%e2%80%99s-lifecycle-part-2
+  _aioseop_keywords: unit,testing,best practices,agile,test automation
+  _aioseop_description: Extends part 1 to include a bast test fixture class. Additional
+    unit testing best practices and guidelines provided.
+  _aioseop_title: ! 'Unit Testing Best Practices: Know Your Test''s Lifecycle, Part
+    2'
+  dsq_thread_id: '832883805'
+---
+In my <a title="Unit Testing Best Practices: Know your test’s lifecycle, Part 1" href="http://www.headspring.com/2011/08/unit-testing-best-practices-know-your-tests-lifecycle-part-1">first post in the Unit Testing Best Practices series</a>, I introduced you to the basic lifecycle of an NUnit test fixture. This time, we're going to see what happens when we give our tests a common test fixture base class.
+<span class="Apple-style-span" style="font-size: 26px"><strong>Why a base class?</strong></span>
+There are two cases where having a base test fixture can be useful in keeping your test code simpler:
+<ol>
+	<li><strong>You have lots of the same kind of tests. </strong>Maybe you're writing integration tests for your persistence layer. Your tests are going to all be performing some similar operations, like creating a database connection. Maybe they all need to reference an Inversion of Control container like StructureMap or Autofac in order to retrieve repository instances. You don't want to write that boilerplate code for every fixture, do you?</li>
+	<li><strong>You have a hierarchy of classes that need testing.</strong> If you have a base class in your domain, you will probably want to set up a parallel type hierarchy of test fixtures. In this case, a base test fixture gives you one place to define tests that verify the base class invariants to which all your derived classes need to conform.</li>
+</ol>
+<span class="Apple-style-span" style="font-size: 26px"><strong>The Code</strong></span>
+<div>Let's take a look at what happens to our simple test fixture when we give it a base class:<!--more-->
+
+<span class="Apple-style-span" style="font-family: Consolas, Monaco, monospace;font-size: 12px;line-height: 18px">[gist id=1262440]</span>
+
+</div>
+Notice that the base class isn't attributed with the [TestFixture] attribute. I only want this class to act as a base for my actual fixtures. I don't intend for it to be run as a fixture in its own right.
+
+Note too that I'm reinforcing the fact that this class doesn't stand alone by making the base class abstract, and following standard practices for an abstract base class by making the constructor protected instead of public. We've also made the IDisposable.Dispose method implementation virtual so we can extend its behavior in derived classes.
+
+<em>Test code is still code. Follow the same design practices here that you would in your application code.</em>
+
+<span class="Apple-style-span" style="font-size: 26px"><strong>The Results</strong></span>
+Now when we run our tests, we get the following output:
+<ul>
+	<li>Base Constructor</li>
+	<li>Derived Constructor</li>
+<ul>
+	<li>Base TestFixtureSetup</li>
+	<li>Derived TestFixtureSetup</li>
+<ul>
+	<li>Base SetUp</li>
+	<li>Derived SetUp</li>
+<ul>
+	<li>Derived First Test passes!</li>
+</ul>
+	<li>Derived TearDown</li>
+	<li>Base TearDown</li>
+	<li>Base SetUp</li>
+	<li>Derived SetUp</li>
+<ul>
+	<li>Derived Second Test fails!</li>
+</ul>
+	<li>Derived TearDown</li>
+	<li>Base TearDown</li>
+	<li>Base SetUp</li>
+	<li>Derived SetUp</li>
+<ul>
+	<li>Base First Test passes!</li>
+</ul>
+	<li>Derived TearDown</li>
+	<li>Base TearDown</li>
+	<li>Base SetUp</li>
+	<li>Derived SetUp</li>
+<ul>
+	<li>Base Second Test fails!</li>
+</ul>
+	<li>Derived TearDown</li>
+	<li>Base TearDown</li>
+</ul>
+	<li>Derived TestFixtureTearDown</li>
+	<li>Base TestFixtureTearDown</li>
+</ul>
+	<li>Derived Dispose</li>
+	<li>Base Dispose</li>
+</ul>
+<span class="Apple-style-span" style="font-size: 26px"><strong>Observations</strong></span>
+Note that even with a base class, all our observations from last time are still true:
+<ol>
+	<li>The Test Fixture class is constructed once.</li>
+	<li>TestFixtureSetup and TestFixtureTeardDown run one time.</li>
+	<li>TestSetup and TestTearDown run around every test.</li>
+	<li>TestTearDown runs even when a test fails.</li>
+	<li>NUnit knows about IDisposable.</li>
+</ol>
+<div>But now we can also see the following new behaviors:</div>
+<div>
+<ol>
+	<li><strong>TestFixture constructors and dispose methods are called in the same order as for any other class. </strong>This is one of the reasons I prefer using constructor/disposable semantics with test fixtures instead of relying on the special FixtureSetUp/FixtureTearDown attributes - we already know the rules for constructors and disposables.</li>
+	<li><strong>The base class SetUp and TearDown methods run <em>around</em> those from the derived class.</strong> This is true for both Fixture- and Test- SetUp and TearDown methods. You can think of your base class wrapping your derived class, like Russian nested dolls. This pattern also extends as you create deeper inheritance hierarchies. SetUp is run from the outermost base class down to the leaf derived class, and TearDown is run in exactly the opposite order.</li>
+	<li><strong>All Test-level SetUp and TearDown methods are run for <em>every</em> test. </strong>This behavior is a little surprising. Notice that even on the test methods defined in the base class, <em>the derived class' SetUp and TearDown methods are still getting run</em>. If you start seeing base class tests failing because something they expected from SetUp is suddenly different, this is a likely culprit.</li>
+	<li><strong>Tests are run in alphabetical order</strong>. Ok, you can't infer this one from the output, you're just going to have to take my word for it (or go play with the test names yourself and see what happens.) NUnit sorts all tests on the fixture by name, from A to Z, and then runs them in that order. Base class test methods are identified as &lt;ClassName&gt;.&lt;TestMethodName&gt; for purposes of sorting. This means that your base class tests will all be grouped together when the fixture is run, but they could all run right in the middle of your derived class' tests.</li>
+</ol>
+</div>
+<div><span class="Apple-style-span" style="font-size: 26px"><strong>Guidelines</strong></span></div>
+You can quickly see from the results above that our first guideline, <em>Use constructors for class-wide setup. Use IDisposable for class-wide cleanup. Avoid TestFixtureSetup and TestFixtureTearDown, </em>is even more relevant once we start creating a hierarchy of test fixtures.  Constructors and IDisposable keep our test fixtures working like any other class we'd write.
+<div>Let's add two more guidelines:</div>
+<div>
+<ol>
+	<li><strong>Don't rely on test run order</strong>. Test method run order varies between different hosts. NUnit and ReSharper and Gallio rarely all agree on which order to run your tests. As a developer, you're often not even running a full test suite -you're running specific fixtures, or even just a few tests within a fixture. If your tests only pass when they're run in a specific order, you're going to waste a lot of time hunting down false failures. Remember, the closer you are to release, the more likely that your tests will start failing for "no reason at all." Keep your tests independent of each other, and you'll <em>always</em> be able to run them with confidence.</li>
+	<li><strong>Limit test-level SetUp and TearDown semantics<em>. </em></strong>It's bad enough when a test fails. It's even worse when you have to jump around between base and derived class code to stitch together what's happening for each test. If at all possible, limit the definition of SetUp and TearDown methods to your base class. In recent years, I find that if I get my fixture initialization right in the constructor, then I rarely have to do much resetting around each individual test.</li>
+</ol>
+</div>
+<div>You've now got a clear understanding of how an individual test fixture is created, initialized, and executed, and how that changes when the fixture has a derived class with its own lifecycle. You've also got a few more guidelines to help you keep your unit tests easy to maintain and extend.</div>
+Next time, we're going to see how to run our own initialization code <em>before any of our test fixtures are even created. </em>

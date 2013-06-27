@@ -1,0 +1,128 @@
+---
+layout: post
+title: A Peek Inside the Headspring Toolbox
+tags:
+- Blog
+- Developer Deep Dive
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '38'
+  dsq_thread_id: '879671648'
+  _wp_old_slug: a-pek-inside-the-headspring-toolbox
+  _podPressPostSpecific: a:6:{s:15:"itunes:subtitle";s:15:"##PostExcerpt##";s:14:"itunes:summary";s:15:"##PostExcerpt##";s:15:"itunes:keywords";s:17:"##WordPressCats##";s:13:"itunes:author";s:10:"##Global##";s:15:"itunes:explicit";s:7:"Default";s:12:"itunes:block";s:7:"Default";}
+---
+Here is a peek into the Headspring toolbox.  I did a simple analysis of the tools used at Headspring by analyzing the Nuget package files for a subset of the projects we have in source control.  I created a PowerShell script to pull out the package names from the Nuget packages.config files.
+
+<a href="http://www.headspring.com/wp-content/uploads/2012/10/headspring-toolbox-2.png"><img src="http://www.headspring.com/wp-content/uploads/2012/10/headspring-toolbox-2-1024x564.png" alt="Headspring Toolbox" width="640" height="352" class="aligncenter size-large wp-image-5790" /></a>
+
+[gist id=3840798]
+
+Here is a list of items we have used to build projects for our clients over the last several years at Headspring. The tool list includes both brownfield and greenfield projects and is by no means comprehensive. I manually added items that I felt were noteworthy but didn’t show up in the Nuget packages.
+<h2>Automation</h2>
+<ul>
+	<li>PowerShell of course!</li>
+	<li>batch files</li>
+</ul>
+<h2>Build Tools</h2>
+<ul>
+	<li><a href="https://github.com/psake">Psake</a></li>
+	<li><a href="http://www.jetbrains.com/teamcity/">Team City</a></li>
+</ul>
+<h2>Deployment Tools</h2>
+<ul>
+        <li><a href="http://pstrami.codeplex.com/">Pstrami<b>Added 10-18</b></a></li>
+</ul>
+<h2>CSS Frameworks</h2>
+<ul>
+	<li><a href="http://foundation.zurb.com/">Foundation</a></li>
+	<li><a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap</a></li>
+</ul>
+<h2>Data Access</h2>
+<ul>
+	<li><a href="http://nhforge.org/">NHibernate</a></li>
+	<li><a href="http://www.fluentnhibernate.org/">FluentNhibernate</a></li>
+	<li><a href="http://nhprof.com/">NHibernateProfiler</a></li>
+	<li><a href="http://www.toptensoftware.com/petapoco/">Petapoco</a></li>
+	<li><a href="http://code.google.com/p/dapper-dot-net/">Dapper and DapperExtensions</a></li>
+	<li><a href="http://ravendb.net/">RavenDB</a></li>
+	<li><a href="http://entityframework.codeplex.com/">Entity Framework</a></li>
+	<li>Mongo</li>
+	<li><a href="http://system.data.sqlite.org">System.Data.SQLite</a></li>
+</ul>
+<h2>Dependency Injection</h2>
+<ul>
+	<li><a href="http://docs.structuremap.net/">StructureMap</a></li>
+</ul>
+<h2>JavaScript Libraries</h2>
+<ul>
+	<li><a href="http://jquery.com/">jQuery</a></li>
+	<li><a href="http://modernizr.com/">Modernizr</a></li>
+	<li><a href="http://jqueryui.com/">jQuery UI</a></li>
+	<li><a href="http://backbonejs.org/">Backbone</a></li>
+	<li><a href="http://knockoutjs.com/">Knockout</a></li>
+	<li><a href="http://www.trirand.com/blog/">jqGrid</a></li>
+	<li><a href="http://datatables.net/">DataTables</a></li>
+	<li><a href="http://www.sencha.com/products/extjs/">ExtJS</a></li>
+	<li><a href="http://www.highcharts.com/">Highcharts JS</a></li>
+        <li><a href="http://www.kendoui.com/">Kendo UI</a></li>
+        <li><a href="http://pivotal.github.com/jasmine/">Jasmine</a></li>
+</ul>
+<h2>Logging</h2>
+<ul>
+	<li><a href="http://logging.apache.org/log4net/">log4net</a></li>
+	<li><a href="http://nlog-project.org/">NLog</a></li>
+	<li><a href="http://code.google.com/p/elmah/">Elmah</a></li>
+</ul>
+<h2>Misc. Open Source Libraries</h2>
+<ul>
+	<li><a href="http://automapper.codeplex.com/">Automapper</a></li>
+	<li><a href="https://github.com/Headspringlabs/Enumeration">Enumeration</a></li>
+	<li><a href="http://nbuilder.org/">NBuilder</a></li>
+	<li><a href="http://nservicebus.com/">NServiceBus</a></li>
+	<li><a href="http://james.newtonking.com/projects/json-net.aspx">Newtonsoft.Json</a></li>
+	<li><a href="http://dotnetzip.codeplex.com/">DotNetZip</a></li>
+	<li><a href="http://quartznet.sourceforge.net/">Quartz.NET</a></li>
+	<li><a href="http://commandline.codeplex.com/">CommandLineParser</a></li>
+	<li><a href="http://nuget.org/packages/DocumentFormat.OpenXml">DocumentFormat.OpenXml</a></li>
+	<li><a href="http://www.dotlesscss.org/">dotless</a></li>
+        <li><a href="https://bitbucket.org/headspringlabs/tarantino/wiki/Home">Tarantino <b>Added 10-18</b></a></li>
+        <li><a href="https://code.google.com/p/roundhouse/">Roundhouse <b>Added 10-18</b></a></li>
+        <li><a href="https://github.com/dahlbyk/posh-git">Posh Git <b>Added 10-18</b></a></li>
+</ul>
+<h2>Reporting / Text Format Tools</h2>
+<ul>
+	<li><a href="http://sourceforge.net/projects/itextsharp/">iTextSharp</a></li>
+	<li><a href="http://code.google.com/p/linqtoexcel/">LinqToExcel</a></li>
+	<li><a href="http://closedxml.codeplex.com/">ClosedXML</a></li>
+	<li><a href="http://epplus.codeplex.com/">EPPlus</a></li>
+	<li><a href="http://doddlereport.codeplex.com/">DoddleReport</a></li>
+	<li><a href="http://www.essentialobjects.com/">Essential Objects</a></li>
+        <li><a href="http://www.nitropdf.com/">Nitro PDF - <b>Updated 10-18</b></a></li>
+</ul>
+<h2>Source Control</h2>
+<ul>
+	<li><a href="http://mercurial.selenic.com/">mercurial</a></li>
+	<li><a href="http://git-scm.com/">git</a></li>
+</ul>
+<h2>Testing Tools</h2>
+<ul>
+	<li><a href="http://watin.org/">WaitN</a></li>
+	<li><a href="http://code.google.com/p/moq/">Moq</a></li>
+	<li><a href="http://www.nunit.org/">NUnit</a></li>
+	<li>Should</li>
+	<li><a href="http://hibernatingrhinos.com/open-source/rhino-mocks">RhinoMocks</a></li>
+	<li><a href="http://mvcrouteunittester.codeplex.com/">MvcRouteUnitTester</a></li>
+</ul>
+<h2>Validation</h2>
+<ul>
+	<li><a href="http://nuget.org/packages/Castle.Components.Validator">Castle.Components.Validator</a></li>
+	<li><a href="http://fluentvalidation.codeplex.com/">FluentValidation</a></li>
+</ul>
+<h2>WPF</h2>
+<ul>
+	<li><a href="http://mvvmlight.codeplex.com/">MvvmLight</a></li>
+	<li><a href="http://caliburnmicro.codeplex.com/">Caliburn.Micro</a></li>
+</ul>
+The list of tools is by no means a recommendation list, as it includes tools from brownfield projects and greenfield projects started more than two years ago. Many of the tools listed would still be my weapon of choice if I started a new project today. I will follow up this post with a list of tools I would recommend for a greenfield ASP .NET MVC website.

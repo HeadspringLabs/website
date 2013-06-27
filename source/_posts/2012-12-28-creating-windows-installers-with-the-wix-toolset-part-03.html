@@ -1,0 +1,44 @@
+---
+layout: post
+title: Creating Windows Installers with the WiX Toolset Part 03
+tags:
+- Blog
+- Developer Deep Dive
+- windows installer
+- WiX
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '27'
+  dsq_thread_id: '997209260'
+  _aioseop_keywords: Windows installer, WiX, Inno Setup, NSIS
+  _aioseop_description: What are the free and commercial options for creating Windows
+    installers?
+  _aioseop_title: Creating Windows Installers with the WiX Toolset Part 03
+  _podPressPostSpecific: a:6:{s:15:"itunes:subtitle";s:15:"##PostExcerpt##";s:14:"itunes:summary";s:15:"##PostExcerpt##";s:15:"itunes:keywords";s:17:"##WordPressCats##";s:13:"itunes:author";s:10:"##Global##";s:15:"itunes:explicit";s:7:"Default";s:12:"itunes:block";s:7:"Default";}
+---
+<address>This article is part of a series exploring how to create installers for Windows software.  Here's the complete contents of the series.</address><address><a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-01/">Part 1 – What Kinds of Software Projects Benefit From an Installer?</a>
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-02/">Part 2 – An Overview Of Windows Installer and its Features</a>
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-03/">Part 3 – Tooling Options for Building Installers</a>
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-04/">Part 4 – The Windows Installer Runtime Sequence</a>
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-5/">Part 5 – The Contents of an MSI</a>
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-6/">Part 6 – The Structure of a WiX File</a>
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-7/">Part 7 – Generating an MSI Package From Your WiX</a>
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-8/">Part 8 – Troubleshooting Installer Runtime Problems</a>
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-summary/">Part 9 - Summary</a>
+</address><br/>
+<h2>Free Options</h2>
+There are several free options for authoring Windows installers, including WiX.  One of these is Nullsoft Scriptable Install System (NSIS).  NSIS was created a number of years ago in order to distribute a media player called Winamp.  Some reasons to consider NSIS are that it's relatively simple and straightforward to learn, and it supports a plugin system to extend it.  Some reasons to avoid NSIS are it's relatively old (the last release was in 2009), and the size of the community using it has been dwindling as a result.  You can check out NSIS <a href="http://nsis.sourceforge.net/">here</a>.
+
+ Another free option with a lot of current traction is Inno Setup.  It's been around nearly as long as NSIS and is being more actively updated.  It has a custom Pascal scripting engine to customize the install process, and appears to have a few features (such as Unicode support) that NSIS doesn't.  You can find out more at the Inno Setup <a href="http://www.jrsoftware.org/isinfo.php">website</a>.
+
+ Both NSIS and Inno Setup have one major drawback compared to WiX - neither use the Windows Installer system in Windows discussed in a previous <a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-02/">part</a>.  Whether or not this matters depends on whether your application targets consumers or corporations.  Consumers are not going to care much HOW software installs on their machine as long as it works and doesn't silently add malware.  Corporations on the other hand have concerns well beyond the average consumer.  This includes things like inspecting the contents of the installer for worrisome system configuration changes, customizing the installer with separate transforms to meet IT standards, and safely allowing nonadmin users to run an installer that needs some admin privileges.  There's a great discussion about the advantages of Windows Installer at <a href="http://serverfault.com/questions/11670/advantages-of-using-msi-files/274609#274609">ServerFault</a> (msi files are Windows Installer packages).
+
+ So if WiX has all these great features compared to Inno Setup, what disadvantages does it have?  In my opinion the answer to this is easily the steep learning curve.  Because WiX is essentially a wrapper around the concepts in Windows Installer, you MUST understand Windows Installer to use it effectively.  This will be the topic of future discussions in this series.
+
+<h2>Commercial Options</h2>
+There are some commercial options that have more polish and user friendliness than WiX.  The two that appear to be most popular are <a href="http://www.advancedinstaller.com/">Advanced Installer</a> and <a href="http://www.installshield.com/">InstallShield</a>.  I have not used either because my installer needs are so irregular that I haven't been able to justify the licensing cost for an occasional "one off" installer project, but if your job responsibilities include fulltime or near fulltime work with Windows installers you probably want to investigate them as an option.
+
+<h2>Summary</h2>
+There are a variety of tooling options for your installer needs.  If you have a sufficiently simple software product and aren't targeting corporate installs, Inno Setup might be a good fit.  If you have more advanced needs that Inno Setup cannot handle, or your targeting corporations that have deployment requirements and standards, you'll probably want to use WiX unless maintaining installers is your primary job responsibility or your company has sufficiently deep pockets for a good commercial tool.
