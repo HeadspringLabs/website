@@ -1,0 +1,295 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Metrics, reports, KPIs, and the stuff developers must provide to executives - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="In September of 2007, I joined Headspring as the CTO.  Now I serve as President and Chief Operating Officer.  When I joined, there were 4 other &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/metrics-reports-kpis-and-the-stuff-developers-must-provide-to-executives">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Metrics, Reports, KPIs, and the Stuff Developers Must Provide to Executives</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-12T00:00:00-05:00" pubdate data-updated="true">Apr 12<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>In September of 2007, I joined <a href="http://www.headspring.com/">Headspring</a> as the CTO.  Now I serve as President and Chief Operating Officer.  When I joined, there were 4 other employees including the original founder serving as CEO.  He founded the company in 2001.  It has always been professional services, but the strategy has changed a few times over the years.  I started my career as a developer in the mid nineties, and now I’m an executive with lots of great developers that I support.  Like most, our company runs on metrics.  As a manager, I understand their worth.  Earlier in my career, I had no idea.</p>
+<p>Every day, I glance at our <strong>operational dashboard</strong>.  While I won’t share full screen-shots yet, I want to share some of the graphs I use every day to ensure the company is doing well.  Consider this graph.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2012/04/CropperCapture22.png"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/04/CropperCapture22_thumb.png" alt="Time allocation BI chart" width="540" height="294" border="0" /></a></p>
+<p>&nbsp;</p>
+<p><!--more--></p>
+<p><strong>“BD” stands for “big dial”.</strong>  We have 3 big dials we glance at every day.  If we don’t like what we see, we have some “smaller dials” we can look at.  We use the analogy of a plane cockpit. There are a few things pilots always glance at, and then there are smaller, more detailed ones that are consulted as the need arises.</p>
+<p>This graph shows us our utilization breakdown in the categories that are relevant.  Here are the categories:</p>
+<ul>
+<li><strong>Personal Time</strong>: holidays, vacations, dentist appts, etc.</li>
+<li><strong>Assigned Time</strong>: Department meetings, 1x1’s, stand-up meetings, etc</li>
+<li><strong>Bench Time</strong>: Time without available project work (doesn’t show because it’s zero)</li>
+<li><strong>Other Time</strong>: Unplanned unproductive time, such as having a flat tire on the way to work</li>
+<li><strong>Sales Time</strong>: Mostly used by the sales department: work to acquire a client</li>
+<li><strong>Billed Time</strong>: self-explanatory</li>
+<li><strong>Unbilled Time</strong>: Working for a client, but not charging</li>
+<li><strong>CI Time</strong>: Continuous Improvement time:  We expect that our people are working to improve.</li>
+<li><strong>Client Time:</strong>  sum of billed and unbilled time.</li>
+</ul>
+<p>You will notice the big dip during the week of 4/7.  We had our Q1 <strong>quarterly off-site</strong> during that week.  We spent 12% of that week to use as a fun off-site where the entire company toured Inner Space Cavern hundreds of feet under Georgetown.  It shows up on the dashboard because it affects the performance of the company.  As an executive team, we decided it was a good investment in the future productivity of our staff.</p>
+<p>You might have also noticed that 4/7 was a Thursday in 2011.  How can it be the week of 4/7?  We use the concept of <strong>“moving weeks”</strong> instead of calendar weeks.  We used to use calendar weeks, but the last data point of the graph was always skewed because it didn’t represent a full data point until people logged their time for Friday.  By taking data from a moving week, when I look at the data on Thursday, it pulls data from the previous Thursday through this Wednesday (yesterday).  That way, every point on the graph represents exactly the same size of a data point.  We do the same for months, quarters and years.</p>
+<p><strong>There is a big problem with pull metrics by calendar month (for 2011)</strong>:</p>
+<ul>
+<li>January has <strong>21</strong> business days</li>
+<li>February has <strong>20</strong> business days</li>
+<li>March has <strong>23</strong> business days</li>
+<li>April has <strong>21</strong> business days</li>
+<li>May has <strong>22</strong> business days</li>
+</ul>
+<p>You can see how using calendar months can <strong>wreak havoc</strong> on the comparability of month metrics.  We expect larger months to pose better numbers than the smaller months.  On the financial side, we have to accrue the payroll appropriately as well in order to keep net income from becoming skewed.</p>
+<p>To deal with this, we use the concept of a <strong>moving month</strong>.  There are 13 moving months in a year.  Each moving month is a 28-day time period from yesterday to 28 days before yesterday.  In this way, every data point will be exactly the same size as the other.  There are also 4, 13-week moving quarters in a year.  The following graph is our 2nd big dial shown by moving month.</p>
+<p><img src="http://jeffreypalermo.com/files/media/image/Windows-Live-Writer/d066af3fb6f3_8D6C/CropperCapture%5B28%5D_thumb_1.png" alt="CropperCapture[28]" /></p>
+<p>Before moving to moving months, the calendar month line was consistently <strong>misrepresented</strong> by the larger months.  Where the line moves, we need to know why.  We made the switch so that every curve of the line was meaningful.  We didn’t want our data communicating falsehoods or April-fools jokes.  You think I’m kidding, but April always looks bad coming straight out of March, which boasts 2 more full business days.  In professional services, a business day accounts for a <strong>significant amount of revenue</strong>.</p>
+<p>Using Big Dial 1 and Big Dial 2, we can keep the ship on the right course.  As long as our staff is billing a consistently high percentage: we shoot for 78-79%, and our hourly margins are high enough to account for our unbillable staff (sales, marketing, corporate) and our fixed costs (facilities, supplies, etc.), our company will remain healthy.</p>
+<p><strong>These dials are tactical, not strategic</strong>.  The next dial is strategic.</p>
+<p><img src="http://jeffreypalermo.com/files/media/image/Windows-Live-Writer/d066af3fb6f3_8D6C/CropperCapture%5B31%5D_thumb.png" alt="CropperCapture[31]" /></p>
+<p>This gives us a view into the <strong>structure</strong> of our company.  <strong>We have hired at least 7 new employees since November, 2011</strong>.  With that, it’s important to keep tabs on how we are changing the structure of our company.  When we hired <a href="http://lostechies.com/chrismissal/">Chris Missal</a> for the operations department, we expanded billable staff.  When we hired <a href="http://www.headspring.com/author/mchauvin">Mary Chauvin</a> for marketing, we increased non-billable staff.  Keeping the right balance is important.</p>
+<p>You can see that our % of Operations staff to the rest has dipped a little bit over the last 7 months.  We have done that while growing, and we are re-leveling the organization now.  To level out the organization, we need to <strong>add about five more people</strong> to the Operations department.  This graph, while very high level, gives critical insight into how the other two graphs affect our income statement.</p>
+<p>Using these three charts together, I have a very good sense of what I need to do to improve the financial performance of the company.  Right now:</p>
+<ol>
+<li>I need to hire 5 more great .Net developers</li>
+<li>I need to keep Client Time at the level of Operations % plus Contractor % (since both types bill)</li>
+</ol>
+<p>I hope that this helps some developers understand how different types of reports can give answers and perspective to managers.  If a picture is worth a thousand words, shouldn’t more of our reports be pictures?</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-12T00:00:00-05:00" pubdate data-updated="true">Apr 12<span>th</span>, 2012</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/metrics-reports-kpis-and-the-stuff-developers-must-provide-to-executives/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/metrics-reports-kpis-and-the-stuff-developers-must-provide-to-executives/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/entity-framework-code-first-dbcontext-validation/" title="Previous Post: Guest Blog [Muhammad Shujaat Siddiqi]: Entity Framework Code First DbContext - Validation">&laquo; Guest Blog [Muhammad Shujaat Siddiqi]: Entity Framework Code First DbContext - Validation</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/nuget-package-restore/" title="Next Post: NuGet Package Restore">NuGet Package Restore &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

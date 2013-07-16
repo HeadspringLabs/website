@@ -1,0 +1,274 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Escape Analysis - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="In languages like Java and C#, most objects wind up on the heap instead of the stack. Heap-allocated objects can only be cleaned up by garbage &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/escape-analysis">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Escape Analysis</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-16T00:00:00-05:00" pubdate data-updated="true">Mar 16<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>In languages like Java and C#, most objects wind up on the heap instead of the stack.  Heap-allocated objects can only be cleaned up by garbage collection, while stack-allocated objects get cleaned up &#8216;for free&#8217; when the function that they were created in returns.</p>
+<p>If you have a method that constructs a new instance of a class, uses it a little, and then discards it, there&#8217;s no real reason to put it on the heap.  It&#8217;s not going to need to exist after we return, so we might as well put it on the stack and get the deallocation for free.</p>
+<p>If you instead have a method that constructs a new instance of a class and <em>returns</em> that to the caller, we <strong>definitely</strong> have to put it on the heap, because we need to ensure it still exists after we return.  There are lots of things we might do with an object that would require us to use the heap.  We can return it, pass it to another thread, pass it to another function that passes it to another thread, etc.<!--more--></p>
+<p>The basic idea is that if, after your function exits, there could not possibly be any remaining references to that object, then it might as well be put on the stack and cleaned away without the need for garbage collection.</p>
+<p><a href="http://en.wikipedia.org/wiki/Escape_analysis">Escape analysis</a> is a compiler optimization that can be applied to languages like these.  If the compiler can prove to itself that the object can&#8217;t &#8220;escape&#8221; beyond the lifetime of the method, it will use the stack.</p>
+<p>Although escape analysis really just refers to this compiler trick, I like to use the term to describe a specific kind of refactoring effort.  Before I get to that, though, we need to talk about your arch-nemesis.</p>
+<h2>Code Doesn&#8217;t Just Rot</h2>
+<p>Over the long life of a software project, certain parts of the code will become more difficult than they deserve to be.  One area might be a frequent source of bugs, and the fixes applied by many hands may make it needlessly complex, for instance.</p>
+<p>Sometimes it seems that even when an area doesn&#8217;t go through much flux, it still rots.  Newer and better ideas are introduced to the project, and one area may be left behind the times.  By the time you come across it again, it feels like it&#8217;s rotting away.</p>
+<p>Code rot taken to its extreme gives you a <a href="http://miksovsky.blogs.com/flowstate/2010/09/every-app-has-a-scary-basement.html">spooky basement</a>, the part of the project <em>nobody</em> wants to touch.  It&#8217;s a tangled mass of patches and awkward abstractions.</p>
+<p>I don&#8217;t really like the code rot metaphor because it makes the problem code out to be a passive byproduct.  I prefer to think of bad/awkward/old design decisions as being an <strong>active and malicious adversary hell-bent on escaping from the confines of its files</strong> with the goal of making the rest of your project rot along with it.</p>
+<p>Code doesn&#8217;t just rot.  The rot escapes and spreads.  This thing is out to get you.</p>
+<h2>Escape Analysis at Refactoring Time</h2>
+<p>When I&#8217;m working in a clean area of a project, refactoring is an easy process.  You rename things to make them read better, extract a method or class here or there to organize responsibilities better, and the like.</p>
+<p>When I&#8217;m working on a spooky basement, or even a not-so-bad eerie breakfast nook, I put on the Escape Analysis Hat.  Unlike the compiler optimization which asks &#8220;At runtime, how can this <em>instance</em> escape into the rest of the running system&#8221;, I ask &#8220;How do <em>references</em> to this unwanted method/property/field/class escape into the rest of the code?&#8221;</p>
+<p>This starts with ReSharper, but tools like this can only get you started.  You find usages of the unwanted thing&#8217;s identifier, and then find usages of those usages, and usages of <em>those</em> usages, to start to get a feel for what other areas depend on it.</p>
+<p>That&#8217;s not enough!  Remember, this method/property/field/class is actively trying to escape into the rest of your system.  It wants to escape in any sneaky, devious way it can.  Maybe it gets AutoMapped to some other type, whose usages you&#8217;ll need to investigate.  Maybe it gets serialized to JSON which in turn gets consumed by some javascript you&#8217;ll need to investigate.  Maybe it gets accessed via reflection, or appears in a binding in a XAML file, or gets passed to a web service…</p>
+<h2>A Particularly Tricky Example</h2>
+<p>I was recently refactoring an area of a project that wasn&#8217;t a serious problem yet.  Left alone, the complexity would have eventually gotten out of control, so we decided to address a particular source of the growing complexity.  I encountered a property in a View Model class that I wanted to simplify; I didn&#8217;t quite see the need for it at first.  After seeing how references to this property escaped into the rest of the system, my first thought was &#8220;Oh, this really does get used in a lot of places, and not just in the UI layer.  It needs to exist.&#8221;</p>
+<p>After looking into the escape paths again, though, I realized it was largely unnecessary.  It satisfied a UI requirement, but that could have been satisfied in a simpler way and in only the UI layer.</p>
+<p>The escape path was pretty intricate.  This property had a few real and meaningful usages.  Additionally, it got AutoMapped to another type, which ultimately got serialized and later deserialized so it could be AutoMapped <em>back</em> to the original type.  This circuitous route was not actually used for anything (anymore) and could be removed.</p>
+<p>The next time you find yourself refactoring, and you reach a point where it&#8217;s not obvious what the next step should be, find a suspicious identifier and see where he&#8217;s escaping to.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-16T00:00:00-05:00" pubdate data-updated="true">Mar 16<span>th</span>, 2012</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/escape-analysis/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/escape-analysis/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/sxsw-interactive-2012-over-and-out/" title="Previous Post: SXSW Interactive 2012: Over and Out">&laquo; SXSW Interactive 2012: Over and Out</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/get-to-know-a-developer-alonso-robles/" title="Next Post: Get to Know a Developer: Alonso Robles">Get to Know a Developer: Alonso Robles &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

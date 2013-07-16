@@ -1,0 +1,276 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Building Rich Enums - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="Headspring has recently updated its open-source Enumeration class. We recommend this as an alternative to using plain old .NET enums in your domain &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/building-rich-enums">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Building Rich Enums</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-11-18T00:00:00-06:00" pubdate data-updated="true">Nov 18<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Headspring has recently updated its open-source <a href="https://bitbucket.org/headspringlabs/enumeration">Enumeration</a> class. We recommend this as an alternative to using plain old .NET enums in your domain models. Most of the time, you use a .NET enum in order to define a finite set of named values. <code>Enumeration</code> serves that purpose too.</p>
+<p><!--more--></p>
+<p>What&#8217;s so bad about enums? They provide a very thin abstraction over integers, and that abstraction is both leaky and insufficient when building a rich domain model.</p>
+<h2>The .NET enum abstraction leaks</h2>
+<p>When you define an enum, you are really defining several integer constants.</p>
+<p>[gist id=&#8221;1375478&#8221;]</p>
+<p>Whether you declare the integers or not, each enum value is really an integer. Unfortunately, this means that unintended values are allowed:</p>
+<p>[gist id=&#8221;1375483&#8221;]</p>
+<p>This is .NET&#8217;s way of reminding you of its own implementation details. -1 has nothing to do with the roles in my system. Enums fail to limit values to those I consider meaningful, so why am I using them as domain objects?</p>
+<h2>The .NET enum abstraction is insufficient</h2>
+<p>You can think of an enum definition as shorthand for a class. That class effectively inherits from int, exposing public static getters that return each defined constant, including convenience methods for converting to and from strings.</p>
+<p>What if the shorthand just isn&#8217;t enough to describe the class we really wanted to write? What if your type deserves some additional methods, or you need to associate additional metadata with each value? You could resort to attaching metadata via attributes, and provide some extension methods to reflect on them, but that&#8217;s a long way to go to avoid admitting that we <em>really</em> just wanted to constrain our domain objects to a fixed set of values. It&#8217;s nice to use ints as the &#8216;unique identifier&#8217; for each value in the set, but we don&#8217;t need that int to be the <em>whole</em> story.</p>
+<h2>Using Headspring&#8217;s Enumeration Class</h2>
+<p>Using <code>Enumeration</code>, we could define a more useful set like so:</p>
+<p>[gist id=&#8221;1375494&#8221;]</p>
+<p>Here we see a fixed set of objects, with the convenient int and string representations we&#8217;re used to having with enums. <code>Role.FromInt32(int)</code> allows you to load the value associated with a given int, such as when reading from a database, but only the fixed set of integers will be allowed. Each value can have arbitrary properties, and the enumeration can contain additional methods.</p>
+<h2>Enumeration&#8217;s Generic Type Constraint</h2>
+<p><code>Enumeration</code> contains an interesting generic constraint. Several of the methods on the base class need to deal with the type of the individual values, so <code>Role</code> is declared to implement <code>Enumeration&lt;Role&gt;</code>. You can think of the <code>Role</code> class as &#8220;passing&#8221; its own definition up to the base class so <code>Enumeration</code> can make use of it. Similarly, <code>Enumeration</code> needs to be declared in such a way that it can know what&#8217;s being &#8220;passed up&#8221; to it:</p>
+<p>[gist id=&#8221;1375498&#8221;]</p>
+<p>In other words, <code>Enumeration</code> will be working with any type that is itself declared as an <code>Enumeration</code>. This constraint basically mimics the &#8220;shape&#8221; of the first line of the <code>Role</code> type. Likewise, it <strong>demands</strong> that any child class be declared with a line of that shape.</p>
+<p>At first, it may seem like <code>class Role : Enumeration&lt;Role&gt;</code> should result in a compiler error. It looks like we&#8217;re trying to <em>use</em> a type before we&#8217;re even finished <em>defining</em> it. The truth is, the compiler need only compare the &#8220;shape&#8221; of the two classes&#8217; declarations in order to convince itself that the required pattern is being respected, and <em>then</em> it can go on with the business of verifying the <em>content</em> of each class.</p>
+<h2>Conclusion</h2>
+<p>.NET enums are still useful, such as when you need to <a href="http://msdn.microsoft.com/en-us/library/system.flagsattribute.aspx">pack several bit flags into a single integer</a>, but when using them to define finite sets of objects in your domain model, their brevity and ubiquity may tempt you away from writing rich domain objects. When you reach for the handy dandy <code>enum</code> keyword, consider whether <code>Enumeration</code> is a better fit.</p>
+<p><a href="http://www.headspring.com/feed" target="_blank">Subscribe to our blog feed</a> for the freshest content.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-11-18T00:00:00-06:00" pubdate data-updated="true">Nov 18<span>th</span>, 2011</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/building-rich-enums/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/building-rich-enums/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/a-worthy-opponent/" title="Previous Post: A Worthy Opponent">&laquo; A Worthy Opponent</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/can-you-spare-some-change/" title="Next Post: Can You Spare Some Change?">Can You Spare Some Change? &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

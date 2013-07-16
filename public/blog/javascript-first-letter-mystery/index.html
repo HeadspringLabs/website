@@ -1,0 +1,282 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Javascript first-letter mystery - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="I was working on producing something that had to look like this: I though I&#8217;d be clever and avoid having to wrap the ! in a span by using the &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/javascript-first-letter-mystery">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Javascript First-letter Mystery</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-05-16T00:00:00-05:00" pubdate data-updated="true">May 16<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>I was working on producing something that had to look like this:</p>
+<p><a href="http://www.headspring.com/2012/05/javascript-first-letter-mystery/goal-2" rel="attachment wp-att-5237"><img class="alignnone size-full wp-image-5237" title="goal" src="http://www.headspring.com/wp-content/uploads/2012/05/goal1.png" alt="" width="112" height="35" /></a></p>
+<p>I though I&#8217;d be clever and avoid having to wrap the ! in a span by using the pseudo-element first-letter to grab that initial exclamation point. first-element selects the first letter of the block it used</p>
+<p>on. Sounds perfect, right? Well, when I tried it I got:</p>
+<p><a href="http://www.headspring.com/2012/05/javascript-first-letter-mystery/badimage1" rel="attachment wp-att-5235"><img class="alignnone size-full wp-image-5235" title="badimage1" src="http://www.headspring.com/wp-content/uploads/2012/05/badimage1.png" alt="" width="110" height="43" /></a></p>
+<p><!--more-->This was not at all what I wanted! It looked not only odd but clearly wrong - first doesn&#8217;t mean first and second! I tried playing with spacing and a few other things, and finally produced the following jsfiddle to simply illustrate the problem:</p>
+<p>&nbsp;</p>
+<p><iframe style="width: 100%; height: 300px;" src="http://jsfiddle.net/27jp6/embedded/result/" frameborder="0" width="320" height="240"></iframe></p>
+<p>With the jsfiddle at hand, I tweeted my confusion:</p>
+<p><a href="http://www.headspring.com/2012/05/javascript-first-letter-mystery/confusedtweet" rel="attachment wp-att-5238"><img class="alignnone size-medium wp-image-5238" title="confusedTweet" src="http://www.headspring.com/wp-content/uploads/2012/05/confusedTweet-300x82.png" alt="" width="300" height="82" /></a></p>
+<p>In moments, I received a dual barrage of twitter responses: half reponding in amazement/surprise, and half with the actual specification of first-letter and the reason for what I was seeing.</p>
+<p>It turns out that, though odd, the behavior I was seesing was reasonably to spec. &#8220;Punctuation (i.e, characters defined in Unicode in the &#8220;open&#8221; (Ps), &#8220;close&#8221; (Pe), &#8220;initial&#8221; (Pi). &#8220;final&#8221; (Pf) and &#8220;other&#8221; (Po) punctuation classes), that precedes or follows the first letter should be included.&#8221;[<a href="#w3c">1</a>] It really is less obvious then I&#8217;d thought: see <a href="https://developer.mozilla.org/En/CSS/::first-letter" target="_blank">https://developer.mozilla.org/En/CSS/::first-letter</a> for a whole discussion of first-letter subtleties: But browsers must be a little confused too: they all act a little bit different in this situation:</p>
+<p>Chrome</p>
+<p><a href="http://www.headspring.com/2012/05/javascript-first-letter-mystery/chrome" rel="attachment wp-att-5245"><img class="alignnone size-full wp-image-5245" title="chrome" src="http://www.headspring.com/wp-content/uploads/2012/05/chrome.png" alt="" width="150" height="53" /></a></p>
+<p>(Note the blue ! and O)</p>
+<hr />
+<p>Firefox</p>
+<p><a href="http://www.headspring.com/2012/05/javascript-first-letter-mystery/firefox" rel="attachment wp-att-5246"><img class="alignnone size-full wp-image-5246" title="firefox" src="http://www.headspring.com/wp-content/uploads/2012/05/firefox.png" alt="" width="148" height="51" /></a></p>
+<p>(Note that neither the ! or O are blue)</p>
+<hr />
+<p>IE something</p>
+<p><a href="http://www.headspring.com/2012/05/javascript-first-letter-mystery/ie9" rel="attachment wp-att-5247"><img class="alignnone size-full wp-image-5247" title="IE9" src="http://www.headspring.com/wp-content/uploads/2012/05/IE9.png" alt="" width="158" height="48" /></a></p>
+<p>(Note that the ! is blue, but the O is not - what I actually wanted!)</p>
+<hr />
+<p>Opera</p>
+<p><a href="http://www.headspring.com/2012/05/javascript-first-letter-mystery/opera-cropped" rel="attachment wp-att-5248"><img class="alignnone size-full wp-image-5248" title="Opera-cropped" src="http://www.headspring.com/wp-content/uploads/2012/05/Opera-cropped.png" alt="" width="150" height="51" /></a></p>
+<p>(Interestingly, Opera matches IE here.)</p>
+<hr />
+<p>In summary, I&#8217;ve learned that css is a little weirder than I had thought, and when they say letter, they really mean letter. Mostly. Sorta.</p>
+<p><a name="w3c"></a>[1] <a href="http://www.w3.org/TR/css3-selectors/#first-letter" target="_blank">http://www.w3.org/TR/css3-selectors/#first-letter</a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-05-16T00:00:00-05:00" pubdate data-updated="true">May 16<span>th</span>, 2012</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/javascript-first-letter-mystery/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/javascript-first-letter-mystery/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/headspring-named-one-of-austins-best-places-to-work/" title="Previous Post: Headspring Named One of Austin's Best Places to Work">&laquo; Headspring Named One of Austin's Best Places to Work</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/a-bidirectional-heisenbug/" title="Next Post: A Bidirectional Heisenbug">A Bidirectional Heisenbug &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

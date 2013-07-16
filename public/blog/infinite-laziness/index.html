@@ -1,0 +1,263 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Infinite Laziness - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="In Haskell, expressions are evaluated lazily by default. This is quite different from the way most languages behave. By taking a dramatically &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/infinite-laziness">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Infinite Laziness</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-12-29T00:00:00-06:00" pubdate data-updated="true">Dec 29<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>In <a href="http://www.haskell.org/haskellwiki/Haskell">Haskell</a>, expressions are evaluated lazily by default.  This is quite different from the way most languages behave.  By taking a dramatically different approach to something we take for granted (expression evaluation), you gain the ability to solve problems in different ways.<!--more--></p>
+<p>When you pass arguments to a method in C#, they are all evaluated right away.  Those calculated values are then passed to the method you are calling.  If the first argument to a function is a costly function call itself, the costly call takes place first.  Most languages do it this way, <strong>and that just makes sense</strong>.  Cause and effect seems to demand that arguments be evaluated before they are passed to another method, but Haskell actually turns cause and effect upside down.  When you pass arguments to a Haskell function, they are not evaluated right away.  Instead, they are only evaluated when the called-function actually needs to <em>look</em> at them!  We can simulate this behavior in C# using Func&lt;T&gt;:</p>
+<p>[gist id=&#8221;1531404&#8221;]</p>
+<p>If we call DoSomething(1, 1+1), the arguments are evaluated eagerly as usual.  If we instead call DoSomethingLazily(() =&gt; 1, () =&gt; 1+1), the expression &#8220;1+1&#8221; will never actually be evaluated; we never needed to <em>look</em> at y!  <strong>Haskell is basically wrapping every argument of every function call in a lambda, and every function receives those lambdas as something like a <code>Func&lt;T&gt;</code></strong>.</p>
+<p>One benefit of Haskell&#8217;s laziness-by-default is that it doesn&#8217;t hurt to pass the result of a costly function to DoSomethingLazily, as the value is not always going to be looked at anyway: DoSomethingLazily(() =&gt; 1, () =&gt; SomethingThatTakesTenYearsToCalculate()).  Calling DoSomethingLazy with these arguments will return immediately, with no need to wait ten years.  You can get some surprising performance boosts without really trying in Haskell.  <em>On the other hand</em>, it could be quite difficult to determine where a bottleneck really <em>is</em> when you do run into one.</p>
+<p>Another way laziness is useful is that it allows us to efficiently deal with apparently-infinite lists, made possible in C# with the <code>yield</code> keyword.  One of the most common examples of Haskell&#8217;s lazy evaluation is the calculation of the Fibonacci numbers as a combination of two infinite lists:</p>
+<p>[gist id=&#8221;1531426&#8221;]</p>
+<p>Here, we define the fibs function to take zero arguments, and return a lazily-evaluated list.  Each value in the list will be calculated the moment we try to look at it.  &#8220;tail fibs&#8221; means &#8220;get the infinite Fibonacci series, skipping the first number&#8221;.  &#8220;zipWith (+) a b&#8221; means &#8220;line up two lists (a and b) side by side, producing a new list by adding together each pair of values&#8221;.  Translating all of this to C#, we get:</p>
+<p>[gist id=&#8221;1531485&#8221;]</p>
+<p>The <code>yield</code> keyword allows us to produce results on demand.  The <code>Enumerable</code> extension methods <code>Zip</code>, <code>Skip</code>, and <code>TakeWhile</code> are all likewise implemented with the <code>yield</code> keyword.  We have effectively glued together a chain of function calls, each of which draws out the next result on demand.  In the main loop, TakeWhile repeatedly tries to pull the next item of the Fibonacci series.  When it does so, Fib() runs until the next time it yields a value, which in turn relies on summing up two <em>other</em> &#8216;instances&#8217; of the Fibonacci sequence.  Since everything&#8217;s lazy, none of this gets stuck in an infinite loop.</p>
+<p>Haskell assumes you&#8217;ll want to be lazy all the time.  The benefit is that when you do want laziness, it comes with brevity.  C# on the other hand offers you two tools for laziness when you really <em>want/need</em> it: lambdas and yield.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-12-29T00:00:00-06:00" pubdate data-updated="true">Dec 29<span>th</span>, 2011</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/infinite-laziness/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/infinite-laziness/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/learning-to-be-a-great-manager/" title="Previous Post: Learning to be a Great Manager">&laquo; Learning to be a Great Manager</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/get-to-know-a-developer-mahendra-mavani/" title="Next Post: Get to Know a Developer: Mahendra Mavani">Get to Know a Developer: Mahendra Mavani &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

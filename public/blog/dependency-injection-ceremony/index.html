@@ -1,0 +1,266 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Dependency Injection Ceremony - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="The vast majority of the time, I enjoy working with dependency injection. Sometimes, however, I find myself rolling my eyes at the amount of &#8220; &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/dependency-injection-ceremony">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Dependency Injection Ceremony</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-05-11T00:00:00-05:00" pubdate data-updated="true">May 11<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>The vast majority of the time, I enjoy working with <a href="http://en.wikipedia.org/wiki/Dependency_injection">dependency injection</a>.  Sometimes, however, I find myself rolling my eyes at the amount of &#8220;ceremony&#8221; boilerplate code it takes in order to take advantage of it.  <em>Disclaimer: This is more a limitation of C# having been created before DI containers became common than a problem with DI itself.</em><br />
+<!--more--></p>
+<p>DI and its benefits have been written about for years, but the short version is that your classes can accept interface arguments through their constructors, and these arguments represent the class&#8217;s dependencies.  A simple example can be seen in the <a href="https://github.com/DarthFubuMVC/fubumvc-examples/blob/master/src/Actions/HandlerStyle/SimpleWebsite/Handlers/Movies/ListHandler.cs">FubuMVC samples</a>:</p>
+<p>[gist id=&#8221;2641353&#8221;]</p>
+<p>Here, the ListHandler class is declaring, incidentally to the compiler but primarily to the <em>reader</em>, that it depends on a repository to do its work.  Rather than construct a <code>new Repository()</code> itself, it assumes a pre-constructed <code>IRepository</code> will be provided.</p>
+<p>At a minimum, this is convenient in the case that the <code>Repository</code> constructor itself has potentially-tricky-to-instantiate arguments, each of which may have their own constructors to call, ad nauseum.</p>
+<p>More importantly, since your class no longer has to &#8216;new up&#8217; the dependencies itself, it is decoupled from the concrete implementations of those dependencies.  At test time, you can pass in a mock or stub implementation to prove that your class makes use of the abstraction as expected, and at run time you can trust a tool like <a href="http://docs.structuremap.net/">StructureMap</a> to create and pass in the real implementation.  When looking at a class written in this style, you can quickly see what it depends on by looking at its constructor, rather than looking through the entire class definition.</p>
+<h2>Playing Devil&#8217;s Advocate</h2>
+<p>The ListHandler class is easy to read, easy to understand, so easy to test that it might not be worth the bother, and it absolutely follows the Single Responsibility Principle.  It&#8217;s simple, basically the &#8220;Hello, World!&#8221; of Dependency Injection, but simple is a good thing to shoot for whenever we put our hands on a keyboard.  It&#8217;s a Good Class.</p>
+<p>However, when I find myself writing similar single-responsibility classes with a dependency or two passed to the constructor, a little imaginary Devil pops up on my left shoulder, accompanied by his Angel twin on my right.  The Devil wispers, &#8220;Why in the <em>heck</em> are you writing all that boilerplate!?&#8221; and the little Angel looks at the class and says, &#8220;Yeah, I hate to say this, but I think you should be listening to <em>that</em> guy.&#8221;</p>
+<p>What does this class tell the reader?  First, it says &#8220;I depend on a repository.&#8221;  Then it says &#8220;And when I say repository, I mean repository.&#8221;  Followed by &#8220;No, seriously dude, we&#8217;re talking about a repository here.&#8221;  When we inject an interface like this, we pay the syntax tax by saying &#8216;repository&#8217; <strong>six times in a row</strong>.  12 lines so that we could say the 1 line that we actually wanted to say.</p>
+<p>Of course, this is not a problem with DI itself.  This is a problem of the language not knowing DI would be so prevalent.  What we really want, in these single-method dependency-injected classes, is effectively a global function, with some arguments specially-marked as dependencies.  Consider a hypothetical C# from the future:</p>
+<p>[gist id=&#8221;2641473&#8221;]</p>
+<p>Such a function, if it could be declared, could be called with zero arguments when we want a real IRepository injected, and could be passed an IRepository at test time.  What do you think?  Would this kind of language support be useful in practice?</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-05-11T00:00:00-05:00" pubdate data-updated="true">May 11<span>th</span>, 2012</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/dependency-injection-ceremony/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/dependency-injection-ceremony/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/headspring-founderceo-profiled-in-popular-podcast-series/" title="Previous Post: Headspring Founder/CEO Profiled in Popular Podcast Series">&laquo; Headspring Founder/CEO Profiled in Popular Podcast Series</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/free-icons-for-the-artistically-challenged/" title="Next Post: Free Icons for the Artistically Challenged">Free Icons for the Artistically Challenged &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,294 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Creating Windows Installers with the WiX Toolset Part 6 - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="This article is part of a series exploring how to create installers for Windows software.  Here&#8217;s the complete contents of the series.
+Part 1 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-6">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Creating Windows Installers With the WiX Toolset Part 6</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-28T00:00:00-06:00" pubdate data-updated="true">Feb 28<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><address>This article is part of a series exploring how to create installers for Windows software.  Here&#8217;s the complete contents of the series.</address>
+<address><a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-01/">Part 1 – What Kinds of Software Projects Benefit From an Installer?</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-02/">Part 2 – An Overview Of Windows Installer and its Features</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-03/">Part 3 – Tooling Options for Building Installers</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-04/">Part 4 – The Windows Installer Runtime Sequence</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-5/">Part 5 – The Contents of an MSI</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-6/">Part 6 – The Structure of a WiX File</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-7/">Part 7 – Generating an MSI Package From Your WiX</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-8/">Part 8 – Troubleshooting Installer Runtime Problems</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-summary/">Part 9 - Summary</a><br />
+</address>
+<p><br/></p>
+<h2>Summary</h2>
+<p>This post is a companion to the previous post in Part 5 - it shows and explains the structure of the WiX file that was used to generate the MSI.</p>
+<h2>Tooling and References For Editing WiX Files</h2>
+<p>Since the name of the toolkit is &#8220;Windows Installer in XML&#8221;, you probably won&#8217;t be terribly surprised to find out that the source files you edit are&#8230;wait for it&#8230;XML. This means you can author and edit in your favorite XML editor of choice, whether that&#8217;s Notepad++, some incredibly expensive specialty tool like Altova XML Spy, or Visual Studio. If you use Visual Studio and you&#8217;ve installed WiX on your local machine, you can leverage the included Votive project types to get Intellisense in Visual Studio.</p>
+<p>[caption id=&#8221;attachment_6409&#8221; align=&#8221;alignnone&#8221; width=&#8221;582&#8221;]<a href="http://www.headspring.com/wp-content/uploads/2013/02/votiveIntellisense.png"><img class=" wp-image-6409 " alt="Picture of editing with Visual Studio and Intellisense supplied by Votive" src="http://www.headspring.com/wp-content/uploads/2013/02/votiveIntellisense-970x562.png" width="582" height="337" /></a> Visual Studio Intellisense with Votive[/caption]</p>
+<p>There&#8217;s reference documentation for the schema at <a href=" http://wix.sourceforge.net/manual-wix3/schema_index.htm">SourceForge</a>. The first link is for the WiX schema itself, and there are other schema references for the various extensions that are available.</p>
+<h2>The Complete Hello World</h2>
+<p>[gist id=5014691]</p>
+<h2>Dissecting the Elements</h2>
+<p>Line 3 is pretty straightforward: declare our root Wix element and specify the namespace. No that isn&#8217;t a typo at the end; the namespace really doesn&#8217;t have an x at the end of it. I have no idea why.</p>
+<p>Line 5 declares our Product for the installer (recall Product has a cardinality of 1). Some of the supporting attributes like Manufacturer, Name, and Version will show up in the Add Program and Features list for Windows.</p>
+<p>Line 12 defines the Package (also cardinality of 1), which is the installer itself. Attributes here will show up in the properties of the MSI file.</p>
+<p>Line 19 introduces the concept of Media, which wasn&#8217;t discussed in the MSI examination. Windows Installer has a profuse amount of options for the physical layout of the files to be deployed, including things like spanning multiple DVDs (or floppies - <a href="http://superuser.com/questions/231273/what-are-the-windows-a-and-b-drives-used-for">remember those?</a> The need for this has fallen by the wayside as most software is downloaded from the internet or an internal network these days. In this example, we only have one physical media target, and the EmbedCab attribute will package all the deployables into the MSI directly since we don&#8217;t need disc spanning.</p>
+<p>Line 21 defines our target directory structure. Note it&#8217;s nested. I&#8217;m not going to discuss it exhaustively, but will point out a few interesting things. Line 22 specifies we&#8217;re installing into this machine&#8217;s Program Files directory, and line 23 is the INSTALLDIR, which is our root target directory. More sophisticated installers will allow the user to specify their own directory and replace the value of INSTALLDIR.</p>
+<p>Line 24 defines our one and only component. Recall from the previous post its possible for a component to have more than one deployable in it, but there are advantages to having a component for every file. Components have a unique ID to identify them.</p>
+<p>In this example we&#8217;ve associated our component with a target directory by simply nesting it under the desired directory. This works for simple scenarios, but if you have more than one target directory for your product or if your code generating your component definitions, it might be easier to declare the directory structure and components separately and use the DirectoryRef attribute on the component to make the association.</p>
+<p>Line 25 contains a file that is part of this component. The name attribute is what the file will be called when it is placed on the target file system, and the source attribute specifies where to get the file when compiling the MSI package.</p>
+<p>Line 26 does what you hopefully would guess; it removes the installation folder from the machine when the component &#8216;MainExecutable&#8217; gets uninstalled.</p>
+<p>Line 32 finishes things out by declaring our single feature (although you&#8217;ll recall there could be multiple Features in a Product), and associating our component with it.</p>
+<h2>Tying It All Together</h2>
+<p>So we have:</p>
+<ul>
+<li>File HelloWorld.exe containing our executable</li>
+<li>Component MainExecutable containing the HelloWorld.exe File</li>
+<li>Directory INSTALLDIR (which itself is a subdirectory) associated with the MainExecutable Component</li>
+<li>Feature called Complete containing the MainExecutable Component</li>
+<li>Product that contains the Complete Feature (this is implied and doesn&#8217;t have to be explicitly defined)</li>
+</ul>
+<p>All of this maps neatly to the MSI we took apart in the <a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-05/">last post</a>. In the next installment, we&#8217;ll look at the process for actually turning WiX into an MSI.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-28T00:00:00-06:00" pubdate data-updated="true">Feb 28<span>th</span>, 2013</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-6/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-6/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/graphiti/" title="Previous Post: Graphiti">&laquo; Graphiti</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/meet-headspring-joe-lockbaum/" title="Next Post: Meet Headspring: Joe Lockbaum">Meet Headspring: Joe Lockbaum &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,274 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>From WebForms to MVC - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="Most of my first job out of college was spent doing desktop development, some of which was in VB6. I didn&#8217;t love it, but it was easy to learn. &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/from-webforms-to-mvc">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">From WebForms to MVC</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-20T00:00:00-05:00" pubdate data-updated="true">Apr 20<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Most of my first job out of college was spent doing desktop development, some of which was in VB6.  I didn&#8217;t love it, but it was easy to learn.  When <em>this</em> button is clicked, <em>that</em> function runs in response to it.  Easy.</p>
+<p>The controls-and-event-handlers model combined with the language also made it exceptionally easy to create a tangled pile of misplaced responsibilities, but I think you&#8217;ve got to experience that kind of pain before you can see that alternatives even <em>exist</em>.  Once you&#8217;ve felt the pain, you can better-evaluate which guidance is actually going to be helpful.<br />
+<!--more--></p>
+<h2>WebForms Was Designed for Desktop Developers</h2>
+<p>Right around that time, .NET was released.  ASP.NET WebForms shared little with classic ASP.  The primary goal was to let desktop VB developers make a smooth transition to both .NET and web development at the same time.  With that goal in mind, WebForms provided a similar controls-and-event-handlers model.  Making a web app felt like making a desktop app.</p>
+<p>In order to support that approach, WebForms had to make the stateless world of HTTP <em>feel</em> stateful.  View State, the Page Life Cycle, and event handlers allowed the developer to go through the familiar motions of dropping controls onto a designer and wiring up methods to control events, <em>all while ignoring everything that was actually happening</em>.</p>
+<p>Abstractions leak, though, and this was a <em>huge</em> abstraction.  It helped me get over the initial hurdle to get a web app up and running, but I found the code I wrote was suspiciously like the desktop VB6 mess I&#8217;d wanted to grow beyond.  I was frequently surprised by the effects of the Page Life Cycle, and every time that happened I had to learn a little bit more about how the abstraction worked under the hood:</p>
+<blockquote><p>
+  &#8220;Oh! There&#8217;s a Big Honking &lt;form&gt; Tag for the whole page, and it contains an Enormous Encoded &lt;input&gt; Tag containing the current state of all the controls, so whenever I need to hit a button click handler I&#8217;m really submitting a normal HTML form and then…&#8221;
+</p></blockquote>
+<p>Ugh. Eventually, you just have to know what HTML and HTTP are, even when using WebForms, so the abstraction was no longer helping.</p>
+<h2>Many Page Life Cycles Later&#8230;</h2>
+<p>While working for a previous employer, ASP.NET MVC came out.  We wanted to try out the new approach, and the timing coincided with a new project that was starting up.  However, there wasn&#8217;t much guidance available yet on how to do it <em>well</em>.  We were challenged at first by the lack of View State, and in order to keep our old &#8220;stateful stateless web&#8221; habit going we ended up storing a <em>lot</em> of things into the user&#8217;s session object.  We also kept treating controller actions like they were event handlers, leading to some awkward-looking URLs.  Distracted by these initial pains, our controllers started absorbing responsibilities like a sponge.  Actually, our <em>controller</em> started absorbing responsibilities - there was only controller in the whole app!</p>
+<p>I was writing a lot of controller actions like this:</p>
+<p>[gist id=&#8221;2410072&#8221;]</p>
+<p>What I saw was the same thing I saw in WebForms development.  The Controller was the new Code Behind, and I was underwhelmed.  WebForms&#8217;s Page Life Cycle and View State hurt, but the real daily pains came from working with classes that were growing out of control, and I was seeing the same thing with my MVC code.  It seemed like the abstractions were lighter-weight, and it felt right to work with HTML more directly, but I was definitely missing some guidance.</p>
+<h2>Turning the Corner</h2>
+<p>Several coworkers got to take an <a href="http://www.headspring.com/services/developer-training/mvc-bootcamp">MVC Boot Camp</a> course here at Headspring, and I got to learn by osmosis from them upon their return.  At last, I had a good picture in my head of what it looks like when you&#8217;ve succeeded with these tools.  Our controllers started to get much more lean:</p>
+<p>[gist id=&#8221;2416902&#8221;]</p>
+<p>I started to see how the <a href="http://jeffreypalermo.com/blog/the-onion-architecture-part-1/">Onion Architecture</a>, dependency injection, model binders, AutoMapper, and the like help you to keep your controllers small.  MVC wasn&#8217;t a silver bullet; its primary benefit compared to WebForms was that you could make it <em>get out of the way</em> so you could actually start laying down a solid architecture.</p>
+<p>ASP.NET MVC has been around for a few years now.  Community contributions like <a href="http://mvccontrib.codeplex.com/">MvcContrib</a> helped to motivate change in subsequent releases, and now ASP.NET MVC is legitimately open-sourced.  Better-yet, guidance on how to do this well has had years to mature.</p>
+<p>MVC is a sharper tool than WebForms.  It acknowledges the reality of web technologies like HTML and HTTP, while providing some reasonably-sized abstractions on top of that, such as routing and model binding.  Having a better tool in your toolbelt isn&#8217;t enough, though.  You have to see what it looks like when used correctly.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-20T00:00:00-05:00" pubdate data-updated="true">Apr 20<span>th</span>, 2012</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/from-webforms-to-mvc/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/from-webforms-to-mvc/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/get-to-know-a-developer-cedric-yao/" title="Previous Post: Get to Know a Developer: Cedric Yao">&laquo; Get to Know a Developer: Cedric Yao</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/increasing-development-enjoyment-with-ravendb/" title="Next Post: Increasing Development Enjoyment with RavenDB">Increasing Development Enjoyment with RavenDB &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

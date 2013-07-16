@@ -1,0 +1,355 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Guest Blog [Muhammad Shujaat Siddiqi]: Entity Framework Code First DbContext - Validation - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="Introduction
+In this post we will be discussing how DbContext API helps us in validation of entities in Entity Framework Code First workflow. The API &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/entity-framework-code-first-dbcontext-validation">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Guest Blog [Muhammad Shujaat Siddiqi]: Entity Framework Code First DbContext - Validation</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-11T00:00:00-05:00" pubdate data-updated="true">Apr 11<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2><strong>Introduction</strong></h2>
+<p>In this post we will be discussing how DbContext API helps us in validation of entities in Entity Framework Code First workflow. The API allows various options to define validation of entities and their properties. It also makes it easier to execute these validations providing validation results. We are going to be using some basic entities in a simple Institute and introduce various forms of validations using different options available in the framework. The whole intent is to learn these available options. In a real world example you might be more or less inclined to be using any of these options.<!--more--></p>
+<h2><strong>Prerequisite</strong></h2>
+<p>In order to keep focus on the validation discussion, let&#8217;s build on top of already existing example code. You can find the download here:</p>
+<p><a href="https://github.com/msiddiqi/EFCodeFirstValidation">https://github.com/msiddiqi/EFCodeFirstValidation</a></p>
+<p>The download is a simple console application with the following:</p>
+<ul>
+<li>Added Nuget packages &#8217;<em>Entity Framework 4.3.1</em>, SQL Server Compact and <em>EntityFramework.SqlServerCompact</em>. These Nugets would take care fo adding all the related assemblies to the project.</li>
+<li>Added a SQL Server Compact database file, named <em>InstituteDB</em>. We needed to add the connection string in app.config.</li>
+<li>Added a <em>Student</em> and <em>Department</em> POCO type and <em>InstituteEntities</em> [DbContext] with <em>DbSet&lt;Student&gt;</em> and DbSet&lt;Department&gt;.</li>
+</ul>
+<p>&nbsp;</p>
+<h2><strong>Enabling Validation for Entities</strong></h2>
+<p><em>DbContext</em> supports turning on or off the validation feature. By default, this is enabled.</p>
+<p><span style="color: #339966;"><a href="http://www.headspring.com/2012/04/entity-framework-code-first-dbcontext-validation/validationdbconfigurationoption" rel="attachment wp-att-4610"><img class="alignnone size-full wp-image-4610" alt="" src="http://www.headspring.com/wp-content/uploads/2012/04/ValidationDbConfigurationOption.png" width="587" height="124" /></a><br />
+</span></p>
+<p>This can be turned on and off during the lifetime of the application based on our requirements. We can set it in the constructor of <em>DbContext</em> as follows:</p>
+<p>[gist id=&#8221;2225969&#8221;] [/gist]</p>
+<p>We can also control this based on the entity type. Let&#8217;s assume that we don&#8217;t want any validation for Student Entity. We just need to override <em>ShouldValidateEntity()</em> method of <em>DbContext</em> and make such decisions there.</p>
+<p>[gist id=&#8221;2267626&#8221;] [/gist]</p>
+<p>Currently this is used with <em>DbContext.SaveChanges()</em> and <em>DbContext.GetValidationErrors()</em> only for added / modified entities. It would be better in future versions if it is used with <em>DbEntityEntry</em> as well. This would enable us to be making decisions when a single entity or its property is being validated on-demand.</p>
+<h2><strong>Defining Validations</strong></h2>
+<p>EF Code first supports various ways to define the validations. We can define validation details using available data annotation validation attributes, Fluent API configurations and implementation of <em>IValidatableObject</em> interface. The greatest thing is that Entity Framework provides all these different options to define validation of our entities. It combines all these implementations when the validation logic is being executed.</p>
+<h3><strong>Data Annotation Attributes</strong></h3>
+<p>As we discussed above, Entity framework code first entities can be decorated with Data Annotation attributes. Most of these attributes come from DataAnnotations assembly. EF team also has added a few attributes. In the future, they might also make their way into the main DataAnnotation library. Still they are in the same namespace i.e. <em>System.ComponentModel.DataAnnotations</em>.</p>
+<div><span style="color: #339966;"><a href="http://www.headspring.com/2012/04/entity-framework-code-first-dbcontext-validation/validationattributeclasshierarchy" rel="attachment wp-att-4611"><img class="size-full wp-image-4611 aligncenter" alt="" src="http://www.headspring.com/wp-content/uploads/2012/04/ValidationAttributeClassHierarchy.png" width="1211" height="396" /></a><br />
+</span></div>
+<div>Simpler attributes are mostly defined on the properties of an entity. They include the attributes which don&#8217;t involve checking the value of another property within the same entity. The validation might need to check anything else too from the same entity or anywhere from the outside. These complex attributes are defined on Entity type instead. We can use Custom Validation attribute to check for validation in this case. Let&#8217;s make sure that department names follow certain pattern in our institute.</div>
+<p>It&#8217;s definitely adulteration of entities with validation attributes. But I think it should be fine until we use an attribute from Entity Framework library as that makes us dependent on the framework which is definitely we wanted to avoid as we are very careful about P in our POCO [Plain Old Clr Object]. But we can have the best of both worlds. This can be achieved using Associated Metadata [buddy] classes [See Julia Lerman&#8217;s book: <a href="http://www.amazon.com/Programming-Entity-Framework-Julia-Lerman/dp/1449312969/ref=sr_1_1?ie=UTF8&amp;qid=1332421133&amp;sr=8-1">DbContext</a>].</p>
+<p><a href="http://www.shujaat.net/2012/03/associated-metadata-buddy-classes-in-c.html">http://www.shujaat.net/2012/03/associated-metadata-buddy-classes-in-c.html</a></p>
+<p>So we would be keeping the data layer clean with our POCO entities. We would not be adding any validation attributes there. Now we would be adding separate buddy classes for our entities. We will be adding DataAnnotation attributes to our properties there. At compile time, these attributes are applied to the entities and then used by Entity Framework runtime. Zindabad!</p>
+<p>[gist id=&#8221;2236288&#8221;] [/gist]</p>
+<p>Similarly, we can define validation for Department. Let&#8217;s make sure that all the departments have their name following a certain format. So Electrical Engineering should be entered as &#8220;Department of Electrical Engineering&#8221;.</p>
+<p>[gist id=&#8221;2236337&#8221;] [/gist]</p>
+<p>Now we need to associate these metadata classes to our entities so that Entity Framework pick them up for validation. A type can be decorated with <em>MetadataTypeAttribute</em> for specifying the associated metadata class. Now we can directly specify <em>[Metadatatype(typeof(StudentAssociatedMetadata)]</em> with the class but some developers would consider even this as adulteration of their POCO types.</p>
+<p>[gist id=&#8221;2236440&#8221;] [/gist]</p>
+<p>We can still utilize these associated classes by defining our entities as partial classes. Now one part of the partial class would be a simple POCO. The other part might have this association defined.</p>
+<h3><strong>Fluent API</strong></h3>
+<p>Entity Framework Code First allows us to define validation with Fluent API as well. Compared to the other features of EF Code First, Fluent API seems to be more limiting and there are only certain validations that you might add to an entity using Fluent API. This is unlike other features where Fluent API is more powerful. Like in our example there are no counterparts of adding range and regular expression validation details to a property using Fluent API. But still we can define other validations including the maximum and minimum length of a string.</p>
+<p>[gist id=&#8221;2237085&#8221;] [/gist]</p>
+<p><em>DbContext</em> allows to define entities configuration to be  further defined. This is just before the model is created using <em>DbSet</em> and their associated members by Entity Framework Code First workflow API. In the above code, we added configuration to <em>Department</em> entity that the maximum length of <em>DepartmentName</em> property must not be more than 25. DbContext also allows configuration of entities to be defined separately using <em>EntityTypeConfiguration&lt;EntityType&gt;</em>. The same is used for <em>Student</em> entity. It can be defined as follows:</p>
+<p>[gist id=&#8221;2237285&#8221;] [/gist]</p>
+<p>Now Code First would use this configuration to generate Database (if required). But it would also use these configurations to check if it is worth a trip to database and cause failure by checking the entities&#8217; data with validation related configurations.</p>
+<h3><strong>Using IValidatableObject</strong></h3>
+<p>EF Code First workflow also supports <em>IValidatableObject</em> as introduce in .net framework 4.0 in<em> System.ComponentModel.DataAnnotations</em>. The definition of <em>IValidatableObject</em> just provides a contract with <em>Validate</em> method as follows:</p>
+<p>[gist id=&#8221;2266621&#8221;] [/gist]</p>
+<p>Here <em>ValidationContext</em> and <em>ValidationResult</em> are introduced in .net framework 4.0. Let&#8217;s validate if <em>City</em> is not empty in Student&#8217;s address.</p>
+<p>[gist id=&#8221;2266997&#8221;] [/gist]</p>
+<p>If there is a Student entity with empty city information then the validation would result in failure with error message: <em>&#8220;City can not be empty&#8221;</em>.</p>
+<h3><strong>Using CustomValidationAttribute for Validation</strong></h3>
+<p><em>CustomValidationAttribute</em> is introduced in .net framework 4.0.  These attributes can be applied on the type or property level. Let&#8217;s make sure that only those students are declared outstanding whose GPA is more than 3.7.</p>
+<p>[gist id=&#8221;2267241&#8221;] [/gist]</p>
+<p>We can add this attribute to one of Student partial class defined for EF Code First validation.</p>
+<p>[gist id=&#8221;2267319&#8221;] [/gist]</p>
+<p>We can also use custom validation attributes for properties of an entity.</p>
+<h3><strong>Introducing Customized ValidationAttribute:</strong></h3>
+<p>We can also introduce new specialized validation attributes. They need to be inherited from <em>ValidationAttribute</em>. We just need to override one of the IsValid() method.</p>
+<p>[gist id=&#8221;2178720&#8221;] [/gist]</p>
+<p>Basically <em>ValidationAttribute</em> was introduced in .net framework 3.5 sp1. Based on the implementation of then released framework we needed to inherit method pair [<em>IsValid</em>() - <em>FormatErrorMessage</em>()] in order for a Validation framework to check for validation and customized error message in case of validation failure. In .net framework 4.0, various other types are also introduced to better support validation. They also include <em>ValidationContext</em> [an implementation of <em>IServiceProvider</em>] and <em>ValidationResult</em>. <em>ValidationAttribute</em> is also enhanced to support these types by introducing a new overload for <em>IsValid</em>().</p>
+<p>Wait a minute!! Can overloaded method have return types as the previous one was returning bool? Yes they can!!! If they don&#8217; t only differ by return types. They sure can, if the parameter list is also different. The compiler is definitely not confused which implementation to call as it can easily infer this based on the arguments supplied for the call.</p>
+<p>This new overload is better for a lot of different reasons. Let&#8217;s discuss them:</p>
+<ul>
+<li>It provides an additional parameter of type <em>ValidationContext</em>. In our case, this is the type encapsulating the property for which this attribute is added. It might also be a proxy of the entity if it is enabled. Anyway, you have the Student instance. You can make use of any other property from the same instance using <em>ValidationContext.ObjectInstance</em>.</li>
+<li>Return type = <em>ValidationResult</em> &#8211; Don&#8217;t need to implement <em>FormatMessage</em></li>
+<li>Non-Virtual Interface [NVI] pattern as the virtual method is protected instead of <em>public</em>.</li>
+</ul>
+<p>&nbsp;</p>
+<p>[gist id=&#8221;2267084&#8221;] [/gist]</p>
+<p>We can update the associated metadata class for Student to include additional attribute for LastName property as follows:</p>
+<p>[gist id=&#8221;2267137&#8221;] [/gist]</p>
+<p>We have included this attribute in the associated metadata class for Student entity.</p>
+<h2><strong>Implicit Validation Execution</strong></h2>
+<p>It gets executed implicitly when <em>SaveChanges()</em> is called. Obviously, we need to have this turned on by using <em>DbContext.Configuration.ValidateOnSaveEnabled</em>. If it fails validation then calling <em>DbContext.SaveChanges()</em> would cause <em>DbEntityValidationException</em>.</p>
+<p><span style="color: #339966;"><a href="http://www.headspring.com/2012/04/entity-framework-code-first-dbcontext-validation/validationexceptionsavechanges" rel="attachment wp-att-4612"><img class="alignnone size-full wp-image-4612" alt="" src="http://www.headspring.com/wp-content/uploads/2012/04/ValidationExceptionSaveChanges.png" width="847" height="278" /></a><br />
+</span></p>
+<p>But we don&#8217;t have to wait until <em>SaveChanges()</em> is called and result in exception. EF Code first Validation can also be executed explicitly for all the entities tracked by <em>DbContext</em>. It can also be executed for an individual entity using <em>DbEntityEntry</em>. Doing this would not show weird exception dialog to the user wondering what he should do.</p>
+<p><span style="color: #339966;"><a href="http://www.headspring.com/2012/04/entity-framework-code-first-dbcontext-validation/validationfaileddialog" rel="attachment wp-att-4613"><img class="alignnone size-full wp-image-4613" alt="" src="http://www.headspring.com/wp-content/uploads/2012/04/ValidationFailedDialog.png" width="366" height="206" /></a><br />
+</span></p>
+<p>We definitely need to handle this gracefully by handling this exception and doing the appropriate action i.e. showing the validation result to the user specifying the details of the issue. We can also log the issue.The user can correct the entry and again try to save the data. Since the failed validation from <em>DbContext.SaveChanges()</em> always results in <em>DbEntityValidationException</em>, we can handle the validation failure using a <em>try / catch</em> block.</p>
+<p>[gist id=&#8221;2267381&#8221;] [/gist]</p>
+<p>where the definition of <em>DbEntityValidationExceptionMessageParser</em> can be as follows:</p>
+<p>[gist id=&#8221;2232206&#8221;] [/gist]</p>
+<p>Here <em>DbEntityValidationMessageParser </em>has three overloads of <em>GetErrorMessage()</em>. They are all internal as we don&#8217;t expect them to be used outside the data layer assembly. All of them are supposed to generate error message using <em>DbValidationError </em>provided directly from the method argument or obtained through <em>DbEntityValidationResult</em>, which in-turn, can be obtained from <em>DbEntityValidationException</em>.</p>
+<h2><strong>On-Demand Validation</strong></h2>
+<p>We can also execute validation logic explicitly. We don&#8217;t have to wait for exception when <em>DbContext.SaveChanges()</em> is called. We can get all the issues with the updated data [added / modified entities].</p>
+<h3><strong>Validating an Entity</strong></h3>
+<p>We can use <em>DbEntityEntry</em> to find out all the validation errors for an entity. In the following example we are creating a <em>Student</em> entity. We are updating some properties of the entity and adding it to the <em>DbContext</em>.<em> DbEntityEntry.GetValidationResult()</em> returns the validation issues as <em>DbEntityValidationResult</em>. It holds the validation errors in ValidationErrors property [<em>ICollection&lt;DbValidationError&gt;</em>].  If there is any validation error then <em>IsValid</em> property returns false.</p>
+<p>[gist id=&#8221;2267434&#8221;] [/gist]</p>
+<p>Here we are creating entities of Student and Department type. After adding it to the context we are checking validation issues of <em>Student</em> entity using <em>DbEntityEntry</em> created for the entity. As you can see there are validation issues with <em>Department</em> entity as well but only the issues [<em>DbEntityValidationResult</em>] with <em>Students</em> are queried using <em>DbEntityEntry.GetValidationErrors()</em>. Later it is parsed in a string using <em>DbEntityValidationMessageParser.GetErrorMessage()</em> defined above and printed on the console.</p>
+<h3><strong>Validating a Property</strong></h3>
+<p>Entity Framework Code First supports limiting the scope of validation checks even further. We can even check if there are validation issues with the value of a certain property of an entity without even worry about any other property of the entity.</p>
+<p>[gist id=&#8221;2267473&#8221;] [/gist]</p>
+<p>Here more than one properties of Student entity have validation issues. We are interested with checking for only <em>StudentLastName</em> property.</p>
+<h3><strong>Validating all Entities tracked by DbContext</strong></h3>
+<p>We might also want to check for validation for all the entities tracked by the <em>context. DbContext.GetValidationErrors(). </em>This returns an <em>IEnumerable&lt;DbEntityValidationResult&gt; </em>which can be used to get the actual errors and show them to the user if so desired.<em><br />
+</em></p>
+<p>[gist id=&#8221;2267502&#8221;] [/gist]</p>
+<p>Again we are creating the same entities as previous examples and adding them to DbContext. There are deliberate issues with the values assigned to the properties. Then we are finding the issues using<em> DbContext.GetValidationErrors()</em> and printing it on the console. This would result in more meaningful message to the user about the actual issue with the data.</p>
+<h2>Summary</h2>
+<p><em>Entity Framework Code First DbContext API</em> provides a comprehensive support for validating entities before they are being pushed to the database. The also allow on-demand validation of entities and their properties. It also supports turning off these validations.</p>
+<h2><strong>About the Author</strong></h2>
+<p><i>Muhammad is a passionate blogger. He loves to explore various technologies and discuss their amazing features with the other software enthusiasts. He is a co-author of <a title="MVVM Survival Guide for Enterprise Architectures in Silverlight and WPF" href="http://www.amazon.com/Survival-Guide-Enterprise-Architectures-Silverlight/dp/1849683425" target="_blank">MVVM Survival Guide for Enterprise Architectures in Silverlight and WPF</a>. [Blogs http://<a title="shujaat.net" href="http://www.shujaat.net/" target="_blank">shujaat.net</a><span style="color: #585757; font-family: SegoeUI, 'Open Sans', Arial, Helvetica, Tahoma, sans-serif; font-size: small;">; Twitter: @SiddiqiMuhammad]</span></i></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-11T00:00:00-05:00" pubdate data-updated="true">Apr 11<span>th</span>, 2012</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/entity-framework-code-first-dbcontext-validation/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/entity-framework-code-first-dbcontext-validation/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/becoming-a-headspringer-take-advantage-of-working-with-smart-people/" title="Previous Post: Becoming a Headspringer: Take Advantage of Working with Smart People">&laquo; Becoming a Headspringer: Take Advantage of Working with Smart People</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/metrics-reports-kpis-and-the-stuff-developers-must-provide-to-executives/" title="Next Post: Metrics, reports, KPIs, and the stuff developers must provide to executives">Metrics, reports, KPIs, and the stuff developers must provide to executives &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

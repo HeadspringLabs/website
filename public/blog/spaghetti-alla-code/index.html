@@ -1,0 +1,293 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Spaghetti alla Code - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="This is part 4 of an N-part series on identifying and resolving incidental complexity in your software projects. This post assumes you&#8217;ve &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/spaghetti-alla-code">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Spaghetti Alla Code</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-04T00:00:00-05:00" pubdate data-updated="true">Aug 4<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>This is part 4 of an N-part series on identifying and resolving incidental complexity in your software projects.  This post assumes you&#8217;ve already read the earlier posts:</p>
+<ol>
+<li><a href="http://www.headspring.com/blog/developer-deep-dive/essential-vs-incidental-complexity/">Essential vs Incidental Complexity</a></li>
+<li><a href="http://www.headspring.com/blog/developer-deep-dive/identifying-incidental-complexity/">Identifying Incidental Complexity</a></li>
+<li><a href="http://www.headspring.com/blog/developer-deep-dive/scope-creep/">Scope Creep</a></li>
+</ol>
+<h2>Recipe: Spaghetti alla Code</h2>
+<p>INGREDIENTS</p>
+<ul>
+<li>1 cup &#8216;virtual&#8217; keywords</li>
+<li>3 cups &#8216;override&#8217; keywords</li>
+<li>1 pinch of &#8216;base&#8217; keyword</li>
+<li>1 generous dollop of moxie</li>
+</ul>
+<p>DIRECTIONS</p>
+<ol>
+<li>Combine ingredients in large mixing hierarchy.</li>
+<li>Season to distaste.</li>
+</ol>
+<p>SERVES: no one<!--more--></p>
+<h2>Composition Over Inheritance</h2>
+<p>Last week, I took a suspiciously-growing class, Scope, and used subclassing to split it into a class hierarchy.  The goal was to start separating some of the concepts that had gotten all mixed up, and to better-communicate how each <em>kind</em> of Scope was to be used.  I ended that post with some vague criticism about disliking the use of &#8216;virtual&#8217;, &#8216;override&#8217;, and &#8216;base&#8217; keywords.  I felt that using subclassing was a useful tool to help separate responsibilities, but the result was more complex than necessary.</p>
+<p>These keywords helped me to avoid copy/pasting code across all the subclasses, and allowed subclasses to customize that behavior where appropriate, so how bad could they be?  It all worked, and I didn&#8217;t have to reach for my copy/paste shortcuts.</p>
+<p><a href="https://github.com/plioi/rook/blob/8155326c6c428cdd2bf63e9e4986796a8a20fac7/src/Rook.Compiling/Scope.cs">The code</a>&#8217;s a little hard to follow, though.  The base class contains some <code>virtual</code> methods with a default implementation.  That implementation is used by GlobalScope and TypeMemberScope because that happens to be the right thing to do for those subclasses.  LocalScope <code>override</code>s them, deliberately using the <code>base</code> implementation in <em>one</em> of those <code>override</code>s and deliberately <em>avoids</em> the <code>base</code> implementation in another.  Why?  To find out, you have to run the code in your head, and in order to do that you have to start looking around at all the implementations of all the methods in the hierarchy.  </p>
+<blockquote><p>With virtual/override/base, you have to understand <em>everything</em> to understand <em>anything</em>.</p></blockquote>
+<p>These three keywords combine to produce the same kind of <a href="http://en.wikipedia.org/wiki/Spaghetti_code">spaghetti code</a> as a <code>goto</code> does.  The compiler knows what you mean, but the reader doesn&#8217;t!</p>
+<p>When possible, I prefer to favor composition over inheritance.  We still want to avoid copy/pasting logic around, but composing simple objects together is another way to accomplish that goal, and the results are easier to read.</p>
+<h2>Applying Composition in the Scope Hierarchy</h2>
+<blockquote><p>In previous weeks, we&#8217;ve improved upon incidental complexity by removing bad abstractions and splitting up abstractions that were getting too complex.  This time, we&#8217;ll improve upon incidental complexity by recognizing that one abstraction was hiding within another.</p></blockquote>
+<p>The code I didn&#8217;t want to copy around appeared largely in the base class of <a href="https://github.com/plioi/rook/blob/8155326c6c428cdd2bf63e9e4986796a8a20fac7/src/Rook.Compiling/Scope.cs">the troubled implementation</a>.  I had a dictionary with a particular key type and value type, representing the types of the identifiers found in a given scope (&#8220;bindings&#8221; in compiler terms), and I wanted access to the dictionary to be strict about uniqueness of keys while not throwing exceptions (programmers mistakenly create duplicate identifiers all the time, so it&#8217;s not an exceptional occurrence).</p>
+<p>This special kind of dictionary deserves to be a first class citizen of my compiler.  Let&#8217;s pull it out into its own class, separate from the class hierarchy but <em>used</em> by the class hierarchy to avoid duplicated logic.</p>
+<p>I extracted the new abstraction, <code>BindingDictionary</code>, from <code>Scope</code>.  The abstract base class became empty, so I converted it to an interface:</p>
+<p>[gist id=&#8221;3260425&#8221;]</p>
+<p>(On for-pay projects I follow the IFoo interface naming convention for consistency across the team.  I don&#8217;t on this project because&#8230; because&#8230; because I say so that&#8217;s why.)</p>
+<p>Contrast <a href="https://github.com/plioi/rook/blob/8155326c6c428cdd2bf63e9e4986796a8a20fac7/src/Rook.Compiling/Scope.cs">the previous implementation</a> with <a href="https://github.com/plioi/rook/blob/59cb30404aba89cd8bc94a761e1194e79210afab/src/Rook.Compiling/Scope.cs">the new implementation</a>.  These classes make use of the new <code>BindingDictionary</code> abstraction in order to reuse that logic without inheritance and overrides.  To understand any class, you need only look at that one class.  You don&#8217;t have to run it <em>all</em> in your head to know what it&#8217;s actual behavior is going to be, because <strong>each class is satisfying the <code>Scope</code> contract on its own</strong>.  Also, I got to give more descriptive names to the member variables because the member variables are no longer shared across multiple classes with different meanings.</p>
+<p>Subclassing isn&#8217;t all bad.  I find myself using the Template Method pattern, for instance.  In that case, though, I&#8217;m only overriding methods that are abstract in the base class.  When you start overriding non-abstract methods, though, you start lying to the reader:</p>
+<blockquote><p>&#8220;This virtual method here does <em>this</em>, unless it doesn&#8217;t.  It probably doesn&#8217;t.&#8221;</p></blockquote>
+<h2>Criticism and Next Steps</h2>
+<p>Some of these classes actually got <em>bigger</em>, which can be a code smell, but in this case they are mostly one-liners, and in my mind I exclude one-liners when considering lines-of-code counts.  The world needs more one-liner methods.</p>
+<p>Now that <code>Scope</code> is just an interface, it&#8217;s easier to take a quick glance at it and know that one of the methods on it is standing out like a sore thumb.  Scopes represent which identifiers are visible at some point in the code being compiled, along with their declared types; the <code>TryIncludeUniqueBinding, TryGet, and Contains</code> methods serve that abstraction.  The <code>IsGeneric</code> method doesn&#8217;t serve that concept, but lives in these classes in order to produce the right results.</p>
+<p>Looks like we&#8217;ve got another poor abstraction here: a useful abstraction is missing completely, and needs to be added so that this &#8216;IsGeneric&#8217; decision, <em>whatever the heck that means</em>, can have a good home.  We&#8217;ll see what that&#8217;s all about in my next post.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-04T00:00:00-05:00" pubdate data-updated="true">Aug 4<span>th</span>, 2012</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/spaghetti-alla-code/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/spaghetti-alla-code/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/get-to-know-a-developer-andrew-west/" title="Previous Post: Get to Know a Developer: Andrew West">&laquo; Get to Know a Developer: Andrew West</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/primitive-obsession/" title="Next Post: Primitive Obsession">Primitive Obsession &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

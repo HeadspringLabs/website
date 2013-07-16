@@ -1,0 +1,296 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>From Imperative to Declarative - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="Two weeks ago, we took a peek at the low-level pattern recognition classes that make up the core of Parsley. Last week, we saw how pattern &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/from-imperative-to-declarative">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">From Imperative to Declarative</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-13T00:00:00-06:00" pubdate data-updated="true">Feb 13<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Two weeks ago, we took a peek at the <a href="http://www.headspring.com/patrick/whittling-parsley/">low-level pattern recognition classes</a> that make up the core of <a href="https://github.com/plioi/parsley">Parsley</a>.  Last week, we saw how pattern recognition involves 3 pivotal <a href="http://www.headspring.com/patrick/composable-operations/">composable operations</a>: repetition, choice, and sequence.  We saw how Parsley implements basic repetition and choice operations, but sequence was still too hard to address.</p>
+<p>Today, we&#8217;ll finally see how to extract a useful sequence operation into a useful class, finally giving us the last of the necessary composable operations, and freeing us to finish our high-level <a href="http://martinfowler.com/bliki/DomainSpecificLanguage.html">DSL</a>.</p>
+<h2>Manual Sequence Recognition</h2>
+<p>Recall the horrible imperative code necessary to recognize the trivial three-token sequence of [left-parenthesis, letter, right-parenthesis]:</p>
+<p>[gist id=4688927]</p>
+<p>To recognize a 3 token sequence, we need 3 nested if statements and 4 return statements.  To recognize an N token sequence, we need N nested if statements and N+1 returns.  Each if statement tests whether the last call to Parse(&#8230;) succeeded, and each if statement&#8217;s body hands off the remanining unparsed tokens to the next step.  Clearly, this does not scale well.</p>
+<h2>(Ab)using LINQ</h2>
+<p>Note how similar each step is: we always call Parse(&#8230;), then test for success, then pass the remaining unparsed tokens along.  The main thing that changes each time we dig deeper is the particular Parser object in play.  I&#8217;d rather just say &#8220;Require(LeftParen), then Require(Letter), then Require(RightParen), halting at the first point of failure&#8221;.</p>
+<p>Our goal is to extract the &#8220;success check and unparsed token hand-off&#8221; action so that we don&#8217;t have to repeat it ourselves, and we want to do so in a way that lets us chain together any number of parsers representing a sequence of expectations, without having to indent deeper as the chain grows longer.  With no further ado, ParserQuery:</p>
+<p>[gist id=4802811]</p>
+<p><strong>I apologize for this.</strong>  This was hands-down the most difficult 12 lines of code I have written or will ever write.  The pattern in play here is so difficult, so abstract, that <em>I don&#8217;t even know what to name some of the variables.</em></p>
+<p>This is the <a href="http://blogs.msdn.com/b/wesdyer/archive/2008/01/11/the-marvels-of-monads.aspx">Monad</a> pattern.  It can be performed in any language that has lambda expressions in which the lambda body can refer to variables in the surrounding scope, like C#, Javascript, and Python, but is only ever used in practice when the language <em>also</em> has special syntax for its usages.  In C#, the special syntax which makes this pattern compelling is the <code>from/select</code> LINQ syntax.</p>
+<p>This special syntax lets us &#8220;flatten&#8221; our nested if statements into a series of &#8216;from&#8217; clauses.  When using the complete Parsley DSL, we can rewrite IsParenthesizedLetter without any nesting:</p>
+<p>[gist id=4919965]</p>
+<p>ParserQuery defines some extension methods that are treated specially by the compiler.  Their existence allows us to select from Parser&lt;T&gt; objects instead of the usual ability to select from IEnumerable&lt;T&gt; objects.  Note how instead of having 3 nested if statements, we have 3 from clauses <em>in sequence</em>.</p>
+<p>Note how the query does little more than <em>list</em> the 3 expectations in the order we expect them to appear in the input.  We &#8220;flattened&#8221; the nested if statements into a vertical series of from clauses.</p>
+<p>Note also how this sequence operation is operating on 3 Parser&lt;Token&gt; objects (the right hand side of each from clause) and the type of the whole query is <em>also</em> a Parser&lt;Token&gt;.  Since our sequence operation results in the same type as it acts on, it is highly composable with last week&#8217;s repetition and choice operations.</p>
+<p>Although complicated, there&#8217;s no magic here.  If we ask ReSharper to translate the above select statement into plain old method calls, we see that ParserQuery&#8217;s SelectMany method is being called N-1 times when there are N from clauses:</p>
+<p>[gist id=4942002]</p>
+<p>In other words, our SelectMany method&#8217;s job is to hook a single from clause into the chain of execution.</p>
+<p>C# rewrites a flat query into calls to the SelectMany extension method, which in turn does the success check and the passing along of remaining unparsed tokens, so all the same <em>work</em> is going on here as in the origial imperative code.  Thankfully, we&#8217;re no longer the ones doing that work!</p>
+<p>Rather than trying to make sense of ParserQuery itself, it may be more illuminating to read <a href="https://github.com/plioi/parsley/blob/cb69098da8135f7ac5fb1b0f84071e0e8b94b8a0/src/Parsley.Test/ParserQueryTests.cs">ParserQuery&#8217;s unit tests</a>.</p>
+<h2>So Where Are We?</h2>
+<p>2 weeks back, we started with the low-level imperative classes.  These let us deliberately walk through the input, pattern matching as we go along.  It was annoying, but it worked.  Like assembly language, we wanted to instead work with a high-level alternative, even if the high-level alternative was ultimately doing this imperative stuff behind the scenes.</p>
+<p>1 week back, we identified 3 fundamental operations necessary for a pattern recognition DSL: repetition, choice, and sequence.  We saw how repetition could be implemented as a class, ZeroOrMoreParser.  We saw how choice could be implemented as a class, ChoiceParser.</p>
+<p>This week, we see that sequence can be handled by ParserQuery and the from/select keywords.</p>
+<p><strong>Now, we have all the tools we need to finally create our DSL.</strong></p>
+<h2>Assembling Parsley&#8217;s DSL</h2>
+<p>Parsley deals with defining grammars for languages.  You could define a grammar for a language like JSON, and use that to turn JSON text into .NET objects.  Parsley contains a Grammar class full of useful operations.  To keep things highly-composable, many of these operations both produce Parser&lt;T&gt; objects and operate on other Parser&lt;T&gt; objects.</p>
+<p>First, the Grammar class includes a few helper methods for constructing the classes developed last week:</p>
+<p>[gist id=4911336]</p>
+<p>Next, we note that ZeroOrMore is useful, but not really enough in practice.  We may rather require that the input include OneOrMore occurrences of something.  Thankfully, we can <em>compose</em> sequence with ZeroOrMore to build OneOrMore.  OneOrMore things is the same as one thing followed by ZeroOrMore things:</p>
+<p>[gist id=4912909]</p>
+<p>Where ZeroOrMore required a whole class full of imperative code, OneOrMore required <em>one 3-line expression</em>.</p>
+<p>It&#8217;s also very common to expect the input to contain a repetition of items <em>separated by</em> some other expected thing.  A JSON array literal contains zero or more items <em>separated by</em> commas.  Here, the third operation, choice, makes an appearance.</p>
+<p>[gist id=4914803]</p>
+<p>Finally, a little payoff for all this infrastructure!  Imagine how horrifyingly verbose and error-prone these methods would be, if we had to implement them directly in terms of the low-level imperative style.</p>
+<p>Lastly, there&#8217;s one more built-in operation worth discussing as it directly affects the IsParenthesizedLetter method from the start of this post.  We often need to recognize that something important appears <em>between</em> two other, less important things.  A JSON array is zero or more items <em>between</em> the &#8220;[&#8221; and &#8220;]&#8221; symbols.  We care that the &#8220;[&#8221; and &#8220;]&#8221; are present, but the meaningful data we want to extract from that is the part in the middle:</p>
+<p>[gist id=4916812]</p>
+<h2>Revisiting the Original Example</h2>
+<p>Now, in order to recognize a parenthesized letter, all we need is:</p>
+<p>[gist id=4923462]</p>
+<p>Here, parenthesizedLetter is an object which can be handed the raw input tokens and can reply with one of two statements: &#8220;The input is not a parenthesized letter and here is why,&#8221; or &#8220;The input is a parenthesized letter and here is that letter.&#8221;  No nested if statements, no explicit progress through the token stream, no manual error checks at every step.</p>
+<p>Most importantly, this says <em>what</em> it does rather than <em>how</em>.  <strong>We&#8217;ve turned our imperative API into a declarative API by repeatedly extracting common and monotonous patterns into highly-composable operations, and by further hiding those helper classes behind a few simply-named helper methods.</strong></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-13T00:00:00-06:00" pubdate data-updated="true">Feb 13<span>th</span>, 2013</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/from-imperative-to-declarative/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/from-imperative-to-declarative/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/composable-operations/" title="Previous Post: Composable Operations">&laquo; Composable Operations</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/wcf-ioc-away-the-need-for-named-pipes/" title="Next Post: WCF IOC Away the need for Named Pipes">WCF IOC Away the need for Named Pipes &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

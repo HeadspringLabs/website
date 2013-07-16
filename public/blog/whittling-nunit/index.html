@@ -1,0 +1,291 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Whittling NUnit - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="Last week, we applied Code Whittling to learn about xUnit. This week, we&#8217;ll do the same for NUnit, and contrast the two testing frameworks. &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/whittling-nunit">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Whittling NUnit</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-25T00:00:00-06:00" pubdate data-updated="true">Jan 25<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Last week, we applied <a href="http://www.headspring.com/patrick/code-whittling/">Code Whittling</a> to learn about <a href="http://www.headspring.com/patrick/whittling-xunit/">xUnit</a>.  This week, we&#8217;ll do the same for NUnit, and contrast the two testing frameworks.  NUnit has been around a long time, and has accumulated many features.  <a href="http://www.nunitlite.com/">NUnitLight</a> is a recent endeavor to make a smaller version of the core features.  Since my goal is to get to the core features anyway, I&#8217;ll start with NUnitLight instead of the full NUnit.</p>
+<h2>The Whittle</h2>
+<p>I started by grabbing a copy of the <a href="https://launchpad.net/nunitlite">NUnitLite source code on Launchpad</a>.</p>
+<p>The first thing I noticed is that it has an atypical structure in Solution Explorer.  Project names include .NET version numbers (2.0, 3.5, 4.0), and these projects are placed within solution folders NET-2.0, NET-3.5, and NET-4.0.  Comparing this to the actual file structure on disk, it looks like the same code files are shared by each of these version-based projects.</p>
+<p>Why have multiple projects containing the exact same files?  Viewing project properties, I see that each project has version-specific &#8220;conditional compilation symbols&#8221; like NET_2_0 or CLR_4_0 to distinguish them.  Within the code, there are lots of tests against these symbols:</p>
+<p>[gist id=4457122]</p>
+<p>The developers were therefore able to use one set of files to create builds for each version they will run on, accounting for the differences with these preprocessor conditions.  That doesn&#8217;t sound like fun, but keep in mind NUnit is ubiquitous, and you don&#8217;t want to be surprised by incompatibility with your environment.</p>
+<p>For my purposes, I picked a single version to focus on, and removed the other versions&#8217; projects from the solution (leaving the actual shared code files intact).</p>
+<p>When I whittled down xUnit last week, one of the first steps was to remove its own tests, and I did the same here with NUnitLite.  Remember, this is supposed to be a destructive exercise.  The goal is to remove everything that is in the way of my understanding the fundamentals of the project: how tests are discovered, how tests are executed, and how test results are accumulated.  I was left with a single project in the solution: nunitlite-3.5.</p>
+<p>Again, as with xUnit, I removed all assertion code, since I use the <a href="http://nuget.org/packages/Should">Should</a> assertion library instead.  This was actually a much larger undertaking than with xUnit.  NUnit has been around for a long time, and the assertion library grew while keeping backward-compatibility as a priority.  It looks like a significant amount of effort went into avoiding duplication of code in the <em>implementation</em> of assertions, even while the main end-user-facing assertion APIs gained support for different styles:</p>
+<p>[gist id=4457213]</p>
+<p>Behind this API lies a large family of classes called Constraints, which represent concepts like is-equal-to-x.  Both lines in the sample above would ultimately rely on the same constraint class to perform the comparison.</p>
+<p>Next, I removed several attributes I never use, so I could instead focus on the main lifecycle attributes: [TestFixture], [TestFixtureSetUp], [TestFixtureTearDown], [SetUp], [TearDown], and [Test].</p>
+<p>I made a mostly-random pass through the solution, removing things that were no longer reachable.  When interfaces eventually had a single implementation, I&#8217;d phase out the interface.  Once it got down to a manageable size, I tweaked and simplified some of the types and methods as the mood struck me.  Now that I was familiar with the overall solution structure, I took a closer look at the test discovery and execution code.</p>
+<h2>Results - Test Discovery</h2>
+<p>Let&#8217;s consider NUnitLiteTestAssemblyRunner to be our entry point.  Given an Assembly (a project containing tests), we want to discover and run all the tests.  I whittled it down to this:</p>
+<p>[gist id=4457272]</p>
+<p>It defers to NUnitLiteTestAssemblyBuilder to create <em>something</em> representing the tests to run, creates a work item to process the tests, kicks off the work item, and waits for the work item to finish.</p>
+<p>NUnitLiteTestAssemblyBuilder&#8217;s job is to traverse the assembly, discover the test fixtures and their tests, and then return a TestSuite summarizing all the work that is to be done.  It does so using reflection, not surprisingly with a very similar implementation as xUnit.  I whittled NUnitLiteTestAssemblyBuilder&#8217;s pivotal method down to:</p>
+<p>[gist id=4457304]</p>
+<p>The CanBuildFrom(Type) method returns true if the Type has a [TestFixture] attribute or if any of its methods have a [Test] attribute.  The BuildFrom method then builds a test fixture description by reflecting on the Type&#8217;s methods, converting each test method into a Test:</p>
+<p>[gist id=4457322]</p>
+<p>To build a single test case, it performs a similar CanBuildFrom/BuildFrom pair as we saw for the fixture as a whole.  In this case, CanBuildFrom tests whether the given method has a [Test] attribute, and BuildFrom constructs a new TestMethod instance, which simply describes the test to be executed.</p>
+<p>All of the above lets us go from a given Assembly to a tree of all the tests that need to be executed.</p>
+<h2>Results - Test Execution</h2>
+<p>To actually run the tests, recall that we hand that work off to something called a WorkItem.  The work item was initialized with the TestSuite (aka the test fixture) to run, and this in turn creates yet more work items, one per test.  Running one of these per-test work items takes us to TestMethodCommand.Execute(&#8230;), which I whittled down to:</p>
+<p>[gist id=4457342]</p>
+<p>Again, much like xUnit, we use reflection to call the test method.  If an exception is thrown, that will cause the test to fail.  If no exception is thrown, we happily reach the next line and set the result to Success.</p>
+<h2>Contrasting xUnit with NUnitLight</h2>
+<p>NUnitLight and xUnit accomplish virtually the same thing, and from a very high level they do it in the same way:</p>
+<ol>
+<li>Provide an assertion API so that failed assertions present themselves as exceptions thrown from test methods.</li>
+<li>Use reflection to traverse the test Assembly, building up a tree that describes what fixtures are to be executed, and which tests appear on each fixture.</li>
+<li>Walk through those trees, using reflection to invoke each test method.</li>
+<li>If that invocation didn&#8217;t throw an exception, consider the test passed.</li>
+</ol>
+<p>Despite this similarity, their implementations differ a great deal.  I thought xUnit was big, but even NUnit<em>Light</em> seems quite a bit larger.  It was really easy to remove xUnit&#8217;s assertion code, and very tough to remove NUnitLight&#8217;s.  I&#8217;m not saying &#8220;ease of destruction&#8221; should be anywhere on a developer&#8217;s radar when writing an API, but it does speak to the history of the two projects.  As I wrote earlier, NUnit&#8217;s history involves more than one user-facing API for writing assertions, and they needed to avoid duplicating implementation details; naturally the design of assertions here is more complex than with xUnit.  I started pulling the assertion thread in NUnitLight, and quickly wound up with a long series of dependencies to remove before it would compile again.</p>
+<p>Before looking at either of these projects, I figured that after removing the assertion code, there would be very little left, but I was wrong.  As with anything that gets used by such a large audience, the devil is in the details.  Projects this popular have to handle many environments and situations that no single developer ever encounters on their own.</p>
+<p>Although I doubt I could make a meaningfully-large contribution to these projects right away, I&#8217;m now much closer to that level of knowledge.  Passively reading through the code would not have been as effective as destroying them from the outside in.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-25T00:00:00-06:00" pubdate data-updated="true">Jan 25<span>th</span>, 2013</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/whittling-nunit/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/whittling-nunit/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/headspring-forms-strategic-alliance-with-clear-measure-in-support-of-new-business-enterprise/" title="Previous Post: Headspring Forms Strategic Alliance with Clear Measure in Support of New Business Enterprise">&laquo; Headspring Forms Strategic Alliance with Clear Measure in Support of New Business Enterprise</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/headspring-reports-year-end-results-and-projections-for-2013/" title="Next Post: Headspring Reports Year-End Results and Projections for 2013">Headspring Reports Year-End Results and Projections for 2013 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

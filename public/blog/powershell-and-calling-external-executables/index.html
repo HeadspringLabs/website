@@ -1,0 +1,273 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Powershell and Calling External Executables - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="In my last post on error handling when using Powershell, we saw how Powershell&#8217;s default behavior for uncaught exceptions allows the rest of &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/powershell-and-calling-external-executables">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Powershell and Calling External Executables</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-18T00:00:00-05:00" pubdate data-updated="true">Aug 18<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>In my last post on <a href="http://www.headspring.com/2011/08/avoiding-on-error-resume-next-when-using-powershell">error handling when using Powershell</a>, we saw how Powershell&#8217;s default behavior for uncaught exceptions allows the rest of your script to continue running in a likely-invalid state, and how setting <strong>$global:ErrorActionPreference = &#8220;Stop&#8221;</strong> changes that behavior to stop as soon as an uncaught exception surfaces.</p>
+<p>Unfortunately, we can <em>still</em> be surprised by Powershell&#8217;s error handling behavior. There are two main categories of errors your Powershell script might encounter:</p>
+<ol>
+<li>Uncaught exceptions thrown by your Powershell process.</li>
+<li>Failure exit codes returned by external programs that your Powershell process invoked.<!--more--></li>
+</ol>
+<p>When we set the ErrorActionPreference to &#8220;Stop&#8221;, we only change the behavior of uncaught exceptions. We have to work a little harder to cover the other category. Consider a Powershell script that calls out to an external program which returns its own failure exit code:</p>
+<p>[gist id=1150145]</p>
+<p>External executables are invoked using similar syntax as Powershell commands like <code>write-host</code>, so it isn&#8217;t obvious that there&#8217;s anything special about the call to <code>schtasks</code>. Since it is an external program, however, it can&#8217;t exactly throw a .NET exception - it might not even <em>be</em> a .NET program.</p>
+<p>The lingua franca of command-line failure is exit codes, rather than exceptions. An exit code of 0 means &#8220;all is well&#8221;, and anything else should be treated as a failure.</p>
+<p>We have two problems:</p>
+<ol>
+<li>calls to external programs don&#8217;t feel special to the reader, even though they behave differently from normal Powershell commands</li>
+<li>we&#8217;re tempted to explicitly follow each external call with a corresponding test-and-throw code block, which would be ugly and distracting to the reader</li>
+</ol>
+<p>Fortunately, we can take advantage of Powershell&#8217;s flexible syntax to address both of these concerns. It turns out that a Powershell function can accept a <em>code block</em> as an argument, effectively allowing us to add new keywords to the language. Consider the helper function &#8216;exec&#8217;:</p>
+<p>[gist id=1150147]</p>
+<p>When we use exec, we can pass it a { code block surrounded in braces }. This way we can make our external commands stand out as special, using just one new &#8216;keyword&#8217;, and we get the error handling we wanted to boot:</p>
+<p>[gist id=1150152]</p>
+<p>Eureka! We can ensure that both categories of failures will stop execution dead in its tracks.</p>
+<p>To sum up, the default error handling behavior in Powershell is dramatically different from that of other .NET languages. <strong>By default, your script will happily and disasterously continue running even when throwing exceptions.</strong> This can leave the user of the script confused as to whether the process has actually succeeded or failed. By setting the global ErrorActionPreference and by wrapping external commands with the &#8216;exec&#8217; helper function, Powershell&#8217;s behavior can become what we expected in the first place.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-18T00:00:00-05:00" pubdate data-updated="true">Aug 18<span>th</span>, 2011</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/powershell-and-calling-external-executables/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/powershell-and-calling-external-executables/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/unit-testing-best-practices-know-your-tests-lifecycle-part-1/" title="Previous Post: Unit Testing Best Practices: Know your test's lifecycle, Part 1">&laquo; Unit Testing Best Practices: Know your test's lifecycle, Part 1</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/when-to-use-a-rhino-mock-and-when-not-to/" title="Next Post: When to Use a Rhino Mock, and When Not To">When to Use a Rhino Mock, and When Not To &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

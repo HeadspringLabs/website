@@ -1,0 +1,748 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="Several weeks back, I was customizing xUnit to cut down on ceremony in my tests. When I ran into some trouble, I started looking through the source &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/page/8">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/avoid-mutation-by-default/">Avoid Mutation by Default</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-25T00:00:00-05:00" pubdate data-updated="true">Oct 25<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Several weeks back, I was <a href="http://www.headspring.com/patrick/low-ceremony-xunit/">customizing xUnit</a> to cut down on ceremony in my tests.  When I ran into some trouble, I started looking through the source code for xUnit, and saw something a little surprising: tests within a test class are executed in a random order.  Sure, tests need to be isolated so that test execution order doesn&#8217;t affect their success or failure, but randomizing within the test runner seemed like overkill.</p>
+<p>If it ever caught an issue, it still wouldn&#8217;t tell me where the problem was, right?  It seemed like it would be better to execute in a deterministic order so that when I <em>do</em> get myself into trouble, it will be reproducible trouble.  Today, though, I was grateful for this behavior.  If you&#8217;re running tests frequently during development, the very fact that your newly-coded tests start failing at random <strong>is</strong> informative: <em>&#8220;What test is wrong?  The one that I just wrote.&#8221;</em></div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/avoid-mutation-by-default/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/how-we-decided-on-our-current-vacation-policy/">How We Decided on Our Current Vacation Policy</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-24T00:00:00-05:00" pubdate data-updated="true">Oct 24<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img style="margin: 0px 5px 5px 0px; display: inline; float: left" align="left" src="http://www.inc.com/uploaded_files/image/170x170/work-vacation-policy-bkt_3122.jpg"></p>
+<p>I very much liked the <a href="https://github.com/blog/1269-the-github-hiring-experience">GitHub write-up</a> on how they hire.&nbsp; It made me think back to a lot of decisions we’ve made at <a href="http://www.headspring.com/">Headspring</a>.&nbsp; One of them is the decision on vacation policy.&nbsp; With a mostly salaried work force, benefits is a big concern, and vacation is one of those.&nbsp; Here, I’ll attempt to share the progression of our vacation policy and how it came about.</p>
+<p>First, in 2007/2008 H1, Headspring had just added its 6th employee.&nbsp; The vacation policy was simple but not consistent.&nbsp; On paper, we said “two weeks” for everyone.&nbsp; In practice, we worked too much and didn’t even track days off.&nbsp; Then, by the end of 2008, we grew to over twelve employees and had to modify the policy.&nbsp; If memory serves me, it was in 2009 when we had real conversations and came up with a policy.</p>
+<h2>The first real policy</h2>
+<p>The idea that arose from having an employee retrospective was that we hired mature professionals, and we didn’t need to have a time-bound, cookie-cutter policy for everyone.&nbsp; The policy that we created them was a “<strong>use as much as you need</strong>” vacation policy.&nbsp; Everyone loved that policy.&nbsp; It communicated to all employees several things.</p>
+<ul>
+<li>You are a professional
+<li>We trust you.</li>
+</ul>
+<p>We didn’t track days off at all.&nbsp; Over the course of the next two years, we found that this policy left a lot of questions on the table.</p>
+<ul>
+<li>Ok.&nbsp; I can take as much vacation as I want?&nbsp; Clearly that can’t be the case?
+<li>How much vacation is too much?
+<li>How much vacation is too little?</li>
+</ul>
+<p>With highly analytical employees who hold themselves to a high standard, the policy of “whatever” proved to be too ambiguous.&nbsp; Folks did take vacation, but there was always an uneasiness of being unsure of expectations in this area.&nbsp; After another company meeting on the topic – probably around the time of twenty (20) employees, we honed the policy yet again.</p>
+<h2>Changing the policy</h2>
+<p>First, we re-established a commitment to a 40-hour work week.&nbsp; While some companies boast “we work hard, and we play hard”, we established a “work hard and go home” standard.&nbsp; Sorry.&nbsp; We don’t have a ping-pong table in the office (although our office complex does have horseshoes, sand volleyball, a basketball court, and a Frisbee golf setup).&nbsp; After communicating this, we made the policy for non-billable staff two or three weeks (in addition to the 7 company holidays we have) based on level in the company.&nbsp; The policy for our software engineers (most of the company) became based on billed time.&nbsp; With a standard of a 40-hour work week, we established a percent of the year that we needed to work on client projects in order for the company to remain financially healthy.&nbsp; After all, we make our money by building great custom software for our clients so they can compete in their industries.&nbsp; </p>
+<p>The solution, then was to based vacation time on the percent of 2080 hours (a year of 40-hour weeks) that we expected to be billed.&nbsp;&nbsp; In effect, by billing continuously for a couple of months, a week of vacation would then pull the percent of time billed down to where we needed it (80%).&nbsp; This system actually worked very well.&nbsp; Everyone knew exactly how much vacation they could take and still meet their commitment for billed time.&nbsp; I must insert here that we don’t have bonuses for top billers.&nbsp; We are a software engineering firm and not a straight consulting company.&nbsp; Therefore, our goal is not to maximize individual billed time to a client.&nbsp; Our goal is to deliver one awesome software system after another.&nbsp; Often we finish milestones early and leave budget on the table.&nbsp; This is celebrated, not lamented.</p>
+<p>With this policy in place, everyone knew what to do, and by tracking our client time, we knew exactly how much time off we could afford per person.&nbsp;&nbsp; One gentleman saved up for himself four weeks of vacation time.</p>
+<h2>How the policy broke, and what we did about it</h2>
+<p><a href="http://www.headspring.com/wp-content/uploads/2012/10/CropperCapture63.png"><img style="background-image: none; border-right-width: 0px; margin: 0px 0px 5px 5px; padding-left: 0px; padding-right: 0px; display: inline; float: right; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 0px" title="CropperCapture[63]" border="0" alt="CropperCapture[63]" align="right" src="http://www.headspring.com/wp-content/uploads/2012/10/CropperCapture63_thumb.png" width="244" height="140"></a>This policy carried us to early 2012.&nbsp; Now, at 30 employees, we have a different policy.&nbsp; The currently policy is much simpler and requires much less math.&nbsp; It is much more in alignment with our philosophy of “light on policy, heavy on judgment.”&nbsp;&nbsp; We have now changed the policy for our software engineers to&nbsp; be the following: 80% client work, 10% non-client company time, and 10% personal time.&nbsp; That means that 10% of the year, it’s yours.&nbsp; With a 52-week year, it is 5.2 weeks.&nbsp; We have found that most people don’t take 5.2 weeks of vacation per year, so that is enough for sick days, other stuff, and small bits of time off spread throughout the year as well.&nbsp; Then, the 10% of company time covers our staff meetings, fun quarterly off-sites, and other stuff.&nbsp; We put that policy in place because we found that a few people we uneasy about taking vacation because they were afraid of bench time.&nbsp; Our policy had not taken that into account.&nbsp; We wanted everyone to take vacation, and now the current policy ensures that.</p>
+<h2>What will it be next?</h2>
+<p>I have no idea.&nbsp; We’ve tweaked it over the years, and if we find another downside to the current policy, we’ll tweak it again.&nbsp; The good news is that we have such great people who live the company values, that they tend to speak up if something isn’t right.&nbsp; One of our company values is honest communication (candor), and they do a great job of living this one out.&nbsp; </p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/the-failed-record-of-the-software-industrywhy-software-people-dont-get-it/">The Failed Record of the Software Industry–why Software People Don’t Get It</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-18T00:00:00-05:00" pubdate data-updated="true">Oct 18<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>The Standish Group is an organization that has been studying and reporting on software projects for many years.&nbsp; In 1995, it reported that only 16.2% of software projects succeeded.&nbsp; In large companies, the number was only 8%.&nbsp; That is, these projects were on time and on budget.&nbsp; In 2012, there is some improvement.&nbsp; The 2012 report discusses waterfall projects and agile projects.&nbsp; A <a href="http://www.mountaingoatsoftware.com/uploads/blog/Agile-Waterfall-Success-Failure-Rates.jpg">summary of the success stats</a> demonstrates that agile projects do improve things across the board.&nbsp; That’s not surprising given that the 1995 report cited lack of stakeholder involvement and incomplete requirements as the top two contributing factors.&nbsp; <a href="http://agilemanifesto.org/principles.html">Agile principles</a> address both of those.&nbsp; </p>
+<p>The 2012 report is still fairly damning of the industry as a whole.&nbsp; It cites 12% success rate for waterfall projects and 42% success rates for agile projects.&nbsp; Firms like <a href="http://www.headspring.com/">Headspring</a>, with a 95% success rate, have embraced agile, of course, but there is still so much more to be desired by the track record of the industry.&nbsp; In 2012, 9% of agile projects still out-right fail, and 49% are “challenged”. i.e. they unacceptably ran over budget and/or over schedule – either can have significant impacts on the business.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2012/10/Car_crash_1.jpg"><img style="background-image: none; border-right-width: 0px; margin: 0px 7px 5px 0px; padding-left: 0px; padding-right: 0px; display: inline; float: left; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 0px" title="Car_crash_1" border="0" alt="Car_crash_1" align="left" src="http://www.headspring.com/wp-content/uploads/2012/10/Car_crash_1_thumb.jpg" width="404" height="304"></a>The industry even pokes fun at itself in a famous Internet meme, “<a href="http://www.snopes.com/humor/jokes/autos.asp">If cars were like software</a>” where we see that we have much more reasonable expectations of our automobiles than we do of software and the people who make software. Somehow, the software vendors/programmers have set the expectations of paying customers (and executives) so low that they celebrate the smallest successes even in the face of massive budget overruns and late launches.</p>
+<p><strong>This is not acceptable!&nbsp; </strong>Software people don’t get it.&nbsp; Programmers have been writing mission-critical business systems for decades.&nbsp; The newness is gone.&nbsp; The trial period of “we’re figuring out how to do this” is well over.&nbsp; Now is the time when paying customers must demand more from programmers.&nbsp; </p>
+<p>As an executive of a <a href="http://headspring.com">software engineering firm</a>, I see the perspective of our clients.&nbsp; They have a business that is pushing forward in their industries.&nbsp;&nbsp; They have a really old information system that must be revamped in order to take advantage of changes in the industry.&nbsp; Or they need some automation for a brand new market offering.&nbsp; The success of the business initiative rides on many factors, software being one of them.&nbsp; They cannot afford to gamble with a failed $1M (or more) project.&nbsp; Besides the money, once the project calendar has come and gone, you can’t get those months back.&nbsp; Whether you hire a <a href="http://headspring.com">firm</a>, do it in-house, or hire contractors in India, a failed project by any cause could mean the end of the career by the manager in charge of the product or initiative.&nbsp; And it doesn’t have to be this way.</p>
+<p>Right now, across the industry, clients are forced to literally gamble with their capital investments and time.&nbsp; With less than 50% of projects (even the new and improved agile variety) succeeding, clients many times have no recourse but to gamble.&nbsp; The smooth-talking sales personnel do their bonding and rapport.&nbsp; Then comes the confidence building.&nbsp; Then the project plan and schedule – all works of fiction.&nbsp; And don’t forget the budget, which magically covers the time period the project plan lays out.&nbsp; Once the project gets started, the software engineers work for a while – hold meetings according to their agile process – track burn-downs, measure lots of agile numbers – then what comes out the other end is your 42% chance of succeeding.&nbsp; </p>
+<p>In order to increase the pitiful industry track record, software engineers need to change.&nbsp; And when saying “software engineers”, I’m referring to any person responsible for delivering software. Some companies have a plethora of titles and segmentation of specialty, but it’s all software engineering (i.e. software engineering includes leadership).&nbsp; The bed of education and training currently in place does not produce the results that clients demand.&nbsp; I hope to elaborate more on this soon.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/aint-any-is-all-aint/">Ain&#8217;t Any Is All Ain&#8217;t</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-17T00:00:00-05:00" pubdate data-updated="true">Oct 17<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Today, ReSharper made the same suspicious suggestion to both my coworker and me.  We both had the task of checking a potentially-large collection for items that fail to pass a test, and we both phrased these like so: &#8220;if not any of the items fail, continue…&#8221;.  In each case, ReSharper wanted to rephrase our statements, and it seemed like following the suggestion would be a change for the worse!</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/aint-any-is-all-aint/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/jack-welch-mbaa-new-graduate/">Jack Welch MBA–a New Graduate</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-12T00:00:00-05:00" pubdate data-updated="true">Oct 12<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img style="margin: 0px 15px 5px 0px; display: inline; float: left" alt="Jack Welch Management Institute" align="left" src="http://www.jwmi.com/sites/all/themes/jwmi/images/jwmi-logo.png">For the last two years, I have been enrolled in the <a href="http://www.jwmi.com">Jack Welch Management Institute</a>.&nbsp; I just finished their <a href="http://www.jwmi.com/content/executive-mba-course-descriptions">Executive MBA program</a>, and my perspective has changed.&nbsp; First, I have to thank <a href="https://twitter.com/jack_welch">Jack Welch</a> for creating this program, in which he shares his decades of business leadership experience.&nbsp; </p>
+<p>If you aren’t familiar, Jack Welch was the CEO of <a href="http://www.ge.com/">General Electric</a> from 1981 to 2001.&nbsp; That’s a lot of years!&nbsp;&nbsp; Now, he shares his knowledge and experience with people like me – and whoever else enrolls in his MBA program.</p>
+<p><img style="margin: 5px 0px 5px 5px; display: inline; float: right" alt="Logo-strayer.png" align="right" src="http://upload.wikimedia.org/wikipedia/en/2/2f/Logo-strayer.png">JWMI is a program hosted at <a href="http://www.strayer.edu/">Strayer University</a>, which is a nationwide university that has been around since 1892 – not as old as my alma mater, <a href="http://www.tamu.edu/">Texas A&amp;M</a> (1872/6), but very proven.&nbsp; Chances are there is a Strayer location in a city near you.</p>
+<p>I was very fortunate to have a great classmate who took the courses with me.&nbsp; <a href="http://headspring.com/kevin">Kevin Hurwitz</a>, the Chief Architect at <a href="http://www.headspring.com/">Headspring</a>, also just received his MBA from JWMI.&nbsp; Each course, we were able to swap notes and apply the knowledge every week at Headspring.</p>
+<p>Throughout the two years, I completed courses on a broad range of topics.&nbsp; They are listed here.&nbsp; As I blog about what I have learned and applied in each course, I’ll link to that blog from this list.</p>
+<ul>
+<li><a href="http://www.headspring.com/jeffrey/jack-welch-mba-course-business-communication-and-ethics/">Business Communications and Ethics</a>
+<li>Leading in the 21st Century
+<li>Strategy
+<li>People Management
+<li>Marketing in a Global Environment
+<li>Managerial Economics
+<li>Operations Management
+<li>Financial Management I
+<li>Organizational Change and Culture
+<li>Financial Management II
+<li>New Business Ventures and Entrepreneurship
+<li>Capstone (simulation)</li>
+</ul>
+<p>I am very happy to have attended and graduated from the Jack Welch Management Institute.&nbsp; My contribution to Headspring has materially benefited from the learning.&nbsp; Also, I am so excited that several other Headspringers have decided to enroll for this semester!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/get-to-know-a-developer-justin-mason/">Get to Know a Developer: Justin Mason</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-12T00:00:00-05:00" pubdate data-updated="true">Oct 12<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://www.headspring.com/wp-content/uploads/2012/10/photo-3.jpg"><img class="alignright size-medium wp-image-5799" title="Justin Mason - Headspring Principal Consultant" src="http://www.headspring.com/wp-content/uploads/2012/10/photo-3-224x300.jpg" alt="Justin Mason - Headspring Principal Consultant" width="224" height="300" /></a>Justin Mason is our newest team member at Headspring. An experienced developer, Justin joins us from Catapult Systems where he designed and developed a sensor data recording and management application for natural gas and oil drilling rigs. Justin has a passion for the ever-changing landscape of viable technologies and their potential applications, which makes him a great addition to our team of like minded and ambitious people!</p>
+<p><strong>Are you an expert at anything?</strong></p>
+<p>I have more than 15 years of application development experience. In that time, I’ve seen the evolution of the Web. By understanding where technology originated, it helps provide a clearer picture of where it may go.  The uncertainty of how competing priorities have shaped the software applications that are currently available makes it an exciting time to be at Headspring to contribute to the needs of its customers.</p>
+<p>I became passionate about Microsoft Windows Communication Foundation (WCF) because I understood the pain it was trying to alleviate for companies.  Bidirectional communication using binary serialization over TCP that can be easily transitioned to other transportation protocols like HTTP really caught my interest.  WCF has had to keep pace with the industry due to emerging technologies such as Ajax using JSON serialization instead of SOAP. Its use in the background will remain intact while abstractions are built on top of it to facilitate new applications.       </div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/get-to-know-a-developer-justin-mason/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/memory-management/">Memory Management</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-11T00:00:00-05:00" pubdate data-updated="true">Oct 11<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Sometimes I get a reputation for having a good memory, but I actually don&#8217;t trust it at all.  When it comes to my short-term memory, I find that simple things slip my mind far too easily if I don&#8217;t place an unusual amount of concentration on them, so &#8220;automatic&#8221; tasks like locking a door fade too quickly and I&#8217;ll immediately wonder whether I actually did them.</p>
+<blockquote><p>Wait. Did I leave the stove on?</p></blockquote>
+<p>I trust my long-term memory only slightly more.  Maybe it&#8217;s all in my head, but the distrust is real.  Short-term and long-term memory matter when working on a large software project, so how do I deal with my memory distrust? <strong>I. Write. Down. <em>Everything.</em></strong></div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/memory-management/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/ravendb-boot-camp/">RavenDB Boot Camp</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-10T00:00:00-05:00" pubdate data-updated="true">Oct 10<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><address>RavenDB is a transactional, open-source Document Database written in .NET, offering a flexible data model designed to address requirements coming from real-world systems. RavenDB allows you to build high-performance, low-latency applications quickly and efficiently.</address>
+<div>
+<p><a href="http://www.headspring.com/wp-content/uploads/2012/06/logo-ravendb.png"><img class="alignleft size-medium wp-image-5690" title="logo-ravendb" src="http://www.headspring.com/wp-content/uploads/2012/06/logo-ravendb-300x104.png" alt="" width="300" height="104" /></a>In this  hands–on, 2–day course you will learn how to use this quickly evolving Document Database efficiently in your applications to save time and effort on communicating with database storage.</p>
+<p><strong>Upon completion of this RavenDB course, you will be able to build database–backed applications faster and more efficiently.</strong></p>
+<p>&nbsp;</p>
+<p>For upcoming classes and registration options call (877) 459 - 2260</p>
+<p>&nbsp;</p>
+<p><strong>Topics covered in this workshop:</strong></p>
+<ul>
+<li>Overview of RDBMS, NoSQL, Document Databases and RavenDB</li>
+<li>Basic CRUD operations</li>
+<li>RavenDB’s indexes implementation</li>
+<li>Data modeling</li>
+<li>Caching</li>
+<li>Static indexes and Full–text search and spatial queries</li>
+<li>Map⁄Reduce, multi–map, boosting</li>
+<li>Live projections</li>
+<li>Scaling: replication, sharding, multi–tenancy</li>
+<li>Bundles</li>
+<li>Extending RavenDB by writing your own bundle</li>
+</ul>
+<div>
+<p><strong></div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/ravendb-boot-camp/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/a-peek-inside-the-headspring-toolbox/">A Peek Inside the Headspring Toolbox</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-10T00:00:00-05:00" pubdate data-updated="true">Oct 10<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Here is a peek into the Headspring toolbox.  I did a simple analysis of the tools used at Headspring by analyzing the Nuget package files for a subset of the projects we have in source control.  I created a PowerShell script to pull out the package names from the Nuget packages.config files.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2012/10/headspring-toolbox-2.png"><img src="http://www.headspring.com/wp-content/uploads/2012/10/headspring-toolbox-2-1024x564.png" alt="Headspring Toolbox" width="640" height="352" class="aligncenter size-large wp-image-5790" /></a></p>
+<p>[gist id=3840798]</p>
+<p>Here is a list of items we have used to build projects for our clients over the last several years at Headspring. The tool list includes both brownfield and greenfield projects and is by no means comprehensive. I manually added items that I felt were noteworthy but didn’t show up in the Nuget packages.</p>
+<h2>Automation</h2>
+<ul>
+<li>PowerShell of course!</li>
+<li>batch files</li>
+</ul>
+<h2>Build Tools</h2>
+<ul>
+<li><a href="https://github.com/psake">Psake</a></li>
+<li><a href="http://www.jetbrains.com/teamcity/">Team City</a></li>
+</ul>
+<h2>Deployment Tools</h2>
+<ul>
+<li><a href="http://pstrami.codeplex.com/">Pstrami<b>Added 10-18</b></a></li>
+</ul>
+<h2>CSS Frameworks</h2>
+<ul>
+<li><a href="http://foundation.zurb.com/">Foundation</a></li>
+<li><a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap</a></li>
+</ul>
+<h2>Data Access</h2>
+<ul>
+<li><a href="http://nhforge.org/">NHibernate</a></li>
+<li><a href="http://www.fluentnhibernate.org/">FluentNhibernate</a></li>
+<li><a href="http://nhprof.com/">NHibernateProfiler</a></li>
+<li><a href="http://www.toptensoftware.com/petapoco/">Petapoco</a></li>
+<li><a href="http://code.google.com/p/dapper-dot-net/">Dapper and DapperExtensions</a></li>
+<li><a href="http://ravendb.net/">RavenDB</a></li>
+<li><a href="http://entityframework.codeplex.com/">Entity Framework</a></li>
+<li>Mongo</li>
+<li><a href="http://system.data.sqlite.org">System.Data.SQLite</a></li>
+</ul>
+<h2>Dependency Injection</h2>
+<ul>
+<li><a href="http://docs.structuremap.net/">StructureMap</a></li>
+</ul>
+<h2>JavaScript Libraries</h2>
+<ul>
+<li><a href="http://jquery.com/">jQuery</a></li>
+<li><a href="http://modernizr.com/">Modernizr</a></li>
+<li><a href="http://jqueryui.com/">jQuery UI</a></li>
+<li><a href="http://backbonejs.org/">Backbone</a></li>
+<li><a href="http://knockoutjs.com/">Knockout</a></li>
+<li><a href="http://www.trirand.com/blog/">jqGrid</a></li>
+<li><a href="http://datatables.net/">DataTables</a></li>
+<li><a href="http://www.sencha.com/products/extjs/">ExtJS</a></li>
+<li><a href="http://www.highcharts.com/">Highcharts JS</a></li>
+<li><a href="http://www.kendoui.com/">Kendo UI</a></li>
+<li><a href="http://pivotal.github.com/jasmine/">Jasmine</a></li>
+</ul>
+<h2>Logging</h2>
+<ul>
+<li><a href="http://logging.apache.org/log4net/">log4net</a></li>
+<li><a href="http://nlog-project.org/">NLog</a></li>
+<li><a href="http://code.google.com/p/elmah/">Elmah</a></li>
+</ul>
+<h2>Misc. Open Source Libraries</h2>
+<ul>
+<li><a href="http://automapper.codeplex.com/">Automapper</a></li>
+<li><a href="https://github.com/Headspringlabs/Enumeration">Enumeration</a></li>
+<li><a href="http://nbuilder.org/">NBuilder</a></li>
+<li><a href="http://nservicebus.com/">NServiceBus</a></li>
+<li><a href="http://james.newtonking.com/projects/json-net.aspx">Newtonsoft.Json</a></li>
+<li><a href="http://dotnetzip.codeplex.com/">DotNetZip</a></li>
+<li><a href="http://quartznet.sourceforge.net/">Quartz.NET</a></li>
+<li><a href="http://commandline.codeplex.com/">CommandLineParser</a></li>
+<li><a href="http://nuget.org/packages/DocumentFormat.OpenXml">DocumentFormat.OpenXml</a></li>
+<li><a href="http://www.dotlesscss.org/">dotless</a></li>
+<li><a href="https://bitbucket.org/headspringlabs/tarantino/wiki/Home">Tarantino <b>Added 10-18</b></a></li>
+<li><a href="https://code.google.com/p/roundhouse/">Roundhouse <b>Added 10-18</b></a></li>
+<li><a href="https://github.com/dahlbyk/posh-git">Posh Git <b>Added 10-18</b></a></li>
+</ul>
+<h2>Reporting / Text Format Tools</h2>
+<ul>
+<li><a href="http://sourceforge.net/projects/itextsharp/">iTextSharp</a></li>
+<li><a href="http://code.google.com/p/linqtoexcel/">LinqToExcel</a></li>
+<li><a href="http://closedxml.codeplex.com/">ClosedXML</a></li>
+<li><a href="http://epplus.codeplex.com/">EPPlus</a></li>
+<li><a href="http://doddlereport.codeplex.com/">DoddleReport</a></li>
+<li><a href="http://www.essentialobjects.com/">Essential Objects</a></li>
+<li><a href="http://www.nitropdf.com/">Nitro PDF - <b>Updated 10-18</b></a></li>
+</ul>
+<h2>Source Control</h2>
+<ul>
+<li><a href="http://mercurial.selenic.com/">mercurial</a></li>
+<li><a href="http://git-scm.com/">git</a></li>
+</ul>
+<h2>Testing Tools</h2>
+<ul>
+<li><a href="http://watin.org/">WaitN</a></li>
+<li><a href="http://code.google.com/p/moq/">Moq</a></li>
+<li><a href="http://www.nunit.org/">NUnit</a></li>
+<li>Should</li>
+<li><a href="http://hibernatingrhinos.com/open-source/rhino-mocks">RhinoMocks</a></li>
+<li><a href="http://mvcrouteunittester.codeplex.com/">MvcRouteUnitTester</a></li>
+</ul>
+<h2>Validation</h2>
+<ul>
+<li><a href="http://nuget.org/packages/Castle.Components.Validator">Castle.Components.Validator</a></li>
+<li><a href="http://fluentvalidation.codeplex.com/">FluentValidation</a></li>
+</ul>
+<h2>WPF</h2>
+<ul>
+<li><a href="http://mvvmlight.codeplex.com/">MvvmLight</a></li>
+<li><a href="http://caliburnmicro.codeplex.com/">Caliburn.Micro</a></li>
+</ul>
+<p>The list of tools is by no means a recommendation list, as it includes tools from brownfield projects and greenfield projects started more than two years ago. Many of the tools listed would still be my weapon of choice if I started a new project today. I will follow up this post with a list of tools I would recommend for a greenfield ASP .NET MVC website.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/headspring-hosts-central-texas-givecamp/">Headspring Successfully Hosts Inaugural Central Texas GiveCamp</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-05T00:00:00-05:00" pubdate data-updated="true">Oct 5<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p style="text-align: center;"><a href="http://www.headspring.com/wp-content/uploads/2012/10/IMG_2612.jpg"><img class="aligncenter size-large wp-image-5784" title="Central Texas GiveCamp" src="http://www.headspring.com/wp-content/uploads/2012/10/IMG_2612-1024x768.jpg" alt="Central Texas GiveCamp" width="640" height="480" /></a></p>
+<p>Last weekend, Headspring hosted a charity hackathon benefiting eight Central Texas nonprofits. Forty-nine GiveCamp volunteers, many of them Headspring employees, gathered at Headspring’s corporate office for a three-day marathon of pro-bono website design and development. </div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/headspring-hosts-central-texas-givecamp/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/9/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/page/7/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie&#8217;s Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

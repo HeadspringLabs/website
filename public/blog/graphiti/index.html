@@ -1,0 +1,280 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Graphiti - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="Back in college, I stumbled across a great tool called GraphViz. I used it to generate class diagrams from the source of a PHP application I was &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/graphiti">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Graphiti</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-27T00:00:00-06:00" pubdate data-updated="true">Feb 27<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Back in college, I stumbled across a great tool called <a href="http://www.graphviz.org/">GraphViz</a>.  I used it to generate class diagrams from the source of a PHP application I was working on.  More recently, I&#8217;ve found it useful again for visualizing the <em>runtime</em> relationships between objects.  GraphViz can turn a plaintext description of relationships into a graph image.  Not &#8220;graph&#8221; as in &#8220;charts and graphs&#8221;, but &#8220;graph&#8221; as in &#8220;computer science graph&#8221;.  Nodes and edges:</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/02/simple.png"><img src="http://www.headspring.com/wp-content/uploads/2013/02/simple.png" alt="simple" width="179" height="251" class="aligncenter size-medium wp-image-6425" /></a></p>
+<p>Today, we&#8217;ll see how to easily generate images like this.  Along the way, we&#8217;ll see an interesting use case for anonymous objects.</p>
+<h2>The Dot File Format</h2>
+<p>The image above can be generated from the following text file, using a GraphViz tool called dot.exe.  Note the use of the word &#8216;digraph&#8217;.  A graph is anything made up of nodes and edges; a digraph is a graph where the edges have <em>di</em>rection from a source node to a destination node.</p>
+<p>[gist id=5014220]</p>
+<p>To create the image from the dot file, run the command: <code>dot.exe Simple.dot -Tpng -o Simple.png</code>.</p>
+<p>The dot file format supports a lot of options.  For instance, we can customize the original dot file like so:</p>
+<p>[gist id=5014224]</p>
+<p>Optional attributes appear in square brackets.  Here, we give one of our edges a label, alter the colors, and change one of the nodes from an ellipse to a box:</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/02/fancy.png"><img src="http://www.headspring.com/wp-content/uploads/2013/02/fancy.png" alt="fancy" width="179" height="275" class="aligncenter size-full wp-image-6424" /></a></p>
+<p>One can imagine generating these dot files programmatically with a StringBuilder.  Doing so would be a little monotonous, especially when the optional attributes like shapes and colors are included.  You have to busy yourself with the dot format&#8217;s quoting rules as well as C#&#8217;s quoting rules.  Even when you succeed, you&#8217;ll be left with some ugly code.  I&#8217;d much rather generate the above two dot files like so:</p>
+<p>[gist id=5014233]</p>
+<p>[gist id=5014237]</p>
+<h2>Implementing the Digraph Class</h2>
+<p>First, it&#8217;ll be handy to define an extension method to apply the dot quoting rules to any .NET value.  The double-quote character is special in dot files and must be preceded with a slash.  Of course, double-quotes and slashes are also meaningful in C# strings, so we have to double-escape these in the substitution:</p>
+<p>[gist id=5014242]</p>
+<p>Next, take a look at the way the optional parameters were supplied in the earlier code sample: <code>new { label = 1, color="red" }</code>.  This is an anonymous object.  It creates an instance of a class whose name we never see, with read-only properties named &#8220;label&#8221; and &#8220;color&#8221;.  We pass this to a method that doesn&#8217;t know what type is being passed to it, but that&#8217;s OK because we can use reflection to inspect such an object.  Here&#8217;s a helper that can look at these anonymous objects and turn them into an equivalent dictionary, whose ToString produces the dot syntax for attributes:</p>
+<p>[gist id=5014245]</p>
+<p>I <em>could</em> have instead provided a real named class with all the possible dot properties already defined.  Doing so would be useful as it would give the developer statement completion suggestions, but the <a href="http://www.graphviz.org/doc/info/attrs.html">dot file format is actually quite extensive</a>.  In this case, it&#8217;s a very reasonable tradeoff to use anonymous objects and reflection for these node and edge attributes.  Even with statement completion, you&#8217;d find yourself frequently looking up details in the documentation anyway, so the return on investment would be ridiculous.</p>
+<p>We can represent a single node in the graph like so:</p>
+<p>[gist id=5014249]</p>
+<p>An Edge is defined by the two Nodes it connects:</p>
+<p>[gist id=5014253]</p>
+<p>Armed with all of the above classes, we can finally implement the Digraph class with ease:</p>
+<p>[gist id=5014257]</p>
+<h2>Criticism</h2>
+<p>Since the scope of this sample program is <em>entirely</em> devoted to generating the dot file format, I don&#8217;t mind the fact that I mixed state (node and edge definitions) with presentation (string formatting in each ToString override).  An earlier implementation put all of the string formatting in the Digraph class, but it was fairly ugly.  If the requirements expanded such that we needed to use the node/edge structure for things in addition to presentation in dot format, I would want to move all string formatting out of the Node, Edge, and Digraph classes, having a dedicated class just for traversing a Digraph to produce a dot file.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-27T00:00:00-06:00" pubdate data-updated="true">Feb 27<span>th</span>, 2013</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/graphiti/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/graphiti/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/creating-windows-installers-with-the-wix-toolset-part-5/" title="Previous Post: Creating Windows Installers with the WiX Toolset Part 5">&laquo; Creating Windows Installers with the WiX Toolset Part 5</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/creating-windows-installers-with-the-wix-toolset-part-6/" title="Next Post: Creating Windows Installers with the WiX Toolset Part 6">Creating Windows Installers with the WiX Toolset Part 6 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

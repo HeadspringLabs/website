@@ -1,0 +1,337 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>TDD Caveat | How not to follow Test Driven Development - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="TDD or Test Driven Development was considered an industry buzz for a while. Now a days it is considered more of a main stream development methodology &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/tdd-caveat-how-not-to-follow-test-driven-development">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">TDD Caveat | How Not to Follow Test Driven Development</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-29T00:00:00-05:00" pubdate data-updated="true">Jul 29<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p align="justify">TDD or <a href="http://www.agiledata.org/essays/tdd.html" target="_blank">Test Driven Development</a> was considered an industry buzz for a while. Now a days it is considered more of a main stream development methodology. we, at <a href="http://headspring.com" target="_blank">Headspring</a>, are among those early adopters who likes to walk on cutting edge technologies.</p>
+<p align="justify">Over last 5 year, I have transition through different stages of mind set when it comes to unit testing or TDD in general. As an early adoptor I was curious to know to what extend we can take this concept. At this stage, my unit test looked more state testing i.e</p>
+<div class="csharpcode">
+<pre>[Test]</pre>
+</div>
+<div class="csharpcode">
+<pre>&lt;span class=&quot;kwrd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;void&lt;/span&gt; Should_Add_Two_Number()</pre>
+</div>
+<div class="csharpcode">
+<pre>{</pre>
+</div>
+<div class="csharpcode">
+<pre>    var number1 = 100;</pre>
+</div>
+<div class="csharpcode">
+<pre>    var number2 = 50;</pre>
+</div>
+<div class="csharpcode">
+<pre>    var sum = number1 + number2;</pre>
+</div>
+<div class="csharpcode">
+<pre>    sum.ShouldEqual(150);</pre>
+</div>
+<div class="csharpcode">
+<pre>}</pre>
+</div>
+<p>As I moved further and realize power of maintainability and loosely coupled design,<!--more--> I started designing solution in terms of interfaces. With that my knowledge on TDD expanded towards interaction testing. Mocking frameworks like <a href="http://ayende.com/wiki/Rhino+Mocks.ashx" target="_blank">Rhino.Mock</a> and Moq, TypeMock etc emerged during that timeframe to support such testing scenarios. And those test now started looking like this:<!--more--></p>
+<div class="csharpcode">
+<pre>[Test]</pre>
+</div>
+<div class="csharpcode">
+<pre>&lt;span class=&quot;kwrd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;void&lt;/span&gt; Use_Is_Anything_when_args_are_not_important()</pre>
+</div>
+<div class="csharpcode">
+<pre>{</pre>
+</div>
+<div class="csharpcode">
+<pre>    &lt;span class=&quot;kwrd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;int&lt;/span&gt; intToReturn = 5;</pre>
+</div>
+<div class="csharpcode">
+<pre>    _stub = MockRepository.GenerateStub&amp;lt;ISampleInterface&amp;gt;();</pre>
+</div>
+<div class="csharpcode">
+<pre>    _stub.Stub(s =&amp;gt; s.MethodThatReturnsInteger(&lt;span class=&quot;str&quot;&gt;&quot;foo&quot;&lt;/span&gt;)).Return(intToReturn);</pre>
+</div>
+<div class="csharpcode">
+<pre>    _stub.MethodThatReturnsInteger(&lt;span class=&quot;str&quot;&gt;&quot;foo&quot;&lt;/span&gt;).ShouldEqual(intToReturn);</pre>
+</div>
+<div class="csharpcode">
+<pre>}</pre>
+</div>
+<p>Exploring further, I started utilizing more features provided by those mocking framework. Now you have way to not only  ensure method on stub/mock returns predictable value, but also make assertion that it was called with right argument. Taking this even further, when you have more services to interact with, these frameworks have option to assert sequence in which you call them. Example of first case may look like this:</p>
+<div class="csharpcode">
+<pre>[Test]</pre>
+</div>
+<div class="csharpcode">
+<pre>&lt;span class=&quot;kwrd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;void&lt;/span&gt; Use_GetArgumentsForCallsMadeOn_to_inspect_arguments()</pre>
+</div>
+<div class="csharpcode">
+<pre>{</pre>
+</div>
+<div class="csharpcode">
+<pre>    var interactor = &lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; InteractingClass();</pre>
+</div>
+<div class="csharpcode">
+<pre>    interactor.CallTheInterfaceTwice(_mock);</pre>
+</div>
+<div class="csharpcode">
+<pre>    IList&amp;lt;&lt;span class=&quot;kwrd&quot;&gt;object&lt;/span&gt;[]&amp;gt; argsPerCall = _mock.&lt;strong&gt;GetArgumentsForCallsMadeOn&lt;/strong&gt;(m =&amp;gt; m.MethodThatReturnsInteger(&lt;span class=&quot;kwrd&quot;&gt;null&lt;/span&gt;));</pre>
+</div>
+<div class="csharpcode">
+<pre>    argsPerCall[0][0].ShouldEqual(&lt;span class=&quot;str&quot;&gt;&quot;foo&quot;&lt;/span&gt;);</pre>
+</div>
+<div class="csharpcode">
+<pre>    argsPerCall[1][0].ShouldEqual(&lt;span class=&quot;str&quot;&gt;&quot;bar&quot;&lt;/span&gt;);</pre>
+</div>
+<div class="csharpcode">
+<pre>}</pre>
+</div>
+<p>Picture looked quite rosy here until I passed over excitement phase and entered phase of maintaining such software. <a href="http://www.refactoring.com/" target="_blank">Refactoring</a> such code became painful job now. That is precisely because I have my logic duplicated at two places, one in production code and one in test. Every single change that I make in production code has to be reflected into test interaction as well. This is direct violation of fundamental principle of OOP.  This indeed is one of the code-smell whose root is buried in wrong choice of underlying software design.</p>
+<p>Now let’s step back and analyze what has gone wrong over this journey. Moving from state base test into interaction base test has its value under certain situation. However as we move towards “<strong>loosely coupled</strong>” and “<strong>highly cohesive</strong>” software architecture design, underlying elements are all services that works together to achieve given use case. Unit testing at those service level yields sweet fruit in terms of coverage and confidence in being able to refactor codebase at any give time. However there is little value in testing interaction between these services and their sequencing with much of mocks.</p>
+<p align="justify">Big question that remains here then would be “How do I ensure those end to end scenarios are covered under test?”. Well, the answer is hidden inside question itself. Coverage on “End to end scenarios” needs “End to End” testing. That’s exact where  Integration test has real value to demonstrate. For the case of web page which let user fill in form and take some action, typically such integration test will include testing all but the actual UI layer. In language of <strong>CommandProcessor</strong> from <a href="http://mvccontrib.codeplex.com/" target="_blank">MvcContrib</a>, it is called PageTester.  Last but not least is UI Tests which ensures application level configuration and environment is set up correctly.</p>
+<p>Till next time. Code smartly.</p>
+<p>&nbsp;</p>
+<p><em>Interested in Agile? Download a Copy of our Whitepaper &#8216;The Agile Difference&#8217; on our <a href="http://www.headspring.com/resources/whitepapers/">Whitepapers page</a></em></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-29T00:00:00-05:00" pubdate data-updated="true">Jul 29<span>th</span>, 2011</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/tdd-caveat-how-not-to-follow-test-driven-development/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/tdd-caveat-how-not-to-follow-test-driven-development/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/review-of-robert-martins-the-clean-coder/" title="Previous Post: Review of Robert Martin's The Clean Coder">&laquo; Review of Robert Martin's The Clean Coder</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/the-secret-sauce-of-business-intelligence-olap-vs-relational-schemas/" title="Next Post: The Secret Sauce of Business Intelligence: OLAP vs Relational Schemas">The Secret Sauce of Business Intelligence: OLAP vs Relational Schemas &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

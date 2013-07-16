@@ -1,0 +1,271 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Unit Testing Best Practices: Know Your Test’s Lifecycle, Part 3 - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="This will be my last post on unit test lifecycle management. In previous posts, we learned how individual unit tests and test fixtures are run, and &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/unit-testing-best-practices-know-your-tests-lifecycle-part-3">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Unit Testing Best Practices: Know Your Test’s Lifecycle, Part 3</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-10-25T00:00:00-05:00" pubdate data-updated="true">Oct 25<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>This will be my last post on unit test lifecycle management. In previous posts, we <a title="Unit Testing Best Practices: Know your test’s lifecycle, Part 1" href="http://www.headspring.com/2011/08/unit-testing-best-practices-know-your-tests-lifecycle-part-1">learned how individual unit tests and test fixtures are run</a>, and <a title="Unit Testing Best Practices: Know Your Test’s Lifecycle, Part 2" href="http://www.headspring.com/2011/09/unit-testing-best-practices-know-your-tests-lifecycle-part-2">how test invocation is affected when test fixtures are derived from an abstract base fixture class</a>. In this installation, we&#8217;re going to learn how to manage code that runs before and after groups of test fixtures.</p>
+<p>Sometimes, you need some code to run before or after a set of test fixtures. I tend to encounter this scenario frequently with integration and system tests. For example, if you&#8217;re using <a href="http://seleniumhq.org/">Selenium</a> to run your full system tests through the <a href="http://seleniumhq.org/projects/webdriver/">Selenium Web Driver</a>, you need to make sure that the Selenium server is running before you run any of your tests. You could do this on the build server by extending your build script with a &#8220;StartSelenium&#8221; task, and then remind all your developers to start the server themselves before they run the tests directly. But wouldn&#8217;t it be better to guarantee directly that, every time those ui tests get run, that the selenium server was active? AND, as a bonus, wouldn&#8217;t it be great if the selenium server was shut down when the tests finished?<!--more--></p>
+<p>Another case where this need shows up is in database-coupled integration tests. These kinds of tests often suffer from unintended order dependencies - one set of tests end up assuming that some data introduced by an earlier set of tests will be present in the database, and then those tests fail if you run them in isolation.</p>
+<p>Another approach I often see people take is to have a &#8220;special&#8221; test fixture  that performs all their database initialization and initial data loading. That test fixture might look like this:</p>
+<p>[gist id=1313334 file=SampleDataLoader.cs]</p>
+<p>The Explicit attribute means that the test fixture is not run if you execute all the tests in the assembly by default. Typically a test like this would be run by invoking the nunit console runner from an automated build to run only tests in the &#8220;DataLoader&#8221; category.</p>
+<p>That&#8217;s not bad, but again - what happens on developer system when you forget to run the dataloader tests first? Or, what do you do when you&#8217;ve got different sets of tests that need different default data? You definitely don&#8217;t want each individual test or fixture going through an entire, scorched-earth style recreation of the entire database just to get to a clean state, do you?</p>
+<p>Fortunately, NUnit provides a not-well-known, but powerful, soltuion for executing code before and after <em>any</em> tests run - the SetUpFixture. It doesn&#8217;t have the greatest name in the world, as it&#8217;s easily confused with TestFixtureSetup. The difference is that SetUpFixture runs around <em>all</em> the fixtures within the same namespace. SetUpFixture classes defined outside of a namespace will run before any tests in the entire assembly. Here&#8217;s a sample:</p>
+<p>[gist id=1313334 file=SetUpFixtureSample.cs]</p>
+<p>Which produces this output:</p>
+<p>[gist id=1313334 file=SetUpFixtureSampleOutput.txt]</p>
+<p>As you can see, the SetUpFixture classes exhibit the same nesting that we&#8217;ve come to expect from constructors, Dispose methods, SetUp, and TearDown atributes. As with basic test fixtures, I recommend that you use the construct/dispose pattern for SetUpFixture classes, and avoid the SetUp and TearDown-attributed methods. There&#8217;s no need for the extra layer of initialization.</p>
+<p>Also note that SetUpFixture class construction and disposal is nested by namespace. If you have two of them in the same namespace though, order of execution between the two could be non-deterministic.</p>
+<p>One of the great things about these SetUp fixture classes is that they run whenever tests in the same namespace are executed, regardless of how many tests within that namespace you happen to be running. The important thing is that your context of execution is always going to be firmly established, even if you&#8217;re only running one test. Andy, by establishing the right part of your entire testing context at the right leve, you can dramatically decrease the test time for expensive tests. For example, you could rebuild the whole test database in a SetUpFixture defined at the assembly level, and then establish and remove different sets of test data for related tests, organized by namespaces. This might look like this:</p>
+<p>[gist id=1313334 file=SetUpFixtureDatabaseExample.cs]</p>
+<p>Which of course produces the following output:</p>
+<p>[gist id=1313334 file=SetUpFixtureDatabaseExampleOutput.txt]</p>
+<p>The outermost SetUpFixture ensures that you always start from a known state, by dropping and rebuilding the test database. We open up a transaction within the namespace SetUpFixture&#8217;s constructor, and roll it back in the corresponding Dispose method. This technique can help ensure that your integration tests don&#8217;t develop unintended order dependencies by relying on data injected by other, previously run tests. Once all the tests in that namespace have run, all the database changes get rolled back. Now the next set of tests can start from a known data state again.</p>
+<p>SetUpFixtures, by virtue of being run outside of, and around, all of your unit test fixtures, give you a lot of options in structuring the runtime context in which your unit tests execute. They can be a very powerful tool in your testing toolbelt. Hopefully this introduction to NUnit SetUpFixtures gives you some ideas on how you can re-structure and streamline your own test management - especially for those more challenging scenarios, like UI and integration tests.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-10-25T00:00:00-05:00" pubdate data-updated="true">Oct 25<span>th</span>, 2011</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/unit-testing-best-practices-know-your-tests-lifecycle-part-3/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/unit-testing-best-practices-know-your-tests-lifecycle-part-3/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/4-growth-strategies-for-your-evolving-business/" title="Previous Post: 4 Growth Strategies for Your Evolving Business">&laquo; 4 Growth Strategies for Your Evolving Business</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/seamless-generic-type-casting/" title="Next Post: Seamless Generic Type Casting">Seamless Generic Type Casting &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

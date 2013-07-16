@@ -1,0 +1,273 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>The Compiler's Treatment of LINQ Syntax - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="When LINQ first became available, it was described as having a &#8220;lazy evaluation model&#8221;, meaning that a query would not actually be &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/the-compilers-treatment-of-linq-syntax">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">The Compiler's Treatment of LINQ Syntax</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-09-08T00:00:00-05:00" pubdate data-updated="true">Sep 8<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>When LINQ first became available, it was described as having a &#8220;lazy evaluation model&#8221;, meaning that a query would not actually be executed until you started to look at the result. Iterating through a result, for instance, would finally cause the query to actually run. This gives you the power to piece together a query over multiple statements before letting it execute.</p>
+<p>Recently, I found that <em>this abstraction can leak</em>. I had a set of queries that were misbehaving, and it seemed that a bug would be reproducible in one set of queries but not in another, even though they were remarkably similar to each other in structure. The culprit was a big surprise: it turns out that <strong>the first &#8216;from&#8217; clause in a query is treated differently from subsequent &#8216;from&#8217; clauses</strong>. Although my project&#8217;s &#8216;from&#8217; clauses were not implemented with side effects, an example that does use side effects best illustrates what is going on. Consider the following:<!--more--></p>
+<p>[gist id=1203504]</p>
+<p>If we trusted the explanations of LINQ queries as having a lazy evaluation model, we would expect the output to be:</p>
+<pre>Before Loop
+First Clause Side Effect
+Second Clause Side Effect
+Third Clause Side Effect
+3</pre>
+<p>We expect this because we&#8217;re told that the query doesn&#8217;t start doing any work until we start iterating throught the results. Surprisingly, the actual output is:</p>
+<pre>First Clause Side Effect
+Before Loop
+Second Clause Side Effect
+Third Clause Side Effect
+3</pre>
+<p>Yikes. <strong>The SQL-like query syntax is an abstraction over plain old method calls, and that abstraction is leaking.</strong> To make sense of what is going on, it is helpful to know what the compiler does every time it encounters query syntax. Before the compiler even bothers to determine whether your query is actually valid, it performs a plain text transformation to a series of specially-nested method calls. Only after that plain text transformation will it actually determine whether the methods being called exist, that the arguments passed to them are of the right type, etc. ReSharper can actually perform that transformation for you. When we do that to the query above, we get the following:</p>
+<p>[gist id=1203437]</p>
+<p>A query with multiple &#8216;from&#8217; clauses is transformed into a series of nested method calls. Lambda expressions are used to introduce a new local scope for the identifiers x, y, and z. SelectMany is an extension method, so the specific implementation is irrelevant during the plain text transformation. In other words, you can define the query syntax yourself, based on the type of the object you are selecting from (in this case, we&#8217;re using the default IEnumerable&lt;T&gt; implementation of SelectMany).</p>
+<p><strong>The right hand side of the first from clause is evaluated immediately. Subsequent from clauses are evaluated lazily, because only they appear on the right hand side of a lambda operator =&gt;.</strong></p>
+<p>By better-understanding what the compiler is actually doing with our LINQ queries, we can avoid frustrating surprises when the abstraction starts leaking.</p>
+<p>If you found this blog to be helpful <a href="http://www.headspring.com/feed" target="_blank">subscribe to our blog feed</a> for the freshest content.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-09-08T00:00:00-05:00" pubdate data-updated="true">Sep 8<span>th</span>, 2011</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/the-compilers-treatment-of-linq-syntax/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/the-compilers-treatment-of-linq-syntax/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/unit-testing-best-practices-know-your-tests-lifecycle-part-2/" title="Previous Post: Unit Testing Best Practices: Know Your Test’s Lifecycle, Part 2">&laquo; Unit Testing Best Practices: Know Your Test’s Lifecycle, Part 2</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/using-jquery-in-asp-net-with-intellisense/" title="Next Post: Using jQuery in ASP.NET with IntelliSense Correctly">Using jQuery in ASP.NET with IntelliSense Correctly &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

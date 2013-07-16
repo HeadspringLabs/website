@@ -1,0 +1,272 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Architecture Resists Change - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="In a conversation about large software projects, the word &#8220;architecture&#8221; is bound to come up sooner or later. Most programmers have a gut &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/architecture-resists-change">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Architecture Resists Change</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-27T00:00:00-05:00" pubdate data-updated="true">Apr 27<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>In a conversation about large software projects, the word &#8220;architecture&#8221; is bound to come up sooner or later.  Most programmers have a gut feeling for what this really means with regard to software, but if you asked 10 programmers to define it, you&#8217;d get 10 different answers.</p>
+<p>In <a href="http://martinfowler.com/ieeeSoftware/whoNeedsArchitect.pdf">Who Needs an Architect?</a>, Martin Fowler covers a few definitions which he ultimately boils down to one simple concept: <strong>architecture is the decisions that are hard to change.</strong></p>
+<p><!--more--></p>
+<p>Depending on the tone you use when reading that definition, it&#8217;s almost a <em>pejorative</em>.  Joel Spolsky even warned us of <a href="http://www.joelonsoftware.com/articles/fog0000000018.html">Architecture Astronauts</a>, people who effectively over-engineer and abstract things to the point that they&#8217;re no longer solving real problems.</p>
+<p>Yes, <strong>an</strong> architecture can be bad.  If the decisions that are hard to change form obstacles between you and the true goal of your project, you&#8217;ve got a bad architecture.  On the other hand, some decisions that are hard to change may be a driving force for your success.  It&#8217;s just important to be aware of which decisions form your architecture as you make them.</p>
+<h2>Example: The Onion Architecture</h2>
+<p>With the <a href="http://www.headspring.com/2012/03/onion-architecture-part-4-after-four-years">Onion Architecture</a>, the hard-to-change decision is to define realtively-unstable infrastructure on the outside, depending on a core application that is ignorant of infrastructure details like persistence.</p>
+<p>This decision is hard to change, but it is justified.  As Jeffrey Palermo said during a presentation on the O.A., an assembly is only as stable as its least-stable dependency.  Therefore, for an application to stand the test of time, we need to maximize the stable portion and minimize our dependency on things that are too likely to change.  If your app integrates with Twitter today, it likely won&#8217;t in 5 years after Twitter goes the way of the blue Dodo bird, so you are better off defining your Twitter integration outside of the core assembly, dependent on the core assembly rather than the other way around.</p>
+<h2>Example: Parsley</h2>
+<p>A few months back I described a hobby project to illustrate <a href="http://www.headspring.com/2011/11/recognizing-covariance-issues-in-your-code">covariance issues</a>.  This project lets you parse text by describing what a valid input looks like (similar to regular expressions).  There were two key decisions that would be impossible to change without starting from scratch:</p>
+<blockquote>
+<p>First, the user would describe what a valid input looks like by gluing together tiny <a href="http://domaindrivendesign.org/node/127">side-effect-free</a> functions.<br />
+  Second, I would use read-only data structures to represent progress through the input.</p>
+</blockquote>
+<p>These two decisions are made frequently when using functional languages, but not so much in C# projects.  Despite being unusual, I found these decisions to be extremely helpful for this kind of problem, regardless of the language used to implement it.</p>
+<p>The samples contain a <a href="https://github.com/plioi/parsley/blob/0b0b1cdddab040c1513344f3b768a8c348bed138/src/Parsley.Test/IntegrationTests/Json/JsonGrammar.cs">JSON parser</a>, which amounts to describing what valid JSON looks like.  The bulk of the description is summed up in a few lines:</p>
+<p>[gist id=&#8221;2495421&#8221;]</p>
+<p>Because of the two architectural decisions, all the details about tracking progress, success, and failure can be completely hidden.  The user can solve the task at hand by describing the task at hand, and the architectural decisions enable that ability.</p>
+<h2>Making Your Own Decisions</h2>
+<p>As you make a decision that affects your project&#8217;s structure, ask yourself, &#8220;Is this a part of our architecture?  Is it going to be hard to change later if we go forward with it?  If so, does it <em>earn the right</em> to be included anyway?&#8221;  If not, try to restructure it so that it <em>is</em> easy to change, or consider chucking it entirely.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-27T00:00:00-05:00" pubdate data-updated="true">Apr 27<span>th</span>, 2012</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/architecture-resists-change/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/architecture-resists-change/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/mvp-vs-mvc-seeking-better-testability/" title="Previous Post: MVP vs MVC: Seeking better testability">&laquo; MVP vs MVC: Seeking better testability</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/becoming-a-headspringer-my-first-week/" title="Next Post: Becoming a Headspringer: My First Week">Becoming a Headspringer: My First Week &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,270 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Loops Obfuscate - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="Most of the world&#8217;s loops have already been written, and their names are &#8220;Where&#8221; and &#8220;Select&#8221;.
+Loops are so commonplace &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/loops-obfuscate">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Loops Obfuscate</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-06-22T00:00:00-05:00" pubdate data-updated="true">Jun 22<span>nd</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Most of the world&#8217;s loops have already been written, and their names are &#8220;Where&#8221; and &#8220;Select&#8221;.</p>
+<p>Loops are so commonplace in software that it barely deserves mentioning.  It&#8217;s like saying &#8220;saws are ubiquitous in woodworking&#8221; or &#8220;epic guitar solos are ubiquitous in Journey albums&#8221;.  Although there is nothing good or bad about loop constructs themselves, LINQ has changed the way I think about them over the last few years.<!--more--></p>
+<p>Let&#8217;s start with some typical, monotonous loops:</p>
+<p>[gist id=&#8221;2969701&#8221;]</p>
+<p>There&#8217;s nothing Earth-shattering about these methods, and there&#8217;s nothing particularly wrong with them.  Let&#8217;s assume, though, that as requirements change the condition for <em>valuable-ness</em> and the means of formatting items become more comlex.  Keeping that logic inside these methods would start to feel a little wrong, as it would <a href="http://en.wiktionary.org/wiki/complect">complect</a> the low-level details of iteration and list-building with the high-level business concepts of product value and formatting.</p>
+<p><strong>I don&#8217;t want to think about iteration and list-building when I&#8217;m also trying to think about business concepts.</strong></p>
+<p>Let&#8217;s say that once these rules got complicated enough, and reading them as monolithic methods got a little too painful, we simplify by doing an Extract-Method refactoring on them:</p>
+<p>[gist id=&#8221;2969706&#8221;]</p>
+<p>Now it&#8217;s easier to see that we&#8217;re building up <code>List</code> objects just so that we can return them for <code>IEnumerable</code> iteration.  Armed with the <code>yield</code> keyword, we clean up further:</p>
+<p>[gist id=&#8221;2969708&#8221;]</p>
+<p>Imagine we have performed a similar refactoring all over a large project.  Our code would be littered with these annoying loop methods that are all suspiciously similar to each other.  All the methods like <code>ValuableProducts</code> would take a collection, loop through it, and apply a filter condition function to each item. All the methods like <code>FormattedProducts</code> would take a collection, loop through it, and apply some transforming function on each item.</p>
+<p>They&#8217;re all so similar that you might be tempted to reach for your copy/paste shortcuts to write them, and that should tell us something about the value of writing that code: <strong>the operations of iterating, filtering, and transforming collections are so fundamental that we shouldn&#8217;t have to write them out.</strong></p>
+<p>Using delegates and generics, we can pluck out the tiny parts that vary from one copy/pasted loop method to another, collapsing all those methods down to two:</p>
+<p>[gist id=&#8221;2969718&#8221;]</p>
+<p>At this point we have accidentally reinvented the <code>Enumerable</code> extension methods <code>Where</code> and <code>Select</code>, so even these two methods can be removed.  We&#8217;re left with the now-commonplace alternatives:</p>
+<p>[gist id=&#8221;2969719&#8221;]</p>
+<p>Once you start writing in this style rather than the original imperative style, <strong>the surface area of your code that corresponds with your actual goals increases compared to that of your infrastructure</strong>.  The focus is on <em>what</em> your goal is, and not on <em>how</em> you intend to trick a box of wires into reaching that goal.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-06-22T00:00:00-05:00" pubdate data-updated="true">Jun 22<span>nd</span>, 2012</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/loops-obfuscate/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/loops-obfuscate/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/using-waithandles-to-test-asynchronous-events/" title="Previous Post: Using WaitHandles to Test Asynchronous Events">&laquo; Using WaitHandles to Test Asynchronous Events</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/mercurial-basics/" title="Next Post: Mercurial basics with Logan Turner">Mercurial basics with Logan Turner &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

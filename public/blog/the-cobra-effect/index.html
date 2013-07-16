@@ -1,0 +1,268 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>The Cobra Effect - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="Imagine for a moment that you are a member of the government in colonial India during the period of British rule. You&#8217;re concerned about the &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/the-cobra-effect">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">The Cobra Effect</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-29T00:00:00-06:00" pubdate data-updated="true">Nov 29<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Imagine for a moment that you are a member of the government in colonial India during the period of British rule.  You&#8217;re concerned about the population of venomous cobras, so you attempt to impose a solution.  You offer a reward to anyone who brings you a dead cobra.  After a while, though, you start to get suspicious of some of the cobra hunters.  They seem to be bringing in far more cobras that any single person is likely to encounter, let alone trap and kill.  You discover that some individuals have begun raising cobras in order to turn a profit!  Clearly, your plan isn&#8217;t working, so you stop offering the bounty.  Countless cobra farmers&#8217; snakes become worthless, so they are released into the wild, increasing the population of cobras.</p>
+<p>You meant well, but your attempt to impose a solution to the problem actually made things worse.</p>
+<p>The <a href="http://en.wikipedia.org/wiki/Cobra_effect">Cobra Effect</a> is similar to the more frequently-referenced <a href="http://en.wikipedia.org/wiki/Murphy's_law">Murphy&#8217;s Law</a>.  Murphy&#8217;s a bit of a pessimist: if something can go wrong, it will, as if the universe is out to get you.  The Cobra Effect, on the other hand, has more to do with human nature: you see a problem and attempt to impose a solution on a group of people, and their natural reaction to your solution ends up making the original problem worse.</p>
+<p>Cobra Effect problems have 4 parts: a) recognizing a problem, b) imposing a solution on a group of people, c) people react naturally <em>to the solution</em>, and d) in turn that reaction makes the problem worse.  Years ago, I experienced these 4 stages on a software project.<!--more--></p>
+<h2>Farming Venomous Comments</h2>
+<p><strong>The problem:</strong> Reading other people&#8217;s code can be frustrating when it doesn&#8217;t communicate enough of the intent.  You may not feel tempted to add lots of comments to your own code, but sometimes when looking at something ugly or unfamiliar, you find yourself wishing the other developers <em>were</em> writing lots of informative comments.  The more experienced developers on the team naturally fear the ocean of undocumented code that the rest of the team is sure to write in the coming months.</p>
+<p><strong>Imposing a solution:</strong> We need to ensure everyone is writing documented code, therefore commits will not pass code review unless each method has complete <a href="http://msdn.microsoft.com/en-us/library/aa288481(v=vs.71).aspx">XML documentation comments</a>.  Each method will tell you what it is, what each of its arguments is, and what the returned value is.  The user of your code will see this information as they type via IntelliSense.</p>
+<p><strong>People react naturally to the solution:</strong> It <em>hurts</em> to write those XML comments.  They are verbose, they are usually redundant, they are time consuming, and they are usually redundant.  If your product is a library to be used by other developers, you owe it to them to document the non-obvious details of your public interface, but beyond that writing these comments is absolutely painful.  Enter <a href="http://visualstudiogallery.msdn.microsoft.com/46A20578-F0D5-4B1E-B55D-F001A6345748">GhostDoc</a>, a Visual Studio extension that writes these comments for you by inspecting the names and types of your methods and parameters.  You start with an undocumented method like so:</p>
+<p>[gist id=&#8221;4159059&#8221;]</p>
+<p>You place your cursor on the first line, hit a keyboard shortcut, and it automatically turns into this:</p>
+<p>[gist id=&#8221;4159061&#8221;]</p>
+<p>Code Review Accomplished.</p>
+<p><strong>That reaction makes the problem worse:</strong> GhostDoc was <em>encouraged</em> because meeting the code review requirement <em>hurt</em> so much.  Every time I used it, a sarcastic little voice in the back of my head said &#8220;Oh, is <em>that</em> what a customerId is?&#8221; or &#8220;Oh, is <em>that</em> what that method does?&#8221;  That voice started getting louder and I soon started to block out all XML comments whenever I read through anybody&#8217;s code.  It wasn&#8217;t even a conscious decision: my eyes started scanning right by the comments as if they were whitespace.  <em>When I actually needed one of these comments to communicate something real about my intent, nobody would ever notice it; it was a an intent-needle in an angle-bracket-haystack.</em></p>
+<p>Compare that last sentence to the original problem: &#8220;Reading other people&#8217;s code can be frustrating when it doesn&#8217;t communicate enough of the intent.&#8221;  The imposed solution made that problem <em>worse</em> by making it even harder to see important information about intent when the need actually arose, and it made it harder to see the intent that was already present in the code itself because you could only fit a few real lines of code on the screen at a time.  </p>
+<h2>People Smells</h2>
+<p>We talk about &#8220;code smells&#8221;, simple things we see in a snippet of code that give us a negative gut reaction, suggesting a deeper problem.  There are also &#8220;people smells&#8221;, where a solution to a human problem should give us a similar negative gut reaction.  With the notable exception of dubstep fans, people naturally try to avoid pain.  We seek out the path of least resistence.  When the solution to a human problem hurts more than the problem, you may get exactly what you asked for.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-29T00:00:00-06:00" pubdate data-updated="true">Nov 29<span>th</span>, 2012</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/the-cobra-effect/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/the-cobra-effect/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/learn-mercurial-basics-with-logan-turner/" title="Previous Post: Learn Mercurial basics with Logan Turner">&laquo; Learn Mercurial basics with Logan Turner</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/austin-based-custom-software-company-named-one-of-the-best-companies-to-work-for-in-texas/" title="Next Post: Austin-Based Custom Software Company Named One of the Best Companies to Work for in Texas">Austin-Based Custom Software Company Named One of the Best Companies to Work for in Texas &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,274 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Dogfooding - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="As soon as your software project has a useful feature or two, it&#8217;s time to start eating your own dogfood. The usual advice is to use your own &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/dogfooding">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Dogfooding</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-11T00:00:00-05:00" pubdate data-updated="true">Apr 11<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>As soon as your software project has a useful feature or two, it&#8217;s time to start <a href="http://en.wikipedia.org/wiki/Eating_your_own_dog_food">eating your own dogfood</a>. The usual advice is to use your own software in order to get early feedback, but there&#8217;s another major benefit to dogfooding that usually goes unmentioned:</p>
+<blockquote><p>To dogfood your software, you have to treat its <em>deployment</em> as a first-class feature.</p></blockquote>
+<p>Deployment is not some secondary activity to be figured out later. Just like we should use our products early and often to make them better, we should use our deployment processes early and often to make <em>them</em> better.</p>
+<h2>Dogfooding Fixie</h2>
+<p>Now that my test framework is powerful enough to <a href="http://www.headspring.com/patrick/bootstrapping/">run all of its own tests</a>, has a <a href="https://github.com/plioi/fixie/blob/9a124ba6c460cf93c1507be68622245033f30454/src/Fixie.Console/Program.cs">command line test runner</a>, and <a href="https://github.com/plioi/fixie/blob/9a124ba6c460cf93c1507be68622245033f30454/src/Fixie.TestDriven/Runner.cs">integrates with TestDriven.NET</a>, it&#8217;s time to start dogfooding it.</p>
+<p>Deploying a test framework involves making it available for use in other projects. For this project, that means publishing a <a href="http://nuget.org/packages/Fixie">Fixie NuGet package</a> to the NuGet Gallery. When another developer installs the package, they should gain three things: an assembly reference added to their test project, the console test runner EXE, and TestDriven.NET support.</p>
+<p>Since dogfooding a project demands treating its deployment as a first-class feature, I needed to automate as much of the NuGet work as possible. I have set up a one-click deployment process for Fixie, and have tried it out for real by installing it into two other open source projects.</p>
+<h2>Creating and Publishing the NuGet Package</h2>
+<p>First, I added a nuspec file which describes the package contents.  I named it <a href="https://github.com/plioi/fixie/blob/a4a358e45e5c1ef2aa6074f12d1075066d4e28ca/src/Fixie/Fixie.nuspec">Fixie.nuspec</a> and placed this beside the Fixie.csproj file. Recall that the <a href="http://www.headspring.com/patrick/socks-then-shoes/">AssemblyInfo values in this project are set by the build script</a>.  By naming the nuspec file after the csproj file, NuGet.exe will know to use those same values as replacements for the $tokens$ in the nuspec:</p>
+<p>[gist id=5359835]</p>
+<p>Fixie.dll will be included in the package automatically, since that is the output of compiling Fixie.csproj.  The <code>&lt;files&gt;</code> section lists additional files I needed to include in the package: the console runner, its config, and 3 files needed to integrate with TestDriven.NET.  Since we&#8217;re including some files we don&#8217;t always want to add as project references during installation, I explicitly list Fixie.dll as the only reference.</p>
+<p>Dropping this nuspec file into the project isn&#8217;t enough.  I also added a &#8216;Package&#8217; task to the <a href="https://github.com/plioi/fixie/blob/a4a358e45e5c1ef2aa6074f12d1075066d4e28ca/default.ps1">build script</a>, which runs NuGet.exe against the nuspec file and produces the deployable package.  This task is the one executed by TeamCity upon each commit to GitHub:</p>
+<p>[gist id=5359834]</p>
+<p>TeamCity creates the NuGet package files with each build, but I don&#8217;t really want to publish a package to the world upon each commit. I&#8217;d rather just publish when I know I&#8217;ve made enough changes to warrant a new deployment.  I found some good advice on how to <a href="http://blog.jonnyzzz.name/2011/09/selective-publishing-of-nuget-packages.html">selectively publish NuGet packages with TeamCity</a>.  In short, my main TeamCity build configuration compiles, runs tests, and creates NuGet package files automatically upon each commit to GitHub, while  a secondary TeamCity build handles publishing the latest successful package to the world.  The secondary TeamCity build only runs when I decide to run it, giving me one-click deployment.</p>
+<h2>Inevitable Explosions</h2>
+<p>Applying this NuGet package to the first target project, <a href="https://github.com/plioi/parsley">Parsley</a>, was a complete success.  That&#8217;s unfortunate, because it is boring.  It gave me no new information to drive Fixie&#8217;s development.  Parsley&#8217;s tests spend all of their time twiddling and comparing strings. Not much can go wrong here that would depend on the details of the host test framework.</p>
+<p>Applying this NuGet package to the second target project, <a href="https://github.com/plioi/rook">Rook</a>, has <em>fortunately</em> proven very difficult, yielding far more interesting results.</p>
+<p>First, Rook&#8217;s integration tests need to read text files from a folder found beside the tests&#8217; own DLL, meaning the tests depend on a test framework&#8217;s own notion of where the current directory is.  The fix here was easy: <a href="https://github.com/plioi/fixie/commit/9a124ba6c460cf93c1507be68622245033f30454">Fixie&#8217;s console runner changes the current directory to the test assembly location during execution, and then reverts to the previous directory</a>.</p>
+<p>Second, this project&#8217;s integration tests actually produce some additional DLLs at runtime and call into them, and those DLLs may depend on <em>other</em> DLLs that live beside the tests&#8217; DLL.  These dependencies are not being found.  That may sound like the same problem: .NET wants to look in the wrong directory for some DLLs.  Unfortunately we&#8217;re not talking about the operating system&#8217;s concept of a current directory.  Instead, we&#8217;re talking about the .NET concept of an AppDomain and its &#8220;base directory&#8221;, and <em>that</em> topic is a can of worms for another day.</p>
+<p>Dogfooding Fixie on two real projects has given me valuable feedback.  I ran into two similar issues and have realized one major requirement that has not been on my radar so far:</p>
+<blockquote><p>A test framework should fool your test DLL into thinking <em>it</em> is an EXE running in the build output folder, when in fact the running EXE is the console runner off in some other folder.</p></blockquote>
+<p>With this week&#8217;s current directory fix and the upcoming fix regarding AppDomains, <em>whatever the heck those are</em>, I&#8217;ll be able to satisfy this new requirement.  Stay tuned!</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-11T00:00:00-05:00" pubdate data-updated="true">Apr 11<span>th</span>, 2013</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/dogfooding/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/dogfooding/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/leaky-abstractions-rot-code/" title="Previous Post: Leaky Abstractions Rot Code">&laquo; Leaky Abstractions Rot Code</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/disabling-language-changes-in-visual-studio/" title="Next Post: Disabling language changes in Visual Studio">Disabling language changes in Visual Studio &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,274 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>The Dunning-Kruger Effect - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="This week, I was guilty of the dark side of the Dunning-Kruger Effect. It&#8217;s not a universal truth, but it does describe a very real phenomenon &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/the-dunning-kruger-effect">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">The Dunning-Kruger Effect</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-27T00:00:00-06:00" pubdate data-updated="true">Dec 27<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>This week, I was guilty of the dark side of the <a href="http://en.wikipedia.org/wiki/Dunning%E2%80%93Kruger_effect">Dunning-Kruger Effect</a>.  It&#8217;s not a universal truth, but it does describe a very real phenomenon that we&#8217;re all guilty of from time to time.  This happens when an unskilled or incorrect person is overly-confident in their own ability, while highly-competent individuals doubt their own ability.</p>
+<p>Good thing it&#8217;s not a universal truth, or else we&#8217;d all get stuck in an infinite loop: &#8220;I doubt myself, therefore I must in fact be perfect.  I think I&#8217;m perfect, therefore I must doubt myself.  I doubt myself&#8230;&#8221;  Since that train of thought isn&#8217;t useful, the practical result of the Dunning-Kruger Effect is that <strong>any extreme confidence should be treated as a sign that we aren&#8217;t trying hard enough to improve.</strong>  When you <em>don&#8217;t</em> react to your own confidence by seeking out areas for improvement, you doom yourself to stagnate.  That would my worst nightmare come to life (aka the Freddy-Krueger Effect).</p>
+<p>This time around, I had false-confidence around a series of refactorings I applied to <a href="https://github.com/plioi/parsley">Parsley</a> about a year ago.</p>
+<p>Let&#8217;s start by setting the scene.  Parsley is a tool for working with complex text patterns, when a single regex is insufficient.  You describe what a successful input looks like by breaking down the overall pattern into several smaller, named patterns called grammar rules.  For instance, if you want to <a href="https://github.com/plioi/parsley/blob/2d113754b6e3e68a43e624987fb7ed5c4dd99870/src/Parsley.Test/IntegrationTests/Json/JsonGrammar.cs">describe JSON documents with Parsley</a>, you could define rules named True, False, Null, Number, Quotation, Array, and Dictionary.  All these grammar rules are described in terms of the <em>tokens</em> of JSON, the tiniest substrings that still have meaning to a JSON parser: things like keywords, operators, numeric literals, and string literals.</p>
+<p>Some tokens are defined with simple string literals:</p>
+<p>[gist id=&#8221;4392649&#8221;]</p>
+<p>Some tokens are defined with simple regexes:</p>
+<p>[gist id=&#8221;4392659&#8221;]</p>
+<p>Lastly, some tokens are defined with nontrivial, multilined regexes:</p>
+<p>[gist id=&#8221;4392669&#8221;]</p>
+<p>An important design goal here was to allow users of Parsley to define their regexes under a technically-untrue assumption: you get to pretend that your regex is being applied to the <em>start</em> of a potentially-long string.  You are trying to tell Parsley how to &#8220;peel off&#8221; the next few characters from the raw input.</p>
+<p>If that&#8217;s how it actually worked, though, we&#8217;d be stuck with performing wasteful substring operations: after matching a regex against the front of a million-character string just to peel off the first few characters, you <strong>don&#8217;t</strong> want to actually perform a nearly-million-character substring operation just to represent progress through the input.  Multiplying that waste by the number of tokens you&#8217;d eventually peel off of the original million characters, the waste would add up quickly.  So, I took advantage of some special regex options as well as a &#8220;\G&#8221; modifier, allowing me to compare your given regex against the input, <em>starting at whatever input position I feel like.</em>  I didn&#8217;t want the consumer to care about these details, so I wrote the TokenRegex class to hide these details:</p>
+<p>[gist id=&#8221;4392684&#8221;]</p>
+<p>Excellent!  You can provide simple regexes intended to match the <em>start</em> of a given input, and I modify the pattern so that I can in-fact match at <em>any</em> position we&#8217;ve progressed to.  <strong>Man, am I awesome or what?</strong></p>
+<p>Introducing this class <em>was</em> a good idea.  It dramatically simplified the regexes that consumers needed to provide, and sufficiently abstracted away the details and reasoning behind this rarely-used &#8220;\G&#8221; regex modifier.  This refactoring was also a part of a larger refactoring effort, which has also been successful.  I wanted to make it so that you didn&#8217;t <em>have</em> to use all of the moving parts Parsley provides: if you needed a smarter tokenizer, such as one to deal with Python-style indentation, that was ok: I provided useful interfaces to let you hook in your own code for that kind of customization.  TokenRegex was supposed to help you further by isolating all the regex stuff from the rest of the system; if the Pattern class wasn&#8217;t good enough for your needs, you could provide your own and still leverage TokenRegex while doing so.</p>
+<p>This week, fellow-Headspringer <a href="https://coderwall.com/ChrisMissal">Chris Missal</a> made a simple request: &#8220;What are your thoughts on giving parsley the ability to match tokens with a case insensitive regex?&#8221;</p>
+<p>Armed with all the undeserved confidence in the world, I first replied that I already provided the right hooks for exactly that kind of customization: simply see class A, create a similar class B implementing the same interface while using a case-insensitive regex instead.</p>
+<p><strong>Oh. Wait. No. That doesn&#8217;t actually work.</strong>  Not so awesome, afterall.</p>
+<p>Even though the entire effort last year was to provide hooks for <em>exactly</em> this sort of customization, my TokenRegex abstraction was working against me.  I had created it in order to hide the use of the &#8220;\G&#8221; regex modifier as well as the convenient RegexOptions.Multiline option, which had the unintended consequence of <em>also</em> hiding the RegexOptions argument from the consumer.  Chris wants to include RegexOptions.IgnoreCase, but I&#8217;m preventing that for no good reason.  It&#8217;s fine that the current behavior is the <em>default</em>, but it shouldn&#8217;t be the <em>only</em> option.</p>
+<p><a href="https://github.com/plioi/parsley/commit/c33c63bf870253be503f900482a6d3a65f50180a">The fix was to update the TokenRegex constructor to optionally accept additional RegexOption values</a>, and to allow those new constructor arguments to be supplied by the consuming project:</p>
+<p>[gist id=&#8221;4392698&#8221;]</p>
+<p>From now on, if I get a feature request on an open-source project, I should never have a knee-jerk reaction of &#8220;It already does that due to my infinite foresight.&#8221;  Rather, I should go on the assumption that I really have left out or hidden something useful, and see what I can learn in the process.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-27T00:00:00-06:00" pubdate data-updated="true">Dec 27<span>th</span>, 2012</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/the-dunning-kruger-effect/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/the-dunning-kruger-effect/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/teaching-and-learning-from-developers-internationally/" title="Previous Post: Teaching and Learning From Developers Internationally">&laquo; Teaching and Learning From Developers Internationally</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/creating-windows-installers-with-the-wix-toolset-part-03/" title="Next Post: Creating Windows Installers with the WiX Toolset Part 03">Creating Windows Installers with the WiX Toolset Part 03 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

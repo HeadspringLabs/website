@@ -1,0 +1,270 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Take a DIP to get DRY - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="The DRY principle is pretty simple. Don&#8217;t Repeat Yourself. When you find yourself reaching for the copy/paste commands, you&#8217;re probably &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/take-a-dip-to-get-dry">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Take a DIP to Get DRY</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-05T00:00:00-06:00" pubdate data-updated="true">Nov 5<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>The DRY principle is pretty simple.  Don&#8217;t Repeat Yourself.  When you find yourself reaching for the copy/paste commands, you&#8217;re probably creating some technical debt.  If you copy/paste a method or class from one part of your application to another with the intent to make a small change in the copy, there&#8217;s a very big chance that those two implementations will begin to drift.  Maybe a bug needs to be fixed in both, but the developer performing the fix doesn&#8217;t know that the copy took place: they&#8217;ll fix some occurrences of the bug but allow others to continue.  Even when you know about both copies, you may find yourself doing double the work each time you need to make a change to one of them.  It&#8217;s costly in development time, brain cycles, and QA time.</p>
+<p>Strangely, I find that when the technical debt brought on by a DRY violation is <em>particularly</em> bad, the solution involves deliberately causing yet more duplication in the short term.  Sometimes, you need to take a DIP to get DRY.<!--more--></p>
+<h2>A DRY Violation in the Wild</h2>
+<p>I was faced with a large DRY violation this week.  Earlier in the history of this project, a class was written in the UI layer to perform some relatively complex validation to ensure the user properly filled out a set of options.  The validation rules weren&#8217;t rocket science, but they also weren&#8217;t trivial rules like &#8216;Field A is required&#8217; or &#8216;Field B cannot exceed 20 characters&#8217;.  All told, it was about 150 lines of logic split out over about 10 methods.  Eventually, the same rules needed to be applied in a related EXE that has no UI, and at that point in time the logic was copied, pasted into an assembly that the other EXE had access to, and tweaked slightly to fit in its new home.  Naturally, the problem got worse since then, as both versions drifted away from each other.</p>
+<p>Once this problem was discovered, I was tasked with resolving the duplication by phasing out the deprecated UI implementation.  The new UI would defer to the newer implementation, so both EXEs would share the same code.  Because of the drift, it wasn&#8217;t clear whether doing this the quick-and-dirty way would be remotely safe: there was a good chance the new implementation was missing important rules enforced in the UI version.  Viewing a diff between the two files wasn&#8217;t helpful, as so much had been tweaked, renamed, and refactored on both sides.  You could tell they were effectively doing the same thing, but the details were too difficult to discern all at once.</p>
+<h2>Duplicate It Purposely</h2>
+<p>When faced with this kind of DRY violation, my first step is to make the situation more clear by <em>deliberately introducing even more blatant duplication</em>.  I Duplicate It Purposely (DIP).  I start with a diff between the two files, and identify the low-hanging fruit: code that is only superficially different due to things like variable and method renames.  I start by making superficial changes to the deprecated code, making it look more and more like the version I want to keep around.  The workflow might look like the following:</p>
+<blockquote>
+<ol>
+<li>View a diff.  Rename variable.  Rename variable.  Rename method.  Commit.</li>
+<li>View a diff.  Rename method.  Extract method.  Reorder members. Commit.</li>
+<li>View a diff.  Inline method.  Extract variable.  Commit.</li>
+<li>View a diff&#8230;</li>
+</ol>
+</blockquote>
+<p>After these quick, low-risk, automatable refactorings are applied to the deprecated code, the diff becomes more illuminating.  You may finally see that the two implementations truly are doing the same thing, in which case it&#8217;s time to drop the original in favor of the second.  In my case, on the other hand, I got to a point where it was clear there were a few places where the logic actually did differ.  In fact, the differences highlighted a real bug in the version I had intended to <em>keep</em>, and I never would have realized that just comparing the two original files to each other.  Armed with a useful diff, I was able to alter the newer code to cover the missing scenarios.</p>
+<p>At that point, I had two code files that were almost character-for-character the same.  The class names were different, but that was about it.  I could now safely drop the original and point the UI at the newer, corrected, shared version.</p>
+<p>Even when fixing a small-scale DRY violation, such as refactoring two suspiciously-similar methods within a single class, I find myself doing this.  I start by making the duplication painfullly obvious by making them look as much like each other as possible.  That extreme duplication highlights the actual differences, giving useful hints as to how to best rephrase both implementations.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-05T00:00:00-06:00" pubdate data-updated="true">Nov 5<span>th</span>, 2012</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/take-a-dip-to-get-dry/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/take-a-dip-to-get-dry/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/migrating-a-windows-install-to-a-new-macbook/" title="Previous Post: Migrating a Windows Install to a New Macbook">&laquo; Migrating a Windows Install to a New Macbook</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/headspring-is-ready-to-rock/" title="Next Post: Headspring is Ready to Rock!">Headspring is Ready to Rock! &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

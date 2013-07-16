@@ -1,0 +1,279 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>The Sincerest Form of Flattery - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="Last week, we saw how to define an NUnit-imitating convention with the Fixie test framework: when the custom Convention class was present in our test &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/the-sincerest-form-of-flattery">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">The Sincerest Form of Flattery</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-05T00:00:00-05:00" pubdate data-updated="true">Jun 5<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Last week, we saw how to define <a href="http://www.headspring.com/fixies-life-bicycle/">an NUnit-imitating convention</a> with the Fixie test framework: when the custom Convention class was present in our test project, the default rules for finding and running tests were replaced, allowing us to write test classes with a familiar NUnit class lifecycle.</p>
+<p>This week, we&#8217;ll see how to customize Fixie to imitate the xUnit lifecycle.</p>
+<blockquote><p>Today’s code samples work against <a href="http://nuget.org/packages/Fixie/0.0.1.56">Fixie 0.0.1.56</a>. The customization API is in its infancy, and is likely to change in the coming weeks.</p></blockquote>
+<h2>Review: The NUnit Lifecycle</h2>
+<p>With NUnit, one instance of your [TestFixture] class is constructed, and that instance is shared across all of that class&#8217;s [Test] methods.  Test discovery is based on the presence of these attributes.  You can identify methods as [SetUp] and [TearDown] in order to run common code before and after each individual test.  You can also identify methods as [TestFixtureSetUp] and [TestFixtureTearDown], in order to perform class-wide initialization and cleanup steps at the start and end of the class&#8217;s lifespan.  You can use fields in the class to hold state that lives across all of the tests.  At the end, if the class is IDisposable, the Dispose() method is called once.</p>
+<h2>The xUnit Lifecycle</h2>
+<p>xUnit is based on NUnit, but they both have different rules about what a test is, and how to run a test once it is found.  xUnit test methods are marked with a [Fact] attribute, and test classes don&#8217;t need any attribute since it is implied by the presence of [Fact]s.  More importantly, xUnit test classes are constructed again and again, once for each [Fact].</p>
+<p>Frequent reconstruction of the test class has a few consequences from the point of view of NUnit users.  </p>
+<p>The first consequence affects how to go about implementing basic setup and teardown logic.  Construction, fixture-level setup, and test-level setup suddenly collapse into one concept, so all of your setup is simply placed in the constructor.  Disposal, fixture-level teardown, and test-level teardown likewise collapse into one concept, so all of your teardown logic goes in the Dispose() method.</p>
+<p>The second consequence of this frequent reconstruction is that test class fields are forgotten from one test to the next, which raises the obvious question, what if I <em>just plain want</em> some state to live across all the tests?  I may have an integration test, for instance, with database setup steps that are costly in time.  I don&#8217;t want to be forced to redo that setup for each test simply to satisfy the strong opinions of a test framework!</p>
+<p>Thankfully, xUnit gives us an escape hatch in the form of IUseFixture&lt;T&gt;.  Your test class can implement this interface for some type T, and xUnit will in turn construct one shared instance of that T.  After reconstructing the test class and before running the next [Fact] method, xUnit injects that T into your test class instance.  When all the [Facts] are done, xUnit will likewise dispose of the T, giving you something like NUnit&#8217;s [TestFixtureTearDown].</p>
+<p>That&#8217;s a mouthful.  Let&#8217;s see a sample xUnit test fixture exercising the whole test lifecycle:</p>
+<p>[gist id=5710920]</p>
+<h2>Customizing Fixie to Mimic xUnit</h2>
+<p>In order to mimic xUnit, we first have to tell Fixie how to find [Fact] methods.  Then, we&#8217;ll need to tell it to find all of the IUseFixture&lt;T&gt; declarations to construct the shared instances of whatever type was provided as the &#8220;T&#8221;.  After that prep work, we can start the actual test lifecycle: for each [Fact] method, we want to construct an instance of the test class, inject the T objects into that instance, call the [Fact], and call Dispose().  After performing that cycle for each [Fact], we need to clean up the shared instances of the Ts.</p>
+<p>Here&#8217;s the Fixie Convention class which accomplishes this lifecycle.  The details have been omitted to focus on the Convention API, but the <a href="https://github.com/plioi/fixie/blob/7fa012d1c63016b7b2e6061fa91cca90fbbc3326/src/Fixie.Samples/xUnitStyle/CustomConvention.cs">xUnit-style CustomConvention class</a> can be found on GitHub under the Samples namespace:</p>
+<p>[gist id=5710922]</p>
+<p>The FixtureExecution section says what should be done with each test fixture class as a whole: we want one instance per test case, we want the whole process to be preceded by a call to PrepareFixtureData, and we want the whole process to be concluded by a call to DisposeFixtureData.</p>
+<p>The InstanceExecution section says what should be done immediately after construction and immediately before disposal of the test class.  Test runs should be preceded by a call to InjectFixtureData so that the shared &#8220;T&#8221; objects can be available to the test.</p>
+<blockquote><p>Note how awkward it is to say that InstanceExecution has a SetUp action but no relevant TearDown action.  On TearDown, we &#8220;do nothing&#8221; by returning an empty list of errors.  That&#8217;s clearly a wart on this API; one I intend to improve upon soon.</p></blockquote>
+<p>The convention class itself has some state, a dictionary which holds onto the shared T objects.  PrepareFixtureData populates the dictionary by finding IUseFixture&lt;T&gt; declarations.  InjectFixtureData reads from that dictionary in order to call the test class&#8217;s SetFixture(&#8230;) methods.  DisposeFixtureData disposes and removes items from the dictionary.</p>
+<p>When we run our sample test class in the presence of this custom convention class, we get the desired output:</p>
+<p>[gist id=5710924]</p>
+<h2>Mimicry as Motivation<br />
+<h2>
+<p>Fixie&#8217;s customization features are intended to set it apart from other test frameworks, so why spend all this time using it only to mimic those other frameworks?  By using two familiar yet dramatically different test lifecycles as a target, I&#8217;ve been able to discover and expose the &#8220;hooks&#8221; they both have in common.  I&#8217;ve discovered that I needed to be able to switch between two modes of construction: one instance per test class vs. one instance per test case method.  I&#8217;ve also discovered that I needed <em>three</em> levels of setup/teardown hooks, where I was originally guessing that two would be enough: 1) the start and end of each test <em>method</em>, 2) the start and end of each test class <em>instance</em>, and 3) the start and end of each test <em>class</em>.</p>
+<p>I selected NUnit and xUnit mimicry deliberately as a first goal along the development of Fixie&#8217;s customization API.  If I couldn&#8217;t do what these frameworks do, there&#8217;d be no point.  Now that I&#8217;ve been able to mimic them, I can start to use the customization API to do new, more interesting things.  Next week, we&#8217;ll try to come up with a convention that is similar to NUnit, but addresses some complexity issues I dislike facing in my NUnit tests.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-05T00:00:00-05:00" pubdate data-updated="true">Jun 5<span>th</span>, 2013</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/the-sincerest-form-of-flattery/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/the-sincerest-form-of-flattery/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/fixies-life-bicycle/" title="Previous Post: Fixie's Life Bicycle">&laquo; Fixie's Life Bicycle</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/dry-test-inheritance/" title="Next Post: DRY Test Inheritance">DRY Test Inheritance &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

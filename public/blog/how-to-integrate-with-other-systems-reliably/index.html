@@ -1,0 +1,277 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>How to Integrate with Other Systems Reliably - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="A couple of years ago, I started working with a client on a system that worked as an integration point and decision engine for a large, nationwide &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/how-to-integrate-with-other-systems-reliably">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">How to Integrate With Other Systems Reliably</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-30T00:00:00-05:00" pubdate data-updated="true">Mar 30<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>A couple of years ago, I started working with a client on a system that worked as an integration point and decision engine for a large, nationwide brick-and-mortar store that was just beginning to introduce a customer loyalty program (think like Best Buy Rewards).</p>
+<p>The system built was like the ones I’ve always built, with the caveat that there was very little in terms of a user interface. Instead, customers never interacted directly with the application, and we received notices of external events (and then notified others) through a variety of integration patterns, including:<!--more--></p>
+<ul>
+<li>Producing flat files</li>
+<li>Consuming flat files (CSV, XML etc.)</li>
+<li>Consuming 3rd party webservices</li>
+<li>Exposing web services to 3rd parties</li>
+</ul>
+<p>This system had to consume a lot of information that it didn’t originate, and there was a lot of potential for failures all up and down the line. Just about everything in the system was done synchronously, and not much could easily (if at all) recover from any kinds of failures or downtime.</p>
+<p>We had files we would process that would sometimes get halfway through, something would mess up, and we’d have to process the file over again. But what about all those records we already processed? Even if we had ways to figure out what was processed and what wasn’t, we would have to re-process a million lines in the file before finding the record  that was the next one to process.</p>
+<h3>Dealing with failures</h3>
+<p>One of the critical files we received were customers that went into the stores to sign up for the loyalty program. Customers would provide their email address, the stores would collect them, and hand them to our system for processing. We would take the emails, make sure that there weren’t already anyone associated with that email address, and send the member an email.</p>
+<p>It was a lot more complicated than that, and currently we communicate with two separate customer management systems through a dozen or so web service calls to fully enter a new member into the system. What became complicated was that each of these processors was essentially a giant “foreach” loop, chugging through the file and doing things. But what would happen if the web services went down? Or the server restarted? Or we needed to deploy the system?</p>
+<p>We would have to wait until all these critical processes were done to deploy. If it was interrupted, we often dropped files, and no matter how much proactive saving we did, we always lost records. You know that guy that hits “Save” in Microsoft Office obsessively? That’s what we tried to do.</p>
+<h3>Coupling, coupling everywhere</h3>
+<p>Eventually, our system came to make many critical decisions throughout processing. For example, new enrollees, if it was close to your birthday, would receive a birthday reward. Issuing rewards could get complicated, however, since we needed to make sure that what we generated satisfied all the guidelines for the POS systems (unique coupons/barcodes, etc.).</p>
+<p>However, the act of issuing a reward to someone during registration was fairly rare, but also fairly expensive. We have to do work to make sure we don’t double-issue and the like. But because we didn’t really have a way to signal that “a reward needed to be issued”, and not slow down the registration processing.</p>
+<p>Ultimately, we wanted separate the event of “CustomerRegistered” with the side effect of “IssueBirthdayReward”. But without some sort of messaging, we had to have it all-in-one. And all that coupling just made it hard for the system to evolve.</p>
+<h3></h3>
+<h3>Towards messaging</h3>
+<p>Because of the brittleness of our current architecture, we decided to go towards a message-oriented approach. Why is that? For one, we were already processing what were effectively messages. Each line in the files, each web service call received already was a message. However, our existing approach was to try and process them all at once, synchronously.</p>
+<p>It was fairly straightforward to imagine this system using asynchronous, durable messages for doing what we were doing in the “foreach” loop, but the question became “which technology?”. I had used MSMQ in the past, but it was EXTEREMELY painful to try and use that API directly. Even looking at other queuing technologies, I didn’t want to build a system directly on top of a queue system. Queuing systems often don’t talk about messages in terms of C# classes and the like, and products like NServiceBus and Mass Transit made it ridiculously easy to send and receive messages over a queue.</p>
+<p>So where are we now? Currently, I have a system with around 20 different NServiceBus endpoints, about 10 or so separate sagas, performing operations like waking up to retrieve files from an FTP to writing files to calling web services to bulk import and export operations. It was a long journey, but we’ve seen incidences of failures drastically decrease as we brought processing into messaging. How much better? That registration file, from customer stores, had been dropping about a file a day since the program’s inception, to a total of about 500 files.</p>
+<p>When we moved to messaging, not a single file has ever been skipped.</p>
+<p>See how easy it is to get started with NServiceBus, check out my <a href="http://www.headspring.com/resources/videos/" target="_blank">quickstart video</a> that takes you through the steps.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-30T00:00:00-05:00" pubdate data-updated="true">Mar 30<span>th</span>, 2012</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/how-to-integrate-with-other-systems-reliably/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/how-to-integrate-with-other-systems-reliably/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/onion-architecture-part-4-after-four-years/" title="Previous Post: Onion Architecture: part 4 - after four years">&laquo; Onion Architecture: part 4 - after four years</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/publishing-a-library-with-nuget/" title="Next Post: Publishing a Library with NuGet">Publishing a Library with NuGet &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,272 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Memory Management - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="Sometimes I get a reputation for having a good memory, but I actually don&#8217;t trust it at all. When it comes to my short-term memory, I find that &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/memory-management">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Memory Management</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-11T00:00:00-05:00" pubdate data-updated="true">Oct 11<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Sometimes I get a reputation for having a good memory, but I actually don&#8217;t trust it at all.  When it comes to my short-term memory, I find that simple things slip my mind far too easily if I don&#8217;t place an unusual amount of concentration on them, so &#8220;automatic&#8221; tasks like locking a door fade too quickly and I&#8217;ll immediately wonder whether I actually did them.</p>
+<blockquote><p>Wait. Did I leave the stove on?</p></blockquote>
+<p>I trust my long-term memory only slightly more.  Maybe it&#8217;s all in my head, but the distrust is real.  Short-term and long-term memory matter when working on a large software project, so how do I deal with my memory distrust? <strong>I. Write. Down. <em>Everything.</em></strong><!--more--> </p>
+<h2>Typical Workflow</h2>
+<p>If you peek over my shoulder on a typical day, you&#8217;ll see Visual Studio open on one monitor and Sublime Text open on the other.  I usually spend more keystrokes typing into Sublime than VS.</p>
+<p>I typically have one text file per topic branch, naturally with the same name as that branch.  As I work on a feature or diagnose a bug, my train of thought winds up in that file.  I document experiments, research of the relevant parts of the preexisting source code, key steps taken, and the like.</p>
+<p>When I&#8217;m working on a brand new feature, I may not have much to document, as the code I&#8217;m writing <em>is</em> the train of thought and there&#8217;s no point in being redundant about this.  When working on a difficult bug, on the other hand, just about every word that crosses my mind winds up in that file.  Even the puns.  (Especially the puns.)</p>
+<h2>Bug Hunting</h2>
+<p>Today, I was researching a particularly tricky bug.  The code involved callbacks within callbacks within callbacks, each of which was named &#8216;callback&#8217;.  Fortunately, the bug was trivially reproducible.  Unfortunately, stepping through the code wasn&#8217;t very illuminating.  It became way too easy to lose track of the train of thought.</p>
+<p>In order to maintain a useful train of thought, I had to start getting very specific in my notes.  What exact code paths were taken for <em>this</em> input, what exact code paths were taken for <em>that</em> input, where did they diverge and why, etc.</p>
+<p>I had some false starts, in which I thought I knew what was going on and later discovered evidence to the contrary.  When that happens, I make a point of keeping the details handy and permanent.  As with scientists experimenting in a lab, <em>a failed coding &#8220;experiment&#8221; is information</em> contributing to the larger effort.</p>
+<p>As I got closer and closer to the actual culprit, these notes and experiments got clearer and clearer.  The little bits of information gleaned in the early stages were starting to congeal into a relatively simple and accurate description of the problem.  Once that description became clear enough, it was obvious what I needed to do to solve the problem.  I spiked out a quick proof of concept for the solution, confirmed success, and then realized the end of the day had come and I was better off tackling the remainder of the work with fresh eyes in the morning.</p>
+<h2>Cool Story Bro, But Why?</h2>
+<p>If I had too much trust in my memory, I wouldn&#8217;t have this document handy first thing tomorrow morning.  Without the document, I would have faced a tough choice around 5:00 today: take a risk and work long mistake-prone hours through the evening while the details were fresh, or take a risk of forgetting it all by morning.  No, thanks.</p>
+<p><strong>First thing tomorrow, I&#8217;ll be able to relive my entire train of thought in about 5 minutes.</strong>  I&#8217;ll be entirely ready to fix the issue while in a responsible state of mind.</p>
+<h2>Coming Soon to A&E, <em>Hoarders: Text Edition</em></h2>
+<p>I keep these notes around forever, for the same reason source control tools keep past commits around forever.</p>
+<p>Recently, a coworker remembered that I worked in an area of the project that needed to be extended.  He asked if I remembered anything about what I had done, and naturally I had absolutely no idea what he was talking about.  I was certain I had never worked on such a thing.  I did, it turns out, work on it about a month ago.  A quick keyword search through my notes folder revealed my entire train of thought from that day, complete with the topic branch name and date so we could find the original commit history.</p>
+<p>A few months back, I was working on a fairly complex overhaul of the way certain events were detected in the UI.  This work involved wrestling with some inadequacies in a third-party UI control.  While fighting with that third-party control, I had performed some experiments with the available events.  One event&#8217;s name and documentation made it seem like a <em>perfect</em> fit, but my attempts revealed a subtle and serious reason to avoid it.  I documented this decision even though I never expected to revisit that event.  A week later, another developer said he&#8217;d found this event and suggested we use it; armed with the details, I could say that it was already attempted, failed, and failed <em>in this specific/subtle/serious way</em>.  We saved ourselves from wasted effort and from the cost of introducing a bug.</p>
+<p>All in all, I think the time I spend keeping these notes saves me time and improves the code I write.  They keep me focused in the moment, prevent rework in later moments, and allow me to hit the ground running each day.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-11T00:00:00-05:00" pubdate data-updated="true">Oct 11<span>th</span>, 2012</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/memory-management/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/memory-management/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/ravendb-boot-camp/" title="Previous Post: RavenDB Boot Camp">&laquo; RavenDB Boot Camp</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/get-to-know-a-developer-justin-mason/" title="Next Post: Get to Know a Developer: Justin Mason">Get to Know a Developer: Justin Mason &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,264 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>PowerShell and the Principle of Most Astonishment - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="When designing a user interface, it&#8217;s important to avoid conflicts between what an action actually does and what the user expects it to do. Our &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/powershell-and-the-principle-of-most-astonishment">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">PowerShell and the Principle of Most Astonishment</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-29T00:00:00-05:00" pubdate data-updated="true">Jul 29<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>When designing a user interface, it&#8217;s important to avoid conflicts between what an action actually does and what the user <em>expects</em> it to do. Our goal is to minimize surprises to ensure a smooth end-user experience. This is called the <a title="Principle of Least Astonishment" href="http://en.wikipedia.org/wiki/Principle_of_least_astonishment">Principle of Least Astonishment</a>.</p>
+<p>This principle should also be important to language designers. Just like a slick, AJAX-y web page is a user interface for the end user, a programming language&#8217;s syntax is a user interface for developers. When the rules of a language conflict with a typical developer&#8217;s mental model of what the rules <em>might</em> be, we have a problem every bit as serious as a confusing user-facing dialog.</p>
+<p>After running into some hurdles using PowerShell, it seems that this language follows the Principle of <em>Most</em> Astonishment. Because its actual model conflicts with the mental model most developers take for granted in similar languages, it is very easy to run into some frustrating bugs.</p>
+<p>Programming lanaguages can be dropped into several broad categories when they encourage similar mental models. For the Imperative Object-Oriented Languages, this makes it easy to start with Python and then learn Ruby, Java, and the like: they all have roughly similar notions of imperative control flow, <!--more-->classes, methods, arguments, return values, and I/O. Since PowerShell is an imperative .NET language, it is all too easy to make incorrect assumptions about how PowerShell will behave, even in the simplest of programs.</p>
+<p>When learning PowerShell, it&#8217;s important to avoid bringing all this imperative language baggage along for the ride. Start by realizing that <strong>PowerShell functions are not functions</strong>! Rather, they are commands.</p>
+<p>PowerShell is meant to replace old-school BAT files and as such its syntax and semantics lean heavily towards command-line instructions where I/O is king. In most imperative languages, functions take in arguments and return values, occasionally performing side-effects like I/O. In PowerShell, commands take in arguments, and then <strong>output values throughout their execution</strong>. The caller of a PowerShell command can often pretend that it is returning a value upon its completion, but it is always more accurate to say that all of the side-effect output of a command is made available to the caller upon its completion. Consider a simple function which intends to calculate some values while only returning a single value:</p>
+<p>[gist id=1114530]</p>
+<p>If we call this command with $x = 1, the caller receives an <em>array</em> as the return value. The array contains three values: [1, 2, 3]. What&#8217;s going on here? First, every expression that gets evaluated will be included in the output. When multiple values are output like this, they get packaged up into an array for you. Second, using the &#8216;return&#8217; keyword with a value on the right-hand-side is misleading. Use the &#8216;return&#8217; keyword only when you need to exit from a command early. The above code is actually equivalent to the following:</p>
+<p>[gist id=1114545]</p>
+<p>&#8220;return 5&#8221; really means &#8220;include 5 in the array of output and then return control to the caller&#8221;. Imagine how frustrating it can be to run into a problem like this. You start adding print statements to your buggy function in order to diagnose what is happening, and the very act of writing that output changes its return value!</p>
+<p>There are ways to prevent expressions from being returned to the caller. You can use the built-in command <strong>write-host</strong> to write output to the console without it being included in the output array. Assignment statements are also suppressed from the output because they represent intermediate work being performed.</p>
+<p>Any developer who approaches the first Output-And-Return definition above will make false assumptions about the behavior of the command. By recognizing that the PowerShell model differs from a typical model of functions-returning-values, you too can avoid mind-boggling debugging sessions.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-29T00:00:00-05:00" pubdate data-updated="true">Jul 29<span>th</span>, 2011</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/powershell-and-the-principle-of-most-astonishment/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/powershell-and-the-principle-of-most-astonishment/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/jazz-up-your-css-with-transitions/" title="Previous Post: Jazz-Up Your CSS with Transitions">&laquo; Jazz-Up Your CSS with Transitions</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/requirement-gathering-techniques-drawing-101/" title="Next Post: Requirement Gathering Techniques | Drawing 101">Requirement Gathering Techniques | Drawing 101 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

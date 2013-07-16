@@ -1,0 +1,271 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Early Experiences with Unit Testing - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="By Patrick Lioi
+I got my feet wet with unit testing during a summer internship, before the term was officially on my radar. I was writing a number- &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/early-experiences-with-unit-testing">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Early Experiences With Unit Testing</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-19T00:00:00-06:00" pubdate data-updated="true">Jan 19<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>By <a href="http://www.headspring.com/author/plioi/">Patrick Lioi</a></p>
+<p>I got my feet wet with unit testing during a summer internship, before the term was officially on my radar. I was writing a number-crunching library in C, and my tests took the form of short C programs using that library. They would run through several related examples and print to the console when something went wrong. It&#8217;s a shame that I was a senior in college before the concept even came up, but at least I got exposure to it before graduating and entering the workforce. This approach actually helped me to catch a pretty serious and subtle error that I wasn&#8217;t explicitly looking for.<!--more--></p>
+<h2>The Goal</h2>
+<p>The project involved a lot of number crunching for an electron-detector that would be mounted on a satellite. Picture a 180 degree protractor stuck on the side of a spinning box. At time 0, we might get a reading of an electron coming from 15 degrees. At time 1 we might get another reading coming from 42 degrees.</p>
+<p>These numbers on their own were completely meaningless, because the device was ignorant of the fact that it was mounted on the side of a spinning satellite. 15 degrees right now is a completely different direction from 15 degrees a moment from now. The idea is that we needed to &#8216;rotate&#8217; the raw data backwards, against the angle the satellite would rotate through, to know what direction it really came from.</p>
+<p>To complicate matters, the satellite would be orbiting the Earth, and in turn orbiting the Sun, introducing more angles to reverse-rotate. As fuel was consumed, a predictable wobble would be introduced, leading to several other rotations to reverse-rotate. Additionally, we needed to translate the resulting 3D coordinates in terms of a convenient coordinate system: some convienient origin (0, 0, 0) with well-defined X, Y, and Z axes. Different people needed to see the results according to different coordinate systems. Some wanted the origin to be the center of the Earth, with Z+ moving throught the magnetic north pole, some wanted the origin to be the center of the sun with Z+ perpendicular to the plane Earth moves through, etc.</p>
+<p>The bottom line was that the physicists would determine exactly what rotations were involved, and how to calculate it all in terms of the initial start position of the satellite and a known time to start the clock. I just had to turn the crank and calculate what those rules dictated.</p>
+<h2>The Short Cut</h2>
+<p>It turns out there&#8217;s a neat short-cut when doing multiple rotations around 3D axes. It comes up in 3D graphics, too. There&#8217;s a way to build a 3x3 matrix representing a single rotation around a single one of the 3 possible axes. If you multiply that matrix against a single 3D data point, you get a new data point showing where it had really come from. Each bit of the phsysicist&#8217;s work could be turned into such a matrix, and if you multiplied all of these together you&#8217;d get yet another 3x3 matrix representing the <em>combination</em> of all the many rotations. Armed with this, you could very quickly process all the data points without having to do a lot of trig for each one individually. The goal was to have a 3x3 grid of numbers that bottled up <em>every</em> operation to perform.</p>
+<h2>My First Unit Tests</h2>
+<p>Despite that simplification, <strong>I was sure I was going to make mistakes</strong>. I started writing very short programs to test my matrix-twiddling library as I went along. I had some concrete examples from the physicists and from the satellite&#8217;s documentation to get me started. <strong>Occasionally I&#8217;d be surprised by a result, and would know something was either wrong with my code or with my understanding of the problem.</strong> Not doing so would have been unprofessional, and it would have surely produced a useless mess: a program that would serve only to make the machine warmer for the few minutes it ran.</p>
+<p><strong>It was really rewarding to see how the testing effort motivated my approach to the implementation.</strong> It forced me to start thinking in terms of the smaller building blocks. Once I was confident in the individual parts, I&#8217;d write the next set of tests at a higher level to test how those parts worked together. I generally hate Lego analogies for writing software, but there was a nearly-audible plasticky <em>click</em> whenever a new operation started passing its tests.</p>
+<h2>The Payoff, or Why We Should All Be Right-Handed</h2>
+<p>Eventually this testing found a <em>very big</em> discrepancy between the explanation of the rotations involved, and the documentation of the satellite, even though both documents were intended as a matching set.</p>
+<p>In middle school Algebra, we always draw +Y moving up the page, and +X moving to the right of the page. That&#8217;s just a convention; it makes sense only because we&#8217;re all agreeing that we will do it that way. When you introduce 3D, you have to decide whether the +Z axis is coming &#8220;up&#8221; out of the page, or &#8220;down&#8221; into the table the page sits on. One of these is called a left-handed system, and the other is called a right-handed system. Again, it&#8217;s just convention; if everyone agrees on what we&#8217;re using, everything is fine.</p>
+<p>The satellite&#8217;s examples used the opposite +Z from the documentation of the angles to reverse-rotate. Every time we needed to rotate around Z, we were going in the wrong direction!</p>
+<p><strong>I never would have discovered this problem if I hadn&#8217;t been building up a test-suite alongside the library.</strong> It was just dumb luck that I got to experience a unit-testing &#8220;A-HA!&#8221; moment so long ago, but I&#8217;m glad I did.</p>
+<p><a href="http://www.headspring.com/resources/whitepapers/">Learn more about unit tests and the Agile Difference by downloading the whitepaper</a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-19T00:00:00-06:00" pubdate data-updated="true">Jan 19<span>th</span>, 2012</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/early-experiences-with-unit-testing/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/early-experiences-with-unit-testing/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/joining-the-dark-side-learning-to-code-with-grace-and-dignity/" title="Previous Post: Joining the Dark Side: Learning to Code with Grace and Dignity">&laquo; Joining the Dark Side: Learning to Code with Grace and Dignity</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/get-to-know-a-developer-pedro-reys/" title="Next Post: Get to Know a Developer: Pedro Reys">Get to Know a Developer: Pedro Reys &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

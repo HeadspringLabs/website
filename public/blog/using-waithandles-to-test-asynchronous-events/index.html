@@ -1,0 +1,275 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Using WaitHandles to Test Asynchronous Events - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="By Casey Gum
+In my last post, I talked about some of the dangers of using lambda expressions (anonymous delegates) as event handlers.  However, one &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/using-waithandles-to-test-asynchronous-events">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Using WaitHandles to Test Asynchronous Events</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-06-20T00:00:00-05:00" pubdate data-updated="true">Jun 20<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><em>By Casey Gum</em></p>
+<p>In my last post, I talked about some of the dangers of using lambda expressions (anonymous delegates) as event handlers.  However, one place where this can be really handy is when you are unit testing classes that raise events. <!--more--></p>
+<p>Occasionally, you will find yourself in a situation where you need to unit test a class that raises an event or calls a callback method on a different thread than the one that initiated the action in the first place.  This is especially common when dealing with web requests and can lead to some obtuse unit testing techniques.  In this post, I&#8217;ll demonstrate a technique that I use that relies on WaitHandles that is pretty darn handy.</p>
+<p>Let&#8217;s say that we have to unit test the following class.</p>
+<p>[gist id=2942373]</p>
+<p>This class has a method, StartJob() and an event JobComplete.  StartJob() spins up a new thread and sleeps for the executionTime to simulate work and then raises an event, notifying the caller that the job is complete.  (ProTip: If I initialize the event to an empty delegate{}, I don&#8217;t have to null-check the event before raising it.)  However, JobComplete is being raised on the new thread.  What implications do you think this will have on a unit test?  Let&#8217;s take a look.</p>
+<p>Here&#8217;s a unit test one might write that would work perfectly provided there was no thread-switching going on.</p>
+<p>[gist id=2942411]</p>
+<p>A test like this *might* even work if there was a thread-switch, but it would all depend on how quickly the code executed and the thread scheduler.  However, I would suspect that most of the time it would fail.</p>
+<p>The next approach someone might take to solve this unit testing dilemma is to use a Thread.Sleep() in the unit test.</p>
+<p>[gist id=2942427]</p>
+<p>This may work most of the time, but if the unit of work exceeds the period provided in the Thread.Sleep() call, the test will fail even though the class under test functions properly.  But under normal circumstances, it would just make your unit test take longer to run.</p>
+<p>Another approach one might take is to use polling and a Thread.Sleep().</p>
+<p>[gist id=2942442]</p>
+<p>This one will definitely work and is more time-efficient, but has one big drawback: if the thing being tested actually does fail, this unit test will spin forever and prevent any other unit tests from running.  In a continuous integration or production build environment, it might even take awhile before anyone realizes there&#8217;s a problem.  The build just doesn&#8217;t finish.</p>
+<p>Okay, next thing to try is to bail out after a certain number of spins.</p>
+<p>[gist id=2942450]</p>
+<p>This one will definitely work and will timeout if the test doesn&#8217;t complete within 30 seconds, but it is obtuse.  Just look at how much code is spent dealing with waiting long enough, but not too long.</p>
+<p>A better approach is to use a WaitHandle, specifically the ManualResetEvent class.</p>
+<p>[gist id=2942461]</p>
+<p>The whole purpose of WaitHandles is to pass signals across thread boundaries.  Using a WaitHandle is much more concise and is perfectly efficient.  The unit test code will sit there on the waitHandle.WaitOne(timeout) line until either the timeout period expires or the waitHandle.Set() method is called.  If Set() is called, WaitOne() returns true.  If the timeout expires before Set() is called, it returns false.  All you need to do is Assert that the result of WaitOne() is true.</p>
+<p>Pretty neat, don&#8217;t you think?</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-06-20T00:00:00-05:00" pubdate data-updated="true">Jun 20<span>th</span>, 2012</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/using-waithandles-to-test-asynchronous-events/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/using-waithandles-to-test-asynchronous-events/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/sneaky-leaky-lambda-listeners/" title="Previous Post: Sneaky Leaky Lambda Listeners">&laquo; Sneaky Leaky Lambda Listeners</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/loops-obfuscate/" title="Next Post: Loops Obfuscate">Loops Obfuscate &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

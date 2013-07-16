@@ -1,0 +1,316 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Detect, Reflect, Decomplect - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="This is part 6 of an N-part series on identifying and resolving incidental complexity in your software projects. This post assumes you&#8217;ve &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/detect-reflect-decomplect">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Detect, Reflect, Decomplect</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-18T00:00:00-05:00" pubdate data-updated="true">Aug 18<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>This is part 6 of an N-part series on identifying and resolving incidental complexity in your software projects.  This post assumes you&#8217;ve already read the earlier posts:</p>
+<ol>
+<li><a href="http://www.headspring.com/blog/developer-deep-dive/essential-vs-incidental-complexity/">Essential vs Incidental Complexity</a></li>
+<li><a href="http://www.headspring.com/blog/developer-deep-dive/identifying-incidental-complexity/">Identifying Incidental Complexity</a></li>
+<li><a href="http://www.headspring.com/blog/developer-deep-dive/scope-creep/">Scope Creep</a></li>
+<li><a href="http://www.headspring.com/blog/developer-deep-dive/spaghetti-alla-code/">Spaghetti alla Code</a></li>
+<li><a href="http://www.headspring.com/blog/developer-deep-dive/primitive-obsession/">Primitive Obsession</a></li>
+</ol>
+<p>The act of &#8220;complecting&#8221; two things is to intertwine or braid them together in such a way that creates complexity.  Most incidental complexity in our code comes from getting separate concepts twisted up in ways that make things more complex without moving us any closer to our goals.  Sometimes we intertwine concepts so tightly that we don&#8217;t even realize it&#8217;s happened.  In this post, we&#8217;ll see how I finally untied a code knot that has been staring at me for about two years.<!--more--></p>
+<h2>A Quick Review</h2>
+<p><a href="http://www.headspring.com/blog/developer-deep-dive/identifying-incidental-complexity/">A few weeks ago</a>, we saw some improvements made to the TypeChecker class.  This class traverses a tree representing all the source code input to the compiler.  If the input source code has an if-expression, then the tree will contain a node (an instance of the <code>If</code> class) that describes what the raw source code looked like.  As TypeChecker traverses the tree, it attempts to find an appropriate type for each node.  Since Rook&#8217;s if-expressions behave like C#&#8217;s <code>?:</code> ternary operator, the type of an <code>If</code> is the type of the positive and negative branch expressions.</p>
+<p>In that post, the original implementation for if-expression type checking looked like this:</p>
+<p>[gist id=&#8221;3151220&#8221;]</p>
+<p>This implementation used a needlessly-complex return type which motivated extra-complicated <code>return</code> statements.  That return type <em>complected</em> success (a new tree node with a meaningful Type property) with failure (a list of CompilerError messages to propagate up the tree).  Braiding those two ideas led to some verbose sanity checks after each step the method performed, and led to some verbose error-message-propagation in each <code>return</code> statement.</p>
+<p>I improved this situation by untying these ideas.  TypeChecker started tracking a single growing list of error messages encountered so far, so that returned objects in the tree traversal methods didn&#8217;t need to pass error messages back to their caller.  At this point, we started returning <code>null</code> every time the method found an error:</p>
+<p>[gist id=&#8221;3154330&#8221;]</p>
+<h2>Return Statements are &#8220;Extract Method&#8221; Fences</h2>
+<p>Surely this change was an improvement, but it didn&#8217;t dramatically improve the health of the TypeChecker class.  TypeChecker is a beast.  The TypeCheck methods for several of the tree nodes are suspiciously similar to each other, so I started out by trying to factor out common helper methods.</p>
+<p>I failed immediately every time I tried to do so.</p>
+<p>The problem was that most of these methods followed the following pattern:</p>
+<ol>
+<li>Do one step of the work.</li>
+<li>If that step failed, return early (null).</li>
+<li>Do one step of the work.</li>
+<li>If that step failed, return early (null).</li>
+<li>&#8230;</li>
+</ol>
+<p>Methods will multiple returns are not inherently <em>bad</em>.  I usually limit myself to using multiple returns when a method starts with some initial &#8220;guard&#8221; statements: &#8220;if this call was kind of pointless, return early&#8221;.  Doing so can help to simplify the remainder of the function by clarifying assumptions up front.  Returning multiple times throughout the <em>meat</em> of a method, though, is usually a problem.</p>
+<blockquote><p>
+    Each time you leave a <code>return</code> statement in the body of a longish method, you are really installing a fence.  You aren&#8217;t going to be able to successfully apply an &#8220;Extract Method&#8221; refactoring <em>across</em> those fence boundaries (try it!), so your method will always be longish with respect to the number of fences.
+</p></blockquote>
+<p>These fences have kept the TypeCheck methods too longish for about 2 years.  I tried to find ways around this countless times, always resulting in something even more complex than I started with.</p>
+<h2>Still Complecting Failure with Success</h2>
+<p>Even after the previous improvement to the meaning of returned objects from these methods, I was still complecting success (non-null return) with failure (null return).  Sure, the error-message-collecting code was out of the way now, but I still had to inspect the result of each call to a <code>TypeCheck</code> method.  In the <code>If</code>-expression example above, I couldn&#8217;t trust the returned objects from the three calls to other <code>TypeCheck</code> methods.  I would call it, inspect the result, and then use that to decide whether I should propagate failure by returning null early.</p>
+<p>Then it hit me.  What if we could just keep on going if we ran into trouble during the other <code>TypeCheck</code> calls?  Compiler errors aren&#8217;t exceptions: you don&#8217;t want to just stop looking for errors when you encounter a single problem.  By returning early, I wasn&#8217;t just making the code more complex.  I was actually limiting the amount of useful output I was ultimately reporting to the user.  Imagine how annoying it would be if the C# compiler just discarded every other error message it could have reported to you!</p>
+<h2>Non-null Nulls</h2>
+<p>Just removing the early return statements wouldn&#8217;t be enough, of course.  By continuing the process with nulls in play, I&#8217;d immediately start running into <code>NullReferenceException</code>s.</p>
+<p>Even though the methods weren&#8217;t returning nulls themselves anymore, the <code>Type</code> property on the returned objects could still be null.  Before type checking, every node in the tree had a Type property initialized to null, meaning a type hadn&#8217;t been found for the node yet.  Some of the methods in the type checker had to inspect those Type properties in order to make decisions, and nulls would start to become a problem at runtime.</p>
+<p>To resolve this, I had to apply the Null Object pattern before I could actually remove the early return statements.  With this pattern, you introduce a class that represents the simplest, most-null-like version of a type as possible.  In this case, I needed something that implemented my <code>DataType</code> abstract class while being completely uninteresting on its own.  Instances of this new <a href="https://github.com/plioi/rook/commit/52686db2b801f414c932f92e390f44ab68c7040b"><code>UnknownType</code></a> class could then be liberally sprinkled over the whole tree prior to type checking.  As the new and improved type checker encountered errors, it could safely proceed to find yet more errors knowing full well that in the worst case it would be working with <code>UnknownType</code> instead of nulls.</p>
+<blockquote><p>Using the Null Object pattern, I could safely remove the problematic early-return statements.  The type checker now finds all the errors it can, and our return values no longer complect success with failure.</p></blockquote>
+<p>The many <code>TypeCheck</code> methods are now much shorter, easier to read, and lack the fences that would stand in the way of further refactorings.</p>
+<h2>Before and After the Return Value Decomplection</h2>
+<p><strong>If-Expression Type Checking</strong></p>
+<p><em>Before:</em><br />
+[gist id=&#8221;3151220&#8221;]</p>
+<p><em>After:</em><br />
+[gist id=&#8221;3390149&#8221;]</p>
+<p><strong>Class Declaration Type Checking</strong></p>
+<p><em>Before:</em><br />
+[gist id=&#8221;3390168&#8221;]</p>
+<p><em>After:</em><br />
+[gist id=&#8221;3390159&#8221;]</p>
+<p><strong>Function Declaration Type Checking</strong></p>
+<p><em>Before:</em><br />
+[gist id=&#8221;3390169&#8221;]</p>
+<p><em>After:</em><br />
+[gist id=&#8221;3390164&#8221;]</p>
+<h2>Detect, Reflect, Decomplect</h2>
+<p>When you find yourself looking at suspiciously-complex code,</p>
+<ol>
+<li><strong>Detect</strong> whether you have two or more ideas all tied up and twisted together.</li>
+<li><strong>Reflect</strong> on what a successful untwisting would look like.  Where will each idea live once they are separated?  Will you lose functionality in the process?  Will you gain some functionality that has been hindered by the complexity?  Will this effort open the door to further cleanup?</li>
+<li><strong>Decomplect</strong> the hell out of that mess and bask in the glory of your cleaner codebase.</li>
+</ol>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-18T00:00:00-05:00" pubdate data-updated="true">Aug 18<span>th</span>, 2012</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/detect-reflect-decomplect/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/detect-reflect-decomplect/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/primitive-obsession/" title="Previous Post: Primitive Obsession">&laquo; Primitive Obsession</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/quashing-incidental-complexity/" title="Next Post: Quashing Incidental Complexity">Quashing Incidental Complexity &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

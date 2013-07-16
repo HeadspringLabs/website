@@ -1,0 +1,820 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="The Austin Startup Games were a flying success this past Saturday, February 16th at the Austin Music Hall. Headspring was proud to participate for &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/page/4">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/headspring-competes-at-2013-austin-startup-games/">Headspring Competes at 2013 Austin Startup Games</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-22T00:00:00-06:00" pubdate data-updated="true">Feb 22<span>nd</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>The Austin Startup Games were a flying success this past Saturday, February 16th at the Austin Music Hall. Headspring was proud to participate for the first time!</p>
+<p>The Austin Startup Games is a one-day event in which sixteen Austin companies compete in various activities, including beer pong, ping pong, shuffleboard, foosball, pop-a-shot, darts, Connect 4, trivia and flip cup. The mechanical bull was the surprise event.</p>
+<p></div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/headspring-competes-at-2013-austin-startup-games/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/the-debugger-must-be-broken/">The Debugger Must Be Broken!</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-19T00:00:00-06:00" pubdate data-updated="true">Feb 19<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Recently, a coworker and I ran into one of those bugs that seem to behave so strangely that you start to wonder, &#8220;Is it me, or is the debugger itself buggy?&#8221;  It appeared that the simplest of operations, the assignment operator, was misbehaving.  In the debugger, we seemed to witness a value being properly set to a non-null object and then secretly nulled out as soon as we tried to look at it again.</p>
+<p>Of course, whenever a program&#8217;s behavior is so profoundly counter to all that we know to be true, we have to stop, take a deep breath, and proudly exclaim, &#8220;I am making an incorrect assumption!  This code does not say what I think it says.&#8221;</p>
+<p>I&#8217;ve boiled the problem down to a simpler form than the original code, and changed names to protect the guilty (me).</p>
+<p>We had a collection of DTO instances, of a type we did not have control over (<code>StudentDTO</code>).  In the rest of our system, we wanted to use one of our own classes instead (<code>Student</code>), as <em>our</em> class implemented an interface that was consumed elsewhere (<code>Person</code>):</p>
+<p>[gist id=4982706]</p>
+<p>This first pass was bug-free, and the <code>ToPersons</code> method passed our unit test:</p>
+<p>[gist id=4982711]</p>
+<p>Easy.  C# 101 stuff.  Of course it passed.</p>
+<p>Some hours later, I had reason to convert <code>Person</code> from an interface to a concrete class:</p>
+<p>[gist id=4982716]</p>
+<p>Suddenly, this and many other tests started failing.  <code>persons[0].Name</code> was null!  We set up a breakpoint on the return statement within <code>ToPersons</code>, and saw that each student being returned did in fact get populated correctly.  <strong>Surely, the debugger must be broken!  We clearly populate an object, and when we next look at it it is unpopulated!  Those punks at Microsoft really grind my gears.</strong></p>
+<p><strong>Ok, Patrick, take a step back.  What assumption is leading me to believe the debugger is wrong?</strong>  I&#8217;m claiming that a clearly-populated property is null the next time I look at it.  Therefore, I should start to doubt whether I am actually inspecting the same property both times.</p>
+<p>In the debugger, we had already seen the <code>Student.Name</code> property set as expected.  We then went to the definition of the Name property that appears in our unit test assertion, which took us to <code>Person.Name</code>.  Here, we also saw a ReSharper warning on each property within <code>Student</code>.  We hadn&#8217;t even <em>changed</em> <code>Student</code>, but that is where the warning appeared: &#8220;The keyword &#8216;new&#8217; is required on &#8216;Name&#8217; because it hides property &#8216;Person.Name&#8217;.&#8221;</p>
+<p>Oh, right.</p>
+<p>This is one of those details you learn about C# early on and then immediately forget, as it so rarely shows up in practice.  Usually, when a subclass defines members with the same name and signature as its parent class, we are in a abstract/override or virtual/override situation, in which you are knowingly and explicitly stating that the subclass provides its own definition of the parent class&#8217;s behavior.  When a subclass instead defines the same members as its parent <em>without</em> overriding, you get <em>two</em> different implementations at runtime.  It&#8217;s basically just a <em>coincidence</em> that they have the same name.</p>
+<p>In this situation, when you look at an instance through a variable declared as the parent type, you see the parent type&#8217;s properties.  When you look at an instance through a variable declared as the subtype, you see the subtype&#8217;s properties.  As we looked at the student variable being returned from the lambda, the debugger showed us the populated <code>Student.Name</code>, and when our test assertion looked at the person returned from the lambda, the test experienced the unpopulated <code>Parent.Name</code>.</p>
+<p>When up is down, black is white, and the debugger stops working, put the apparently impossible behavior into plain English, and cast some healthy doubt on each word.  You&#8217;ve got a faulty assumption in there somewhere.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/wcf-ioc-away-the-need-for-named-pipes/">WCF IOC Away the Need for Named Pipes</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-13T00:00:00-06:00" pubdate data-updated="true">Feb 13<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>The NetNamedPipeBinding is the optimized binding for on-machine communication.  For most WCF implementations I have seen WCF is really only there to help facilitate RPC (Remote Procedure Calls).  When WCF is simply a way to segment your service layer into an optionally distributed deployment architecture there may be a much better way.  WCF has additional overhead that seams useless if the code is being executed on the same machine.  IOC (Inversion of Control) using DI (Dependency Injection) provides a relatively simple way to avoid WCF all together.</p>
+<p>Lets take a simple WCF Service Contract for Customers.<br />
+[gist id=4945825]</p>
+<p>The client creates a proxy and through WCF configuration the proper binding can be used to communicate with the Service.  In order to make the client know where the service is without hardcoding this you would have the following configuration settings.</p>
+<pre class="csharpcode">  &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;system.serviceModel&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;bindings&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;basicHttpBinding&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;binding&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&quot;BasicHttpBinding_ICustomerService&quot;&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;/&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;basicHttpBinding&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;bindings&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;endpoint&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;address&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&quot;http://localhost:26859/CustomerService.svc&quot;&lt;/span&gt;
+        &lt;span class=&quot;attr&quot;&gt;binding&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&quot;basicHttpBinding&quot;&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;bindingConfiguration&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&quot;BasicHttpBinding_ICustomerService&quot;&lt;/span&gt;
+        &lt;span class=&quot;attr&quot;&gt;contract&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&quot;OptionalWCF.Contracts.ICustomerService&quot;&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&quot;BasicHttpBinding_IUserProfileService&quot;&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;system.serviceModel&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;</pre>
+<p>Most clients stop there rather than have a explicit setting for NetNamedPipes.  If they decided to “Optimize” they could add the WCF configuration endpoint for NetNamedPipes and modify the Service to expose a NetNamedPipe endpoint.  Now the client can use the NetNamedPipe endpoint and the performance has been improved.  In reality the performance between NetTcp and NetNamedPipe is rather minimal with a slighter advantage over BasicHttp.  The most optimal invocation is in-process so why not just go around WCF all together.  We already have the interface separation that DI can use and either way if we want optimal performance we will be tweaking configuration files for different deployment environments.</p>
+<p>For this blog I choose StructureMap as my DI library.  My client Code only needs to get a handle to the interface.</p>
+<div class="csharpcode">
+<pre class="alt">var customerServices = ObjectFactory.GetInstance&amp;lt;ICustomerService&amp;gt;();</pre>
+</div>
+<p>The client is configured to either use WCF or use the direct reference to the service implementation of the service Contract.</p>
+<pre class="csharpcode">&lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;StructureMap&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;MementoStyle&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&quot;Attribute&quot;&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;rem&quot;&gt;&amp;lt;!-- WCF Service Through Proxy --&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;DefaultInstance&lt;/span&gt;
+      &lt;span class=&quot;attr&quot;&gt;PluginType&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&quot;OptionalWCF.Contracts.ICustomerService, OptionalWCF&quot;&lt;/span&gt;
+      &lt;span class=&quot;attr&quot;&gt;PluggedType&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&quot;OptionalWCF.Client.CustomerServiceProxyWrapper, OptionalWCF.Client&quot;&lt;/span&gt;
+      &lt;span class=&quot;attr&quot;&gt;Scope&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&quot;Singleton&quot;&lt;/span&gt;
+      &lt;span class=&quot;kwrd&quot;&gt;/&amp;gt;&lt;/span&gt;
+
+    &lt;span class=&quot;rem&quot;&gt;&amp;lt;!--Real Service--&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;rem&quot;&gt;&amp;lt;!--&amp;lt;DefaultInstance&lt;/span&gt;
+&lt;span class=&quot;rem&quot;&gt;      PluginType=&quot;OptionalWCF.Contracts.ICustomerService, OptionalWCF&quot;&lt;/span&gt;
+&lt;span class=&quot;rem&quot;&gt;      PluggedType=&quot;OptionalWCF.ServiceImpl.CustomerService, OptionalWCF.ServiceImpl&quot;&lt;/span&gt;
+&lt;span class=&quot;rem&quot;&gt;      Scope=&quot;Singleton&quot;&lt;/span&gt;
+&lt;span class=&quot;rem&quot;&gt;      /&amp;gt;--&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;kwrd&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;StructureMap&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;</pre>
+<p>Now if the client is running on the same machine WCF is discarded.  If the service is moved to another machine with a simple configuration file tweak WCF is used.  The clients code is none the wiser.</p>
+<p>This pattern can be extending to support duplex communication by using .Net events instead of exposing the callback contracts to the clients.  I plan on writing an additional blog to cover this topic.</p>
+<p>The full source to this post can be downloaded here <a href="http://www.headspring.com/wp-content/uploads/2013/02/OptionalWCF.zip">OptionalWCF</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/from-imperative-to-declarative/">From Imperative to Declarative</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-13T00:00:00-06:00" pubdate data-updated="true">Feb 13<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Two weeks ago, we took a peek at the <a href="http://www.headspring.com/patrick/whittling-parsley/">low-level pattern recognition classes</a> that make up the core of <a href="https://github.com/plioi/parsley">Parsley</a>.  Last week, we saw how pattern recognition involves 3 pivotal <a href="http://www.headspring.com/patrick/composable-operations/">composable operations</a>: repetition, choice, and sequence.  We saw how Parsley implements basic repetition and choice operations, but sequence was still too hard to address.</p>
+<p>Today, we&#8217;ll finally see how to extract a useful sequence operation into a useful class, finally giving us the last of the necessary composable operations, and freeing us to finish our high-level <a href="http://martinfowler.com/bliki/DomainSpecificLanguage.html">DSL</a>.</p>
+<h2>Manual Sequence Recognition</h2>
+<p>Recall the horrible imperative code necessary to recognize the trivial three-token sequence of [left-parenthesis, letter, right-parenthesis]:</p>
+<p>[gist id=4688927]</p>
+<p>To recognize a 3 token sequence, we need 3 nested if statements and 4 return statements.  To recognize an N token sequence, we need N nested if statements and N+1 returns.  Each if statement tests whether the last call to Parse(&#8230;) succeeded, and each if statement&#8217;s body hands off the remanining unparsed tokens to the next step.  Clearly, this does not scale well.</p>
+<h2>(Ab)using LINQ</h2>
+<p>Note how similar each step is: we always call Parse(&#8230;), then test for success, then pass the remaining unparsed tokens along.  The main thing that changes each time we dig deeper is the particular Parser object in play.  I&#8217;d rather just say &#8220;Require(LeftParen), then Require(Letter), then Require(RightParen), halting at the first point of failure&#8221;.</p>
+<p>Our goal is to extract the &#8220;success check and unparsed token hand-off&#8221; action so that we don&#8217;t have to repeat it ourselves, and we want to do so in a way that lets us chain together any number of parsers representing a sequence of expectations, without having to indent deeper as the chain grows longer.  With no further ado, ParserQuery:</p>
+<p>[gist id=4802811]</p>
+<p><strong>I apologize for this.</strong>  This was hands-down the most difficult 12 lines of code I have written or will ever write.  The pattern in play here is so difficult, so abstract, that <em>I don&#8217;t even know what to name some of the variables.</em></p>
+<p>This is the <a href="http://blogs.msdn.com/b/wesdyer/archive/2008/01/11/the-marvels-of-monads.aspx">Monad</a> pattern.  It can be performed in any language that has lambda expressions in which the lambda body can refer to variables in the surrounding scope, like C#, Javascript, and Python, but is only ever used in practice when the language <em>also</em> has special syntax for its usages.  In C#, the special syntax which makes this pattern compelling is the <code>from/select</code> LINQ syntax.</p>
+<p>This special syntax lets us &#8220;flatten&#8221; our nested if statements into a series of &#8216;from&#8217; clauses.  When using the complete Parsley DSL, we can rewrite IsParenthesizedLetter without any nesting:</p>
+<p>[gist id=4919965]</p>
+<p>ParserQuery defines some extension methods that are treated specially by the compiler.  Their existence allows us to select from Parser&lt;T&gt; objects instead of the usual ability to select from IEnumerable&lt;T&gt; objects.  Note how instead of having 3 nested if statements, we have 3 from clauses <em>in sequence</em>.</p>
+<p>Note how the query does little more than <em>list</em> the 3 expectations in the order we expect them to appear in the input.  We &#8220;flattened&#8221; the nested if statements into a vertical series of from clauses.</p>
+<p>Note also how this sequence operation is operating on 3 Parser&lt;Token&gt; objects (the right hand side of each from clause) and the type of the whole query is <em>also</em> a Parser&lt;Token&gt;.  Since our sequence operation results in the same type as it acts on, it is highly composable with last week&#8217;s repetition and choice operations.</p>
+<p>Although complicated, there&#8217;s no magic here.  If we ask ReSharper to translate the above select statement into plain old method calls, we see that ParserQuery&#8217;s SelectMany method is being called N-1 times when there are N from clauses:</p>
+<p>[gist id=4942002]</p>
+<p>In other words, our SelectMany method&#8217;s job is to hook a single from clause into the chain of execution.</p>
+<p>C# rewrites a flat query into calls to the SelectMany extension method, which in turn does the success check and the passing along of remaining unparsed tokens, so all the same <em>work</em> is going on here as in the origial imperative code.  Thankfully, we&#8217;re no longer the ones doing that work!</p>
+<p>Rather than trying to make sense of ParserQuery itself, it may be more illuminating to read <a href="https://github.com/plioi/parsley/blob/cb69098da8135f7ac5fb1b0f84071e0e8b94b8a0/src/Parsley.Test/ParserQueryTests.cs">ParserQuery&#8217;s unit tests</a>.</p>
+<h2>So Where Are We?</h2>
+<p>2 weeks back, we started with the low-level imperative classes.  These let us deliberately walk through the input, pattern matching as we go along.  It was annoying, but it worked.  Like assembly language, we wanted to instead work with a high-level alternative, even if the high-level alternative was ultimately doing this imperative stuff behind the scenes.</p>
+<p>1 week back, we identified 3 fundamental operations necessary for a pattern recognition DSL: repetition, choice, and sequence.  We saw how repetition could be implemented as a class, ZeroOrMoreParser.  We saw how choice could be implemented as a class, ChoiceParser.</p>
+<p>This week, we see that sequence can be handled by ParserQuery and the from/select keywords.</p>
+<p><strong>Now, we have all the tools we need to finally create our DSL.</strong></p>
+<h2>Assembling Parsley&#8217;s DSL</h2>
+<p>Parsley deals with defining grammars for languages.  You could define a grammar for a language like JSON, and use that to turn JSON text into .NET objects.  Parsley contains a Grammar class full of useful operations.  To keep things highly-composable, many of these operations both produce Parser&lt;T&gt; objects and operate on other Parser&lt;T&gt; objects.</p>
+<p>First, the Grammar class includes a few helper methods for constructing the classes developed last week:</p>
+<p>[gist id=4911336]</p>
+<p>Next, we note that ZeroOrMore is useful, but not really enough in practice.  We may rather require that the input include OneOrMore occurrences of something.  Thankfully, we can <em>compose</em> sequence with ZeroOrMore to build OneOrMore.  OneOrMore things is the same as one thing followed by ZeroOrMore things:</p>
+<p>[gist id=4912909]</p>
+<p>Where ZeroOrMore required a whole class full of imperative code, OneOrMore required <em>one 3-line expression</em>.</p>
+<p>It&#8217;s also very common to expect the input to contain a repetition of items <em>separated by</em> some other expected thing.  A JSON array literal contains zero or more items <em>separated by</em> commas.  Here, the third operation, choice, makes an appearance.</p>
+<p>[gist id=4914803]</p>
+<p>Finally, a little payoff for all this infrastructure!  Imagine how horrifyingly verbose and error-prone these methods would be, if we had to implement them directly in terms of the low-level imperative style.</p>
+<p>Lastly, there&#8217;s one more built-in operation worth discussing as it directly affects the IsParenthesizedLetter method from the start of this post.  We often need to recognize that something important appears <em>between</em> two other, less important things.  A JSON array is zero or more items <em>between</em> the &#8220;[&#8221; and &#8220;]&#8221; symbols.  We care that the &#8220;[&#8221; and &#8220;]&#8221; are present, but the meaningful data we want to extract from that is the part in the middle:</p>
+<p>[gist id=4916812]</p>
+<h2>Revisiting the Original Example</h2>
+<p>Now, in order to recognize a parenthesized letter, all we need is:</p>
+<p>[gist id=4923462]</p>
+<p>Here, parenthesizedLetter is an object which can be handed the raw input tokens and can reply with one of two statements: &#8220;The input is not a parenthesized letter and here is why,&#8221; or &#8220;The input is a parenthesized letter and here is that letter.&#8221;  No nested if statements, no explicit progress through the token stream, no manual error checks at every step.</p>
+<p>Most importantly, this says <em>what</em> it does rather than <em>how</em>.  <strong>We&#8217;ve turned our imperative API into a declarative API by repeatedly extracting common and monotonous patterns into highly-composable operations, and by further hiding those helper classes behind a few simply-named helper methods.</strong></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/composable-operations/">Composable Operations</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-07T00:00:00-06:00" pubdate data-updated="true">Feb 7<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Last week, we took a peek at the <a href="http://www.headspring.com/patrick/whittling-parsley/">low-level pattern recognition classes</a> that make up the core of Parsley.  The final example showed how you can walk through some untrustworthy text in small and deliberate steps, looking for expected input along the way.  At each step, the step either succeeds or fails.  On success, the remaining unparsed text is passed along to the next step.</p>
+<p>This process was the epitome of imperative coding: <em>Do this, and then do this, and then do that.</em>  Despite this imperative core, I&#8217;d describe the intended usage of Parsley as declarative: <em>Here&#8217;s what valid input looks like, figure out the details for me.</em></p>
+<p>I said I&#8217;d reveal this week how this shift from low-level imperative coding to high-level declarative coding can be implemented, but I&#8217;ve decided to split it into two posts.  This week, we&#8217;ll see how Parsley builds on the frustrating foundation by baking in a few fundamental and composable imperative operations.  Next week, we&#8217;ll see how that more-useful layer can be extended into a high-level <a href="http://martinfowler.com/bliki/DomainSpecificLanguage.html">Domain Specific Language</a> (DSL).</p>
+<p><strong>A declarative API needs to give your end users a suite of useful and familiar words, in such a way that the words can be easily combined to form larger declarations.</strong>  We&#8217;re going to take some important imperative operations, give them useful names, and package them up in such a way that they will compose well with each other.</p>
+<h2>Pattern Recognition Fundamentals</h2>
+<p>Parsley can recognize patterns not unlike those recognized by regexes.  When working with regexes, we&#8217;re constantly composing three fundamental operations: repetition, choice, and sequence.</p>
+<p>With <strong>repetition</strong>, we say, &#8220;I&#8217;ve got this regex here, and I want it to be repeated.&#8221;  The regex &#8220;A&#8221; recognizes a single letter &#8220;A&#8221;, and we can produce a more interesting regex &#8220;A*&#8221; to recognize zero-or-more As, or &#8220;A+&#8221; to recognize one-or-more As.  A more complex pattern like &#8220;(A+B+)&#8221; can likewise be made more interesting via repetition: &#8220;(A+B+)*&#8221; which recognizes zero-or-more occurrences of As-followed-by-Bs.</p>
+<p>With <strong>choice</strong>, we can combine some small patterns into a larger one by saying, &#8220;Any one of these subpatterns could happen next.&#8221;  The regex &#8220;A|B&#8221; recognizes either an &#8220;A&#8221; or a &#8220;B&#8221;.</p>
+<p>With <strong>sequence</strong>, we can combine some small patterns into a larger one by saying, &#8220;The first pattern, followed by the second, followed by the third.&#8221;  Regexes achieve this by just squishing them together in order: the regex &#8220;ABC&#8221; recognizes an A, followed by a B, followed by a C.  They all have to appear, and in that order.</p>
+<p>These three operations <em>compose</em> very well.  The regex @&#8221;[_a-zA-Z]+[_a-zA-Z0-9]*&#8221; recognizes variable names.  We have repetition: the pattern has one-or-more leading characters and zero-or-more trailing characters.  We have choice: each character is an underscore or a letter or a digit.  We have sequence: to enforce that names don&#8217;t start with a digit, we have a two-part sequence of leading characters <em>followed by</em> trailing characters.  We say these operations &#8220;compose well&#8221; because:</p>
+<ol>
+<li>They can be applied to any pattern.</li>
+<li>Doing so takes very little code.</li>
+<li>Most importantly, <strong>the result is also a pattern to which the operations can be applied again.</strong></li>
+</ol>
+<p>If our API can exhibit these three properties, we can say it is &#8220;highly composable&#8221;, which should go a long way to making the API declarative as well.  Instead of telling the machine what to do, step by step, we&#8217;ll just glue together a bunch of small words into a larger statement.  The small words and the glue operations we perform on them will hide all the imperative details.</p>
+<h2>What Hurt Last Week</h2>
+<p>The big example at the end of the <a href="http://www.headspring.com/patrick/whittling-parsley/">last post</a> just had to tell the user whether or not a string was a single letter surrounded by parentheses.  Despite being a simple pattern, the code involved was quite large and annoying to write.</p>
+<p>Recall the Parser&lt;T&gt; interface:</p>
+<p>[gist id=4727988]</p>
+<p>A Parser of Things consumes some input tokens with the intent to construct a Thing.  On success, the Parser of Things produces a Thing and a reference to the remaining unconsumed tokens.  On failure, you get an error instead of a Thing.</p>
+<p>To write the Parser of Parenthesized Letters, we first needed to write an implementation of this interface, just so that we could say &#8220;I expect the next token to be of a certain kind, would you kindly try to consume one such token?&#8221;  We then made a convenience method to construct instances of this class, to save on keystrokes later.  Finally, we could write the big, ugly Parser of Parenthesized Letters.</p>
+<p>It hurts to have to write so much for so little gain.  I&#8217;d rather Parsley contain a suite of useful Parser&lt;T&gt; implementations out of the box, so I could just dive in and focus on detecting the pattern I&#8217;m interested in.  This suite of useful Parser&lt;T&gt; implementations ought to include our 3 fundamental/composable pattern-recognition operations: repetition, choice, and sequence.</p>
+<p>First, though, the suite should provide some primitive operations to get started with.  Compared to our regex examples, we need to be able to express things like &#8220;A&#8221; before we can augment them into interesting patterns like &#8220;A*&#8221;.</p>
+<h2>Parsley&#8217;s Default Parsers</h2>
+<p>The default parser implementations are as frustrating to write as the sample from last week, since they are written in terms of the awkward low-level API.  However, they make things easier on the end user, as we&#8217;ll see next week.  They are found under the <a href="https://github.com/plioi/parsley/tree/cb69098da8135f7ac5fb1b0f84071e0e8b94b8a0/src/Parsley/Primitives">Primitives</a> folder.  Four of these are relevant to today&#8217;s discussion:</p>
+<p><strong>TokenByKindParser</strong> - Last week we wrote a parser that takes an expected token <em>kind</em> and demands that the next token in the input be of that kind.  On success, the token is consumed.  For instance, if you are parsing C# you may reach a point where you expect the next token to be an identifier.  You don&#8217;t care what specific identifier it is, only that it is an identifier as opposed to an operator or number.  The real implementation of that class in Parsley is called TokenByKindParser:</p>
+<p>[gist id=4728010]</p>
+<p><strong>TokenByLiteralParser</strong> - Sometimes you have a more specific expectation of what will appear next in the input.  Rather than only caring about what kind of token appears next, you&#8217;ll expect that the token will be a specific known string.  When parsing C#, you may reach a point where you know the next token must be a &#8220;;&#8221; character.  TokenByLiteralParser serves this purpose.  As with TokenByKindParser, we simply inspect the current token and return success or failure, advancing one token on success:</p>
+<p>[gist id=4728017]</p>
+<p><strong>ZeroOrMoreParser</strong> - This class gives us our much-needed repetition operation.  Note that this class is constructed <em>with another Parser&lt;T&gt;</em> to be augmented, just as the regex &#8220;A&#8221; augmented by &#8220;*&#8221; becomes the regex &#8220;A*&#8221;.  The parser works by attempting the given parser against the input.  On success, we repeat from the new position in the input, collecting each intermediate result into a list.  As soon as the item-parser finally fails, we are finished and can return a successful result containing all the items collected along the way.  Note that this is a Parser&lt;IEnumerable&lt;T&gt;&gt;, meaning that after consuming a bunch of tokens, the result you get is a collection of things, where each thing was recognized by the initial input Parser&lt;T&gt;.  That&#8217;s our first hint at composabilty:</p>
+<p>[gist id=4728052]</p>
+<p><strong>ChoiceParser</strong> - This beast gives us our much-needed choice operation.  When we want the next thing in the input to be one of several possible things, and each of those things is individually recognized by a different Parser class, this combines them into one operation that says &#8220;Any of these things could appear next.&#8221;  The first one to match the input wins:</p>
+<p>[gist id=4728061]</p>
+<p>ZeroOrMoreParser and ChoiceParser make up a part of the composability we are shooting for here.  They take in Parsers as their input and are themselves Parsers.  That means you could feed one into the other: you might have two ZeroOrMoreParser instances, and pass them into a ChoiceParser: I expect zero-or-more As or else I expect zero-or-more Bs.</p>
+<p>There&#8217;s a subtle gotcha within both ZeroOrMoreParser and ChoiceParser.  By default, Parsley distinguishes between a parser that fails <strong>without</strong> advancing in the input and a parser that fails <strong>after</strong> advancing in the input.  If you are parsing C# and you know that the next thing in the input is a choice between a foreach statement or an if statement, but the input is &#8220;if $typo$&#8221;, we don&#8217;t just want to say that the choice failed; we want to say that your if statement is broken.  This is why these two classes care so much about detecting changes in position along the way.</p>
+<h2>What About Sequence?</h2>
+<p>TokenByKindParser and TokenByLiteralParser give us our trivial starting point, like a regex that only recognizes a single letter &#8220;A&#8221;.  ZeroOrMoreParser gives us repetition.  ChoiceParser gives us choice.  We still don&#8217;t have a useful sequence operation to build on.  Our complicated example from last week is still complicated!</p>
+<p>Recall my criticism from last week:</p>
+<blockquote><p>[IsParenthesizedLetter] is nearly as tedious as writing assembly. Each time I wanted to progress a little further, I had to indent again and declare some new local variables. I had to carefully pass along the remaining unparsed tokens at each step, and I had to concern myself with failure at each step.</p>
+<p>To make matters worse, this stuff motivates having lots of returns from a single function, making it extremely hard to break the function apart into smaller parts. <a href="http://www.headspring.com/patrick/detect-reflect-decomplect/">Return statements are &#8220;Extract Method&#8221; fences.</a></p></blockquote>
+<p>With all the code we&#8217;ve seen so far, we&#8217;re stuck with implementing all sequence patterns in this way, producing a convoluted morass of nested if statements.  We don&#8217;t even have the option of Extract Method refactorings to ease the pain.  We&#8217;ve coded ourselves into a corner!</p>
+<p>Fortunately, a little-used design pattern will save the day next week, allowing us to bottle up the subtle code duplication exhibited by last week&#8217;s manual attempt at a sequence operation.  Once we have sequencing down, all of these peices will start to fit together smoothly, and our end user will finally have that suite of useful composable words at their disposal.</p>
+<h2>Recap</h2>
+<p>Last week, we saw how Parsley represents progress through the input, and caught a glimpse of how a desired pattern can be recognized (or not) within that input.  The code to use those classes was verbose, ugly, and apparently refactor-proof.</p>
+<p>To ease the pain, we&#8217;ve seen how a few composable operations could be provided on top of the original core classes, but we&#8217;re still left with the tricky situation of sequencing.  Next week, we&#8217;ll implement sequencing, completing our DSL and insulating the end user from having to work with the ugly core directly.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/mvc-boot-camp/">MVC Boot Camp</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-05T00:00:00-06:00" pubdate data-updated="true">Feb 5<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img class="size-full wp-image-5716 alignright" title="ASP.NET MVC4 In Action" alt="ASP.NET MVC4 In Action" src="http://www.headspring.com/wp-content/uploads/2012/06/Palermo-ASPNET4-fc.jpg" width="239" height="300" /></p>
+<p>&nbsp;</p>
+<p>Instead of listening to lectures and doing boring written exercises, participants jump in and work on real code using real examples - applying these techniques on an existing application.</p>
+<p>We&#8217;ve made registration even easier through Eventbrite, but for other registration options call (877) 459 - 2260</p>
+<p><strong>Next Class: TBD - Ask about private training options</strong></p>
+<p><strong>You’ll Come Out of MVC Boot Camp Knowing:</strong></p>
+<ul>
+<li>How to Avoid Common Web Development Pitfalls</li>
+<li>How to Write Maintainable Systems</li>
+<li>25% Discount on a Personal ReSharper License</li>
+</ul>
+<p>Best of all, we have updated our curriculum for the latest version of MVC4 and mobile web development. If you are looking to get started with MVC, convert from an older version or learn how to use MVC in mobile web development projects, we highly recommend this course.</p>
+<p><em> <a title="MVC4 Boot Camp Curriculum" href="http://www.headspring.com/headspring/mvc-boot-camp/" target="_blank">Course curriculum</a> was created by the guys that wrote the book on <strong>MVC</strong>, Jeffrey Palermo and Jimmy Bogard.</em></p>
+<p><strong>Who Benefits Most? Developers With:</strong></p>
+<ul>
+<li>1 Year+ Experience in C#</li>
+<li>A Basic Understanding of Web Development Languages, Including HTML</li>
+<li>A Basic Understanding of the Web Life-Cycle</li>
+</ul>
+<p><em></div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/mvc-boot-camp/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/whittling-parsley/">Whittling Parsley</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-01T00:00:00-06:00" pubdate data-updated="true">Feb 1<span>st</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>A few weeks back, I introduced the idea of <a href="http://www.headspring.com/patrick/code-whittling/">Code Whittling</a>, in which you actively remove code from an unfamiliar project in order to learn about it and discover its most interesting core functionality.  I used this technique to learn about 3 open source projects: <a href="http://www.headspring.com/patrick/whittling-rhino-licensing/">Rhino Licensing</a>, <a href="http://www.headspring.com/patrick/whittling-xunit/">xUnit</a>, and <a href="http://www.headspring.com/patrick/whittling-nunit/">NUnitLite</a>.  I&#8217;ve got one more open-source project I&#8217;d like to apply this to, but in a <em>Shyamalanian twist</em> I&#8217;ll use this approach to teach something about one of my <em>own</em> projects, instead of using it to learn about someone else&#8217;s project.</p>
+<p>I&#8217;ve written about <a href="https://github.com/plioi/parsley">Parsley</a> here before: it&#8217;s a library that lets you declaratively parse complex text patterns, like a super-duper regex.  This week, we&#8217;ll tear this project down to get to the nuts-and-bolts of text traversal and pattern recognition, and next week we&#8217;ll rebuild some of the layers destroyed along the way.  We&#8217;ll discard the high-level useful bits this week, revealing a simple-yet-frustratingly-verbose core, so that next week we can reintroduce the layers that make it ultimately useful and terse.  We can make an analogy with C versus assembly: you don&#8217;t want to write assembly, even though that is the truth happening under the surface, but you&#8217;ll better-understand C once you&#8217;ve seen assembly.</p>
+<h2>A Little Background</h2>
+<p>If .NET didn&#8217;t already have an excellent <a href="http://json.codeplex.com/">JSON parsing library</a>, for instance, and someone needed your app to inspect and make use of some JSON as input, you might first reach for some kind of enormously complex regex, only to run into trouble describing the recursive nature of JSON (JSON objects can contain JSON objects (within JSON objects (within JSON objects))).  Regexes aren&#8217;t quite powerful enough to describe such patterns, and even if a complex regex is enough to handle your parsing needs, interpreting the results of a regex with multiple returned groups can be tedious.</p>
+<p>Instead, you could use a library like Parsley to simply describe what a valid JSON string <em>looks</em> like, as well as describe how each part of JSON corresponds with your own classes.  Then, the library does the heavy lifting for you.  For instance, <a href="https://github.com/plioi/parsley/blob/cb69098da8135f7ac5fb1b0f84071e0e8b94b8a0/src/Parsley.Test/IntegrationTests/Json/JsonGrammarTests.cs">Parsley&#8217;s integration tests</a> contain a <a href="https://github.com/plioi/parsley/blob/cb69098da8135f7ac5fb1b0f84071e0e8b94b8a0/src/Parsley.Test/IntegrationTests/Json/JsonGrammar.cs">JSON parser</a> which produces .NET bools, decimals, strings, arrays, and dictionaries when given an arbitrary JSON string as input.</p>
+<p>Parsley is an <a href="http://martinfowler.com/bliki/DomainSpecificLanguage.html">internal DSL for creating external DSLs</a>, so the normal use case involves simply declaring what successful input looks like, at a high level:</p>
+<p>[gist id=4688571]</p>
+<h2>High-Level Architecture</h2>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/02/ParsleyArchitecture.png"><img src="http://www.headspring.com/wp-content/uploads/2013/02/ParsleyArchitecture-466x165.png" alt="Parsley Architecture" width="466" height="165" class="aligncenter size-medium wp-image-6369" /></a></p>
+<p>Parsley can be broken down into 2 distinct subsystems: tokenization and grammars.  The grammar subsystem includes a low-level means of processing the input as well as a high-level DSL to make it all pretty like the example above.</p>
+<p>In a tokenization phase, a JSON string like &#8220;[1, 10, 100]&#8221; is chopped up into a series of substrings: &#8220;[&#8220;, &#8220;1&#8221;, &#8220;10&#8221;, &#8220;100&#8221;, and &#8220;]&#8221;.  Note that tokens can be multiple characters, as long as they represent a single meaningful thing in JSON.  A token could be an operator, a keyword, a number, or a whole quoted string literal.  Cutting any of these things into a smaller substring would remove its meaning, so we say &#8220;that&#8217;s small enough&#8221; and stop there.  We also remember what <em>kind</em> of token each substring is, so in our example the tokenizer really turns &#8220;[1, 10, 100]&#8221; into (&#8220;[&#8220;, OpenArray), (&#8220;1&#8221;, Number), (&#8220;,&#8221;, Comma), (&#8220;10&#8221;, Number), (&#8220;,&#8221;, Comma), (&#8220;100&#8221;, Number), (&#8220;]&#8221;, CloseArray).</p>
+<p>This collection of token objects is then handed off to the second subsystem, in which a grammar for our language is declared.  Parsley takes the collection of tokens, applies the grammar to it, and out pops plain old .NET objects like arrays, dictionaries, or instances of your own classes.</p>
+<p><strong>My goal today is to reveal that low-level processing within the grammar subsystem.  To get there, we&#8217;re going to have to whittle away a most of the project:</strong></p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/02/WhittledParsleyArchitecture.png"><img src="http://www.headspring.com/wp-content/uploads/2013/02/WhittledParsleyArchitecture-466x164.png" alt="Whittled Parsley Architecture" width="466" height="164" class="aligncenter size-medium wp-image-6370" /></a></p>
+<h2>The Whittle - Removing the Tokenizer Subsystem</h2>
+<p>I started by creating a new clone of https://github.com/plioi/parsley.git.</p>
+<p>As with the last three weeks, the first thing I got rid of was the unit testing project.  We&#8217;re about to start throwing away things left and right, and the tests were just going to be in the way.</p>
+<p>Next, I focused on removing the entire tokenization subsystem.  I deliberately made it so that you could use the grammar subsystem without the tokenizer subsystem.  There are very real reasons why the default tokenizer wouldn&#8217;t be enough for your needs: Python&#8217;s significant indentation, for instance, requires that you maintain some extra state and make some extra decisions along the way just to produce meaningful tokens.  Since I wanted a simple tokenizer that would work for most people, and also wanted to leave the door open for Python-style gymnastics, you can provide your own drop-in replacement tokenizer: anything that produces a collection of Token objects will satisfy the grammar subsystem.</p>
+<p>Tokenizing isn&#8217;t the interesting part.  If we inspect the next few characters in the input, surely we can decide whether we&#8217;re looking at a word, or an operator, or whatever.  We could go through the details, but it wouldn&#8217;t be surprising or enlightening.  To kill off the default tokenizer, I removed several classes we can ignore for the rest of today&#8217;s discussion: I dropped Lexer, which does the string-chopping action, as well as some classes that lived only to serve Lexer.</p>
+<blockquote><p>At this point, the tokenizer subsystem was dead, may it rest in pieces.</p></blockquote>
+<h2>The Whittle - Removing the DSL</h2>
+<p>This left me with the right-hand side of the archtecture diagram above.  Time to whittle away anything that contributes to the high-level DSL seen in the JSON example grammar above.  I won&#8217;t belabor the point by listing all the classes that got removed in this step.  We&#8217;ll revisit them next week when we see how they build on top of the low-level pattern recognition code.</p>
+<h2>Core Pattern-Recognition Classes</h2>
+<p>Only a few classes survived this attack, representing the bottom-right portion of the architecture diagram.</p>
+<p><strong>Token</strong> - Recall that the tokenizer subsystem&#8217;s job is to turn the input string into a collection of these Token objects.  They are our input.  It&#8217;s easier to work with these than to work with the original raw input string.  A token is a string like &#8220;100&#8221;, a position like &#8220;row 1, col 3&#8221;, and a TokenKind like &#8220;Number&#8221;:</p>
+<p>[gist id=4688648]</p>
+<p><strong>Position</strong> - This class is a pair of integers representing the line # and column # that a token was found at.  It inherits from Value, which just provides a basic equality and GetHashCode implementation:</p>
+<p>[gist id=4688659]</p>
+<p><strong>TokenKind</strong> - When you use Parsley to define your tokenizer phase, you provide a list of TokenKind objects.  If you&#8217;re making a JSON parser, you create an instance for each operator, each keyword, one for Number, one for Quotation&#8230; Each TokenKind also knows how to recognize itself in the raw input; a TokenKind representing variable names in the language you are parsing will be able to look at the raw input and say &#8220;Yes, the next 6 characters are a variable name,&#8221; or &#8220;Nope, the next few characters are not a variable name.&#8221;  Since the string-recognizing methods are irrelevant outside of the tokenizer phase, I&#8217;ve omitted them here:</p>
+<p>[gist id=4688687]</p>
+<p><strong>TokenStream</strong> - Admittedly weird, <a href="https://github.com/plioi/parsley/blob/cb69098da8135f7ac5fb1b0f84071e0e8b94b8a0/src/Parsley/TokenStream.cs">TokenStream</a> takes the arbitrary collection of Tokens produced by the tokenizer subsystem and presents them to the grammar subsystem in a way that provides traversal without needing state change.  If you ask this to advance to the next token, <em>the object doesn&#8217;t change</em>; instead you get a new TokenStream representing everything except for the token you are advancing beyond.  This action resembles the <code>Skip(int) IEnumerable</code> extension method.  Rather than dwell on the weird implementation, it&#8217;s easier to just see its usage within <a href="https://github.com/plioi/parsley/blob/cb69098da8135f7ac5fb1b0f84071e0e8b94b8a0/src/Parsley.Test/TokenStreamTests.cs">TokenStreamTests</a>.  When you have a TokenStream containing the tokens &#8220;[&#8220;, &#8220;10&#8221;, and &#8220;]&#8221;, and you call .Advance(), you&#8217;ll get a TokenStream containing only the tokens &#8220;10&#8221; and &#8220;]&#8221;.</p>
+<p><strong>Parser, Reply, Parsed, and Error</strong> - These are our fundamental building blocks.  A Parser is anything that consumes <em>some</em> Tokens from the stream and produces a Reply.  A Reply is either successful (Parsed), or unsuccessful (Error).  When successful, a Reply holds a Value, the .NET object you wanted to pull out of the original plain text.  Successful or not, the Reply also holds a reference to the <em>remaining, not yet consumed</em> Tokens.  A Reply basically says &#8220;I worked, and now we&#8217;re <em>here</em>,&#8221; or &#8220;I failed, and we&#8217;re still <em>there</em>.&#8221;  The whittled and simplified versions of these classes appear below:</p>
+<p>[gist id=4688743]</p>
+<h2>The Result - Tedious Pattern Recognition</h2>
+<p>These classes don&#8217;t look like much, and their emphasis on zero-state-change is atypical for .NET development, but when combined they let us deliberately walk through the input Token collection, recognizing patterns along the way.</p>
+<p>Let&#8217;s consider a simple example.  We want to be given a string and then decide whether or not it is a parenthesized letter like &#8220;(A)&#8221; or &#8220;(B)&#8221;.  If we&#8217;re given &#8220;(&#8220;, &#8220;(A&#8221;, &#8220;(AB)&#8221;, or &#8220;Resplendent Quatzal&#8221;, then we want to report failure.  Sure, we could do this with a regex, but any <em>simple</em> example could work with a regex.  I only need an example complex enough to show how these Parser/Reply/TokenStream classes work together.</p>
+<p>Let&#8217;s assume we&#8217;ve implemented our tokenizer phase correctly already.  The tokenizer phase defined 3 TokenKind instances:</p>
+<p>[gist id=4688912]</p>
+<p>The tokenizer hands us the tokens to evaluate:</p>
+<p>[gist id=4688919]</p>
+<p>We want to write a function which receives these Token objects and tells us whether or not it is a parenthesized letter.  If it is, we want to report what the letter was.  If it isn&#8217;t, we want to tell them exactly what went wrong.  Before we do that, we&#8217;ll need to provide a useful implementation of the Parser<T> interface.  For our needs, we want a parser that produces strings on success, so that we can report what the letter was on success.  We&#8217;ll also define a convenience method for creating instances of this class:</p>
+<p>[gist id=4688947]</p>
+<p>Finally, we have enough to write IsParenthesizedLetter(Token[]):</p>
+<p>[gist id=4688927]</p>
+<p>Phew!  That is monotonous.  Writing this is nearly as tedious as writing assembly.  Each time I wanted to progress a little further, I had to indent again and declare some new local variables.  I had to carefully pass along the remaining unparsed tokens at each step, and I had to concern myself with failure at each step.</p>
+<p>To make matters worse, this stuff motivates having lots of returns from a single function, making it extremely hard to break the function apart into smaller parts.  <a href="http://www.headspring.com/patrick/detect-reflect-decomplect/">Return statements are &#8220;Extract Method&#8221; fences</a>.</p>
+<p>Consider, though, that if we wanted to concern ourselves with concepts like &#8220;the next token has to be either a Foo or a Bar or a Baz&#8221;, we could use this approach to &#8220;test the waters&#8221; as we go: Require(Foo) and if the reply was a failure, just Require(Bar) using the same original TokenStream, and if <em>that</em> reply is a failure just Require(Baz) <em>again using the same TokenStream</em>.  <strong>We get backtracking for free without having to take on the dangers of tracking some global, writable int represting our progress through the token array.</strong></p>
+<p>With all the downsides, allowing backtracking in this manner doesn&#8217;t seem very worthwhile, but writing in assembly doesn&#8217;t seem very worthwhile either.</p>
+<p>Next week, we&#8217;ll see how we can build a more useful, declarative API on top of these low-level pattern recognition primitives.  The suspense is killing you!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/headspring-announces-employee-promotions/">Headspring Announces Employee Promotions</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-01T00:00:00-06:00" pubdate data-updated="true">Feb 1<span>st</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p style="text-align: left;" align="center"><i>Company committed to continued growth and development of its team</i></p>
+<p><b>AUSTIN, Texas, Jan., 2013</b> – Headspring, a custom software provider, is proud to announce the promotion of five employees: Justin Pope and Pedro Reys to principal consultant and Patrick Lioi, Graham Swor, and Cedric Yao to Senior Consultant 4.</p>
+<p>“One of our primary objectives at Headspring is focusing on the development of our team and providing them opportunities to grow professionally,” said Dustin Wells, CEO of Headspring.” “We’re proud to give our employees well-earned promotions for their hard work.”</p>
+<p>Prior to their promotions, both Pope and Reys were senior consultants and client leads. Their new role will focus on managing project teams, overseeing architectural decisions, and acting as liaison with clients. Pope joined the Headspring team in 2010 and is an expert in front-end development. Reys also joined the team in 2010 and focuses on back-end development.</p>
+<p>Lioi, Swor, and Yao have been promoted to Senior Consultant 4. They are being recognized for their proactive client and company leadership, as well as their software development and project delivery skills.</p>
+<p>Headspring is committed to the continued growth and development of its team. The company currently has 35 employees and hired 12 new employees within the past year.</p>
+<p>&nbsp;</p>
+<p><b>About Headspring                                                                                                           </b></p>
+<p>Headspring delivers custom business applications to help growing companies. The Austin-based company has proudly served Texas businesses since 2001. Headspring is committed to helping local companies compete in their markets by delivering custom business applications using consultative and collaborative processes. Headspring provides customers with maintainable custom applications to fit business specific needs to enable continued growth and efficiencies. The company has been named 127 on Inc. 500, the exclusive ranking of the nation’s fastest-growing private companies. For more information, go to <a href="http://www.headspring.com">www.headspring.com</a> or call (877) 459–2260.<b></b></p>
+<p align="center">
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/headspring-reports-year-end-results-and-projections-for-2013/">Headspring Reports Year-End Results and Projections for 2013</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-29T00:00:00-06:00" pubdate data-updated="true">Jan 29<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2 style="text-align: left;" align="center"><i>67 percent growth in sales generates launch of mobile software brand and new Texas location</i></h2>
+<p><b>AUSTIN, TX – (January 29, 2013) – </b>Headspring, a leading custom software development company, today announced a 67 percent growth in revenue. Headspring grew 50 percent year over year for the past two years and in 2012 exceeded its unprecedented growth cycle.</p>
+<p>The company increased its client base, as well as the size and scope of its software development and consulting projects. Among Headspring’s 76 clients are government agencies, retail chains, e-commerce firms, and software vendors.  Headspring&#8217;s clients include both Fortune 500 companies and mid-market firms based in Austin, Dallas, and Houston, Texas.</p>
+<p>“From day one, we focused on building a team that is creative and dedicated to top-notch results for our clients,” said Dustin Wells, CEO, Headspring. “But our success is about more than just the bottom-line, it’s about company culture.  If culture isn’t measured as a business priority, a company will lose ground quickly.”</p>
+<p>To help manage its rapid growth, in June 2012, Headspring nearly tripled its office space and moved into an 11,319-square-foot headquarters building. In addition, Headspring hired 12 new employees, growing the team to 35, and promoted 17 employees.  Last year, Headspring ranked 4<sup>th</sup> of the “Best Places to Work in Central Texas” by <i>Austin Business Journal</i>, placed in the “Top 100 Best Companies to Work for in Texas” by <i>Texas Monthly</i>, and made national honors on the list of “101 Best and Brightest Companies to Work For.”</p>
+<p>In 2013, Headspring forecasts continued growth and job expansion.  The company will increase the number of employees by adding 24 overall positions.  Headspring Houston will open in May, adding up to 10 team members at that location by the end of the year.  Expansion into the Houston market reflects the growing software needs of companies. One of the biggest challenges facing the industry is the need for more qualified and talented software developers.</p>
+<p>“Opening an office in Houston will give Headspring the ability to attract from a broader pool of developers and also serve the increasing needs of the Houston business market,” said Glenn Burnside, vice president of engineering, Headspring.</p>
+<p>In April, Headspring will launch Headspring Mobile, an independent brand focused strictly on delivering mobile application solutions. Headspring has developed a number of mobile applications under its Headspring brand, such as <a href="http://bit.ly/Vs4Tya">1<sup>st</sup> Down Technologies</a>. According to a recent report by research firm Strategy Analytics, more than 200 million mobile workers will be using mobile business applications in 2013.</p>
+<p>“We are very excited about Headspring Mobile,” Wells said. “Headspring is plugged into what our customers are saying they need, and with the tremendous growth of the mobile industry, it makes sense to make this part of our product solutions.”</p>
+<p><b>About Headspring:</b></p>
+<p>Headspring delivers custom business applications to help growing companies. The Austin-based company has proudly served Texas businesses since 2001. Headspring is committed to helping companies compete in their markets by delivering custom business applications for growing companies. Headspring provides customers with scalable custom applications to fit business specific needs to enable continued growth. In 2009, the company was named #127 on Inc. 500, the exclusive ranking of the nation’s fastest-growing private companies. For more information, go to <a href="http://www.headspring.com/">www.headspring.com</a> or call (877) 459–2260.</p>
+<p>&nbsp;</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/whittling-nunit/">Whittling NUnit</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-25T00:00:00-06:00" pubdate data-updated="true">Jan 25<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Last week, we applied <a href="http://www.headspring.com/patrick/code-whittling/">Code Whittling</a> to learn about <a href="http://www.headspring.com/patrick/whittling-xunit/">xUnit</a>.  This week, we&#8217;ll do the same for NUnit, and contrast the two testing frameworks.  NUnit has been around a long time, and has accumulated many features.  <a href="http://www.nunitlite.com/">NUnitLight</a> is a recent endeavor to make a smaller version of the core features.  Since my goal is to get to the core features anyway, I&#8217;ll start with NUnitLight instead of the full NUnit.</p>
+<h2>The Whittle</h2>
+<p>I started by grabbing a copy of the <a href="https://launchpad.net/nunitlite">NUnitLite source code on Launchpad</a>.</p>
+<p>The first thing I noticed is that it has an atypical structure in Solution Explorer.  Project names include .NET version numbers (2.0, 3.5, 4.0), and these projects are placed within solution folders NET-2.0, NET-3.5, and NET-4.0.  Comparing this to the actual file structure on disk, it looks like the same code files are shared by each of these version-based projects.</p>
+<p>Why have multiple projects containing the exact same files?  Viewing project properties, I see that each project has version-specific &#8220;conditional compilation symbols&#8221; like NET_2_0 or CLR_4_0 to distinguish them.  Within the code, there are lots of tests against these symbols:</p>
+<p>[gist id=4457122]</p>
+<p>The developers were therefore able to use one set of files to create builds for each version they will run on, accounting for the differences with these preprocessor conditions.  That doesn&#8217;t sound like fun, but keep in mind NUnit is ubiquitous, and you don&#8217;t want to be surprised by incompatibility with your environment.</p>
+<p>For my purposes, I picked a single version to focus on, and removed the other versions&#8217; projects from the solution (leaving the actual shared code files intact).</p>
+<p>When I whittled down xUnit last week, one of the first steps was to remove its own tests, and I did the same here with NUnitLite.  Remember, this is supposed to be a destructive exercise.  The goal is to remove everything that is in the way of my understanding the fundamentals of the project: how tests are discovered, how tests are executed, and how test results are accumulated.  I was left with a single project in the solution: nunitlite-3.5.</p>
+<p>Again, as with xUnit, I removed all assertion code, since I use the <a href="http://nuget.org/packages/Should">Should</a> assertion library instead.  This was actually a much larger undertaking than with xUnit.  NUnit has been around for a long time, and the assertion library grew while keeping backward-compatibility as a priority.  It looks like a significant amount of effort went into avoiding duplication of code in the <em>implementation</em> of assertions, even while the main end-user-facing assertion APIs gained support for different styles:</p>
+<p>[gist id=4457213]</p>
+<p>Behind this API lies a large family of classes called Constraints, which represent concepts like is-equal-to-x.  Both lines in the sample above would ultimately rely on the same constraint class to perform the comparison.</p>
+<p>Next, I removed several attributes I never use, so I could instead focus on the main lifecycle attributes: [TestFixture], [TestFixtureSetUp], [TestFixtureTearDown], [SetUp], [TearDown], and [Test].</p>
+<p>I made a mostly-random pass through the solution, removing things that were no longer reachable.  When interfaces eventually had a single implementation, I&#8217;d phase out the interface.  Once it got down to a manageable size, I tweaked and simplified some of the types and methods as the mood struck me.  Now that I was familiar with the overall solution structure, I took a closer look at the test discovery and execution code.</p>
+<h2>Results - Test Discovery</h2>
+<p>Let&#8217;s consider NUnitLiteTestAssemblyRunner to be our entry point.  Given an Assembly (a project containing tests), we want to discover and run all the tests.  I whittled it down to this:</p>
+<p>[gist id=4457272]</p>
+<p>It defers to NUnitLiteTestAssemblyBuilder to create <em>something</em> representing the tests to run, creates a work item to process the tests, kicks off the work item, and waits for the work item to finish.</p>
+<p>NUnitLiteTestAssemblyBuilder&#8217;s job is to traverse the assembly, discover the test fixtures and their tests, and then return a TestSuite summarizing all the work that is to be done.  It does so using reflection, not surprisingly with a very similar implementation as xUnit.  I whittled NUnitLiteTestAssemblyBuilder&#8217;s pivotal method down to:</p>
+<p>[gist id=4457304]</p>
+<p>The CanBuildFrom(Type) method returns true if the Type has a [TestFixture] attribute or if any of its methods have a [Test] attribute.  The BuildFrom method then builds a test fixture description by reflecting on the Type&#8217;s methods, converting each test method into a Test:</p>
+<p>[gist id=4457322]</p>
+<p>To build a single test case, it performs a similar CanBuildFrom/BuildFrom pair as we saw for the fixture as a whole.  In this case, CanBuildFrom tests whether the given method has a [Test] attribute, and BuildFrom constructs a new TestMethod instance, which simply describes the test to be executed.</p>
+<p>All of the above lets us go from a given Assembly to a tree of all the tests that need to be executed.</p>
+<h2>Results - Test Execution</h2>
+<p>To actually run the tests, recall that we hand that work off to something called a WorkItem.  The work item was initialized with the TestSuite (aka the test fixture) to run, and this in turn creates yet more work items, one per test.  Running one of these per-test work items takes us to TestMethodCommand.Execute(&#8230;), which I whittled down to:</p>
+<p>[gist id=4457342]</p>
+<p>Again, much like xUnit, we use reflection to call the test method.  If an exception is thrown, that will cause the test to fail.  If no exception is thrown, we happily reach the next line and set the result to Success.</p>
+<h2>Contrasting xUnit with NUnitLight</h2>
+<p>NUnitLight and xUnit accomplish virtually the same thing, and from a very high level they do it in the same way:</p>
+<ol>
+<li>Provide an assertion API so that failed assertions present themselves as exceptions thrown from test methods.</li>
+<li>Use reflection to traverse the test Assembly, building up a tree that describes what fixtures are to be executed, and which tests appear on each fixture.</li>
+<li>Walk through those trees, using reflection to invoke each test method.</li>
+<li>If that invocation didn&#8217;t throw an exception, consider the test passed.</li>
+</ol>
+<p>Despite this similarity, their implementations differ a great deal.  I thought xUnit was big, but even NUnit<em>Light</em> seems quite a bit larger.  It was really easy to remove xUnit&#8217;s assertion code, and very tough to remove NUnitLight&#8217;s.  I&#8217;m not saying &#8220;ease of destruction&#8221; should be anywhere on a developer&#8217;s radar when writing an API, but it does speak to the history of the two projects.  As I wrote earlier, NUnit&#8217;s history involves more than one user-facing API for writing assertions, and they needed to avoid duplicating implementation details; naturally the design of assertions here is more complex than with xUnit.  I started pulling the assertion thread in NUnitLight, and quickly wound up with a long series of dependencies to remove before it would compile again.</p>
+<p>Before looking at either of these projects, I figured that after removing the assertion code, there would be very little left, but I was wrong.  As with anything that gets used by such a large audience, the devil is in the details.  Projects this popular have to handle many environments and situations that no single developer ever encounters on their own.</p>
+<p>Although I doubt I could make a meaningfully-large contribution to these projects right away, I&#8217;m now much closer to that level of knowledge.  Passively reading through the code would not have been as effective as destroying them from the outside in.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/5/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/page/3/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie&#8217;s Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

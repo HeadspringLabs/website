@@ -1,0 +1,581 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="In A Game of Throws, we saw a frequently-blogged-about gotcha regarding the yield keyword and exception handling. This week, we&#8217;ll see how &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/page/9">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/the-defensive-toarray/">The Defensive ToArray</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-02T00:00:00-05:00" pubdate data-updated="true">Oct 2<span>nd</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In <a href="http://www.headspring.com/patrick/a-game-of-throws/">A Game of Throws</a>, we saw a frequently-blogged-about gotcha regarding the <code>yield</code> keyword and exception handling.  This week, we&#8217;ll see how there is more than one motivation for using the <code>yield</code> keyword, and when you opt into it for one you get the other whether you like it or not.  This leads to a code smell: littering our code with &#8216;defensive&#8217; calls to ToArray().</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/the-defensive-toarray/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/a-game-of-throws/">A Game of Throws</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-27T00:00:00-05:00" pubdate data-updated="true">Sep 27<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In <a href="http://www.headspring.com/blog/developer-deep-dive/infinite-laziness/">Infinite Laziness</a>, we saw how the <code>yield</code> keyword lets us work with <em>lazy evaluation</em>, in which work is deferred and performed on demand once something else actually needs to consume the result.  Lazy evaluation with <code>yield</code> isn&#8217;t free, though; it has some unfortunate consequences.</p>
+<p>This week, we&#8217;ll see how lazy evaluation affects exception handling.  Next week, we&#8217;ll see how <code>yield</code> complects brevity with laziness, resulting in some undesirable patterns.</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/a-game-of-throws/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/mvc-boot-camp-updated-for-asp-net-mvc-4/">MVC Boot Camp Updated for ASP.NET MVC 4</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-25T00:00:00-05:00" pubdate data-updated="true">Sep 25<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>With the release of ASP.NET MVC 4, we’ve updated <a title="MVC4 Boot Camp Curriculum" href="http://www.headspring.com/headspring/mvc-boot-camp/" target="_blank">our boot camp curriculum</a> to include the latest enhancements and features - the biggest of which is the inclusion of ASP.NET Web API. We’ll look at where Web API fits with modern web applications, and where we’ve seen Web API fit best.</p>
+<p>ASP.NET MVC 4 also includes a number of mobile enhancements, AJAX improvements, bundling and minification, all of which will be covered in the course.</p>
+<p>Hope to see you there!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/bugs-of-omission/">Bugs of Omission</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-21T00:00:00-05:00" pubdate data-updated="true">Sep 21<span>st</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>When your software includes faulty logic or conflicting requirements, you&#8217;re very likely to run into unexpected behavior.  These bugs are relatively easy to trigger and diagnose.</p>
+<p>A bug of omission, on the other hand, in which you <em>should</em> have included code to cover an edge case, might sit around lurking for quite a while.  When such a bug finally does surface, the behavior may be so counter to your expectations  that you&#8217;ll wonder if maybe, just maybe, a rogue pixie or trickster demigod has cursed your machine.</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/bugs-of-omission/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/low-ceremony-xunit/">Low-Ceremony xUnit</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-13T00:00:00-05:00" pubdate data-updated="true">Sep 13<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>&#8220;High Ceremony&#8221; software includes excessive detail which distracts from the essential thing the coder is trying to convey.  In C# for instance, you could argue that having to place <em>all</em> methods inside classes is needless ceremony.  Your Main() method shouldn&#8217;t need that extra boilerplate, but we just Have To Do It That Way.  We have to perform that ceremony.  Developers who favor dynamic languages would find type declarations to be High Ceremony as well, and even C#ers admit this whenever they use the <code>var</code> or <code>dynamic</code> keywords.</p>
+<p>High ceremony isn&#8217;t limited to language details, though.  We can be guilty of introducing it, ourselves.</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/low-ceremony-xunit/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/seamless-audit-trails-in-ravendb/">Seamless Audit Trails in RavenDB</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-07T00:00:00-05:00" pubdate data-updated="true">Sep 7<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Since the basic product sold by software consultancies is consultant-time, you would expect there to be pressure (gentle or not), to put in as many billable hours as physically possible, to the detrement of quality.  Fortunately, Headspring takes the long view: excess hours this week may make this week&#8217;s revenue numbers jump, but sustainability matters more for all involved.  I first experienced this policy as a reliable 40 hour work week, but it doesn&#8217;t stop there.  When you take the long view, you respect the need to put some unbillable time towards improving your own skills.  This week, I got to take advantage of that flexibility by attending Headspring&#8217;s own <a href="http://www.headspring.com/events/ravendb-boot-camp/">RavenDB Boot Camp</a>, taught by <a href="http://coderwall.com/alonsorobles">Alonso Robles</a>.</p>
+<p>When new software tools come around, they almost always claim to &#8220;Just Work&#8221;.  Even <a href="http://ravendb.net/">ravendb.net</a> makes this claim.  Real software problems tend to involve lots of competing concerns, so we should always take such claims with a grain of salt in addition to an open mind.  During the Boot Camp, I got to see a perfect example of where this &#8220;It Just Works&#8221; claim comes from.</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/seamless-audit-trails-in-ravendb/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/get-to-know-a-developer-patrick-mcveety-mill/">Get to Know a Developer: Patrick McVeety-Mill</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-07T00:00:00-05:00" pubdate data-updated="true">Sep 7<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://www.headspring.com/wp-content/uploads/2012/09/photo.jpg"><img class="alignright size-medium wp-image-5718" title="Patrick McVeety-Mill" src="http://www.headspring.com/wp-content/uploads/2012/09/photo-224x300.jpg" alt="Patrick McVeety-Mill" width="224" height="300" /></a>Patrick McVeety-Mill is one of a kind here at Headspring. We found him pretty much straight out of college, but his resume and <a href="http://loudandabrasive.com/">portfolio</a> showed a lot of potential.  We’ve never hired a fresh graduate before, but he’s proven to encompass every ounce of thoughtfulness, creativity and skill we have come to expect from a seasoned developer.  After a few weeks on the job, I’m convinced!</p>
+<p>Patrick is a native Austinite, but graduated from the Rochester Institute of Technology in Game Design and Development. We’ll forgive him.</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/get-to-know-a-developer-patrick-mcveety-mill/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/headspring-1st-down-technologies/">Headspring & 1st Down Technologies Launch App That Delivers Complete Playbook Tool for Youth League Coaches and Players</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-05T00:00:00-05:00" pubdate data-updated="true">Sep 5<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><strong>AUSTIN, TX – Sept, 2012,</strong> Headspring, an Austin-based software development company, today announced the launch of FirstDown PlayBook™ Youth, a football app for mobile and tablet devices developed for 1st Down Technologies, LLC, an Austin-based sports software company.</p>
+<p>FirstDown PlayBook™ Youth app is a tool for youth league football coaches and players to browse formation packs full of professionally drawn plays, create playbooks, and develop practice and game plans. The app also allows users to print the coach’s playbook and player wristband sheets.  Using HTML5 technology, the playbook is web-based and gives coaches and players immediate access on multiple mobile and tablet devices. Real-time changes can be made offline during football games and updated online when an Internet connection is available. </div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/headspring-1st-down-technologies/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/headspring-hosts-central-texas-givecamp-to-benefit-10-local-non-profits/">Headspring Hosts Central Texas GiveCamp to Benefit Nine Local Non-profits</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-30T00:00:00-05:00" pubdate data-updated="true">Aug 30<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p style="text-align: left;" align="center"><em>Sponsors and Web Developers Wanted for September Event</em></p>
+<p><strong><a href="http://www.headspring.com/wp-content/uploads/2012/06/Banner.png"><img class="alignright size-medium wp-image-5706" title="Central Texas GiveCamp Banner" src="http://www.headspring.com/wp-content/uploads/2012/06/Banner-300x300.png" alt="Central Texas GiveCamp Banner" width="300" height="300" /></a>AUSTIN, TX – August 2012,</strong> Headspring announces Central Texas GiveCamp, a three-day collaboration of software development teams building websites for 10 local non-profit organizations. <strong><em>The event begins on Friday, September 28 through Sunday, September 30, 2012</em></strong><em>.</em> GiveCamp is a national initiative that happens throughout the year in various cities. Central Texas GiveCamp is being hosted in Austin for the first time and will be held at Headspring’s new headquarters.</p>
+<p>“Employees at Headspring are community-minded and spearhead the company’s charitable efforts,” said Dustin Wells, CEO of Headspring. “We are excited to host this inaugural Central Texas GiveCamp and give back in a tangible way that helps sustain the good work being done by nonprofits in our communities.”</p>
+<p>Central Texas GiveCamp is open to all interested software developers. Software developers will gather at the Headspring office to design and develop updated websites for nine local non-profit organizations, including Arlington Urban Ministries, A.S.P.I.R.E. (Awarding Students and Promoting Increased Rigor in Education), Austin Partners in Education, Bluebonnet RCD, Colorado River Foundation, Dallas Rape Crisis Center, Texas Hill Country RCD, Texas Kidney Foundation, and TexVet.</p>
+<p>“Texas Association of Nonprofit Organizations (TANO) is looking forward to seeing what the teams will create at Central Texas GiveCamp,” said Ellen Tucker, Director of Member Services for TANO. “We’re honored to be a part of the event. The support of organizations like Headspring helps our nonprofits focus more energy on their mission, creating a more positive impact for the people of Texas.”</p>
+<p>To learn more about Central Texas GiveCamp and get involved as a developer or sponsor, please visit <a href="http://ctxgivecamp.org/">http://ctxgivecamp.org</a> or call Headspring at (512) 459-2260. For more information about TANO, visit www.TANO.org.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/a-c-feature-that-shocks-the-conscience/">A C# Feature That Shocks the Conscience</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-29T00:00:00-05:00" pubdate data-updated="true">Aug 29<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>The &#8220;default arguments&#8221; feature in C# seems like a great time-saver at first, but there is a sharp difference between what it <em>feels</em> like it does versus what it <em>actually</em> does which can lead to surprises.  Recently, fellow Headspring consultant <a href="https://twitter.com/pedroreys">Pedro Reys</a> discovered a particularly bizarre gotcha related to default arguments.</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/a-c-feature-that-shocks-the-conscience/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/10/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/page/8/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie&#8217;s Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

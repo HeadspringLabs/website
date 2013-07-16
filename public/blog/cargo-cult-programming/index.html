@@ -1,0 +1,270 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Cargo Cult Programming - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="During World War II, Japanese and American troops had to transport a great deal of cargo through the Pacific islands, setting up many short-lived &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/cargo-cult-programming">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Cargo Cult Programming</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-12-09T00:00:00-06:00" pubdate data-updated="true">Dec 9<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>During World War II, Japanese and American troops had to transport a great deal of cargo through the Pacific islands, setting up many short-lived landing strips along the way. Members of tribal societies in the area, who had not seen landing strips and planes before, didn&#8217;t quite understand the <em>how</em> or the <em>why</em>, only the <em>fact</em> that the presence of landing strips and planes coincided with the arrival of supplies. After the war, they would try to build immitation landing strips and planes in the hopes that this would cause new cargo to arrive.</p>
+<p>This is an example of a <a href="http://en.wikipedia.org/wiki/Cargo_cult">cargo cult</a>. The term has since been applied to a wide variety of other topics, when we supposedly-more-advanced people make the <em>exact</em> same mistake. When someone superficially mimics all the trappings of a legitimate scientist in order to support ideas with no scientific leg to stand on, they&#8217;re engaging in cargo cult science. Similarly, when programmers write unhelpful code because it <em>looks</em> or <em>feels</em> like something they ought to be doing, they&#8217;re engaging in cargo cult programming.<!--more--></p>
+<p>Years ago, I was working on a project in which the architects required the team to code the layers of our application according to a very strict pattern. It had all the trappings of a Good Layered Archictecture, but had the opposite effect in practice.</p>
+<p>At the bottom, we had a Data Access Layer responsible for making database calls. Above that we had a Business Layer, which our ASP.NET code-behinds depended on. A general fear of exceptions led to a lot of rules about try/catch blocks and logging. It turned out, very little <em>business</em> was actually going on in these methods. They largely just forwarded arguments passed from the UI layer down to the Data Access Layer, amounting to hundreds of methods with the following structure:</p>
+<p>[gist id=&#8221;1449927&#8221;]</p>
+<p>The Handle method would serialize the exception to a log file, and then rethrow the exception after wrapping it in a BusinessException devoted to this layer.</p>
+<p>Furthermore, each of these methods had to have full XML documentation in order to pass code review. Monotonous, you say? No worries, because everyone could install a plugin to automatically write those comments by inspecting the code.</p>
+<p>In an elevator pitch, these might sound like good practices. &#8220;You don&#8217;t want your UI layer making database calls, right? You want to handle your exceptions, right? You want to log your exceptions, right? You need documentation, right?&#8221;</p>
+<p>Unfortunately, these decisions were exceptionally costly in several ways. The initial costs came in development time. Imagine how often developers would reach for their copy and paste shortcuts while developing hundreds of these methods, effectively one for each database call. Imagine creating and then tracking down the inevitable copy/paste bugs. Imagine how silly I felt <em>writing unit tests</em> for these.</p>
+<p>The documentation was <em>almost</em> always generated by a plugin, meaning that we all very quickly learned to skip over them while reading through the code. Whenever an important comment was actually written, it would therefore never been seen. <strong>A comment that tells me exactly what my code says is not a comment.</strong></p>
+<p>The costs were magnified when it came to troubleshooting production issues. Because every exception was caught, wrapped, and rethrown, stack traces became quite garbled and misleading. A similar try/catch appeared in the Data Access Layer, so when you tried to read the log file for a failed database call, the complexity was compounded. Instead of seeing a stack trace that showed the steps from the incoming request down to the actual point of failure, you had to walk through nested stack traces sprinkled with the untrue &#8220;failure&#8221; of each call to Handle().</p>
+<p>The costs were further magnified in those cases where we actually did want some specific exception types to fall up to the caller. Here, in order to follow the pattern and pass code review, our try/catches had to get extra clever:</p>
+<p>[gist id=&#8221;1449930&#8221;]</p>
+<p><strong>This all <em>walked</em> like exception handling, and <em>quacked</em> like exception handling, but it was really just a duck.</strong></p>
+<p>Handle()&#8217;s contributions were the logging of exceptions and the introduction of a layer-specific exception wrapper. Logging is useful, but could be performed by a <a href="http://nuget.org/packages/log4net">logging framework</a> higher up the call chain so that we don&#8217;t have to keep on remembering to include it. The layer-specific exception instance served no purpose other than to remind us that we did in fact have a layer named &#8220;Business&#8221;. Removing the exception handling pattern would leave us with the following:</p>
+<p>[gist id=&#8221;1449933&#8221;]</p>
+<p>Harrumph. This entire layer&#8217;s contribution, now, is to provide a namespace containing the word &#8220;Business&#8221;. It can be removed entirely. Hide the remaining Data Access layer behind some repository interfaces and you&#8217;re well on the way to an architecture that solves problems. To see where this train of thought eventually leads you, see the <a href="http://jeffreypalermo.com/blog/the-onion-architecture-part-1/">Onion Architecture</a>.</p>
+<p>Setting up conventions and patterns for your team to follow can be extrememly valuable, but those conventions and patterns always come with a cost. You have to weigh the cost of including a pattern with the savings they provide. <em>You have to know what pain you&#8217;re solving.</em> Even following a <em>great</em> pattern without <em>understanding</em> can lead to waste. You&#8217;ve got to trust your team members to learn and understand not only what to do, but why to do it.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-12-09T00:00:00-06:00" pubdate data-updated="true">Dec 9<span>th</span>, 2011</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/cargo-cult-programming/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/cargo-cult-programming/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/reduce-stress-put-down-the-zoloft-and-start-base-jumping/" title="Previous Post: Reduce Stress: Put Down the Zoloft and Start Base Jumping">&laquo; Reduce Stress: Put Down the Zoloft and Start Base Jumping</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/get-to-know-a-developer-glenn-burnside/" title="Next Post: Get to Know a Developer: Glenn Burnside">Get to Know a Developer: Glenn Burnside &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

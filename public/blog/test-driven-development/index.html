@@ -1,0 +1,270 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Test-driven development - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="[caption id=&#8221;attachment_426&#8221; align=&#8221;alignright&#8221; width=&#8221;300&#8221;] A as you raise spoon of soup to your mouth B it &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/test-driven-development">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Test-driven Development</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-15T00:00:00-05:00" pubdate data-updated="true">Jul 15<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>[caption id=&#8221;attachment_426&#8221; align=&#8221;alignright&#8221; width=&#8221;300&#8221;]<img class="size-medium wp-image-426" title="RubeGoldberg" alt="" src="http://www.headspring.com/wp-content/uploads/2011/07/RubeGoldberg-300x184.gif" width="300" height="184" /> A as you raise spoon of soup to your mouth B it pulls the string C thereby jerking the ladle D which throws the cracker E past the parrot which jumps F causing the perch to tilt G upsetting seeds H into the pail I adding the extra weight to pull the cord J which opens and lights the automatic cigar lighter K setting off the rocket L which causes the sickle M to cut the string allowing the napkin to swing wiping off your chin[/caption]</p>
+<p>TDD is an excellent safeguard against bugs. Why is test-driven development specifically vital in Agile development?</p>
+<p>The hardest part of implementing a new feature is keeping all of the existing features working.</p>
+<p>Software can be very complicated, and if you were trying to visualize it, although I don&#8217;t like to compare the software we build to a Rube Goldberg machine, you might be able to think of it in those terms, in that if you have a device which works in just such a way and then you add to it there is a good chance that it will no longer continue to work like it did.<!--more--></p>
+<p>What test-driven development allows you to do is to essentially lock into place the features that you&#8217;ve built that you know were working, so that in the future if anything you change would affect the functionality of those features you&#8217;ll get a report on that within an hour or two at the most. Then you can take corrective action without having to do exhaustive testing on the system, which, when a system becomes significant, can actually become almost impossible to do by humans.</p>
+<p>I think anyone that&#8217;s been in software development, who has done a software project, either internally or with a partner, has probably experienced bugs and defects. Typically you&#8217;ll see those when you add a feature and a couple of things break that used to work. That happens a lot. It is a trapping of development.</p>
+<p>Whether it is in<a href="http://www.headspring.com/resources/whitepapers/" target="_blank"> Agile development</a> methodology or whether it&#8217;s in something else it is critical to make sure the software quality is present as one works into the future in enhancing or adding to the system.</p>
+<p>Typically, a lot of the systems that we see are pretty critical to running a client&#8217;s business or to executing projects. They are something that helps businesses, from a technology side, have an advantage over their competition or deliver their services faster or better or in a more streamlined manner. When you have a system like that, that is that critical, you can&#8217;t afford to have downtime. You can&#8217;t afford to add a feature and then have ten things that used to work break, and so test-driven development is important because it helps mitigate the risk and helps issues come to the surface much more quickly before they&#8217;ve reached production or affected customer service negatively.</p>
+<p>Specifically with regards to Agile, test-driven development allows you to change the system which is the whole basis for Agile development in the first place. (Without going into the long explanation of Agile essentially it means that instead of waiting for a year to release the software you&#8217;ll wait a month with the expectation that you&#8217;ll change it again each month and release it again. Because you&#8217;re iterating on functionality development, you&#8217;re going to be changing existing functionality over and over again until you get to your ultimate goals.) Having a system that you can change quickly is critical to Agile development.</p>
+<h2>The Gotcha Question (and its answer)</h2>
+<p>Given the protections of TDD, why should stakeholders feel the need to manually test or demo code or to kick the tires at any level whatsoever?</p>
+<p>One of the misperceptions about test-driven development is that it results in 100% defect-free software, and that&#8217;s actually not the case, because the software you write is only as good as the ways you think to test it. You might think of the same thing for perhaps a building in that a building&#8217;s strength is only as good as the weight against it, testing it, and if you don&#8217;t plan for a certain type of event, like an earthquake or a strong wind from a certain angle, then the building could potentially fail because the tests the building was put through did not account for the scenario. It is the same with software.</p>
+<ul>
+<li>The advantage of TDD is that when you do discover that defect, you can write a test to expose the defect, correct the defect, and never see it again.</li>
+<li>The introduction of defects is actually not the biggest problem. The biggest problem is the introduction of defects over and over again as you maintain the software that can really kill the software&#8217;s budget and thus the effectiveness of an organization&#8217;s operations.</li>
+</ul>
+<p>I think there are certain things that tests can&#8217;t account for and it deals with the user interaction side of applications. It&#8217;s important for clients to test the system or use it just to make sure that it functions how they thought it would. Chances are really good that when a client conceives of a new piece of functionality, or a new idea, that they see it working in their head one way, but once they actually use it they realize they&#8217;ve learned new things that they didn&#8217;t know before and that they&#8217;ll want to implement some changes to that end. So, while the software can work exactly as it was designed to work, it might not be quite right for the business goals or the goals of the client, and so, just from that standpoint alone, making sure that the software is aligned with business goals and not with mean functional specifications is really important.</p>
+<p>A test does not guarantee that there are zero defects. It just guarantees that there are no defects in the, in the ways the system is being tested. But, as the system matures and is tested and put through more and more rigorous paces, TDD essentially just cuts out a lot of wasted time that you might have otherwise accrued. Without getting too philosophical, because humans create software and humans are flawed, software, in a sense, will always be somewhat flawed, but that doesn’t mean you shouldn&#8217;t enforce strict engineering principles to try to improve the quality of what you create.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-15T00:00:00-05:00" pubdate data-updated="true">Jul 15<span>th</span>, 2011</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/test-driven-development/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/test-driven-development/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/why-my-mom-quit-using-the-computer-when-i-updated-windows/" title="Previous Post: Why My Mom Quit Using The Computer When I Updated Windows">&laquo; Why My Mom Quit Using The Computer When I Updated Windows</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/from-programmer-to-manager/" title="Next Post: From Programmer to Manager">From Programmer to Manager &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

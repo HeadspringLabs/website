@@ -1,0 +1,292 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Insufficiently Round Wheels - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="When Sharon Cichelli started the Polyglot Programmers of Austin, she created the meeting format around learning-by-teaching: one of the best ways to &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/insufficiently-round-wheels">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Insufficiently Round Wheels</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-08T00:00:00-06:00" pubdate data-updated="true">Mar 8<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>When Sharon Cichelli started the <a href="http://austin.polyglotprogrammers.org">Polyglot Programmers of Austin</a>, she created the meeting format around learning-by-teaching: one of the best ways to become an expert at something is to start teaching others about it.  Surely you&#8217;ll make some glorious mistakes along the way, but you&#8217;ll be motivated to constantly fill in the gaps of your knowledge in order to keep up with yourself and your audience.</p>
+<p>My weekly blog posts over the past year and a half have served the purpose of learning-by-teaching, but the subject matter has always been random.  One thing that has made this effort difficult is that my current open source projects are a little esoteric.  It&#8217;s too difficult to write an article of the form, &#8220;Here&#8217;s a problem I ran into and here&#8217;s how I solved it,&#8221; as these projects require too much background explanation each time.</p>
+<p>To motivate better learning-by-teaching, I&#8217;d like to take on a new experiment: developing a new open source project from scratch, documenting my approach here each week.  To keep the material focused and more generally useful, I&#8217;ll be selecting a project that most software developers are at least familiar with.  I want to work on something immediately <em>recognizable</em>, so that we all know what success will look like at each step, yet complex enough that the engineering challenges will match those we all find on real world projects.</p>
+<p>I&#8217;m going to reinvent a familiar wheel, but that&#8217;s okay.  The more I look at this wheel, the more I think it really could benefit from being reinvented.</p>
+<h2>Goals</h2>
+<p>The goals of this project are not limited to delivering the software.</p>
+<p>My public goal for this series of articles is to help any developer feel confident that they, too, can start a new open source project.  We&#8217;ll cover things like attacking the hard problems first, prototyping, build scripts, bootstrapping, dogfooding, and publishing your work for everyone to use.  Along the way, we&#8217;ll surely run into some interesting engineering challenges, too.</p>
+<p>My personal goals are twofold.  First, I want to become a better software developer, and that takes practice.  Second, I want to become better at helping others to become better software developers.</p>
+<p>Documenting my progress as I go along is just an extension of the open source point of view.  Not only will the <em>source</em> be open source on GitHub, but the <em>process</em> will be open source here in these articles.</p>
+<h2>The Wheel</h2>
+<p>In case I haven&#8217;t been clear enough, I want to pick a problem that is <em>extremely</em> familar to software developers, but one that is nontrivial to implement.  Also, in order to add something new to the mix, it should be a problem whose state of the art has basically stagnated and could benefit from a refresh.</p>
+<p>The insufficiently round wheel I&#8217;d like to reinvent is the unit test framework.</p>
+<blockquote><p>
+<strong>Seriously?</strong> Yes.<br />
+<strong>No, really.</strong> Yes.<br />
+<strong>Those have been around forever.</strong> You could say the same thing about music or turducken, but we&#8217;ve only really started to get those right in the last few years.<br />
+<strong>But Patrick, that is a sufficiently round wheel and you shouldn&#8217;t be reinventing the wheel.  Do something cool instead!</strong> First, all &#8220;reinventing the wheel&#8221; remarks shall be met with a friendly &#8220;That&#8217;s kind of the point,&#8221; followed by a not-so-friendly <a href="http://www.youtube.com/watch?v=fRiiiKA1xUI#t=13s">EPIC EYE-ROLL</a>.  Second, I think we really can add something cool to the mix.</p>
+<p>If you must, think of it as a big code review of the current state of the art, followed by some advice on building <em>any</em> old open source project you have in mind.
+</p></blockquote>
+<h2>NUnit and xUnit: Constructive Criticism</h2>
+<p>I have happily used NUnit for several years on several projects.  I&#8217;m using it on my current project at Headspring.  It&#8217;s excellent.  Use it.  I have happily used xUnit for several years on several projects.  I&#8217;m using it on my current open source projects.  It&#8217;s excellent.  Use it.</p>
+<p>Still, these are complex systems, so there is always room for constructive criticism.</p>
+<p><strong>NUnit has a complex test fixture lifecycle.</strong>  You can have code run before and after each fixture, and before and after each test case.  You specify these setup and teardown actions via [Attributes].  One instance of your fixture class is constructed and shared across the test cases, in order to support the fixture-level setup and teardown.</p>
+<p>I&#8217;ve run into a lot of frustrating surprises with this lifecycle.  First, I couldn&#8217;t tell you exactly how these attributes behave in the presence of inheritance (in fact, I believe the rules changed a few times throughout the history of NUnit).  Second, I have seen this behave differently across different <em>test runners</em>.  It&#8217;s pretty jarring to find your SetUp methods blatantly ignored.  <strong>The lifecycle is complex.  I lack control over it, and I lack insight into it when things go weird.</strong></p>
+<p>xUnit was a reaction to NUnit, and it has a much simpler fixture lifecycle.  You get one instance of the fixture class <em>per test case</em>, a regular constructor is used for setup, a regular Dispose() is used for teardown, and if you really really want fixture state, you can still do that using an interface dedicated to that purpose.  I like the simplicity of using already-available language concepts like constructors and interfaces for these lifecycle steps.  I never get confused when my xUnit fixture classes take part in inheritance.</p>
+<blockquote><p>I find that when fixture-wide state is downplayed like it is in xUnit, <em>I don&#8217;t miss it at all</em>.  When I use NUnit, on the other hand, I use [TestFixtureSetUp] all the time.  Once you open the door to a little complexity, vagabonds and feral cats are free to walk right in.</p></blockquote>
+<p>xUnit is meant to be more customizable with regard to how fixtures and test cases are discovered, but <strong>the means of customization is opinionated</strong>.  I&#8217;ve had some success customizing xUnit in the past, but I ran into two problems: I still had to put an attribute on each of my fixture classes, and the means of customization is an <a href="http://www.headspring.com/patrick/low-ceremony-xunit/">ISP violation</a>.</p>
+<p>Okay, so it was a little hard to customize, buy why is it bad that I still had to put an attribute on my fixture classes?  I actually have a use case in mind for one of my other projects, in which some test fixtures would originate from folders of plain text files rather than C# classes.  If my fixture isn&#8217;t also a class, <em>where do I put xUnit&#8217;s required class attribute</em>?  <strong>I want to have total control over the means of discovering test fixtures and test cases.</strong></p>
+<h2>Degrees of Freedom</h2>
+<p>Regardless of the test framework I use, I use the Should assertion library.  Its creator recognized that assertion libraries have no business being tied to a single test framework.  Once that concept was plucked out of the test framework&#8217;s responsibilities, developers gained an extra degree of freedom: you can change your assertion library without having to change your test framework, and you can change your test framework without having to change your assertions.</p>
+<blockquote><p>I&#8217;m thinking about switching to Shoudly.  <a href="http://shouldly.github.com/">Its error messages are amazing.</a>  How does that even <em>work</em>!?</p></blockquote>
+<p>Ensuring the freedom to make changes is vital to successful software development, which raises an important question: if assertion libraries have no business being a part of a test framework, and plucking them out gives us a new degree of freedom, then what <em>else</em> are test frameworks mistakenly doing which should <em>also</em> be plucked out?</p>
+<h2>Fixie</h2>
+<p>Aside from providing reasonable defaults, I think that test frameworks have no business owning test fixture discovery, test case discovery, or the test fixture lifecycle.  The reasonable defaults should be enough for the 90% of use cases, but it should get completely the heck out of my way for the other 90%.</p>
+<p>If we pluck those responsibilities out, what&#8217;s left?  Test frameworks should only do the monotonous parts: orchestration of test execution, deferring to you for advice on discovery/lifecycle decisions, accumulating results, and reporting those results to whatever test runner is in play.  It should include a console test runner at a minimum, but test running should also be available as a library so that other runners like a GUI runner, ReSharper plugin, TestDriven.NET runner, or the like could be developed independently.</p>
+<p>I&#8217;d like to announce <a href="https://github.com/plioi/fixie">Fixie</a>, a test framework with the goals of having low-ceremony defaults, and extra degrees of freedom around the test lifecycle.  We&#8217;ll see this project grow here over the next few months.</p>
+<blockquote><p>A <a href="http://en.wikipedia.org/wiki/Fixed-gear_bicycle">fixie</a> is what you get when you start with a bike and remove everything that isn&#8217;t a bike.  I want Fixie to be what&#8217;s left when you start with a test framework and remove everything that isn&#8217;t a test framework.</p></blockquote>
+<p><strong>Low-ceremony defaults:</strong> No required attributes, no required inheritance.  A test fixture is a class in your test assembly whose name ends in Tests.  A test case is any public method in one of those classes.  I will likely include an answer to NUnit&#8217;s <a href="http://nunit.org/index.php?p=testCaseSource&r=2.6.2">[TestCaseSource]</a>, but only if I can keep it similarly low-ceremony.  Like xUnit, you&#8217;ll get one fixture instance per test case.</p>
+<p><strong>Degrees of freedom:</strong>  If the defaults aren&#8217;t enough, I want you to be able to customize the test fixture and test case discovery steps, as well as customize the test fixture lifecycle itself.  Making this customization <em>easy</em> will be challenging, but fun.</p>
+<p>Next week, we&#8217;ll tackle a proof-of-concept for the highest-risk requirement: the must-have integration with TestDriven.NET.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-08T00:00:00-06:00" pubdate data-updated="true">Mar 8<span>th</span>, 2013</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/insufficiently-round-wheels/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/insufficiently-round-wheels/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/you-need-solutions-not-surprises/" title="Previous Post: You need solutions, not surprises">&laquo; You need solutions, not surprises</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/meet-headspring-sam-garrison/" title="Next Post: Meet Headspring: Sam Garrison">Meet Headspring: Sam Garrison &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

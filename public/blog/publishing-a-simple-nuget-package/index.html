@@ -1,0 +1,269 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Publishing a Simple NuGet Package - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="NuGet is a Visual Studio extension that makes it easy to pull third-party libraries into your projects. It can also bring in their dependencies, &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/publishing-a-simple-nuget-package">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Publishing a Simple NuGet Package</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-23T00:00:00-05:00" pubdate data-updated="true">Mar 23<span>rd</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><a href="http://nuget.org/">NuGet</a> is a Visual Studio extension that makes it easy to pull third-party libraries into your projects.  It can also bring in their dependencies, along the same lines as gems for Ruby development.</p>
+<p>I recently <a href="http://www.headspring.com/2012/03/migrating-from-bitbucket-to-github">migrated Headspring&#8217;s Enumeration class to GitHub</a>.  This is a simple class that, for the most part, replaces the need for .NET enum types.  One of the simplest things a NuGet package can do is add a file to your project, so creating and publishing an updated NuGet package for Enumeration was a great way to get my feet wet.</p>
+<p>Unlike most things, it was as easy as it should be.<!--more--></p>
+<p>First, I created an account on <a href="http://nuget.org">nuget.org</a> and installed the extension using the link on the front page.  Next, I downloaded the <a href="http://nuget.codeplex.com/releases/view/58939">NuGet.exe command-line tool</a> and made sure it was included in my PATH.  On my account profile page, I&#8217;m given the chance to see my API Key.  Keep this secret.  At the command line, we need to issue a one-time command so that this key can be active during subsequent nuget commands:</p>
+<p><code>$ nuget setApiKey 123-abc-123-abc-123</code></p>
+<p>You create a *.nuspec file which describes the files you want to publish.  Then you ask nuget.exe to turn that file into a *.nupkg file.  A nupkg file is actually a zip file containing the files to be deployed as well as some metadata.</p>
+<p>At this point, the project consisted of 3 files: a README, LICENSE.txt, and Enumeration.cs.  While in this folder, I issued a command to create a skeleton of a nuspec file:</p>
+<p><code>$ nuget spec</code></p>
+<p>This creates Package.nuspec, which I renamed to Enumeration.nuspec and populated:</p>
+<p>[gist id=&#8221;2155348&#8221;]</p>
+<p>There isn&#8217;t much going on here.  We say what version number we want to publish, a few descriptive fields, and then list the files we want to be included in the nupkg &#8216;zip&#8217; file.  In the file tags, <code>src</code> refers to the files relative to the location of the nuspec file, and <code>target</code> describes the path we want to copy it to <em>within</em> the zip.  Starting these paths with &#8220;content&#8221; means that when someone installs the package into one of their own projects, the files will be copied and then added to the target project file.</p>
+<p>To publish, we just need to issue the following commands:</p>
+<p><code>$ nuget pack Enumeration.nuspec</code><br />
+<code>$ nuget push Enumeration.1.0.4.nupkg</code><br />
+<code>$ del Enumeration.1.0.4.nupkg</code></p>
+<p><code>nuget pack</code> converts a nuspec into a nupkg, and <code>nuget push</code> submits it to <a href="http://nuget.org/">nuget.org</a>.  After that, we don&#8217;t need to keep a copy of the nupgk, so we delete it.</p>
+<p>That&#8217;s it!  Next week, we&#8217;ll cover the slightly more involved scenario of publishing a whole open-source library.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-23T00:00:00-05:00" pubdate data-updated="true">Mar 23<span>rd</span>, 2012</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/publishing-a-simple-nuget-package/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/publishing-a-simple-nuget-package/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/headspring-values-what-matters-most/" title="Previous Post: Headspring Values: What Matters Most?">&laquo; Headspring Values: What Matters Most?</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/you-want-to-change-what/" title="Next Post: You Want To Change What?">You Want To Change What? &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

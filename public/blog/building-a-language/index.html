@@ -1,0 +1,280 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Building a Language - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="I&#8217;ve had an on-again, off-again relationship with a hobby project for the last few years. I&#8217;m (slowly) implementing a compiler for a new &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/building-a-language">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Building a Language</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-05-25T00:00:00-05:00" pubdate data-updated="true">May 25<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>I&#8217;ve had an on-again, off-again relationship with a hobby project for the last few years.  I&#8217;m (slowly) implementing a compiler for a new language, called <a href="https://github.com/plioi/rook">Rook</a>.  I recently gave a presentation at the <a href="http://www.polyglotprogrammers.org/">Polyglot Programmers of Austin</a> during the mid-meeting break.  The presentation was less focused on Rook itself, as it&#8217;s constantly in flux, and instead focused on how you might go about implementing a similar project yourself.  Whether you want to implement a full-blown programming language, or the next time-saving structured-text-processing tool like <a href="http://lesscss.org/">Less</a>, much of the same priciples and patterns apply.</p>
+<p>As <a href="http://www.headspring.com/2012/05/headspringers-at-austin-code-camp">Nolan Egly mentioned last week</a>, I&#8217;ve submitted the longer version of this presentation for this year&#8217;s <a href="http://austincodecamp2012.com/">Austin Code Camp</a> on June 9.</p>
+<p>Although the language&#8217;s syntax, priorities, and long term vision are a little wibbly/wobbly at the moment, here&#8217;s a basic rundown of what I have working so far.<br />
+<!--more--></p>
+<h2>Hello, World!</h2>
+<p>In this example, we print some text to standard out.  Note that the <code>Main</code> function doesn&#8217;t have to live inside of a boilerplate class.  Since the body of the function is just one little function call, we also don&#8217;t bother surrounding it with <code>{</code> curly braces <code>}</code>:<br />
+[gist id=&#8221;2772642&#8221;]</p>
+<h2>Everything&#8217;s an Expression</h2>
+<p>Well, most things are expressions.  Most of the things you see in a Rook program have a value, even things like <code>if/else</code> conditional logic.  Here, the value of the whole <code>if/else</code> is the value of the branch that was actually executed.  Since the <code>Factorial</code> function&#8217;s body is just a single expression, we have no need to bother with more <code>{</code> curly braces <code>}</code> or an explicit <code>return</code> keyword:<br />
+[gist id=&#8221;2772676&#8221;]</p>
+<h2>Blocks: Fancy Expressions</h2>
+<p>Sometimes you just need to go into &#8216;statement mode&#8217; and declare some local variables to work with.  Rook blocks are special compound expressions.  They are surrounded with <code>{</code> curly braces <code>}</code> and can contain zero or more local variable declarations followed by one or more body expressions.  The value of the whole block is the value of the last body expression evaluated.</p>
+<p>The local variables can have an explicit type declaration if you want one, but when you leave it off it will be inferred just like C#&#8217;s &#8216;var&#8217; keyword.  Here, Main() will return 50:</p>
+<p>[gist id=&#8221;2772851&#8221;]</p>
+<h2>The Billion Dollar Feature</h2>
+<p>Allowing reference types to be nullable by default in languages like Java and C# has been called <a href="http://www.infoq.com/presentations/Null-References-The-Billion-Dollar-Mistake-Tony-Hoare">The Billion Dollar Mistake</a>.  Honestly, how often would it be meaningful for your domain objects to be nulls?  Most of the time, when your Customer/Account/Whathaveyou objects are null, you have encountered a bug and are moments away from a NullReferenceException cropping up <em>nowhere near</em> the actual point where the mistake was made.</p>
+<p>Nullability should be something you <em>ask for</em>, when it has <em>meaning</em> in your system.  Also, when you look at a method signature for a method someone else wrote, it would be nice to know right away whether or not the other programmer is taking on the responsibility of handling nulls.  Just like <code>int</code> is a different type from <code>int?</code> in C#, <code>string</code> is a different type from <code>string?</code> in Rook:<br />
+[gist id=&#8221;2772701&#8221;]</p>
+<h2>Collections</h2>
+<p>In C#, <code>IEnumerable&lt;T&gt;</code> has become extremely commonplace.  Any arbitrarily-sized collection that you could loop through implements this interface.  It&#8217;s useful, prevalent, <em>and the length of its name drives me bonkers</em>.  <strong>The most commonly-used things should take the fewest characters to write.</strong>  In Rook variable declarations, <code>int*</code> is shorthand for <code>IEnumerable&lt;int&gt;</code>.</p>
+<p>C#&#8217;s basic built in collection type, the one that get special syntax support and shorthand in variable declarations, is mutable.  This is The Million Dollar Mistake.  It&#8217;s not quite as offensive as nullability-by-default, but it does encourage some brittleness.  If a library call returns an array of something, and you mess with the result, you&#8217;re probably abusing the intent of the library developers.  This might even give you unintended access to the data that the library is trying to maintain privately.  Let&#8217;s use things like <code>List&lt;T&gt;</code> for mutation, and keep our array-like things immutable.  Again, the most commonplace things should take the fewest characters to write, so I&#8217;d rather devote shorthand like <code>int[]</code> to something I can really feel safe using everywhere.</p>
+<p>In Rook, <code>int[]</code> is shorthand for <code>Vector&lt;int&gt;</code>, where <code>Vector&lt;T&gt;</code> is an <em>abstract</em> base class for an immutable array-like collection.  Since it&#8217;s abstract, there&#8217;s the potential for multiple implementations benefiting from the same built-in syntax.</p>
+<p>Because <code>Vector&lt;T&gt;</code> isn&#8217;t a concrete type, we can play some neat tricks to keep these immutable collections efficient.  <code>Vector&lt;T&gt;</code> supports Python-style slicing operations with the [:] operator, which gives results similar to <code>String.Substring(...)</code>.  The operation returns a <code>Slice&lt;T&gt;</code>, which also happens to implement <code>Vector&lt;T&gt;</code>.  This structure allows the slicing operation to have O(1) performance characteristics (taking a large slice of a large collection is as fast as taking a small slice of a small collection).</p>
+<p><strong>Letting the language favor interfaces and abstract types right from the get-go opens the door to neat trickery like fast slicing.</strong>  We preach coding to abstractions when <em>using</em> languages, and our languages should start following that advice as well.</p>
+<p>Also similar to strings, operations like <code>Append()</code> produce a whole new collection instead of modifying the original:<br />
+[gist id=&#8221;2772715&#8221;]</p>
+<h2>Austin Code Camp</h2>
+<p>All of this is in constant flux as I figure out what I really want this to <em>be</em> in the long run, but the implementation and patterns involved have become more and more stable in the past year.  Come on by the Austin Code Camp on June 9 to see how this seemingly-complex task can be broken down into managable pieces.  Be there and be square!</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-05-25T00:00:00-05:00" pubdate data-updated="true">May 25<span>th</span>, 2012</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/building-a-language/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/building-a-language/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/polyglot-programmers-of-austin-and-the-importance-of-industry-groups-with-sharon-cichelli-and-jeffrey-palermo/" title="Previous Post: Industry groups with Sharon Cichelli, the founder of Polyglot Programmers of Austin">&laquo; Industry groups with Sharon Cichelli, the founder of Polyglot Programmers of Austin</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/get-to-know-a-developer-casey-gum/" title="Next Post: Get to Know a Developer: Casey Gum">Get to Know a Developer: Casey Gum &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,288 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Lean Lambdas - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="Shirley: Tell me about the Extract-Variable refactoring.
+Albert: Let&#8217;s say I have a long expression that has become hard to read, and that I &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/lean-lambdas">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Lean Lambdas</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-12T00:00:00-06:00" pubdate data-updated="true">Dec 12<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><strong>Shirley:</strong> Tell me about the Extract-Variable refactoring.</p>
+<p><strong>Albert:</strong> Let&#8217;s say I have a long expression that has become hard to read, and that I can identify a noteworthy subexpression within it.  I can &#8216;extract&#8217; that subexpression from the original by introducing a new local variable.  The variable is initialized to the subexpression, and then the larger original expression is rewritten in terms of the new variable.  Doing so can make things easier to read: the original expression is shorter, and we&#8217;ve given a useful name to the part we took out.  For example:<!--more--></p>
+<p>[gist id=&#8221;4264666&#8221;]</p>
+<p><strong>Shirley:</strong> Since we&#8217;re doing this extra step with an extra variable, will the result run a little slower than the original?</p>
+<p><strong>Albert:</strong> No, silly!  We&#8217;re doing the same amount of work in both versions.  Even with the original version, the compiler had to break down the expression into many smaller steps just like the change we made.  We&#8217;re just introducing a useful nickname for one of those intermediate steps.</p>
+<p><strong>S:</strong> Is there any way Extract-Variable <em>could</em> make something faster?</p>
+<p><strong>A:</strong> Aren&#8217;t you listening!?  Oh, wait.  If the expression you are pulling out appears multiple times in the larger expression, and the cost of evaluating it is large enough to notice, then Extract-Variable could actually speed things up, since you&#8217;ll only evaluate it once.</p>
+<p><strong>S:</strong> If you do that, is there any chance you&#8217;ll change the runtime behavior?</p>
+<p><strong>A:</strong> Only if the subexpression has side effects.  We used to evaluate it multiple times, and now we evaluate it once.  If the expression <em>does</em> something to the world other than just provide a value, we&#8217;d be introducing a breaking change.  That&#8217;s why you want to keep as much of your code as pure as reasonably possible.</p>
+<p><strong>S:</strong> Pure?</p>
+<p><strong>A:</strong> An expression or function is pure if it depends only on its inputs and has no side effects.  It just looks at the inputs and returns a result.  For the same inputs, it always gives the same output.  <code>x+5</code> is pure, while <code>SendAnEmailToGrandma()</code> isn&#8217;t.  It&#8217;s safe to Extract-Variable with pure code, even when the subexpression showed up multiple times beforehand.  Pure stuff is easier to chop up, reorder, and move around.  It&#8217;s easier to reason about.</p>
+<p><strong>S:</strong> Imagine that we&#8217;ve got a large expression, and that the subexpression we&#8217;re extracting only appears <em>once</em>.  What if I told you we could <em>still</em> get a performance boost out of it?</p>
+<p><strong>A:</strong> Shirley, you&#8217;re joking.</p>
+<p><strong>S:</strong> Nope! I&#8217;ve got two situations in mind.  Let&#8217;s start with the easy one.  This loop is taking way too long to execute:</p>
+<p>[gist id=&#8221;4264673&#8221;]</p>
+<p><strong>A:</strong> Oh, I see what you&#8217;re getting at.  We saw earlier how you can get a performance boost when extracting a subexpression that appeared multiple times in the original expression.  In this loop, we&#8217;ve got the same problem in a different format.  The subexpression <em>appears</em> once, but it gets <em>evalutated</em> a whole lot, each time with the same result.  We&#8217;d fix this with two refactorings: we&#8217;d Extract-Variable, and then we&#8217;d move that variable declaration <em>before</em> the loop:</p>
+<p>[gist id=&#8221;4264675&#8221;]</p>
+<p><strong>S:</strong> Great! Earlier, I said I was thinking about two examples in which code with a singly-occurring subexpression could be sped up with Extract-Variable.  The easy one was the <code>foreach</code> you just fixed, but the second one&#8217;s tough.  Let&#8217;s improve upon the previous example.  Instead of building up a big list of all the values in the column, we&#8217;ll make a column object that uses a Func&lt;Row&gt; to evaluate each cell only as needed:</p>
+<p>[gist id=&#8221;4264677&#8221;]</p>
+<p><strong>A:</strong> Again, we don&#8217;t want to keep on performing the costly CompileUserExpression(&#8230;) call every time we need to display a grid cell.  The problem is, if I Extract-Variable here, we&#8217;re left with the same wasteful recompilation:</p>
+<p>[gist id=&#8221;4264685&#8221;]</p>
+<p><strong>S:</strong> If the lambda gets called a bajillion times, how many times will we evaluate the costly part?</p>
+<p><strong>A:</strong> A bajillion.</p>
+<p><strong>S:</strong> Hmmph.</p>
+<p><strong>A:</strong> &#8230;</p>
+<p><strong>S:</strong> How is this any different from the <code>foreach</code> example?</p>
+<p><strong>A:</strong> When the costly bit was in a <code>foreach</code>, we could just move the variable to the outer scope.  Here, we have a lambda.</p>
+<p><strong>S:</strong> Doesn&#8217;t a lambda introduce a scope too?</p>
+<p><strong>A:</strong> Well, yeah, but if we move <code>compiledExpression</code> outside of the lambda, wouldn&#8217;t it become available for garbage collection as soon as we returned from <code>CreateCalculatedColumn</code>?  Let&#8217;s see:</p>
+<p>[gist id=&#8221;4264688&#8221;]</p>
+<p><strong>A:</strong> It works!  Our lambda is referring to a variable in the surrounding scope, and we&#8217;re returning the lambda.  Lambdas are just objects, so this is just like returning any other object that references a locally-constructed thing.  The garbage collector only cleans up unreachable things, and <code>compiledExpression</code> will be reachable for as long as the lambda is reachable.  We get to avoid all that rework no matter how many times the lambda is called!</p>
+<p><strong>S:</strong> Slick.</p>
+<p><strong>A:</strong> How does one end a Socratic Dialogue?</p>
+<p><strong>S:</strong> How about with a summary?</p>
+<p><strong>A:</strong> Extract-Variable starts out as a simple refactoring to improve the readability of large expressions.  When working with pure code, the change is both safe and easy to perform.  In addition to aiding readability, Extract-Variable can occasionally improve performance, when the extraction keeps us from doing a lot of excess work.  After extracting a variable, we can consider moving it to an outer scope, so long as doing so preserves behavior.  Moving it outside of a loop can prevent wasteful reevaluation across many iterations.  Likewise, moving it outside of a lambda can prevent wasteful reevaluation across many invocations of the lambda.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-12T00:00:00-06:00" pubdate data-updated="true">Dec 12<span>th</span>, 2012</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/lean-lambdas/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/lean-lambdas/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/the-solution-is-never-inheritance/" title="Previous Post: The Solution is Never Inheritance">&laquo; The Solution is Never Inheritance</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/gizmos-that-should-be-on-your-wish-list-this-holiday/" title="Next Post: Gizmos that Should Be on Your Wish List this Holiday!">Gizmos that Should Be on Your Wish List this Holiday! &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

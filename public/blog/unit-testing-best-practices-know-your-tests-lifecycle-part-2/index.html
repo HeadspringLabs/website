@@ -1,0 +1,339 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Unit Testing Best Practices: Know Your Test’s Lifecycle, Part 2 - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="In my first post in the Unit Testing Best Practices series, I introduced you to the basic lifecycle of an NUnit test fixture. This time, we&#8217;re &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/unit-testing-best-practices-know-your-tests-lifecycle-part-2">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Unit Testing Best Practices: Know Your Test’s Lifecycle, Part 2</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-09-07T00:00:00-05:00" pubdate data-updated="true">Sep 7<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>In my <a title="Unit Testing Best Practices: Know your test’s lifecycle, Part 1" href="http://www.headspring.com/2011/08/unit-testing-best-practices-know-your-tests-lifecycle-part-1">first post in the Unit Testing Best Practices series</a>, I introduced you to the basic lifecycle of an NUnit test fixture. This time, we&#8217;re going to see what happens when we give our tests a common test fixture base class.<br />
+<span class="Apple-style-span" style="font-size: 26px"><strong>Why a base class?</strong></span><br />
+There are two cases where having a base test fixture can be useful in keeping your test code simpler:</p>
+<ol>
+<li><strong>You have lots of the same kind of tests. </strong>Maybe you&#8217;re writing integration tests for your persistence layer. Your tests are going to all be performing some similar operations, like creating a database connection. Maybe they all need to reference an Inversion of Control container like StructureMap or Autofac in order to retrieve repository instances. You don&#8217;t want to write that boilerplate code for every fixture, do you?</li>
+<li><strong>You have a hierarchy of classes that need testing.</strong> If you have a base class in your domain, you will probably want to set up a parallel type hierarchy of test fixtures. In this case, a base test fixture gives you one place to define tests that verify the base class invariants to which all your derived classes need to conform.</li>
+</ol>
+<p><span class="Apple-style-span" style="font-size: 26px"><strong>The Code</strong></span></p>
+<div>Let&#8217;s take a look at what happens to our simple test fixture when we give it a base class:<!--more--></p>
+<p><span class="Apple-style-span" style="font-family: Consolas, Monaco, monospace;font-size: 12px;line-height: 18px">[gist id=1262440]</span></p>
+</div>
+<p>Notice that the base class isn&#8217;t attributed with the [TestFixture] attribute. I only want this class to act as a base for my actual fixtures. I don&#8217;t intend for it to be run as a fixture in its own right.</p>
+<p>Note too that I&#8217;m reinforcing the fact that this class doesn&#8217;t stand alone by making the base class abstract, and following standard practices for an abstract base class by making the constructor protected instead of public. We&#8217;ve also made the IDisposable.Dispose method implementation virtual so we can extend its behavior in derived classes.</p>
+<p><em>Test code is still code. Follow the same design practices here that you would in your application code.</em></p>
+<p><span class="Apple-style-span" style="font-size: 26px"><strong>The Results</strong></span><br />
+Now when we run our tests, we get the following output:</p>
+<ul>
+<li>Base Constructor</li>
+<li>Derived Constructor</li>
+<ul>
+<li>Base TestFixtureSetup</li>
+<li>Derived TestFixtureSetup</li>
+<ul>
+<li>Base SetUp</li>
+<li>Derived SetUp</li>
+<ul>
+<li>Derived First Test passes!</li>
+</ul>
+<li>Derived TearDown</li>
+<li>Base TearDown</li>
+<li>Base SetUp</li>
+<li>Derived SetUp</li>
+<ul>
+<li>Derived Second Test fails!</li>
+</ul>
+<li>Derived TearDown</li>
+<li>Base TearDown</li>
+<li>Base SetUp</li>
+<li>Derived SetUp</li>
+<ul>
+<li>Base First Test passes!</li>
+</ul>
+<li>Derived TearDown</li>
+<li>Base TearDown</li>
+<li>Base SetUp</li>
+<li>Derived SetUp</li>
+<ul>
+<li>Base Second Test fails!</li>
+</ul>
+<li>Derived TearDown</li>
+<li>Base TearDown</li>
+</ul>
+<li>Derived TestFixtureTearDown</li>
+<li>Base TestFixtureTearDown</li>
+</ul>
+<li>Derived Dispose</li>
+<li>Base Dispose</li>
+</ul>
+<p><span class="Apple-style-span" style="font-size: 26px"><strong>Observations</strong></span><br />
+Note that even with a base class, all our observations from last time are still true:</p>
+<ol>
+<li>The Test Fixture class is constructed once.</li>
+<li>TestFixtureSetup and TestFixtureTeardDown run one time.</li>
+<li>TestSetup and TestTearDown run around every test.</li>
+<li>TestTearDown runs even when a test fails.</li>
+<li>NUnit knows about IDisposable.</li>
+</ol>
+<div>But now we can also see the following new behaviors:</div>
+<div>
+<ol>
+<li><strong>TestFixture constructors and dispose methods are called in the same order as for any other class. </strong>This is one of the reasons I prefer using constructor/disposable semantics with test fixtures instead of relying on the special FixtureSetUp/FixtureTearDown attributes - we already know the rules for constructors and disposables.</li>
+<li><strong>The base class SetUp and TearDown methods run <em>around</em> those from the derived class.</strong> This is true for both Fixture- and Test- SetUp and TearDown methods. You can think of your base class wrapping your derived class, like Russian nested dolls. This pattern also extends as you create deeper inheritance hierarchies. SetUp is run from the outermost base class down to the leaf derived class, and TearDown is run in exactly the opposite order.</li>
+<li><strong>All Test-level SetUp and TearDown methods are run for <em>every</em> test. </strong>This behavior is a little surprising. Notice that even on the test methods defined in the base class, <em>the derived class&#8217; SetUp and TearDown methods are still getting run</em>. If you start seeing base class tests failing because something they expected from SetUp is suddenly different, this is a likely culprit.</li>
+<li><strong>Tests are run in alphabetical order</strong>. Ok, you can&#8217;t infer this one from the output, you&#8217;re just going to have to take my word for it (or go play with the test names yourself and see what happens.) NUnit sorts all tests on the fixture by name, from A to Z, and then runs them in that order. Base class test methods are identified as &lt;ClassName&gt;.&lt;TestMethodName&gt; for purposes of sorting. This means that your base class tests will all be grouped together when the fixture is run, but they could all run right in the middle of your derived class&#8217; tests.</li>
+</ol>
+</div>
+<div><span class="Apple-style-span" style="font-size: 26px"><strong>Guidelines</strong></span></div>
+<p>You can quickly see from the results above that our first guideline, <em>Use constructors for class-wide setup. Use IDisposable for class-wide cleanup. Avoid TestFixtureSetup and TestFixtureTearDown, </em>is even more relevant once we start creating a hierarchy of test fixtures.  Constructors and IDisposable keep our test fixtures working like any other class we&#8217;d write.</p>
+<div>Let&#8217;s add two more guidelines:</div>
+<div>
+<ol>
+<li><strong>Don&#8217;t rely on test run order</strong>. Test method run order varies between different hosts. NUnit and ReSharper and Gallio rarely all agree on which order to run your tests. As a developer, you&#8217;re often not even running a full test suite -you&#8217;re running specific fixtures, or even just a few tests within a fixture. If your tests only pass when they&#8217;re run in a specific order, you&#8217;re going to waste a lot of time hunting down false failures. Remember, the closer you are to release, the more likely that your tests will start failing for &#8220;no reason at all.&#8221; Keep your tests independent of each other, and you&#8217;ll <em>always</em> be able to run them with confidence.</li>
+<li><strong>Limit test-level SetUp and TearDown semantics<em>. </em></strong>It&#8217;s bad enough when a test fails. It&#8217;s even worse when you have to jump around between base and derived class code to stitch together what&#8217;s happening for each test. If at all possible, limit the definition of SetUp and TearDown methods to your base class. In recent years, I find that if I get my fixture initialization right in the constructor, then I rarely have to do much resetting around each individual test.</li>
+</ol>
+</div>
+<div>You&#8217;ve now got a clear understanding of how an individual test fixture is created, initialized, and executed, and how that changes when the fixture has a derived class with its own lifecycle. You&#8217;ve also got a few more guidelines to help you keep your unit tests easy to maintain and extend.</div>
+<p>Next time, we&#8217;re going to see how to run our own initialization code <em>before any of our test fixtures are even created. </em></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-09-07T00:00:00-05:00" pubdate data-updated="true">Sep 7<span>th</span>, 2011</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/unit-testing-best-practices-know-your-tests-lifecycle-part-2/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/unit-testing-best-practices-know-your-tests-lifecycle-part-2/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/youre-doing-your-code-reviews-wrong-2/" title="Previous Post: You're Doing Your Code Reviews Wrong!">&laquo; You're Doing Your Code Reviews Wrong!</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/the-compilers-treatment-of-linq-syntax/" title="Next Post: The Compiler's Treatment of LINQ Syntax">The Compiler's Treatment of LINQ Syntax &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

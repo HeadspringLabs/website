@@ -1,0 +1,259 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>The Secret Sauce of Business Intelligence: OLAP vs Relational Schemas - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="Ever heard the terms star schema, OLAP, fact table, dimension, or business intelligence and wondered what they meant and/or why you should care?  I &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/the-secret-sauce-of-business-intelligence-olap-vs-relational-schemas">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">The Secret Sauce of Business Intelligence: OLAP vs Relational Schemas</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-29T00:00:00-05:00" pubdate data-updated="true">Jul 29<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Ever heard the terms <em>star schema, OLAP, fact table, dimension, </em>or<em> business intelligence</em> and wondered what they meant and/or why you should care?  I learned what these terms meant five years ago, and I have found powerful usages for these concepts ever since.</p>
+<p>Imagine your business owner is a restaurant manager.  You&#8217;ve built a point of sale system that records what customers have ordered.  Begrudgingly, you have also built some canned reports to list out sales transactions within a user-entered date range.  The restaurant manager could browse the transaction history for a particular month to learn<!--more--> which menu items customers seem to like and at what times they tend to eat.  However, it will be difficult to really quantify those trends.  Are sales for the Caesar Salad going up or down?  How many more Caesar Salads were ordered than House Salads?  What was the most popular hour of the day to dine during weekdays?  On the weekends?  Inevitably, your business owner will get tired of trekking down to your desk to ask you those questions, and you will get tired of creating a seemingly endless set of &#8220;canned&#8221; reports.</p>
+<p>Wouldn&#8217;t it be great if your client could answer those questions herself?  She can - she just needs a business intelligence solution!</p>
+<p>First, design a star schema.  A star schema is a special type of relational database schema that has at least one <em>fact table</em> and zero to many <em>dimension tables</em>.  The dimension tables are optional, so let&#8217;s focus on the fact table.  A fact table has two types of columns, dimensions and facts.  <em>Dimension columns</em> for our sales fact table would include Hour of Day, Date, Month, Quarter, Year, Day Type (Weekday, Weekend), Product Category (Salad, Appetizer, Main Course, etc.), and Product.  Notice, although all of the date-related fields could be inferred from a transaction time-stamp, all of the columns are broken out individually.  This is an example of the secret sauce of business intelligence - <em>denormalization</em>. Also, the Hour of Day column should have user-readable values such as &#8220;3:00 PM - 4:00 PM&#8221;, not 15 or 15:00.  Our fact table could only have a single <em>fact column, </em>amount.</p>
+<p>Second, build an ETL (Extract, Transform, Load) process.  This process should run every night and import new records from the transactional point of sales system (OLTP) database into your star schema.  In some cases, it might just be easier to replace all of the data in your star schema on a nightly basis - it just depends on how much data you have.</p>
+<p>Third, use Excel&#8217;s ability to connect to a database server and add PivotTable functionality on top of your sales fact table.  Before you know it, your business user will be answering all of the questions I raised before, and a thousand others - without having to hound you for new canned reports!</p>
+<p>p.s.  OLAP is a different kind of data structure that can be built directly from your star schema.  It&#8217;s important when you have an enormous amount of data that must be sliced and diced quickly.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-29T00:00:00-05:00" pubdate data-updated="true">Jul 29<span>th</span>, 2011</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/the-secret-sauce-of-business-intelligence-olap-vs-relational-schemas/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/the-secret-sauce-of-business-intelligence-olap-vs-relational-schemas/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/tdd-caveat-how-not-to-follow-test-driven-development/" title="Previous Post: TDD Caveat | How not to follow Test Driven Development">&laquo; TDD Caveat | How not to follow Test Driven Development</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/true-confessions-public-shaming-and-test-driven-development/" title="Next Post: True Confessions, Public Shaming, and Test-Driven Development">True Confessions, Public Shaming, and Test-Driven Development &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

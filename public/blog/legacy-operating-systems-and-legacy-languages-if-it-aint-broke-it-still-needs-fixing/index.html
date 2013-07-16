@@ -1,0 +1,259 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Legacy Operating Systems and Legacy Languages: If it ain't broke, it still needs fixing - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="In my travels I&#8217;ve encountered systems chugging happily along on outdated, discontinued, unsupported technology stacks. Apps written in VB6, &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/legacy-operating-systems-and-legacy-languages-if-it-aint-broke-it-still-needs-fixing">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Legacy Operating Systems and Legacy Languages: If It Ain't Broke, It Still Needs Fixing</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-25T00:00:00-05:00" pubdate data-updated="true">Aug 25<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>In my travels I&#8217;ve encountered systems chugging happily along on outdated, discontinued, unsupported technology stacks. Apps written in VB6, FoxPro, Classic ASP, still running without a hitch because the kinks had been shaken out years ago&#8230; Software users delicately avoiding upgrading their Windows 95 machine because it does what they need, in a manner they understand, running the apps they&#8217;ve built their business on&#8230; As a techie, the idea makes your hair curl, but the thing is: these applications <em>work</em>. They&#8217;ve been working, and they give the appearance of continuing to work indefinitely.<!--more--></p>
+<p>It&#8217;s an illusion, though. I sympathize with getting taken in by that illusion. After all, I&#8217;ve owned the same cell phone for seven years—I don&#8217;t mind that it doesn&#8217;t do the <em>latest</em> stuff because it does everything I need (makes phone calls). To replace it, just because someone else has something shinier, sounds ridiculous. I&#8217;m the same way with cars, computers, furniture: I evaluate an item&#8217;s utility against my own needs, not something else&#8217;s capabilities. Taking the same view of your software applications can seem like good sense.</p>
+<p>Here&#8217;s the difference with software. Factors outside your control can make your application stop working. This is especially true when it is running on a legacy operating system or a legacy language.</p>
+<p>I just had a sharp lesson in this on one of my personal websites. My site uses a content-management system written in PHP, which I had allowed to drift a bit behind on version updates. Last weekend my webhost, quite reasonably, upgraded their servers with the latest stable version of PHP. They had notified me, so I was looking out for it, and sure enough: my site was broken. My outdated version of the content-management system was calling deprecated and discontinued PHP methods. To drive the lesson home, I was enough out of date that upgrading the content-management system wasn&#8217;t trivial, either. Here is a case where &#8220;if it ain&#8217;t broke&#8221; turned into &#8220;it&#8217;s broke anyway.&#8221;</p>
+<p>Keeping software platforms current is not about wanting the latest features. It is about routine maintenance that keeps your critical systems comfortably supported. If you fall behind the pack, software patches and operating system upgrades offer no guarantees. That&#8217;s what it means when a technology is no longer supported: it means the manufacturer won&#8217;t be testing whether their latest change will impact that end-of-life technology. Complacency is perilous.</p>
+<p>You might find it daunting to estimate the value of rewriting an application in a supported language. The cost is plain, but what is the return? It can sound like spending considerable time and resources to end up with the same feature set. We have helped some of our clients make such an assessment, so that they can decide when it is prudent to bring their technology stack up to date. <a href="http://www.headspring.com/services/consulting-development">Please get in touch</a> if you are weighing similar trade-offs.</p>
+<p>In order to make an informed decision, consider what it would cost to lose the application, to have it rendered non-functional—even non-starting—by an environment change. Is the application critical to your business? Is it your business&#8217;s product? What would it cost to lose it? Keeping current is insurance against that cost.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-25T00:00:00-05:00" pubdate data-updated="true">Aug 25<span>th</span>, 2011</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/legacy-operating-systems-and-legacy-languages-if-it-aint-broke-it-still-needs-fixing/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/legacy-operating-systems-and-legacy-languages-if-it-aint-broke-it-still-needs-fixing/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/agile-best-practices/" title="Previous Post: Agile Best Practices*">&laquo; Agile Best Practices*</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/pair-programming-in-agile/" title="Next Post: How pair programming benefits agile teams">How pair programming benefits agile teams &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

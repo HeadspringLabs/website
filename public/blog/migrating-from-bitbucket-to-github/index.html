@@ -1,0 +1,287 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Migrating from Bitbucket to GitHub - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="Git and Mercurial certainly have their differences, but in the grand scheme of things they are both equally-viable source control tools. Bitbucket &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/migrating-from-bitbucket-to-github">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Migrating From Bitbucket to GitHub</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-02T00:00:00-06:00" pubdate data-updated="true">Mar 2<span>nd</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Git and Mercurial certainly have their differences, but in the grand scheme of things they are both equally-viable source control tools.  Bitbucket and GitHub are also both equally-viable hosts for Mercurial and Git projects.</p>
+<p>All other things being equal, when it comes to open-source software the Capricious and Arbitrary Popularity Contest kicks in with the deciding vote.  Git, and in particular GitHub, has won the popularity contest in recent years and will own the title of Open Source Thingamabob for the near future.  Something cooler will come along and take its place, but for now GitHub is the place to be.<!--more--></p>
+<p>We still trust Bitbucket with our client work, but we&#8217;re in the process of migrating our open-source projects to the new <a href="https://github.com/HeadspringLabs">GitHub &#8220;HeadspringLabs&#8221; organization</a>.</p>
+<p>After a few failed attempts and much gnashing of teeth, I successfully migrated the <a href="http://www.headspring.com/2011/11/building-rich-enums">Enumeration</a> project from Bitbucket to GitHub, complete with history.<br />
+<!--more--></p>
+<h2>Installing Hg-Git on Windows</h2>
+<p>If you&#8217;re migrating a Subversion project to GitHub, they already provide an simple import service.  They don&#8217;t yet offer a tool for importing Mercurial repositories, though, so I found a Mercurial-to-Git bridge called <a href="http://hg-git.github.com/">Hg-Git</a>.</p>
+<p>Hg-Git is intended to let you work continuously against a Git repository while using Mercurial tools on the client side.  I didn&#8217;t need all that, but it can also be used to do the initial push to GitHub from within a Mercurial repository.</p>
+<p>The documentation on the Hg-Git&#8217;s main site is a little brief, and after Googling around I found some good advice as well as some good advice that no longer applied.  To get Hg-Git installed on Windows, here&#8217;s all you really need to do:</p>
+<ol>
+<li>Install a recent TortoiseHg if you haven&#8217;t already.  I used TortoiseHg 2.3 (Mercurial 2.1).</li>
+<li>Open a command window and <code>cd</code> to a development folder.  We&#8217;ll be creating some repository folders underneath it:<br />
+$ <code>cd C:dev</code></li>
+<li>You install Hg-Git by simply cloning its own repository off of Bitbucket:<br />
+$ <code>hg clone https://bitbucket.org/durin42/hg-git</code><br />
+This creates a new folder named hg-git under the current directory, and underneath that you&#8217;ll see a folder named hggit.</li>
+<li>Mercurial needs to be told that this extension exists.  Update C:&#92;Users&#92;&lt;username&gt;&#92;mercurial.ini and add the following (using whatever path you cloned to):<br />
+<code>[extensions]<br />
+bookmarks =<br />
+hggit = C:devhg-githggit</code></li>
+<li>Confirm that Mercurial knows what hggit is:<br />
+$ <code>hg help hggit</code></li>
+</ol>
+<h2>Initial Failure</h2>
+<p>You&#8217;ll need to have a new empty repository created on GitHub, and you&#8217;ll need to have the rights to push to it.  You&#8217;ll need to have a local clone of the Bitbucket project you wish to migrate.</p>
+<p>If you follow the advice on <a href="http://hg-git.github.com">the Hg-Git site</a>, you&#8217;ll try to issue a special &#8221;<code>hg push</code>&#8221; command using a git-specific destination URL.  <strong>This can push the history of commits only partially.  The GitHub repository will unforunately fail to show <em>who</em> performed each commit.</strong>  Yikes.  When I got this far, I had to delete the GitHub repo and start over.</p>
+<p>The problem is Mercurial uses one string to represent committer identity while Git uses two (name and email).  Additionally, GitHub pays special attention to the email part, allowing the site to recognize existing GitHub users and linking to their user page.  Since Hg-Git wasn&#8217;t populating email addresses, GitHub had little to go on.</p>
+<h2>Successfuly Migrating from Bitbucket to GitHub</h2>
+<p><strong>Instead</strong> of using Hg-Git to perform the whole push, we&#8217;ll follow some <a href="http://www.theleagueofpaul.com/hg-to-git">excellent Hg-Git advice</a> that lets us step in to fix committer identities along the way.</p>
+<p>That site has a shell script (which can be executed on Windows using the Git Bash command prompt).  The script will use Hg-Git for only one small part of the process: converting a local Mercurial repository folder into an equivalent local git repository.  The only thing wrong with that git repository will be the user names and email addresses.  The script then takes a chainsaw to that local git history, fixing the identity of each committer.  Finally, the script uses regular git commands to do the final push to GitHub.</p>
+<p>The downside is that you have to modify this script with a separate chunk for each real-world person that appears in the Mercurial history.  For instance, let&#8217;s say we have history in Bitbucket for users named hgjohn and hgjane.  John Doe has a GitHub account already and prefers to be known there as &#8220;John Doe&#8221; with email address &#8220;john@example.com&#8221;.  Jane Doe doesn&#8217;t have a GitHub account yet, but later on if she does she&#8217;ll want to be known as &#8220;Jane Doe&#8221; and &#8220;jane@example.com&#8221;.  With these transformations ready, we modify the script to the following:</p>
+<p>[gist id=&#8221;1954240&#8221;]</p>
+<p>After saving this as &#8220;migrate_hg_to_git.sh&#8221; in our development folder, we execute the following command (all on one line).  This creates a local folder named &#8216;MyProject&#8217;, populates it with a Bitbucket clone, converts it to a Git repository, fixes the names, and pushes to GitHub:</p>
+<p>$ <code>./migrate_hg_to_git.sh MyProject https://bitbucket.org/johnd/MyProject git@github.com:jdoe/MyProject.git</code></p>
+<p>Now when you view the project on GitHub, John&#8217;s commits display his photo and link to his user page.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-02T00:00:00-06:00" pubdate data-updated="true">Mar 2<span>nd</span>, 2012</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/migrating-from-bitbucket-to-github/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/migrating-from-bitbucket-to-github/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/get-to-know-a-developer-chris-missal/" title="Previous Post: Get to Know a Developer: Chris Missal">&laquo; Get to Know a Developer: Chris Missal</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/why-isnt-software-as-reliable-as-a-car/" title="Next Post: Why isn’t software as reliable as a car?">Why isn’t software as reliable as a car? &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

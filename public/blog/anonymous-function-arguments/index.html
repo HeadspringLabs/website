@@ -1,0 +1,270 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Anonymous Function Arguments - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="A lambda expression is also called an &#8220;anonymous function&#8221; as it has no official name of its own: x => x + 1 does some work, but there&# &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/anonymous-function-arguments">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Anonymous Function Arguments</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-06-27T00:00:00-05:00" pubdate data-updated="true">Jun 27<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>A lambda expression is also called an &#8220;anonymous function&#8221; as it has no official name of its own: <code>x => x + 1</code> does some work, but there&#8217;s no declared name for that function.  Anonymous functions are powerful and expressive, and are now common in .NET projects.</p>
+<p>Anonymous function <em>arguments</em>, on the other hand, are weak and inexpressive.  Since the advent of the <code>Func</code> and <code>Action</code> delegate types, anonymous arguments have unfortuanately become as common as anonymous functions.  That is a trend I&#8217;d like to quash ASAP.<!--more--></p>
+<h2>Sneaky Ambiguity</h2>
+<p>What do I mean by &#8220;anonymous function arguments&#8221;?  Let&#8217;s say someone else has written a method that takes in a <code>Func</code> and then invokes it as part of its own work:</p>
+<p>[gist id=&#8221;2992221&#8221;]</p>
+<p>Let&#8217;s say you really need to reticulate some splines, and you have a general idea of what function you should be passing into the <code>ReticulateSplines</code> method, but you don&#8217;t happen to really know what the int and bool arguments are supposed to signify.  You confidently put your keyboard to work and get as far as the open-parenthesis in but a few keystrokes:</p>
+<p>[gist id=&#8221;2992224&#8221;]</p>
+<p>Alas, your stalled and blinking cursor finds your youthful confidence quaint but ultimately futile.  Visual Studio isn&#8217;t going to be of any use here.  The most you&#8217;ll find out from Intellisense is that you need to supply some function that takes in an int and a bool.  <code>Func</code>&#8217;s declared argument names are <em>arg1</em> and <em>arg2</em>.  These names are so useless that they might as well not exist.  Hence, &#8220;anonymous&#8221; function arguments.</p>
+<p><code>ReticulateSplines</code> has a descriptive name for its <em>own</em> argument (<code>generateSplines</code>), but has provided no clue as to what the arguments to this <code>Func</code> are.  If I started writing methods with parameters named <em>arg1</em>, <em>arg2</em>, <em>arg3</em>… I&#8217;d be immediately despised by every other developer who had to use my code.  Why, then, should I be able to get away with expecting those same developers to make sense of delegate arguments that have equally-ambiguous names?</p>
+<h2>Getting Specific</h2>
+<p>The <code>delegate</code> keyword gets used less and less now that <code>Func</code> and <code>Action</code> are used for everything.  It&#8217;s time to dust it off and put it to work again.  When faced with the problem of anonymous function arguments, and you can resolve the problem with a simple delegate declaration.</p>
+<p>I recently needed to call a method that accepted an <code>Action&lt;Action, Action&gt;</code>.  I had a rough idea of what such an action needed to accomplish, but even after reading the body of the method in question I was unsure of the details.  The two anonymous arguments (the two inner actions) were passed around a bit before they were actually used.  Thankfully, someone had successfully called this method before, and after looking at the concrete method declaration that was being used in that case, I had a real clue what <em>arg1</em> and <em>arg2</em> were supposed to be called.</p>
+<p>The fix was to introduce a more useful yet equivalent delegate type.</p>
+<p>[gist id=&#8221;2995736&#8221;]</p>
+<p>Now, I could replace all usages of <code>Action&lt;Action, Action&gt;</code> with <code>SavePromptContinuation</code>.  Back in my own code, Intellisense started offering the help I needed, and more importantly started offering the help that the next developer would inevitably need.  When trying to call a method that accepts one of these, ReSharper even offers to write the method stub for the specific delegate expected, complete with well-named parameters!</p>
+<p><code>Func</code> and <code>Action</code> are useful because they are <em>at hand</em>, but the other edge of that sword may just cut your fellow developers.  Here&#8217;s some advice for their use:</p>
+<p>1. Use <code>Func</code> and <code>Action</code> when writing something that is inherently so abstract that you can&#8217;t be more specific.<br />
+2. You are not writing something that abstract.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-06-27T00:00:00-05:00" pubdate data-updated="true">Jun 27<span>th</span>, 2012</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/anonymous-function-arguments/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/anonymous-function-arguments/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/mercurial-basics/" title="Previous Post: Mercurial basics with Logan Turner">&laquo; Mercurial basics with Logan Turner</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/bowling-night/" title="Next Post: Bowling Night">Bowling Night &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

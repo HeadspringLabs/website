@@ -1,0 +1,311 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Creating Windows Installers with the WiX Toolset Part 5 - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="This article is part of a series exploring how to create installers for Windows software.  Here&#8217;s the complete contents of the series.
+Part 1 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-5">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Creating Windows Installers With the WiX Toolset Part 5</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-26T00:00:00-06:00" pubdate data-updated="true">Feb 26<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><address>This article is part of a series exploring how to create installers for Windows software.  Here&#8217;s the complete contents of the series.</address>
+<address><a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-01/">Part 1 – What Kinds of Software Projects Benefit From an Installer?</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-02/">Part 2 – An Overview Of Windows Installer and its Features</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-03/">Part 3 – Tooling Options for Building Installers</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-04/">Part 4 – The Windows Installer Runtime Sequence</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-5/">Part 5 – The Contents of an MSI</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-6/">Part 6 – The Structure of a WiX File</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-7/">Part 7 – Generating an MSI Package From Your WiX</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-8/">Part 8 – Troubleshooting Installer Runtime Problems</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-summary/">Part 9 - Summary</a><br />
+</address>
+<p><br/></p>
+<h2>Summary</h2>
+<p>This post discusses what an MSI is, We&#8217;ll use a Microsoft SDK tool called Orca to examine what the internal structure looks like.  We&#8217;ll also talk about how the internal structure maps to Windows Installer concepts.  While this post is not about WiX directly, authoring in WiX requires a good understanding of these internal structures and how they interconnect.</p>
+<h2>The Contents of an MSI</h2>
+<p>If you&#8217;ve installed several software applications like Office or Halo on your computer, chances are you&#8217;ve come across a file with type of MSI.  MSI stands for Microsoft Installer, and is the primary package type that Windows Installer consumes to install a product.</p>
+<p>There are other file types used by Windows Installer, but MSI is the only &#8220;required&#8221; type for making an installer.  I&#8217;m not going to discuss the other types, but you can find out more about them <a href="http://msdn.microsoft.com/en-us/library/aa372842.aspx">here</a>.</p>
+<p>For our dissection we&#8217;re going to use an MSI that installs a single file - HelloWorld.exe.  Here&#8217;s the installer:</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/msi.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="msi" alt="msi" src="http://www.headspring.com/wp-content/uploads/2013/01/msi_thumb.png" width="244" height="83" border="0" /></a></p>
+<p>The installer has no user interface.  This is what happens when you double click the MSI to install it:</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/installing.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="installing" alt="installing" src="http://www.headspring.com/wp-content/uploads/2013/01/installing_thumb.png" width="244" height="94" border="0" /></a></p>
+<p>What happens next is the window changes to say &#8220;Please wait while Windows configures Edgewolf HelloWorld&#8221; with a progess bar, and then performs the installation and closes.  This happens so fast I couldn&#8217;t get a screenshot of it before it disappeared.  After we run the installer, we have a new entry in Programs and Features that looks like this:</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/programsAndFeatures.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="programsAndFeatures" alt="programsAndFeatures" src="http://www.headspring.com/wp-content/uploads/2013/01/programsAndFeatures_thumb.png" width="244" height="58" border="0" /></a></p>
+<p>And we can find our installed program here:</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/installed.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="installed" alt="installed" src="http://www.headspring.com/wp-content/uploads/2013/01/installed_thumb.png" width="244" height="83" border="0" /></a></p>
+<p>It doesn&#8217;t get much simpler then that, right?</p>
+<h2>MSI Internal Structure</h2>
+<p>It&#8217;s interesting how trends in software development affect technical implementations.  For example, the programming language Java was rising to prominence around the same time the XML file format was being widely touted as THE way to store data for a variety of reasons.  As a result, Java Enterprise Edition (J2EE) relies heavily on XML files, to the point that I&#8217;ve heard jokes that enterprise Java development consists of writing one line of code and editing twenty XML files.</p>
+<p>Windows Installer is no different, and its source of large inspiration is relational databases.  An msi package is, quite literally, a database file with tables and rows in it.  Here&#8217;s a partial schema diagram:</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/payloadTables.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="payloadTables" alt="payloadTables" src="http://www.headspring.com/wp-content/uploads/2013/01/payloadTables_thumb.png" width="244" height="111" border="0" /></a></p>
+<p>Since an installer is for a single product, there&#8217;s dedicated table for that.  But a product like Microsoft Office does have multiple features such as Word, Excel, and PowerPoint.  Large features will typically be composed of a collection of subfeatures that can be installed or not installed and still have a working feature.  Examples of subfeatures for Word would be items like spellcheck, or clipart.</p>
+<p>Features and subfeatures are &#8220;above the water&#8221; concepts in the way that they are exposed directly to the person using the installer.  The user sees them and has a chance to choose what features they do or do not want.</p>
+<p>Features are composed of one or more components.  Components are tangible items like files, start menu shortcuts, and registry entries.  Components are &#8220;below the water&#8221; in the sense that they aren&#8217;t meant to be exposed to users.  When you&#8217;re installing Word, you could care less that you&#8217;re getting the files winword.exe, wordcnv.dll, wordcnvpxy.cnv&#8230;.well you get the idea.  Components are linked to a directory where they are installed, and are composed of one or more files.  Because the directory link is at the component level, obviously all of the files in the component need to target the same directory.</p>
+<p>Components are tied to features with a linking Feature Component table.</p>
+<p>In addition to the payload tables we just looked at, an MSI also has sequence tables that instruct Windows Installer what steps to execute and in what order.  There are a number standard actions included in Windows Installer such as calculating the disk space needed to perform the installation.  It&#8217;s also possible to write your own custom actions, I plan on talking about that in a later post.</p>
+<h2>Installing Orca</h2>
+<p>Microsoft provides a free tool called Orca that can be used to examine an MSI file.  It isn&#8217;t part of Windows, but it&#8217;s included with the Windows 7 SDK.  You can get an ISO of the Windows 7 SDK <a href="http://www.microsoft.com/en-us/download/details.aspx?id=8442">here</a> and the Windows 8 SDK is available <a href="http://msdn.microsoft.com/en-us/windows/hardware/hh852363.aspx">here</a>.</p>
+<p>Once you&#8217;ve installed the SDK, you can find an installer for Orca in the Bin directory (something similar to C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin).  Run the installer, and then you&#8217;ll have Orca in your start menu.</p>
+<h2>Examining the Hello World MSI</h2>
+<p>Start Orca.  Click File..Open, and open the MSI you want to load.  Here’s what you’ll see:</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/msiTablesInOrca.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="msiTablesInOrca" alt="msiTablesInOrca" src="http://www.headspring.com/wp-content/uploads/2013/01/msiTablesInOrca_thumb.png" width="244" height="179" border="0" /></a></p>
+<p>In addition to tables, the installer stores some nonrelational information in a Summary Stream.  You can view this by clicking &#8220;View..Summary Information&#8221;.  Most of it is product related, but the target architecture (32bit or 64bit) is also stored here.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/summaryStreamInOrca.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="summaryStreamInOrca" alt="summaryStreamInOrca" src="http://www.headspring.com/wp-content/uploads/2013/01/summaryStreamInOrca_thumb.png" width="229" height="244" border="0" /></a></p>
+<p>Looking at the feature table, we see this installer only has one feature - Complete (as in a complete install).</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/tableFeature.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="tableFeature" alt="tableFeature" src="http://www.headspring.com/wp-content/uploads/2013/01/tableFeature_thumb.png" width="244" height="53" border="0" /></a></p>
+<p>The FeatureComponent table links one component to our feature, the component called MainExecutable.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/tableFeatureComponent.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="tableFeatureComponent" alt="tableFeatureComponent" src="http://www.headspring.com/wp-content/uploads/2013/01/tableFeatureComponent_thumb.png" width="244" height="75" border="0" /></a></p>
+<p>Heading over to the component table, we see MainExecutable, and it targets the INSTALLDIR for the directory.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/tableComponent.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="tableComponent" alt="tableComponent" src="http://www.headspring.com/wp-content/uploads/2013/01/tableComponent_thumb.png" width="244" height="54" border="0" /></a></p>
+<p>The INSTALLDIR is going into an Edgewolf HelloWorld subdirectory under Program Files.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/tableDirectory.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="tableDirectory" alt="tableDirectory" src="http://www.headspring.com/wp-content/uploads/2013/01/tableDirectory_thumb.png" width="244" height="71" border="0" /></a></p>
+<p>So where&#8217;s the actual exe?  In the File table, and we see its linked to the MainExecutable component.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/tableFile.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="tableFile" alt="tableFile" src="http://www.headspring.com/wp-content/uploads/2013/01/tableFile_thumb.png" width="244" height="54" border="0" /></a></p>
+<p>I didn&#8217;t mention it earlier, but there&#8217;s also a Property table that&#8217;s a catch-all name value pair collection.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/tableProperty.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="tableProperty" alt="tableProperty" src="http://www.headspring.com/wp-content/uploads/2013/01/tableProperty_thumb.png" width="244" height="170" border="0" /></a></p>
+<p>The sequence tables instruct Windows Installer in what steps to take to run the installer.  Recall that there are two install stages (the UI stage and the Execution stage).  There are tables for each, and looking at the pictures below we can see the difference between the two:</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/installUiSequence.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="installUiSequence" alt="installUiSequence" src="http://www.headspring.com/wp-content/uploads/2013/01/installUiSequence_thumb.png" width="244" height="115" border="0" /></a><a href="http://www.headspring.com/wp-content/uploads/2013/01/installExecuteSequence.png"><img style="background-image: none; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="installExecuteSequence" alt="installExecuteSequence" src="http://www.headspring.com/wp-content/uploads/2013/01/installExecuteSequence_thumb.png" width="244" height="191" border="0" /></a></p>
+<p>That&#8217;s enough for this post.  Now we have a solid understanding of the basic building blocks in an installer package.  In the next post we&#8217;ll take a look at the WiX that generated this MSI.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-26T00:00:00-06:00" pubdate data-updated="true">Feb 26<span>th</span>, 2013</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-5/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-5/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/headspring-ceo-finalist-for-austin-under-40-awards/" title="Previous Post: Headspring CEO Finalist for Austin Under 40 Awards">&laquo; Headspring CEO Finalist for Austin Under 40 Awards</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/graphiti/" title="Next Post: Graphiti">Graphiti &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

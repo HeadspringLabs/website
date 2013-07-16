@@ -1,0 +1,261 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Two Reasons to Use Abstract Classes in C# - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="Do you find yourself writing the same methods over and over in different classes? Say your project needs both a &#8220;Dog&#8221; class and a &#8220; &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/two-reasons-to-use-abstract-classes-in-c">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Two Reasons to Use Abstract Classes in C#</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-29T00:00:00-05:00" pubdate data-updated="true">Jul 29<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Do you find yourself writing the same methods over and over in different classes? Say your project needs both a &#8220;Dog&#8221; class and a &#8220;Cat&#8221; class &#8211; do you end up writing a &#8220;sleep&#8221; method for both? What if, in two months, the client needs you to add a &#8220;possum&#8221; to the system? Do you end up going in and retyping &#8220;sleep&#8221; instructions yet again? When you&#8217;re modeling a system with many similar parts, it takes way too much time and effort to keep duplicating code for each class. Imagine how hard it would be to maintain a large project with thousands of classes! Besides, it violates the DRY principle of good programming: Don&#8217;t Repeat Yourself! There must be a better way.<!--more--></p>
+<p>Thankfully, C# has built-in features for sharing code between classes. One of these is called an &#8220;abstract class&#8221;. Just create a new class with the keyword &#8220;abstract&#8221; (e.g. &#8220;public abstract class Mammal&#8221;) and write in its body all the methods you would like your other classes to share in common. Since an abstract class is still a class, your &#8220;Cat&#8221; and &#8220;Dog&#8221; classes can inherit from it using a colon (e.g. &#8220;public Cat : Mammal&#8221;). This means that instead of writing a &#8220;sleep&#8221; method for each animal, you only need to write it in the &#8220;Mammal&#8221; class, and the other animals will be able to use it too.<br />
+But if any class can have inheritance, why not just use a regular class? The answer is that abstract classes have two special features:</p>
+<p>1. They cannot be instantiated (made into objects),<br />
+2. They can have special methods called &#8220;abstract methods&#8221;.</p>
+<p>&#8220;Wait a minute,&#8221; you may be thinking, &#8220;Why would I want a class that can&#8217;t become an object?!&#8221; Sounds useless, right? However, consider the purpose of an abstract class: it contains common methods (and fields) that multiple child classes inherit from, but it does not attempt to follow these directions itself. In fact, a parent class is often missing vital information about the methods and fields it contains, because each child may use them a little bit differently. The &#8220;Mammal&#8221; abstract class only has what is common to all mammals &#8211; since some mammals can&#8217;t crawl and other mammals can&#8217;t gallop, the &#8220;Mammal&#8221; class can&#8217;t do either one. Imagine what would happen if you tried to instantiate a &#8220;generic&#8221; mammal: you&#8217;d get a featureless mass of hair, muscle and bone that probably wouldn&#8217;t survive on its own! In the same way, it is undesirable (sometimes dangerous!) to leave a class open to instantiation when it is simply a placeholder for common features. Guard against this possibility by using an abstract class.</p>
+<p>What if two classes have methods so different that the only common factor is their name? This is where an abstract method comes in handy. An abstract method looks just like a normal method, except it has the word &#8220;abstract&#8221; (e.g. &#8220;abstract exampleMethod(args);&#8221; ) and a semicolon &#8220;;&#8221; instead of body brackets &#8220;{}&#8221;. What does it do? It basically tells each inheriting class to create its own method with that same name. For instance, since a dog and a bat both sleep, you could write a &#8220;sleep&#8221; method in the &#8220;Mammal&#8221; class. However, there are very few commonalities between a dog&#8217;s sleep and a bat&#8217;s sleep. So instead of trying to account for each individual animal&#8217;s sleeping habits, you would make the &#8220;sleep&#8221; method abstract. Now the code won&#8217;t even compile until each animal that inherits from &#8220;Mammal&#8221; has a method called &#8220;sleep&#8221;, using the &#8220;override&#8221; keyword to replace the abstract one (e.g. &#8220;public override sleep(args) {}&#8221; ). Now even though all mammals sleep, each individual mammal can sleep in its own way. After this, you may be wondering, &#8220;Why even bother putting that method in the parent class? Each inheritor is going to have its own version anyway.&#8221; You really do want to have that abstract class, not to prevent syntax errors, but to prevent human memory errors. You may know intellectually that all mammals sleep, but without a mechanism forcing you to write a &#8220;sleep&#8221; method for each mammal, it is all too easy to forget to do so. You may not even realize your mistake until you get a phone call from the client in the middle of the night. By refusing to compile until each abstract method is implemented in every inheriting class, the C# compiler is doing you a favor: it&#8217;s helping you remember the obvious.</p>
+<p>Abstract classes help you improve your code not only through what they can do, but also through what they can&#8217;t. They can hold common features for many classes to inherit, without accidentally becoming objects themselves. They can also force you to write unique implementations of a common method, preventing human errors of forgetfulness. When you set up a class hierarchy, seriously consider whether you need a normal class to inherit from, or whether an abstract class will do. It may end up making the difference between a solid or buggy program.</p>
+<p>Now, if only we had something to write the rest of our code for us&#8230;</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-29T00:00:00-05:00" pubdate data-updated="true">Jul 29<span>th</span>, 2011</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/two-reasons-to-use-abstract-classes-in-c/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/two-reasons-to-use-abstract-classes-in-c/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/true-confessions-public-shaming-and-test-driven-development/" title="Previous Post: True Confessions, Public Shaming, and Test-Driven Development">&laquo; True Confessions, Public Shaming, and Test-Driven Development</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/visual-studio-lightswitch-and-upgrade-path-for-microsoft-access-to-net/" title="Next Post: Visual Studio Lightswitch, an upgrade path for Microsoft Access to .Net">Visual Studio Lightswitch, an upgrade path for Microsoft Access to .Net &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

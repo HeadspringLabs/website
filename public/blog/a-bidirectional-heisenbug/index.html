@@ -1,0 +1,263 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>A Bidirectional Heisenbug - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="I think I may have encountered the world&#8217;s first bidirectional Heisenbug.
+The Heisenberg Uncertainty Principle in physics deals with the &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/a-bidirectional-heisenbug">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">A Bidirectional Heisenbug</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-05-18T00:00:00-05:00" pubdate data-updated="true">May 18<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>I think I may have encountered the world&#8217;s first bidirectional Heisenbug.<!--more--></p>
+<p>The Heisenberg Uncertainty Principle in physics deals with the problem of observing very small things.  If you want to detect an electron, to &#8220;see&#8221; where it&#8217;s going, you have to basically &#8220;shine a light on it&#8221; by letting it interact with a photon.  At those scales, simply shining a light on something is enough to push it off course!  In short, <em>observing something can change the thing being observed</em>.</p>
+<p>A <a href="http://en.wikipedia.org/wiki/Heisenbug">Heisenbug</a> is a software bug that seems to correct itself the moment you start trying to find its root cause.  This can be particularly frustrating.  You know the bug is really there.  You&#8217;ve seen its effects.  The moment you start stepping through your program to see it in action, though, everything starts working again.  <strong>Although initially frustrating, this strange behavior can actually provide vital clues about a bug&#8217;s root cause.</strong></p>
+<p>I encountered the epitome of a Heisenbug today.</p>
+<p>The application has a data entry grid reminiscent of a spreadsheet.  The bug report stated that when adding a new record to this grid, some of the necessary data would not get saved successfully, and that lack of data would be apparent on one of the other screens.</p>
+<p>Sure enough, I could reproduce the issue consistently and I knew what part of the project to look into first.  I set up some breakpoints in the suspicious part of the code, and <em>unlike</em> a typical Heisenbug, I could see some real clues about what was going wrong.  I made a prediction, that if I made a particular column visible in this grid, then I would be able to see the effects of the problem without having to go to the second screen.  This prediction turned out to be correct: I included the column in the grid, and immediately saw the inconsistency created by my earlier attempts to add records to the grid.</p>
+<p>I continued attempting to trigger the bug, and step through the suspect code, but everything started to look correct.  The data I expected to be missing was right there, clear as day, in my debugger.  Just before frustration got the best of me, though, I asked myself to look back over every step I had taken, in case it would explain the sudden disappearance of the bug.</p>
+<p><strong>Between the failure scenarios and the working scenarios, I had included that extra column in the grid!</strong>  It turns out that the suspect code depended on the presence of certain columns in order to function properly.</p>
+<p>That discovery didn&#8217;t just explain the bug&#8217;s sudden disappearance, it actually provided the main clue as to what was really going wrong, and suggested where I needed to apply the fix.  If the bug hadn&#8217;t disappeared, it probably would have taken <em>longer</em> to actually hunt it down.</p>
+<p>The Heisenbug-ness of this issue was actually bidirectional.  Not only did the bug stop happening when I attempted to look at it, but the official Steps-to-Reproduce The Issue involve deliberately trying to avoid seeing its effects!</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-05-18T00:00:00-05:00" pubdate data-updated="true">May 18<span>th</span>, 2012</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/a-bidirectional-heisenbug/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/a-bidirectional-heisenbug/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/javascript-first-letter-mystery/" title="Previous Post: Javascript first-letter mystery">&laquo; Javascript first-letter mystery</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/polyglot-programmers-of-austin-and-the-importance-of-industry-groups-with-sharon-cichelli-and-jeffrey-palermo/" title="Next Post: Industry groups with Sharon Cichelli, the founder of Polyglot Programmers of Austin">Industry groups with Sharon Cichelli, the founder of Polyglot Programmers of Austin &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,278 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>The Defensive ToArray - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="In A Game of Throws, we saw a frequently-blogged-about gotcha regarding the yield keyword and exception handling. This week, we&#8217;ll see how &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/the-defensive-toarray">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">The Defensive ToArray</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-02T00:00:00-05:00" pubdate data-updated="true">Oct 2<span>nd</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>In <a href="http://www.headspring.com/patrick/a-game-of-throws/">A Game of Throws</a>, we saw a frequently-blogged-about gotcha regarding the <code>yield</code> keyword and exception handling.  This week, we&#8217;ll see how there is more than one motivation for using the <code>yield</code> keyword, and when you opt into it for one you get the other whether you like it or not.  This leads to a code smell: littering our code with &#8216;defensive&#8217; calls to ToArray().<!--more--> </p>
+<h2>Generalizing the Exception Gotcha</h2>
+<p>The exception handling case from last week is a specific example of a larger potential gotcha: with lazy evaluation, some work <em>happens</em> at a different time than the caller might expect.  It allows exceptions to get &#8220;smuggled&#8221; through try/catch blocks, but exceptions are just one way you might be surprised by the change in the order of events: if your <code>yield</code>ing method has any kind of side effect, the caller is likely to experience the odd order of evaluation.</p>
+<p>That can be good.  That can be bad.  It&#8217;s a sharp tool.</p>
+<h2>Complecting Brevity with Laziness</h2>
+<p>This week, I&#8217;d like to cover another problem with lazy evaluation.  Maybe it&#8217;s really just a corollary of the order-of-events gotcha, but I want to call it out specially because it has to do less with the nuts-and-bolts of code execution and more to do with the emergent human behavior that results <em>from</em> people&#8217;s understanding of the problem: the Defensive ToArray.</p>
+<p>There are two reasons to use the <code>yield</code> keyword:  laziness and brevity.</p>
+<p><strong>Laziness is the advertised feature:</strong> you can produce a collection&#8217;s items on demand, as the caller tries to loop through them.  Laziness enables awesome things like assembling LINQ queries over multiple statements before finally starting to iterate through the overall result.</p>
+<p><strong>Brevity is the tempting, likely-unintended feature</strong>: a really monotonous pattern can be shortened using the <code>yield</code> keyword:</p>
+<p>[gist id=&#8221;3823991&#8221;]</p>
+<p>It&#8217;s tempting to look at that explicit list create/Add/return pattern and say, &#8220;I can shorten that with <code>yield</code>!&#8221;</p>
+<p>[gist id=&#8221;3823995&#8221;]</p>
+<p>Or even shorter:</p>
+<p>[gist id=&#8221;3823997&#8221;]</p>
+<p>…but even that uses <code>yield</code>&#8217;s semantics under the surface.</p>
+<p>The problem is that we opted into <code>yield</code> (or equivalently Select) for the brevity, but we <em>got</em> laziness along with it.  Now we all have to be wary every time we call a method that returns an IEnumerable.  My inner monologue starts to sound like the following:</p>
+<blockquote><p>Is this call lazy?  Would it be unsafe to pass the result around before defensively <em>realizing</em> it with a call to .ToArray()?  If I <em>do</em> that .ToArray() call defensively, am I stomping all over the original developer&#8217;s intentions?</p></blockquote>
+<p>Now I have to start looking at the implementation of a method I&#8217;m calling in order to know whether or not its result is to be immediately distrusted.  <em>Do I have to finish writing that other developer&#8217;s method with a .ToArray because they were being particularly… er… lazy?</em></p>
+<p>I&#8217;m starting to think that most calls to .ToArray() are a code smell, or rather an in-your-face workaround for a code smell.  Even when it&#8217;s doing the right thing, it&#8217;s too wordy and puts the onus on the caller rather than the guilty callee.  I don&#8217;t want to have to fix the result of another method, and I don&#8217;t want to have to look at a thousand such fixes littered throughout a project.</p>
+<h2>Let&#8217;s Start Communicating Intent</h2>
+<p>In response to all this, I have two items on my wishlist.  One is a wish for an addition to C#, and the other we can use in our projects today.</p>
+<p>First, I wish that if a <code>yield</code>ing method were declared to return an array or anything that has a constructor accepting an IEnumerable&lt;T&gt;, that the items be immediately iterated through and packaged as that type.  This way, you could get the brevity while communicating that you are not interested in the side effects of laziness:</p>
+<p>[gist id=&#8221;3824003&#8221;]</p>
+<p>Second, something we can do today: I wish that we could start standardizing on a naming convention for extension methods similar to Select that are not lazy: Map is a common term in other platforms.  Select would still lazily produce one IEnumerable from another, but Map methods would always do a defensive .ToArray for you.  You&#8217;d have to write a Map overload for every collection type you care about, but there&#8217;s really just a handful of collection types you&#8217;ll care about in practice.  For instance:</p>
+<p>[gist id=&#8221;3824012&#8221;]</p>
+<p>Without these Map methods, every time you see a Select you have to wonder what the original developer&#8217;s intention was.  <strong>If instead Map was the first method you reached for, then you would only reach for Select when you actually wanted lazy evaluation.</strong>    Reading through someone else&#8217;s code, Select calls would communicate deliberate laziness with potential side effect gotchas, and Map calls would communicate deliberate brevity with no such gotchas.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-02T00:00:00-05:00" pubdate data-updated="true">Oct 2<span>nd</span>, 2012</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/the-defensive-toarray/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/the-defensive-toarray/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/a-game-of-throws/" title="Previous Post: A Game of Throws">&laquo; A Game of Throws</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/headspring-hosts-central-texas-givecamp/" title="Next Post: Headspring Successfully Hosts Inaugural Central Texas GiveCamp">Headspring Successfully Hosts Inaugural Central Texas GiveCamp &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

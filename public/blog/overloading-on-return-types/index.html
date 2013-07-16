@@ -1,0 +1,286 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Overloading on Return Types - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="When you define two methods with the same name in C#, they have to take in different argument types in order for them to be distinguished from each &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/overloading-on-return-types">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Overloading on Return Types</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-06-07T00:00:00-05:00" pubdate data-updated="true">Jun 7<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>When you define two methods with the same name in C#, they have to take in different argument types in order for them to be distinguished from each other.  Sometimes, I find myself wishing that you could also overload a method name when the inputs are the same, but return types differ.</p>
+<p>Technically, you can&#8217;t do that in C#, but you can fake it.<!--more--></p>
+<h2>What would that even <em>mean</em>?</h2>
+<p>Let&#8217;s imagine a hypothetical C# in which you were allowed to overload on return types.  Consider the following class:</p>
+<p>[gist id=&#8221;2891704&#8221;]</p>
+<p>In the call to <code>foo.GetValue()</code>, we cannot tell which method should be called.  However, what if we tried to call it with some more context?</p>
+<p>[gist id=&#8221;2891706&#8221;]</p>
+<p>When we have some local type information available, we really could make an unambiguous decision about which overload to call.  When initializing <code>i</code>, the only overload that could work is the one returning an <code>int</code>.  When initializing <code>b</code>, the only overload that could work is the one returning a <code>bool</code>.</p>
+<p>We could conceivably find the right overload to call <em>based on how the return value is used</em>.  That seems odd at first, but there&#8217;s nothing really Earth-shattering about it.  Even in today&#8217;s real C#, overloads are picked based on what call-site types we happen to be using, and this would simply be yet another bit of call-site type information at our disposal.  Also, today&#8217;s real C# figures out the type of a lambda expression based on how it&#8217;s <em>used</em> as well, so there&#8217;s a precedent for being able to use usage-site context.</p>
+<h2>Using &#8216;out&#8217; Parameters</h2>
+<p>Let&#8217;s rewrite the original invalid class, using &#8216;out&#8217; parameters instead of return types:</p>
+<p>[gist id=&#8221;2891722&#8221;]</p>
+<p>This is completely valid.  <strong>When picking the right overload to call, the compiler considers &#8216;out&#8217; parameters as if they were inputs.</strong></p>
+<blockquote><p>
+  There is no substantive difference between a method that returns some type <code>T</code>, and a <code>void</code> method with an &#8216;out&#8217; parameter of type <code>T</code>.  The difference is only skin deep.
+</p></blockquote>
+<h2>A Concrete Example</h2>
+<p>I&#8217;ve encountered this in the real world on a few projects, dealing with the unfortunate interface <code>IDataReader</code>.  This is the interface used to process low-level ADO.NET result sets one row at a time.  Nowadays, most of us access databases with higher-level tools like NHibernate or PetaPoco, but this interface serves as a good example because:</p>
+<blockquote>
+<p>1) It was written before .NET gained generics, so it has some awkwardly-named methods we&#8217;d like to work around.<br />
+  2) Using it leads you to write hard-to-read, monotonous code.</p>
+</blockquote>
+<p>Both of these issues will be resolved with the &#8216;out&#8217; keyword.</p>
+<p>This interface exposes many methods that take in an <code>int</code> and return a value.  The input <code>int</code> indicates which column of the result set you are interested in, and the method <em>name</em> says what type you hope to find in that column.  <code>reader.GetInt32(2)</code> gives you the <code>int</code> found in the third column, <code>reader.GetDataTime(3)</code> gives you the <code>DateTime</code> found in the fourth column, etc.  To further complicate matters, you shouldn&#8217;t call these methods when the result set contains the special <code>DBNull</code> value.  When using this interface, you end up writing ugly things like this:</p>
+<p>[gist id=&#8221;2891743&#8221;]</p>
+<p>Note that every time you want call one of these Get* methods, you answer two questions:</p>
+<blockquote>
+<p>1) What type do I expect to find at the given position?<br />
+  2) Are null values possible at the given position?</p>
+</blockquote>
+<p>Note also that in each line, both of these questions are answered by the declared type of the left-hand-side.  Why should we have to repeat those answers on the right-hand-side?  Armed with some extension methods and the &#8216;out&#8217; keyword, things get much less repetative:</p>
+<p>[gist id=&#8221;2891749&#8221;]</p>
+<p>When you&#8217;re reading in 10 or so columns, the brevity adds up.  When writing a method that needs to read in a record from an <code>IDataReader</code>, you are <em>thinking</em> &#8220;I expect to get back values with these names, at these positions, with these types&#8221;.  You are <em>not</em> thinking &#8220;I expect to pull a Guid out of the first position so I&#8217;ll GetGuid, and I expect to pull an int out of the second position so I&#8217;ll GetInt32 but watch out for DBNull, and&#8230;&#8221;.  By &#8220;overloading on the return type&#8221;, we get to say what we mean <em>and nothing else</em>.</p>
+<p>I rarely use &#8216;out&#8217; parameters, but it&#8217;s nice to know they actually have a purpose every now and again, when the need presents itself.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-06-07T00:00:00-05:00" pubdate data-updated="true">Jun 7<span>th</span>, 2012</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/overloading-on-return-types/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/overloading-on-return-types/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/headspring-named-one-of-top-5-best-places-to-work-in-austin/" title="Previous Post: Headspring Named One of Top 5 Best Places to Work in Austin">&laquo; Headspring Named One of Top 5 Best Places to Work in Austin</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/html5-boot-camp/" title="Next Post: HTML5 Boot Camp">HTML5 Boot Camp &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

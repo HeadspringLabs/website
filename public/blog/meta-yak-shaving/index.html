@@ -1,0 +1,281 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Meta-Yak Shaving - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="Yak Shaving is a term used to describe one of two situations: when you&#8217;re performing some seemingly-wasteful activity that ultimately helps you &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/meta-yak-shaving">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Meta-Yak Shaving</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-07-07T00:00:00-05:00" pubdate data-updated="true">Jul 7<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><a href="http://joi.ito.com/weblog/2005/03/05/yak-shaving.html">Yak Shaving</a> is a term used to describe one of two situations: when you&#8217;re performing some seemingly-wasteful activity that ultimately helps you reach your actual goal, or when you fixate on a mostly-wasteful activity while procrastinating about your actual goal.</p>
+<p>With software, this usually presents itself as spending <em>way</em> too much time refactoring without making meaningful forward progress.  Don&#8217;t get me wrong - refactoring should be a daily activity to ensure that you don&#8217;t get overwhelmed by mounting complexity, but when you&#8217;re refactoring perfectly-fine code again and again because it&#8217;s kinda fun to do so, you&#8217;re yak shaving.<!--more--></p>
+<p>On a project for which time and money are valuable to the interested parties, yak shaving is unacceptable.  However, I think that developers should feel free to do this on a side project for the sake of <em>practice</em>.  If I violently overthink a refactoring effort on a project that affects nobody else, then when I encounter a similar problem on a for-pay project I won&#8217;t <em>need</em> to waste time coming to the same conclusion.  &#8220;When I had infinite time and zero dollars on the line, I solved this problem like so.  So let&#8217;s just do that this time right away!&#8221;</p>
+<h2>Code Metrics</h2>
+<p>I place relatively little value on code metrics, especially when they are used to drive decisions.  For instance, if you&#8217;re deciding what to do with your day <em>purely</em> by inspecting a code coverage report, you are staring directly into the business end of an inverted horse cart.  Instead, good testing habits will give you high coverage anyway.  Better yet, high code coverage born from good habits will be <strong>meaningfully</strong>-high; it&#8217;s easy to make changes that <em>trick</em> a metric into looking better than it is, giving you a false sense of security.</p>
+<p>The little value I do place on metrics comes when I want to take an occasional snapshot of a project, in case it can point out some useful patterns or trouble areas.  I did this for my <a href="https://github.com/plioi/parsley">yak shaving project</a> and found some interesting things about my own coding style.</p>
+<h2>Lines of Code</h2>
+<p>LOC counts are largely useless as a code metric, but comparing lines of library code versus lines of test code is interesting: Parsley has 585 lines of library code, and <em>847</em> of test code.  I was expecting a 50/50 split.  This project lends itself to having a lot of unit tests: it doesn&#8217;t go out-of-process for anything, and has no UI.  Still, this ratio is pretty darn high.  I&#8217;m glad I&#8217;ve put in the effort, though, for an unusually-high test/library ratio, as the problem being solved involves a great deal of potential edge cases and, more importantly, the problem being solved is nearly impossible to step through with a debugger.</p>
+<p>Lesson learned: unit testing can help to mitigate the risks of using a hard-to-step-through design.</p>
+<h2>Depth of Inheritance</h2>
+<p>Most of the inheritance in this project is interface-based.  The largest example of implementation-inheritance is only 3 levels deep, and <a href="https://github.com/plioi/parsley/blob/2d113754b6e3e68a43e624987fb7ed5c4dd99870/src/Parsley/TokenKind.cs">the classes involved</a> have a very narrow focus.  This is an example of the Template Method pattern.  There&#8217;s the &#8216;real&#8217; class and then a few convenience subclasses that fill in a tiny bit of the work.</p>
+<p>Lesson learned: with infinite yak shaving time, I avoid most implementation-inheritance.</p>
+<h2>Conditional Logic</h2>
+<p>Another surprise: the &#8216;else&#8217; keyword appears only 4 times in those 1432 lines.  Weird.  I certainly don&#8217;t consciously think of &#8216;else&#8217; as somehow <em>bad</em>.  The explanation comes in seeing how else conditional logic presents itself.</p>
+<p>First, polymorphism hides some conditional logic, as it implies statements like &#8220;if the runtime type of x is T1 then call T1&#8217;s implementation, <strong>else</strong> if the runtime type of x is T2 then call T2&#8217;s implementation, <strong>else</strong>…&#8221;</p>
+<p>Second, I find that I have several methods that take on the following form:</p>
+<p>[gist id=&#8221;3066889&#8221;]</p>
+<p>In every way that matters, there&#8217;s an &#8216;else&#8217; in that code block.  It&#8217;s just implied.  I think my accidental aversion to &#8216;else&#8217; is really a consequence of two other things:</p>
+<ol>
+<li>My class methods are very short and make few decisions. They have cyclomatic complexity around 1.6, meaning each method makes about 1 decision before returning, giving little reason to require nested if statements.  Also, my methods tend to be very short, averaging 3 lines.  Most of my if statements therefore take the form &#8220;if (condition) return A; else return B;&#8221; in which &#8216;else&#8217; is superfluous.</li>
+<li>ReSharper suggests removing &#8216;else&#8217; whenever it is superfluous.</li>
+</ol>
+<p>Lessons learned: with infinite yak shaving time, I a) perform extract-method refactorings until my methods are extremely short, with each method making about 1 decision; b) use interface-inheritance and Template Method to simplify the most complex logic; and c) discard as many characters as I can get away with, such as when ReSharper suggets removing &#8216;else&#8217;.</p>
+<h2>Mutation</h2>
+<p>This one isn&#8217;t a lesson learned because it&#8217;s always on my mind already, but when given infinite yak shaving time I avoid mutable state like the plague.  Most of my class fields are declared as readonly, and most of my auto-properties are declared as <code>{ get; private set;}</code> and only get set within the constructor, making them effectively readonly too.  Most of my local variables are given a value when they are declared and then never get overwritten.</p>
+<p>I found about 10 mutable variables in this whole project, and they were all local to a method, so the state change wouldn&#8217;t have any affect on the complexity of the rest of the library.  My aversion to mutation leads me to write code in the functional-style for the most part, but when that <em>inevitably</em> gets awkward during an intensively bit-twiddling method, I know it&#8217;s time to escape into statements-and-mutation-mode.</p>
+<p>The only interesting bit of mutation comes in the <a href="https://github.com/plioi/parsley/blob/2d113754b6e3e68a43e624987fb7ed5c4dd99870/src/Parsley/TokenStream.cs">TokenStream</a> class, which repeatedly mutates a <a href="http://www.headspring.com/blog/developer-deep-dive/public-private-super-private/">super-private</a> IEnumerator by calling its <code>MoveNext()</code> method.  Amusingly, this admittedly-complex class exists precisely so that you can traverse an IEnumerable in an apparently-mutation-free way.  My worst offender in the fight against mutable state exists in order to cover up some mutable state!</p>
+<h2>Conclusion</h2>
+<p>With infinite time and no budget, I write code in a particular style.  It drifts over the years as I gain experience, but certain trends are already apparent, and this experience influences my work on for-pay projects.  I recommend setting aside one project-of-no-consequence for a similar effort, so that you can also discover your own trends.  <strong>What do you find yourself doing, when you have the opportunity to write something that is truly to your liking?</strong></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-07-07T00:00:00-05:00" pubdate data-updated="true">Jul 7<span>th</span>, 2012</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/meta-yak-shaving/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/meta-yak-shaving/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/saying-goodbye-to-spicewood-springs-road/" title="Previous Post: Saying Goodbye to Spicewood Springs Road">&laquo; Saying Goodbye to Spicewood Springs Road</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/essential-vs-incidental-complexity/" title="Next Post: Essential vs Incidental Complexity">Essential vs Incidental Complexity &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

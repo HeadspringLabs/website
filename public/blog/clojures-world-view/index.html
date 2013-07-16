@@ -1,0 +1,271 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Clojure's World View - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="The programming language you use has a very large impact on the way you think about problems. Despite superficial similaries, each language comes &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/clojures-world-view">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Clojure's World View</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-12-16T00:00:00-06:00" pubdate data-updated="true">Dec 16<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>The programming language you use has a very large impact on the way you think about problems. Despite superficial similaries, each language comes with its own set of opinions about what is Important, what is Clean, what is Right, and what is Dangerous.</p>
+<p>It&#8217;s a good idea to take a look at the opinions of languages outside of your comfort zone, in case any of those tools can be incorporated into your toolbelt. My language of choice is C#, partly because it has similarly been influenced by a wide range of other languages. You <em>can</em> write Java in C#, but you don&#8217;t <em>have</em> to.</p>
+<p><a href="http://clojure.org/">Clojure</a>&#8217;s view of the world is dramatically different from C# and Java, even though it runs on the JVM and can interop with Java libraries. There are two main areas where Clojure can be contrasted with C#: its syntax and its approach to state changes.</p>
+<p>Today, we&#8217;ll see how Clojure&#8217;s approach to syntax can help us achieve brevity in C#. Next week, we&#8217;ll see how Clojure&#8217;s opinions can shape the way we think about state change.<!--more--></p>
+<h4><strong>Clojure Syntax</strong></h4>
+<p>Clojure is a dialect of Lisp, which means the first thing you&#8217;ll notice (is all the (nested (parentheses))). The look and feel of Lisp dialects can be initially confusing to newcomers. Instead of saying <em>1 + 2 + 3</em>, we say <em>(+ 1 2 3)</em>. The name of an operation comes before its arguments, never between them. This inside-out syntax has an interesting effect: <strong>everything looks the same</strong>. Every construct in the language, from simple expressions, to conditional logic, to function and type definitions <code>(looks like this)</code>.</p>
+<p>The fact that everything looks the same as everything else is a double-edged sword. I <em>like</em> that different constructs in C# <em>look</em> different. I find it helps me &#8220;chunk&#8221; up the screen as I read through something unfamiliar.</p>
+<p>On the other hand, the extreme simplicity of Clojure syntax gives us <a href="http://en.wikipedia.org/wiki/Homoiconicity">homoiconicity</a>, meaning that every bit of Clojure code is also a description of a data structure, namely a list of lists. <em>(* 3 (+ 2 1))</em> is both an arithmetic expression to be evaluated <strong>and</strong> a list containing three items: the symbol <strong>*</strong>, the number <strong>3</strong>, and another list containing 3 more items.</p>
+<p>Because all Clojure code is <em>also</em> a literal for a Clojure list, code generation becomes orders of magnitude simpler with Clojure than with C#. In fact, code generation is so common in Lisp dialects that it gets special treatment. A <strong>macro</strong> is a function whose job it is to take in code as its input and produce new code as its output. Even most of the seamingly-built-in keywords are in fact implemented as code-twiddling functions called early in the execution process.</p>
+<h4><strong>Hypothetical C# Macros</strong></h4>
+<p>Imagine we had a version of C# that didn&#8217;t have <a href="http://msdn.microsoft.com/en-us/library/bb384054.aspx">auto properties</a>, but did have macros. With macros, we could effectively add a new keyword to the language, implementing it in a library, to give us the same shorthand:</p>
+<p>[gist id=&#8221;1484258&#8221;]</p>
+<p>Our hypothetical macro function <strong>public macro Code prop(Code c) { &#8230; }</strong> would receive as its input a description of the code between &#8216;prop&#8217; and the semicolon, returning a description of the more elaborate property code. The compiler could call that function early on, generating the code we would have otherwise written:</p>
+<p>[gist id=&#8221;1484255&#8221;]</p>
+<p>This hypothetical C# wouldn&#8217;t need <strong>using() { &#8230; }</strong> blocks, or even <strong>foreach</strong> loops, because those keywords could be implemented in a library in terms of other existing constructs. Most language features that we think of as &#8216;syntax sugar&#8217; wouldn&#8217;t have to be thought of by the language designers in advance. With Clojure, developers invent their own new syntax sugar as a part of their daily thought process.</p>
+<h4><strong>Back to Reality</strong></h4>
+<p>A future version of C#, codenamed <a href="http://msdn.microsoft.com/en-us/roslyn">Roslyn</a>, will be exposing some of the compiler&#8217;s inner guts to us as a library. As with Clojure, we&#8217;ll be able to treat C# code as both a set of instructions and as a data structure. I <strong>seriously doubt</strong> this means that C# will gain macros, but I wouldn&#8217;t be surprised if we do end up seeing some powerful tools aimed at the same target as macros.</p>
+<p>The closest thing to macros that we have today in C# is lambda expressions and their corresponding expression trees. HTML helpers in MVC, for instance, leverage the code-twiddling power of lambda expressions in order to prevent us from reaching for our copy/paste shortcuts, saving us from having to maintain monotonously-verbose view files. Once you hand developers a powerful code-traversal tool like this, you empower them to <a href="http://www.headspring.com/2011/12/opening-the-black-box">invent powerful shorthand of their own</a>.</p>
+<p><strong>When you find yourself writing suspiciously-similar code in C# ask yourself, &#8220;What would Clojure do?&#8221;</strong></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-12-16T00:00:00-06:00" pubdate data-updated="true">Dec 16<span>th</span>, 2011</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/clojures-world-view/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/clojures-world-view/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/3-redesigns-i-love/" title="Previous Post: 3 Redesigns I Love">&laquo; 3 Redesigns I Love</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/get-to-know-a-developer-anne-epstein/" title="Next Post: Get to Know a Developer: Anne Epstein">Get to Know a Developer: Anne Epstein &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

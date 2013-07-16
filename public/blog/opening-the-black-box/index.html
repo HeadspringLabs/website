@@ -1,0 +1,268 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Opening the Black Box - Headspring Labs</title>
+  <meta name="author" content="Headspring Labs">
+
+  
+  <meta name="description" content="Lambda expressions are unusual in the way they are turned into objects at runtime, compared to other kinds of expressions. The object corresponding &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://headspringlabs.com/blog/opening-the-black-box">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Headspring Labs</a></h1>
+  
+    <h2>Experiments by Headspringers!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:headspringlabs.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Opening the Black Box</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-12-02T00:00:00-06:00" pubdate data-updated="true">Dec 2<span>nd</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Lambda expressions are unusual in the way they are turned into objects at runtime, compared to other kinds of expressions.<!--more--> The object corresponding with your lambda could either be a delegate type, like <code>Func&lt;T&gt;</code>, or an expression type like <code>Expression&lt;Func&lt;T&gt;&gt;</code>. The object you&#8217;ll get to work with depends on what you are passing the lambda <em>to</em>:</p>
+<p>[gist id=1421580]</p>
+<p>In the first case, our lambda is received as a delegate type, a function that can be invoked with an integer to receive its square. In this usage, it&#8217;s just shorthand for a method.</p>
+<p>In the second case, our lambda is received as an expression type, meaning that the <code>expression</code> parameter&#8217;s value is an object that <em>describes what the lambda&#8217;s source code looks like</em>. The value of the <code>expression</code> parameter is a tree-like object, effectively saying &#8220;I am a lambda expression with an x parameter. My body is a multiplication operation, where both the left and right operands are the x parameter.&#8221; This description of the source code is verbose and traversable, so we can reason about it in a way that would be too difficult to do with the mere string <code>"x =&gt; x*x"</code>. We can also take this tree, compile it at runtime, and evaluate it for some given input.</p>
+<p>This ability has been leveraged, for example, to make strongly-typed HTML helpers: <code>Html.EditorFor(model =&gt; model.ProductName)</code> will generate an appropriate snippet of HTML by traversing the tree of objects which <em>describe</em> the text &#8220;model.ProductName&#8221;. Our HTML snippet will include the given name. By compiling/evaluating the expression at runtime, we can also pick an appropriate control to output based on the type of the property, and can include the current value of the property within that control.</p>
+<p><strong>Because the language designers exposed a <em>tiny</em> bit of the compiler&#8217;s internal data structure, we have access to a great deal of information <em>about</em> our code, allowing us to phase out a lot of otherwise monotonous and error-prone busywork.</strong></p>
+<h2>Roslyn</h2>
+<p>In a future version of .NET, a great deal <em>more</em> of the compiler&#8217;s internal data structures will be exposed as an official part of the framework. This project is called <a href="http://msdn.microsoft.com/en-us/roslyn">Roslyn</a>. As part of this project, <strong>the C# compiler is being rewritten in C#</strong>. They should have called it <a href="http://en.wikipedia.org/wiki/Ouroboros">Ouroboros</a>.</p>
+<p>Compilers are usually a bit of a black box. Text goes in, compiled assemblies come out, and throughout that process we don&#8217;t get to see the intermediate data structures, similar to <code>Expression&lt;T&gt;</code>, that are used to perform the compilation.</p>
+<p>Since the Roslyn compiler will be implemented with .NET, the development team has the opportunity to expose the whole set of data structures to us as an API, similar to the way expression trees are currently exposed to us for lambdas. As with lambdas, trees are used to represent larger constructs like statements, methods, and classes. During compilation, this tree is traversed and queried to do things like type inference, type checking, IL generation, and the like. By exposing these intermediate data structures to us, we&#8217;ll be able to benefit from the wealth of information stored in them.</p>
+<p>Tools like ReSharper and your favorite HTML-ifying code snippet highlighter need to effectively reinvent some of the wheels found in our current black box. With Roslyn, we&#8217;ll be able to instead develop smart code-twiddling tools without having to reinvent 80% of a compiler first.</p>
+<h2>A Shinier Mirror</h2>
+<p>You can think of these trees as providing <strong>suped-up reflection</strong>. Reflection lets us traverse already-compiled code for <em>some</em> of the information the compiler had at its disposal along the way. We&#8217;ll be able to traverse these trees for similar information, <em>before</em> it gets squashed down into measly, stinking IL instructions:</p>
+<p>[gist id=1421585]</p>
+<h2>Unintended Consequences (The Good Kind)</h2>
+<p>When lambdas and the expression API were first developed, the language designers didn&#8217;t necessarily know ahead of time what we&#8217;d do with them. HTML helpers in MVC, for instance, were a creative and unanticipated reaction to the language feature. Now that more of the compiler&#8217;s inner workings will be exposed to us, I&#8217;m looking forward to a flurry of creative and powerful code-twiddling tools.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-12-02T00:00:00-06:00" pubdate data-updated="true">Dec 2<span>nd</span>, 2011</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://headspringlabs.com/blog/opening-the-black-box/" data-via="HeadspringLabs" data-counturl="http://headspringlabs.com/blog/opening-the-black-box/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/losing-yourself-in-the-data/" title="Previous Post: Losing Yourself in the Data">&laquo; Losing Yourself in the Data</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/get-to-know-a-developer-patrick-lioi/" title="Next Post: Get to Know a Developer: Patrick Lioi">Get to Know a Developer: Patrick Lioi &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fixies-life-bicycle/">Fixie's Life Bicycle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/test-discovery/">Test Discovery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/enabling-change/">Enabling Change</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'HeadspringLabs',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Headspring Labs -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
