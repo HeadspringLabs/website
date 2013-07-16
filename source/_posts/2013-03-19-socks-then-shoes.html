@@ -17,7 +17,7 @@ meta:
 <p>Although I'm framing this advice as "necessary first steps for any project", it's never too late to get a reliable build in place around your existing project.  Take it in small steps: get a build script that can simply compile the solution, then grow it to apply version numbers to assemblies, then grow it to run unit tests, put it on a Continuous Integration server, expand it to run integration tests...</p>
 <h2>Initialize .gitignore</h2>
 <p>Here's a minimal .gitignore file you can start with.  It tells git to ignore some files that have no business being checked into source control, such as compiled assemblies under the bin/ folders.  Grow it as needed:</p>
-<p>[gist id=5192403]</p>
+<p>{% gist 5192403 %}</p>
 <h2>Choose an Open Source License</h2>
 <p>I am not a lawyer, so I cannot offer advice as to which open source license is right for you.  I selected the MIT License and included it as a .txt file at the root of my repo.  The fact that I went with this is not a recommendation.  This is your decision, but whatever you choose, include it in your repo and be sure to include the official name of the license at the top of the file so that everyone knows what it is.</p>
 <p><a href="https://github.com/plioi/fixie/commit/af7c43afaf3111c2139e5886abc9b57e983a0962">Commit</a>.</p>
@@ -43,7 +43,7 @@ meta:
 <p>Before installing any NuGet packages, though, we want to "Enable NuGet Package Restore".  Doing so adds a few files to our solution.  When we later install packages, source control will only contain the master list of the names/versions of the packages we depend on.  The package DLLs themselves are deliberately <em>excluded</em> from source control via .gitignore.  When a new developer clones the repo and builds, NuGet will step in, download any missing dependencies (like NUnit), and <em>then</em> compile.  The combination of NuGet Package Restore and .gitignore gives us a clean repo on GitHub and a smooth experience for new developers.</p>
 <p>In Solution Explorer, right-click the solution and select Enable NuGet Package Restore.  Git will show you that src/Fixie.sln was updated to include the contents of a new folder /src/.nuget containing a few files.  We can leave them alone, as the default settings are just fine.</p>
 <p>Be sure to include the following line in your .gitignore.  This is the folder that will contain downloaded packages.  Since package restore is turned on, this folder can be left out of source control.  It will be rebuilt by NuGet during a build, whenever the folder is missing or incomplete:</p>
-<p>[gist id=5192486]</p>
+<p>{% gist 5192486 %}</p>
 <p><a href="https://github.com/plioi/fixie/commit/2cf6ed22a1008787f33bc7d07d0fc0816393d90f">Commit.</a></p>
 <h2>Install NUnit and NUnit.Runners via NuGet</h2>
 <p>Fixie is a test framework, so it may seem odd to start using NUnit during its development.  However, there's a bare minimum of functionality that I need to implement before Fixie can be used to test itself, and in the meantime I don't want to fall into the tempting trap of "coding without a net".  In the meantime, I'll use NUnit.</p>
@@ -56,13 +56,13 @@ meta:
 <p>Given that, it's good to start out by copying a script you know already works, and tweaking it from there, so feel free to use today's scripts as a starting point for your project, too.</p></blockquote>
 <p>Just like we did for NUnit.Runners, right-click the solution and install the package named "psake".</p>
 <p>In Fixie.Tests, I added a single test <strong>that always fails</strong>:</p>
-<p>[gist id=5192516]</p>
+<p>{% gist 5192516 %}</p>
 <p>We'll know we are done writing our build script if we can run the build, witness the test failing, fix the test, rerun the build, and witness the test passing.  This process will give us confidence that actual errors will be properly reported to us later.</p>
 <p>At the root of the repo, outside the /src folder, add a build script written in PowerShell.  This example just builds the solution and runs the tests:</p>
-<p>[gist id=5192529]</p>
+<p>{% gist 5192529 %}</p>
 <p>This script is meant to run with psake, but recall that psake's files all live under the /src/packages NuGet folder, <em>which is not in source control</em>.  We've got a bit of a chicken-and-egg problem here: we want NuGet to step in during the compile step in order to download any missing dependencies <em>like psake</em>, but we need psake to exist in the first place to run our build script and kick off that download!</p>
 <p>The solution to that problem is to include a build.cmd batch file, which starts by asking NuGet.exe to install solution-wide dependencies (including psake), and <em>then</em> invoke psake to run our default.ps1 file:</p>
-<p>[gist id=5192545]</p>
+<p>{% gist 5192545 %}</p>
 <p>When someone clones the repo and runs "build" at the command line, the results in the console should show the dependencies successfully downloaded (if they were missing), the solution compiled successfully, and the single unit test executed but failed.  After changing the test to always pass, rerunning the script should show the whole build-and-test process completes successfully.</p>
 <p>I encourage the habit of running "build" at the command line manually prior to any commit.  Speaking of commits,</p>
 <p><a href="https://github.com/plioi/fixie/commit/c45ac7a6c50c1be995303b70a85396c89b8fb768">Commit</a>.</p>
@@ -73,10 +73,10 @@ meta:
 <blockquote><p>A Continuous Integration (CI) server is any tool that monitors our source control for new commits, automatically checking out the latest, running our build script, and reporting on success or failure.  We're all human, and we're bound to occasionally make changes that don't pass the build.  The responsible thing is to let a tool alert us whenever our humanity gets the best of us.</p>
 <p>I'll be using TeamCity, which additionally tracks an auto-incrementing integer indicating the build number.  We'll use the build number as the fourth part of our assemblies' version numbers.</p></blockquote>
 <p><strong>VERSION.txt</strong> - Store the human-determined first three numbers in a plain text file right beside our build script.</p>
-<p>[gist id=5192587]</p>
+<p>{% gist 5192587 %}</p>
 <p><strong>CommonAssemblyInfo.cs</strong> - Rather than maintain redundant information in separate AssemblyInfo.cs files, we'll put all of the common parts in a single file, and then link each Project in the Solution to that common file.  Our build script will read the contents of VERSION.txt and generate src/CommonAssemblyInfo.cs upon each build.  When we run the build ourselves, we'll just assume ".0" as the fourth part of the version, since locally-run builds are just for local development purposes.  When our CI server runs the build, we'll pull the actual build number out of the air and use that for the fourth part.  Therefore, we'll always see ".0" in source control's CommonAssemblyInfo.cs, but the DLLs produced on the CI server will have a complete version number for sharing with the world.</p>
 <p>I updated the build script to produce a CommonAssemblyInfo.cs file with the build number filled in:</p>
-<p>[gist id=5192606]</p>
+<p>{% gist 5192606 %}</p>
 <p>I ran the script and confirmed the contents of CommonAssemblyInfo.cs.  Next, I needed to make both Projects in the Solution actually use this file instead of the defaults.  In both Projects, I removed most of the contents of Properties/AssemblyInfo.cs (leaving only the Project-specific [AssemblyName] attribute), right-clicked the Project to Add \ Existing Item, browsed to CommonAssemblyInfo.cs <em>and clicked the down-arrow within the Add button to select Add As Link</em> so that a single copy of the file would be used by all projects.  Once these links were created, I dragged them into the Properties folders to get them out of the way.  Whenever I add a new project to the solution, I'll need to repeat this step.</p>
 <p><a href="https://github.com/plioi/fixie/commit/d861ff8fb6bc5621c7066a855fa96733cbe7eebf">Commit</a>.</p>
 <h2>Footwear Accomplished</h2>

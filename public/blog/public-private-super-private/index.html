@@ -92,16 +92,22 @@
 
 
 <div class="entry-content"><p>I&#8217;ll never understand <em>why</em> it works, but it turns out that generating pseudorandom numbers takes very little code. Consider the following Random class. Given a seed integer to get started, it will produce an apparently-random list of ints as you repeatedly call Next():<!--more--></p>
-<p>[gist id=&#8221;2938870&#8221;]</p>
+<p><div><script src='https://gist.github.com/2938870.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>Easy as pie. Shortest blog post ever.</p>
 <p><strong>*Record Scratch*</strong></p>
 <p>Wait, why is <code>x</code> public? It&#8217;s so wrong, your gut says &#8220;That should be private!&#8221; long before your brain catches up and agrees. The downside, of course, is that the coder using this class can mess with <code>x</code>, and that could have the effect of the algorithm no longer producing a &#8220;fair&#8221; sequence.</p>
 <p>We mark that field private and call it a day. Later, we revisit the class to start adding convenience methods, written in terms of the existing <code>Next()</code> method:</p>
-<p>[gist id=&#8221;2938877&#8221;]</p>
+<p><div><script src='https://gist.github.com/2938877.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>We balked at <code>x</code> being public because more code <em>could</em> mess with it than <em>should</em> mess with it. By marking it public, we were <em>telling</em> the next coder that altering the value of <code>x</code> was something you might want to do <em>from anywhere</em>.</p>
 <p>However, if the person implementing additional methods on this class doesn&#8217;t already know that <code>x</code> is sacred, not to be altered anywhere but within <code>Next()</code>, then marking it private hasn&#8217;t actually helped. We&#8217;re stuck with the same problem: by merely marking it private, we are <em>telling</em> the next coder that altering the value of <code>x</code> is something you might want to do <em>from anywhere within the class</em>.</p>
 <p>That&#8217;s a risk we&#8217;re likely willing to take in practice, but in a perfect world we could further constrain <code>x</code> so that it is only visible to the method that deserves to see it. Consider the following, in which <code>x</code> is promoted from private to super-private:</p>
-<p>[gist id=&#8221;2938890&#8221;]</p>
+<p><div><script src='https://gist.github.com/2938890.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>This produces the same results. Although <code>x</code> is declared local to the constructor, it will still live on after construction because the <code>Next</code> lambda expression &#8220;closes over&#8221; or &#8220;grabs onto&#8221; it. The lambda is even allowed to change it. Think of every lambda expression as being an instance of a class that has fields of its own, and those fields are implied by which local variables we happen to refer to in the lambda&#8217;s body.</p>
 <p>I&#8217;m <em>not</em> recommending that you start obfuscating all of your classes in this fashion. The main point, though, is that once you get comfortable with the idea that lambdas have their own &#8216;super private&#8217; state that lives on for the lambda&#8217;s lifetime, you may find that you just don&#8217;t need as many class-level fields as you used to.</p>
 </div>

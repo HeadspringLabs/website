@@ -102,9 +102,13 @@
 <p>Because all Clojure code is <em>also</em> a literal for a Clojure list, code generation becomes orders of magnitude simpler with Clojure than with C#. In fact, code generation is so common in Lisp dialects that it gets special treatment. A <strong>macro</strong> is a function whose job it is to take in code as its input and produce new code as its output. Even most of the seamingly-built-in keywords are in fact implemented as code-twiddling functions called early in the execution process.</p>
 <h4><strong>Hypothetical C# Macros</strong></h4>
 <p>Imagine we had a version of C# that didn&#8217;t have <a href="http://msdn.microsoft.com/en-us/library/bb384054.aspx">auto properties</a>, but did have macros. With macros, we could effectively add a new keyword to the language, implementing it in a library, to give us the same shorthand:</p>
-<p>[gist id=&#8221;1484258&#8221;]</p>
+<p><div><script src='https://gist.github.com/1484258.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>Our hypothetical macro function <strong>public macro Code prop(Code c) { &#8230; }</strong> would receive as its input a description of the code between &#8216;prop&#8217; and the semicolon, returning a description of the more elaborate property code. The compiler could call that function early on, generating the code we would have otherwise written:</p>
-<p>[gist id=&#8221;1484255&#8221;]</p>
+<p><div><script src='https://gist.github.com/1484255.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>This hypothetical C# wouldn&#8217;t need <strong>using() { &#8230; }</strong> blocks, or even <strong>foreach</strong> loops, because those keywords could be implemented in a library in terms of other existing constructs. Most language features that we think of as &#8216;syntax sugar&#8217; wouldn&#8217;t have to be thought of by the language designers in advance. With Clojure, developers invent their own new syntax sugar as a part of their daily thought process.</p>
 <h4><strong>Back to Reality</strong></h4>
 <p>A future version of C#, codenamed <a href="http://msdn.microsoft.com/en-us/roslyn">Roslyn</a>, will be exposing some of the compiler&#8217;s inner guts to us as a library. As with Clojure, we&#8217;ll be able to treat C# code as both a set of instructions and as a data structure. I <strong>seriously doubt</strong> this means that C# will gain macros, but I wouldn&#8217;t be surprised if we do end up seeing some powerful tools aimed at the same target as macros.</p>

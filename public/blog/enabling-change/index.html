@@ -103,7 +103,9 @@
 <p>Rather than declare that unit testing is bad, I instead needed to admit that my tests needed to change just as much as the code <em>under</em> test needed to change. I needed to revise my testing approach in light of new information, to enable further development.</p>
 <p>Fortunately, I was already close to the solution. As I started implementing more involved features like support for async/await test cases and IDisposable test fixtures, I developed a pattern of wrapping fake test fixtures within a real test fixture. The outer real fixture&#8217;s tests must pass for my build to pass, but the inner fake fixtures are allowed to have failing tests. The outer real tests ask the test runner to run the inner fake test fixtures, capturing their results. The benefit to this approach is that I can confirm how Fixie will handle real test failures in the wild.</p>
 <p>Consider the tests for Fixie&#8217;s treatment of IDisposable test fixture classes (details omitted to emphasize the pattern):</p>
-<p>[gist id=&#8221;5581509&#8221;]</p>
+<p><div><script src='https://gist.github.com/5581509.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>This pattern appeared a few times:</p>
 <ol>
 <li><a href="https://github.com/plioi/fixie/blob/754af5e9c14bcb9ad55ce70d7f69ebdb84c26c35/src/Fixie.Tests/ClassFixtures/DisposalTests.cs">DisposalTests.cs</a> as described above.</li>

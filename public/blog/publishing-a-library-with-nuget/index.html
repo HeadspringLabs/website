@@ -94,9 +94,13 @@
 <div class="entry-content"><p>Last week, we saw how to <a href="http://www.headspring.com/2012/03/publishing-a-simple-nuget-package">publish a simple NuGet package</a>.  When installed into your solution in Visual Studio, that package would copy some text files into the target project.  That&#8217;s convenient, but it isn&#8217;t a typical use case for NuGet.  Instead, you usually want to publish compiled assemblies, and you want installation to add those assemblies to the target project&#8217;s list of assembly references.<!--more--></p>
 <p>In <a href="http://www.headspring.com/2011/11/recognizing-covariance-issues-in-your-code">Recognizing Covariance Issues in Your Code</a>, I introduced my hobby project, <a href="https://github.com/plioi/Parsley">Parsley</a>.  This project has gotten fairly stable in recent weeks, and I decided to publish it so that I could use NuGet to install it in other projects.</p>
 <p>In the <a href="http://www.headspring.com/2012/03/publishing-a-simple-nuget-package">simple NuGet package</a>, we created a *.nuspec file containing a <code>files</code> tag.  That <code>files</code> tag listed the files we wanted to copy into the target project upon installation.  We described the target path starting with &#8220;content&#8221;:</p>
-<p>[gist id=&#8221;2231965&#8221;]</p>
+<p><div><script src='https://gist.github.com/2231965.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p><a href="https://github.com/plioi/parsley/blob/c89236d7f253a13f0eaa3354b9714488d1742d65/default.ps1">Parsley&#8217;s build script</a> generates a *.nuspec file with a slightly different naming convention for the target paths:</p>
-<p>[gist id=&#8221;2231973&#8221;]</p>
+<p><div><script src='https://gist.github.com/2231973.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>Starting these paths with &#8220;lib&#8221; instead of &#8220;content&#8221; indicates to NuGet that they are libraries and should be added to the target project&#8217;s list of referenced assemblies.  The &#8220;net40&#8221; folder is also a part of the naming convention, indicating that the assembly was built for .NET 4.0.  If we&#8217;re targeting several different runtimes, we could include them all in one package using folder names like &#8220;net11&#8221;, &#8220;net20&#8221;, etc&#8230;</p>
 <p>Above, I&#8217;m also copying the *.pdb files into the package.  Next week, we&#8217;ll see a better alternative to enhance the debugging experience for your library&#8217;s users: integrating with <a href="http://symbolsource.org/">SymbolSource.org</a>.</p>
 </div>

@@ -97,18 +97,26 @@
 <!--more--></p>
 <h2>Hello, World!</h2>
 <p>In this example, we print some text to standard out.  Note that the <code>Main</code> function doesn&#8217;t have to live inside of a boilerplate class.  Since the body of the function is just one little function call, we also don&#8217;t bother surrounding it with <code>{</code> curly braces <code>}</code>:<br />
-[gist id=&#8221;2772642&#8221;]</p>
+<div><script src='https://gist.github.com/2772642.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <h2>Everything&#8217;s an Expression</h2>
 <p>Well, most things are expressions.  Most of the things you see in a Rook program have a value, even things like <code>if/else</code> conditional logic.  Here, the value of the whole <code>if/else</code> is the value of the branch that was actually executed.  Since the <code>Factorial</code> function&#8217;s body is just a single expression, we have no need to bother with more <code>{</code> curly braces <code>}</code> or an explicit <code>return</code> keyword:<br />
-[gist id=&#8221;2772676&#8221;]</p>
+<div><script src='https://gist.github.com/2772676.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <h2>Blocks: Fancy Expressions</h2>
 <p>Sometimes you just need to go into &#8216;statement mode&#8217; and declare some local variables to work with.  Rook blocks are special compound expressions.  They are surrounded with <code>{</code> curly braces <code>}</code> and can contain zero or more local variable declarations followed by one or more body expressions.  The value of the whole block is the value of the last body expression evaluated.</p>
 <p>The local variables can have an explicit type declaration if you want one, but when you leave it off it will be inferred just like C#&#8217;s &#8216;var&#8217; keyword.  Here, Main() will return 50:</p>
-<p>[gist id=&#8221;2772851&#8221;]</p>
+<p><div><script src='https://gist.github.com/2772851.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <h2>The Billion Dollar Feature</h2>
 <p>Allowing reference types to be nullable by default in languages like Java and C# has been called <a href="http://www.infoq.com/presentations/Null-References-The-Billion-Dollar-Mistake-Tony-Hoare">The Billion Dollar Mistake</a>.  Honestly, how often would it be meaningful for your domain objects to be nulls?  Most of the time, when your Customer/Account/Whathaveyou objects are null, you have encountered a bug and are moments away from a NullReferenceException cropping up <em>nowhere near</em> the actual point where the mistake was made.</p>
 <p>Nullability should be something you <em>ask for</em>, when it has <em>meaning</em> in your system.  Also, when you look at a method signature for a method someone else wrote, it would be nice to know right away whether or not the other programmer is taking on the responsibility of handling nulls.  Just like <code>int</code> is a different type from <code>int?</code> in C#, <code>string</code> is a different type from <code>string?</code> in Rook:<br />
-[gist id=&#8221;2772701&#8221;]</p>
+<div><script src='https://gist.github.com/2772701.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <h2>Collections</h2>
 <p>In C#, <code>IEnumerable&lt;T&gt;</code> has become extremely commonplace.  Any arbitrarily-sized collection that you could loop through implements this interface.  It&#8217;s useful, prevalent, <em>and the length of its name drives me bonkers</em>.  <strong>The most commonly-used things should take the fewest characters to write.</strong>  In Rook variable declarations, <code>int*</code> is shorthand for <code>IEnumerable&lt;int&gt;</code>.</p>
 <p>C#&#8217;s basic built in collection type, the one that get special syntax support and shorthand in variable declarations, is mutable.  This is The Million Dollar Mistake.  It&#8217;s not quite as offensive as nullability-by-default, but it does encourage some brittleness.  If a library call returns an array of something, and you mess with the result, you&#8217;re probably abusing the intent of the library developers.  This might even give you unintended access to the data that the library is trying to maintain privately.  Let&#8217;s use things like <code>List&lt;T&gt;</code> for mutation, and keep our array-like things immutable.  Again, the most commonplace things should take the fewest characters to write, so I&#8217;d rather devote shorthand like <code>int[]</code> to something I can really feel safe using everywhere.</p>
@@ -116,7 +124,9 @@
 <p>Because <code>Vector&lt;T&gt;</code> isn&#8217;t a concrete type, we can play some neat tricks to keep these immutable collections efficient.  <code>Vector&lt;T&gt;</code> supports Python-style slicing operations with the [:] operator, which gives results similar to <code>String.Substring(...)</code>.  The operation returns a <code>Slice&lt;T&gt;</code>, which also happens to implement <code>Vector&lt;T&gt;</code>.  This structure allows the slicing operation to have O(1) performance characteristics (taking a large slice of a large collection is as fast as taking a small slice of a small collection).</p>
 <p><strong>Letting the language favor interfaces and abstract types right from the get-go opens the door to neat trickery like fast slicing.</strong>  We preach coding to abstractions when <em>using</em> languages, and our languages should start following that advice as well.</p>
 <p>Also similar to strings, operations like <code>Append()</code> produce a whole new collection instead of modifying the original:<br />
-[gist id=&#8221;2772715&#8221;]</p>
+<div><script src='https://gist.github.com/2772715.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <h2>Austin Code Camp</h2>
 <p>All of this is in constant flux as I figure out what I really want this to <em>be</em> in the long run, but the implementation and patterns involved have become more and more stable in the past year.  Come on by the Austin Code Camp on June 9 to see how this seemingly-complex task can be broken down into managable pieces.  Be there and be square!</p>
 </div>

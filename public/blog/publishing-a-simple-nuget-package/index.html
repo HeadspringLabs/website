@@ -100,7 +100,9 @@
 <p>At this point, the project consisted of 3 files: a README, LICENSE.txt, and Enumeration.cs.  While in this folder, I issued a command to create a skeleton of a nuspec file:</p>
 <p><code>$ nuget spec</code></p>
 <p>This creates Package.nuspec, which I renamed to Enumeration.nuspec and populated:</p>
-<p>[gist id=&#8221;2155348&#8221;]</p>
+<p><div><script src='https://gist.github.com/2155348.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>There isn&#8217;t much going on here.  We say what version number we want to publish, a few descriptive fields, and then list the files we want to be included in the nupkg &#8216;zip&#8217; file.  In the file tags, <code>src</code> refers to the files relative to the location of the nuspec file, and <code>target</code> describes the path we want to copy it to <em>within</em> the zip.  Starting these paths with &#8220;content&#8221; means that when someone installs the package into one of their own projects, the files will be copied and then added to the target project file.</p>
 <p>To publish, we just need to issue the following commands:</p>
 <p><code>$ nuget pack Enumeration.nuspec</code><br />

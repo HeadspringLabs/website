@@ -100,9 +100,13 @@
 </ol>
 <h2>NUnit Lifecycle Attributes Are Redundant</h2>
 <p>If you use NUnit, you probably see a lot of test classes like this:</p>
-<p>[gist id=5762364]</p>
+<p><div><script src='https://gist.github.com/5762364.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>My [SetUp] methods are always named &#8220;SetUp&#8221;, my [TearDown] methods are always named &#8220;TearDown&#8221;, etc. It&#8217;s annoying to sacrifice whole lines to that noise.  When 99% of your test fixtures use naming conventions like mine, the attributes stop telling you something.  These attributes start to fill the same role as excessive comments:</p>
-<p>[gist id=5762368]</p>
+<p><div><script src='https://gist.github.com/5762368.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <h2>NUnit Inheritance is Needlessly Complex</h2>
 <p>The use of attributes for these &#8220;lifecycle&#8221; hooks poses more serious problems when your test classes take part in inheritance.  Since they don&#8217;t <em>have</em> to be placed on methods with the same name, you could have completely unrelated [SetUp]s, for instance, at different levels of the hierarchy.</p>
 <p>What order do they run in? Should the child class&#8217;s [SetUp] call the base?  Should the base [SetUp] call an abstract method you have to implement instead of providing your own [SetUp] in the child? [SetUp]s get complicated very quickly in the presence of inheritance.</p>
@@ -110,11 +114,17 @@
 <blockquote><p>The preparation of state under test should be remarkably dull.  We&#8217;re trying to confirm our assumptions about the behavior of our system, and we can&#8217;t do so with confidence if we aren&#8217;t confident about what all we&#8217;ve set up in the first place.</p></blockquote>
 <h2>A Low-Ceremony Alternative Convention</h2>
 <p>DRY stands for &#8220;Don&#8217;t Repeat Yourself&#8221;, not &#8220;[DontRepeatYourself] Don&#8217;t Repeat Yourself&#8221;! Allowing redundancy has opened the door to complexity. Let&#8217;s improve upon the NUnit style by defining a simpler, <a href="https://github.com/plioi/fixie/blob/a74078dfe3c8f415fd0663af104b75adfb90d29d/src/Fixie.Samples/LowCeremony/CustomConvention.cs">low-ceremony test class convention</a> with Fixie:</p>
-<p>[gist id=5762372]</p>
+<p><div><script src='https://gist.github.com/5762372.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>Armed with this convention class in our test assembly, our original test class gets simpler:</p>
-<p>[gist id=5762378]</p>
+<p><div><script src='https://gist.github.com/5762378.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>The most relevant part of the convention says that, instead of using attributes, the lifecycle hook methods will be identified by their names:</p>
-<p>[gist id=5762381]</p>
+<p><div><script src='https://gist.github.com/5762381.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <h2>What Does This Convention Buy Us?</h2>
 <p>There are three benefits to this approach:</p>
 <p>First, we don&#8217;t waste time reminding the reader that &#8220;SetUp&#8221; is in fact spelled &#8220;SetUp&#8221;.</p>

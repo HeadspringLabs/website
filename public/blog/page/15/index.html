@@ -178,7 +178,9 @@
 
   <div class="entry-content"><p>Not long a go, I wrote a detailed blog post on <a href="http://www.headspring.com/2012/03/getting-started-with-ravendb">getting started with RavenDB</a> and described the process of performing the most basic CRUD (create, retrieve, update, and delete) operations. The operations covered in the post are great for working with single data entities. One thing I didn’t discuss was how to retrieve a set of data entities and that is exactly what I want to dive into here.</p>
 <p>Retrieving data from RavenDB is dead simple and the .NET client offers excellent support for LINQ based queries. Let’s start by reviewing the IDocumentSession interface:</p>
-<p>[gist id=2153059]</p>
+<p><div><script src='https://gist.github.com/2153059.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>The query method in the interface is the gateway to retrieving sets of data and offers three signatures which give us immense flexibility with our queries.</p>
 <p>Let’s explore the Query&lt;T&gt;() method! Beginning with the example context…</p>
 <p></div>

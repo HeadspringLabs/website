@@ -103,10 +103,14 @@
 <h2>A Quick Review</h2>
 <p><a href="http://www.headspring.com/blog/developer-deep-dive/identifying-incidental-complexity/">A few weeks ago</a>, we saw some improvements made to the TypeChecker class.  This class traverses a tree representing all the source code input to the compiler.  If the input source code has an if-expression, then the tree will contain a node (an instance of the <code>If</code> class) that describes what the raw source code looked like.  As TypeChecker traverses the tree, it attempts to find an appropriate type for each node.  Since Rook&#8217;s if-expressions behave like C#&#8217;s <code>?:</code> ternary operator, the type of an <code>If</code> is the type of the positive and negative branch expressions.</p>
 <p>In that post, the original implementation for if-expression type checking looked like this:</p>
-<p>[gist id=&#8221;3151220&#8221;]</p>
+<p><div><script src='https://gist.github.com/3151220.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>This implementation used a needlessly-complex return type which motivated extra-complicated <code>return</code> statements.  That return type <em>complected</em> success (a new tree node with a meaningful Type property) with failure (a list of CompilerError messages to propagate up the tree).  Braiding those two ideas led to some verbose sanity checks after each step the method performed, and led to some verbose error-message-propagation in each <code>return</code> statement.</p>
 <p>I improved this situation by untying these ideas.  TypeChecker started tracking a single growing list of error messages encountered so far, so that returned objects in the tree traversal methods didn&#8217;t need to pass error messages back to their caller.  At this point, we started returning <code>null</code> every time the method found an error:</p>
-<p>[gist id=&#8221;3154330&#8221;]</p>
+<p><div><script src='https://gist.github.com/3154330.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <h2>Return Statements are &#8220;Extract Method&#8221; Fences</h2>
 <p>Surely this change was an improvement, but it didn&#8217;t dramatically improve the health of the TypeChecker class.  TypeChecker is a beast.  The TypeCheck methods for several of the tree nodes are suspiciously similar to each other, so I started out by trying to factor out common helper methods.</p>
 <p>I failed immediately every time I tried to do so.</p>
@@ -135,19 +139,31 @@
 <h2>Before and After the Return Value Decomplection</h2>
 <p><strong>If-Expression Type Checking</strong></p>
 <p><em>Before:</em><br />
-[gist id=&#8221;3151220&#8221;]</p>
+<div><script src='https://gist.github.com/3151220.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p><em>After:</em><br />
-[gist id=&#8221;3390149&#8221;]</p>
+<div><script src='https://gist.github.com/3390149.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p><strong>Class Declaration Type Checking</strong></p>
 <p><em>Before:</em><br />
-[gist id=&#8221;3390168&#8221;]</p>
+<div><script src='https://gist.github.com/3390168.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p><em>After:</em><br />
-[gist id=&#8221;3390159&#8221;]</p>
+<div><script src='https://gist.github.com/3390159.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p><strong>Function Declaration Type Checking</strong></p>
 <p><em>Before:</em><br />
-[gist id=&#8221;3390169&#8221;]</p>
+<div><script src='https://gist.github.com/3390169.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p><em>After:</em><br />
-[gist id=&#8221;3390164&#8221;]</p>
+<div><script src='https://gist.github.com/3390164.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <h2>Detect, Reflect, Decomplect</h2>
 <p>When you find yourself looking at suspiciously-complex code,</p>
 <ol>

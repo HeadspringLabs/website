@@ -94,7 +94,9 @@
 <div class="entry-content"><p>Today, ReSharper made the same suspicious suggestion to both my coworker and me.  We both had the task of checking a potentially-large collection for items that fail to pass a test, and we both phrased these like so: &#8220;if not any of the items fail, continue…&#8221;.  In each case, ReSharper wanted to rephrase our statements, and it seemed like following the suggestion would be a change for the worse!<!--more--> </p>
 <h2>An Offensive Suggestion</h2>
 <p>Here&#8217;s what each of our situations boiled down to:</p>
-<p>[gist id=&#8221;3903096&#8221;]</p>
+<p><div><script src='https://gist.github.com/3903096.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>We leaned on the Any() extension method, with the intention of &#8220;short circuiting&#8221; the underlying loop.  Any() starts at the front of the list, and tests each item until one of them passes the condition in the lambda expression.  Once we hit that item, there is no need to continue processing items, so Any() returns early.  This is similar to the way that the || operator works: in the expression (a() || b() || c()), we only bother to call method c() when a() and b() are both false.</p>
 <p>So, it seems the ReSharper suggestion is only <em>technically</em> the same.  You&#8217;ll get the same answer, but surely testing &#8220;All&#8221; the items is potentially wasteful in the event that the collection is large.</p>
 <p>What a terrible suggestion!  So terrible, I wanted to write an angry letter to the editor of my local newspaper: &#8220;…these nogoodniks, these ne&#8217;er-do-wells over at <a href="http://www.jetbrains.com/resharper/">JetBrains</a> need to <strong>turn that racket down and get off my lawn!</strong>&#8221;</p>

@@ -95,17 +95,23 @@
 <h3><strong>The Null Object Pattern</strong></h3>
 <p>Rather than dealing with uninitialized variable instances, you can start off by assigning a variable to an instance of a “Null Object”. Oftentimes you’ll see this done when developers assign an empty string to a variable because they don’t want to deal with null values. I’m going to be discussing this with types that are a bit more complex than string.</p>
 <p>In the code snippet below, I have represented a method with an optional argument that will fall back to an “empty” signature if one isn’t supplied. This Empty property is our Null Object for Signature that provides a safe instance we can use instead of dealing with null.</p>
-<p>[gist id=&#8221;2206415&#8221;]<br />
+<p><div><script src='https://gist.github.com/2206415.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+<br />
 [gist id=&#8221;2206371&#8221; file=&#8221;Signature.cs&#8221;]<!--more--></p>
 <p>Another reason I’m a fan of this pattern is when it can be used in sets. Imagine your email signature for a moment. You could have multiple signatures to choose from when you compose an email. Rather than having code to check for the existence of signatures, we can now simply always assume that there will be at least one signature.</p>
 <p>[gist id=&#8221;2206371&#8221; file=&#8221;EmailUser.cs&#8221;]</p>
 <p>While this code example isn’t too complex, one could imagine that creating a new object every time a property is accessed could get a bit expensive depending on the project. In our example with Email and Signatures, we would be perfectly fine using a Singleton. We might also want to set up our code this way if we needed to worry about reference equality. Just something to keep in mind.</p>
 <p>When creating singletons over the years, I’ve seen it done many ways, each better than the next. If we’re going to manage our object’s lifestyle ourselves, there’s a couple of approaches. Each of these is better than the previous:</p>
-<p>[gist id=&#8221;2206342&#8221;]</p>
+<p><div><script src='https://gist.github.com/2206342.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>You’ll notice that making sure this code is lazily initialized and thread safe can add a lot of “noise” to your code.</p>
 <h3><strong>Using .Net’s System.Lazy</strong></h3>
 <p>This is where <a href="http://msdn.microsoft.com/en-us/library/dd642331.aspx">Lazy</a> can help me out. The following code will achieve the same result as the double-checked locking method above.</p>
-<p>[gist id=&#8221;2206450&#8221;]</p>
+<p><div><script src='https://gist.github.com/2206450.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>It is much cleaner, right? I like Lazy because it removes the noise around thread safety from my code, where it really shouldn’t exist anyway.</p>
 <p>I’ve found places that these two patterns work together nicely for me, but one doesn&#8217;t require the other. Keep an eye open for areas to use these individually if the opportunity is right.</p>
 </div>

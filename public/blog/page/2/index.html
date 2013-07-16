@@ -103,10 +103,14 @@
 <p>Since dogfooding a project demands treating its deployment as a first-class feature, I needed to automate as much of the NuGet work as possible. I have set up a one-click deployment process for Fixie, and have tried it out for real by installing it into two other open source projects.</p>
 <h2>Creating and Publishing the NuGet Package</h2>
 <p>First, I added a nuspec file which describes the package contents.  I named it <a href="https://github.com/plioi/fixie/blob/a4a358e45e5c1ef2aa6074f12d1075066d4e28ca/src/Fixie/Fixie.nuspec">Fixie.nuspec</a> and placed this beside the Fixie.csproj file. Recall that the <a href="http://www.headspring.com/patrick/socks-then-shoes/">AssemblyInfo values in this project are set by the build script</a>.  By naming the nuspec file after the csproj file, NuGet.exe will know to use those same values as replacements for the $tokens$ in the nuspec:</p>
-<p>[gist id=5359835]</p>
+<p><div><script src='https://gist.github.com/5359835.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>Fixie.dll will be included in the package automatically, since that is the output of compiling Fixie.csproj.  The <code>&lt;files&gt;</code> section lists additional files I needed to include in the package: the console runner, its config, and 3 files needed to integrate with TestDriven.NET.  Since we&#8217;re including some files we don&#8217;t always want to add as project references during installation, I explicitly list Fixie.dll as the only reference.</p>
 <p>Dropping this nuspec file into the project isn&#8217;t enough.  I also added a &#8216;Package&#8217; task to the <a href="https://github.com/plioi/fixie/blob/a4a358e45e5c1ef2aa6074f12d1075066d4e28ca/default.ps1">build script</a>, which runs NuGet.exe against the nuspec file and produces the deployable package.  This task is the one executed by TeamCity upon each commit to GitHub:</p>
-<p>[gist id=5359834]</p>
+<p><div><script src='https://gist.github.com/5359834.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>TeamCity creates the NuGet package files with each build, but I don&#8217;t really want to publish a package to the world upon each commit. I&#8217;d rather just publish when I know I&#8217;ve made enough changes to warrant a new deployment.  I found some good advice on how to <a href="http://blog.jonnyzzz.name/2011/09/selective-publishing-of-nuget-packages.html">selectively publish NuGet packages with TeamCity</a>.  In short, my main TeamCity build configuration compiles, runs tests, and creates NuGet package files automatically upon each commit to GitHub, while  a secondary TeamCity build handles publishing the latest successful package to the world.  The secondary TeamCity build only runs when I decide to run it, giving me one-click deployment.</p>
 <h2>Inevitable Explosions</h2>
 <p>Applying this NuGet package to the first target project, <a href="https://github.com/plioi/parsley">Parsley</a>, was a complete success.  That&#8217;s unfortunate, because it is boring.  It gave me no new information to drive Fixie&#8217;s development.  Parsley&#8217;s tests spend all of their time twiddling and comparing strings. Not much can go wrong here that would depend on the details of the host test framework.</p>
@@ -157,7 +161,9 @@
 <p>Once the information you intended to hide has spread, everything it touches is now brittle.  If you make changes within the abstraction&#8217;s implementation, those details may cause a ripple effect through all the rotting code.  If other people or projects now depend on the leaked information, you may not even have the option of making the desired changes in the first place!</p>
 <h2>Fixie&#8217;s Leaky Abstraction</h2>
 <p>By the end of last week&#8217;s post, I had developed <a href="http://www.headspring.com/patrick/bootstrapping/">a roughly-usable test framework</a>. This version had an abstraction called Convention which is fundamental to the project: I want the end user to be able to tell me what their test fixtures and test cases look like.  I want you to be able to say things like &#8220;My test fixtures are the classes whose names end with &#8216;Tests&#8217;&#8221;, or &#8220;My test fixtures are the classes marked with some [Attribute]&#8221;.  If you don&#8217;t provide such a description, you&#8217;ll get the <a href="https://github.com/plioi/fixie/blob/6a01e382f30c3c598cf7d3d3a3bde450ad684297/src/Fixie/DefaultConvention.cs">default convention</a>:</p>
-<p>[gist id=5307031]</p>
+<p><div><script src='https://gist.github.com/5307031.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>The first method says, &#8220;A class is a test fixture when its name ends with &#8216;Tests&#8217; and it has a default constructor.&#8221;  The second method says, &#8220;A method is a test case if it is a public instance void method with zero parameters.&#8221; To its credit, DefaultConvention successfully describes the behavior you&#8217;ll get by default.  However, there&#8217;s something wrong here.</p>
 <p>The lack of symmetry is suspicious.  To tell me what your test <em>fixtures</em> look like, you implement a method that says whether or not a <em>single</em> class is a test fixture.  To tell me what your test <em>cases</em> look like, you implement a method that <em>lists</em> all the methods that look like test cases.</p>
 <p>I originally wanted both methods to take a single candidate and return a bool, meaning the second method would accept one MethodInfo, returning true when that method looks like a test case.  I couldn&#8217;t just do that, because the .NET reflection API wants me to start things off with a BindingFlags value to describe visibility (public/private/static/instance/etc), and <em>then</em> filter those results down.  Contrast this two-step process with the way reflection wants you to search for Types: you can take an Assembly, call GetTypes(), and <em>then</em> filter down on things <em>including</em> visibility.</p>
@@ -165,11 +171,17 @@
 <p>With this design, anyone who took advantage of Convention to customize their tests would be forced to understand a lot about the reflection API&#8217;s quirks.  Worse, they&#8217;d have to write some suspiciously-similar boilerplate code each time they wanted to provide an implementation.  DefaultConvention says what the default behavior is, but it isn&#8217;t very clear to the reader.</p>
 <h2>The Fix</h2>
 <p>Let&#8217;s jump to the improved abstraction, and then see how it works.  Here&#8217;s the new version of <a href="https://github.com/plioi/fixie/blob/cb649450e5d42a6eb83faeb58dafc3b9511d92d1/src/Fixie/DefaultConvention.cs">DefaultConvention</a>:</p>
-<p>[gist id=5307051]</p>
+<p><div><script src='https://gist.github.com/5307051.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>Much better. It says exactly what test fixtures and test cases look like by default, and suggests how you might specify your own similar rules. There&#8217;s no suspicious asymmetry now: both test fixtures and test cases are discovered using very similar statements.  It&#8217;s declarative, so the end user doesn&#8217;t have to be concerned with <em>how</em> the discovery will be honored; they can focus on simply stating what success looks like.</p>
 <p>The Fixtures property is an instance of <a href="https://github.com/plioi/fixie/blob/cb649450e5d42a6eb83faeb58dafc3b9511d92d1/src/Fixie/ClassFilter.cs">ClassFilter</a>, and the Cases property is an instance of <a href="https://github.com/plioi/fixie/blob/cb649450e5d42a6eb83faeb58dafc3b9511d92d1/src/Fixie/MethodFilter.cs">MethodFilter</a>:</p>
-<p>[gist id=5307060]</p>
-<p>[gist id=5307065]</p>
+<p><div><script src='https://gist.github.com/5307060.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p><div><script src='https://gist.github.com/5307065.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>Both of these objects work in a similar way, achieving the symmetry I&#8217;d originally intended.  They each accumulate conditions in a list, and only perform that work when the Filter(&#8230;) method is finally called by Fixie&#8217;s main loop.  Since the real work is deferred to that last moment, MethodFilter is able to similarly accumulate information about the awkward BindingFlags, thus hiding the worst of the information leak found in the original version.</p>
 <p>Since each condition-building method returns <code>this</code>, the caller can Chain().Together().Calls().Like().This().  This approach gives me a home to place reflection helper methods like HasDefaultConstructor, further hiding odd implementation details about the reflection API, and if I happen to omit such a convenient helper method, the end user can build extension methods upon this foundation using the Where(&#8230;) method.</p>
 <h2>Criticism</h2>
@@ -240,14 +252,22 @@
 <p>By approaching this task with a bootstrapping mindset, I&#8217;ve successfully gotten a useful-enough test framework up and running in a very short time.  It&#8217;s not fancy enough to write home about, but that wasn&#8217;t the goal in this phase of development.  Let&#8217;s see what this minimal test framework looks like.</p>
 <p>First, <a href="https://github.com/plioi/fixie/blob/6a01e382f30c3c598cf7d3d3a3bde450ad684297/default.ps1">Fixie&#8217;s build script</a> runs all the tests using Fixie and then runs all the tests using xUnit.  In order to compare their output in the case of failing tests, only xUnit failures actually cause the build to fail.  Fixie test failures are output, but don&#8217;t prevent the build script from progressing to the xUnit run.</p>
 <p>The <a href="https://github.com/plioi/fixie/blob/6a01e382f30c3c598cf7d3d3a3bde450ad684297/src/Fixie/DefaultConvention.cs">default convention</a> (and currently the only convention), describes how to tell whether a class is a test fixture, and whether a method is a test case.  A class is a test fixture if its name ends with &#8220;Tests&#8221; and it has a default constructor; a method is a test case if it&#8217;s a public instance void method with zero parameters:</p>
-<p>[gist id=5242692]</p>
+<p><div><script src='https://gist.github.com/5242692.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>This convention helps to reach out and find all the fixture classes and test case methods in your test assembly, so it can construct Fixture and Case objects describing the work to be performed.  A <a href="https://github.com/plioi/fixie/blob/6a01e382f30c3c598cf7d3d3a3bde450ad684297/src/Fixie/Fixture.cs">Fixture</a> is a named executable thing, a <a href="https://github.com/plioi/fixie/blob/6a01e382f30c3c598cf7d3d3a3bde450ad684297/src/Fixie/Case.cs">Case</a> is a named executable thing, and they both rely on a <a href="https://github.com/plioi/fixie/blob/6a01e382f30c3c598cf7d3d3a3bde450ad684297/src/Fixie/Listener.cs">Listener</a> to report test failures:</p>
-<p>[gist id=5242698]</p>
+<p><div><script src='https://gist.github.com/5242698.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>For this bootstrapping phase, all fixtures correspond with classes, so the only implementation of Fixture is <a href="https://github.com/plioi/fixie/blob/6a01e382f30c3c598cf7d3d3a3bde450ad684297/src/Fixie/ClassFixture.cs">ClassFixture</a>.  ClassFixture takes one of the Types discovered by the DefaultConvention, and owns the test fixture lifecycle in its Execute method:</p>
-<p>[gist id=5242707]</p>
+<p><div><script src='https://gist.github.com/5242707.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>Note the elaborate try/catch block.  Activator.CreateInstance(fixtureClass) calls your test fixture&#8217;s default constructor via reflection.  If your test fixture constructor throws an exception, we perceive that here as a TargetInvocationException that <em>wraps</em> the original exception.  We don&#8217;t want to report that wrapper to the user, otherwise every single test failure will hide the original with the unhelpful message, &#8220;Exception has been thrown by the target of an invocation.&#8221;  We unpack the wrapped original exception and report <em>that</em> to the listener.</p>
 <p>For this bootstrapping phase, all test cases correspond with methods, so the only implementation of Case is <a href="https://github.com/plioi/fixie/blob/6a01e382f30c3c598cf7d3d3a3bde450ad684297/src/Fixie/MethodCase.cs">MethodCase</a>.  MethodCase takes one of the MethodInfos discovered by the default Convention, and owns the execution of that method with a similar exception handler:</p>
-<p>[gist id=5242711]</p>
+<p><div><script src='https://gist.github.com/5242711.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>That&#8217;s all the real work.  The remaining classes include <a href="https://github.com/plioi/fixie/blob/6a01e382f30c3c598cf7d3d3a3bde450ad684297/src/Fixie/Suite.cs">Suite</a>, which loops through all the Fixtures and asks them to run themselves, <a href="https://github.com/plioi/fixie/blob/6a01e382f30c3c598cf7d3d3a3bde450ad684297/src/Fixie.Console/ConsoleListener.cs">ConsoleListener</a>, which is a Listener that outputs failures to the console, and <a href="https://github.com/plioi/fixie/blob/6a01e382f30c3c598cf7d3d3a3bde450ad684297/src/Fixie.Console/Program.cs">Program</a>, whose Main method builds up and executes a Suite with a ConsoleListener for a given Assembly.</p>
 <p>By approaching this effort from a bootstrapping point of view, I now have a test framework powerful enough to drive the rest of its own features.  I&#8217;ve kept scope creep in check while laying a reasonable foundation, and even in the early stages I was able to have meaningful code coverage via xUnit.  Now that I&#8217;m about to embark on the more significant features, I already have a meaningful set of test cases to rely on.</p>
 </div>
@@ -332,7 +352,9 @@
 <p>Although I&#8217;m framing this advice as &#8220;necessary first steps for any project&#8221;, it&#8217;s never too late to get a reliable build in place around your existing project.  Take it in small steps: get a build script that can simply compile the solution, then grow it to apply version numbers to assemblies, then grow it to run unit tests, put it on a Continuous Integration server, expand it to run integration tests&#8230;</p>
 <h2>Initialize .gitignore</h2>
 <p>Here&#8217;s a minimal .gitignore file you can start with.  It tells git to ignore some files that have no business being checked into source control, such as compiled assemblies under the bin/ folders.  Grow it as needed:</p>
-<p>[gist id=5192403]</p>
+<p><div><script src='https://gist.github.com/5192403.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <h2>Choose an Open Source License</h2>
 <p>I am not a lawyer, so I cannot offer advice as to which open source license is right for you.  I selected the MIT License and included it as a .txt file at the root of my repo.  The fact that I went with this is not a recommendation.  This is your decision, but whatever you choose, include it in your repo and be sure to include the official name of the license at the top of the file so that everyone knows what it is.</p>
 <p><a href="https://github.com/plioi/fixie/commit/af7c43afaf3111c2139e5886abc9b57e983a0962">Commit</a>.</p>
@@ -358,7 +380,9 @@
 <p>Before installing any NuGet packages, though, we want to &#8220;Enable NuGet Package Restore&#8221;.  Doing so adds a few files to our solution.  When we later install packages, source control will only contain the master list of the names/versions of the packages we depend on.  The package DLLs themselves are deliberately <em>excluded</em> from source control via .gitignore.  When a new developer clones the repo and builds, NuGet will step in, download any missing dependencies (like NUnit), and <em>then</em> compile.  The combination of NuGet Package Restore and .gitignore gives us a clean repo on GitHub and a smooth experience for new developers.</p>
 <p>In Solution Explorer, right-click the solution and select Enable NuGet Package Restore.  Git will show you that src/Fixie.sln was updated to include the contents of a new folder /src/.nuget containing a few files.  We can leave them alone, as the default settings are just fine.</p>
 <p>Be sure to include the following line in your .gitignore.  This is the folder that will contain downloaded packages.  Since package restore is turned on, this folder can be left out of source control.  It will be rebuilt by NuGet during a build, whenever the folder is missing or incomplete:</p>
-<p>[gist id=5192486]</p>
+<p><div><script src='https://gist.github.com/5192486.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p><a href="https://github.com/plioi/fixie/commit/2cf6ed22a1008787f33bc7d07d0fc0816393d90f">Commit.</a></p>
 <h2>Install NUnit and NUnit.Runners via NuGet</h2>
 <p>Fixie is a test framework, so it may seem odd to start using NUnit during its development.  However, there&#8217;s a bare minimum of functionality that I need to implement before Fixie can be used to test itself, and in the meantime I don&#8217;t want to fall into the tempting trap of &#8220;coding without a net&#8221;.  In the meantime, I&#8217;ll use NUnit.</p>
@@ -371,13 +395,19 @@
 <p>Given that, it&#8217;s good to start out by copying a script you know already works, and tweaking it from there, so feel free to use today&#8217;s scripts as a starting point for your project, too.</p></blockquote>
 <p>Just like we did for NUnit.Runners, right-click the solution and install the package named &#8220;psake&#8221;.</p>
 <p>In Fixie.Tests, I added a single test <strong>that always fails</strong>:</p>
-<p>[gist id=5192516]</p>
+<p><div><script src='https://gist.github.com/5192516.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>We&#8217;ll know we are done writing our build script if we can run the build, witness the test failing, fix the test, rerun the build, and witness the test passing.  This process will give us confidence that actual errors will be properly reported to us later.</p>
 <p>At the root of the repo, outside the /src folder, add a build script written in PowerShell.  This example just builds the solution and runs the tests:</p>
-<p>[gist id=5192529]</p>
+<p><div><script src='https://gist.github.com/5192529.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>This script is meant to run with psake, but recall that psake&#8217;s files all live under the /src/packages NuGet folder, <em>which is not in source control</em>.  We&#8217;ve got a bit of a chicken-and-egg problem here: we want NuGet to step in during the compile step in order to download any missing dependencies <em>like psake</em>, but we need psake to exist in the first place to run our build script and kick off that download!</p>
 <p>The solution to that problem is to include a build.cmd batch file, which starts by asking NuGet.exe to install solution-wide dependencies (including psake), and <em>then</em> invoke psake to run our default.ps1 file:</p>
-<p>[gist id=5192545]</p>
+<p><div><script src='https://gist.github.com/5192545.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>When someone clones the repo and runs &#8220;build&#8221; at the command line, the results in the console should show the dependencies successfully downloaded (if they were missing), the solution compiled successfully, and the single unit test executed but failed.  After changing the test to always pass, rerunning the script should show the whole build-and-test process completes successfully.</p>
 <p>I encourage the habit of running &#8220;build&#8221; at the command line manually prior to any commit.  Speaking of commits,</p>
 <p><a href="https://github.com/plioi/fixie/commit/c45ac7a6c50c1be995303b70a85396c89b8fb768">Commit</a>.</p>
@@ -388,10 +418,14 @@
 <blockquote><p>A Continuous Integration (CI) server is any tool that monitors our source control for new commits, automatically checking out the latest, running our build script, and reporting on success or failure.  We&#8217;re all human, and we&#8217;re bound to occasionally make changes that don&#8217;t pass the build.  The responsible thing is to let a tool alert us whenever our humanity gets the best of us.</p>
 <p>I&#8217;ll be using TeamCity, which additionally tracks an auto-incrementing integer indicating the build number.  We&#8217;ll use the build number as the fourth part of our assemblies&#8217; version numbers.</p></blockquote>
 <p><strong>VERSION.txt</strong> - Store the human-determined first three numbers in a plain text file right beside our build script.</p>
-<p>[gist id=5192587]</p>
+<p><div><script src='https://gist.github.com/5192587.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p><strong>CommonAssemblyInfo.cs</strong> - Rather than maintain redundant information in separate AssemblyInfo.cs files, we&#8217;ll put all of the common parts in a single file, and then link each Project in the Solution to that common file.  Our build script will read the contents of VERSION.txt and generate src/CommonAssemblyInfo.cs upon each build.  When we run the build ourselves, we&#8217;ll just assume &#8220;.0&#8221; as the fourth part of the version, since locally-run builds are just for local development purposes.  When our CI server runs the build, we&#8217;ll pull the actual build number out of the air and use that for the fourth part.  Therefore, we&#8217;ll always see &#8220;.0&#8221; in source control&#8217;s CommonAssemblyInfo.cs, but the DLLs produced on the CI server will have a complete version number for sharing with the world.</p>
 <p>I updated the build script to produce a CommonAssemblyInfo.cs file with the build number filled in:</p>
-<p>[gist id=5192606]</p>
+<p><div><script src='https://gist.github.com/5192606.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>I ran the script and confirmed the contents of CommonAssemblyInfo.cs.  Next, I needed to make both Projects in the Solution actually use this file instead of the defaults.  In both Projects, I removed most of the contents of Properties/AssemblyInfo.cs (leaving only the Project-specific [AssemblyName] attribute), right-clicked the Project to Add \ Existing Item, browsed to CommonAssemblyInfo.cs <em>and clicked the down-arrow within the Add button to select Add As Link</em> so that a single copy of the file would be used by all projects.  Once these links were created, I dragged them into the Properties folders to get them out of the way.  Whenever I add a new project to the solution, I&#8217;ll need to repeat this step.</p>
 <p><a href="https://github.com/plioi/fixie/commit/d861ff8fb6bc5621c7066a855fa96733cbe7eebf">Commit</a>.</p>
 <h2>Footwear Accomplished</h2>
@@ -441,13 +475,19 @@
 </ul>
 <p>First to create a validation Attribute you need to inherit from the <strong>ValidationAttribute</strong>.  To make this validation available on the client you need to implement the <strong>IClientValidatable</strong> interface.  The <strong>ValidationAttribute</strong> is where you define the settable properties that can be used by the View Model.  To handle the validation server side you can override the <strong>IsValid</strong> method to execute your validation logic.  The <strong>IClientValidatable</strong> interface exposes the <strong>GetClientValidationRules</strong> method.  The validation rules are parameters that will be provided to your JavaScript as an array.  The <strong>ModelClientValidationRule </strong>is where you define the Rules/Settings that the <strong>ValidationAttribute</strong> will provide based upon what was supplied when the attribute was applied to a property on a View Model.</p>
 <p>Lets look at some code before we go to far.</p>
-<p>[gist id=5200208]</p>
+<p><div><script src='https://gist.github.com/5200208.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>The <strong>DataComparerAttribute</strong> exposes the properties that will be used when the attribute is applied to a property on a View Model.  Notice that the <strong>ModelClientValidationRangeDateRule</strong> exposes the same properties and maps to the validation attribute.  This type is created in the <strong>GetClientValidationRules</strong> method which creates the <strong>ValidationParameters</strong> that will be passed to the Client JavaScript validation method.  Now we have enough to implement the server side <strong>IsValid</strong> method and the client side JavaScript to handle the unobtrusive validation.</p>
 <p>With the attribute defined the JavaScript can be created.  The client JavaScript function is linked through the <strong>ModelClientValidationRule.ValidationType</strong> string property.  In this validator the <strong>ValidationType</strong> was set to <em>“rangeDate”</em>.  This value is what we will use to add to the JQuery validator.  There are two JQuery validator concepts we need to link to the magic string <em>“rangeDate”</em> .  The <strong>$.validator.unobtrusive.adapters </strong>which is where MVC will supply the View Model rules from the <strong>GetClientValidationRules</strong> method and the <strong>$.validator.addMethod </strong>which is where the actual JavaScript validation function is defined.</p>
-<p>[gist id=5205136]</p>
+<p><div><script src='https://gist.github.com/5205136.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>Notice the signature of the <strong>$.validator.unobtrusive.adapters </strong>(line 4).  This is where the same array defined in the <strong>ModelClientValidationRangeDateRule.ValidationParameters</strong> lines up to the client code.  MVC will expect the C# and JavaScript to match.  Notice the date format being used to supply the <em>“minDate”</em> and <em>“maxDate”</em>.  Since date formatting can be complicated having the server side format match the client side format helps to make the validation more predictable.</p>
 <p>With the attribute complete now we can apply it to our View Model and see it in action.  This validator is designed to do validation based upon a Max Date and a Min Date.  For Min and Max the choices are either a sibling property on the View Model (MinDateSelector and MaxDateSelector) or an interval from DateTime.Now (MinDateAddDaysFromNow, MaxDateAddDaysFromNow).  The *DateSelector will be used to get the current value from the property on the View Model.  When the server side <strong>IsValid</strong> is executed Reflection is used to get the property value.  When the client side JavaScript is executed JQuery is used to get the value from a HTML element on the browser.</p>
-<p>[gist id=5205378]</p>
+<p><div><script src='https://gist.github.com/5205378.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>In the above usage of the attribute the BirthDate must be from January 1st 2013 through the current Date and Time the validation is executed.</p>
 <h3>Summary</h3>
 <p>Adding custom validation to MVC is useful in reducing duplication of code.  As you can see it’s not all that complicated to do.  The validation methods for server side and client side validation risk having different logic and need to use different mechanisms to get property values.  Reflection and JQuery make this easy enough but there are still gotchas that need to be considered.  When your using JQuery to select a value on a page you need to make sure your selector is unique.  If in our case we have more than one View Model loaded on the page the JQuery Selector could return another html elements value.  I hope this gets you started and can open up some new possibilities for validation.</p>

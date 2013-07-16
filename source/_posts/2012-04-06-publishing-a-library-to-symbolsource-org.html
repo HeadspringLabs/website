@@ -25,9 +25,9 @@ meta:
 <h2>Publishing a Symbol Package</h2>
 <p>Fortunately there is a free service, <a href="http://SymbolSource.org">SymbolSource.org</a>, which is easy to integrate with both NuGet (for the publisher) and Visual Studio (for the consumer).  Although getting a SymbolSource account is an option, you won't actually need one.  You'll be able to publish a special variant of your NuGet package to NuGet.org, and then NuGet.org shakes hands with SymbolSource.org on your behalf.  All it takes is a slight tweak to your <code>.nuspec</code> file, and an extra command-line argument when converting that <code>.nuspec</code> into a <code>.nupkg</code>!</p>
 <p>The previous version of my <code>.nuspec</code>'s <code>files</code> tag just copied DLLs and PDBs into the package's special "lib" folder:</p>
-<p>[gist id="2231973"]</p>
+<p>{% gist 2231973 %}</p>
 <p>The new version also copies all of the source code to the package's special "src" folder.  We don't need to copy auxiliary files like <code>.csproj</code> or <code>.sln</code>.  We just need to copy the code files that the debugger will need to display, namely all the *.cs files:</p>
-<p>[gist id="2288725"]</p>
+<p>{% gist 2288725 %}</p>
 <p>I used this single <code>.nuspec</code> to produce <em>two</em> <code>.nupkg</code> files, by including the <code>-Symbols</code> command line argument:</p>
 <blockquote><p>
   $ nuget pack Parsley.nuspec -Symbols

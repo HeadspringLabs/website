@@ -111,7 +111,9 @@ Part 1 &hellip;">
 <p>[caption id=&#8221;attachment_6409&#8221; align=&#8221;alignnone&#8221; width=&#8221;582&#8221;]<a href="http://www.headspring.com/wp-content/uploads/2013/02/votiveIntellisense.png"><img class=" wp-image-6409 " alt="Picture of editing with Visual Studio and Intellisense supplied by Votive" src="http://www.headspring.com/wp-content/uploads/2013/02/votiveIntellisense-970x562.png" width="582" height="337" /></a> Visual Studio Intellisense with Votive[/caption]</p>
 <p>There&#8217;s reference documentation for the schema at <a href=" http://wix.sourceforge.net/manual-wix3/schema_index.htm">SourceForge</a>. The first link is for the WiX schema itself, and there are other schema references for the various extensions that are available.</p>
 <h2>The Complete Hello World</h2>
-<p>[gist id=5014691]</p>
+<p><div><script src='https://gist.github.com/5014691.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <h2>Dissecting the Elements</h2>
 <p>Line 3 is pretty straightforward: declare our root Wix element and specify the namespace. No that isn&#8217;t a typo at the end; the namespace really doesn&#8217;t have an x at the end of it. I have no idea why.</p>
 <p>Line 5 declares our Product for the installer (recall Product has a cardinality of 1). Some of the supporting attributes like Manufacturer, Name, and Version will show up in the Add Program and Features list for Windows.</p>

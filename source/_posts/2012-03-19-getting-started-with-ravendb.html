@@ -24,7 +24,7 @@ meta:
 <h3><span style="font-weight: bold;">Installing RavenDB</span></h3>
 <p>There are <a href="http://ravendb.net/download">a few different options for obtaining RavenDB</a>. When it’s available, I prefer using <a href="http://nuget.org/">Nuget</a> via the package manager console. So that’s how we are going to do it… Here we go.</p>
 <p>I am assuming you already have a Visual Studio solution with some projects in it. I have a class library project targeting the .NET 4.0 framework called Persistence where all of my persistence logic goes. Using the package manager console, I install the RavenDB package.</p>
-<p>[gist id=1987578]</p>
+<p>{% gist 1987578 %}</p>
 <p>From the output you can see a number of dependencies were installed. Feel free to hit your easy button now.</p>
 <h3><span style="font-weight: bold;">Starting the Server</span></h3>
 <p>The next thing we need to do is to start up the server. Please note that these steps are here to get you started, not the steps you should follow for production use. I’ll throw in some other pointers along the way.</p>
@@ -82,13 +82,13 @@ meta:
 <p><a href="http://www.headspring.com/2012/03/getting-started-with-ravendb/image-png-39" rel="attachment wp-att-3968"><img class="alignnone size-medium wp-image-3968" src="http://www.headspring.com/wp-content/uploads/2012/03/image7.png" alt="" width="440" height="286" /></a></p>
 <p>Congrats! You now have a new database instance and the management studio is now working in its context.</p>
 <p>We could have done the same thing with some code. It looks like this.</p>
-<p>[gist id=2176197]</p>
+<p>{% gist 2176197 %}</p>
 <p>Now we are ready to add some data.</p>
 <h3><span style="font-weight: bold;">Creating Documents</span></h3>
 <p>First we need to define our classes. We can do that with some simple C# like this:</p>
-<p>[gist id=1988820]</p>
+<p>{% gist 1988820 %}</p>
 <p>Then the application can do something like this:</p>
-<p>[gist id=2176205]</p>
+<p>{% gist 2176205 %}</p>
 <p>After that code is executed by the application you can see a few things in the RavenDB management studio.</p>
 <p>Let’s take a look at the collections page which can be accessed by clicking the “Collections” tab at the top of the studio.</p>
 <p><a href="http://www.headspring.com/2012/03/getting-started-with-ravendb/image-png-33" rel="attachment wp-att-3956"><img class="alignnone size-medium wp-image-3956" src="http://www.headspring.com/wp-content/uploads/2012/03/image8.png" alt="" width="440" height="286" /></a></p>
@@ -98,21 +98,21 @@ meta:
 <p>Now we can retrieve documents.</p>
 <h3><span style="font-weight: bold;">Retrieving Documents</span></h3>
 <p>We can now retrieve the shopping cart.</p>
-<p>[gist id=2176209]</p>
+<p>{% gist 2176209 %}</p>
 <h3></h3>
 <h3><span style="font-weight: bold;">Updating Documents</span></h3>
 <p>After retrieving a document, you will probably want to persist changes to it. This easy pretty easy to do.</p>
 <p>We can refactor the shopping cart class a little here. By changing the array of line items to a list of line items, we can now easily add items to the cart.</p>
-<p>[gist id=1989715]</p>
+<p>{% gist 1989715 %}</p>
 <p>Now our application can make changes like this:</p>
-<p>[gist id=2176221]</p>
+<p>{% gist 2176221 %}</p>
 <p>Take a look at the document data in the management studio</p>
 <p><a href="http://www.headspring.com/2012/03/getting-started-with-ravendb/image-png-33" rel="attachment wp-att-3956"><img class="alignnone size-medium wp-image-3956" src="http://www.headspring.com/wp-content/uploads/2012/03/image10.png" alt="" width="440" height="286" /></a></p>
 <p>Notice that the change in the shopping cart class had no impact in this operation. This is one of the neat features of a document DB. Adding and changing fields is pretty easy without having to worry about migrating data most of the time. There are some caveats with this. But that is a topic for another discussion.</p>
 <h3></h3>
 <h3><span style="font-weight: bold;">Deleting Documents</span></h3>
 <p>We can now add a delete a cart easily like this:</p>
-<p>[gist id=2176223]</p>
+<p>{% gist 2176223 %}</p>
 <p>Take another look at collections tab in the management studio:</p>
 <p><a href="http://www.headspring.com/2012/03/getting-started-with-ravendb/image-png-33" rel="attachment wp-att-3956"><img class="alignnone size-medium wp-image-3956" src="http://www.headspring.com/wp-content/uploads/2012/03/image11.png" alt="" width="440" height="286" /></a></p>
 <p>Notice the document is gone, but RavenDB remembers the ShoppingCarts collection.</p>

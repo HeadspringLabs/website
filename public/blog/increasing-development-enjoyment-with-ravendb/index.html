@@ -106,7 +106,9 @@
 </ol>
 <p>The net result is I can spend most of my time focused on my application and its problem space. Reasons 4 and 5 are also true for other document databases, but reasons 1, 2, and 3 really distinguish RavenDB in the .NET space.</p>
 <p>Let’s look at an example. Take for instance reason #4 and assume we were tasked with creating a domain model for a shopping cart and the persistence logic for it.  The very first thing we would do is create the domain model. After some conversations and collaboration with a stakeholder, we come up with the following initial domain model along with the unit tests which validate the correct behavior of the model:</p>
-<p>[gist id=2399488]</p>
+<p><div><script src='https://gist.github.com/2399488.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>At this point we are ready to start working on persisting the shopping cart object to a database. If we are using Microsoft SQL Server, we would now have to create some tables in SQL or perhaps use a code-first approach with our ORM of choice. We may need to create a map for our ORM and probably a repository class to facilitate the storage and retrieval of our domain object to and from the database. If we are using RavenDB, we are pretty much done. Regardless of the data storage solution selected, we can usually count on some tweaks and enhancements during the demo and develop iterations with the stakeholder. But when RavenDB is used, those changes are going to happen here in the domain model. Contrast this with a traditional relational database, which may require changes to the domain model, ORM maps, repositories, and SQL tables.</p>
 <p>I can’t get over how easy the .NET client is to use and how powerful RavenDB can be. If you are interested in trying RavenDB out, check out my <a href="http://www.headspring.com/2012/03/getting-started-with-ravendb">Getting Started with RavenDB</a> post for a quick introduction.</p>
 </div>

@@ -94,7 +94,9 @@ Albert: Let&#8217;s say I have a long expression that has become hard to read, a
 
 <div class="entry-content"><p><strong>Shirley:</strong> Tell me about the Extract-Variable refactoring.</p>
 <p><strong>Albert:</strong> Let&#8217;s say I have a long expression that has become hard to read, and that I can identify a noteworthy subexpression within it.  I can &#8216;extract&#8217; that subexpression from the original by introducing a new local variable.  The variable is initialized to the subexpression, and then the larger original expression is rewritten in terms of the new variable.  Doing so can make things easier to read: the original expression is shorter, and we&#8217;ve given a useful name to the part we took out.  For example:<!--more--></p>
-<p>[gist id=&#8221;4264666&#8221;]</p>
+<p><div><script src='https://gist.github.com/4264666.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p><strong>Shirley:</strong> Since we&#8217;re doing this extra step with an extra variable, will the result run a little slower than the original?</p>
 <p><strong>Albert:</strong> No, silly!  We&#8217;re doing the same amount of work in both versions.  Even with the original version, the compiler had to break down the expression into many smaller steps just like the change we made.  We&#8217;re just introducing a useful nickname for one of those intermediate steps.</p>
 <p><strong>S:</strong> Is there any way Extract-Variable <em>could</em> make something faster?</p>
@@ -106,13 +108,21 @@ Albert: Let&#8217;s say I have a long expression that has become hard to read, a
 <p><strong>S:</strong> Imagine that we&#8217;ve got a large expression, and that the subexpression we&#8217;re extracting only appears <em>once</em>.  What if I told you we could <em>still</em> get a performance boost out of it?</p>
 <p><strong>A:</strong> Shirley, you&#8217;re joking.</p>
 <p><strong>S:</strong> Nope! I&#8217;ve got two situations in mind.  Let&#8217;s start with the easy one.  This loop is taking way too long to execute:</p>
-<p>[gist id=&#8221;4264673&#8221;]</p>
+<p><div><script src='https://gist.github.com/4264673.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p><strong>A:</strong> Oh, I see what you&#8217;re getting at.  We saw earlier how you can get a performance boost when extracting a subexpression that appeared multiple times in the original expression.  In this loop, we&#8217;ve got the same problem in a different format.  The subexpression <em>appears</em> once, but it gets <em>evalutated</em> a whole lot, each time with the same result.  We&#8217;d fix this with two refactorings: we&#8217;d Extract-Variable, and then we&#8217;d move that variable declaration <em>before</em> the loop:</p>
-<p>[gist id=&#8221;4264675&#8221;]</p>
+<p><div><script src='https://gist.github.com/4264675.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p><strong>S:</strong> Great! Earlier, I said I was thinking about two examples in which code with a singly-occurring subexpression could be sped up with Extract-Variable.  The easy one was the <code>foreach</code> you just fixed, but the second one&#8217;s tough.  Let&#8217;s improve upon the previous example.  Instead of building up a big list of all the values in the column, we&#8217;ll make a column object that uses a Func&lt;Row&gt; to evaluate each cell only as needed:</p>
-<p>[gist id=&#8221;4264677&#8221;]</p>
+<p><div><script src='https://gist.github.com/4264677.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p><strong>A:</strong> Again, we don&#8217;t want to keep on performing the costly CompileUserExpression(&#8230;) call every time we need to display a grid cell.  The problem is, if I Extract-Variable here, we&#8217;re left with the same wasteful recompilation:</p>
-<p>[gist id=&#8221;4264685&#8221;]</p>
+<p><div><script src='https://gist.github.com/4264685.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p><strong>S:</strong> If the lambda gets called a bajillion times, how many times will we evaluate the costly part?</p>
 <p><strong>A:</strong> A bajillion.</p>
 <p><strong>S:</strong> Hmmph.</p>
@@ -121,7 +131,9 @@ Albert: Let&#8217;s say I have a long expression that has become hard to read, a
 <p><strong>A:</strong> When the costly bit was in a <code>foreach</code>, we could just move the variable to the outer scope.  Here, we have a lambda.</p>
 <p><strong>S:</strong> Doesn&#8217;t a lambda introduce a scope too?</p>
 <p><strong>A:</strong> Well, yeah, but if we move <code>compiledExpression</code> outside of the lambda, wouldn&#8217;t it become available for garbage collection as soon as we returned from <code>CreateCalculatedColumn</code>?  Let&#8217;s see:</p>
-<p>[gist id=&#8221;4264688&#8221;]</p>
+<p><div><script src='https://gist.github.com/4264688.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p><strong>A:</strong> It works!  Our lambda is referring to a variable in the surrounding scope, and we&#8217;re returning the lambda.  Lambdas are just objects, so this is just like returning any other object that references a locally-constructed thing.  The garbage collector only cleans up unreachable things, and <code>compiledExpression</code> will be reachable for as long as the lambda is reachable.  We get to avoid all that rework no matter how many times the lambda is called!</p>
 <p><strong>S:</strong> Slick.</p>
 <p><strong>A:</strong> How does one end a Socratic Dialogue?</p>

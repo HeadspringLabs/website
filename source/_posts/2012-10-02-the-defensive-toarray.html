@@ -25,11 +25,11 @@ meta:
 <p>There are two reasons to use the <code>yield</code> keyword:  laziness and brevity.</p>
 <p><strong>Laziness is the advertised feature:</strong> you can produce a collection's items on demand, as the caller tries to loop through them.  Laziness enables awesome things like assembling LINQ queries over multiple statements before finally starting to iterate through the overall result.</p>
 <p><strong>Brevity is the tempting, likely-unintended feature</strong>: a really monotonous pattern can be shortened using the <code>yield</code> keyword:</p>
-<p>[gist id="3823991"]</p>
+<p>{% gist 3823991 %}</p>
 <p>It's tempting to look at that explicit list create/Add/return pattern and say, "I can shorten that with <code>yield</code>!"</p>
-<p>[gist id="3823995"]</p>
+<p>{% gist 3823995 %}</p>
 <p>Or even shorter:</p>
-<p>[gist id="3823997"]</p>
+<p>{% gist 3823997 %}</p>
 <p>…but even that uses <code>yield</code>'s semantics under the surface.</p>
 <p>The problem is that we opted into <code>yield</code> (or equivalently Select) for the brevity, but we <em>got</em> laziness along with it.  Now we all have to be wary every time we call a method that returns an IEnumerable.  My inner monologue starts to sound like the following:</p>
 <blockquote><p>Is this call lazy?  Would it be unsafe to pass the result around before defensively <em>realizing</em> it with a call to .ToArray()?  If I <em>do</em> that .ToArray() call defensively, am I stomping all over the original developer's intentions?</p></blockquote>
@@ -38,7 +38,7 @@ meta:
 <h2>Let's Start Communicating Intent</h2>
 <p>In response to all this, I have two items on my wishlist.  One is a wish for an addition to C#, and the other we can use in our projects today.</p>
 <p>First, I wish that if a <code>yield</code>ing method were declared to return an array or anything that has a constructor accepting an IEnumerable&lt;T&gt;, that the items be immediately iterated through and packaged as that type.  This way, you could get the brevity while communicating that you are not interested in the side effects of laziness:</p>
-<p>[gist id="3824003"]</p>
+<p>{% gist 3824003 %}</p>
 <p>Second, something we can do today: I wish that we could start standardizing on a naming convention for extension methods similar to Select that are not lazy: Map is a common term in other platforms.  Select would still lazily produce one IEnumerable from another, but Map methods would always do a defensive .ToArray for you.  You'd have to write a Map overload for every collection type you care about, but there's really just a handful of collection types you'll care about in practice.  For instance:</p>
-<p>[gist id="3824012"]</p>
+<p>{% gist 3824012 %}</p>
 <p>Without these Map methods, every time you see a Select you have to wonder what the original developer's intention was.  <strong>If instead Map was the first method you reached for, then you would only reach for Select when you actually wanted lazy evaluation.</strong>    Reading through someone else's code, Select calls would communicate deliberate laziness with potential side effect gotchas, and Map calls would communicate deliberate brevity with no such gotchas.</p>

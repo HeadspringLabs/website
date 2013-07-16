@@ -28,7 +28,7 @@ There are two cases where having a base test fixture can be useful in keeping yo
 </ol>
 <p><span class="Apple-style-span" style="font-size: 26px"><strong>The Code</strong></span></p>
 <div>Let's take a look at what happens to our simple test fixture when we give it a base class:<!--more--></p>
-<p><span class="Apple-style-span" style="font-family: Consolas, Monaco, monospace;font-size: 12px;line-height: 18px">[gist id=1262440]</span></p>
+<p><span class="Apple-style-span" style="font-family: Consolas, Monaco, monospace;font-size: 12px;line-height: 18px">{% gist 1262440 %}</span></p>
 </div>
 <p>Notice that the base class isn't attributed with the [TestFixture] attribute. I only want this class to act as a base for my actual fixtures. I don't intend for it to be run as a fixture in its own right.</p>
 <p>Note too that I'm reinforcing the fact that this class doesn't stand alone by making the base class abstract, and following standard practices for an abstract base class by making the constructor protected instead of public. We've also made the IDisposable.Dispose method implementation virtual so we can extend its behavior in derived classes.</p>

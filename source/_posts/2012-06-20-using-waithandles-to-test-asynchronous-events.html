@@ -22,21 +22,21 @@ meta:
 <p>In my last post, I talked about some of the dangers of using lambda expressions (anonymous delegates) as event handlers.  However, one place where this can be really handy is when you are unit testing classes that raise events. <!--more--></p>
 <p>Occasionally, you will find yourself in a situation where you need to unit test a class that raises an event or calls a callback method on a different thread than the one that initiated the action in the first place.  This is especially common when dealing with web requests and can lead to some obtuse unit testing techniques.  In this post, I'll demonstrate a technique that I use that relies on WaitHandles that is pretty darn handy.</p>
 <p>Let's say that we have to unit test the following class.</p>
-<p>[gist id=2942373]</p>
+<p>{% gist 2942373 %}</p>
 <p>This class has a method, StartJob() and an event JobComplete.  StartJob() spins up a new thread and sleeps for the executionTime to simulate work and then raises an event, notifying the caller that the job is complete.  (ProTip: If I initialize the event to an empty delegate{}, I don't have to null-check the event before raising it.)  However, JobComplete is being raised on the new thread.  What implications do you think this will have on a unit test?  Let's take a look.</p>
 <p>Here's a unit test one might write that would work perfectly provided there was no thread-switching going on.</p>
-<p>[gist id=2942411]</p>
+<p>{% gist 2942411 %}</p>
 <p>A test like this *might* even work if there was a thread-switch, but it would all depend on how quickly the code executed and the thread scheduler.  However, I would suspect that most of the time it would fail.</p>
 <p>The next approach someone might take to solve this unit testing dilemma is to use a Thread.Sleep() in the unit test.</p>
-<p>[gist id=2942427]</p>
+<p>{% gist 2942427 %}</p>
 <p>This may work most of the time, but if the unit of work exceeds the period provided in the Thread.Sleep() call, the test will fail even though the class under test functions properly.  But under normal circumstances, it would just make your unit test take longer to run.</p>
 <p>Another approach one might take is to use polling and a Thread.Sleep().</p>
-<p>[gist id=2942442]</p>
+<p>{% gist 2942442 %}</p>
 <p>This one will definitely work and is more time-efficient, but has one big drawback: if the thing being tested actually does fail, this unit test will spin forever and prevent any other unit tests from running.  In a continuous integration or production build environment, it might even take awhile before anyone realizes there's a problem.  The build just doesn't finish.</p>
 <p>Okay, next thing to try is to bail out after a certain number of spins.</p>
-<p>[gist id=2942450]</p>
+<p>{% gist 2942450 %}</p>
 <p>This one will definitely work and will timeout if the test doesn't complete within 30 seconds, but it is obtuse.  Just look at how much code is spent dealing with waiting long enough, but not too long.</p>
 <p>A better approach is to use a WaitHandle, specifically the ManualResetEvent class.</p>
-<p>[gist id=2942461]</p>
+<p>{% gist 2942461 %}</p>
 <p>The whole purpose of WaitHandles is to pass signals across thread boundaries.  Using a WaitHandle is much more concise and is perfectly efficient.  The unit test code will sit there on the waitHandle.WaitOne(timeout) line until either the timeout period expires or the waitHandle.Set() method is called.  If Set() is called, WaitOne() returns true.  If the timeout expires before Set() is called, it returns false.  All you need to do is Assert that the result of WaitOne() is true.</p>
 <p>Pretty neat, don't you think?</p>

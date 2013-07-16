@@ -256,7 +256,9 @@
 
   <div class="entry-content"><p>LINQ&#8217;s <code>.Any()</code> method is under-utilized, given the benefits it brings in making your code briefer, clearer, and more efficient. LINQ in general improves the expressiveness of your collection-manipulating code by using declarative statements instead of imperative <code>foreach</code> loops; <code>.Any()</code> is a great tool in that regard.</p>
 <p>Here&#8217;s a representative example:</p>
-<p>[gist id=1877234]</p>
+<p><div><script src='https://gist.github.com/1877234.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>I want to determine if my to-do list has any items that are late, so I use <code>.Where()</code> to filter my list of deliverables down to items with a deadline in the past; then I take a <code>.Count()</code> of the resulting list, and see if that number is greater than zero. This is a plausible solution, and our years of SQL lead us to write LINQ this way. But it can be better.</div>
   
   

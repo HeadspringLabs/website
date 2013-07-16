@@ -104,7 +104,9 @@
 </ul>
 <p>In short, all of the things that make RDBMS work well. It wasn’t the ORM that forced me down this path. It was my own bias.</p>
 <p>Recently, we hit an issue where we were wanting to enforce uniqueness of the member’s email in the system. We had a set of code on a user creating an account:</p>
-<p>[gist id=1871924]</p>
+<p><div><script src='https://gist.github.com/1871924.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>This worked well when only one user tried to save their email at any given time. But in a messaging system, we often do things like increase throughput by increasing workers. But that introduces the problem of dirty reads. If between the time the system checks the database for uniqueness and finally saves the member, that email could (and did) sneak in.</p>
 <p>So how did we solve this? Not by removing this code, but putting in a unique constraint and an index on that column. Now I’ve <em>guaranteed</em> uniqueness for that value, instead of having just a hope that the value is unique. It’s something that the database does, and does well. So instead of worrying about logic in SQL stored procedures, which I won’t do, I’ll look at what SQL does well, and take advantage of those features as necessary.</p>
 <p>It’s the same side of the coin of “use the right tool for the job”. It’s “be aware of what tools work best in what scenarios, and tradeoffs for those scenarios.”</p>

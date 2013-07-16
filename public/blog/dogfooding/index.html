@@ -100,10 +100,14 @@
 <p>Since dogfooding a project demands treating its deployment as a first-class feature, I needed to automate as much of the NuGet work as possible. I have set up a one-click deployment process for Fixie, and have tried it out for real by installing it into two other open source projects.</p>
 <h2>Creating and Publishing the NuGet Package</h2>
 <p>First, I added a nuspec file which describes the package contents.  I named it <a href="https://github.com/plioi/fixie/blob/a4a358e45e5c1ef2aa6074f12d1075066d4e28ca/src/Fixie/Fixie.nuspec">Fixie.nuspec</a> and placed this beside the Fixie.csproj file. Recall that the <a href="http://www.headspring.com/patrick/socks-then-shoes/">AssemblyInfo values in this project are set by the build script</a>.  By naming the nuspec file after the csproj file, NuGet.exe will know to use those same values as replacements for the $tokens$ in the nuspec:</p>
-<p>[gist id=5359835]</p>
+<p><div><script src='https://gist.github.com/5359835.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>Fixie.dll will be included in the package automatically, since that is the output of compiling Fixie.csproj.  The <code>&lt;files&gt;</code> section lists additional files I needed to include in the package: the console runner, its config, and 3 files needed to integrate with TestDriven.NET.  Since we&#8217;re including some files we don&#8217;t always want to add as project references during installation, I explicitly list Fixie.dll as the only reference.</p>
 <p>Dropping this nuspec file into the project isn&#8217;t enough.  I also added a &#8216;Package&#8217; task to the <a href="https://github.com/plioi/fixie/blob/a4a358e45e5c1ef2aa6074f12d1075066d4e28ca/default.ps1">build script</a>, which runs NuGet.exe against the nuspec file and produces the deployable package.  This task is the one executed by TeamCity upon each commit to GitHub:</p>
-<p>[gist id=5359834]</p>
+<p><div><script src='https://gist.github.com/5359834.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>TeamCity creates the NuGet package files with each build, but I don&#8217;t really want to publish a package to the world upon each commit. I&#8217;d rather just publish when I know I&#8217;ve made enough changes to warrant a new deployment.  I found some good advice on how to <a href="http://blog.jonnyzzz.name/2011/09/selective-publishing-of-nuget-packages.html">selectively publish NuGet packages with TeamCity</a>.  In short, my main TeamCity build configuration compiles, runs tests, and creates NuGet package files automatically upon each commit to GitHub, while  a secondary TeamCity build handles publishing the latest successful package to the world.  The secondary TeamCity build only runs when I decide to run it, giving me one-click deployment.</p>
 <h2>Inevitable Explosions</h2>
 <p>Applying this NuGet package to the first target project, <a href="https://github.com/plioi/parsley">Parsley</a>, was a complete success.  That&#8217;s unfortunate, because it is boring.  It gave me no new information to drive Fixie&#8217;s development.  Parsley&#8217;s tests spend all of their time twiddling and comparing strings. Not much can go wrong here that would depend on the details of the host test framework.</p>

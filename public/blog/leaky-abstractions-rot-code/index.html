@@ -97,7 +97,9 @@
 <p>Once the information you intended to hide has spread, everything it touches is now brittle.  If you make changes within the abstraction&#8217;s implementation, those details may cause a ripple effect through all the rotting code.  If other people or projects now depend on the leaked information, you may not even have the option of making the desired changes in the first place!</p>
 <h2>Fixie&#8217;s Leaky Abstraction</h2>
 <p>By the end of last week&#8217;s post, I had developed <a href="http://www.headspring.com/patrick/bootstrapping/">a roughly-usable test framework</a>. This version had an abstraction called Convention which is fundamental to the project: I want the end user to be able to tell me what their test fixtures and test cases look like.  I want you to be able to say things like &#8220;My test fixtures are the classes whose names end with &#8216;Tests&#8217;&#8221;, or &#8220;My test fixtures are the classes marked with some [Attribute]&#8221;.  If you don&#8217;t provide such a description, you&#8217;ll get the <a href="https://github.com/plioi/fixie/blob/6a01e382f30c3c598cf7d3d3a3bde450ad684297/src/Fixie/DefaultConvention.cs">default convention</a>:</p>
-<p>[gist id=5307031]</p>
+<p><div><script src='https://gist.github.com/5307031.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>The first method says, &#8220;A class is a test fixture when its name ends with &#8216;Tests&#8217; and it has a default constructor.&#8221;  The second method says, &#8220;A method is a test case if it is a public instance void method with zero parameters.&#8221; To its credit, DefaultConvention successfully describes the behavior you&#8217;ll get by default.  However, there&#8217;s something wrong here.</p>
 <p>The lack of symmetry is suspicious.  To tell me what your test <em>fixtures</em> look like, you implement a method that says whether or not a <em>single</em> class is a test fixture.  To tell me what your test <em>cases</em> look like, you implement a method that <em>lists</em> all the methods that look like test cases.</p>
 <p>I originally wanted both methods to take a single candidate and return a bool, meaning the second method would accept one MethodInfo, returning true when that method looks like a test case.  I couldn&#8217;t just do that, because the .NET reflection API wants me to start things off with a BindingFlags value to describe visibility (public/private/static/instance/etc), and <em>then</em> filter those results down.  Contrast this two-step process with the way reflection wants you to search for Types: you can take an Assembly, call GetTypes(), and <em>then</em> filter down on things <em>including</em> visibility.</p>
@@ -105,11 +107,17 @@
 <p>With this design, anyone who took advantage of Convention to customize their tests would be forced to understand a lot about the reflection API&#8217;s quirks.  Worse, they&#8217;d have to write some suspiciously-similar boilerplate code each time they wanted to provide an implementation.  DefaultConvention says what the default behavior is, but it isn&#8217;t very clear to the reader.</p>
 <h2>The Fix</h2>
 <p>Let&#8217;s jump to the improved abstraction, and then see how it works.  Here&#8217;s the new version of <a href="https://github.com/plioi/fixie/blob/cb649450e5d42a6eb83faeb58dafc3b9511d92d1/src/Fixie/DefaultConvention.cs">DefaultConvention</a>:</p>
-<p>[gist id=5307051]</p>
+<p><div><script src='https://gist.github.com/5307051.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>Much better. It says exactly what test fixtures and test cases look like by default, and suggests how you might specify your own similar rules. There&#8217;s no suspicious asymmetry now: both test fixtures and test cases are discovered using very similar statements.  It&#8217;s declarative, so the end user doesn&#8217;t have to be concerned with <em>how</em> the discovery will be honored; they can focus on simply stating what success looks like.</p>
 <p>The Fixtures property is an instance of <a href="https://github.com/plioi/fixie/blob/cb649450e5d42a6eb83faeb58dafc3b9511d92d1/src/Fixie/ClassFilter.cs">ClassFilter</a>, and the Cases property is an instance of <a href="https://github.com/plioi/fixie/blob/cb649450e5d42a6eb83faeb58dafc3b9511d92d1/src/Fixie/MethodFilter.cs">MethodFilter</a>:</p>
-<p>[gist id=5307060]</p>
-<p>[gist id=5307065]</p>
+<p><div><script src='https://gist.github.com/5307060.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p><div><script src='https://gist.github.com/5307065.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>Both of these objects work in a similar way, achieving the symmetry I&#8217;d originally intended.  They each accumulate conditions in a list, and only perform that work when the Filter(&#8230;) method is finally called by Fixie&#8217;s main loop.  Since the real work is deferred to that last moment, MethodFilter is able to similarly accumulate information about the awkward BindingFlags, thus hiding the worst of the information leak found in the original version.</p>
 <p>Since each condition-building method returns <code>this</code>, the caller can Chain().Together().Calls().Like().This().  This approach gives me a home to place reflection helper methods like HasDefaultConstructor, further hiding odd implementation details about the reflection API, and if I happen to omit such a convenient helper method, the end user can build extension methods upon this foundation using the Where(&#8230;) method.</p>
 <h2>Criticism</h2>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Developer Deep Dive | Headspring Labs]]></title>
   <link href="http://headspringlabs.com/blog/categories/developer-deep-dive/atom.xml" rel="self"/>
   <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-15T21:58:07-05:00</updated>
+  <updated>2013-07-15T22:03:46-05:00</updated>
   <id>http://headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
@@ -39,13 +39,17 @@
 <p>If you use NUnit, you probably see a lot of test classes like this:</p>
 
 
-<p>[gist id=5762364]</p>
+<p><div><script src='https://gist.github.com/5762364.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 
 
 <p>My [SetUp] methods are always named "SetUp", my [TearDown] methods are always named "TearDown", etc. It's annoying to sacrifice whole lines to that noise.  When 99% of your test fixtures use naming conventions like mine, the attributes stop telling you something.  These attributes start to fill the same role as excessive comments:</p>
 
 
-<p>[gist id=5762368]</p>
+<p><div><script src='https://gist.github.com/5762368.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 
 
 <h2>NUnit Inheritance is Needlessly Complex</h2>
@@ -69,19 +73,25 @@
 <p>DRY stands for "Don't Repeat Yourself", not "[DontRepeatYourself] Don't Repeat Yourself"! Allowing redundancy has opened the door to complexity. Let's improve upon the NUnit style by defining a simpler, <a href="https://github.com/plioi/fixie/blob/a74078dfe3c8f415fd0663af104b75adfb90d29d/src/Fixie.Samples/LowCeremony/CustomConvention.cs">low-ceremony test class convention</a> with Fixie:</p>
 
 
-<p>[gist id=5762372]</p>
+<p><div><script src='https://gist.github.com/5762372.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 
 
 <p>Armed with this convention class in our test assembly, our original test class gets simpler:</p>
 
 
-<p>[gist id=5762378]</p>
+<p><div><script src='https://gist.github.com/5762378.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 
 
 <p>The most relevant part of the convention says that, instead of using attributes, the lifecycle hook methods will be identified by their names:</p>
 
 
-<p>[gist id=5762381]</p>
+<p><div><script src='https://gist.github.com/5762381.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 
 
 <h2>What Does This Convention Buy Us?</h2>

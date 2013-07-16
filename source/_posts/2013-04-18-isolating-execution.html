@@ -52,11 +52,11 @@ meta:
 <p>In AppDomain 1, we ask AppDomain 2 to create an instance of our intermediary class.  This request creates a <em>real</em> instance over in AppDomain 2.  Back in AppDomain 1, we get a <em>proxy</em>.  If you call a method on the proxy in AppDomain 1, the arguments get serialized and thrown over the chasm to the real object in AppDomain 2.  When the work is performed and the real object returns a result, that result is serialized and thrown back over the chasm to AppDomain 1.  It feels like a regular method call.</p>
 </blockquote>
 <p>I created the <code>ExecutionEnvironment</code> to wrap all of the AppDomain interaction:</p>
-<p>[gist id=5409040]</p>
+<p>{% gist 5409040 %}</p>
 <p>Upon construction, this class creates the second AppDomain, treating the given folder path as the BaseDirectory.  You call <code>Create&lt;T&gt;(...)</code> in order to create an object in the new AppDomain.  You get back a proxy which knows how to cross the chasm between AppDomains.  <code>Dispose()</code> frees up the resources used by the secondary AppDomain and returns the current directory back to its original value.  Fixie's <code>Main</code> method uses this class like so:</p>
-<p>[gist id=5409049]</p>
+<p>{% gist 5409049 %}</p>
 <p><code>ConsoleRunner</code> is our <code>MarshalByRefObject</code>, which effectively lives on both sides of the AppDomain chasm:</p>
-<p>[gist id=5409051]</p>
+<p>{% gist 5409051 %}</p>
 <p>I wanted to minimize the amount of code that cared about AppDomains, so the <code>MarshalByRefObject</code> subclass is very small.  It receives the <code>assemblyPath</code> (the serializable object that got thrown across the chasm), and defers to <code>Runner</code> as quickly as possible.  <code>Runner</code> does the real work, and is used by both the console EXE and TestDriven.NET.  <code>Runner</code> has no idea that AppDomains are involved at all.  Only <code>ConsoleRunner</code> cares about that detail.</p>
 <h2>Isolating Test Execution</h2>
 <p>I came to this solution by studying the similar steps taken by NUnit, xUnit, and Machine.Specifications.  All these test frameworks need to let the developer pretend that their unit test assembly is their main EXE, and they all do it by isolating test execution in a specially-configured AppDomain.  AppDomains are like processes-within-the-process, and <code>MarshalByRefObject</code> classes help to make inter-AppDomain communication feel like regular method calls.</p>

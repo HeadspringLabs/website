@@ -107,14 +107,20 @@
 <h2>Results</h2>
 <p>Test execution is broken down into two phases.</p>
 <p>For <strong>Phase 1</strong>, it builds up a tree of objects representing the test methods in the test assemblies: a TestAssembly has TestClass objects, each of which has TestMethod objects.  These are discovered and constructed via reflection.  The class EnumerateTests uses reflection to discover all the types in a given Assembly, and ultimately defers to TypeUtility.GetTestMethods(&#8230;):</p>
-<p>[gist id=4438396]</p>
+<p><div><script src='https://gist.github.com/4438396.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>Plain old reflection walks through all the methods in the test assembly, picking out the ones that are marked as tests with the [Fact] attribute.</p>
 <p>For <strong>Phase 2</strong>, it traverses the tree of tests to execute them and accumulate results.  <a href="http://xunit.codeplex.com/SourceControl/changeset/view/2e806844c3c1#src/xunit/Sdk/Commands/ClassCommands/TestClassCommandRunner.cs">TestClassCommandRunner</a> has the main execution logic.  For a given class, it processes the list of method in random order.  For each method, xUnit gets one or more ITestCommands to execute.  Each test command is invoked, giving a MethodResult which gets included in the overall ClassResult.</p>
 <p>A single test command to execute, for a test identified with the [Fact] attribute, looks like this:</p>
-<p>[gist id=4438431]</p>
+<p><div><script src='https://gist.github.com/4438431.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>A single test is executed here via Invoke(&#8230;), which is also a part of .NET reflection.  xUnit is just asking the .NET framework to call our test method for us.  Any exceptions bubble up and cause the test to fail, including exceptions thrown by Assert methods.  If no exceptions were thrown, it returns the new PassedResult representing success.  Results are hierarchical, just like the original tree of tests: AssemblyResult, ClassResult, FailedResult, and PassedResult allow us to track results at every level that a test runner may need to report on.</p>
 <p><strong>Lastly, TestDriven.NET integration:</strong> TestDriven.NET requires you to implement the following interface.  Depending on how the user invokes TD.Net, one of these three methods will be called:</p>
-<p>[gist id=4438582]</p>
+<p><div><script src='https://gist.github.com/4438582.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>xUnit&#8217;s TdNetRunner implements this by ultimately deferring to the same test execution code that the console runner uses.</p>
 <p>I was a little surprised by the size of the project, especially the use of multithreading.  A large number of features added up to a lot of things for me to remove before I could really see the fundamental code path.  This makes me curious about how NUnit compares, so next week we&#8217;ll see what we can learn by whittling down NUnit.</p>
 </div>

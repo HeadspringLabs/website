@@ -112,9 +112,13 @@
 <blockquote><p>It was better than a whiteboard sketch, in that I got real feedback from the IDE at every step, but it was weaker than regular development.  All the planning and whiteboard diagrams in the world would have been irrelevant as soon as fingers met keyboard, so I dove into the implementation with the intent to learn from the activity and to discard the code afterwards.</p></blockquote>
 <p>The throw-away Solution contained two projects.  The first project represented the fake implementation of my test framework&#8217;s TD.NET plugin.  The second project represented the test cases within a hypothetical consumer project.  The goal here was not to make a working plugin, but instead to prove to myself that the TD.NET integration would be technically feasable.  I wanted to discover how TD.NET behaved as I implemented that integration from scratch.</p>
 <p>First, I left the fake plugin project <em>empty</em> and populated the sample consumer with a single fake test fixture:</p>
-<p>[gist id=5149250]</p>
+<p><div><script src='https://gist.github.com/5149250.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>Before doing anything in the plugin project, I wanted to confirm the behavior of TD.NET in the case that NO test framework is in play at all.  Right-clicking on the MyTestCase method and running it showed the following output:</p>
-<p>[gist id=5149257]</p>
+<p><div><script src='https://gist.github.com/5149257.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>Oh, right.  TD.NET has a convenient feature that it can run methods even if they are not officially recognized as test methods in a test fixture.  That can be useful to quickly try out a simple method during development, before you really have tests in place for it.  This behavior poses an interesting problem, though: <strong>how will I <em>know</em> when my proof of concept is actually being detected and used by TD.NET as a real test framework plugin?</strong></p>
 <p>There are <strong>two</strong> aspects to ensuring that my proof of concept is actually playing nicely with TD.NET:</p>
 <ul>
@@ -123,14 +127,22 @@
 </ul>
 <p>TD.NET includes a library, TestDriven.Framework.dll, which you can use to wire things up to your own test runner.  It contains an interface that you must implement for your plugin to be detected.  TD.NET plugs into Visual Studio to pick up on keyboard shortcuts and the like, then turns that into calls against this interface, allowing you to pick things up from there to do the actual work of running tests.</p>
 <p>In the plugin project, I added a reference to TestDriven.Framework.dll and added the following class as a first pass:</p>
-<p>[gist id=5149264]</p>
+<p><div><script src='https://gist.github.com/5149264.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>Since each method just throws an exception with a specific message, I&#8217;ll be able to prove to myself whether or not TD.NET actually found and executed the plugin.  I made the sample consumer project reference the plugin project, and attempted to run the sample test method and test fixture: no dice.  The results were the same as having no test framework in play at all!</p>
 <p>There was another piece to the puzzle.</p>
 <p>The TD.NET blog explains how to complete the detection of custom test runners: <a href="http://weblogs.asp.net/nunitaddin/archive/2009/11/05/testdriven-net-2-24-xcopy-deployable-test-runners.aspx">XCopy Deployable Test Runners</a>.  Over in the plugin project, I added a text file named TestDrivenPoc.dll.tdnet:</p>
-<p>[gist id=5149267]</p>
+<p><div><script src='https://gist.github.com/5149267.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>In Solution Explorer, I set this text file to &#8220;Copy Always&#8221;.  Now, when I rebuild the solution, the consumer gets a copy of this file right beside the similarly named DLL.  (When it comes time to deploy this to users, I&#8217;ll need to be sure to include this file along with the DLL.)  When running MyTestCase or MyTestFixture, we now see the exception thrown by our fake test framework&#8217;s TD.NET integration:</p>
-<p>[gist id=5149272]</p>
-<p>[gist id=5149273]</p>
+<p><div><script src='https://gist.github.com/5149272.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p><div><script src='https://gist.github.com/5149273.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>Fantastic!  These exceptions prove that TD.NET was able to find our plugin and call methods on it, instead of the default behavior we saw when there was no test framework in place.</p>
 <p>To sum up, when creating a test framework that needs to integrate with TD.NET:</p>
 <ul>
@@ -142,11 +154,15 @@
 <h2>Eliminate Any Remaining Risks</h2>
 <p>Part of the interface strikes me as odd.  Note how in the sample successful output above, we hit &#8220;RunMember&#8221; after telling TD.NET to run a single test method <strong>and</strong> after telling it to run a whole test fixture class.  I would use the word &#8220;member&#8221; to describe a method-belonging-to-a-class, but using &#8220;member&#8221; to describe a whole class surprised me.</p>
 <p>I was unsure of how to really implement RunMember(&#8230;), so I wasn&#8217;t finished with the proof of concept.  With a little trial and error, I fleshed out just enough of this method to see how you can tell the difference between single-test-method execution versus whole-test-fixture execution:</p>
-<p>[gist id=5149277]</p>
+<p><div><script src='https://gist.github.com/5149277.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>This implementation determines whether we are running a test method or a test fixure, announces that fact in the output, and then reports success since we&#8217;re still just faking test execution.  In writing this method, I learned that MemberInfo, part of the .NET reflection API, can be used to describe class members as well as classes.</p>
 <blockquote><p>The awkward wording in the TD.NET interface is in fact due to awkward naming in the .NET Framework.  I&#8217;ll want to be sure to avoid letting that complexity leak out into my own API.  Bad naming can spread like a disease.  If it posed an obstacle to my understanding ITestRunner, it would pose a similar obstacle to anyone reading Fixie&#8217;s implementation.</p></blockquote>
 <p>Now, when I attempt to run my sample tests at the method or class level, I get the expected output:</p>
-<p>[gist id=5149279]</p>
+<p><div><script src='https://gist.github.com/5149279.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <h2>Set the Proof of Concept Aside</h2>
 <p>This is a proof of concept.  I don&#8217;t actually want this code in my real Solution.  Now that I have these notes handy, it can <em>and should</em> be discarded.  I&#8217;ll grow the real implementation with more care when I&#8217;m ready to implement it.  With a little strongly-typed whiteboarding, I&#8217;ve removed the largest risk to the project and can feel free to proceed.</p>
 <p>Next week, we&#8217;ll cover the nuts and bolts of setting up a new project from scratch, covering Fixie&#8217;s initial set of commits.</p>

@@ -96,20 +96,28 @@
 <p>What&#8217;s so bad about enums? They provide a very thin abstraction over integers, and that abstraction is both leaky and insufficient when building a rich domain model.</p>
 <h2>The .NET enum abstraction leaks</h2>
 <p>When you define an enum, you are really defining several integer constants.</p>
-<p>[gist id=&#8221;1375478&#8221;]</p>
+<p><div><script src='https://gist.github.com/1375478.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>Whether you declare the integers or not, each enum value is really an integer. Unfortunately, this means that unintended values are allowed:</p>
-<p>[gist id=&#8221;1375483&#8221;]</p>
+<p><div><script src='https://gist.github.com/1375483.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>This is .NET&#8217;s way of reminding you of its own implementation details. -1 has nothing to do with the roles in my system. Enums fail to limit values to those I consider meaningful, so why am I using them as domain objects?</p>
 <h2>The .NET enum abstraction is insufficient</h2>
 <p>You can think of an enum definition as shorthand for a class. That class effectively inherits from int, exposing public static getters that return each defined constant, including convenience methods for converting to and from strings.</p>
 <p>What if the shorthand just isn&#8217;t enough to describe the class we really wanted to write? What if your type deserves some additional methods, or you need to associate additional metadata with each value? You could resort to attaching metadata via attributes, and provide some extension methods to reflect on them, but that&#8217;s a long way to go to avoid admitting that we <em>really</em> just wanted to constrain our domain objects to a fixed set of values. It&#8217;s nice to use ints as the &#8216;unique identifier&#8217; for each value in the set, but we don&#8217;t need that int to be the <em>whole</em> story.</p>
 <h2>Using Headspring&#8217;s Enumeration Class</h2>
 <p>Using <code>Enumeration</code>, we could define a more useful set like so:</p>
-<p>[gist id=&#8221;1375494&#8221;]</p>
+<p><div><script src='https://gist.github.com/1375494.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>Here we see a fixed set of objects, with the convenient int and string representations we&#8217;re used to having with enums. <code>Role.FromInt32(int)</code> allows you to load the value associated with a given int, such as when reading from a database, but only the fixed set of integers will be allowed. Each value can have arbitrary properties, and the enumeration can contain additional methods.</p>
 <h2>Enumeration&#8217;s Generic Type Constraint</h2>
 <p><code>Enumeration</code> contains an interesting generic constraint. Several of the methods on the base class need to deal with the type of the individual values, so <code>Role</code> is declared to implement <code>Enumeration&lt;Role&gt;</code>. You can think of the <code>Role</code> class as &#8220;passing&#8221; its own definition up to the base class so <code>Enumeration</code> can make use of it. Similarly, <code>Enumeration</code> needs to be declared in such a way that it can know what&#8217;s being &#8220;passed up&#8221; to it:</p>
-<p>[gist id=&#8221;1375498&#8221;]</p>
+<p><div><script src='https://gist.github.com/1375498.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>In other words, <code>Enumeration</code> will be working with any type that is itself declared as an <code>Enumeration</code>. This constraint basically mimics the &#8220;shape&#8221; of the first line of the <code>Role</code> type. Likewise, it <strong>demands</strong> that any child class be declared with a line of that shape.</p>
 <p>At first, it may seem like <code>class Role : Enumeration&lt;Role&gt;</code> should result in a compiler error. It looks like we&#8217;re trying to <em>use</em> a type before we&#8217;re even finished <em>defining</em> it. The truth is, the compiler need only compare the &#8220;shape&#8221; of the two classes&#8217; declarations in order to convince itself that the required pattern is being respected, and <em>then</em> it can go on with the business of verifying the <em>content</em> of each class.</p>
 <h2>Conclusion</h2>

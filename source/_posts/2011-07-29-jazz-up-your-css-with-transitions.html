@@ -16,9 +16,9 @@ meta:
 ---
 <p>While JavaScript has historically been the go-to technology for animating CSS properties, CSS 3 brings us transitions: a declarative syntax for defining the transition between styles.</p>
 <p>Adding transitions to your CSS is quite simple. First, define the "start" and "end" states of your HTML elements as separate rules, like so.</p>
-<p>[gist id=1114324]</p>
+<p>{% gist 1114324 %}</p>
 <p>Then, add the appropriate properties for transitioning your elements to both states (necessary since we'll be transitioning both <em>to</em> and <em>from</em> each state).<!--more--> Since the transitions specification <a href="http://www.w3.org/TR/css3-transitions/" target="_blank">hasn't been finalized</a>, you'll need to add some vendor-specific rules to support the majority of modern browsers. I've found <a title="CSS3Please" href="http://css3please.com/" target="_blank">CSS3Please</a> to be an invaluable resource for this, as I always forget the correct vendor syntax to use.</p>
-<p>[gist id=1114331]</p>
+<p>{% gist 1114331 %}</p>
 <p>Each of these lines, for the browser it targets, sets the following properties for animation:</p>
 <ul>
 <li>"all": The name of the property to animate (in this case, all of them).</li>

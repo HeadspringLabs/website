@@ -93,7 +93,9 @@
 
 <div class="entry-content"><p>The NetNamedPipeBinding is the optimized binding for on-machine communication.  For most WCF implementations I have seen WCF is really only there to help facilitate RPC (Remote Procedure Calls).  When WCF is simply a way to segment your service layer into an optionally distributed deployment architecture there may be a much better way.  WCF has additional overhead that seams useless if the code is being executed on the same machine.  IOC (Inversion of Control) using DI (Dependency Injection) provides a relatively simple way to avoid WCF all together.</p>
 <p>Lets take a simple WCF Service Contract for Customers.<br />
-[gist id=4945825]</p>
+<div><script src='https://gist.github.com/4945825.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>The client creates a proxy and through WCF configuration the proper binding can be used to communicate with the Service.  In order to make the client know where the service is without hardcoding this you would have the following configuration settings.</p>
 <pre class="csharpcode">  &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;system.serviceModel&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;
     &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;bindings&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;

@@ -95,12 +95,18 @@
 <p>Of course, whenever a program&#8217;s behavior is so profoundly counter to all that we know to be true, we have to stop, take a deep breath, and proudly exclaim, &#8220;I am making an incorrect assumption!  This code does not say what I think it says.&#8221;</p>
 <p>I&#8217;ve boiled the problem down to a simpler form than the original code, and changed names to protect the guilty (me).</p>
 <p>We had a collection of DTO instances, of a type we did not have control over (<code>StudentDTO</code>).  In the rest of our system, we wanted to use one of our own classes instead (<code>Student</code>), as <em>our</em> class implemented an interface that was consumed elsewhere (<code>Person</code>):</p>
-<p>[gist id=4982706]</p>
+<p><div><script src='https://gist.github.com/4982706.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>This first pass was bug-free, and the <code>ToPersons</code> method passed our unit test:</p>
-<p>[gist id=4982711]</p>
+<p><div><script src='https://gist.github.com/4982711.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>Easy.  C# 101 stuff.  Of course it passed.</p>
 <p>Some hours later, I had reason to convert <code>Person</code> from an interface to a concrete class:</p>
-<p>[gist id=4982716]</p>
+<p><div><script src='https://gist.github.com/4982716.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>Suddenly, this and many other tests started failing.  <code>persons[0].Name</code> was null!  We set up a breakpoint on the return statement within <code>ToPersons</code>, and saw that each student being returned did in fact get populated correctly.  <strong>Surely, the debugger must be broken!  We clearly populate an object, and when we next look at it it is unpopulated!  Those punks at Microsoft really grind my gears.</strong></p>
 <p><strong>Ok, Patrick, take a step back.  What assumption is leading me to believe the debugger is wrong?</strong>  I&#8217;m claiming that a clearly-populated property is null the next time I look at it.  Therefore, I should start to doubt whether I am actually inspecting the same property both times.</p>
 <p>In the debugger, we had already seen the <code>Student.Name</code> property set as expected.  We then went to the definition of the Name property that appears in our unit test assertion, which took us to <code>Person.Name</code>.  Here, we also saw a ReSharper warning on each property within <code>Student</code>.  We hadn&#8217;t even <em>changed</em> <code>Student</code>, but that is where the warning appeared: &#8220;The keyword &#8216;new&#8217; is required on &#8216;Name&#8217; because it hides property &#8216;Person.Name&#8217;.&#8221;</p>

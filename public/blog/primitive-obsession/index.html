@@ -111,7 +111,9 @@
 <p>When a compiler is type-checking your code, it often has to reason about the type of an expression for which there is not yet enough information.  When type checking an &#8216;if&#8217; condition, we know that the condition&#8217;s type had better be boolean, but at the moment we are inspecting the if statement there might not be enough information about the types of variables appearing in that condition.  Maybe the condition refers to a lambda expression parameter, and we won&#8217;t be able to nail down the type of that parameter until we <em>later</em> discover the <code>Func</code> type of the lambda as a whole.</p>
 <blockquote><p>When the compiler has to start reasoning about types it doesn&#8217;t know about yet, it has to introduce a temporary placeholder: a stand-in for the real type that we will eventually nail down to something concrete.  We (unfortunately) call these Type Variables.</p></blockquote>
 <p>It&#8217;s easy to get type variables confused with generics, because there&#8217;s a definite overlap.  Consider a generic method in C#:</p>
-<p>[gist id=&#8221;3327067&#8221;]</p>
+<p><div><script src='https://gist.github.com/3327067.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>When a compiler makes its first pass through this code, it can store the definition of Echo using a type variable everywhere we see a <code>T</code> to mean &#8220;Echo does stuff with some type but we don&#8217;t know what that type is yet.&#8221;</p>
 <p>An important quality of these <em>generic type variables</em> is that every time we call Echo, we need to nail down the type of <code>T</code> all over again.  A first call to Echo(1) nails down the type variable to int, and a subsequent call to Echo(&#8220;Hello!&#8221;) nails down the type variable to string.</p>
 <p>We can&#8217;t, however, conclude that type variables are synonymous with generic type parameters like <code>T</code> above.  There are lots of reasons a compiler won&#8217;t yet know about a type; these placeholders are not limited to explicitly-declared generic type parameter like Echo&#8217;s <code>T</code>.  Some of these type variables are <em>nongeneric</em>, meaning their behavior is a little different from the Echo example.  With Echo, we got to rediscover the concrete type with each call.  When we&#8217;re not dealing with generics, though, we can only nail things down <em>once</em>.</p>
@@ -132,7 +134,9 @@
 <p>Scope is <em>supposed</em> to be a dictionary-like type that stores the declared type of identifiers in scope.  If the code being compiled has a local <code>int x</code> varaible and a global <code>Echo</code> function, this dictionary-like thing would have a key &#8220;x&#8221; with value &#8220;int&#8221; and a key &#8220;Echo&#8221; with value &#8220;Func&lt;T, T&gt;&#8221;.</p>
 <p>That&#8217;s all Scope was supposed to be, but it also took on the responsibility of knowing which TypeVariable instances were generic and which ones weren&#8217;t.  <strong>Wat.</strong></p>
 <p>Here&#8217;s what the troubled version looked like.  Note especially the LambdaScope class, which took on the awkward responsibility of remembering which TypeVariables were <em>special</em>:</p>
-<p>[gist id=&#8221;3327028&#8221;]</p>
+<p><div><script src='https://gist.github.com/3327028.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>Holy cow, that is complex!  The different implementations of IsGeneric work together to make up for the fact that we couldn&#8217;t just <em>ask</em> each TypeVariable whether or not it was had generics-behavior, and that all grew from my preoccupation with these things being glorified ints.</p>
 <p>What&#8217;s worse is that these implementations of IsGeneric only give accurate answers when you <em>happen</em> to call them correctly.  Note how GlobalScope always returns true.  If I ever called that implementation for a TypeVariable that really <em>isn&#8217;t</em> generic, I&#8217;d be working with a lie.  The compiler didn&#8217;t <em>happen</em> to rely on any liars yet, but if it ever did I&#8217;d be faced with some incomprehensible bugs.</p>
 <h2>Fixing TypeVariable and Scope</h2>

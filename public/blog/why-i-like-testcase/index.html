@@ -95,15 +95,21 @@
 <p>I&#8217;ve found myself using TestCase (formerly <a title="What Happened to NUnit's RowTest" href="http://stackoverflow.com/questions/4069841/what-happended-to-nunit-extensions-rowtest" target="_blank">RowTest</a>) more and more often. If you see lots of very similar tests that shared assertions, or test method names with numbers/values in them, these are signs that you might be wanting to use TestCase. Let&#8217;s take a look at the following examples.<!--more--></p>
 <h3><strong>One Test, Many Assertions</strong></h3>
 <p>Here you can see that we have one test and many assertions. I&#8217;ve often seen this pattern in tests that have been around the project for a long time. It can be faster to add an assertion rather than to write a whole new test.  This might get the job done, but there are better ways.</p>
-<p>[gist id=&#8221;1981200&#8221;]</p>
+<p><div><script src='https://gist.github.com/1981200.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>This isn&#8217;t ideal because your test can fail at the first assertion, skipping all the rest. Imagine a more complex test that fails at the first assert call and subsequent code changes make it fail at the second and so on. The feedback on the failed tests is less valuable in these situations. This is also why we don&#8217;t write one test for our entire application; tests are more helpful as they become more granular.</p>
 <h3><strong>Many Tests, Each with One Assertion</strong></h3>
 <p>Another not so great way to test this is breaking the assertions into many tests. This also technically works, but is prone to test names representing the wrong idea if values change and the name does not. Maintenance becomes a bit tougher when they&#8217;re written this way.</p>
-<p>[gist id=&#8221;1981202&#8221;]</p>
+<p><div><script src='https://gist.github.com/1981202.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>The reason I wouldn&#8217;t recommend this is because you tend to see duplication in your values under test and your metadata (test method name). Since duplication is bad, we want to avoid this.</p>
 <h3><strong>One Test, Many Values</strong></h3>
 <p>A better approach is TestCase. As you&#8217;ll see by the following example. We&#8217;re writing the test in a way that doesn&#8217;t rely on values from within the test&#8217;s body, but to be supplied by attributes that are &#8220;stacked&#8221; on top.</p>
-<div>[gist id=&#8221;1935584&#8221;]</div>
+<div><div><script src='https://gist.github.com/1935584.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</div>
 <p>I like this test because it&#8217;s very simply testing boundary conditions. The code is largely quite discoverable and very easy to modify if our requirements were to change.</p>
 <p>There&#8217;s nothing magical about TestCase. It&#8217;s just another tool I&#8217;ve found helpful when writing tests for code that I want to be able to take advantage of &#8220;given a set of inputs, verify some output&#8221;.</p>
 <p>What are you thoughts on this? Is TestCase new to you? Have you been using it already? Any drawbacks to using it?</p>

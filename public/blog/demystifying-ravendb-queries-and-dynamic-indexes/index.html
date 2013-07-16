@@ -93,19 +93,27 @@
 
 <div class="entry-content"><p>Not long a go, I wrote a detailed blog post on <a href="http://www.headspring.com/2012/03/getting-started-with-ravendb">getting started with RavenDB</a> and described the process of performing the most basic CRUD (create, retrieve, update, and delete) operations. The operations covered in the post are great for working with single data entities. One thing I didn’t discuss was how to retrieve a set of data entities and that is exactly what I want to dive into here.</p>
 <p>Retrieving data from RavenDB is dead simple and the .NET client offers excellent support for LINQ based queries. Let’s start by reviewing the IDocumentSession interface:</p>
-<p>[gist id=2153059]</p>
+<p><div><script src='https://gist.github.com/2153059.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>The query method in the interface is the gateway to retrieving sets of data and offers three signatures which give us immense flexibility with our queries.</p>
 <p>Let’s explore the Query&lt;T&gt;() method! Beginning with the example context…</p>
 <p><!--more--></p>
 <p>Imagine we have a database of orders. Each order has some customer and payment information and a list of line items. Each line item consists of a product and a quantity. Our very simplified domain model might  resemble something like this:</p>
-<p>[gist id=2423417]</p>
+<p><div><script src='https://gist.github.com/2423417.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>Let’s also assume we have a RavenDB instance with some orders in it. Using the management studio we take a peek at the orders collection and see 324 orders sitting in it!</p>
 <p><a href="http://www.headspring.com/wp-content/uploads/2012/04/image.png"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border-width: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/04/image_thumb.png" alt="image" width="480" height="310" border="0" /></a></p>
 <h3>The Simplest and Most Dangerous Query</h3>
 <p>What can we do this with this? A whole lot. The simplest thing we can do is ask Raven to give us all the orders in the collection. The query would look something like this:</p>
-<p>[gist id=2423510]</p>
+<p><div><script src='https://gist.github.com/2423510.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>Or you could use lambda expressions if you prefer:</p>
-<p>[gist id=2423571]</p>
+<p><div><script src='https://gist.github.com/2423571.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>Both of the code snippets generate the same query and return the same result set. You end up with an array containing 128 Order instances. Wait a minute…. Didn’t we have 324 orders in the database? Where are the rest? Raven limits unbounded queries to 128 result by default. This is a really neat safety measure that keeps you from doing something silly like asking for all objects in an huge dataset. Imagine issuing a similar query against Amazon’s order database… Yeah, that probably wouldn’t be good. Of course you can override this behavior specifying it using the <em>Take&lt;TSource&gt;</em> method. So if you really mean give me everything, then you need to say it explicitly.</p>
 <h3>Under the Hood of the .NET Client</h3>
 <p>A lot of other interesting things happen when a query is prepared and executed in the code snippets. Let’s take a look under the hood of the Raven client and see what is going on.</p>
@@ -117,27 +125,43 @@
 <p>By the way, its not a good idea to delete this index. The server will complain quite a bit if this happens. But if you do, don’t worry Raven is self healing. Just shut restart the server process and Raven will add the missing index and stop complaining.</p>
 <p>You may have noticed that I haven’t talked one bit about how the server processes the request and I have done that on purpose. There is a lot to be said about what happens on the server side. For now, lets build another more useful query and see what happens.</p>
 <p>Hypothetically speaking, let’s say that we need to find all the orders placed by one of our customers named “Jane Doe”. A query for that may look like:</p>
-<p>[gist id=2424678]</p>
+<p><div><script src='https://gist.github.com/2424678.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>When executed the client will send “dynamic/Orders” index to the server. If you inspect the results you will see that the actual index used is the “Temp/Orders/ByName” index. Why is this? The server noticed that the default index was not sufficient to efficiently find the records queried. The server then creates a temporary index and returns the result set containing 108 orders for a total operation time of 321ms. Not bad. If I execute the query again, it returns in under 1ms. I can live with that. Here is the really cool part, RavenDB cleans up after itself. If RavenDB doesn’t receive any more queries like this for some time, it will simply delete the temporary index. You can see the temporary indexes in the management studio.</p>
 <p><a href="http://www.headspring.com/wp-content/uploads/2012/04/image2.png"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border-width: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/04/image_thumb2.png" alt="image" width="480" height="310" border="0" /></a></p>
 <h3>More Query Fu</h3>
 <p>Now let’s say that we reviewed the results and learned that what we really wanted was all the orders placed by either Jane Doe or her husband, John Doe. We can fix our query to look like this:</p>
-<p>[gist id=2424749]</p>
+<p><div><script src='https://gist.github.com/2424749.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>This query will also be sent with the “dynamic/Orders” index (the rest of the examples in this blog post will use the same dynamic index) and the server will reuse the “Temp/Orders/ByName” index. In fact, any additional queries that only make use of the name property will use this index.</p>
 <p>Let’s say that we really meant all orders placed by any member of the Doe family. We may then use this variation of the query:</p>
-<p>[gist id=2424767]</p>
+<p><div><script src='https://gist.github.com/2424767.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>We can also use the <em>StartsWith() </em>and <em>Contains()</em> methods with strings. With numeric fields we can use all the typical operators such as equals (=), not equals (!=), greater than (&gt;), greater than or equal to (&gt;=), less than (&lt;), and less than or equal to (&lt;=). By the way, we can also make use of some calculated values and we can combine them with others. For example, may we want to find all the orders placed by Jane Doe that had single line item.</p>
-<p>[gist id=2424816]</p>
+<p><div><script src='https://gist.github.com/2424816.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <h3>Even More Query Fu</h3>
 <p>There are a couple of other useful operations for filtering results. They are the <em>In</em> and <em>Any</em> operations. Let’s see them in action!</p>
 <p>Say, we need to find all the orders containing a line item requested in bulk quantity. Assume that by bulk quantity we mean at least two dozen or more of a line item. The query will look something like this:</p>
-<p>[gist id=2483951]</p>
+<p><div><script src='https://gist.github.com/2483951.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>Now, imagine we really wanted was the orders containing products valued over $100.00 in bulk quantity. Then the query would look like this:</p>
-<p>[gist id=2484054]</p>
+<p><div><script src='https://gist.github.com/2484054.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>Remember when we wanted find all of the orders from just Jane and John Doe. We can rewrite that query and leverage the <em>In </em>operator. This example maybe trivial, but imaging you had a larger list of names to compare against. This operator can make the query very readable.</p>
-<p>[gist id=2484118]</p>
+<p><div><script src='https://gist.github.com/2484118.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>Just like we did with the string and numeric comparisons, we can also combine these operators and nest them to give us some pretty advanced queries. For example, assume we needed to find all orders with bulk quantity line items of our “Better Thingy” or “Thingy” products:</p>
-<p>[gist id=2484165]</p>
+<p><div><script src='https://gist.github.com/2484165.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>Combine these operators with the other string and numeric comparisons and you are equipped to write some serious queries!</p>
 <h3>Know Your Limits</h3>
 <p>Just because you can write it doesn’t mean you can query it. While the query processor is very good, there are some things it can’t do. Here are a few limitations:</p>

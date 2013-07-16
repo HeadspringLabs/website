@@ -29,10 +29,10 @@ meta:
 <h2>A Quick Review</h2>
 <p><a href="http://www.headspring.com/blog/developer-deep-dive/identifying-incidental-complexity/">A few weeks ago</a>, we saw some improvements made to the TypeChecker class.  This class traverses a tree representing all the source code input to the compiler.  If the input source code has an if-expression, then the tree will contain a node (an instance of the <code>If</code> class) that describes what the raw source code looked like.  As TypeChecker traverses the tree, it attempts to find an appropriate type for each node.  Since Rook's if-expressions behave like C#'s <code>?:</code> ternary operator, the type of an <code>If</code> is the type of the positive and negative branch expressions.</p>
 <p>In that post, the original implementation for if-expression type checking looked like this:</p>
-<p>[gist id="3151220"]</p>
+<p>{% gist 3151220 %}</p>
 <p>This implementation used a needlessly-complex return type which motivated extra-complicated <code>return</code> statements.  That return type <em>complected</em> success (a new tree node with a meaningful Type property) with failure (a list of CompilerError messages to propagate up the tree).  Braiding those two ideas led to some verbose sanity checks after each step the method performed, and led to some verbose error-message-propagation in each <code>return</code> statement.</p>
 <p>I improved this situation by untying these ideas.  TypeChecker started tracking a single growing list of error messages encountered so far, so that returned objects in the tree traversal methods didn't need to pass error messages back to their caller.  At this point, we started returning <code>null</code> every time the method found an error:</p>
-<p>[gist id="3154330"]</p>
+<p>{% gist 3154330 %}</p>
 <h2>Return Statements are "Extract Method" Fences</h2>
 <p>Surely this change was an improvement, but it didn't dramatically improve the health of the TypeChecker class.  TypeChecker is a beast.  The TypeCheck methods for several of the tree nodes are suspiciously similar to each other, so I started out by trying to factor out common helper methods.</p>
 <p>I failed immediately every time I tried to do so.</p>
@@ -61,19 +61,19 @@ meta:
 <h2>Before and After the Return Value Decomplection</h2>
 <p><strong>If-Expression Type Checking</strong></p>
 <p><em>Before:</em><br />
-[gist id="3151220"]</p>
+{% gist 3151220 %}</p>
 <p><em>After:</em><br />
-[gist id="3390149"]</p>
+{% gist 3390149 %}</p>
 <p><strong>Class Declaration Type Checking</strong></p>
 <p><em>Before:</em><br />
-[gist id="3390168"]</p>
+{% gist 3390168 %}</p>
 <p><em>After:</em><br />
-[gist id="3390159"]</p>
+{% gist 3390159 %}</p>
 <p><strong>Function Declaration Type Checking</strong></p>
 <p><em>Before:</em><br />
-[gist id="3390169"]</p>
+{% gist 3390169 %}</p>
 <p><em>After:</em><br />
-[gist id="3390164"]</p>
+{% gist 3390164 %}</p>
 <h2>Detect, Reflect, Decomplect</h2>
 <p>When you find yourself looking at suspiciously-complex code,</p>
 <ol>

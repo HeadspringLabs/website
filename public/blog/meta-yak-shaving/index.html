@@ -107,7 +107,9 @@
 <p>Another surprise: the &#8216;else&#8217; keyword appears only 4 times in those 1432 lines.  Weird.  I certainly don&#8217;t consciously think of &#8216;else&#8217; as somehow <em>bad</em>.  The explanation comes in seeing how else conditional logic presents itself.</p>
 <p>First, polymorphism hides some conditional logic, as it implies statements like &#8220;if the runtime type of x is T1 then call T1&#8217;s implementation, <strong>else</strong> if the runtime type of x is T2 then call T2&#8217;s implementation, <strong>else</strong>…&#8221;</p>
 <p>Second, I find that I have several methods that take on the following form:</p>
-<p>[gist id=&#8221;3066889&#8221;]</p>
+<p><div><script src='https://gist.github.com/3066889.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>In every way that matters, there&#8217;s an &#8216;else&#8217; in that code block.  It&#8217;s just implied.  I think my accidental aversion to &#8216;else&#8217; is really a consequence of two other things:</p>
 <ol>
 <li>My class methods are very short and make few decisions. They have cyclomatic complexity around 1.6, meaning each method makes about 1 decision before returning, giving little reason to require nested if statements.  Also, my methods tend to be very short, averaging 3 lines.  Most of my if statements therefore take the form &#8220;if (condition) return A; else return B;&#8221; in which &#8216;else&#8217; is superfluous.</li>

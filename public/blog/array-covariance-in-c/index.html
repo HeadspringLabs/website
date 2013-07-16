@@ -93,13 +93,19 @@
 
 <div class="entry-content"><p>When we first learn about inheritance, we&#8217;re given some plain-English examples with an emphasis on the phrase &#8220;is-a&#8221;. A car <em>is-a</em> vehicle, so a <code>Car</code> class would inherit from a <code>Vehicle</code> class. The idea that class inheritance can so directly map to English is <strong>seriously misleading</strong> and can get you into trouble.</p>
 <p>In English, it&#8217;s fair to say that a bag of apples <em>is-a</em> bag of objects. It may have an odd sound to it, but it&#8217;s true. This makes it very tempting to say that in C#, a <code>List&lt;Apple&gt;</code> should be assignable to a <code>List&lt;Object&gt;</code>, since all <code>Apple</code> instances are also <code>Object</code> instances:<!--more--></p>
-<p>[gist id=1302300]</p>
+<p><div><script src='https://gist.github.com/1302300.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>The sample above won&#8217;t compile. The compiler is protecting us from potential runtime type exceptions. If this compiled, we could get into trouble like so:</p>
-<p>[gist id=1302301]</p>
+<p><div><script src='https://gist.github.com/1302301.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>If this compiled, we would be able to attempt to put a string into a collection that simply does not support that operation. The English metaphor for inheritence (<em>is-a</em>) just doesn&#8217;t adequately match the actual constraints of the type system. We&#8217;re trying to violate the <a href="http://en.wikipedia.org/wiki/Liskov_substitution_principle">Liskov Substitution Principle</a>. If we declared that <code>List&lt;Apple&gt;</code> is a subtype of <code>List&lt;Object&gt;</code>, we&#8217;d be saying that <em>every</em> operation that acts on a <code>List&lt;Object&gt;</code> could be given a <code>List&lt;Apple&gt;</code>, and that&#8217;s simply not true. In our example, the operations performed on the <code>List&lt;Object&gt;</code> included putting new arbitrary objects into the list, and you just can&#8217;t do that to a <code>List&lt;Apple&gt;</code>.</p>
 <p><strong>Because <code>List&lt;Apple&gt;</code> has more constraints than <code>List&lt;Object&gt;</code>, <code>List&lt;Apple&gt;</code> is not assignment-compatible with <code>List&lt;Object&gt;</code>.</strong></p>
 <p>Unfortunately, the previous example <strong>does</strong> compile when you replace <code>List&lt;T&gt;</code> with supposedly-strongly-typed arrays. Instead of knowing that you&#8217;ve done something wrong at compile time, you get an exception at runtime:</p>
-<p>[gist id=1302325]</p>
+<p><div><script src='https://gist.github.com/1302325.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>Because <code>TChild[]</code> can be assigned to <code>TParent[]</code> for any <code>TChild</code> inheriting from <code>TParent</code>, we can say &#8220;arrays in C# are covariant&#8221;.</p>
 <p>To sum up, <code>List&lt;Apple&gt;</code> can&#8217;t be treated as <code>List&lt;Object&gt;</code> <em>because of the operations that <code>List&lt;T&gt;</code> provides</em>. The question, then, is could we ever safely take advantage of this convenient funky-casting for <em>other</em> generic types? The answer to this question falls under the category of &#8220;Covariance and Contravariance&#8221; and is provided by the C# 4 keywords <code>in</code> and <code>out</code>. In my next post, we&#8217;ll cover an example where this funky-casting is both convenient and safe.</p>
 <p><a href="http://www.headspring.com/feed" target="_blank">Subscribe to our blog feed</a> for the freshest content.</p>

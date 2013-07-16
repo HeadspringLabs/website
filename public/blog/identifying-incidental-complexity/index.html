@@ -100,7 +100,9 @@
 <p>When the <code>TypeChecker</code> succeeded, you&#8217;d get a tree with type information.  When it failed, you&#8217;d get a list of error messages instead.  More on that oddity later&#8230;</p>
 <h2>Type Checking &#8216;if&#8217; Expressions</h2>
 <p>Consider a simple if-expression in Rook, which is equivalent to the <code>? :</code> ternary operator in C#:</p>
-<p>[gist id=&#8221;3154382&#8221;]</p>
+<p><div><script src='https://gist.github.com/3154382.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>These four lines form a single expression.  The value of the expression as a whole is the value of the true branch (x) or the value of the false branch (y), whichever is actually evaluated at runtime.</p>
 <p>The requirements for type checking these expressions are rather simple, but the implementation of those checks had a great deal of incidental complexity.  To pass the type checker, an if expression:</p>
 <ol>
@@ -111,7 +113,9 @@
 <p>When these requirements are met, the type of the whole if-expression is the type of one of its branches&#8217; body expressions.  In the sample above, <code>count > 0</code> must be a boolean expression, and <code>x</code> had better have the same type as <code>y</code>.</p>
 <h2>The Troubled Implementation</h2>
 <p>It just takes a few clear sentences to describe the type checking of if-expressions, but the implementation of those rules is jam-packed with incidental complexity:</p>
-<p>[gist id=&#8221;3151220&#8221;]</p>
+<p><div><script src='https://gist.github.com/3151220.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>After attempting to type check the condition, true branch, and false branch, we jump through some strange hoops to collect any error messages that were encountered so far.  Then, we declare three more variables with suspiciously-similar names to the variables already in scope.  Next, we &#8216;Unify&#8217; the condition expression&#8217;s type with Boolean and &#8216;Unify&#8217; the true-branch&#8217;s type with the false-branch&#8217;s type (<code>Unify</code> calls are basically assertions like &#8220;These two types had better be the same as each other&#8221;).  <em>Again</em>, we jump through some weird hoops to collect any error messages encountered before returning a result.  <strong>On success, the result is a new If tree node with its DataType property populated, and on failure we instead return a list of error messages.</strong></p>
 <p>Reread that last sentence.  It&#8217;s weird.</p>
 <p>We&#8217;re returning <em>either</em> a tree node of type If, or a list of error messages.  In a statically-typed language, returning either one thing or a completely different thing is not strictly doable.  To handle that, <strong>I created an abstraction that had big consequences on the complexity of the type checker.</strong>  The return type, <code>TypeChecked&lt;Expression&gt;</code>, is the unfortunate abstraction I needed to remove.</p>
@@ -122,7 +126,9 @@
 <p>Let&#8217;s kick this abstraction out of the project entirely.</p>
 <p>The <code>TypeChecker</code> class should simply own a growing list of error messages encountered during the tree traversal, so <code>TypeChecked&lt;T&gt;</code> would no longer need to store a list of its own.  That would make <code>TypeChecked&lt;T&gt;</code> a trivial wrapper of a node, adding nothing of value to that node.  I removed the class, and change occurrences of <code>TypeChecked&lt;T&gt;</code> to simply T.</p>
 <p>Now, each <code>TypeCheck</code> method just returns null when no properly-typed node can be produced, and non-null when one can be produced.  That subtle shift in the meaning of returned objects lets us get rid of a lot of the cruft that was accumulating.  The new version of the if-expression type checker is much more to the point:</p>
-<p>[gist id=&#8221;3154330&#8221;]</p>
+<p><div><script src='https://gist.github.com/3154330.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>It&#8217;s not perfect, but it&#8217;s a clear step in the right direction.  <strong>To sum up, when you&#8217;re working <em>for</em> your abstractions, they&#8217;re not working for you.  Render them pointness, and then drop them like the bad habit they are.</strong></p>
 </div>
 

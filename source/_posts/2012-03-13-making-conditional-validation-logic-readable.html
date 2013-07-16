@@ -53,7 +53,7 @@ meta:
 <p><a href="http://www.headspring.com/wp-content/uploads/2012/02/changePassword1.png"><img style="padding-left: 0px; padding-right: 0px; float: none; margin-left: auto; margin-right: auto; padding-top: 0px; border-width: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/02/changePassword_thumb1.png" alt="changePassword" width="326" height="208" border="0" /></a></p>
 <p>Clicking Submit triggers two phases of validation.  The first phase checks the current password is correct, a new password is supplied, that the new password was typed correctly twice, and the new password was not used recently.  The second phase ensures the new password is sufficiently complex – e.g. a minimum length and a minimum number of numeric and alpha characters are used.</p>
 <p>I needed to add an audit entry for any password change attempt and the corresponding result.  This is what the original code looked like:</p>
-<p>[gist id=1934704]</p>
+<p>{% gist 1934704 %}</p>
 <p>There are several suboptimal things to note about the above code:</p>
 <ul>
 <li>There are six levels of nested if statements.</li>

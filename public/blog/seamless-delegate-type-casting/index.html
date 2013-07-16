@@ -93,15 +93,25 @@
 
 <div class="entry-content"><p>In <a href="http://www.headspring.com/2011/10/seamless-generic-type-casting">Seamless Generic Type Casting</a>, we saw how the <code>in</code> and <code>out</code> keywords can make our generic interfaces polite with respect to casting. A <code>List&lt;string&gt;</code> can be treated as an <code>IEnumerable&lt;object&gt;</code> because a) all strings are objects and b) <code>IEnumerable</code> is declared with the <code>out</code> keyword. Now, we&#8217;ll see how these keywords can be applied to delegate types in addition to interface types.</p>
 <p>Suppose we have a a basic hierarchy of entity classes:<!--more--></p>
-<p>[gist id=1339376]</p>
+<p><div><script src='https://gist.github.com/1339376.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>Also, suppose we find ourselves creating/persisting many instances of these in our integration tests, and we create a delegate type with some helper methods for doing so:</p>
-<p>[gist id=1339379]</p>
+<p><div><script src='https://gist.github.com/1339379.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>In our integration tests, we may use this to quickly get some sample employees into our database:</p>
-<p>[gist id=1339417]</p>
+<p><div><script src='https://gist.github.com/1339417.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>As we write some tests, we realize that we need some of our sample employees to be populated differently:</p>
-<p>[gist id=1339420]</p>
+<p><div><script src='https://gist.github.com/1339420.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>Surprise! This won&#8217;t even compile. The compiler can&#8217;t assign our <code>EntityCreator&lt;SalesPerson&gt;</code> to the expected type <code>EntityCreator&lt;Employee&gt;</code>. That&#8217;s strange, since we know that any <code>SalesPerson</code> it ever makes will <strong>obviously</strong> be an Employee. As we saw with similar situations around interfaces, we need to use the <code>out</code> keyword when we define the delegate type, promising to the compiler that the <code>T</code> will only appear in the return value. Armed with this additional promise, the compiler can safely treat all <code>EntityCreator&lt;FieldTechnician&gt;</code> as <code>EntityCreator&lt;Employee&gt;</code>. With the following change, the example compiles as expected:</p>
-<p>[gist id=1339421]</p>
+<p><div><script src='https://gist.github.com/1339421.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p><a href="http://www.headspring.com/feed" target="_blank">Subscribe to our blog feed</a> for the freshest content.</p>
 </div>
 

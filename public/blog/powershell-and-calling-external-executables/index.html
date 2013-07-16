@@ -98,7 +98,9 @@
 <li>Failure exit codes returned by external programs that your Powershell process invoked.<!--more--></li>
 </ol>
 <p>When we set the ErrorActionPreference to &#8220;Stop&#8221;, we only change the behavior of uncaught exceptions. We have to work a little harder to cover the other category. Consider a Powershell script that calls out to an external program which returns its own failure exit code:</p>
-<p>[gist id=1150145]</p>
+<p><div><script src='https://gist.github.com/1150145.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>External executables are invoked using similar syntax as Powershell commands like <code>write-host</code>, so it isn&#8217;t obvious that there&#8217;s anything special about the call to <code>schtasks</code>. Since it is an external program, however, it can&#8217;t exactly throw a .NET exception - it might not even <em>be</em> a .NET program.</p>
 <p>The lingua franca of command-line failure is exit codes, rather than exceptions. An exit code of 0 means &#8220;all is well&#8221;, and anything else should be treated as a failure.</p>
 <p>We have two problems:</p>
@@ -107,9 +109,13 @@
 <li>we&#8217;re tempted to explicitly follow each external call with a corresponding test-and-throw code block, which would be ugly and distracting to the reader</li>
 </ol>
 <p>Fortunately, we can take advantage of Powershell&#8217;s flexible syntax to address both of these concerns. It turns out that a Powershell function can accept a <em>code block</em> as an argument, effectively allowing us to add new keywords to the language. Consider the helper function &#8216;exec&#8217;:</p>
-<p>[gist id=1150147]</p>
+<p><div><script src='https://gist.github.com/1150147.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>When we use exec, we can pass it a { code block surrounded in braces }. This way we can make our external commands stand out as special, using just one new &#8216;keyword&#8217;, and we get the error handling we wanted to boot:</p>
-<p>[gist id=1150152]</p>
+<p><div><script src='https://gist.github.com/1150152.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>Eureka! We can ensure that both categories of failures will stop execution dead in its tracks.</p>
 <p>To sum up, the default error handling behavior in Powershell is dramatically different from that of other .NET languages. <strong>By default, your script will happily and disasterously continue running even when throwing exceptions.</strong> This can leave the user of the script confused as to whether the process has actually succeeded or failed. By setting the global ErrorActionPreference and by wrapping external commands with the &#8216;exec&#8217; helper function, Powershell&#8217;s behavior can become what we expected in the first place.</p>
 </div>

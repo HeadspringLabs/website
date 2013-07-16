@@ -98,7 +98,9 @@
 <h3><strong>The Null Object Pattern</strong></h3>
 <p>Rather than dealing with uninitialized variable instances, you can start off by assigning a variable to an instance of a “Null Object”. Oftentimes you’ll see this done when developers assign an empty string to a variable because they don’t want to deal with null values. I’m going to be discussing this with types that are a bit more complex than string.</p>
 <p>In the code snippet below, I have represented a method with an optional argument that will fall back to an “empty” signature if one isn’t supplied. This Empty property is our Null Object for Signature that provides a safe instance we can use instead of dealing with null.</p>
-<p>[gist id=&#8221;2206415&#8221;]<br />
+<p><div><script src='https://gist.github.com/2206415.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+<br />
 [gist id=&#8221;2206371&#8221; file=&#8221;Signature.cs&#8221;]</div>
   
   
@@ -225,7 +227,9 @@
 
   <div class="entry-content"><p>Yes this is a lame title, but it made me chuckle. I thought I’d share a quick shortcut that good ole Func&lt;&gt; provides as an alternative to a private method.</p>
 <p>With Func&lt;&gt; it’s easy to clean up tests. Let’s assume you need to test a query that returns a list of books in a particular genre.</p>
-<p>[gist id=2015251]</p>
+<p><div><script src='https://gist.github.com/2015251.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>By creating a Func&lt;&gt; to set the properties on an object, it shortens the test and makes it much more readable. Obviously if you have more than one test that needs new books, then I&#8217;d recommend using a private method. If you&#8217;re wondering about the .ShouldEqual or .ShouldBeTrue in the test, I&#8217;m using the <a title="Should Assertion Library" href="http://nuget.org/packages/Should" target="_blank">Should Assertion Library</a> because I like the readability.</div>
   
   

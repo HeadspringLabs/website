@@ -95,7 +95,9 @@
 <p>While developing the fix, I relearned an important lesson: cutting scope is not a sign of defeat. Sometimes less really is more.</p>
 <h2>The Bug</h2>
 <p>With the bug in place, a test framework can report that a test has passed even when it should fail. Consider the following test fixture:</p>
-<p>[gist id=5448833]</p>
+<p><div><script src='https://gist.github.com/5448833.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>The developer of these tests should expect TestAwaitThenPass to be the only passing test. The other four tests should all fail with one exception or another. Unfortunately, <em>Fixie would claim that all 5 of these tests pass</em>. To make matters even more confusing, despite &#8220;passing&#8221;, TestAsyncVoid&#8217;s DivideByZeroException would still be output to the user.</p>
 <p>When you call most async methods, the method call will not actually do the work. Rather, the method will quickly return a <code>Task</code> that <em>knows how</em> to do that work. To provoke the <code>Task</code> to execute, you must call its Wait() method. I was failing to call Wait(), so I would happily report success for a test that was never actually executed in full!</p>
 <p>In the case of an <code>async void</code> method, calling the method <em>does</em> cause the work to take place, but the exception does not surface in the normal fashion. The test framework&#8217;s own try/catch blocks won&#8217;t catch it, and it will bubble all the way up before appearing in the output as an unhandled exception.</p>
@@ -108,11 +110,17 @@
 </ol>
 <h2>The Easy Part</h2>
 <p>We want to do the extra work for methods declared with the <code>async</code> keyword, and fortunately we can detect that keyword using reflection. When you use this keyword, the compiled method gains an attribute available to us at runtime:</p>
-<p>[gist id=5448836]</p>
+<p><div><script src='https://gist.github.com/5448836.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>Before the fix, a test method would be executed via reflection like so:</p>
-<p>[gist id=5448839]</p>
+<p><div><script src='https://gist.github.com/5448839.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>We can fix the execution of <code>async Task</code> and <code>asyc Task&lt;T&gt;</code> by waiting for the returned <code>Task</code> to complete:</p>
-<p>[gist id=5448843]</p>
+<p><div><script src='https://gist.github.com/5448843.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>When a regular test fails, <code>method.Invoke(...)</code> throws. When an <code>async</code> test fails, <code>task.Wait()</code> throws.</p>
 <h2>Unforeseen Complexity</h2>
 <p>The third requirement is problematic. If a test method is declared <code>async void</code>, <code>method.Invoke(...)</code> returns null, so we&#8217;ll never see the <code>Task</code> object and will never be able to call <code>task.Wait()</code>.  It turns out there is an extremely complex workaround, implemented in NUnit, which takes advantage of implementation details surrounding <code>async</code>/<code>await</code> execution.  After researching the technique, I lacked confidence that I would use it correctly.</p>

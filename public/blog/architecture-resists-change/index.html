@@ -107,7 +107,9 @@
 </blockquote>
 <p>These two decisions are made frequently when using functional languages, but not so much in C# projects.  Despite being unusual, I found these decisions to be extremely helpful for this kind of problem, regardless of the language used to implement it.</p>
 <p>The samples contain a <a href="https://github.com/plioi/parsley/blob/0b0b1cdddab040c1513344f3b768a8c348bed138/src/Parsley.Test/IntegrationTests/Json/JsonGrammar.cs">JSON parser</a>, which amounts to describing what valid JSON looks like.  The bulk of the description is summed up in a few lines:</p>
-<p>[gist id=&#8221;2495421&#8221;]</p>
+<p><div><script src='https://gist.github.com/2495421.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>Because of the two architectural decisions, all the details about tracking progress, success, and failure can be completely hidden.  The user can solve the task at hand by describing the task at hand, and the architectural decisions enable that ability.</p>
 <h2>Making Your Own Decisions</h2>
 <p>As you make a decision that affects your project&#8217;s structure, ask yourself, &#8220;Is this a part of our architecture?  Is it going to be hard to change later if we go forward with it?  If so, does it <em>earn the right</em> to be included anyway?&#8221;  If not, try to restructure it so that it <em>is</em> easy to change, or consider chucking it entirely.</p>

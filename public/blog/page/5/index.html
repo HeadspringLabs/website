@@ -210,14 +210,20 @@ AUSTIN, TX – (January 24, 2013) – Headspring, a leading custom software &hel
 <h2>Results</h2>
 <p>Test execution is broken down into two phases.</p>
 <p>For <strong>Phase 1</strong>, it builds up a tree of objects representing the test methods in the test assemblies: a TestAssembly has TestClass objects, each of which has TestMethod objects.  These are discovered and constructed via reflection.  The class EnumerateTests uses reflection to discover all the types in a given Assembly, and ultimately defers to TypeUtility.GetTestMethods(&#8230;):</p>
-<p>[gist id=4438396]</p>
+<p><div><script src='https://gist.github.com/4438396.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>Plain old reflection walks through all the methods in the test assembly, picking out the ones that are marked as tests with the [Fact] attribute.</p>
 <p>For <strong>Phase 2</strong>, it traverses the tree of tests to execute them and accumulate results.  <a href="http://xunit.codeplex.com/SourceControl/changeset/view/2e806844c3c1#src/xunit/Sdk/Commands/ClassCommands/TestClassCommandRunner.cs">TestClassCommandRunner</a> has the main execution logic.  For a given class, it processes the list of method in random order.  For each method, xUnit gets one or more ITestCommands to execute.  Each test command is invoked, giving a MethodResult which gets included in the overall ClassResult.</p>
 <p>A single test command to execute, for a test identified with the [Fact] attribute, looks like this:</p>
-<p>[gist id=4438431]</p>
+<p><div><script src='https://gist.github.com/4438431.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>A single test is executed here via Invoke(&#8230;), which is also a part of .NET reflection.  xUnit is just asking the .NET framework to call our test method for us.  Any exceptions bubble up and cause the test to fail, including exceptions thrown by Assert methods.  If no exceptions were thrown, it returns the new PassedResult representing success.  Results are hierarchical, just like the original tree of tests: AssemblyResult, ClassResult, FailedResult, and PassedResult allow us to track results at every level that a test runner may need to report on.</p>
 <p><strong>Lastly, TestDriven.NET integration:</strong> TestDriven.NET requires you to implement the following interface.  Depending on how the user invokes TD.Net, one of these three methods will be called:</p>
-<p>[gist id=4438582]</p>
+<p><div><script src='https://gist.github.com/4438582.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>xUnit&#8217;s TdNetRunner implements this by ultimately deferring to the same test execution code that the console runner uses.</p>
 <p>I was a little surprised by the size of the project, especially the use of multithreading.  A large number of features added up to a lot of things for me to remove before I could really see the fundamental code path.  This makes me curious about how NUnit compares, so next week we&#8217;ll see what we can learn by whittling down NUnit.</p>
 </div>
@@ -308,13 +314,19 @@ AUSTIN, TX – (January 24, 2013) – Headspring, a leading custom software &hel
 <h2>Results - Signing XML Documents</h2>
 <p>All this left me with a better understanding of what Rhino Licensing has to offer, while whittling the project down to the few files I <em>really</em> wanted to dig into: <a href="https://github.com/hibernating-rhinos/rhino-licensing/blob/4d77e00bfa85e8d22f966b09e340be31476afac1/Rhino.Licensing/LicenseGenerator.cs">LicenseGenerator</a>, and a now-much-much-smaller version of <a href="https://github.com/hibernating-rhinos/rhino-licensing/blob/4d77e00bfa85e8d22f966b09e340be31476afac1/Rhino.Licensing/AbstractLicenseValidator.cs">AbstractLicenseValidator</a>.  The first is responsible for generating the tamper-proof XML, and the second is responsible for parsing the tamper-proof XML and deciding whether it is legitimate.</p>
 <p>James Gregory&#8217;s <a href="http://www.jagregory.com/writings/rhino-licensing/">Rhino Licensing tutorial</a> first describes a prerequisite step for creating a private/public key pair:</p>
-<p>[gist id=4435588]</p>
+<p><div><script src='https://gist.github.com/4435588.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>The contents of these files are basically large numbers.  The numbers are related to each other, but a malicious user would not be able to guess the private one given only the public one.</p>
 <p><a href="https://github.com/hibernating-rhinos/rhino-licensing/blob/4d77e00bfa85e8d22f966b09e340be31476afac1/Rhino.Licensing/LicenseGenerator.cs">LicenseGenerator</a> is given the private one as a string to its constructor.  LicenseGenerator then generates a string of XML given a few values.  The values will all appear in plain text in the XML: name, id, expirationDate, LicenseType, and an optional set of name/value pairs specific to your needs.  The private helper method CreateDocument produces an XmlDocument containing those inputs.</p>
 <p><strong>Next, the magic happens.</strong>  This simple XML document is completely open to tampering by a malicious user.  To combat our adversary, it supplements the document with an additional XML element produced by private helper method GetXmlDigitalSignature.  This method uses some .NET framework classes to take the original document and use the secret/private key to produce an encrypted version of the original weak XML document.  The new XML element basically contains yet another very large number, which corresponds with the original XML document content.  The resulting document is now tamper-proof: if a malicious user opens it and changes the expiration date to the year 2500, they would have to <em>also</em> change the big signature number to match, and <em>good luck guessing what big number corresponds with the new XML document</em>, since the malicious user doesn&#8217;t have the private key necessary to create that number quickly.  To sum up, here&#8217;s how to take an insecure XML document and make it tamper-proof with a signature:</p>
-<p>[gist id=4438155]</p>
+<p><div><script src='https://gist.github.com/4438155.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>Once we have one of these documents, how do we read and validate them?  <a href="https://github.com/hibernating-rhinos/rhino-licensing/blob/4d77e00bfa85e8d22f966b09e340be31476afac1/Rhino.Licensing/AbstractLicenseValidator.cs">AbstractLicenseValidator</a> had been whittled down to be little more than the methods ValidateXmlDocumentLicense() and TryGetValidDocument(string licensePublicKey, XmlDocument doc).  Contrary to its name, the main thing ValidateXmlDocumentLicense does is read the original inputs from the human-readable parts of the XML file.  TryGetValidDocument does the real work, the inverse of LicenseGenerator&#8217;s digital &#8220;signature&#8221;: read the special &lt;Signature&gt; element which contains our encrypted original document, and ask the .NET framework whether it matches the rest of the document&#8217;s human-readable content:</p>
-<p>[gist id=4438179]</p>
+<p><div><script src='https://gist.github.com/4438179.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>Creating tamper-proof yet human-readable XML files is no longer magical.  Rhino Licensing creates and validates tamper-proof license files by taking the original insecure version of the document and appending a special &#8220;content summary&#8221; element.  A malicious user would have to tamper with the human-readable part as well as the virtually-unguessable content summary in order to trick the validator, and as long as the private key is kept private, that&#8217;s certainly good-enough.</p>
 </div>
   
@@ -563,14 +575,22 @@ AUSTIN, TX – (January 24, 2013) – Headspring, a leading custom software &hel
 <p>This time around, I had false-confidence around a series of refactorings I applied to <a href="https://github.com/plioi/parsley">Parsley</a> about a year ago.</p>
 <p>Let&#8217;s start by setting the scene.  Parsley is a tool for working with complex text patterns, when a single regex is insufficient.  You describe what a successful input looks like by breaking down the overall pattern into several smaller, named patterns called grammar rules.  For instance, if you want to <a href="https://github.com/plioi/parsley/blob/2d113754b6e3e68a43e624987fb7ed5c4dd99870/src/Parsley.Test/IntegrationTests/Json/JsonGrammar.cs">describe JSON documents with Parsley</a>, you could define rules named True, False, Null, Number, Quotation, Array, and Dictionary.  All these grammar rules are described in terms of the <em>tokens</em> of JSON, the tiniest substrings that still have meaning to a JSON parser: things like keywords, operators, numeric literals, and string literals.</p>
 <p>Some tokens are defined with simple string literals:</p>
-<p>[gist id=&#8221;4392649&#8221;]</p>
+<p><div><script src='https://gist.github.com/4392649.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>Some tokens are defined with simple regexes:</p>
-<p>[gist id=&#8221;4392659&#8221;]</p>
+<p><div><script src='https://gist.github.com/4392659.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>Lastly, some tokens are defined with nontrivial, multilined regexes:</p>
-<p>[gist id=&#8221;4392669&#8221;]</p>
+<p><div><script src='https://gist.github.com/4392669.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>An important design goal here was to allow users of Parsley to define their regexes under a technically-untrue assumption: you get to pretend that your regex is being applied to the <em>start</em> of a potentially-long string.  You are trying to tell Parsley how to &#8220;peel off&#8221; the next few characters from the raw input.</p>
 <p>If that&#8217;s how it actually worked, though, we&#8217;d be stuck with performing wasteful substring operations: after matching a regex against the front of a million-character string just to peel off the first few characters, you <strong>don&#8217;t</strong> want to actually perform a nearly-million-character substring operation just to represent progress through the input.  Multiplying that waste by the number of tokens you&#8217;d eventually peel off of the original million characters, the waste would add up quickly.  So, I took advantage of some special regex options as well as a &#8220;\G&#8221; modifier, allowing me to compare your given regex against the input, <em>starting at whatever input position I feel like.</em>  I didn&#8217;t want the consumer to care about these details, so I wrote the TokenRegex class to hide these details:</p>
-<p>[gist id=&#8221;4392684&#8221;]</p>
+<p><div><script src='https://gist.github.com/4392684.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>Excellent!  You can provide simple regexes intended to match the <em>start</em> of a given input, and I modify the pattern so that I can in-fact match at <em>any</em> position we&#8217;ve progressed to.  <strong>Man, am I awesome or what?</strong></p>
 <p>Introducing this class <em>was</em> a good idea.  It dramatically simplified the regexes that consumers needed to provide, and sufficiently abstracted away the details and reasoning behind this rarely-used &#8220;\G&#8221; regex modifier.  This refactoring was also a part of a larger refactoring effort, which has also been successful.  I wanted to make it so that you didn&#8217;t <em>have</em> to use all of the moving parts Parsley provides: if you needed a smarter tokenizer, such as one to deal with Python-style indentation, that was ok: I provided useful interfaces to let you hook in your own code for that kind of customization.  TokenRegex was supposed to help you further by isolating all the regex stuff from the rest of the system; if the Pattern class wasn&#8217;t good enough for your needs, you could provide your own and still leverage TokenRegex while doing so.</p>
 <p>This week, fellow-Headspringer <a href="https://coderwall.com/ChrisMissal">Chris Missal</a> made a simple request: &#8220;What are your thoughts on giving parsley the ability to match tokens with a case insensitive regex?&#8221;</p>
@@ -578,7 +598,9 @@ AUSTIN, TX – (January 24, 2013) – Headspring, a leading custom software &hel
 <p><strong>Oh. Wait. No. That doesn&#8217;t actually work.</strong>  Not so awesome, afterall.</p>
 <p>Even though the entire effort last year was to provide hooks for <em>exactly</em> this sort of customization, my TokenRegex abstraction was working against me.  I had created it in order to hide the use of the &#8220;\G&#8221; regex modifier as well as the convenient RegexOptions.Multiline option, which had the unintended consequence of <em>also</em> hiding the RegexOptions argument from the consumer.  Chris wants to include RegexOptions.IgnoreCase, but I&#8217;m preventing that for no good reason.  It&#8217;s fine that the current behavior is the <em>default</em>, but it shouldn&#8217;t be the <em>only</em> option.</p>
 <p><a href="https://github.com/plioi/parsley/commit/c33c63bf870253be503f900482a6d3a65f50180a">The fix was to update the TokenRegex constructor to optionally accept additional RegexOption values</a>, and to allow those new constructor arguments to be supplied by the consuming project:</p>
-<p>[gist id=&#8221;4392698&#8221;]</p>
+<p><div><script src='https://gist.github.com/4392698.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 <p>From now on, if I get a feature request on an open-source project, I should never have a knee-jerk reaction of &#8220;It already does that due to my infinite foresight.&#8221;  Rather, I should go on the assumption that I really have left out or hidden something useful, and see what I can learn in the process.</p>
 </div>
   
