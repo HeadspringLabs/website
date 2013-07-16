@@ -18,7 +18,7 @@ deploy_branch  = "master"
 
 public_dir      = "public"    # compiled site directory
 source_dir      = "source"    # source file directory
-blog_index_dir  = 'source'    # directory for your blog's index page (if you put your index in source/blog/index.html, set this to 'source/blog')
+blog_index_dir  = 'source/blog'    # directory for your blog's index page (if you put your index in source/blog/index.html, set this to 'source/blog')
 deploy_dir      = "_heroku"   # deploy directory (for Github pages deployment)
 stash_dir       = "_stash"    # directory to stash posts for speedy generation
 posts_dir       = "_posts"    # directory for blog files
@@ -363,23 +363,23 @@ task :setup_github_pages, :repo do |t, args|
   puts "\n---\n## Now you can deploy to #{url} with `rake deploy` ##"
 end
 
-#desc "deploy basic rack app to heroku"
-#multitask :heroku do
-#  puts "## Deploying to Heroku "
-#  (Dir["#{deploy_dir}/public/*"]).each { |f| rm_rf(f) }
-#  system "cp -R #{public_dir}/* #{deploy_dir}/public"
-#  puts "\n## copying #{public_dir} to #{deploy_dir}/public"
-#  cd "#{deploy_dir}" do
-#    system "git add ."
-#    system "git add -u"
-#    puts "\n## Committing: Site updated at #{Time.now.utc}"
-#    message = "Site updated at #{Time.now.utc}"
-#    system "git commit -m '#{message}'"
-#    puts "\n## Pushing generated #{deploy_dir} website"
-#    system "git push -f heroku #{deploy_branch}"
-#    puts "\n## Heroku deploy complete"
-#  end
-#end
+desc "deploy basic rack app to heroku"
+multitask :heroku do
+  puts "## Deploying to Heroku "
+  (Dir["#{deploy_dir}/public/*"]).each { |f| rm_rf(f) }
+  system "cp -R #{public_dir}/* #{deploy_dir}/public"
+  puts "\n## copying #{public_dir} to #{deploy_dir}/public"
+  cd "#{deploy_dir}" do
+    system "git add ."
+    system "git add -u"
+    puts "\n## Committing: Site updated at #{Time.now.utc}"
+    message = "Site updated at #{Time.now.utc}"
+    system "git commit -m '#{message}'"
+    puts "\n## Pushing generated #{deploy_dir} website"
+    system "git push -f heroku #{deploy_branch}"
+    puts "\n## Heroku deploy complete"
+  end
+end
 
 desc "Convert old gist tags into new format"
 task :convert_gists, :dir do |t, args|
