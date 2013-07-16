@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: tools | Headspring Labs]]></title>
+  <link href="http://headspringlabs.com/blog/categories/tools/atom.xml" rel="self"/>
+  <link href="http://headspringlabs.com/"/>
+  <updated>2013-07-15T23:13:23-05:00</updated>
+  <id>http://headspringlabs.com/</id>
+  <author>
+    <name><![CDATA[Headspring Labs]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Customizing Visual Studio With External Tools, Part 3]]></title>
+    <link href="http://headspringlabs.com/blog/customizing-visual-studio-with-external-tools-part-3/"/>
+    <updated>2012-01-30T00:00:00-06:00</updated>
+    <id>http://headspringlabs.com/blog/customizing-visual-studio-with-external-tools-part-3</id>
+    <content type="html"><![CDATA[<p>In my previous posts (<a title="Customizing Visual Studio With External Tools, Part 1" href="http://www.headspring.com/2012/01/customizing-visual-studio-with-external-tools-part-1">part 1</a>, <a title="Customizing Visual Studio With External Tools, Part 2" href="http://www.headspring.com/2012/01/customizing-visual-studio-with-external-tools-part-2">part 2</a>) I showed you how to create external tools and add them to a custom tool bar. In this post we will go the next logical step and add them to the context menu, so when you right-click on a file in the solution explorer (or other places) you’re tools are right there for use.</p>
+
+
+<p>If you’ve been following along, you’ll have noticed that customizing Visual Studio in these ways is a bit cumbersome. Creating context menus are no better considering there are a ton of <em>different</em> menus depending on the <em>context</em> that you’ll have to independently configure.</p>
+
+
+<p><!--more--></p>
+
+
+<h2>Creating a right-click, Open in Notepad context menu</h2>
+
+
+<p>Lets start with a simple example: creating a new context menu to open the selected document in Notepad++ by using the external tool we previously created to open files in Notepad++. Here’s what we’re going to create:</p>
+
+
+<p><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0pt none;" src="http://www.headspring.com/wp-content/uploads/2012/01/image9.png" alt="Visual Studio open in notepad context menu" width="358" height="126" border="0" /></p>
+
+
+<p>Go to Tools &gt; Customize, or right-click in the toolbar area and click “Customize…” to open the familiar customization dialog. Go to the “Commands” tab and select the radio button for Context menu and expand the drop down list. Brace yourself, because what you’ll see is <em>every single context menu and sub-menu</em> in Visual Studio. And herein lies the pain of creating a context menu – you have to configure it for each <em>context</em> it may need to be used in. You’ll see the menus are separated by the symbol “|” which denotes a sub-menu.</p>
+
+
+<p>If you select “Project and Solution Context Menus” the “Controls:” list will show all of the context menus related to Projects and Solutions (a Project menu, Solution Folder menu, and so on). The Project menu is thus in the drop down list as “Project and Solution Context Menus | Project” and it has a controls and sub-menus itself. It’s a little confusing but once you poke around you’ll get the hang of it.</p>
+
+
+<p><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0pt none;" src="http://www.headspring.com/wp-content/uploads/2012/01/image10.png" alt="List of context menus" width="421" height="354" border="0" /></p>
+
+
+<p>Above I have highlighted the “Project and Solution Context Menus | Item” menu, which is the context menu that appears when you right click a file in the solution explorer. Once this is selected, click “Add Command…” and find the external tool associated with the command you previously created in <a title="Customizing Visual Studio With External Tools, Part 1" href="http://www.headspring.com/2012/01/customizing-visual-studio-with-external-tools-part-1">part 1</a>. It will be in the “Tools” category. You can then click on “Modify Selection” and rename the command.</p>
+
+
+<p><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0pt none;" src="http://www.headspring.com/wp-content/uploads/2012/01/image11.png" alt="Adding commands to a context menu" width="398" height="270" border="0" /></p>
+
+
+<p>A final, optional step is to create a new “group” for you command(s). Select the command just under the one you added (“Open” in this case) and click “Modify Selection” on it and the “Begin a Group” selection will be available. Click it and a group separator will be created under your command:</p>
+
+
+<p><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0pt none;" src="http://www.headspring.com/wp-content/uploads/2012/01/image12.png" alt="Context menu command in a group" width="265" height="66" border="0" /></p>
+
+
+<p>You’re done! Close out all the dialogs and right click on a file in the solution explorer and it’ll open up in Notepad++ for editing.</p>
+
+
+<h2>Creating a context sub-menu</h2>
+
+
+<p>You can create a sub-menu much the same way. Select the menu it belongs in and instead of adding a command, click the “Add New Menu” button. You can rename it the same way you renamed your external command above. Once renamed and placed in the order you wish, it’s time to add commands to it. Because I just added a new menu to the “Project and Solution Context Menus | Item” menu, it will now appear in the context menu drop down list, and we have to select it there in order to add commands to it:</p>
+
+
+<p><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0pt none;" src="http://www.headspring.com/wp-content/uploads/2012/01/image13.png" alt="Creating a sub-menu within a context menu" width="370" height="92" border="0" /></p>
+
+
+<p>I’ve added the Explorer and Notepad++ commands that I created in <a title="Customizing Visual Studio With External Tools, Part 1" href="http://www.headspring.com/2012/01/customizing-visual-studio-with-external-tools-part-1">part 1</a> in the “My Menu” I created. Now I have these commands available to files in the Solution Explorer in their own sub-menu!</p>
+
+
+<p><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0pt none;" src="http://www.headspring.com/wp-content/uploads/2012/01/image14.png" alt="A custom context menu" width="476" height="101" border="0" /></p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Customizing Visual Studio With External Tools, Part 2]]></title>
+    <link href="http://headspringlabs.com/blog/customizing-visual-studio-with-external-tools-part-2/"/>
+    <updated>2012-01-23T00:00:00-06:00</updated>
+    <id>http://headspringlabs.com/blog/customizing-visual-studio-with-external-tools-part-2</id>
+    <content type="html"><![CDATA[<p>In my <a href="http://www.headspring.com/2012/01/customizing-visual-studio-with-external-tools-part-1">previous post</a> I showed you how to configure your own External Tools in Visual Studio, such as a command that opens up the current document in an external text editor, or a tool that launches a custom deployment executable. External Tools by default are accessed through the Tools menu, but this is lame. In this post I’ll show you to create your own toolbar to contain your tools so they are no more than one click away.<!--more--></p>
+
+
+<h2>Creating a custom toolbar</h2>
+
+
+<p>To create a custom toolbar, click Tools &gt; Customize... or right-click in the open space in the toolbar area and select “Customize…” at the very bottom of this context menu. Click “New…” to create a new toolbar and give it a name and click OK, then close this dialog box.</p>
+
+
+<p><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/01/image4.png" alt="Creating a new toolbar" width="445" height="456" border="0" /></p>
+
+
+<p>It may appear that nothing has happened, but your toolbar has been added, it’s just empty. Look closely at your toolbars and you should be able to spot it:</p>
+
+
+<p><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/01/image5.png" alt="Customize your toolbar" width="204" height="77" border="0" /></p>
+
+
+<p>Click on the arrow, then “Add or Remove Buttons” then “Customize”. From this dialog, click “Add Command…”. Here you’ll see two lists, one for categories and another for the commands associated with the selected category.  Find and select the “Tools” category, then select the “External Command 1” command.</p>
+
+
+<p><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/01/image6.png" alt="Add commands to your toolbar" width="494" height="355" border="0" /></p>
+
+
+<p>The process is certainly a little cumbersome, but you’ll get the hang of it after doing it once or twice. The “External Commands” listed in the Commands window correspond with the external tools you have [previously configured –link to post #1]. It’s not magical enough to know the name of the external tools you’ve configured, so you’ll have to keep track of what you’ve created and the order they are in. In my example, I have three external tools configured, and I’m going to add each of them to my toolbar: External Command 1, External Command 2, and External Command 3.</p>
+
+
+<p><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/01/image7.png" alt="External Commands correspond to the External Tools you have, in order" width="324" height="229" border="0" /></p>
+
+
+<p>When you are done, close out any remaining open dialogs and your custom toolbar should be all set!</p>
+
+
+<p><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/01/image8.png" alt="A custom toolbar!" width="266" height="42" border="0" /></p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Customizing Visual Studio With External Tools, Part 1]]></title>
+    <link href="http://headspringlabs.com/blog/customizing-visual-studio-with-external-tools-part-1/"/>
+    <updated>2012-01-16T00:00:00-06:00</updated>
+    <id>http://headspringlabs.com/blog/customizing-visual-studio-with-external-tools-part-1</id>
+    <content type="html"><![CDATA[<p>Visual Studio has some deep customization options and extensibility points that many of us just ignore. Once such option is “External Tools” which allow you to create a menu item (and optional toolbar) that can run any external program you wish.</p>
+
+
+<p>I recently had to set up a couple of new computing environments so I went through my typical routine of setting up <em>Explorer.exe</em> as an external tool, and while doing so I pondered a few other tools that might be useful. In this and subsequent posts, I’ll describe how to set up some simple external tools, create a custom tool bar for them and even add them to the context menu.<!--more--></p>
+
+
+<p>In your menu, go to <strong>Tools &gt; External Tools</strong>. You may already have some present like Dotfuscator or a Guid generator.</p>
+
+
+<p><img style="padding-left: 0px;padding-right: 0px;padding-top: 0px;border-style: initial;border-color: initial;border-width: 0px" src="http://www.headspring.com/wp-content/uploads/2012/01/image2.png" alt="Visual Studio External Tools" width="371" height="362" border="0" /></p>
+
+
+<p>Setting up a tool is fairly simple: You can see above I have Windows Explorer configured with the /select argument to select the file based on the $(ItemPath) variable. More on this on <a href="http://msdn.microsoft.com/en-us/library/ekbzk5f8.aspx" target="_blank">MSDN – Arguments for External Tools</a>. When you launch this tool it will open Explorer to the currently active/selected file (either in your editor or the one selected in your solution explorer). I find it a handy shortcut when I need to explore to a file deep within a solution.</p>
+
+
+<h2>Other External Tools</h2>
+
+
+<p>I recently added my other favorite editor, <em>Notepad++,</em> to my tools.  Instead of exploring to the currently active file, it will open it up in Notepad++ which is where I find myself editing project files, csv files and other documents that I don’t need to edit with Visual Studio. You can configure Notepad++ with:</p>
+
+
+<p><strong>Title</strong>: Notepad++ (or anything you wish)</p>
+
+
+<p><strong>Command</strong>: C:Program Files (x86)Notepad++notepad++.exe (location of the exe)</p>
+
+
+<p><strong>Arguments</strong>: $(ItemPath)</p>
+
+
+<p>At Headspring, we use the open-source <a href="https://bitbucket.org/headspringlabs/tarantino/wiki/Home" target="_blank">Tarantino Project</a> to deploy many of our applications. On some projects the deployer executable resides somewhere in a <em>lib</em> folder within the project which means you have to walk through at least a few directories to get to it. I recently made a batch file to launch it straight from the command line from the root of a project, and so I went ahead and turned this .bat file into an external tool while I was at it.</p>
+
+
+<p><strong>Title</strong>: Tarantino Deployer</p>
+
+
+<p><strong>Command</strong>: $(SolutionDir)..Deploy.bat</p>
+
+
+<p><strong>Arguments</strong>: /min (this hides the cmd window)</p>
+
+
+<p>The Deploy.bat file sites in the same folder as the .sln file does and simply points to the relative location of the deployer exe:</p>
+
+
+<p>@echo off<br />
+Start /D.libdeployer .libdeployerTarantino.Deployer.exe</p>
+
+
+<h2>Launching External Tools</h2>
+
+
+<p>Once you’ve set up your tools in the dialog shown above, they will appear in your tools menu like so:</p>
+
+
+<p><img style="padding-left: 0px;padding-right: 0px;padding-top: 0px;border-style: initial;border-color: initial;border-width: 0px" src="http://www.headspring.com/wp-content/uploads/2012/01/image3.png" alt="Visual Studio Tools Menu" width="238" height="383" border="0" /></p>
+
+
+<p>Stay tuned for more! In the next post I’ll walk you through making your own custom Visual Studio toolbar to contain your tools.</p>
+
+
+<p><a title="Customizing Visual Studio With External Tools, Part 2" href="http://www.headspring.com/2012/01/customizing-visual-studio-with-external-tools-part-2">Part 2: Creating a custom toolbar</a></p>
+
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,551 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: ravendb | Headspring Labs]]></title>
+  <link href="http://headspringlabs.com/blog/categories/ravendb/atom.xml" rel="self"/>
+  <link href="http://headspringlabs.com/"/>
+  <updated>2013-07-15T23:13:23-05:00</updated>
+  <id>http://headspringlabs.com/</id>
+  <author>
+    <name><![CDATA[Headspring Labs]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Increasing Development Enjoyment with RavenDB]]></title>
+    <link href="http://headspringlabs.com/blog/increasing-development-enjoyment-with-ravendb/"/>
+    <updated>2012-04-23T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/increasing-development-enjoyment-with-ravendb</id>
+    <content type="html"><![CDATA[<p>We have a lot of different options for data storage and retrieval available today. These options include the traditional relational database, document databases, key value stores, and even flat files. Every option has its benefits over the others, making some options better for some things and other options better for other things. Once the data storage and retrieval option is selected, we then typically have to select a product. Within a solution space, most products offer some distinction from their competitors. Such distinctions make certain products popular choices for a particular technology stack. For example, MySQL is a common choice for the LAMP stack, as is Microsoft SQL Server for the .NET stack.</p>
+
+
+<p>Why is this so? There are several reasons for this, and their importance varies between administrators, developers, managers, and even executives.</p>
+
+
+<p>From a developer's point of view, it comes down to whether or not the product in the solution space makes the work more enjoyable.<!--more--></p>
+
+
+<p>As a .NET developer, <a href="http://ravendb.net">RavenDB</a> is a ton of fun to work with. Here is what it offers me:</p>
+
+
+<ol>
+<li>RavenDB is available as a <a href="http://nuget.org">NuGet</a> package, which means I don’t even have to leave Visual Studio to start working with it.</li>
+<li>The .NET client is very well designed and supports the IQueryable interface and LINQ very well.  This makes storing, deleting, and loading data easy. It also makes querying data easy and extremely powerful.</li>
+<li>Facilities to quickly define indexes and even MapReduce queries in code with minimal effort are supported.</li>
+<li>The amount of time I spend on the data model is greatly reduced, since mapping .NET objects to JSON documents is easy.</li>
+<li>I don’t have to use an object relational mapper (ORM).</li>
+<li>An HTTP API is available as an integration option.</li>
+<li>I can completely embed RavenDB in my application.</li>
+</ol>
+
+
+<p>The net result is I can spend most of my time focused on my application and its problem space. Reasons 4 and 5 are also true for other document databases, but reasons 1, 2, and 3 really distinguish RavenDB in the .NET space.</p>
+
+
+<p>Let’s look at an example. Take for instance reason #4 and assume we were tasked with creating a domain model for a shopping cart and the persistence logic for it.  The very first thing we would do is create the domain model. After some conversations and collaboration with a stakeholder, we come up with the following initial domain model along with the unit tests which validate the correct behavior of the model:</p>
+
+
+<p><div><script src='https://gist.github.com/2399488.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>At this point we are ready to start working on persisting the shopping cart object to a database. If we are using Microsoft SQL Server, we would now have to create some tables in SQL or perhaps use a code-first approach with our ORM of choice. We may need to create a map for our ORM and probably a repository class to facilitate the storage and retrieval of our domain object to and from the database. If we are using RavenDB, we are pretty much done. Regardless of the data storage solution selected, we can usually count on some tweaks and enhancements during the demo and develop iterations with the stakeholder. But when RavenDB is used, those changes are going to happen here in the domain model. Contrast this with a traditional relational database, which may require changes to the domain model, ORM maps, repositories, and SQL tables.</p>
+
+
+<p>I can’t get over how easy the .NET client is to use and how powerful RavenDB can be. If you are interested in trying RavenDB out, check out my <a href="http://www.headspring.com/2012/03/getting-started-with-ravendb">Getting Started with RavenDB</a> post for a quick introduction.</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Demystifying RavenDB Queries and Dynamic Indexes]]></title>
+    <link href="http://headspringlabs.com/blog/demystifying-ravendb-queries-and-dynamic-indexes/"/>
+    <updated>2012-04-19T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/demystifying-ravendb-queries-and-dynamic-indexes</id>
+    <content type="html"><![CDATA[<p>Not long a go, I wrote a detailed blog post on <a href="http://www.headspring.com/2012/03/getting-started-with-ravendb">getting started with RavenDB</a> and described the process of performing the most basic CRUD (create, retrieve, update, and delete) operations. The operations covered in the post are great for working with single data entities. One thing I didn’t discuss was how to retrieve a set of data entities and that is exactly what I want to dive into here.</p>
+
+
+<p>Retrieving data from RavenDB is dead simple and the .NET client offers excellent support for LINQ based queries. Let’s start by reviewing the IDocumentSession interface:</p>
+
+
+<p><div><script src='https://gist.github.com/2153059.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>The query method in the interface is the gateway to retrieving sets of data and offers three signatures which give us immense flexibility with our queries.</p>
+
+
+<p>Let’s explore the Query&lt;T&gt;() method! Beginning with the example context…</p>
+
+
+<p><!--more--></p>
+
+
+<p>Imagine we have a database of orders. Each order has some customer and payment information and a list of line items. Each line item consists of a product and a quantity. Our very simplified domain model might  resemble something like this:</p>
+
+
+<p><div><script src='https://gist.github.com/2423417.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>Let’s also assume we have a RavenDB instance with some orders in it. Using the management studio we take a peek at the orders collection and see 324 orders sitting in it!</p>
+
+
+<p><a href="http://www.headspring.com/wp-content/uploads/2012/04/image.png"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border-width: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/04/image_thumb.png" alt="image" width="480" height="310" border="0" /></a></p>
+
+
+<h3>The Simplest and Most Dangerous Query</h3>
+
+
+<p>What can we do this with this? A whole lot. The simplest thing we can do is ask Raven to give us all the orders in the collection. The query would look something like this:</p>
+
+
+<p><div><script src='https://gist.github.com/2423510.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>Or you could use lambda expressions if you prefer:</p>
+
+
+<p><div><script src='https://gist.github.com/2423571.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>Both of the code snippets generate the same query and return the same result set. You end up with an array containing 128 Order instances. Wait a minute…. Didn’t we have 324 orders in the database? Where are the rest? Raven limits unbounded queries to 128 result by default. This is a really neat safety measure that keeps you from doing something silly like asking for all objects in an huge dataset. Imagine issuing a similar query against Amazon’s order database… Yeah, that probably wouldn’t be good. Of course you can override this behavior specifying it using the <em>Take&lt;TSource&gt;</em> method. So if you really mean give me everything, then you need to say it explicitly.</p>
+
+
+<h3>Under the Hood of the .NET Client</h3>
+
+
+<p>A lot of other interesting things happen when a query is prepared and executed in the code snippets. Let’s take a look under the hood of the Raven client and see what is going on.</p>
+
+
+<p>The <em>session.Query&lt;Order&gt;()</em> method call is the first point of interest. The document session instance will begin by picking a dynamic index to use for the query. In this case, it selects a dynamic index named “dynamic/Orders”. It will then build a <em>RavenQueryStatistics</em> instance and a <em>RavenQueryProvider&lt;Order&gt;</em> instance and use them to build and return a <em>RavenQueryInspector&lt;Order&gt;</em> instance. The inspector object implements the <em>IRavenQueryable&lt;T&gt;</em> interface. At this point, the facilities for generating the query. There is a subtle difference between the LINQ expression and the lambda expression here. With the lambda expression, the <em>RavenQueryInspector&lt;Order&gt;</em> instance is immediately assigned to the <em>results</em> variable. The LINQ statement on the other hand then invokes the  <em>Select</em> LINQ extension method as a result of the LINQ syntax. This subtle difference forces the <em>RavenQueryProvider&lt;Orders&gt; </em>contained in the inspector object execute a few additional instructions that result in a second (yet identical) inspector instance that is assigned to the <em>results</em> variable.</p>
+
+
+<p>Notice that no query has actually been issued to the RavenDB server yet. That happens in the <em>results.ToArray()</em> method call. This method will make the <em>RavenQueryInspector&lt;Order&gt;</em> instance enumerate itself. When this happens, the inspector asks the underlying <em>RavenQueryProvider&lt;Order&gt;</em> instance to execute the select expression.  The provider will then get a processor object to help execute the expression. The processor first translates the expression into a Lucene query and issues the query command against RavenDB server. The details of the query command execution can vary quite a bit based on your configuration and is beyond the scope of this post. Take it on trust, the client knows what it’s doing. Now the client waits for the result from the server and begins processing it as soon as it receives it. The result contains some additional data including the time to execute, number or results returned, the number of results matched, and the actual index used. These results are available to you via the <em>Statistics</em> method declared in the <em>IRavenQueryable&lt;T&gt;</em> interface. After processing the result, the execution continues back up the call stack where the inspector instance finally returns the enumerator that becomes the final array of Order instances that is assigned to the <em>orders</em> variable.</p>
+
+
+<h3>Enter the Dynamic Index</h3>
+
+
+<p>Interestingly enough, the simplest query uses the “Raven/DocumentsByEntityName” index which is the default static index RavenDB creates to access all of the documents stored within it. You can see this index by clicking on the “Indexes” tab in the management studio.</p>
+
+
+<p><a href="http://www.headspring.com/wp-content/uploads/2012/04/image1.png"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border-width: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/04/image_thumb1.png" alt="image" width="480" height="310" border="0" /></a></p>
+
+
+<p>By the way, its not a good idea to delete this index. The server will complain quite a bit if this happens. But if you do, don’t worry Raven is self healing. Just shut restart the server process and Raven will add the missing index and stop complaining.</p>
+
+
+<p>You may have noticed that I haven’t talked one bit about how the server processes the request and I have done that on purpose. There is a lot to be said about what happens on the server side. For now, lets build another more useful query and see what happens.</p>
+
+
+<p>Hypothetically speaking, let’s say that we need to find all the orders placed by one of our customers named “Jane Doe”. A query for that may look like:</p>
+
+
+<p><div><script src='https://gist.github.com/2424678.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>When executed the client will send “dynamic/Orders” index to the server. If you inspect the results you will see that the actual index used is the “Temp/Orders/ByName” index. Why is this? The server noticed that the default index was not sufficient to efficiently find the records queried. The server then creates a temporary index and returns the result set containing 108 orders for a total operation time of 321ms. Not bad. If I execute the query again, it returns in under 1ms. I can live with that. Here is the really cool part, RavenDB cleans up after itself. If RavenDB doesn’t receive any more queries like this for some time, it will simply delete the temporary index. You can see the temporary indexes in the management studio.</p>
+
+
+<p><a href="http://www.headspring.com/wp-content/uploads/2012/04/image2.png"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border-width: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/04/image_thumb2.png" alt="image" width="480" height="310" border="0" /></a></p>
+
+
+<h3>More Query Fu</h3>
+
+
+<p>Now let’s say that we reviewed the results and learned that what we really wanted was all the orders placed by either Jane Doe or her husband, John Doe. We can fix our query to look like this:</p>
+
+
+<p><div><script src='https://gist.github.com/2424749.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>This query will also be sent with the “dynamic/Orders” index (the rest of the examples in this blog post will use the same dynamic index) and the server will reuse the “Temp/Orders/ByName” index. In fact, any additional queries that only make use of the name property will use this index.</p>
+
+
+<p>Let’s say that we really meant all orders placed by any member of the Doe family. We may then use this variation of the query:</p>
+
+
+<p><div><script src='https://gist.github.com/2424767.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>We can also use the <em>StartsWith() </em>and <em>Contains()</em> methods with strings. With numeric fields we can use all the typical operators such as equals (=), not equals (!=), greater than (&gt;), greater than or equal to (&gt;=), less than (&lt;), and less than or equal to (&lt;=). By the way, we can also make use of some calculated values and we can combine them with others. For example, may we want to find all the orders placed by Jane Doe that had single line item.</p>
+
+
+<p><div><script src='https://gist.github.com/2424816.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<h3>Even More Query Fu</h3>
+
+
+<p>There are a couple of other useful operations for filtering results. They are the <em>In</em> and <em>Any</em> operations. Let’s see them in action!</p>
+
+
+<p>Say, we need to find all the orders containing a line item requested in bulk quantity. Assume that by bulk quantity we mean at least two dozen or more of a line item. The query will look something like this:</p>
+
+
+<p><div><script src='https://gist.github.com/2483951.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>Now, imagine we really wanted was the orders containing products valued over $100.00 in bulk quantity. Then the query would look like this:</p>
+
+
+<p><div><script src='https://gist.github.com/2484054.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>Remember when we wanted find all of the orders from just Jane and John Doe. We can rewrite that query and leverage the <em>In </em>operator. This example maybe trivial, but imaging you had a larger list of names to compare against. This operator can make the query very readable.</p>
+
+
+<p><div><script src='https://gist.github.com/2484118.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>Just like we did with the string and numeric comparisons, we can also combine these operators and nest them to give us some pretty advanced queries. For example, assume we needed to find all orders with bulk quantity line items of our “Better Thingy” or “Thingy” products:</p>
+
+
+<p><div><script src='https://gist.github.com/2484165.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>Combine these operators with the other string and numeric comparisons and you are equipped to write some serious queries!</p>
+
+
+<h3>Know Your Limits</h3>
+
+
+<p>Just because you can write it doesn’t mean you can query it. While the query processor is very good, there are some things it can’t do. Here are a few limitations:</p>
+
+
+<ul>
+<li>The <strong>let</strong> keyword is not currently supported.</li>
+<li>The only LINQ aggregate operations currently supported are <em>Distinct</em> and <em>Count</em></li>
+</ul>
+
+
+<p>You will see these limitations arise when the query processor object we talked about earlier fails to generate (or translate) an expression to a document query at runtime. So make sure you write tests around your queries. Also you should know there are solutions and workarounds to get beyond the limitations such as using MapReduce index or N+1 queries.</p>
+
+
+<h3>From Temporary To Permanent</h3>
+
+
+<p>One last note about the temporary indexes… When a temporary index gets significant usage, Raven may decide to promote them permanently. When this happens their name changes from “Temp/Foo/Bar” to “Auto/Foo/Bar” and are really easy to spot in the management studio.</p>
+
+
+<p><a href="http://www.headspring.com/wp-content/uploads/2012/04/image3.png"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border-width: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/04/image_thumb3.png" alt="image" width="480" height="392" border="0" /></a></p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Getting Started with RavenDB]]></title>
+    <link href="http://headspringlabs.com/blog/getting-started-with-ravendb/"/>
+    <updated>2012-03-19T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/getting-started-with-ravendb</id>
+    <content type="html"><![CDATA[<p>I have been following the NoSQL movement for a while now. I have <a href="http://alonsorobles.com/2012/01/10/nosql-big-data-polyglot-persistence-a-new-era/">blogged about the movement</a> and even written a how to post on <a href="http://alonsorobles.com/2011/08/08/running-apache-cassandra-0-8-2-on-windows-7/">setting up a popular column oriented data store</a>. It’s exciting to see the development of so many persistence alternatives. Don’t get me wrong either. The RDBMS is not dead. It just no longer the only kid on the block.</p>
+
+
+<p>Document databases are another persistence alternative to the traditional RDBMS and there are plenty to chose from (like <a href="http://couchdb.apache.org/">CouchDB</a>, <a href="http://aws.amazon.com/simpledb/">SimpleDB</a>, <a href="http://ravendb.net/">RavenDB</a>,  and <a href="http://wiki.basho.com/Riak.html">Riak</a> to name a few). This post is intended to help get you started using RavenDB.</p>
+
+
+<p>Let’s get started!<!--more--></p>
+
+
+<h3><span style="font-weight: bold;">Installing RavenDB</span></h3>
+
+
+<p>There are <a href="http://ravendb.net/download">a few different options for obtaining RavenDB</a>. When it’s available, I prefer using <a href="http://nuget.org/">Nuget</a> via the package manager console. So that’s how we are going to do it… Here we go.</p>
+
+
+<p>I am assuming you already have a Visual Studio solution with some projects in it. I have a class library project targeting the .NET 4.0 framework called Persistence where all of my persistence logic goes. Using the package manager console, I install the RavenDB package.</p>
+
+
+<p><div><script src='https://gist.github.com/1987578.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>From the output you can see a number of dependencies were installed. Feel free to hit your easy button now.</p>
+
+
+<h3><span style="font-weight: bold;">Starting the Server</span></h3>
+
+
+<p>The next thing we need to do is to start up the server. Please note that these steps are here to get you started, not the steps you should follow for production use. I’ll throw in some other pointers along the way.</p>
+
+
+<p>To start the server, open up windows explorer and navigate to your solution directory. You should find a packages directory there which was created by Nuget.</p>
+
+
+<p><a href="http://www.headspring.com/2012/03/getting-started-with-ravendb/image-png-32" rel="attachment wp-att-3954"><img class="alignnone size-medium wp-image-3954" src="http://www.headspring.com/wp-content/uploads/2012/03/image.png" alt="" width="440" height="232" /></a></p>
+
+
+<p>Navigate into the packages directory, then into the RavenDB directory, then into the server directory and locate the Raven.Server.exe file.</p>
+
+
+<p><a href="http://www.headspring.com/2012/03/getting-started-with-ravendb/image-png-33" rel="attachment wp-att-3956"><img class="alignnone size-medium wp-image-3956" src="http://www.headspring.com/wp-content/uploads/2012/03/image1.png" alt="" width="440" height="232" /></a></p>
+
+
+<p>Double click the Raven.Server.exe file to start the server. This will start a console window that looks like this:</p>
+
+
+<p><a href="http://www.headspring.com/2012/03/getting-started-with-ravendb/image-png-34" rel="attachment wp-att-3958"><img class="alignnone size-medium wp-image-3958" src="http://www.headspring.com/wp-content/uploads/2012/03/image2.png" alt="" width="440" height="232" /></a></p>
+
+
+<p>Feel free to hit that easy button again!</p>
+
+
+<p>The server has automatically created a data directory and started an HTTP server on port 8080. These settings can be changed in the Raven.Server.exe.config file as needed. Let’s move on.</p>
+
+
+<h3><span style="font-weight: bold;">The Basics</span></h3>
+
+
+<p>Before we start fiddling with data, we need to understand the basic mechanics of a document database. The concepts are pretty easy, but can be a mental leap if you spent years working with traditional relational databases. Here are the basic concepts from the top down.</p>
+
+
+<p><strong>Database </strong>– The server is made up of database instances. Each database is made up of document collections. I like to think of a database like a filing cabinet.</p>
+
+
+<p><strong>Collection</strong> – The instance is made up of collections which are nothing more than logical grouping of documents. I like to think of them as a folder or a bin that contain related documents.</p>
+
+
+<p><strong>Document</strong> – A document is a single unit of data. It is made up of fields. Think about an email. It is a document which contains a single sender, one or more recipients, a subject, a timestamp, and a body. It is important to note that every document does not necessarily contain all the fields. That means there is no enforced schema for the documents. It may be helpful to think about a handwritten letter. A letter will most likely contain a recipient, a body, and a sender. But you could optionally add a return address, a subject line, a post script message, and/or a date.</p>
+
+
+<p><strong>Field</strong> – A field is a key value pair. The key describes the contents of the field. The value maybe an array or a scalar value. It could also be a document or an array of documents. They are pretty flexible.</p>
+
+
+<p>If you are still having a hard time wrapping your mind around these concepts, then you may find it useful to conceptually map these terms to relational data terms. Just remember that these mappings are not literally identical, they are somewhat similar concepts. I have also added a real world equivalent for comparison.</p>
+
+
+<table width="374" border="1" cellspacing="0" cellpadding="2">
+<tbody>
+<tr>
+<td valign="top" width="195"><strong>Document DB Concept/Term</strong></td>
+<td valign="top" width="177"><strong>Similar SQL Concept/Term</strong></td>
+</tr>
+<tr>
+<td valign="top" width="208">Database</td>
+<td valign="top" width="183">Database</td>
+</tr>
+<tr>
+<td valign="top" width="211">Collection</td>
+<td valign="top" width="186">Table</td>
+</tr>
+<tr>
+<td valign="top" width="211">Document</td>
+<td valign="top" width="187">Row</td>
+</tr>
+<tr>
+<td valign="top" width="210">Field</td>
+<td valign="top" width="188">Column</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>You may still not fully understand the difference and that’s okay. The differences will become more apparent as you play with document databases.</p>
+
+
+<p>Let’s get some hands on experience now.</p>
+
+
+<p>Fire up the management studio by using your favorite browser and navigating to http://localhost:8080 while the server is still running.</p>
+
+
+<p><a href="http://www.headspring.com/2012/03/getting-started-with-ravendb/image-png-35" rel="attachment wp-att-3960"><img class="alignnone size-medium wp-image-3960" src="http://www.headspring.com/wp-content/uploads/2012/03/image3.png" alt="" width="440" height="286" /></a></p>
+
+
+<p>By default, the RavenDB server has created a “Default” database instance and that is the instance the management studio has connected to. The first thing we are going to do is create a database instance that we will use for the remainder of this discussion.</p>
+
+
+<p>Click on the “Database” link towards the top right of the studio.</p>
+
+
+<p><a href="http://www.headspring.com/2012/03/getting-started-with-ravendb/image-png-36" rel="attachment wp-att-3962"><img class="alignnone size-medium wp-image-3962" src="http://www.headspring.com/wp-content/uploads/2012/03/image4.png" alt="" width="440" height="286" /></a></p>
+
+
+<p>Next click on the “New Database” button.</p>
+
+
+<p><a href="http://www.headspring.com/2012/03/getting-started-with-ravendb/image-png-37" rel="attachment wp-att-3964"><img class="alignnone size-medium wp-image-3964" src="http://www.headspring.com/wp-content/uploads/2012/03/image5.png" alt="" width="300" height="96" /></a></p>
+
+
+<p>Enter “ShoppingCartDemo” for the database name and click the “OK” button. You may be prompted for credentials. Go ahead and enter them.</p>
+
+
+<p><a href="http://www.headspring.com/2012/03/getting-started-with-ravendb/image-png-38" rel="attachment wp-att-3966"><img class="alignnone size-medium wp-image-3966" src="http://www.headspring.com/wp-content/uploads/2012/03/image6.png" alt="" width="440" height="286" /></a></p>
+
+
+<p>Click on the “ShoppingCartDemo” database. Notice the navigation bar changed from “Databases &gt; Default” to “Databases &gt; ShoppingCartDemo”.</p>
+
+
+<p><a href="http://www.headspring.com/2012/03/getting-started-with-ravendb/image-png-39" rel="attachment wp-att-3968"><img class="alignnone size-medium wp-image-3968" src="http://www.headspring.com/wp-content/uploads/2012/03/image7.png" alt="" width="440" height="286" /></a></p>
+
+
+<p>Congrats! You now have a new database instance and the management studio is now working in its context.</p>
+
+
+<p>We could have done the same thing with some code. It looks like this.</p>
+
+
+<p><div><script src='https://gist.github.com/2176197.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>Now we are ready to add some data.</p>
+
+
+<h3><span style="font-weight: bold;">Creating Documents</span></h3>
+
+
+<p>First we need to define our classes. We can do that with some simple C# like this:</p>
+
+
+<p><div><script src='https://gist.github.com/1988820.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>Then the application can do something like this:</p>
+
+
+<p><div><script src='https://gist.github.com/2176205.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>After that code is executed by the application you can see a few things in the RavenDB management studio.</p>
+
+
+<p>Let’s take a look at the collections page which can be accessed by clicking the “Collections” tab at the top of the studio.</p>
+
+
+<p><a href="http://www.headspring.com/2012/03/getting-started-with-ravendb/image-png-33" rel="attachment wp-att-3956"><img class="alignnone size-medium wp-image-3956" src="http://www.headspring.com/wp-content/uploads/2012/03/image8.png" alt="" width="440" height="286" /></a></p>
+
+
+<p>Notice that RavenDB has created a “ShoppingCarts” collection for us. This collection is a logical grouping of the ShoppingCart documents. Now click on the pencil icon on the document.</p>
+
+
+<p><a href="http://www.headspring.com/2012/03/getting-started-with-ravendb/image-png-33" rel="attachment wp-att-3956"><img class="alignnone size-medium wp-image-3956" src="http://www.headspring.com/wp-content/uploads/2012/03/image9.png" alt="" width="440" height="286" /></a></p>
+
+
+<p>Notice that the document is just a JSON serialized representation of the created cart. There is some metadata that RavenDB keeps to help it serialize and deserialize the JSON documents to plain old CLR objects.</p>
+
+
+<p>Now we can retrieve documents.</p>
+
+
+<h3><span style="font-weight: bold;">Retrieving Documents</span></h3>
+
+
+<p>We can now retrieve the shopping cart.</p>
+
+
+<p><div><script src='https://gist.github.com/2176209.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<h3></h3>
+
+
+<h3><span style="font-weight: bold;">Updating Documents</span></h3>
+
+
+<p>After retrieving a document, you will probably want to persist changes to it. This easy pretty easy to do.</p>
+
+
+<p>We can refactor the shopping cart class a little here. By changing the array of line items to a list of line items, we can now easily add items to the cart.</p>
+
+
+<p><div><script src='https://gist.github.com/1989715.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>Now our application can make changes like this:</p>
+
+
+<p><div><script src='https://gist.github.com/2176221.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>Take a look at the document data in the management studio</p>
+
+
+<p><a href="http://www.headspring.com/2012/03/getting-started-with-ravendb/image-png-33" rel="attachment wp-att-3956"><img class="alignnone size-medium wp-image-3956" src="http://www.headspring.com/wp-content/uploads/2012/03/image10.png" alt="" width="440" height="286" /></a></p>
+
+
+<p>Notice that the change in the shopping cart class had no impact in this operation. This is one of the neat features of a document DB. Adding and changing fields is pretty easy without having to worry about migrating data most of the time. There are some caveats with this. But that is a topic for another discussion.</p>
+
+
+<h3></h3>
+
+
+<h3><span style="font-weight: bold;">Deleting Documents</span></h3>
+
+
+<p>We can now add a delete a cart easily like this:</p>
+
+
+<p><div><script src='https://gist.github.com/2176223.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>Take another look at collections tab in the management studio:</p>
+
+
+<p><a href="http://www.headspring.com/2012/03/getting-started-with-ravendb/image-png-33" rel="attachment wp-att-3956"><img class="alignnone size-medium wp-image-3956" src="http://www.headspring.com/wp-content/uploads/2012/03/image11.png" alt="" width="440" height="286" /></a></p>
+
+
+<p>Notice the document is gone, but RavenDB remembers the ShoppingCarts collection.</p>
+
+
+<p>We have looked at:</p>
+
+
+<ol>
+<li>How to install RavenDB using Nuget for development</li>
+<li>How to start up the RavenDB server (again for development and tinkering)</li>
+<li>How to access the management studio</li>
+<li>How to create a database using code and the studio</li>
+<li>How to perform simplistic CRUD operations (create, retrieve, update, and delete) using the RavenDB client.</li>
+</ol>
+
+
+<p>There is much more to discuss about Raven. Make sure you look at the <a href="http://ravendb.net/">official RavenDB site for more information</a>.</p>
+
+
+<p><strong>Update:</strong> Thanks for the feedback. I removed the repository pattern from the examples as the implementation example was taking away from the intent of the post.</p>
+
+]]></content>
+  </entry>
+  
+</feed>

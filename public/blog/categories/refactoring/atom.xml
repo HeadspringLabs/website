@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Refactoring | Headspring Labs]]></title>
+  <link href="http://headspringlabs.com/blog/categories/refactoring/atom.xml" rel="self"/>
+  <link href="http://headspringlabs.com/"/>
+  <updated>2013-07-15T23:13:23-05:00</updated>
+  <id>http://headspringlabs.com/</id>
+  <author>
+    <name><![CDATA[Headspring Labs]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Making Conditional Validation Logic Readable]]></title>
+    <link href="http://headspringlabs.com/blog/making-conditional-validation-logic-readable/"/>
+    <updated>2012-03-13T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/making-conditional-validation-logic-readable</id>
+    <content type="html"><![CDATA[<h2>Summary</h2>
+
+
+<p>Why are readable conditionals important?</p>
+
+
+<ul>
+<li>Reduce the chance of making an error while creating the initial implementation</li>
+<li>Reduce the time to understand the conditional while maintaining the implementation<!--more--></li>
+</ul>
+
+
+<p>&nbsp;</p>
+
+
+<p>What techniques can I use?</p>
+
+
+<ul>
+<li>Invert if statements where possible
+<ul>
+<li>reduces nesting</li>
+<li>reduces vertical height of the conditionals</li>
+</ul>
+</li>
+<li>Extract methods from conditional payloads
+<ul>
+<li>emphasizes control flow decision logic instead of the implementations of the decisions</li>
+<li>reduces vertical height of the conditionals</li>
+</ul>
+</li>
+</ul>
+
+
+<p>&nbsp;</p>
+
+
+<p>The <em>Practical Example</em> section below contains a walkthrough demonstrating a refactoring using these techniques.</p>
+
+
+<h2>Why Conditionals Matter</h2>
+
+
+<p>Conditional logic is a large component of software.  While it’s certainly possible to write software without conditionals (usually some sort of number crunching calculation), it’s fairly rare.  Conditionals make it possible for a program to do different things based on a set of circumstances that might change while the program is running.  Almost all user input has to be filtered by conditional validation, since you can never be sure what a user is going to type into your program!</p>
+
+
+<p>Finding defects in conditionals can be difficult because it usually takes a set of specific circumstances to flow through the defective code.  In worst cases you may not even know how to reliably trigger the error because you don’t the exact circumstances that cause the defective lines to be reached.</p>
+
+
+<p>Since conditionals are so common, and the potential for problems is so high, it’s important to write conditional statements that are clear to understand and easy to follow.</p>
+
+
+<h2>Practical Example – Refactoring A Password Change Validation</h2>
+
+
+<p>Recently I needed to add an audit trail to a small web application.  The app was about 5 pages and I felt doing it explicitly would be quicker and simpler than spending time setting up and configuring an automated approach.</p>
+
+
+<p>One of the pages provided a way for users to change their password using the standard “enter your current password, type the new password twice” design:</p>
+
+
+<p><a href="http://www.headspring.com/wp-content/uploads/2012/02/changePassword1.png"><img style="padding-left: 0px; padding-right: 0px; float: none; margin-left: auto; margin-right: auto; padding-top: 0px; border-width: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/02/changePassword_thumb1.png" alt="changePassword" width="326" height="208" border="0" /></a></p>
+
+
+<p>Clicking Submit triggers two phases of validation.  The first phase checks the current password is correct, a new password is supplied, that the new password was typed correctly twice, and the new password was not used recently.  The second phase ensures the new password is sufficiently complex – e.g. a minimum length and a minimum number of numeric and alpha characters are used.</p>
+
+
+<p>I needed to add an audit entry for any password change attempt and the corresponding result.  This is what the original code looked like:</p>
+
+
+<p><div><script src='https://gist.github.com/1934704.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>There are several suboptimal things to note about the above code:</p>
+
+
+<ul>
+<li>There are six levels of nested if statements.</li>
+<li>The longest conditional block is 65 lines between the opening and closing.  I can’t even see the entire block at once in my editor, I have to scroll up and down.</li>
+<li>The phase two validation on lines 38-54 is buried inside error handling for phase one validation.  You cannot glance through the conditional and find it without reading almost the entire conditional.</li>
+<li>The logic for displaying a validation failure is duplicated several times.</li>
+</ul>
+
+
+<p>&nbsp;</p>
+
+
+<p>Implementing the auditing would require making multiple additions, and it would be easy for a particular condition to get missed if the validation logic changed later.  I decided to refactor the conditional.</p>
+
+
+<p>The first thing I did was reduce the vertical height by encapsulating the payloads of the conditionals into a call to a new method DenyChanges(string reason).  Your conditional payloads may not always be completely duplicated like this, but you can still encapsulate them into methods to reduce the space between the conditional clauses.</p>
+
+
+<p>[gist id = 1934740]</p>
+
+
+<p>&nbsp;</p>
+
+
+<p>This is already much easier to look at.</p>
+
+
+<ul>
+<li>The longest conditional block is 42 lines, and we can see the whole conditional at once.</li>
+<li>The decisions around control flow are emphasized over what the conditionals are doing.  It’s easier to spot a logic error in the conditionals.</li>
+<li>The normal case (user changes password) stands out much clearer from all the validation checks.</li>
+</ul>
+
+
+<p>&nbsp;</p>
+
+
+<p>Now that we can see the entire block in our screen, it becomes apparent the outer if statement doesn’t have an else clause.  We can remove an unnecessary level of nesting by inverting the history check and returning instead.  Here’s what that inversion looks like (see line 9 specifically):</p>
+
+
+<p>[gist id = 1934825]</p>
+
+
+<p>&nbsp;</p>
+
+
+<p>This reduces the nesting from 6 levels to 5.  Looking over the remainder of the validation, we can remove virtually ALL of the nesting by applying the same technique – perform a validation, and return if a failure occurred.  I’m not going to show each little step, but here’s the end result of continuing to invert ifs and extract methods.</p>
+
+
+<p>[gist id = 1934871]</p>
+
+
+<p>&nbsp;</p>
+
+
+<p>Much better!  In ChangePassword_Click we can tell what happens just by reading top to bottom.  Method names like ValidateChange and DenyChange, along with variable names like changeErrors, communicate the WHAT without forcing us to suffer through reading the HOW to implicitly figure out WHAT’s going on.</p>
+
+
+<h2>Practical Example – Wrap up</h2>
+
+
+<p>We’ve used two techniques to simplify a conditional that was nested 6 levels deep and difficult to quickly trace through the decision flow.  By extracting the conditional payloads into methods and inverting if clauses when possible, we’ve completely eliminated the nested conditionals, and also managed to eliminate all the else clauses as well.  The result is a much shorter block of conditionals that can be read and followed without having to understand the implementation of what each conditional state does, and will be much easier to modify in the future.</p>
+
+]]></content>
+  </entry>
+  
+</feed>

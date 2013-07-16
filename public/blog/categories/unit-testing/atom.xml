@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: unit testing | Headspring Labs]]></title>
+  <link href="http://headspringlabs.com/blog/categories/unit-testing/atom.xml" rel="self"/>
+  <link href="http://headspringlabs.com/"/>
+  <updated>2013-07-15T23:13:23-05:00</updated>
+  <id>http://headspringlabs.com/</id>
+  <author>
+    <name><![CDATA[Headspring Labs]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Using WaitHandles to Test Asynchronous Events]]></title>
+    <link href="http://headspringlabs.com/blog/using-waithandles-to-test-asynchronous-events/"/>
+    <updated>2012-06-20T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/using-waithandles-to-test-asynchronous-events</id>
+    <content type="html"><![CDATA[<p><em>By Casey Gum</em></p>
+
+
+<p>In my last post, I talked about some of the dangers of using lambda expressions (anonymous delegates) as event handlers.  However, one place where this can be really handy is when you are unit testing classes that raise events. <!--more--></p>
+
+
+<p>Occasionally, you will find yourself in a situation where you need to unit test a class that raises an event or calls a callback method on a different thread than the one that initiated the action in the first place.  This is especially common when dealing with web requests and can lead to some obtuse unit testing techniques.  In this post, I'll demonstrate a technique that I use that relies on WaitHandles that is pretty darn handy.</p>
+
+
+<p>Let's say that we have to unit test the following class.</p>
+
+
+<p><div><script src='https://gist.github.com/2942373.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>This class has a method, StartJob() and an event JobComplete.  StartJob() spins up a new thread and sleeps for the executionTime to simulate work and then raises an event, notifying the caller that the job is complete.  (ProTip: If I initialize the event to an empty delegate{}, I don't have to null-check the event before raising it.)  However, JobComplete is being raised on the new thread.  What implications do you think this will have on a unit test?  Let's take a look.</p>
+
+
+<p>Here's a unit test one might write that would work perfectly provided there was no thread-switching going on.</p>
+
+
+<p><div><script src='https://gist.github.com/2942411.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>A test like this *might* even work if there was a thread-switch, but it would all depend on how quickly the code executed and the thread scheduler.  However, I would suspect that most of the time it would fail.</p>
+
+
+<p>The next approach someone might take to solve this unit testing dilemma is to use a Thread.Sleep() in the unit test.</p>
+
+
+<p><div><script src='https://gist.github.com/2942427.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>This may work most of the time, but if the unit of work exceeds the period provided in the Thread.Sleep() call, the test will fail even though the class under test functions properly.  But under normal circumstances, it would just make your unit test take longer to run.</p>
+
+
+<p>Another approach one might take is to use polling and a Thread.Sleep().</p>
+
+
+<p><div><script src='https://gist.github.com/2942442.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>This one will definitely work and is more time-efficient, but has one big drawback: if the thing being tested actually does fail, this unit test will spin forever and prevent any other unit tests from running.  In a continuous integration or production build environment, it might even take awhile before anyone realizes there's a problem.  The build just doesn't finish.</p>
+
+
+<p>Okay, next thing to try is to bail out after a certain number of spins.</p>
+
+
+<p><div><script src='https://gist.github.com/2942450.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>This one will definitely work and will timeout if the test doesn't complete within 30 seconds, but it is obtuse.  Just look at how much code is spent dealing with waiting long enough, but not too long.</p>
+
+
+<p>A better approach is to use a WaitHandle, specifically the ManualResetEvent class.</p>
+
+
+<p><div><script src='https://gist.github.com/2942461.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>The whole purpose of WaitHandles is to pass signals across thread boundaries.  Using a WaitHandle is much more concise and is perfectly efficient.  The unit test code will sit there on the waitHandle.WaitOne(timeout) line until either the timeout period expires or the waitHandle.Set() method is called.  If Set() is called, WaitOne() returns true.  If the timeout expires before Set() is called, it returns false.  All you need to do is Assert that the result of WaitOne() is true.</p>
+
+
+<p>Pretty neat, don't you think?</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Becoming a Headspringer: Take Advantage of Working with Smart People]]></title>
+    <link href="http://headspringlabs.com/blog/becoming-a-headspringer-take-advantage-of-working-with-smart-people/"/>
+    <updated>2012-04-10T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/becoming-a-headspringer-take-advantage-of-working-with-smart-people</id>
+    <content type="html"><![CDATA[<p>As I was pondering a new topic to blog, I stumbled into one this morning. I was running some ideas by a few Headspringers, and they provided several options. I decided to go with a hybrid of their suggestions. What I originally planned to blog was a way to test Enumeration subclasses of the <a href="https://bitbucket.org/headspringlabs/tarantino/wiki/Home" target="_blank">Enumeration class from Tarantino</a>. What I ended up with was an even better way to test them. This is not an unusual happenstance at Headspring. If you talk to other Headspringers, you’re going to learn something new. It never ceases to amaze me how often I’m learning something. I like to think I’m doing some teaching, too, but I’m confident that I’m currently learning more than teaching.</p>
+
+
+<p>In case it isn’t clear by the title, part of becoming a Headspringer is to learn from the great people you get to work with every day. So, if you'd like the opportunity to work with talented, passionate people, <a href="http://www.headspring.com/about-us/careers">we are hiring!</a></p>
+
+
+<p>Now let’s get to the original idea of testing the Enumeration subclasses. I will walk through my original code, then what <a href="http://www.headspring.com/2012/02/get-to-know-a-developer-brandon-barry">Mr. Brandon Barry</a> showed me, and why it’s an improvement.<!--more--></p>
+
+
+<p>Originally, I had a test that gets all the subclasses of Enumeration, loops through them, and verifies all the values are unique. The test looked like this:<br />
+[gist id=2348233 file=All_Enumerations_should_contain_unique_ids_test.cs]<br />
+After talking to a few Headspringers, Brandon mentioned TestCaseSource, which turned out to be pretty perfect for this situation. Using TestCaseSource is similar to TestCase, which <a href="http://www.headspring.com/2012/03/why-i-like-testcase">Chris Missal blogged</a> about a couple weeks ago. You could use TestCase for this if you only wanted to test a few specific enumerations. Since I want to test all subclasses of Enumeration all the time, TestCaseSource was a much better fit. Now I don't have to worry about forgetting to add an Enumeration to the test.</p>
+
+
+<p>Now the test looks like this:<br />
+[gist id=2348235 file=Enumeration_should_contain_unique_ids_test.cs]<br />
+Basically, NUnit runs a test per type in EnumerationTypes and passes that type into the now-parameterized test. The primary benefit of this method is that it tests one Enumeration at a time. It also makes the test simpler by removing the muck and letting you focus on the actual test. As an added bonus, it integrates with <a href="http://www.jetbrains.com/resharper/">Resharper</a>’s test runner, which means you can debug an individual test without having to loop through the set to get to the one you want.</p>
+
+
+<p>I created three test subclasses, and TestEnum3 has duplicate values of 1. Here’s what the runner looks like:</p>
+
+
+<p><a href="http://www.headspring.com/wp-content/uploads/2012/04/CropperCapture4.jpg"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border-width: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/04/CropperCapture4_thumb.jpg" alt="CropperCapture[4]" width="560" border="0" /></a><br />
+<span style="font-size: x-small; color: #666;">Click image to enlarge</span></p>
+
+
+<p>You can see in the image above that my original test just fails with "TestEnum3 contains duplicate ID of 1". When using the TestCaseSource you get the test breakdown of each Enumeration, can clearly see that TestEnum3 is the one that fails, and can re-run that one individually. It also shows you what exactly is being tested, so you can verify you're testing everything you think you're testing.</p>
+
+
+<p>And now it’s fixed:</p>
+
+
+<p><a href="http://www.headspring.com/wp-content/uploads/2012/04/CropperCapture6.jpg"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border-width: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/04/CropperCapture6_thumb.jpg" alt="CropperCapture[6]" width="560" border="0" /></a><br />
+<span style="font-size: x-small; color: #666;">Click image to enlarge</span></p>
+
+
+<p>If you would like to see more details on the Enumeration class, you can <a href="http://lostechies.com/jimmybogard/2008/08/12/enumeration-classes/">read Jimmy Bogard’s post on the subject</a>. If you would like more details about this particular test, feel free to leave a comment.</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[You Want To Change What?]]></title>
+    <link href="http://headspringlabs.com/blog/you-want-to-change-what/"/>
+    <updated>2012-03-26T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/you-want-to-change-what</id>
+    <content type="html"><![CDATA[<p>Change is inevitable. It is a simple fact of life which permeates into just about everything. Software development is no exception. Many software development life cycles have evolved and others have come into existence in an effort to help us deal with change. Programming languages, tools and techniques are also continuously evolving as well. Yet with all these improvements many project teams continue to struggle with change.</p>
+
+
+<p>What can we do about change? The truth is change doesn’t have to be hard. There are many things we can do such as plan for change, design for change, and code for change.<!--more--></p>
+
+
+<p>Sounds great doesn’t it? There are actually dozens of books and a plethora of blog posts that talk about those principles.</p>
+
+
+<p>If you are still reading this, then you are probably wondering how to put those principles into practice. I will share a practical example with you.</p>
+
+
+<p>A short while ago, I blogged <a href="http://www.headspring.com/2012/02/i-have-frameworkcommitment-issues">about selecting a framework</a>. The premise was a real situation in which a company I was consulting for selected a framework, changed their mind, and then changed it back. The actual frameworks involved are not important. The important thing is that the change was essentially painless.</p>
+
+
+<p>Here is how pain was avoided.</p>
+
+
+<p>I worked on a subsystem with very well defined boundaries of responsibility. One thing the subsystem had to do was to send a message to another subsystem. That was easy enough.</p>
+
+
+<p>I started working on the core domain logic of the subsystem and I reached the point where a domain object implemented the business logic that decided to send a message to the other subsystem. The details of the message format and content were still fuzzy and that was a clear indicator that change was coming. Anticipating change here, I decided to use an interface to allow me to continue developing the business logic while the details of the messages were in limbo.</p>
+
+
+<p>My code looked something like this:</p>
+
+
+<p><div><script src='https://gist.github.com/1979430.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>I used unit tests to make sure the business logic was sound and leveraged a mocking framework to mock the message publisher. Shortly thereafter a decision was made to implement a third party message bus to handle some of the messaging details. Again this was easy enough to do. We just implemented the IMessagePublisher interface.</p>
+
+
+<p><div><script src='https://gist.github.com/1979561.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>I ended up using a dependency injection framework to inject a MessagePublisher instance into the BusinessObject during runtime. We were also able to use a combination of unit tests and integration tests to make sure the third party message bus worked correctly. The key thing to take away here is that this MessagePublisher class and a couple of supporting classes (omitted from the code sample) were the only places where the third party code touched our subsystem.</p>
+
+
+<p>When the client decided to change to another third party message bus, we only had to change one class.</p>
+
+
+<p><div><script src='https://gist.github.com/1979613.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>Honestly, it was a little more involved. There were a couple of other classes involved that handled the set up and configuration of the third party message bus. But the net effect of the change was limited to about three small classes, a few unit tests, and a few integration tests.</p>
+
+
+<p>When the client decided to change back to the original third party message bus, I just recovered the previous implementation, unit tests, and integration tests from source control.</p>
+
+
+<p>It was pretty much painless.</p>
+
+
+<p>Granted not all changes are this easy. But when we plan, design, and code with change in mind we end up in a position where we can respond to change.</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Why I Like TestCase]]></title>
+    <link href="http://headspringlabs.com/blog/why-i-like-testcase/"/>
+    <updated>2012-03-14T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/why-i-like-testcase</id>
+    <content type="html"><![CDATA[<p><a href="http://nunit.org/?p=testCase&amp;r=2.5" target="_blank">TestCase</a> is one way you can run parameterized tests with NUnit. An example of how this is useful is testing a whitelist or blacklist. You only need to write the test once, then pass in your items to test some sort of output. If the requirements change and words need to be added to or removed from your list, you simply add another entry without the need for writing another test or set of tests.</p>
+
+
+<p>I've found myself using TestCase (formerly <a title="What Happened to NUnit's RowTest" href="http://stackoverflow.com/questions/4069841/what-happended-to-nunit-extensions-rowtest" target="_blank">RowTest</a>) more and more often. If you see lots of very similar tests that shared assertions, or test method names with numbers/values in them, these are signs that you might be wanting to use TestCase. Let's take a look at the following examples.<!--more--></p>
+
+
+<h3><strong>One Test, Many Assertions</strong></h3>
+
+
+<p>Here you can see that we have one test and many assertions. I've often seen this pattern in tests that have been around the project for a long time. It can be faster to add an assertion rather than to write a whole new test.  This might get the job done, but there are better ways.</p>
+
+
+<p><div><script src='https://gist.github.com/1981200.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>This isn't ideal because your test can fail at the first assertion, skipping all the rest. Imagine a more complex test that fails at the first assert call and subsequent code changes make it fail at the second and so on. The feedback on the failed tests is less valuable in these situations. This is also why we don't write one test for our entire application; tests are more helpful as they become more granular.</p>
+
+
+<h3><strong>Many Tests, Each with One Assertion</strong></h3>
+
+
+<p>Another not so great way to test this is breaking the assertions into many tests. This also technically works, but is prone to test names representing the wrong idea if values change and the name does not. Maintenance becomes a bit tougher when they're written this way.</p>
+
+
+<p><div><script src='https://gist.github.com/1981202.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>The reason I wouldn't recommend this is because you tend to see duplication in your values under test and your metadata (test method name). Since duplication is bad, we want to avoid this.</p>
+
+
+<h3><strong>One Test, Many Values</strong></h3>
+
+
+<p>A better approach is TestCase. As you'll see by the following example. We're writing the test in a way that doesn't rely on values from within the test's body, but to be supplied by attributes that are "stacked" on top.</p>
+
+
+<div><div><script src='https://gist.github.com/1935584.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</div>
+
+
+<p>I like this test because it's very simply testing boundary conditions. The code is largely quite discoverable and very easy to modify if our requirements were to change.</p>
+
+
+<p>There's nothing magical about TestCase. It's just another tool I've found helpful when writing tests for code that I want to be able to take advantage of "given a set of inputs, verify some output".</p>
+
+
+<p>What are you thoughts on this? Is TestCase new to you? Have you been using it already? Any drawbacks to using it?</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Continuous Integration: Early indicators mean inexpensive fixes]]></title>
+    <link href="http://headspringlabs.com/blog/continuous-integration-early-indicators-mean-inexpensive-fixes/"/>
+    <updated>2011-12-02T00:00:00-06:00</updated>
+    <id>http://headspringlabs.com/blog/continuous-integration-early-indicators-mean-inexpensive-fixes</id>
+    <content type="html"><![CDATA[<p>Earlier this year, I bought a car—my first <em>new</em> car. Although it fills me with sanctimonious hybrid glee (it really does), it's making me neurotic with instrument panel indicator lights. The low-tire-pressure indicator after the weather turned cold. The insistent exclamation point from the airbag computer in my seat. The glaring amber beacon from the Integrated Motor Assist battery. I've never had so many things go wrong with a car!</p>
+
+
+<p>Or have I?</p>
+
+
+<p>Incorporating automated tests into your Continuous Integration build process can feel similar. You're suddenly presented with all these errors. Your product seems to be broken all the time. You liked it better when things were quiet and you didn't know how bad it was.<!--more--></p>
+
+
+<p>There are two reasons I'm getting so many warnings from my car: It has more systems, more features, more <em>computers</em> than any car I've owned before; and it has more health sensors and warning lights. It's better at knowing when it's a little unhappy, and better at letting me know. I take care of these little maintenance tasks, and all is well. It never reaches the big, blow-up, throw-a-rod, leave-you-stranded, heartache-on-the-interstate meltdown that results from years of indifferent neglect.</p>
+
+
+<p>Continuously run unit tests are an army of little health sensors. CI feels painful at first, but it pays off quickly. When the system under test wavers, even minutely, the tests catch it promptly and summon your attention while it is still a small, containable, inexpensive problem. (Provided they're running frequently. Once a day is pretty infrequent. Strive to make them fast enough that you're willing to run them every time you commit to source control.) Continuous Integration tests keep your problems on the scale of oil changes and tire pressure, instead of engine blocks and radiators.</p>
+
+]]></content>
+  </entry>
+  
+</feed>

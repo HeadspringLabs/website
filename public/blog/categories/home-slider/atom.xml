@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Home Slider | Headspring Labs]]></title>
+  <link href="http://headspringlabs.com/blog/categories/home-slider/atom.xml" rel="self"/>
+  <link href="http://headspringlabs.com/"/>
+  <updated>2013-07-15T23:13:23-05:00</updated>
+  <id>http://headspringlabs.com/</id>
+  <author>
+    <name><![CDATA[Headspring Labs]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[You need solutions, not surprises]]></title>
+    <link href="http://headspringlabs.com/blog/you-need-solutions-not-surprises/"/>
+    <updated>2013-03-01T00:00:00-06:00</updated>
+    <id>http://headspringlabs.com/blog/you-need-solutions-not-surprises</id>
+    <content type="html"><![CDATA[<div class="slide-content">
+<h1>"You need solutions, not surprises</h1>
+<p>Let our expert enginers pave the way."</p>
+<div class="button-wrap"><a class="button" href="http://headspringlabs.com/contact">Get in touch</a></div>
+</div>
+
+
+<div class="slide-media">
+<div style="max-width: 342px;">
+<div onclick="thevid=document.getElementById('thevideo'); thevid.style.display='block'; this.style.display='none'; "><img style="cursor: pointer;" alt="" src="http://www.headspring.com/wp-content/themes/headspring/images/slide-video-placeholder.jpg" /></div>
+<div id="thevideo" style="display: none;"><iframe src="http://www.youtube.com/embed/SMVXAurJHtA?rel=0;showinfo=0;enablejsapi=1" height="235" width="342" frameborder="0"></iframe></div>
+</div>
+</div>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Powerful design, long term vision]]></title>
+    <link href="http://headspringlabs.com/blog/powerful-design-long-term-vision/"/>
+    <updated>2013-03-01T00:00:00-06:00</updated>
+    <id>http://headspringlabs.com/blog/powerful-design-long-term-vision</id>
+    <content type="html"><![CDATA[<div class="slide-content">
+<h1>"Powerful design, long-term vision:</h1>
+<p>At Headspring, we look at how your software can be used in the real world, and what sort of impact it will have. Learn more about the playbook management system we built for First Down Technologies."</p>
+<div class="button-wrap"><a class="button" href="http://headspringlabs.com/success-stories">View our portfolio</a></div>
+</div>
+
+
+<div class="slide-media"><img alt="" src="http://headspringlabs.com/wp-content/themes/headspring/images/football-ipad.png" /></div>
+
+]]></content>
+  </entry>
+  
+</feed>

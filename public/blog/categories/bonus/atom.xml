@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Bonus! | Headspring Labs]]></title>
+  <link href="http://headspringlabs.com/blog/categories/bonus/atom.xml" rel="self"/>
+  <link href="http://headspringlabs.com/"/>
+  <updated>2013-07-15T23:13:23-05:00</updated>
+  <id>http://headspringlabs.com/</id>
+  <author>
+    <name><![CDATA[Headspring Labs]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Headspring Competes at 2013 Austin Startup Games]]></title>
+    <link href="http://headspringlabs.com/blog/headspring-competes-at-2013-austin-startup-games/"/>
+    <updated>2013-02-22T00:00:00-06:00</updated>
+    <id>http://headspringlabs.com/blog/headspring-competes-at-2013-austin-startup-games</id>
+    <content type="html"><![CDATA[<p>The Austin Startup Games were a flying success this past Saturday, February 16th at the Austin Music Hall. Headspring was proud to participate for the first time!</p>
+
+
+<p>The Austin Startup Games is a one-day event in which sixteen Austin companies compete in various activities, including beer pong, ping pong, shuffleboard, foosball, pop-a-shot, darts, Connect 4, trivia and flip cup. The mechanical bull was the surprise event.</p>
+
+
+<p><!--more--></p>
+
+
+<p><img class="alignnone size-medium wp-image-6417" alt="IMAGE_B2E4A8A6-E1D4-47B2-B540-53AA3B0AE653" src="http://www.headspring.com/wp-content/uploads/2013/02/IMAGE_B2E4A8A6-E1D4-47B2-B540-53AA3B0AE653-400x300.jpg" width="400" height="300" /> <img class="alignnone size-medium wp-image-6418" alt="IMAGE_E7ED9347-5418-44A0-B09F-55DEC43F43B8" src="http://www.headspring.com/wp-content/uploads/2013/02/IMAGE_E7ED9347-5418-44A0-B09F-55DEC43F43B8-400x300.jpg" width="400" height="300" /></p>
+
+
+<p>We sported these awesome Headspring shirts. We call it "From Our Heads" because it's an abstract mash-up of the Headspring culture. It combines what we do and tools we use (bit bucket, technology, code, the cloud, mobile apps) and the things we enjoy (bowling, the Internet, providing great customer service).</p>
+
+
+<p><img class="aligncenter size-medium wp-image-6414" alt="BDQfHQVCAAImy5p" src="http://www.headspring.com/wp-content/uploads/2013/02/BDQfHQVCAAImy5p-369x300.jpeg" width="369" height="300" /></p>
+
+
+<p>Each company represented a charity of its choice, and Headspring chose The Cancer Connection. (link: http://www.thecancerconnection.org/) The organization provides one-on-one mentoring and oncology and hospital support to patients. The Cancer Connection volunteers provide comfort, support and informational resources to cancer patients and their families.</p>
+
+
+<p>There were very intense and close competitions, and at the end of the day, Headspring walked away victoriously with a couple of medals and a proud team.</p>
+
+
+<ul>
+<li>Justin P. won Bronze in Connect Four</li>
+<li>Chris M. and Patrick M. won Silver in Beer Pong</li>
+<li>Glenn B. and Kevin H. won Bronze in Foosball</li>
+</ul>
+
+
+<p><img class="alignnone size-medium wp-image-6415" alt="20130216_142241" src="http://www.headspring.com/wp-content/uploads/2013/02/20130216_142241-225x300.jpg" width="225" height="300" />  <img class="alignnone size-medium wp-image-6416" alt="732970388" src="http://www.headspring.com/wp-content/uploads/2013/02/732970388-225x300.jpeg" width="225" height="300" /></p>
+
+
+<p>Total results:</p>
+
+
+<ul>
+<li>533 lbs (about 480 meals) of food was donated to Capital Area Food Bank</li>
+<li>500-600 attendees was expected and actually had 800 attendees show up</li>
+</ul>
+
+
+<p>The Austin Startup Games was a great opportunity to bring out our competitive side, represent Headspring among numerous Austin companies, support The Cancer Connection and bring our team together for some fun and bonding time.</p>
+
+
+<p><strong>For more photos, <a href="https://www.facebook.com/media/set/?set=a.459745877414576.108919.280556282000204&amp;type=1&amp;l=92e3753744" target="_blank">check out our Facebook page!</a></strong></p>
+
+
+<p>&nbsp;</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[No Offshoring]]></title>
+    <link href="http://headspringlabs.com/blog/no-offshoring/"/>
+    <updated>2013-01-17T00:00:00-06:00</updated>
+    <id>http://headspringlabs.com/blog/no-offshoring</id>
+    <content type="html"><![CDATA[<p>One of Headspring's principle practices - which is probably not advertised nearly to the extent it should be - is that we never outsource development work. The policy was put in place early in our company history. This was right around the time we steered away from building websites for new companies and began focusing our services on delivering custom enterprise software. Sometimes it made sense to outsource, and could be more cost effective for our customers. But more often than not, it became difficult to see around corners and ensure that we were receiving quality built code.</p>
+
+
+<p>We discovered the best way to create or reconstruct our clients' software is to hire the best architects, critical thinkers and code masters we could get our hands on, put them in a room together, and give them the resources they need to do great work. We refer to this collaboration as a "brain trust". And working this way has directly affected our ability to be so successful.</p>
+
+
+<h2>Looks Can Be Deceiving</h2>
+
+
+<p>This morning I woke up to <a href="http://www.npr.org/blogs/thetwo-way/2013/01/16/169528579/outsourced-employee-sends-own-job-to-china-surfs-web" target="_blank">a national news story</a> about a company entrusting critical development work to a pricey developer - only to find its deluxe development package was being outsourced to a Chinese team for 1/5 of their cost.</p>
+
+
+<p>The story is quite funny, actually.  The company discovered data that showed its virtual network being accessed from China. The company feared hackers had invaded the network, so they ordered an investigation from Verizon's web security team. The VPN logs showed the originally contracted developer, while still sitting at his desk, was also accessing the network from a city in China.</p>
+
+
+<p>Now, it was understood in the office that this contract developer (<a href="http://webcache.googleusercontent.com/search?q=cache:http://securityblog.verizonbusiness.com/2013/01/14/case-study-pro-active-log-review-might-be-a-good-idea/" target="_blank">the original story published on Verizon's blog refers to him as "Bob"</a>) did great work. In fact, he was regarded as the best developer in the office, and was paid accordingly - six figures, in fact.  But after a deeper investigation, the Verizon team discovered hundreds of .pdf files detailing Bob's communication with the outsourced firm he worked with in Shenyang China. He subcontracted the firm for 1/5 of his pay.</p>
+
+
+<p>So what did Bob do while his sub-contract was hard at work? Here's his busy schedule:</p>
+
+
+<p>9:00 AM - Arrive at the office, surf Reddit.com, watch cat videos</p>
+
+
+<p>11:30 AM - Take lunch</p>
+
+
+<p>1:00 PM - Ebay time!</p>
+
+
+<p>2:00 - ish PM - Facebook and LinkedIn updates</p>
+
+
+<p>4:30 PM - End of day email to management</p>
+
+
+<p>5:00 PM - Go home</p>
+
+
+<h2>Who Do You Love?</h2>
+
+
+<p>As it turns out, this wasn't Bob's first rodeo, and he didn't invent the wheel either. Sure, he <em>delivered</em> great code, so what's the big issue in the end? It comes down to trust.</p>
+
+
+<p>We hear the same stories all the time from our prospective clients - except not usually with the same storybook "no harm done" ending that Verizon outlines in their comical case study. Nope. Usually companies aren't aware of the security breach until there is a big problem.</p>
+
+
+<p>So do yourself a favor: make absolute sure you are working with a company/contractor/development team that cares about your security and code as much as you do.</p>
+
+
+<p>&nbsp;</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Get to Know a Developer: Jose Basilio]]></title>
+    <link href="http://headspringlabs.com/blog/get-to-know-a-developer-jose-basilio/"/>
+    <updated>2013-01-11T00:00:00-06:00</updated>
+    <id>http://headspringlabs.com/blog/get-to-know-a-developer-jose-basilio</id>
+    <content type="html"><![CDATA[<p><img class="alignright size-medium wp-image-6321" alt="Jose Basilio" src="http://www.headspring.com/wp-content/uploads/2013/01/photo-2-e1357940416657-224x300.jpg" width="224" height="300" />This week we welcomed Jose Basilio to the team! Jose currently lives in Houston, but he’s originally from the Dominican Republic. I was so excited to speak with him because he told me that participating in <a href="http://www.headspring.com/mary/headspring-hosts-central-texas-givecamp-to-benefit-10-local-non-profits/" target="_blank">CTX GiveCamp</a> (one of my projects last year) convinced him to look into working for us full time. In fact, Jose was on the TX Kidney Foundation team, which won CTX GiveCamp’s highest honor: the “Meg Ryan Facelift Award for Coolest UI”. I knew he was a winner. Here’s the rest of our conversation:</p>
+
+
+<p><!--more--></p>
+
+
+<p>Where did you work, and what did you do before coming to Headspring?</p>
+
+
+<p>I was a senior developer at Dril-Quip, Inc., a manufacturer of oil and gas drilling equipment in Houston. Prior to that, I worked in various roles in application and database administration at Compaq / HP.</p>
+
+
+<p>What or who made you want to work here?</p>
+
+
+<p>Throughout my career, I have worked for companies where software was a cost-center. I wanted the opportunity to work for a company where my efforts directly contribute to the bottom-line. I also wanted work along-size like-minded individuals that have a passion for learning and moving their careers forward. I believe Headspring is that company.</p>
+
+
+<p>What led you to software development?</p>
+
+
+<p>Computers are better than humans at performing repetitive tasks in a fast and consistent manner. I wanted to automate my day-to-day activities as a database admin. This led me to learn scripting languages, and I enjoyed that so much that moved into full-blown development.</p>
+
+
+<p>What did you learn first?</p>
+
+
+<p>I started by learning VBScript to create windows scripts and dynamic web pages back in the day.</p>
+
+
+<p>Do you like teaching?</p>
+
+
+<p>I love teaching and learning new things. The best way to truly learn and become an expert at something is to teach it.  I think that in the process of simplifying a topic in order to teach it to others, we gain clarity of mind and reach those “aha” moments in our understanding of the subject.</p>
+
+
+<p>&nbsp;</p>
+
+
+<p>Want to know more? Tweet <a href="https://twitter.com/jbasilio" target="_blank">@jbasilio</a>.</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Get to Know a Developer: Patrick Abbs]]></title>
+    <link href="http://headspringlabs.com/blog/get-to-know-a-developer-patrick-abbs/"/>
+    <updated>2013-01-08T00:00:00-06:00</updated>
+    <id>http://headspringlabs.com/blog/get-to-know-a-developer-patrick-abbs</id>
+    <content type="html"><![CDATA[<p><img class="alignright size-medium wp-image-6318" title="Patrick Abbs" src="http://www.headspring.com/wp-content/uploads/2013/01/photo-1-e1357685470139-224x300.jpg" alt="Patrick Abbs" width="224" height="300" />This week we welcomed in a New Year and a new consultant to the team: Patrick Abbs.  Patrick is a native Austinite, but just moved back from New York.  He went to NYU for Individualized Study – a new type of customized undergraduate degree program. He explained to me that he chose a focus of study (Game Theory) and developed his own course schedule around it. He had to produce a senior thesis and submit it before a board, similar to the process of obtaining a graduate degree.</p>
+
+
+<p>In school and in the workforce, he found programming knowledge to be very helpful in crunching data for statistical analysis. Eventually, he was led to Headspring. Read more about how that happened:</p>
+
+
+<p><strong>Where did you work, and what did you do before coming to Headspring?</strong></p>
+
+
+<p>My last two jobs were completely different from each other, but Headspring is interestingly kind of a mix between the two.  At the tech startup Tilde, I worked with the LAMP stack (as well as some C# and Python) to create a B-to-B tool for businesses to streamline their back-office processes.  At DRSdigital, I worked directly with new and existing clients to create, customize, and maintain secure data rooms (typically for potential merger and acquisition deals).<!--more--></p>
+
+
+<p><strong>Are you an expert at anything?</strong></p>
+
+
+<p>I have worked extensively with algorithms geared towards statistical analysis of information sets, and am especially well-acquainted with mixture models (a more specific type of statistical algorithm).  As much as I love statistics algorithms, though, I definitely want to expand my expertise into other areas of programming.  At the moment I'm fascinated with the differences between and advantages of different types of databases, as well as with how compilers work.</p>
+
+
+<p><strong>What led you to software development?</strong></p>
+
+
+<p>The initial appeal of software development for me came from the recognition that once a program has been written to solve a given type of problem once, it can thereafter solve any instance of that problem an endless number of times with incredible efficiency and little effort.  For instance, it might take me two minutes to sort fifty documents according to some ordering criteria manually, versus ten minutes to write a program which executes the same sorting methodology.  However, after I have written such a program I can use it to sort any number of documents any number of times in a matter of milliseconds for each execution, all with the click of a button.  Once I started thinking about software development as something that requires some initial time investment but can save exponentially more time in the long run, I was hooked.</p>
+
+
+<p><strong>What did you learn first?</strong></p>
+
+
+<p>My first introduction to code was as a mathematically-oriented person trying to convey algorithms to software developers for implementation.  The fact that I had no experience with code and the developers I was working with had a limited understanding of math significantly slowed the rate at which theory could be converted to practice, so I decided to try to bridge the gap between our areas of understanding by learning the relatively simple, mathematical language Python.</p>
+
+
+<p><strong>What or who made you want to work here?</strong></p>
+
+
+<p>Headspring is an appealing place to work for me for several reasons.  It is known for having a great and open company culture (which I saw first-hand at the two lunch-and-learns I've attended).  I'm also excited about the fact that the vast majority of the people working there are seasoned, experienced professionals, and as a less experienced developer I really value being able to ask questions and learn from the experience of the people around me.</p>
+
+
+<p>As far as the actual responsibilities of being a Headspring consultant, I really like the fact that the projects are diverse and let me work on a variety of different programming challenges.  Finally, I like the fact that working at Headspring often involves working directly with clients.  I love technology, but regularly interacting with clients is exciting to me.</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Teaching and Learning From Developers Internationally]]></title>
+    <link href="http://headspringlabs.com/blog/teaching-and-learning-from-developers-internationally/"/>
+    <updated>2012-12-21T00:00:00-06:00</updated>
+    <id>http://headspringlabs.com/blog/teaching-and-learning-from-developers-internationally</id>
+    <content type="html"><![CDATA[<p>At Headspring, we’re proud to have amazing leaders who are experts in the industry. Jimmy Bogard, our Technical Architect, not only excels at Headspring but also enthusiastically participates in the global development community. He recently went on a “world tour” to teach and meet developers in Ireland, England and Ukraine.  Jimmy had the opportunity to speak to the following groups. For more information about what information was presented at each event, <a href="http://lostechies.com/jimmybogard/2012/12/17/dublin-alt-net-skills-matter-kiev-alt-net-slides-code/" target="_blank">click here</a>.<!--more--></p>
+
+
+<ul>
+<li><a href="http://dublinalt.net/2012/11/20/november-meetup-jimmy-bogard-on-real-world-polyglot-persistence/" target="_blank">Dublin ALT.NET</a> in <strong>Dublin, Ireland</strong></li>
+<li><a href="http://skillsmatter.com/course/design-architecture/udi-dahan-nservicebus-workshop" target="_blank">Enterprise Development with NServiceBus @ SkillsMatter</a> in <strong>London, England</strong></li>
+<li><a href="http://blog.kievalt.net/post/36657818028/jimmy-in-the-town" target="_blank">Kiev ALT.NET</a> in <strong>Kiev, Ukraine</strong></li>
+</ul>
+
+
+<p>&nbsp;</p>
+
+
+<p>While the way we program is universally similar, it’s interesting to think about how similar and different developers are around the world. Here’s what Jimmy had to say about his experience:</p>
+
+
+<p><em>“One of the insights I found consistent in conversations from all the developers is that it seems that no matter where I go, the problems and passions remain the same. Everyone's smart, everyone's passionate, and the things developers’ care about are similar everywhere. We read the same blogs, books, and even use the same gadgets (when we can afford them). The only global issue was whether to code in English. People don't pick English just because an American or Brit is on the team.  What if there are Ukrainians, French or Danes on the same team? The common language is English. We have a hard enough time picking a programming language, but picking a spoken language is even more interesting!”</em></p>
+
+
+<p>&nbsp;</p>
+
+
+<p>Want Headspring to speak at your event or come do an in-house training for your employees? <a href="http://www.headspring.com/developer-training/" target="_blank">Take a look at our website</a> for more information and contact us today!</p>
+
+
+<p>&nbsp;</p>
+
+]]></content>
+  </entry>
+  
+</feed>

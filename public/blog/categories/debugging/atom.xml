@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: debugging | Headspring Labs]]></title>
+  <link href="http://headspringlabs.com/blog/categories/debugging/atom.xml" rel="self"/>
+  <link href="http://headspringlabs.com/"/>
+  <updated>2013-07-15T23:13:23-05:00</updated>
+  <id>http://headspringlabs.com/</id>
+  <author>
+    <name><![CDATA[Headspring Labs]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Sneaky Leaky Lambda Listeners]]></title>
+    <link href="http://headspringlabs.com/blog/sneaky-leaky-lambda-listeners/"/>
+    <updated>2012-06-16T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/sneaky-leaky-lambda-listeners</id>
+    <content type="html"><![CDATA[<p><em>By Casey Gum</em></p>
+
+
+<p>Sometimes, it can be very convenient to use lambda expressions as event handlers.  If the event handler does something short and sweet, it can also be a lot easier to read than having to jump down to the method that implements the handler.</p>
+
+
+<p>However, as with all events handlers, you really need to understand the lifetime of the instance that exposes the event or you can leak, leak, leak. <!--more--></p>
+
+
+<p>Let's take a look at some code.  The following is a typical way to hook up to an event using a method as an event handler.</p>
+
+
+<p><div><script src='https://gist.github.com/2941654.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>This next block of code uses a lambda expression instead. As you can see, it is much more concise.</p>
+
+
+<p><div><script src='https://gist.github.com/2941702.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>Interestingly, when you do this, behind the scenes, the compiler will actually add a method to your class.  So, you're really not making your class any smaller, you're just making it easier to read.  You can see this if you look at it using <a title=".Net Reflector" href="http://www.reflector.net/" target="_blank">.Net Reflector</a>.</p>
+
+
+<p><a href="http://www.headspring.com/wp-content/uploads/2012/06/reflector.png"><img class="alignnone size-full wp-image-5590" src="http://www.headspring.com/wp-content/uploads/2012/06/reflector.png" alt="" width="240" height="91" /></a></p>
+
+
+<p>Okay, so that's all well and good, but now let's consider the implementation of the <strong>Publisher</strong> class.  For simplicity sake (normally I let my IoC container sort this out), I did a quick Singleton pattern implementation on it so that we can get a Publisher instance by calling the <strong>static</strong> .Instance property.  When you see the "static" keyword, you should really think "immortal".  From the perspective of the GarbageCollector, once it has a value, it's not going away unless you set it to null.</p>
+
+
+<p>Now, consider this block of code.</p>
+
+
+<p><div><script src='https://gist.github.com/2941741.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>If you haven't had to deal much with memory leaks in the past, you might think that the code above would nuke all instances of Listener, but it does not.  As a matter of fact, after making the call to this function, here's what <a title=".Net Memory Profiler" href="http://memprofiler.com/" target="_blank">.Net Memory Profiler</a> shows.  We have 10 new instances and they are not going away.</p>
+
+
+<p><a href="http://www.headspring.com/wp-content/uploads/2012/06/snapshot12-e1339861888756.png"><img class="alignnone size-full wp-image-5593" src="http://www.headspring.com/wp-content/uploads/2012/06/snapshot12-e1339861888756.png" alt="" width="500" height="79" /></a></p>
+
+
+<p>The following image shows what it looks like to the GarbageCollector.  The static instance of Publisher is rooted and will not go away.  Its event variable is a MulticastDelegate.  The MulticastDelegate holds a reference to a System.Action&lt;string&gt; delegate. And the Action delegate holds a reference to your Listener.  So, even though your listener instance has fallen out of scope, it will survive garbage collection because there is a reference path to it via the Publisher.PublishedMessage event.  Incidentally, this is true whether you use a traditionally implemented event handler or a lambda expression.</p>
+
+
+<p><a href="http://www.headspring.com/wp-content/uploads/2012/06/root-path1.png"><img class="alignnone size-full wp-image-5594" src="http://www.headspring.com/wp-content/uploads/2012/06/root-path1.png" alt="" width="151" height="445" /></a><a href="http://www.headspring.com/wp-content/uploads/2012/06/root-path21.png"><img class="alignnone size-full wp-image-5596" src="http://www.headspring.com/wp-content/uploads/2012/06/root-path21.png" alt="" width="172" height="450" /></a></p>
+
+
+<p>What to do, what to do?  Well, one thing we could do is to implement IDisposable and unhook our event handler in the Dispose() method.  Of course, we will also need to actually call Dispose() after we are done with our listener.</p>
+
+
+<p><div><script src='https://gist.github.com/2941797.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>This totally works and now here's what the memory profiler reports:</p>
+
+
+<p><a href="http://www.headspring.com/wp-content/uploads/2012/06/snapshot2.png"><img class="alignnone size-full wp-image-5598" src="http://www.headspring.com/wp-content/uploads/2012/06/snapshot2.png" alt="" width="512" height="94" /></a></p>
+
+
+<p>Can you do the same thing with a lambda listeners?  Unfortunately, no, you cannot, but we can give it a try just to see what happens.  The following is our desperate attempt to unhook a lambda event handler in the Dispose() method.</p>
+
+
+<p><div><script src='https://gist.github.com/2941810.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>So, why doesn't that work?  Well, because the compiler is creating a different method for each of our lambdas, one in the constructor and one in Dispose().  Again, this can be proven using .Net Reflector.</p>
+
+
+<p><a href="http://www.headspring.com/wp-content/uploads/2012/06/reflector2.png"><img class="alignnone size-full wp-image-5599" src="http://www.headspring.com/wp-content/uploads/2012/06/reflector2.png" alt="" width="288" height="188" /></a></p>
+
+
+<p><strong>CONCLUSION</strong></p>
+
+
+<p>The C# language makes dealing with events very easy. Unfortunately, by hiding some of the implementation details from the developer, it may lull you into a false sense of security with respect to memory management.  Whenever you are dealing with events, you need to carefully consider the lifetimes of both the publisher and the listener and make sure you unhook your event handlers or risk dealing with OutOfMemoryExecptions that are very difficult to diagnose.  This is ESPECIALLY important if you are doing WPF, Silverlight or Metro development.  If your View Model is listening for events on a long-lived object, and your View is listening to your View Model's INotifyPropertyChanged.PropertyChanged event, and your View's .Parent property holds a reference to its container, you can see that you can easily keep a very large object graph from being garbage collected.</p>
+
+
+<p>If you are doing UI development, object graph teardown can get extremely complex.  You can simplify these event/lifetime management headaches by using an Event Aggregator that uses weak reference eventing such as the one found in the Microsoft PRISM composite application framework.</p>
+
+
+<p>I should probably cover that in a future post.</p>
+
+
+<p>Until then, remember, you can be freaky, but try not to be leaky!</p>
+
+
+<p>&nbsp;</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Creating a Glimpse plugin to log SQL generated by NHibernate]]></title>
+    <link href="http://headspringlabs.com/blog/creating-a-glimpse-plugin-to-log-sql-generated-by-nhibernate/"/>
+    <updated>2011-07-29T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/creating-a-glimpse-plugin-to-log-sql-generated-by-nhibernate</id>
+    <content type="html"><![CDATA[<p>Glimpse has generated a lot of buzz since it was <a href="http://channel9.msdn.com/Shows/HanselminutesOn9/Hanselminutes-on-9-Glimpse-at-the-Mix11-Open-Source-Fest" target="_blank">unveiled</a> earlier this year during the “Open Source Fest” at the Mix 2011 conference. If you’re not already using it to debug your ASP.NET Web Forms or MVC application, you should be. Glimpse allows you to inspect several server-side diagnostic and request related information with a UI just like Firebug. Here’s some resources to get you started if you need an intro:</p>
+
+
+<ul>
+<li><a href="http://getglimpse.com/" target="_blank">GetGlimpse.com</a></li>
+<li><a href="http://www.hanselman.com/blog/NuGetPackageOfTheWeek5DebuggingASPNETMVCApplicationsWithGlimpse.aspx" target="_blank">NuGet Package of the Week – Glimpse</a></li>
+</ul>
+
+
+<p>There are several <a href="http://getglimpse.com/Help" target="_blank">built-in plugins</a> for Web Forms and MVC that will serve many needs, and you can even create your own. This tutorial will demonstrate how to create a plugin that will display the SQL generated by NHibernate.</p>
+
+
+<h2>Glimpse Plugins</h2>
+
+
+<p>Plugins are implemented by a simple class that implements the IGlimpsePlugin interface. There are a couple of great “hello world” example plugins on the Glimpse <a href="http://getglimpse.com/Help/CreatingPlugins" target="_blank">creating plugins page</a>. Besides setting the name and some optional start-up code, a plugin’s main job is just to return some set of data that will be rendered to the Glimpse UI. What that data is and how we get it is the real magic, so read on below.<!--more--></p>
+
+
+<p>The actual code for this NHibernate Glimpse plugin is fairly simple. We create a header column, add a row indicating the number of SQL statements that were executed and then add all the actual SQL to the plugin data. The SqlLogger class referenced here is just a static class that acts as a wrapper for the HttpContext.Items collection, which is where we’re logging the SQL itself. You can find a full gist including this class and all of the following code snippets, with comments, <a href="https://gist.github.com/1114503" target="_blank">here</a>.</p>
+
+
+<p><div><script src='https://gist.github.com/1114428.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<h2>Logging the SQL generated by NHibernate</h2>
+
+
+<p>The easiest way to log the SQL generated by NHibernate so it can be pushed up to Glimpse is to create a custom Log4Net appender and configure it in the web.config. It’s as simple as creating a class that extends the AppenderSkeleton base class and implement the Append method, like so:</p>
+
+
+<p><div><script src='https://gist.github.com/1114440.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>Wiring up the web.config:</p>
+
+
+<p><div><script src='https://gist.github.com/1114446.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<h2>The hard part</h2>
+
+
+<p>There is no hard part! We’re done! Drop this into an application that’s using NHibernate, enable Glimpse, click over to the new NHibernate tab, and wonder how you ever lived without this.</p>
+
+
+<p><a href="http://www.headspring.com/wp-content/uploads/2011/07/GlimpseNhibernate.png"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border-width: 0px;" src="http://www.headspring.com/wp-content/uploads/2011/07/GlimpseNhibernate_thumb.png" alt="NHibernate Glimpse Plugin" width="559" height="145" border="0" /></a></p>
+
+
+<p>The complete source code with comments is available <a href="https://gist.github.com/1114503" target="_blank">here</a>.</p>
+
+]]></content>
+  </entry>
+  
+</feed>

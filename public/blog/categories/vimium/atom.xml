@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Vimium | Headspring Labs]]></title>
+  <link href="http://headspringlabs.com/blog/categories/vimium/atom.xml" rel="self"/>
+  <link href="http://headspringlabs.com/"/>
+  <updated>2013-07-15T23:13:23-05:00</updated>
+  <id>http://headspringlabs.com/</id>
+  <author>
+    <name><![CDATA[Headspring Labs]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Why try vi? (Part 1)]]></title>
+    <link href="http://headspringlabs.com/blog/why-try-vi-part-1/"/>
+    <updated>2012-06-04T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/why-try-vi-part-1</id>
+    <content type="html"><![CDATA[<p>Like most people, the majority of my time on a computer has been spent on systems having an O/S with a graphical user interface.  Because I was not raised in the arcane dungeons of the command-line interface, I never [thought I] had any reason to learn to use vi.</p>
+
+
+<p>For those of you who don’t know what vi is, it is a powerful text editor that is built in to pretty much every Unix/Linux-based operating system on the planet.  Even present-day Macs have vi and you can access it from the terminal.</p>
+
+
+<p>Having watched a proficient Linux user use vi a few times, I concluded that it was originally designed for programmer prisoners of war whose wrists were rigidly shackled to the bases of their keyboards and were therefore unable to reach either the mouse or the arrow keys. And for good measure, were punished for venturing too far from the home row.  I, a free, and enlightened programmer certainly had no use for this nonsense.</p>
+
+
+<p>Then one day about 4 or 5 years ago, during a .Net boot camp given by <a href="http://blog.developwithpassion.com/">JP Boodhoo</a>, it was revealed to me the true power of vi.  JP coded and refactored so quickly, so effortlessly, it was almost impossible to track what he was doing – and he did this without ever having his hands leave the keyboard.  What was his secret?  It was <a href="http://www.jetbrains.com/resharper/">ReSharper</a> and <a href="http://www.viemu.com/">ViEmu</a>. <!--more--> As many of you know, ReSharper is a code navigation, generation and refactoring plugin for Visual Studio.  (If you are not already using it, you are probably shaving months, if not years, off your life performing coding tasks that it can do almost instantaneously.)</p>
+
+
+<p>The second tool, ViEmu, is a plugin that allows Visual Studio to accept vi commands in its Text Editor windows.  There is a bit of a learning curve, but it is very surmountable and if you take the time to learn it, you will be able to transfer the skill into other computing avenues.  (For instance, in about 5 minutes and for almost nothing, you can set up an Amazon EC2 micro instance to tunnel through your company’s oppressive firewall and look at that Dilbert cartoon that someone sent you a link to.  However, you’ll need to use vi to change the SSH daemon’s port from 22 to 443.  Perhaps I’ll show how to do this in a later post.)</p>
+
+
+<p>Okay, so how do you make the leap into learning vi?  We’ll take some baby steps and start with something that will make you a more productive web browser right now by installing the Vimium extension for Chrome.  It is available for both Windows and Mac and will be especially helpful if you browse the web on a laptop.  You <em>are</em> using Google Chrome, right?  If you’re not, go ahead and <a href="https://www.google.com/intl/en/chrome/browser/">install it</a>.  Next, run it and click the little wrench icon and go to <strong>Tools</strong> &gt; <strong>Extensions</strong>.  Browse for extensions, look for Vimium and install it.  When I last checked, it had a 5-star review with over 850 reviews.  It’s got to be good, right???</p>
+
+
+<p><a href="http://www.headspring.com/2012/06/why-try-vi-part-1/vimium-1-med" rel="attachment wp-att-5379"><img class="aligncenter size-full wp-image-5379" src="http://www.headspring.com/wp-content/uploads/2012/06/vimium-1-med.png" alt="" width="500" height="95" /></a></p>
+
+
+<p>The first thing you have to learn with vi is navigation.  Vi has five main modes - for navigating (Normal mode), selecting (Visual mode), editing (Insert mode) and searching text, and for executing commands.  Up, down, left, right navigation is performed by the home row keys on your right hand: <strong>h</strong> (left), <strong>j</strong> (down), <strong>k</strong> (up), and <strong>l</strong> (right).</p>
+
+
+<p>To try these out, open up <a href="http://www.gizmag.com/">http://www.gizmag.com</a> (one of my favorites) and shrink your window so that content on the right is cut off.  Use the <strong>h</strong>, <strong>j</strong>, <strong>k</strong>, <strong>l</strong> navigation keys to scroll the text up, down, left and right.  See?  You’re already making progress towards a carpal tunnel syndrome-free life.  (Did you know, that even without Vimium, Gmail and Slashdot both support some vi keys?  Actually Vimium is disabled in Gmail, but Gmail already has many of its own keyboard shortcut commands which you can see, by pressing the <strong>?</strong> key.)</p>
+
+
+<p>Probably the coolest feature of Vimium is the ability to navigate form elements and hyperlinks from the keyboard.  All you have to do is hit the <strong>f</strong> key and all hyperlinks and form elements on the page will be decorated with a one or two-letter code.  Just type in the letters and it’s like selecting the form element or clicking the hyperlink.  If you type the letters in lower-case, you will navigate in the same tab.  If you type them in upper-case, you will open the link in a new tab.  That’s pretty sweet, right??</p>
+
+
+<p><a href="http://www.headspring.com/2012/06/why-try-vi-part-1/vimium-2-med" rel="attachment wp-att-5386"><img class="aligncenter size-full wp-image-5386" src="http://www.headspring.com/wp-content/uploads/2012/06/vimium-2-med.png" alt="" width="500" height="373" /></a></p>
+
+
+<p>You can press the <strong>esc</strong> key to turn them back off.</p>
+
+
+<p>The next thing you do frequently in vi is to search for text.  The search mode is activated using the <strong>/</strong> (forward slash) key.  This will cause a small box to appear at the bottom of the screen.  Just type the search string you are looking for and press <strong>Enter</strong>.</p>
+
+
+<p><a href="http://www.headspring.com/2012/06/why-try-vi-part-1/vimium-3-med" rel="attachment wp-att-5387"><img class="aligncenter size-full wp-image-5387" src="http://www.headspring.com/wp-content/uploads/2012/06/vimium-3-med.png" alt="" width="200" height="76" /></a></p>
+
+
+<p>Now, you can cycle through all instances of the search string in the browser text by pressing <strong>n </strong>or <strong>N</strong> to go forward or backward, respectively.</p>
+
+
+<p>To see the complete list of Vimium commands, you can just press the <strong>?</strong> key, but here are some more of my favorites:</p>
+
+
+<p><strong>r</strong> – reload</p>
+
+
+<p><strong>t</strong> – new tab</p>
+
+
+<p><strong>x</strong> – close tab</p>
+
+
+<p><strong>H</strong> – previous page in browser history</p>
+
+
+<p><strong>L</strong> – next page in browsing history</p>
+
+
+<p><strong>J</strong> – previous tab</p>
+
+
+<p><strong>K</strong> – next tab</p>
+
+
+<p><strong>[[</strong> – follow the link labeled previous or &lt;</p>
+
+
+<p><strong>]]</strong> – follow the link labeled next or &gt;</p>
+
+
+<p>Using Vimium is a good way to start getting comfortable with vi commands and pure keyboard navigation.  However, the most important thing to take away from this post is that every time your fingers leave the home row of your keyboard, move and click the mouse and come back to the home row to type, you waste precious seconds of your life.  Believe it or not, at the end of the day, week, month, year, it adds up.</p>
+
+
+<p>Challenge yourself by trying to do as much as possible without leaving your keyboard.  When I was learning to do this (and sometimes I do this when I pair with people) I would take my mouse and put it on the left side of the keyboard, or even behind my monitor.  Only if the action could not be done using the keyboard would I finally go to the mouse.</p>
+
+
+<p>Trust me, do this for a while and you will truly amaze yourself and others, just as I was amazed when I first saw JP do it.</p>
+
+]]></content>
+  </entry>
+  
+</feed>

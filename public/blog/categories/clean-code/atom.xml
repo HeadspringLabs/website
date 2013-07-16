@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: clean code | Headspring Labs]]></title>
+  <link href="http://headspringlabs.com/blog/categories/clean-code/atom.xml" rel="self"/>
+  <link href="http://headspringlabs.com/"/>
+  <updated>2013-07-15T23:13:23-05:00</updated>
+  <id>http://headspringlabs.com/</id>
+  <author>
+    <name><![CDATA[Headspring Labs]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[The Null Object Pattern in C# and System.Lazy]]></title>
+    <link href="http://headspringlabs.com/blog/the-null-object-pattern-in-c-and-system-lazy/"/>
+    <updated>2012-04-06T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/the-null-object-pattern-in-c-and-system-lazy</id>
+    <content type="html"><![CDATA[<p>This post is going to cover a pair of topics that aren’t truly related, but topics that I like to use together. When combined they can give you a nice pattern. First I’m going to briefly talk about the Null Object Pattern:</p>
+
+
+<h3><strong>The Null Object Pattern</strong></h3>
+
+
+<p>Rather than dealing with uninitialized variable instances, you can start off by assigning a variable to an instance of a “Null Object”. Oftentimes you’ll see this done when developers assign an empty string to a variable because they don’t want to deal with null values. I’m going to be discussing this with types that are a bit more complex than string.</p>
+
+
+<p>In the code snippet below, I have represented a method with an optional argument that will fall back to an “empty” signature if one isn’t supplied. This Empty property is our Null Object for Signature that provides a safe instance we can use instead of dealing with null.</p>
+
+
+<p><div><script src='https://gist.github.com/2206415.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+<br />
+[gist id="2206371" file="Signature.cs"]<!--more--></p>
+
+
+<p>Another reason I’m a fan of this pattern is when it can be used in sets. Imagine your email signature for a moment. You could have multiple signatures to choose from when you compose an email. Rather than having code to check for the existence of signatures, we can now simply always assume that there will be at least one signature.</p>
+
+
+<p>[gist id="2206371" file="EmailUser.cs"]</p>
+
+
+<p>While this code example isn’t too complex, one could imagine that creating a new object every time a property is accessed could get a bit expensive depending on the project. In our example with Email and Signatures, we would be perfectly fine using a Singleton. We might also want to set up our code this way if we needed to worry about reference equality. Just something to keep in mind.</p>
+
+
+<p>When creating singletons over the years, I’ve seen it done many ways, each better than the next. If we’re going to manage our object’s lifestyle ourselves, there’s a couple of approaches. Each of these is better than the previous:</p>
+
+
+<p><div><script src='https://gist.github.com/2206342.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>You’ll notice that making sure this code is lazily initialized and thread safe can add a lot of “noise” to your code.</p>
+
+
+<h3><strong>Using .Net’s System.Lazy</strong></h3>
+
+
+<p>This is where <a href="http://msdn.microsoft.com/en-us/library/dd642331.aspx">Lazy</a> can help me out. The following code will achieve the same result as the double-checked locking method above.</p>
+
+
+<p><div><script src='https://gist.github.com/2206450.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>It is much cleaner, right? I like Lazy because it removes the noise around thread safety from my code, where it really shouldn’t exist anyway.</p>
+
+
+<p>I’ve found places that these two patterns work together nicely for me, but one doesn't require the other. Keep an eye open for areas to use these individually if the opportunity is right.</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[You Want To Change What?]]></title>
+    <link href="http://headspringlabs.com/blog/you-want-to-change-what/"/>
+    <updated>2012-03-26T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/you-want-to-change-what</id>
+    <content type="html"><![CDATA[<p>Change is inevitable. It is a simple fact of life which permeates into just about everything. Software development is no exception. Many software development life cycles have evolved and others have come into existence in an effort to help us deal with change. Programming languages, tools and techniques are also continuously evolving as well. Yet with all these improvements many project teams continue to struggle with change.</p>
+
+
+<p>What can we do about change? The truth is change doesn’t have to be hard. There are many things we can do such as plan for change, design for change, and code for change.<!--more--></p>
+
+
+<p>Sounds great doesn’t it? There are actually dozens of books and a plethora of blog posts that talk about those principles.</p>
+
+
+<p>If you are still reading this, then you are probably wondering how to put those principles into practice. I will share a practical example with you.</p>
+
+
+<p>A short while ago, I blogged <a href="http://www.headspring.com/2012/02/i-have-frameworkcommitment-issues">about selecting a framework</a>. The premise was a real situation in which a company I was consulting for selected a framework, changed their mind, and then changed it back. The actual frameworks involved are not important. The important thing is that the change was essentially painless.</p>
+
+
+<p>Here is how pain was avoided.</p>
+
+
+<p>I worked on a subsystem with very well defined boundaries of responsibility. One thing the subsystem had to do was to send a message to another subsystem. That was easy enough.</p>
+
+
+<p>I started working on the core domain logic of the subsystem and I reached the point where a domain object implemented the business logic that decided to send a message to the other subsystem. The details of the message format and content were still fuzzy and that was a clear indicator that change was coming. Anticipating change here, I decided to use an interface to allow me to continue developing the business logic while the details of the messages were in limbo.</p>
+
+
+<p>My code looked something like this:</p>
+
+
+<p><div><script src='https://gist.github.com/1979430.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>I used unit tests to make sure the business logic was sound and leveraged a mocking framework to mock the message publisher. Shortly thereafter a decision was made to implement a third party message bus to handle some of the messaging details. Again this was easy enough to do. We just implemented the IMessagePublisher interface.</p>
+
+
+<p><div><script src='https://gist.github.com/1979561.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>I ended up using a dependency injection framework to inject a MessagePublisher instance into the BusinessObject during runtime. We were also able to use a combination of unit tests and integration tests to make sure the third party message bus worked correctly. The key thing to take away here is that this MessagePublisher class and a couple of supporting classes (omitted from the code sample) were the only places where the third party code touched our subsystem.</p>
+
+
+<p>When the client decided to change to another third party message bus, we only had to change one class.</p>
+
+
+<p><div><script src='https://gist.github.com/1979613.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>Honestly, it was a little more involved. There were a couple of other classes involved that handled the set up and configuration of the third party message bus. But the net effect of the change was limited to about three small classes, a few unit tests, and a few integration tests.</p>
+
+
+<p>When the client decided to change back to the original third party message bus, I just recovered the previous implementation, unit tests, and integration tests from source control.</p>
+
+
+<p>It was pretty much painless.</p>
+
+
+<p>Granted not all changes are this easy. But when we plan, design, and code with change in mind we end up in a position where we can respond to change.</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Why I Like TestCase]]></title>
+    <link href="http://headspringlabs.com/blog/why-i-like-testcase/"/>
+    <updated>2012-03-14T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/why-i-like-testcase</id>
+    <content type="html"><![CDATA[<p><a href="http://nunit.org/?p=testCase&amp;r=2.5" target="_blank">TestCase</a> is one way you can run parameterized tests with NUnit. An example of how this is useful is testing a whitelist or blacklist. You only need to write the test once, then pass in your items to test some sort of output. If the requirements change and words need to be added to or removed from your list, you simply add another entry without the need for writing another test or set of tests.</p>
+
+
+<p>I've found myself using TestCase (formerly <a title="What Happened to NUnit's RowTest" href="http://stackoverflow.com/questions/4069841/what-happended-to-nunit-extensions-rowtest" target="_blank">RowTest</a>) more and more often. If you see lots of very similar tests that shared assertions, or test method names with numbers/values in them, these are signs that you might be wanting to use TestCase. Let's take a look at the following examples.<!--more--></p>
+
+
+<h3><strong>One Test, Many Assertions</strong></h3>
+
+
+<p>Here you can see that we have one test and many assertions. I've often seen this pattern in tests that have been around the project for a long time. It can be faster to add an assertion rather than to write a whole new test.  This might get the job done, but there are better ways.</p>
+
+
+<p><div><script src='https://gist.github.com/1981200.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>This isn't ideal because your test can fail at the first assertion, skipping all the rest. Imagine a more complex test that fails at the first assert call and subsequent code changes make it fail at the second and so on. The feedback on the failed tests is less valuable in these situations. This is also why we don't write one test for our entire application; tests are more helpful as they become more granular.</p>
+
+
+<h3><strong>Many Tests, Each with One Assertion</strong></h3>
+
+
+<p>Another not so great way to test this is breaking the assertions into many tests. This also technically works, but is prone to test names representing the wrong idea if values change and the name does not. Maintenance becomes a bit tougher when they're written this way.</p>
+
+
+<p><div><script src='https://gist.github.com/1981202.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>The reason I wouldn't recommend this is because you tend to see duplication in your values under test and your metadata (test method name). Since duplication is bad, we want to avoid this.</p>
+
+
+<h3><strong>One Test, Many Values</strong></h3>
+
+
+<p>A better approach is TestCase. As you'll see by the following example. We're writing the test in a way that doesn't rely on values from within the test's body, but to be supplied by attributes that are "stacked" on top.</p>
+
+
+<div><div><script src='https://gist.github.com/1935584.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</div>
+
+
+<p>I like this test because it's very simply testing boundary conditions. The code is largely quite discoverable and very easy to modify if our requirements were to change.</p>
+
+
+<p>There's nothing magical about TestCase. It's just another tool I've found helpful when writing tests for code that I want to be able to take advantage of "given a set of inputs, verify some output".</p>
+
+
+<p>What are you thoughts on this? Is TestCase new to you? Have you been using it already? Any drawbacks to using it?</p>
+
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: linq | Headspring Labs]]></title>
+  <link href="http://headspringlabs.com/blog/categories/linq/atom.xml" rel="self"/>
+  <link href="http://headspringlabs.com/"/>
+  <updated>2013-07-15T23:13:23-05:00</updated>
+  <id>http://headspringlabs.com/</id>
+  <author>
+    <name><![CDATA[Headspring Labs]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Improve your LINQ with .Any()]]></title>
+    <link href="http://headspringlabs.com/blog/improve-your-linq-with-any/"/>
+    <updated>2012-02-21T00:00:00-06:00</updated>
+    <id>http://headspringlabs.com/blog/improve-your-linq-with-any</id>
+    <content type="html"><![CDATA[<p>LINQ's <code>.Any()</code> method is under-utilized, given the benefits it brings in making your code briefer, clearer, and more efficient. LINQ in general improves the expressiveness of your collection-manipulating code by using declarative statements instead of imperative <code>foreach</code> loops; <code>.Any()</code> is a great tool in that regard.</p>
+
+
+<p>Here's a representative example:</p>
+
+
+<p><div><script src='https://gist.github.com/1877234.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>I want to determine if my to-do list has any items that are late, so I use <code>.Where()</code> to filter my list of deliverables down to items with a deadline in the past; then I take a <code>.Count()</code> of the resulting list, and see if that number is greater than zero. This is a plausible solution, and our years of SQL lead us to write LINQ this way. But it can be better.<!--more--></p>
+
+
+<p>Testing "count greater than zero" is a programmer's way of saying "are there any?" So let's just say <em>any</em>. As you might expect, <code>.Any()</code> returns a Boolean indicating whether the collection contains any items. Further, you can pass a lambda expression to specify the predicate "any <em>like this</em>." (<code>.Count()</code> takes a predicate, too, by the way, but I really have seen "<code>.Where().Count()</code>" in use, so I wanted to start from there.)</p>
+
+
+<p>Here's the new version:</p>
+
+
+<p><div><script src='https://gist.github.com/1877236.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>In addition to being shorter, this version more directly and declaratively states my intent: "Are there any late deliverables?"</p>
+
+
+<p>This code also executes more efficiently. For <code>.Count()</code> to return a value, LINQ must iterate over all items in the collection, even though I don't care <em>how many</em> items there are. <code>.Any()</code> will return as soon as it encounters an item that satisfies the predicate. It evaluates as few items as possible, giving me an efficient and readable solution.</p>
+
+]]></content>
+  </entry>
+  
+</feed>

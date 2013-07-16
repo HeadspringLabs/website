@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: open source | Headspring Labs]]></title>
+  <link href="http://headspringlabs.com/blog/categories/open-source/atom.xml" rel="self"/>
+  <link href="http://headspringlabs.com/"/>
+  <updated>2013-07-15T23:13:23-05:00</updated>
+  <id>http://headspringlabs.com/</id>
+  <author>
+    <name><![CDATA[Headspring Labs]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Another Tiny Contribution to WebApiContrib]]></title>
+    <link href="http://headspringlabs.com/blog/another-tiny-contribution-to-webapicontrib/"/>
+    <updated>2012-04-30T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/another-tiny-contribution-to-webapicontrib</id>
+    <content type="html"><![CDATA[<p>I have the privilege of working with lots of smart people. Sometimes they blog about things that are new, weird, wrong or backwards. <a href="http://lostechies.com/jimmybogard/">Jimmy Bogard</a> posted something the other day that, to me, was weird. If you’re bringing <a href="http://www.asp.net/web-api">ASP.NET Web API</a> into an existing ASP.NET web site or application, you probably want your API custom errors to match your web app’s custom errors. By default, this isn’t hooked up out of the box. In Jimmy’s post on <a href="http://lostechies.com/">Los Techies</a>, you’ll notice how he solves this problem.</p>
+
+
+<h3><strong>What is ASP.NET Web API?</strong></h3>
+
+
+<p>I’ve worked with ASP.NET’s take on HTTP for quite some time, but I'm usually the guy that avoids the past opinions of the Microsoft team. I feel like I understand how the web works and bulky .NET classes around it seem heavy handed and usually overkill; I try to avoid them at all costs. This is why ASP.NET Web API appeals to me. It’s a lighter-weight approach to the web with C# and the .NET stack. A few individuals have been paying attention to this for a few months now and I decided to help out a little bit after.<!--more--></p>
+
+
+<h3><strong>Why WebApiContrib?</strong></h3>
+
+
+<p>While I’ve been focusing a good amount of time onASP.NET Web API, I decided that his post was a perfect fit for a small amount of code in the <a href="http://webapicontrib.github.com/">WebApiContrib</a> project. This project is aimed to be a supplement to what Web API already provides. It's still new, and the help of the community can really drive this project in the right direction.</p>
+
+
+<h3><strong>Adding Code to WebApiContrib</strong></h3>
+
+
+<p>I went ahead and took <a href="http://lostechies.com/jimmybogard/2012/04/18/custom-errors-and-error-detail-policy-in-asp-net-web-api/">Jimmy’s blog post</a> and <a href="https://github.com/WebApiContrib/WebAPIContrib/commit/27381146d65b3958cf267e7bb7fcd80e1b913b66">turned it into code</a> so it could be used <a href="https://nuget.org/packages/webapicontrib">straight from NuGet</a>. If you are ever wanting to give back to open source and you read a blog post like this one. You’re basically being tossed a lob ball. Thanks Jimmy!</p>
+
+]]></content>
+  </entry>
+  
+</feed>

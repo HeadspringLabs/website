@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: productivity | Headspring Labs]]></title>
+  <link href="http://headspringlabs.com/blog/categories/productivity/atom.xml" rel="self"/>
+  <link href="http://headspringlabs.com/"/>
+  <updated>2013-07-15T23:13:23-05:00</updated>
+  <id>http://headspringlabs.com/</id>
+  <author>
+    <name><![CDATA[Headspring Labs]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Increasing Development Enjoyment with RavenDB]]></title>
+    <link href="http://headspringlabs.com/blog/increasing-development-enjoyment-with-ravendb/"/>
+    <updated>2012-04-23T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/increasing-development-enjoyment-with-ravendb</id>
+    <content type="html"><![CDATA[<p>We have a lot of different options for data storage and retrieval available today. These options include the traditional relational database, document databases, key value stores, and even flat files. Every option has its benefits over the others, making some options better for some things and other options better for other things. Once the data storage and retrieval option is selected, we then typically have to select a product. Within a solution space, most products offer some distinction from their competitors. Such distinctions make certain products popular choices for a particular technology stack. For example, MySQL is a common choice for the LAMP stack, as is Microsoft SQL Server for the .NET stack.</p>
+
+
+<p>Why is this so? There are several reasons for this, and their importance varies between administrators, developers, managers, and even executives.</p>
+
+
+<p>From a developer's point of view, it comes down to whether or not the product in the solution space makes the work more enjoyable.<!--more--></p>
+
+
+<p>As a .NET developer, <a href="http://ravendb.net">RavenDB</a> is a ton of fun to work with. Here is what it offers me:</p>
+
+
+<ol>
+<li>RavenDB is available as a <a href="http://nuget.org">NuGet</a> package, which means I don’t even have to leave Visual Studio to start working with it.</li>
+<li>The .NET client is very well designed and supports the IQueryable interface and LINQ very well.  This makes storing, deleting, and loading data easy. It also makes querying data easy and extremely powerful.</li>
+<li>Facilities to quickly define indexes and even MapReduce queries in code with minimal effort are supported.</li>
+<li>The amount of time I spend on the data model is greatly reduced, since mapping .NET objects to JSON documents is easy.</li>
+<li>I don’t have to use an object relational mapper (ORM).</li>
+<li>An HTTP API is available as an integration option.</li>
+<li>I can completely embed RavenDB in my application.</li>
+</ol>
+
+
+<p>The net result is I can spend most of my time focused on my application and its problem space. Reasons 4 and 5 are also true for other document databases, but reasons 1, 2, and 3 really distinguish RavenDB in the .NET space.</p>
+
+
+<p>Let’s look at an example. Take for instance reason #4 and assume we were tasked with creating a domain model for a shopping cart and the persistence logic for it.  The very first thing we would do is create the domain model. After some conversations and collaboration with a stakeholder, we come up with the following initial domain model along with the unit tests which validate the correct behavior of the model:</p>
+
+
+<p><div><script src='https://gist.github.com/2399488.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>At this point we are ready to start working on persisting the shopping cart object to a database. If we are using Microsoft SQL Server, we would now have to create some tables in SQL or perhaps use a code-first approach with our ORM of choice. We may need to create a map for our ORM and probably a repository class to facilitate the storage and retrieval of our domain object to and from the database. If we are using RavenDB, we are pretty much done. Regardless of the data storage solution selected, we can usually count on some tweaks and enhancements during the demo and develop iterations with the stakeholder. But when RavenDB is used, those changes are going to happen here in the domain model. Contrast this with a traditional relational database, which may require changes to the domain model, ORM maps, repositories, and SQL tables.</p>
+
+
+<p>I can’t get over how easy the .NET client is to use and how powerful RavenDB can be. If you are interested in trying RavenDB out, check out my <a href="http://www.headspring.com/2012/03/getting-started-with-ravendb">Getting Started with RavenDB</a> post for a quick introduction.</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Improve developer productivity by losing your mouse]]></title>
+    <link href="http://headspringlabs.com/blog/improve-developer-productivity-by-losing-your-mouse/"/>
+    <updated>2011-08-31T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/improve-developer-productivity-by-losing-your-mouse</id>
+    <content type="html"><![CDATA[<p>I started my development career working for a very small company that developed accessibility software for the blind. I was fresh out of school and working on a screen reader for Windows 3.1. It was quite a challenge, in more ways than one.</p>
+
+
+<p>One of the things I had to learn was how blind people used the computer at all. My boss (the owner of the company) was blind and taught me a lot – but he could only work in DOS, as there just weren’t any screen readers for Windows yet. So I had to figure out a lot of things on my own.<!--more--></p>
+
+
+<p><a href="http://www.headspring.com/wp-content/uploads/2011/08/image.png"><img style="margin: 0px 30px 25px 0px; padding-left: 0px; padding-right: 0px; float: left; padding-top: 0px; border: 0px;" src="http://www.headspring.com/wp-content/uploads/2011/08/image_thumb.png" alt="image" width="165" height="169" align="left" border="0" /></a>As you might guess, blind people have terrible eye-hand coordination, so they never use a mouse. I decided that I would also learn to avoid my mouse as much as possible. One of the best things for me was to just push the mouse out of reach – if it wasn’t there, it made it more inconvenient to use it. Sometimes I would go so far as disconnecting it or dropping down behind my desk. I very quickly learned that the Alt key would let me get to menus, and that the tab key would move me between controls in a dialog. I learned that the Enter key in a dialog would (usually) press the default button, which looked different than other buttons. Over time, I developed a very strong ability to use nothing but the keyboard – and it has helped in many ways.</p>
+
+
+<p>One thing I noticed as I moved on to other jobs is that many developers had not learned the same keyboard skills that I had. I would frequently wince as I watched someone use the mouse to do something, and then I would gently suggest the (much faster) keyboard way of doing the same thing. One time I was working with someone on a word processing document, and they wanted to change the font of the whole document. I t was painful to watch them first click on the up arrow in the scroll bar to get to the top of the document, then use the mouse to select the whole document. They thought it was pretty cool when I showed them that CTRL+A almost always works to “select all”. One of my other favorites is that when I am filling in a form on a website, when it gets to asking about my address, there is almost always a huge dropdown for State. Since I live in Texas, hitting T twice gets me right where I need to be super-fast. You can also do this for those “what year were you born in” dropdowns – rather than pointing and clicking, just start typing, and it will select the right year.</p>
+
+
+<p>Pair programming is a great way to share these kinds of tips and tricks. Attending a coding dojo is another one. Of course, the <a href="http://www.headspring.com/services/developer-training">Headspring training classes</a> usually introduce students to all kinds of productivity enhancing techniques too!</p>
+
+
+<p>There are too many keyboard shortcuts to list here, but start looking around for lists of keyboard shortcuts for the programs you use most often. Use something like <a href="http://osherove.com/tools">Key Jedi</a> when you pair with someone so you can learn they shortcuts they use. and try ‘losing’ your mouse every once in a while to force yourself out of your comfort zone. It may take longer at first, but when you master them, you will be faster than ever.</p>
+
+
+<p>Here are a few keyboard shortcut references to get you started:</p>
+
+
+<p><a href="http://support.microsoft.com/kb/126449">Keyboard Shortcuts for Windows</a> – a nice general list to get you started.</p>
+
+
+<p><a href="http://windows.microsoft.com/en-US/windows7/Keyboard-shortcuts">Windows 7 Shortcuts</a> – some duplicates here, but some things that are Windows 7 specific.</p>
+
+]]></content>
+  </entry>
+  
+</feed>

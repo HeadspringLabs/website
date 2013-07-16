@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: pair programming | Headspring Labs]]></title>
+  <link href="http://headspringlabs.com/blog/categories/pair-programming/atom.xml" rel="self"/>
+  <link href="http://headspringlabs.com/"/>
+  <updated>2013-07-15T23:13:23-05:00</updated>
+  <id>http://headspringlabs.com/</id>
+  <author>
+    <name><![CDATA[Headspring Labs]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[How pair programming benefits agile teams]]></title>
+    <link href="http://headspringlabs.com/blog/pair-programming-in-agile/"/>
+    <updated>2011-08-29T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/pair-programming-in-agile</id>
+    <content type="html"><![CDATA[<div>Hands down, pair programming is one of the most valuable agile techniques, but at the same it is one of the most controversial because it can be a tough sell to a manager or non-technical stakeholder. At face value, two developers and one keyboard sounds like a perfect recipe for double the cost. The problem with that equation is it naively assumes that value is limited to the speed at which developers type, and that adding a second developer won't do any good unless he also has a keyboard to pound on. In reality though, pair programming helps agile teams solve difficult problems quicker as well as help keep your team up-to-date on the latest business and technical knowledge. I want to give you the arguments to use to quell those management fears and allow you to get all the benefits of pair programming for your agile team.<!--more--></div>
+
+
+<p>&nbsp;</p>
+
+
+<div>Have you ever watched Wheel of Fortune with a friend, without the slightest idea what the answer could be, then your friend, thinking out-loud, says one of the words and instantly you can complete the rest of the phrase? Neither of you knew the answer, but as a team you were able to solve the problem neither of you could solve on your own. Given enough time, one of you would likely have figured it out, but by working as a team you arrived at it much quicker. When developing software, the same type of problems can pop-up, and two people can solve them quicker as a team than either could individually... and most often times, far beyond twice as quickly! When situations like these pop-up, it just makes sense from a cost perspective to pair on them so the total amount of time spent on the task is reduced.</div>
+
+
+<p>&nbsp;</p>
+
+
+<div>The other fundamental justification for pair programming is knowledge transfer. Knowledge transfer is the process where one person shares his wisdom with a peer. This can be done countless was, such as just sitting in a room and talking to a group of other developers, but with pair programming it is baked right it. There are two types of knowledge that can be transferred: business and technical. Transferring business knowledge, such as what must happen in a system for a user to be considered a preferred customer, help to ensure multiple developers in the organization know how the system works and mitigate risk for the company when an employee leaves. Transferring technical knowledge, such as one partner in the pair sharing a keyboard shortcut key with the other, allows developers to become more efficient in how they operate and increase their productivity over the lifetime of the project.</div>
+
+
+<p>&nbsp;</p>
+
+
+<div>The caveat to pair programming is you shouldn't over do it. In practice, I've found about 20% of the time I pair program, and about 80% I work solo. This varies greatly week to week, and I tend to pair program more (sometimes even 80-100%) earlier in the life-cycle of an application when there are lots of difficult portions to think though and even small design mistakes can be costly down the road. As a project becomes more mature, I usually taper down to closer to a few hours a week, and then there is more emphasis on the knowledge transfer aspect--both what business rules have been developed in parallel that I have not found out about yet as well as what can I be doing to be more efficient while developing.</div>
+
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: keyboard | Headspring Labs]]></title>
+  <link href="http://headspringlabs.com/blog/categories/keyboard/atom.xml" rel="self"/>
+  <link href="http://headspringlabs.com/"/>
+  <updated>2013-07-15T23:13:23-05:00</updated>
+  <id>http://headspringlabs.com/</id>
+  <author>
+    <name><![CDATA[Headspring Labs]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Power to the Pinkies]]></title>
+    <link href="http://headspringlabs.com/blog/power-to-the-pinkies/"/>
+    <updated>2012-06-13T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/power-to-the-pinkies</id>
+    <content type="html"><![CDATA[<p><em>By Casey Gum</em></p>
+
+
+<p>As you may have gathered from <a title="Why try vi" href="http://www.headspring.com/2012/06/why-try-vi-part-1">my last post</a>, I am a big fan of vi/vim.  However, one thing that has always annoyed me about vi is that to get back into normal mode, you have to hit the escape key.  It is probably one of the most difficult keys to hit on the whole keyboard and many laptop keyboard layouts have made it about the size of peanut.</p>
+
+
+<p>People who have been doing command-line linux for a long time don’t have a problem with this since environmental adaptation has elongated their left pinkies [citation needed].  People who use Windows and OSX, on the other hand, need help.</p>
+
+
+<p>So, the natural thing to do is to commandeer the enormous and conveniently located Caps Lock key and make it act like the escape key.  (<strong>Note:  </strong>If you need to type OMG LOL ROFL, you can just hold down the shift key and type – you don’t actually need to use Caps Lock – just saying…)</p>
+
+
+<p><a href="http://www.headspring.com/2012/06/power-to-the-pinkies/esc-hands-2" rel="attachment wp-att-5472"><img class="aligncenter size-full wp-image-5472" src="http://www.headspring.com/wp-content/uploads/2012/06/esc-hands1.jpg" alt="" width="500" height="257" /><br />
+</a></p>
+
+
+<p>Here's how you do it... <!--more--></p>
+
+
+<p><span style="text-decoration: underline"><span style="color: #000000"><strong>In Windows:</strong></span></span></p>
+
+
+<p><strong>Note: </strong>If you are running Windows in Parallels on a Mac, this won’t work – go to the section on how to do it in OSX.</p>
+
+
+<p>Take the block of text below and copy it into notepad.  Then, save the file as EscapeKeyRemap.reg and double-click it to run it.  (You can also <strong>Start &gt; Run &gt; regedit</strong> and then choose <strong>File &gt; Import</strong> and import the file.)  As you can easily see,  it sets the "Scancode Map" key to a bunch of random numbers.  This causes the Caps Lock key to behave like an escape key, which is all that really matters.</p>
+
+
+<div style="font-size: 10px;padding: 10px;border: solid 1px gray;background-color: silver">
+<p>Windows Registry Editor Version 5.00</p>
+<p>[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Keyboard Layout]<br />
+"Scancode Map"=hex:00,00,00,00,00,00,00,00,02,00,00,00,01,00,3a,00,00,00,00,00</p>
+</div>
+
+
+<p><strong>EDIT</strong>: The previous registry key entry was wrong - I fixed it.</p>
+
+
+<p>After you have modified the registry, you will need to reboot the system.  Once you are done rebooting, you will be good to go.</p>
+
+
+<p><span style="text-decoration: underline"><strong>In OSX:</strong></span></p>
+
+
+<p>In OSX, you will need to install <strong>PCKeyboardHack</strong>.  You can download it from here: <a href="http://download.cnet.com/PCKeyboardHack/3000-2110_4-75363152.html">http://download.cnet.com/PCKeyboardHack/3000-2110_4-75363152.html</a>.</p>
+
+
+<p>After you download and run the disk image (.dmg file) you will see an icon on your desktop called <strong>PCKeyboardHack-7.4.0</strong>.  Double-click it and it will open a new window with a file in it called <strong>PCKeyboardHack.reg</strong>.  Double-click that to install it using all the default options.  After it is done installing, you will need to reboot.</p>
+
+
+<p><a href="http://www.headspring.com/2012/06/power-to-the-pinkies/screen-shot-2012-06-12-at-8-42-03-pm" rel="attachment wp-att-5475"><img class="aligncenter size-medium wp-image-5475" src="http://www.headspring.com/wp-content/uploads/2012/06/Screen-Shot-2012-06-12-at-8.42.03-PM-300x187.png" alt="" width="300" height="187" /></a></p>
+
+
+<p>After rebooting, go to your system preferences and double-click the <strong>PCKeyboardHack</strong> icon.</p>
+
+
+<p><a href="http://www.headspring.com/2012/06/power-to-the-pinkies/screen-shot-2012-06-12-at-8-40-29-pm" rel="attachment wp-att-5476"><img class="aligncenter size-medium wp-image-5476" src="http://www.headspring.com/wp-content/uploads/2012/06/Screen-Shot-2012-06-12-at-8.40.29-PM-300x251.png" alt="" width="300" height="251" /></a></p>
+
+
+<p>This will bring up a dialog that allows you to remap your Caps Lock key.  Check the Change Caps Lock box and enter the keycode <strong>53</strong>.</p>
+
+
+<p><a href="http://www.headspring.com/2012/06/power-to-the-pinkies/screen-shot-2012-06-12-at-8-42-59-pm" rel="attachment wp-att-5477"><img class="aligncenter size-medium wp-image-5477" src="http://www.headspring.com/wp-content/uploads/2012/06/Screen-Shot-2012-06-12-at-8.42.59-PM-300x294.png" alt="" width="300" height="294" /></a></p>
+
+
+<p>Close the dialog and you’ll be good to go.  This will carry over to Windows running under Parallels as well.</p>
+
+
+<p>Happy Vimming!</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Improve developer productivity by losing your mouse]]></title>
+    <link href="http://headspringlabs.com/blog/improve-developer-productivity-by-losing-your-mouse/"/>
+    <updated>2011-08-31T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/improve-developer-productivity-by-losing-your-mouse</id>
+    <content type="html"><![CDATA[<p>I started my development career working for a very small company that developed accessibility software for the blind. I was fresh out of school and working on a screen reader for Windows 3.1. It was quite a challenge, in more ways than one.</p>
+
+
+<p>One of the things I had to learn was how blind people used the computer at all. My boss (the owner of the company) was blind and taught me a lot – but he could only work in DOS, as there just weren’t any screen readers for Windows yet. So I had to figure out a lot of things on my own.<!--more--></p>
+
+
+<p><a href="http://www.headspring.com/wp-content/uploads/2011/08/image.png"><img style="margin: 0px 30px 25px 0px; padding-left: 0px; padding-right: 0px; float: left; padding-top: 0px; border: 0px;" src="http://www.headspring.com/wp-content/uploads/2011/08/image_thumb.png" alt="image" width="165" height="169" align="left" border="0" /></a>As you might guess, blind people have terrible eye-hand coordination, so they never use a mouse. I decided that I would also learn to avoid my mouse as much as possible. One of the best things for me was to just push the mouse out of reach – if it wasn’t there, it made it more inconvenient to use it. Sometimes I would go so far as disconnecting it or dropping down behind my desk. I very quickly learned that the Alt key would let me get to menus, and that the tab key would move me between controls in a dialog. I learned that the Enter key in a dialog would (usually) press the default button, which looked different than other buttons. Over time, I developed a very strong ability to use nothing but the keyboard – and it has helped in many ways.</p>
+
+
+<p>One thing I noticed as I moved on to other jobs is that many developers had not learned the same keyboard skills that I had. I would frequently wince as I watched someone use the mouse to do something, and then I would gently suggest the (much faster) keyboard way of doing the same thing. One time I was working with someone on a word processing document, and they wanted to change the font of the whole document. I t was painful to watch them first click on the up arrow in the scroll bar to get to the top of the document, then use the mouse to select the whole document. They thought it was pretty cool when I showed them that CTRL+A almost always works to “select all”. One of my other favorites is that when I am filling in a form on a website, when it gets to asking about my address, there is almost always a huge dropdown for State. Since I live in Texas, hitting T twice gets me right where I need to be super-fast. You can also do this for those “what year were you born in” dropdowns – rather than pointing and clicking, just start typing, and it will select the right year.</p>
+
+
+<p>Pair programming is a great way to share these kinds of tips and tricks. Attending a coding dojo is another one. Of course, the <a href="http://www.headspring.com/services/developer-training">Headspring training classes</a> usually introduce students to all kinds of productivity enhancing techniques too!</p>
+
+
+<p>There are too many keyboard shortcuts to list here, but start looking around for lists of keyboard shortcuts for the programs you use most often. Use something like <a href="http://osherove.com/tools">Key Jedi</a> when you pair with someone so you can learn they shortcuts they use. and try ‘losing’ your mouse every once in a while to force yourself out of your comfort zone. It may take longer at first, but when you master them, you will be faster than ever.</p>
+
+
+<p>Here are a few keyboard shortcut references to get you started:</p>
+
+
+<p><a href="http://support.microsoft.com/kb/126449">Keyboard Shortcuts for Windows</a> – a nice general list to get you started.</p>
+
+
+<p><a href="http://windows.microsoft.com/en-US/windows7/Keyboard-shortcuts">Windows 7 Shortcuts</a> – some duplicates here, but some things that are Windows 7 specific.</p>
+
+]]></content>
+  </entry>
+  
+</feed>

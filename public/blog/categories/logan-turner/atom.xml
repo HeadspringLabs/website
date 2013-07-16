@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: logan turner | Headspring Labs]]></title>
+  <link href="http://headspringlabs.com/blog/categories/logan-turner/atom.xml" rel="self"/>
+  <link href="http://headspringlabs.com/"/>
+  <updated>2013-07-15T23:13:23-05:00</updated>
+  <id>http://headspringlabs.com/</id>
+  <author>
+    <name><![CDATA[Headspring Labs]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Mercurial basics with Logan Turner]]></title>
+    <link href="http://headspringlabs.com/blog/mercurial-basics/"/>
+    <updated>2012-06-26T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/mercurial-basics</id>
+    <content type="html"><![CDATA[<p><a href="http://feeds.headspring.com/headspringpodcast"><img class="alignleft size-full wp-image-5635" src="http://www.headspring.com/wp-content/uploads/2012/06/rss-icon40.jpg" alt="" width="40" height="40" /></a>In this cast, Logan Turner and Jeffrey Palermo discuss Mercurial basics.  Logan Turner is a Headspring intern and a student at LeTourneau University.  Logan has recently learned Mercurial, and he has helped another new employee come up to speed with this distributed version control system.</p>
+
+
+<p>You might be interested in these Mercurial resources:</p>
+
+
+<ul>
+<li><a href="http://mercurial.selenic.com/">Mercurial/TortoiseHg</a></li>
+<li><a href="http://hgbook.red-bean.com/read/">Free Mercurial ebook by Bryan O'Sullivan</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

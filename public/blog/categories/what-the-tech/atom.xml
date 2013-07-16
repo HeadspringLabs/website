@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: What the tech? | Headspring Labs]]></title>
+  <link href="http://headspringlabs.com/blog/categories/what-the-tech/atom.xml" rel="self"/>
+  <link href="http://headspringlabs.com/"/>
+  <updated>2013-07-15T23:13:23-05:00</updated>
+  <id>http://headspringlabs.com/</id>
+  <author>
+    <name><![CDATA[Headspring Labs]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Get to Know a Developer: Jose Basilio]]></title>
+    <link href="http://headspringlabs.com/blog/get-to-know-a-developer-jose-basilio/"/>
+    <updated>2013-01-11T00:00:00-06:00</updated>
+    <id>http://headspringlabs.com/blog/get-to-know-a-developer-jose-basilio</id>
+    <content type="html"><![CDATA[<p><img class="alignright size-medium wp-image-6321" alt="Jose Basilio" src="http://www.headspring.com/wp-content/uploads/2013/01/photo-2-e1357940416657-224x300.jpg" width="224" height="300" />This week we welcomed Jose Basilio to the team! Jose currently lives in Houston, but he’s originally from the Dominican Republic. I was so excited to speak with him because he told me that participating in <a href="http://www.headspring.com/mary/headspring-hosts-central-texas-givecamp-to-benefit-10-local-non-profits/" target="_blank">CTX GiveCamp</a> (one of my projects last year) convinced him to look into working for us full time. In fact, Jose was on the TX Kidney Foundation team, which won CTX GiveCamp’s highest honor: the “Meg Ryan Facelift Award for Coolest UI”. I knew he was a winner. Here’s the rest of our conversation:</p>
+
+
+<p><!--more--></p>
+
+
+<p>Where did you work, and what did you do before coming to Headspring?</p>
+
+
+<p>I was a senior developer at Dril-Quip, Inc., a manufacturer of oil and gas drilling equipment in Houston. Prior to that, I worked in various roles in application and database administration at Compaq / HP.</p>
+
+
+<p>What or who made you want to work here?</p>
+
+
+<p>Throughout my career, I have worked for companies where software was a cost-center. I wanted the opportunity to work for a company where my efforts directly contribute to the bottom-line. I also wanted work along-size like-minded individuals that have a passion for learning and moving their careers forward. I believe Headspring is that company.</p>
+
+
+<p>What led you to software development?</p>
+
+
+<p>Computers are better than humans at performing repetitive tasks in a fast and consistent manner. I wanted to automate my day-to-day activities as a database admin. This led me to learn scripting languages, and I enjoyed that so much that moved into full-blown development.</p>
+
+
+<p>What did you learn first?</p>
+
+
+<p>I started by learning VBScript to create windows scripts and dynamic web pages back in the day.</p>
+
+
+<p>Do you like teaching?</p>
+
+
+<p>I love teaching and learning new things. The best way to truly learn and become an expert at something is to teach it.  I think that in the process of simplifying a topic in order to teach it to others, we gain clarity of mind and reach those “aha” moments in our understanding of the subject.</p>
+
+
+<p>&nbsp;</p>
+
+
+<p>Want to know more? Tweet <a href="https://twitter.com/jbasilio" target="_blank">@jbasilio</a>.</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Get to Know a Developer: Patrick Abbs]]></title>
+    <link href="http://headspringlabs.com/blog/get-to-know-a-developer-patrick-abbs/"/>
+    <updated>2013-01-08T00:00:00-06:00</updated>
+    <id>http://headspringlabs.com/blog/get-to-know-a-developer-patrick-abbs</id>
+    <content type="html"><![CDATA[<p><img class="alignright size-medium wp-image-6318" title="Patrick Abbs" src="http://www.headspring.com/wp-content/uploads/2013/01/photo-1-e1357685470139-224x300.jpg" alt="Patrick Abbs" width="224" height="300" />This week we welcomed in a New Year and a new consultant to the team: Patrick Abbs.  Patrick is a native Austinite, but just moved back from New York.  He went to NYU for Individualized Study – a new type of customized undergraduate degree program. He explained to me that he chose a focus of study (Game Theory) and developed his own course schedule around it. He had to produce a senior thesis and submit it before a board, similar to the process of obtaining a graduate degree.</p>
+
+
+<p>In school and in the workforce, he found programming knowledge to be very helpful in crunching data for statistical analysis. Eventually, he was led to Headspring. Read more about how that happened:</p>
+
+
+<p><strong>Where did you work, and what did you do before coming to Headspring?</strong></p>
+
+
+<p>My last two jobs were completely different from each other, but Headspring is interestingly kind of a mix between the two.  At the tech startup Tilde, I worked with the LAMP stack (as well as some C# and Python) to create a B-to-B tool for businesses to streamline their back-office processes.  At DRSdigital, I worked directly with new and existing clients to create, customize, and maintain secure data rooms (typically for potential merger and acquisition deals).<!--more--></p>
+
+
+<p><strong>Are you an expert at anything?</strong></p>
+
+
+<p>I have worked extensively with algorithms geared towards statistical analysis of information sets, and am especially well-acquainted with mixture models (a more specific type of statistical algorithm).  As much as I love statistics algorithms, though, I definitely want to expand my expertise into other areas of programming.  At the moment I'm fascinated with the differences between and advantages of different types of databases, as well as with how compilers work.</p>
+
+
+<p><strong>What led you to software development?</strong></p>
+
+
+<p>The initial appeal of software development for me came from the recognition that once a program has been written to solve a given type of problem once, it can thereafter solve any instance of that problem an endless number of times with incredible efficiency and little effort.  For instance, it might take me two minutes to sort fifty documents according to some ordering criteria manually, versus ten minutes to write a program which executes the same sorting methodology.  However, after I have written such a program I can use it to sort any number of documents any number of times in a matter of milliseconds for each execution, all with the click of a button.  Once I started thinking about software development as something that requires some initial time investment but can save exponentially more time in the long run, I was hooked.</p>
+
+
+<p><strong>What did you learn first?</strong></p>
+
+
+<p>My first introduction to code was as a mathematically-oriented person trying to convey algorithms to software developers for implementation.  The fact that I had no experience with code and the developers I was working with had a limited understanding of math significantly slowed the rate at which theory could be converted to practice, so I decided to try to bridge the gap between our areas of understanding by learning the relatively simple, mathematical language Python.</p>
+
+
+<p><strong>What or who made you want to work here?</strong></p>
+
+
+<p>Headspring is an appealing place to work for me for several reasons.  It is known for having a great and open company culture (which I saw first-hand at the two lunch-and-learns I've attended).  I'm also excited about the fact that the vast majority of the people working there are seasoned, experienced professionals, and as a less experienced developer I really value being able to ask questions and learn from the experience of the people around me.</p>
+
+
+<p>As far as the actual responsibilities of being a Headspring consultant, I really like the fact that the projects are diverse and let me work on a variety of different programming challenges.  Finally, I like the fact that working at Headspring often involves working directly with clients.  I love technology, but regularly interacting with clients is exciting to me.</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Get to Know a Developer: Andrew West]]></title>
+    <link href="http://headspringlabs.com/blog/get-to-know-a-developer-andrew-west/"/>
+    <updated>2012-08-02T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/get-to-know-a-developer-andrew-west</id>
+    <content type="html"><![CDATA[<p><a href="http://www.headspring.com/wp-content/uploads/2012/08/andrew-west.png"><img class="alignright size-medium wp-image-5681" title="andrew west" src="http://www.headspring.com/wp-content/uploads/2012/08/andrew-west-300x300.png" alt="" width="300" height="300" /></a>This week's developer actually started last week: Andrew West, Senior Consultant.  Andrew has been riding the contract train for all kinds of companies for about 10 years.  He's done some server side work for mobile geo-caching apps, developed a bar code app for hazardous waste tracking in the healthcare industry, worked on projects in the financial and academic worlds, and more.  Now, he's happy to give Headspring and our clients his full attention, telling me that he intentionally steered away from other offers because he knew he wanted to work here.  Here's more of our conversation:<!--more--></p>
+
+
+<p><strong>Are you an expert at anything?</strong></p>
+
+
+<p>I have a lot of experience with C#, ASP.NET MVC, and relational databases, but the learning process never ends.  I’m always looking for ways to improve my skills.</p>
+
+
+<p><strong>Who is on your list of ideal clients to work for or individuals to work with?</strong></p>
+
+
+<p>I’m fascinated by the space industry, so it would be interesting to work with clients in that field.  I’m amazed by things like the Mars Science Laboratory mission.</p>
+
+
+<p><strong>What led you to software development?</strong></p>
+
+
+<p>When I was 9 or 10 years old my parents gave me a toy computer.  It only had 2 kilobytes of RAM and a 16-character display, but I managed to create simple games with it.  Eventually I learned to program the Apple II, TRS-80, and IBM PC.  By the time I was in high school, I knew I wanted a career in software.</p>
+
+
+<p><strong>What did you learn first?</strong></p>
+
+
+<p>I started out learning various dialects of BASIC.  A few years later I learned C++ and x86 assembly language.</p>
+
+
+<p><strong>Do you like teaching?</strong></p>
+
+
+<p>Teaching a room full of people can be intimidating, but it’s still a great experience if you don’t worry too much about being perfect.  I learn a lot when I’m preparing to teach.</p>
+
+
+<p><strong>Where do you begin when learning something new?</strong></p>
+
+
+<p>I still like to read books in hard copy format.  Reading a technical book from cover to cover gives me a broader understanding of a new technology than reading online code examples or documentation.</p>
+
+
+<p>&nbsp;</p>
+
+
+<p>I agree, Andy. Hard copy books for life!  To learn more, tweet: <a href="https://twitter.com/andrewtwest">@andrewtwest</a></p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Get to Know a Developer: Cedric Yao]]></title>
+    <link href="http://headspringlabs.com/blog/get-to-know-a-developer-cedric-yao/"/>
+    <updated>2012-04-19T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/get-to-know-a-developer-cedric-yao</id>
+    <content type="html"><![CDATA[<p><a href="http://www.headspring.com/2012/04/get-to-know-a-developer-cedric-yao/cedric" rel="attachment wp-att-4884"><img class="alignright size-medium wp-image-4884" title="Cedric" src="http://www.headspring.com/wp-content/uploads/2012/04/Cedric-199x300.jpg" alt="" width="199" height="300" /></a>Headspring’s latest new hire is Cedric Yao, Senior Consultant.  We’re really excited to have him on board, and I am super excited to get a fresh addition into this series.</p>
+
+
+<p>Cedric has been in Austin for a few years, and just welcomed his first born son into the family 5 weeks ago!  We talked about Austin, why working here is so much fun, and what we really love about technology.  As it turns out we share a lot of the same interests in bringing together communities through technology.  His experiences are going to be a real help to me with planning and preparation for Headspring’s Central Texas <a href="http://ctxgivecamp.org/">Give Camp</a> in September.</p>
+
+
+<p>Here’s how the rest of our conversation went:<!--more--></p>
+
+
+<p><strong>Are you an expert at anything?</strong></p>
+
+
+<p>I’m really great at creating tangible systems for internal processes.  This can be really useful to organizations when it comes time to, say, track metrics.  At my last job, I developed an authentication system for web applications, and integrated some ERP systems for order automation.  I think I’m good at this because I tend to approach problem solving visually, with a creative mindset, before getting analytical.</p>
+
+
+<p><strong>Who is on your list of ideal clients to work for or individuals to work with?</strong></p>
+
+
+<p>Coming to Headspring to work with Jimmy and Jeffrey is definitely up there on my list.  I would also really like to work on a project with Apple one day.  I really appreciate their design methodology</p>
+
+
+<p><strong>What led you to software development?</strong></p>
+
+
+<p>When I was in 5<sup>th</sup> grade my teacher had a puzzle closet.  If we solved the puzzles, we would get free days and homework excuses.  I got really good at solving the puzzles and I pretty much never had to do homework.  I think that was the early start of my interest in engineering, and software development stemmed from it as a natural extension of problem solving.  By high school, I found myself using or creating software all the time.</p>
+
+
+<p><strong>Do you like teaching?</strong></p>
+
+
+<p>Yes! Teaching is the best way to study.  It requires me to understand all the levels of details that go into something.  In my opinion, you don’t fully cement an idea until you teach it.</p>
+
+
+<p><strong>Where do begin when learning something new?</strong></p>
+
+
+<p>I study Brazilian Jiu Jitsu, and one of the concepts I’ve realized is that you have to be able to throw yourself into a challenge.  When thrown into a challenge, we immediately begin to imitate the opponent.  After that, we go through a series of experiments until skills become instinctual.  Anything I’m learning I can approach the same way.  Imitate first, experiment and learn.</p>
+
+
+<p><strong>How do you gauge “time well spent”?</strong></p>
+
+
+<p>If I learn or gain mastery, it’s definitely time well spent.  Sometimes that’s not always so easy to see, especially if my results don’t match my expectations.  But if I can learn through my mistakes, then it’s worth it to me.</p>
+
+
+<p>&nbsp;</p>
+
+
+<p>Hiring great developers is something this company has become really good at.  If you need help on the subject, read our <a href="http://www.headspring.com/resources/whitepapers/">How Headspring Hires Developers whitepaper</a> on what has worked for us.</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[The confusion around QA: why doesn’t the industry agree?]]></title>
+    <link href="http://headspringlabs.com/blog/the-confusion-around-qa-why-doesnt-the-industry-agree/"/>
+    <updated>2012-03-30T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/the-confusion-around-qa-why-doesnt-the-industry-agree</id>
+    <content type="html"><![CDATA[<p>Most people in the industry are undoubtedly familiar with the Software Development Lifecycle (SDLC).</p>
+
+
+<p><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/CPT-SystemLifeSycle.svg/500px-CPT-SystemLifeSycle.svg.png" alt="" /></p>
+
+
+<p>Reference: Wikipedia</p>
+
+
+<p>I was having lunch with a recruiter colleague, and I was learning about the QA requests from lots of customers.  Most defined the QA role well within the “Testing” oval as shown in the picture.  From my questioning, it appears that the agile movement has done little to alter this SDLC.  In fact, this process is still alive and very will, even within agile teams.  The difference is in the batch size.  Rather than doing analysis on a batch of 50 features and then moving that full batch to design, the agile movement has reduced that batch size considerably, and in some cases reduced it down to a batch size of 1.  Lean agile teams are likely to use a batch size of 1 and continuously pull features through the lifecycle.  As an aside, I find that even when working on a single feature, this cycle is still in play, although the feature is more likely to jump backward and redo a portion of the phase before if new information is found.<!--more--></p>
+
+
+<p>The reason for the reflection on QA is that my recruiter colleague still predominantly  receives requests for QA folks to fill the roll of the testing phase.  This means that the QA involvement happens after analysis, after design, after implementation, and only when defects can no longer be prevented.  They can only be discovered.  Inspectors at the end of an assembly line are powerless to prevent defective parts.  They can only discover them through inspection and serve a Quality Control role to prevent defective parts from being shipped.  The same is true in software, and many others have written the same.</p>
+
+
+<p>I shared a very successful project where we incorporated what would otherwise be a very traditional QA Manager into an agile process and yielded great results and a very low defect rate.  When crafting the team’s process, the QA Manager worked in between the analysis and design phases of a given feature to understand and then define the test cases.  That is, based on the current understanding of the feature, how will we test it?  The work required to create the test cases was sufficient to find analysis gaps early and force them to be filled.  The additional information and context contained in the test cases added the design activity as well and yield, in my opinion, a more robust design that was less prone to defects of oversight.  In this project, we saw the time spent coding reduced to less than 50% of the overall project effort.  In fact, at the beginning of the project, programmers were about 50% of project staff, and half-way through, the programmer staff had been reduced to 1/3 of overall project staff.  By crafting a process that pulled thoughts of QA to the beginning of the process, we modified the environment to one in which it was hard for defects to be created in the first place.  In the end, we found no need to create a defect tracking database, and the team was applauded for its quality.  The production launch, which always carries some risk, was a trivial affair, and the system is currently being used by many to perform their daily job.</p>
+
+
+<p>Our industry stills see QA not as assuring quality, but merely controlling quality through inspection.  Some savvy development managers already have changed traditional QA job descriptions, but there is a long way to go before these notions reach the mainstream of the industry.</p>
+
+
+<p>What are your experiences with QA?</p>
+
+]]></content>
+  </entry>
+  
+</feed>

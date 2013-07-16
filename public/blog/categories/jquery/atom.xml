@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: jQuery | Headspring Labs]]></title>
+  <link href="http://headspringlabs.com/blog/categories/jquery/atom.xml" rel="self"/>
+  <link href="http://headspringlabs.com/"/>
+  <updated>2013-07-15T23:13:23-05:00</updated>
+  <id>http://headspringlabs.com/</id>
+  <author>
+    <name><![CDATA[Headspring Labs]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Using jQuery in ASP.NET with IntelliSense Correctly]]></title>
+    <link href="http://headspringlabs.com/blog/using-jquery-in-asp-net-with-intellisense/"/>
+    <updated>2011-09-23T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/using-jquery-in-asp-net-with-intellisense</id>
+    <content type="html"><![CDATA[<p>When I'm teaching the MVC boot camp, I'm always amazed at how some of the smallest things are most impressive to students. One of the most common "wow" moments I see from students not familiar with jQuery is how you can trick Visual Studio to provide IntelliSense by including the vsdoc file, but make sure it still uses the min file for performance. That can be done by including the vsdoc file in an if(false) condition like below. This ensures it will never get included in the production code, which still tricking visual studio's tooling to import the IntelliSense.</p>
+
+
+<p style="text-align: center"><img class="aligncenter size-full wp-image-1871" src="http://www.headspring.com/wp-content/uploads/2011/09/jQuery-IntelliSense2.png" alt="" width="432" height="158" /></p>
+
+
+<p>&nbsp;</p>
+
+]]></content>
+  </entry>
+  
+</feed>

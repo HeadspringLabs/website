@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: keyboard shortcuts | Headspring Labs]]></title>
+  <link href="http://headspringlabs.com/blog/categories/keyboard-shortcuts/atom.xml" rel="self"/>
+  <link href="http://headspringlabs.com/"/>
+  <updated>2013-07-15T23:13:23-05:00</updated>
+  <id>http://headspringlabs.com/</id>
+  <author>
+    <name><![CDATA[Headspring Labs]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Disabling language changes in Visual Studio]]></title>
+    <link href="http://headspringlabs.com/blog/disabling-language-changes-in-visual-studio/"/>
+    <updated>2013-04-12T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/disabling-language-changes-in-visual-studio</id>
+    <content type="html"><![CDATA[<p>On a recent project I used a workstation given to me by the client. It was typical "big enterprise" setup with support for multiple languages. I discovered there's a keyboard shortcut "Ctrl+Space" for changing your language that I would keep accidentally activating in Visual Studio. This post explains how to disable that.</p>
+
+
+<ul>
+<li>Go to the control panel.</li>
+<li>Choose "Region and Language".</li>
+<li>Click the "Keyboard and Layout" tab.</li>
+<li>Click on "Change Keyboards".</li>
+<li>Click on "Advanced Key Settings".</li>
+<li>Look over the list of sequences, ensure they are all set to "none" for keyboard activation.</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: solutions based approach | Headspring Labs]]></title>
+  <link href="http://headspringlabs.com/blog/categories/solutions-based-approach/atom.xml" rel="self"/>
+  <link href="http://headspringlabs.com/"/>
+  <updated>2013-07-15T23:13:23-05:00</updated>
+  <id>http://headspringlabs.com/</id>
+  <author>
+    <name><![CDATA[Headspring Labs]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Get to Know a Developer: Steve Donie]]></title>
+    <link href="http://headspringlabs.com/blog/get-to-know-a-developer-steve-donie/"/>
+    <updated>2012-02-02T00:00:00-06:00</updated>
+    <id>http://headspringlabs.com/blog/get-to-know-a-developer-steve-donie</id>
+    <content type="html"><![CDATA[<p>&nbsp;</p>
+
+
+<p><a href="http://www.headspring.com/wp-content/uploads/2012/02/Steve-Donie.jpg"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border-style: initial; border-color: initial; border-image: initial; border-width: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/02/Steve-Donie_thumb.jpg" alt="Steve Donie" width="164" height="244" align="right" border="0" /></a>When Steve Donie was hired as a Principal Consultant at Headspring in early 2011, he hit the ground running.  His first day on the job, he started as the project lead for EPA Systems, designing a system for tracking greenhouse gasses for a large oil and gas company.  He encompasses the solutions based approach that we covet so much at Headspring and in life.  At home, Steve and his father worked on a massive project digitizing hundreds of family photos from their original slides onto an online portal for their entire family to share.  He is also the webmaster for his local high school’s swim team. And when he is not plugging away on a computer, he can be designing and building furniture, or enjoying the company of his two brilliant daughters.</p>
+
+
+<p>Basically, getting to know Steve meant getting to know how diverse his background truly is, and his desire to really involve himself in the world that surrounds him.  Here is some of what we talked about:</p>
+
+
+<p><!--more--></p>
+
+
+<p><strong>What tools and technologies would you consider yourself an expert in?</strong></p>
+
+
+<p>I’ve been doing software development for over 20 years and have worked with a variety of different languages and technologies.  I’ve mostly worked in a Microsoft environment, starting with DOS, through Windows 3.1, through all the various intervening versions of Windows, up to the current Windows 7.  I’ve also done a fair amount of work on the GNU/Linux platform and on Mac OSX. Language-wise, I’ve mainly used C, C++, Java and C#.</p>
+
+
+<p><strong>What work or studies have you done with these tools and technologies that make you feel expert in them?</strong></p>
+
+
+<p>I’ve mainly worked in industry rather than in consulting.  My first job out of college was developing a screen reader for Windows 95, so I had to learn a lot about accessibility.  I then worked for Microsoft in their Accessibility and Disabilities group.  My next ‘career’ had me working for a company developing sub-surface modeling and simulation software for the oil and gas industry.  I then focused on improving my test-driven design skills and learning C# and .NET on a project handling law firm invoices.  I took another turn through the oil and gas business, honing my leadership, management, and project management skills before coming to Headspring in March 2011.</p>
+
+
+<p><strong>What would you say that your team relies on you for?</strong></p>
+
+
+<p>Probably my domain expertise.  Windows internals, accessibility for people with disabilities, and a lot of work for the oil and gas industry are all included.  I also have a particular passion for agile software development processes, and automating the software development lifecycle, from builds through deploys.  I have also been told that I am great at explaining things; I try to be the translator between technical and non-technical folks.</p>
+
+
+<p><strong>When you were younger, what did you want to be when you grew up?</strong></p>
+
+
+<p>My first memory was that I wanted to be an architect. I watched a lot of “Brady Bunch” and thought Mike Brady was pretty cool.  Later on, I decided I wanted to be a fighter pilot, and went to the United States Air Force Academy in pursuit of that goal.  I soon learned that “Maverick” from Top Gun was not how pilots really were, and transferred to the University of Texas to pursue my second love - computers.</p>
+
+
+<p><strong>How do you gauge “time well spent”?</strong></p>
+
+
+<p>I am very motivated by successful results.  If something that took a lot of time does not turn out how I wanted it to, it’s harder for me to just say “oh well; I learned something.”  However, during a project, I am patient and careful based on the successful results that I am expecting.</p>
+
+
+<p><strong>What do you listen to on your way to work?</strong></p>
+
+
+<p>I mainly listen to the news on NPR when I drive, and podcasts when I walk my dog.  I listen to a few technical podcasts (This Developer’s life, dotNet Rocks, Software Engineering Radio) and other podcasts (RadioLab, This American Life, Planet Money) when I walk my dog.  When I listen to music I lean towards classic rock (Beatles, Stones, The Who, Grateful Dead), Reggae, and alternative/punk.</p>
+
+
+<p>To learn more about Steve, visit his website: <a href="http://donie.us:8080/">http://donie.us:8080/</a></p>
+
+]]></content>
+  </entry>
+  
+</feed>

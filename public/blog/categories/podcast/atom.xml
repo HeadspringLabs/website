@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Podcast | Headspring Labs]]></title>
+  <link href="http://headspringlabs.com/blog/categories/podcast/atom.xml" rel="self"/>
+  <link href="http://headspringlabs.com/"/>
+  <updated>2013-07-15T23:13:23-05:00</updated>
+  <id>http://headspringlabs.com/</id>
+  <author>
+    <name><![CDATA[Headspring Labs]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Mercurial basics with Logan Turner]]></title>
+    <link href="http://headspringlabs.com/blog/mercurial-basics/"/>
+    <updated>2012-06-26T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/mercurial-basics</id>
+    <content type="html"><![CDATA[<p><a href="http://feeds.headspring.com/headspringpodcast"><img class="alignleft size-full wp-image-5635" src="http://www.headspring.com/wp-content/uploads/2012/06/rss-icon40.jpg" alt="" width="40" height="40" /></a>In this cast, Logan Turner and Jeffrey Palermo discuss Mercurial basics.  Logan Turner is a Headspring intern and a student at LeTourneau University.  Logan has recently learned Mercurial, and he has helped another new employee come up to speed with this distributed version control system.</p>
+
+
+<p>You might be interested in these Mercurial resources:</p>
+
+
+<ul>
+<li><a href="http://mercurial.selenic.com/">Mercurial/TortoiseHg</a></li>
+<li><a href="http://hgbook.red-bean.com/read/">Free Mercurial ebook by Bryan O'Sullivan</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[RavenDB with Alonso Robles and Jeffrey Palermo]]></title>
+    <link href="http://headspringlabs.com/blog/ravendb-with-alonso-robles-and-jeffrey-palermo/"/>
+    <updated>2012-06-02T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/ravendb-with-alonso-robles-and-jeffrey-palermo</id>
+    <content type="html"><![CDATA[<p><a href="http://feeds.headspring.com/headspringpodcast"><img class="alignleft size-full wp-image-5225" title="Subscribe to podcast" src="http://www.headspring.com/wp-content/uploads/2012/05/rss-icon402.jpg" alt="Subscribe to podcast" width="40" height="40" /></a>In this cast, Alonso Robles and Jeffrey Palermo discuss RavenDB.  RavenDB is a document database that is very easy to use with .Net applications.  Alonso is a Principal Consultant at Headspring and teaches the RavenDB Boot Camp.  Along with spending time with his family, he enjoys learning new programming languages and is a self-described technology junkie.</p>
+
+
+<p>You might be interested in these RavenDB resources:</p>
+
+
+<ul>
+<li><a href="http://ravendb.net/">http://ravendb.net/</a></li>
+<li><a href="http://www.codeproject.com/Articles/74322/RavenDB-An-Introduction">RavenDB quickstart on CodeProject</a></li>
+<li><a href="https://github.com/ravendb">Source code on GitHub</a></li>
+<li><a href="http://blog.hibernatingrhinos.com/8193/ravendb-webinar-1-now-available-on-youtube">RavenDB webinar</a></li>
+<li><a href="http://ayende.com/blog/4499/why-raven-db">Justification for RavenDB</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Industry groups with Sharon Cichelli, the founder of Polyglot Programmers of Austin]]></title>
+    <link href="http://headspringlabs.com/blog/polyglot-programmers-of-austin-and-the-importance-of-industry-groups-with-sharon-cichelli-and-jeffrey-palermo/"/>
+    <updated>2012-05-21T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/polyglot-programmers-of-austin-and-the-importance-of-industry-groups-with-sharon-cichelli-and-jeffrey-palermo</id>
+    <content type="html"><![CDATA[<p><a href="http://feeds.headspring.com/headspringpodcast"><img class="alignleft size-full wp-image-5225" src="http://www.headspring.com/wp-content/uploads/2012/05/rss-icon402.jpg" alt="Subscribe to podcast" width="40" height="40" /></a>In this cast, Sharon Cichelli and Jeffrey Palermo discuss the importance of industry groups, both the benefits of participating in, and volunteering for them.</p>
+
+
+<p>Sharon is a Senior Consultant for Headspring.  Aside from building valuable custom business software, Sharon writes a blog at <a href="http://www.girlwritescode.com/">GirlWritesCode.com</a>, builds unusual home furnishings with Arduinos, and plays too much pinball. She founded Polyglot Programmers of Austin, a co-working study group which encourages developers to branch out and learn other languages and platforms.</p>
+
+
+<p>Here are some other relevant resources that were mentioned in the cast.</p>
+
+
+<ul>
+<li><a href="http://www.meetup.com/">Meetup</a></li>
+<li><a href="http://door64.com/">door64</a></li>
+<li><a href="http://southcentralcommunity.com/">South Central Community</a></li>
+<li><a href="http://www.polyglotprogrammers.org/">Polyglot Programmers of Austin</a></li>
+<li><a href="http://adnug.org/">Austin .NET User Group</a></li>
+<li><a href="http://www.agileaustin.org/">Agile Austin</a></li>
+<li><a href="https://groups.google.com/forum/?fromgroups#!forum/atx-code-lunch">ATX Code Lunch</a></li>
+<li><a href="http://www.toastmasters.org/">Toastmasters International</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[CQRS with Kevin Hurwitz and Jeffrey Palermo]]></title>
+    <link href="http://headspringlabs.com/blog/cqrs-with-kevin-hurwitz-and-jeffrey-palermo/"/>
+    <updated>2012-05-15T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/cqrs-with-kevin-hurwitz-and-jeffrey-palermo</id>
+    <content type="html"><![CDATA[<p><a href="http://feeds.headspring.com/headspringpodcast"><img class="alignleft size-full wp-image-5212" title="Subscribe to podcast" src="http://www.headspring.com/wp-content/uploads/2012/05/rss-icon401.jpg" alt="Subscribe to podcast" width="40" height="40" /></a>In this cast, Kevin Hurwitz (Chief Architect) discusses the Command Query Responsibility Segregation pattern with Jeffrey Palermo (President/COO).  We have used CQRS successfully in several development projects for clients, and we have learned when it is appropriate and when it is not.  This cast distills the pattern down to its simplest essence and attempts to talk concretely about what is different from applications that employ CQRS.  Here are some other resources.</p>
+
+
+<ul>
+<li><a href="http://martinfowler.com/bliki/CQRS.html">Martin Fowler on CQRS</a></li>
+<li><a href="http://codebetter.com/gregyoung/2010/02/16/cqrs-task-based-uis-event-sourcing-agh/">Greg Young on CQRS</a></li>
+</ul>
+
+
+<div>Subscribe to the podcast <a href="http://feeds.headspring.com/headspringpodcast">here</a>: <a href="http://feeds.headspring.com/headspringpodcast">http://feeds.headspring.com/headspringpodcast</a></div>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Database migrations with Kevin Hurwitz and Jeffrey Palermo]]></title>
+    <link href="http://headspringlabs.com/blog/database-migrations-with-kevin-hurwitz-and-jeffrey-palermo-on-the-headspring-podcast/"/>
+    <updated>2012-05-14T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/database-migrations-with-kevin-hurwitz-and-jeffrey-palermo-on-the-headspring-podcast</id>
+    <content type="html"><![CDATA[<p><a href="http://feeds.headspring.com/headspringpodcast"><img class="alignleft size-full wp-image-5225" title="Subscribe to podcast" src="http://www.headspring.com/wp-content/uploads/2012/05/rss-icon402.jpg" alt="Subscribe to podcast" width="40" height="40" /></a><a>In this cast, Kevin Hurwitz (Chief Architect) discusses database migrations and database change management with Jeffrey Palermo (President/COO) while covering the problem, options, and our recommended approach.  We use an open source tool called Tarantino in our deployment-based process.  This tool can be executed via a NAnt or Psake build script as well as stand-alone from the command line.  Here are some additional resources.</a></p>
+
+
+<p>&nbsp;</p>
+
+
+<ul>
+<li><a href="http://www.amazon.com/Continuous-Integration-Improving-Software-Reducing/dp/0321336380">Continuous Integration book (see chapter 5 for full database coverage)</a></li>
+<li><a href="http://www.screencast.com/users/HeadspringSystems/folders/Community/media/8fcd55fe-a0b5-474d-8cc9-1f955e5dda9d">Screencast from several years ago demonstrating Tarantino and NAnt execution</a></li>
+<li><a href="http://elegantcode.com/2009/11/28/database-change-management-with-tarantino/">Ryan Kelley's blog post about using Tarantino</a></li>
+<li><a href="http://code.google.com/p/tarantino/wiki/DatabaseChangeManagement">Tarantino database change management documentation</a></li>
+</ul>
+
+
+<div>Subscribe to the podcast <a href="http://feeds.headspring.com/headspringpodcast">here</a>: <a href="http://feeds.headspring.com/headspringpodcast">http://feeds.headspring.com/headspringpodcast</a></div>
+
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: WiX | Headspring Labs]]></title>
+  <link href="http://headspringlabs.com/blog/categories/wix/atom.xml" rel="self"/>
+  <link href="http://headspringlabs.com/"/>
+  <updated>2013-07-15T23:13:23-05:00</updated>
+  <id>http://headspringlabs.com/</id>
+  <author>
+    <name><![CDATA[Headspring Labs]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Creating Windows Installers with the WiX Toolset - Summary]]></title>
+    <link href="http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-summary/"/>
+    <updated>2013-03-15T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-summary</id>
+    <content type="html"><![CDATA[<address>This article is part of a series exploring how to create installers for Windows software.  Here's the complete contents of the series.</address>
+
+
+<address><a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-01/">Part 1 – What Kinds of Software Projects Benefit From an Installer?</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-02/">Part 2 – An Overview Of Windows Installer and its Features</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-03/">Part 3 – Tooling Options for Building Installers</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-04/">Part 4 – The Windows Installer Runtime Sequence</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-5/">Part 5 – The Contents of an MSI</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-6/">Part 6 – The Structure of a WiX File</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-7/">Part 7 – Generating an MSI Package From Your WiX</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-8/">Part 8 – Troubleshooting Installer Runtime Problems</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-summary/">Part 9 - Summary</a><br />
+</address>
+
+
+<p><br/></p>
+
+
+<h2>Summing It All Up</h2>
+
+
+<p>We've covered a lot of ground over this series. We've talked about what kind of projects benefit from having an installer and why you should consider making one. We've learned what Windows Installer actually is (a feature of the Windows operating system) and what some of the tooling options for creating installers are. We've explored the sequence of events that occur when installing a package as well as the contents of an actual MSI package. We've dived into the basic structure of a WiX file and how an understanding of the Windows Installer concepts makes authoring WiX files easier. Coming full circle, we've created an installer package from WiX source with the WiX tooling.</p>
+
+
+<p>There's certainly a lot left we could discuss: automatic file harvesting, custom actions, etc. However I haven't had much feedback on the series up to this point: Windows Installer is a niche topic in software development, especially with the rise of the web. I'm thinking about moving on to other topics.</p>
+
+
+<h2>Last Call...</h2>
+
+
+<p>Is there something you want to know that I haven't covered yet? This is the time to leave feedback in the comments if you want to see more articles in this series. Thanks for reading with me!</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Creating Windows Installers with the WiX Toolset Part 8]]></title>
+    <link href="http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-8/"/>
+    <updated>2013-03-15T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-8</id>
+    <content type="html"><![CDATA[<address>This article is part of a series exploring how to create installers for Windows software.  Here's the complete contents of the series.</address>
+
+
+<address><a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-01/">Part 1 – What Kinds of Software Projects Benefit From an Installer?</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-02/">Part 2 – An Overview Of Windows Installer and its Features</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-03/">Part 3 – Tooling Options for Building Installers</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-04/">Part 4 – The Windows Installer Runtime Sequence</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-5/">Part 5 – The Contents of an MSI</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-6/">Part 6 – The Structure of a WiX File</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-7/">Part 7 – Generating an MSI Package From Your WiX</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-8/">Part 8 – Troubleshooting Installer Runtime Problems</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-summary/">Part 9 - Summary</a><br />
+</address>
+
+
+<p><br/><span style="font-size: 13px;">This entry describes how to enable diagnostic logging when running an installer and some tools for analyzing the output.</span></p>
+
+
+<h2>Troubleshooting Runtime Problems - When All Else Fails, Print</h2>
+
+
+<p>Let’s face it: things don’t always work the way they’re supposed to and installers are no different. If you’re making anything more complex than the simple Hello World example we’ve been using in this series, you’re going to run into situation where something doesn’t work quite right and you can’t figure out why.</p>
+
+
+<p>Probably the world’s oldest debugging technique that predates debuggers themselves is printing a line of output with the current program location and variable values at runtime.  Windows installer doesn’t provide a native way to do this in the UI itself, but we do have the next best thing: log files.</p>
+
+
+<h2>Enabling Logging During an Installation</h2>
+
+
+<pre>Use msiexec (builts into Windows) to run your msi in a diagnostic mode and get a log file. Here’s an example invocation that asks for verbose logging into a file called HelloWorld.log: &#160;%windir%\system32\msiexec.exe /i artifacts\installer\HelloWorld.msi /l*v HelloWorld.log</pre>
+
+
+<p>The content of the log for our simple Hello World is 749 lines. I’m obviously not going to paste it in here, but I will briefly describe some of the contents you’ll see in a log file.</p>
+
+
+<ul>
+<li>Machine environment settings, such as whether the computer can have patches applied or not</li>
+<li>The value of properties (variables), such as the install directory</li>
+<li>The beginning and end of the execute stage</li>
+<li>The value of all properties at the end of the installation</li>
+</ul>
+
+
+<p>Most importantly, any errors that occurred should be contained here as well. You can simply search through the log for “error”.</p>
+
+
+<h2>Tools for Analyzing a Log File</h2>
+
+
+<p>I have not gotten a large amount of use from the tool I’m about to introduce, but I want to make you aware of it because it might be valuable to you.</p>
+
+
+<p>The Windows SDK includes a utility reader for installer logs located at %PROGRAMFILES%\Microsoft SDKs\Windows\v7.1\Bin (or something similar). The utility is named WiLogUtl.exe. When you start the log analyzer, you’ll need to browse to your log file and open it. I’ve already done that step in the screenshot below.</p>
+
+
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/03/logAnalyzer.png"><img class="alignnone size-full wp-image-6466" alt="logAnalyzer" src="http://www.headspring.com/wp-content/uploads/2013/03/logAnalyzer.png" width="638" height="335" /></a></p>
+
+
+<p>When you click Analyze, you’re taken to another screen.</p>
+
+
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/03/analysis.png"><img class="alignnone size-full wp-image-6467" alt="analysis" src="http://www.headspring.com/wp-content/uploads/2013/03/analysis.png" width="669" height="545" /></a></p>
+
+
+<p>The most prominent UI element at the top is an errors list. Our log doesn’t have any, but this view makes it easy to see them all in one place.<br />
+We also have a variety of options on the right. States will show you the detected status of the features in your package – whether they are already installed or not. Properties will give you a list of all the properties (variables) and their values in your installer.</p>
+
+
+<p>The HTML Log is rather nice because it will color code all the log entries by category, and provide controls for navigating between any errors.</p>
+
+
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/03/htmlLogFile.png"><img class="alignnone size-large wp-image-6468" alt="htmlLogFile" src="http://www.headspring.com/wp-content/uploads/2013/03/htmlLogFile-970x709.png" width="970" height="709" /></a></p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Creating Windows Installers with the WiX Toolset Part 7]]></title>
+    <link href="http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-7/"/>
+    <updated>2013-03-15T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-7</id>
+    <content type="html"><![CDATA[<address>This article is part of a series exploring how to create installers for Windows software.  Here's the complete contents of the series.</address>
+
+
+<address><a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-01/">Part 1 – What Kinds of Software Projects Benefit From an Installer?</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-02/">Part 2 – An Overview Of Windows Installer and its Features</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-03/">Part 3 – Tooling Options for Building Installers</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-04/">Part 4 – The Windows Installer Runtime Sequence</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-5/">Part 5 – The Contents of an MSI</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-6/">Part 6 – The Structure of a WiX File</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-7/">Part 7 – Generating an MSI Package From Your WiX</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-8/">Part 8 – Troubleshooting Installer Runtime Problems</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-summary/">Part 9 - Summary</a><br />
+</address>
+
+
+<p><br/><br />
+This post explains how to create an MSI installer from the WiX files you’ve written from either the command line or within Visual Studio.</p>
+
+
+<h2>The Missing Magic</h2>
+
+
+<p>So we’ve discussed how an MSI is an installer package that Windows can process and taken a peek at what the insides of an MSI looks like, and then we’ve examined a simple WiX file that can be used to create an MSI and how WiX schema is heavily tied to the entities of Windows Installer.  But we don’t quite have the complete picture yet – how do we magically get our MSI once we’ve authored some WiX?</p>
+
+
+<h2><a href="http://www.headspring.com/wp-content/uploads/2013/03/magicHappensHere.png"><img class="alignnone size-full wp-image-6459" alt="magicHappensHere" src="http://www.headspring.com/wp-content/uploads/2013/03/magicHappensHere.png" width="800" height="233" /><br />
+</a>It's Just A Compiler</h2>
+
+
+<p>So the answer is 42.  <a href="http://en.wikipedia.org/wiki/Answer_to_The_Ultimate_Question_of_Life,_the_Universe,_and_Everything#Answer_to_the_Ultimate_Question_of_Life.2C_the_Universe.2C_and_Everything_.2842.29">Just kidding.</a>  The answer is that the WiX toolset comes with its own compiler and linker tools.  If you’ve ever set up an automated build, this is the WiX equivalent of MsBuild.exe (or if you’re really hard core, csc.exe).  Most of the tooling in WiX is related to candles in some fashion (WiX sounds like “wicks”, the burning portion of a candle), so you might find it amusing to learn the name of the compiler is “candle”, and the linker is called “light”.</p>
+
+
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/03/candleAndLight.png"><img class="alignnone size-full wp-image-6460" alt="candleAndLight" src="http://www.headspring.com/wp-content/uploads/2013/03/candleAndLight.png" width="499" height="299" /></a></p>
+
+
+<p>There are two ways you can run the compiler:  through the command line, or as an integrated extension of Visual Studio.  I’ll discuss both below.</p>
+
+
+<h2>From the Command Line</h2>
+
+
+<p>This is my preferred method.  Usually when I’m building an installer, I’ve had to do some PowerShell scripting to stage the output that I want to be packaged up by the installer.  This is usually artifacts like help files, shortcut icons, and so forth.  This is also the primary method for getting an installer compilation rolled into your automated build (you might be able to use Votive with TFS, you’ll have to verify that with someone that willingly uses TFS).</p>
+
+
+<p>Invocation looks something like this in a simple bat file:</p>
+
+
+<pre>rem If we don&#39;t specify an output directory, the wixobj files will get dumped in the current working directory of the bat file</pre>
+
+
+<pre>tools\wix\candle.exe src\installer\HelloWorld.wxs -out artifacts\wix\</pre>
+
+
+<pre>tools\wix\light.exe artifacts\wix\HelloWorld.wixobj -out artifacts\wix\HelloWorld.msi</pre>
+
+
+<pre></pre>
+
+
+<pre>rem Move the final output for exposure to CI build or shared network folder</pre>
+
+
+<pre>copy artifacts\wix\HelloWorld.msi artifacts\installer</pre>
+
+
+<h2> Inside Visual Studio</h2>
+
+
+<p>The WiX tooling comes with a Visual Studio extension called Votive.  I mentioned it earlier how you can use it to get IntelliSense when editing your WiX files.  Votive also makes it possible to compile your WiX when doing a build in Visual Studio.</p>
+
+
+<p>If you examine the properties of your WiX project, you’ll find a host of options for controlling your compilation.</p>
+
+
+<p>The Installer tab lets you name your output file, and choose alternate output types if you happen to need something besides MSI (if you don’t know otherwise, then stick with MSI).</p>
+
+
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/03/buildTab.png"><img class="alignnone size-large wp-image-6461" alt="buildTab" src="http://www.headspring.com/wp-content/uploads/2013/03/buildTab-970x335.png" width="970" height="335" /></a></p>
+
+
+<p>&nbsp;</p>
+
+
+<p>The Build tab allows you to specify values for your preprocessor variables (WiX supports preprocessing similar to C and C++ compilers), and where to place your output.</p>
+
+
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/03/buildTab1.png"><img class="alignnone size-full wp-image-6462" alt="buildTab" src="http://www.headspring.com/wp-content/uploads/2013/03/buildTab1.png" width="673" height="642" /></a></p>
+
+
+<p>&nbsp;</p>
+
+
+<p>The Tool Settings tab can be used to ignore ICE validation on your package (although I’d suggest leaving it on, you always want to know about potential problems), and pass additional arguments to the compiler and linker.</p>
+
+
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/03/toolSettings.png"><img class="alignnone size-full wp-image-6463" alt="toolSettings" src="http://www.headspring.com/wp-content/uploads/2013/03/toolSettings.png" width="655" height="521" /></a></p>
+
+
+<p>&nbsp;</p>
+
+
+<p>When you compile the project in Visual Studio, if you look carefully at the build output you’ll see that it’s simply invoking candle and light for you under the hood:</p>
+
+
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/03/votiveOutput.png"><img class="alignnone size-large wp-image-6464" alt="votiveOutput" src="http://www.headspring.com/wp-content/uploads/2013/03/votiveOutput-970x158.png" width="970" height="158" /></a></p>
+
+
+<p>&nbsp;</p>
+
+
+<p>If you do use Votive, you probably won’t want to build the installer in debug configuration.  Otherwise you’ll have to wait for an installer to build every time you recompile the solution.</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Creating Windows Installers with the WiX Toolset Part 6]]></title>
+    <link href="http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-6/"/>
+    <updated>2013-02-28T00:00:00-06:00</updated>
+    <id>http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-6</id>
+    <content type="html"><![CDATA[<address>This article is part of a series exploring how to create installers for Windows software.  Here's the complete contents of the series.</address>
+
+
+<address><a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-01/">Part 1 – What Kinds of Software Projects Benefit From an Installer?</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-02/">Part 2 – An Overview Of Windows Installer and its Features</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-03/">Part 3 – Tooling Options for Building Installers</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-04/">Part 4 – The Windows Installer Runtime Sequence</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-5/">Part 5 – The Contents of an MSI</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-6/">Part 6 – The Structure of a WiX File</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-7/">Part 7 – Generating an MSI Package From Your WiX</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-8/">Part 8 – Troubleshooting Installer Runtime Problems</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-summary/">Part 9 - Summary</a><br />
+</address>
+
+
+<p><br/></p>
+
+
+<h2>Summary</h2>
+
+
+<p>This post is a companion to the previous post in Part 5 - it shows and explains the structure of the WiX file that was used to generate the MSI.</p>
+
+
+<h2>Tooling and References For Editing WiX Files</h2>
+
+
+<p>Since the name of the toolkit is "Windows Installer in XML", you probably won't be terribly surprised to find out that the source files you edit are...wait for it...XML. This means you can author and edit in your favorite XML editor of choice, whether that's Notepad++, some incredibly expensive specialty tool like Altova XML Spy, or Visual Studio. If you use Visual Studio and you've installed WiX on your local machine, you can leverage the included Votive project types to get Intellisense in Visual Studio.</p>
+
+
+<p>[caption id="attachment_6409" align="alignnone" width="582"]<a href="http://www.headspring.com/wp-content/uploads/2013/02/votiveIntellisense.png"><img class=" wp-image-6409 " alt="Picture of editing with Visual Studio and Intellisense supplied by Votive" src="http://www.headspring.com/wp-content/uploads/2013/02/votiveIntellisense-970x562.png" width="582" height="337" /></a> Visual Studio Intellisense with Votive[/caption]</p>
+
+
+<p>There's reference documentation for the schema at <a href=" http://wix.sourceforge.net/manual-wix3/schema_index.htm">SourceForge</a>. The first link is for the WiX schema itself, and there are other schema references for the various extensions that are available.</p>
+
+
+<h2>The Complete Hello World</h2>
+
+
+<p><div><script src='https://gist.github.com/5014691.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<h2>Dissecting the Elements</h2>
+
+
+<p>Line 3 is pretty straightforward: declare our root Wix element and specify the namespace. No that isn't a typo at the end; the namespace really doesn't have an x at the end of it. I have no idea why.</p>
+
+
+<p>Line 5 declares our Product for the installer (recall Product has a cardinality of 1). Some of the supporting attributes like Manufacturer, Name, and Version will show up in the Add Program and Features list for Windows.</p>
+
+
+<p>Line 12 defines the Package (also cardinality of 1), which is the installer itself. Attributes here will show up in the properties of the MSI file.</p>
+
+
+<p>Line 19 introduces the concept of Media, which wasn't discussed in the MSI examination. Windows Installer has a profuse amount of options for the physical layout of the files to be deployed, including things like spanning multiple DVDs (or floppies - <a href="http://superuser.com/questions/231273/what-are-the-windows-a-and-b-drives-used-for">remember those?</a> The need for this has fallen by the wayside as most software is downloaded from the internet or an internal network these days. In this example, we only have one physical media target, and the EmbedCab attribute will package all the deployables into the MSI directly since we don't need disc spanning.</p>
+
+
+<p>Line 21 defines our target directory structure. Note it's nested. I'm not going to discuss it exhaustively, but will point out a few interesting things. Line 22 specifies we're installing into this machine's Program Files directory, and line 23 is the INSTALLDIR, which is our root target directory. More sophisticated installers will allow the user to specify their own directory and replace the value of INSTALLDIR.</p>
+
+
+<p>Line 24 defines our one and only component. Recall from the previous post its possible for a component to have more than one deployable in it, but there are advantages to having a component for every file. Components have a unique ID to identify them.</p>
+
+
+<p>In this example we've associated our component with a target directory by simply nesting it under the desired directory. This works for simple scenarios, but if you have more than one target directory for your product or if your code generating your component definitions, it might be easier to declare the directory structure and components separately and use the DirectoryRef attribute on the component to make the association.</p>
+
+
+<p>Line 25 contains a file that is part of this component. The name attribute is what the file will be called when it is placed on the target file system, and the source attribute specifies where to get the file when compiling the MSI package.</p>
+
+
+<p>Line 26 does what you hopefully would guess; it removes the installation folder from the machine when the component 'MainExecutable' gets uninstalled.</p>
+
+
+<p>Line 32 finishes things out by declaring our single feature (although you'll recall there could be multiple Features in a Product), and associating our component with it.</p>
+
+
+<h2>Tying It All Together</h2>
+
+
+<p>So we have:</p>
+
+
+<ul>
+<li>File HelloWorld.exe containing our executable</li>
+<li>Component MainExecutable containing the HelloWorld.exe File</li>
+<li>Directory INSTALLDIR (which itself is a subdirectory) associated with the MainExecutable Component</li>
+<li>Feature called Complete containing the MainExecutable Component</li>
+<li>Product that contains the Complete Feature (this is implied and doesn't have to be explicitly defined)</li>
+</ul>
+
+
+<p>All of this maps neatly to the MSI we took apart in the <a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-05/">last post</a>. In the next installment, we'll look at the process for actually turning WiX into an MSI.</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Creating Windows Installers with the WiX Toolset Part 5]]></title>
+    <link href="http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-5/"/>
+    <updated>2013-02-26T00:00:00-06:00</updated>
+    <id>http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-5</id>
+    <content type="html"><![CDATA[<address>This article is part of a series exploring how to create installers for Windows software.  Here's the complete contents of the series.</address>
+
+
+<address><a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-01/">Part 1 – What Kinds of Software Projects Benefit From an Installer?</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-02/">Part 2 – An Overview Of Windows Installer and its Features</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-03/">Part 3 – Tooling Options for Building Installers</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-04/">Part 4 – The Windows Installer Runtime Sequence</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-5/">Part 5 – The Contents of an MSI</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-6/">Part 6 – The Structure of a WiX File</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-7/">Part 7 – Generating an MSI Package From Your WiX</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-8/">Part 8 – Troubleshooting Installer Runtime Problems</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-summary/">Part 9 - Summary</a><br />
+</address>
+
+
+<p><br/></p>
+
+
+<h2>Summary</h2>
+
+
+<p>This post discusses what an MSI is, We'll use a Microsoft SDK tool called Orca to examine what the internal structure looks like.  We'll also talk about how the internal structure maps to Windows Installer concepts.  While this post is not about WiX directly, authoring in WiX requires a good understanding of these internal structures and how they interconnect.</p>
+
+
+<h2>The Contents of an MSI</h2>
+
+
+<p>If you've installed several software applications like Office or Halo on your computer, chances are you've come across a file with type of MSI.  MSI stands for Microsoft Installer, and is the primary package type that Windows Installer consumes to install a product.</p>
+
+
+<p>There are other file types used by Windows Installer, but MSI is the only "required" type for making an installer.  I'm not going to discuss the other types, but you can find out more about them <a href="http://msdn.microsoft.com/en-us/library/aa372842.aspx">here</a>.</p>
+
+
+<p>For our dissection we're going to use an MSI that installs a single file - HelloWorld.exe.  Here's the installer:</p>
+
+
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/msi.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="msi" alt="msi" src="http://www.headspring.com/wp-content/uploads/2013/01/msi_thumb.png" width="244" height="83" border="0" /></a></p>
+
+
+<p>The installer has no user interface.  This is what happens when you double click the MSI to install it:</p>
+
+
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/installing.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="installing" alt="installing" src="http://www.headspring.com/wp-content/uploads/2013/01/installing_thumb.png" width="244" height="94" border="0" /></a></p>
+
+
+<p>What happens next is the window changes to say "Please wait while Windows configures Edgewolf HelloWorld" with a progess bar, and then performs the installation and closes.  This happens so fast I couldn't get a screenshot of it before it disappeared.  After we run the installer, we have a new entry in Programs and Features that looks like this:</p>
+
+
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/programsAndFeatures.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="programsAndFeatures" alt="programsAndFeatures" src="http://www.headspring.com/wp-content/uploads/2013/01/programsAndFeatures_thumb.png" width="244" height="58" border="0" /></a></p>
+
+
+<p>And we can find our installed program here:</p>
+
+
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/installed.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="installed" alt="installed" src="http://www.headspring.com/wp-content/uploads/2013/01/installed_thumb.png" width="244" height="83" border="0" /></a></p>
+
+
+<p>It doesn't get much simpler then that, right?</p>
+
+
+<h2>MSI Internal Structure</h2>
+
+
+<p>It's interesting how trends in software development affect technical implementations.  For example, the programming language Java was rising to prominence around the same time the XML file format was being widely touted as THE way to store data for a variety of reasons.  As a result, Java Enterprise Edition (J2EE) relies heavily on XML files, to the point that I've heard jokes that enterprise Java development consists of writing one line of code and editing twenty XML files.</p>
+
+
+<p>Windows Installer is no different, and its source of large inspiration is relational databases.  An msi package is, quite literally, a database file with tables and rows in it.  Here's a partial schema diagram:</p>
+
+
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/payloadTables.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="payloadTables" alt="payloadTables" src="http://www.headspring.com/wp-content/uploads/2013/01/payloadTables_thumb.png" width="244" height="111" border="0" /></a></p>
+
+
+<p>Since an installer is for a single product, there's dedicated table for that.  But a product like Microsoft Office does have multiple features such as Word, Excel, and PowerPoint.  Large features will typically be composed of a collection of subfeatures that can be installed or not installed and still have a working feature.  Examples of subfeatures for Word would be items like spellcheck, or clipart.</p>
+
+
+<p>Features and subfeatures are "above the water" concepts in the way that they are exposed directly to the person using the installer.  The user sees them and has a chance to choose what features they do or do not want.</p>
+
+
+<p>Features are composed of one or more components.  Components are tangible items like files, start menu shortcuts, and registry entries.  Components are "below the water" in the sense that they aren't meant to be exposed to users.  When you're installing Word, you could care less that you're getting the files winword.exe, wordcnv.dll, wordcnvpxy.cnv....well you get the idea.  Components are linked to a directory where they are installed, and are composed of one or more files.  Because the directory link is at the component level, obviously all of the files in the component need to target the same directory.</p>
+
+
+<p>Components are tied to features with a linking Feature Component table.</p>
+
+
+<p>In addition to the payload tables we just looked at, an MSI also has sequence tables that instruct Windows Installer what steps to execute and in what order.  There are a number standard actions included in Windows Installer such as calculating the disk space needed to perform the installation.  It's also possible to write your own custom actions, I plan on talking about that in a later post.</p>
+
+
+<h2>Installing Orca</h2>
+
+
+<p>Microsoft provides a free tool called Orca that can be used to examine an MSI file.  It isn't part of Windows, but it's included with the Windows 7 SDK.  You can get an ISO of the Windows 7 SDK <a href="http://www.microsoft.com/en-us/download/details.aspx?id=8442">here</a> and the Windows 8 SDK is available <a href="http://msdn.microsoft.com/en-us/windows/hardware/hh852363.aspx">here</a>.</p>
+
+
+<p>Once you've installed the SDK, you can find an installer for Orca in the Bin directory (something similar to C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin).  Run the installer, and then you'll have Orca in your start menu.</p>
+
+
+<h2>Examining the Hello World MSI</h2>
+
+
+<p>Start Orca.  Click File..Open, and open the MSI you want to load.  Here’s what you’ll see:</p>
+
+
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/msiTablesInOrca.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="msiTablesInOrca" alt="msiTablesInOrca" src="http://www.headspring.com/wp-content/uploads/2013/01/msiTablesInOrca_thumb.png" width="244" height="179" border="0" /></a></p>
+
+
+<p>In addition to tables, the installer stores some nonrelational information in a Summary Stream.  You can view this by clicking "View..Summary Information".  Most of it is product related, but the target architecture (32bit or 64bit) is also stored here.</p>
+
+
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/summaryStreamInOrca.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="summaryStreamInOrca" alt="summaryStreamInOrca" src="http://www.headspring.com/wp-content/uploads/2013/01/summaryStreamInOrca_thumb.png" width="229" height="244" border="0" /></a></p>
+
+
+<p>Looking at the feature table, we see this installer only has one feature - Complete (as in a complete install).</p>
+
+
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/tableFeature.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="tableFeature" alt="tableFeature" src="http://www.headspring.com/wp-content/uploads/2013/01/tableFeature_thumb.png" width="244" height="53" border="0" /></a></p>
+
+
+<p>The FeatureComponent table links one component to our feature, the component called MainExecutable.</p>
+
+
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/tableFeatureComponent.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="tableFeatureComponent" alt="tableFeatureComponent" src="http://www.headspring.com/wp-content/uploads/2013/01/tableFeatureComponent_thumb.png" width="244" height="75" border="0" /></a></p>
+
+
+<p>Heading over to the component table, we see MainExecutable, and it targets the INSTALLDIR for the directory.</p>
+
+
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/tableComponent.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="tableComponent" alt="tableComponent" src="http://www.headspring.com/wp-content/uploads/2013/01/tableComponent_thumb.png" width="244" height="54" border="0" /></a></p>
+
+
+<p>The INSTALLDIR is going into an Edgewolf HelloWorld subdirectory under Program Files.</p>
+
+
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/tableDirectory.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="tableDirectory" alt="tableDirectory" src="http://www.headspring.com/wp-content/uploads/2013/01/tableDirectory_thumb.png" width="244" height="71" border="0" /></a></p>
+
+
+<p>So where's the actual exe?  In the File table, and we see its linked to the MainExecutable component.</p>
+
+
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/tableFile.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="tableFile" alt="tableFile" src="http://www.headspring.com/wp-content/uploads/2013/01/tableFile_thumb.png" width="244" height="54" border="0" /></a></p>
+
+
+<p>I didn't mention it earlier, but there's also a Property table that's a catch-all name value pair collection.</p>
+
+
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/tableProperty.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="tableProperty" alt="tableProperty" src="http://www.headspring.com/wp-content/uploads/2013/01/tableProperty_thumb.png" width="244" height="170" border="0" /></a></p>
+
+
+<p>The sequence tables instruct Windows Installer in what steps to take to run the installer.  Recall that there are two install stages (the UI stage and the Execution stage).  There are tables for each, and looking at the pictures below we can see the difference between the two:</p>
+
+
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/installUiSequence.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="installUiSequence" alt="installUiSequence" src="http://www.headspring.com/wp-content/uploads/2013/01/installUiSequence_thumb.png" width="244" height="115" border="0" /></a><a href="http://www.headspring.com/wp-content/uploads/2013/01/installExecuteSequence.png"><img style="background-image: none; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="installExecuteSequence" alt="installExecuteSequence" src="http://www.headspring.com/wp-content/uploads/2013/01/installExecuteSequence_thumb.png" width="244" height="191" border="0" /></a></p>
+
+
+<p>That's enough for this post.  Now we have a solid understanding of the basic building blocks in an installer package.  In the next post we'll take a look at the WiX that generated this MSI.</p>
+
+]]></content>
+  </entry>
+  
+</feed>

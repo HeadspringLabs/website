@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: mercurial | Headspring Labs]]></title>
+  <link href="http://headspringlabs.com/blog/categories/mercurial/atom.xml" rel="self"/>
+  <link href="http://headspringlabs.com/"/>
+  <updated>2013-07-15T23:13:23-05:00</updated>
+  <id>http://headspringlabs.com/</id>
+  <author>
+    <name><![CDATA[Headspring Labs]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Mercurial basics with Logan Turner]]></title>
+    <link href="http://headspringlabs.com/blog/mercurial-basics/"/>
+    <updated>2012-06-26T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/mercurial-basics</id>
+    <content type="html"><![CDATA[<p><a href="http://feeds.headspring.com/headspringpodcast"><img class="alignleft size-full wp-image-5635" src="http://www.headspring.com/wp-content/uploads/2012/06/rss-icon40.jpg" alt="" width="40" height="40" /></a>In this cast, Logan Turner and Jeffrey Palermo discuss Mercurial basics.  Logan Turner is a Headspring intern and a student at LeTourneau University.  Logan has recently learned Mercurial, and he has helped another new employee come up to speed with this distributed version control system.</p>
+
+
+<p>You might be interested in these Mercurial resources:</p>
+
+
+<ul>
+<li><a href="http://mercurial.selenic.com/">Mercurial/TortoiseHg</a></li>
+<li><a href="http://hgbook.red-bean.com/read/">Free Mercurial ebook by Bryan O'Sullivan</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[What is Hg Rebase?]]></title>
+    <link href="http://headspringlabs.com/blog/what-is-hg-rebase/"/>
+    <updated>2012-03-27T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/what-is-hg-rebase</id>
+    <content type="html"><![CDATA[<p>A couple weeks ago I introduced a client developer I'm working with on a project to <a href="http://mercurial.selenic.com/wiki/RebaseExtension">Hg Rebase</a> because the work we were doing at the time didn't really need feature branches of any kind. When I was asked how this works over the phone, I explained it the best I could on the spot, but here's a better attempt.<!--more--></p>
+
+
+<h3><strong>Rebase vs Merge</strong></h3>
+
+
+<p>Instead of adding several changesets and committing them on top as a "merge" commit, Rebase uses graft (essentially a cherry-pick in the git world). My typical workflow includes taking an entirely new branch and place it "on top" of another branch. After this is done, it looks more like a straight line instead of something that has been braided. As you can see by the three diagrams below. A rebase removes the unnecessary merge commit and gives you a cleaner history. This tends to be easier for people to follow and understand than the messes you can end up with after loads of merge commits all over the place.</p>
+
+
+<p>[gallery link="file" order="DESC"]</p>
+
+
+<p>For a more detailed look into Rebase, visit <a href="http://mercurial.selenic.com/wiki/RebasePlan">the official Mercurial site</a>.</p>
+
+
+<p>If you're interested in looking at the extension's code, it can be found on BitBucket at <a href="https://bitbucket.org/astratto/rebase-soc/">https://bitbucket.org/astratto/rebase-soc/</a>. I'm glad I was asked the question about how rebase works. Learning the internal details was really helpful for me and hopefully for you too!</p>
+
+]]></content>
+  </entry>
+  
+</feed>

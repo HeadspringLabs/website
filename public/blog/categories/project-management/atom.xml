@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Project Management | Headspring Labs]]></title>
+  <link href="http://headspringlabs.com/blog/categories/project-management/atom.xml" rel="self"/>
+  <link href="http://headspringlabs.com/"/>
+  <updated>2013-07-15T23:13:23-05:00</updated>
+  <id>http://headspringlabs.com/</id>
+  <author>
+    <name><![CDATA[Headspring Labs]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Guest Blog [Muhammad Shujaat Siddiqi]: Defect Density as Estimation Tool]]></title>
+    <link href="http://headspringlabs.com/blog/defect-density-estimation/"/>
+    <updated>2012-03-07T00:00:00-06:00</updated>
+    <id>http://headspringlabs.com/blog/defect-density-estimation</id>
+    <content type="html"><![CDATA[<p><em><strong>Introduction</strong></em>:</p>
+
+
+<p><em>This article is about defect density as an estimation tool. This attempts to create a simple mathematical model for estimation based on historic defect density about total number of defects and project delivery time. This also presents proposal for creating organizational competitiveness based on defect density of individuals.<!--more--></em></p>
+
+
+<p>For historical reasons, defects are generally termed as bugs in Computer Systems Design &amp; Development community.</p>
+
+
+<p><strong><em><span style="text-decoration: underline;">Defect Density Defined: </span></em></strong>-</p>
+
+
+<p>The simplest definition of defect density is: “<em>The ratio of the number of defects to program size</em>”.</p>
+
+
+<p>But it leads to a debate about how to measure program size. Some managers define program size in terms of Lines of Code. So according to them, the definition of defect density becomes: “<em>The number of defects per thousand lines of code</em>” i.e</p>
+
+
+<div align="center">
+<table width="255" border="1" cellpadding="0">
+<tbody>
+<tr>
+<td width="40"><strong><strong>DD = Defects / (K)LOC</strong></strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<p>Others define it in terms of function points. They define Defect Density as: “<em>Defect Density is the number of defect points per hundred function points</em>.” i.e.</p>
+
+
+<table border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td valign="top" width="590">
+<p align="center"><strong>Defect Density = (Total Defect Points / Function Point Count) * 100</strong></p>
+</td>
+</tr>
+</tbody>
+</table>
+
+
+<p><strong></strong>Let's agree to both definitions but we want this information to be utilized for help of managers. Managers have to take decisions. For these decisions they do estimation about future events based on past data about current resources. The same principle should be applied for Software Managers. They should have historical data of defect density for code written by each and every software engineer. This data should help them answering questions about future project's delivery.</p>
+
+
+<p><strong><em><span style="text-decoration: underline;">Limitation of above measures:</span></em></strong></p>
+
+
+<p><strong><em></em></strong>Function points are a very good measure but, for estimation of defects, it does not consider the present resources (engineers) of an organization. Lines of code may overcome this but I think this measure is not very accurate. I say this because of following reasons:</p>
+
+
+<ol>
+<li>The same functionality can be implemented with different number of total lines of code. Even if two persons write code about the same functionality then the number of lines of code would be different for both programmers.</li>
+<li>The numbers of lines of code are different for different programming languages or various code generators.</li>
+</ol>
+
+
+<ol start="3">
+<li>Programmers have different level of expertise in different programming languages, which results in different bug densities in their code written in different programming languages.</li>
+</ol>
+
+
+<ol start="4">
+<li>But the most important point is that most of the code is auto generated code and it is very cumbersome to divide the code of one class to be auto generated or programmer’s written and counts the number of lines for each.</li>
+</ol>
+
+
+<p><!--more--></p>
+
+
+<p>So let's see if we could come up with a different concept of measuring the defect density which includes software units (forms etc.) and their complexities. Obviously one can also relate them with lines of code. You can also call them Extended Function Points.</p>
+
+
+<p><strong><em><span style="text-decoration: underline;">Defect Analysis for measuring Build delivery time</span></em></strong></p>
+
+
+<p>Defect Density analysis may also be used to estimate total time it would take for the build to be reaching to the hands of the client. Now this point needs some elaboration. Let's consider a typical software solution with a number of modules. We divide our modules in different categories of complexities (ω) for example 1, 2, 3…….. etc. We assign ω = 1 for the simplest software unit (module) and assigns different level of complexities to other units based on their difficulty as compared to the module with ω = 1. For simplicity we keep it discrete but you may have it in decimal numbers as per your convenience. As a matter of fact different values of ω could also mean different lines of code. But the specialty of this design is that the user written code is kept in focus and level of complexity is assigned based on that.</p>
+
+
+<table border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td valign="top" width="590">
+<p align="center"><strong>Total estimated number of defects = Σ N<sub>i</sub> * D<sub>i</sub></strong></p>
+</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>Where Ni is the no. of software unit with ω<sub>i</sub> complexity and Di is the Defect density of programmers.</p>
+
+
+<p>The time of first build to SQA (Software Quality Assurance) is already estimated based on the industry standard estimation techniques. SQA productivity is analyzed by project manager in previous projects by some other density related matrices. The time for fixing for above estimated code can be found out very easily by simple arithmetic. This give total time for this build development, testing and bug removing. So the build delivery time can be estimated using.</p>
+
+
+<p style="text-align: center;"><em><strong>Total Time for Build Delivery = Time for build before SQA + Time for SQA phase + Time for defect fixing </strong></em></p>
+
+
+<p><strong><em><em></em></em></strong><em><span style="text-decoration: underline;">Example:</span></em></p>
+
+
+<p>Now we analyze a build based on the above theory. I have a programmer Shahbaz and his defect density for C#.net is 4.8, 11.3, 19.1 for ω = 1, 2 and 3 respectively. He develops 5 modules having ω = 1, 3 having ω = 2 and 2 having ω = 3. We can estimate the number of defects in his code as follows:</p>
+
+
+<p>Estimated defects in Shahbaz’s code = 5 * 4.8 + 11.3 * 3 + 19.1 * 2 = 96.1 defects.</p>
+
+
+<p>If SQA finds out 92 bugs in shahbaz’s code, it means nearly all potential bugs are identified and the build may be delivered to client with confidence.</p>
+
+
+<p><strong><em><span style="text-decoration: underline;">What’s next?</span></em></strong></p>
+
+
+<p>With the above calculation we still are not able to tell the build delivery time with sufficient trust because of different critical nature of defects α<sub>i</sub> . We must have some idea about the no. of defects of each critical level. For simplicity, we define three critical classes; they are α =1, 2, 3. The formula for total no. of bugs becomes:</p>
+
+
+<p style="text-align: center;"><strong>Estimated no. of defects = Φ (N, D) = <a href="http://www.headspring.com/2012/03/defect-density-estimation/attachment/1" rel="attachment wp-att-3916"><img class="alignnone size-full wp-image-3916" alt="" src="http://www.headspring.com/wp-content/uploads/2012/03/1.jpg" width="124" height="33" /></a>  (updated)</strong></p>
+
+
+<p>Where D<sub>ij</sub> is the no. of defects of α<sub>j</sub> criticality on the form of ω<sub>i</sub> complexity and N<sub>i</sub> is the no. of software units of ω<sub>i</sub> complexity. ‘p’ is the limit of complexities defined by your organization and ‘q’ is the levels of criticality of bugs defined.</p>
+
+
+<p><strong><em><span style="text-decoration: underline;">Time for Defect Fixing</span></em></strong></p>
+
+
+<p>Here we are more interested in the estimating the time required for fixing of these defects. By simply updating the above formula, we can reach to this:</p>
+
+
+<p>Time required for fixing bugs = <a href="http://www.headspring.com/2012/03/defect-density-estimation/attachment/2" rel="attachment wp-att-3917"><img class="alignnone size-full wp-image-3917" alt="" src="http://www.headspring.com/wp-content/uploads/2012/03/2.jpg" width="142" height="33" /></a> (hours)</p>
+
+
+<p>where <a href="http://www.headspring.com/2012/03/defect-density-estimation/attachment/16" rel="attachment wp-att-4015"><img class="alignnone size-full wp-image-4015" title="16" alt="" src="http://www.headspring.com/wp-content/uploads/2012/03/16.jpg" width="18" height="17" /></a> is the time (in hours) required for fixing a single bug of α<sub>j </sub>critical nature.</p>
+
+
+<p>Now you can covert this time in no. of days by dividing the result came out by putting values in above formula by working hours in a day in your organization. If H is the no. of working hours in a day, then:</p>
+
+
+<p>Days required for fixing of bugs = Ceil <a href="http://www.headspring.com/2012/03/defect-density-estimation/attachment/3" rel="attachment wp-att-3918"><img class="alignnone size-full wp-image-3918" alt="" src="http://www.headspring.com/wp-content/uploads/2012/03/3.jpg" width="177" height="33" /></a> (ideal)</p>
+
+
+<p>Now use your intuition and add some buffer days for unforeseen incidents. Let <a href="http://www.headspring.com/2012/03/defect-density-estimation/attachment/17" rel="attachment wp-att-4014"><img class="alignnone size-full wp-image-4014" title="17" alt="" src="http://www.headspring.com/wp-content/uploads/2012/03/17.jpg" width="16" height="18" /></a> be the same, then:</p>
+
+
+<p>Days required for fixing of bugs = Ceil [<a href="http://www.headspring.com/2012/03/defect-density-estimation/attachment/4" rel="attachment wp-att-3919"><img class="alignnone size-full wp-image-3919" alt="" src="http://www.headspring.com/wp-content/uploads/2012/03/4.jpg" width="177" height="33" /></a>] + <a href="http://www.headspring.com/2012/03/defect-density-estimation/attachment/5" rel="attachment wp-att-3920"><img class="alignnone size-full wp-image-3920" alt="" src="http://www.headspring.com/wp-content/uploads/2012/03/5.jpg" width="16" height="18" /></a>(realistic)</p>
+
+
+<p><strong><em><span style="text-decoration: underline;">Regression Defects</span></em>:</strong></p>
+
+
+<p>“<em>Defects can neither be created nor be destroyed but they can change from one form to other. The total number of defects in a module always remains constant</em>.”</p>
+
+
+<p>This is a joke in software development community and termed as “<em>Law of conservation of bugs</em>”. Although we don't believe in this but one thing is for sure that there are defects which might be created while fixing other defects. With the calculations that we did above, these defects may not be included but there should be some other method to estimate them. Due to these defects , very often, we see a number of cycles of builds between development team and QA team. If we do not include this in our estimation analysis then, again, we are underestimating the time.</p>
+
+
+<p>There are few general observations which should be considered:</p>
+
+
+<ol>
+<li>The no. of defect (N) decreases with each cycle of build between development team and QA.</li>
+<li>The level of defect (α) increases with each cycle. Mostly integration issues with other components or development units.</li>
+</ol>
+
+
+<p>Now the greatest part of this discussion is to calculate the total number of defects. To estimate this, we proceed as follows:</p>
+
+
+<p><strong><em><span style="text-decoration: underline;">Solution</span></em></strong></p>
+
+
+<p>It is believed that the no. of defects produced in cycle 2 are all new bugs which are created in fixing other bugs, so they must be lesser than earlier defects. It is believed that they are some percentage of earlier bugs. This should also be kept in mind that this is also different for each engineer.</p>
+
+
+<p>The formula for total number of bugs should be something like this:</p>
+
+
+<table width="608" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td valign="top" width="608">
+<p align="center"><a href="http://www.headspring.com/2012/03/defect-density-estimation/attachment/6" rel="attachment wp-att-3921"><img class="alignnone size-full wp-image-3921" alt="" src="http://www.headspring.com/wp-content/uploads/2012/03/6.jpg" width="265" height="22" /></a>…………………………………Equation-1</p>
+</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>Let <a href="http://www.headspring.com/2012/03/defect-density-estimation/attachment/7" rel="attachment wp-att-3922"><img class="alignnone size-full wp-image-3922" alt="" src="http://www.headspring.com/wp-content/uploads/2012/03/7.jpg" width="16" height="20" /></a> percent more bugs are created at each next level than previous level. i.e.</p>
+
+
+<p><a href="http://www.headspring.com/2012/03/defect-density-estimation/attachment/8" rel="attachment wp-att-3923"><img class="alignnone size-full wp-image-3923" alt="" src="http://www.headspring.com/wp-content/uploads/2012/03/8.jpg" width="157" height="22" /></a></p>
+
+
+<p>Then <a href="http://www.headspring.com/2012/03/defect-density-estimation/attachment/9" rel="attachment wp-att-3924"><img class="alignnone size-full wp-image-3924" alt="" src="http://www.headspring.com/wp-content/uploads/2012/03/9.jpg" width="101" height="22" /></a>, <a href="http://www.headspring.com/2012/03/defect-density-estimation/attachment/10" rel="attachment wp-att-3925"><img class="alignnone size-full wp-image-3925" alt="" src="http://www.headspring.com/wp-content/uploads/2012/03/10.jpg" width="110" height="22" /></a>, <a href="http://www.headspring.com/2012/03/defect-density-estimation/attachment/11" rel="attachment wp-att-3926"><img class="alignnone size-full wp-image-3926" alt="" src="http://www.headspring.com/wp-content/uploads/2012/03/11.jpg" width="124" height="22" /></a> equation 1 becomes:</p>
+
+
+<p><a href="http://www.headspring.com/2012/03/defect-density-estimation/attachment/12" rel="attachment wp-att-3927"><img class="alignnone size-medium wp-image-3927" alt="" src="http://www.headspring.com/wp-content/uploads/2012/03/12-300x15.jpg" width="300" height="15" /></a></p>
+
+
+<p>Solving the above equation we come out to the following conclusion:</p>
+
+
+<p><a href="http://www.headspring.com/2012/03/defect-density-estimation/attachment/13" rel="attachment wp-att-3928"><img class="alignnone size-medium wp-image-3928" alt="" src="http://www.headspring.com/wp-content/uploads/2012/03/13-300x53.jpg" width="300" height="53" /></a></p>
+
+
+<p>We have come to a very nice conclusion but still we are left with a problem i.e. the value of n. How should we figure out this value? This needs some managerial acumen regarding understanding of our engineers and complexity of the project. For a very simple project with averagely competent engineers, this may be as minimum as 2 but for other cases this may go to some very high value. So there are two unknowns; first is the percentage of bugs created in each cycle (<a href="http://www.headspring.com/2012/03/defect-density-estimation/attachment/14" rel="attachment wp-att-3929"><img class="alignnone size-full wp-image-3929" alt="" src="http://www.headspring.com/wp-content/uploads/2012/03/14.jpg" width="16" height="20" /></a>) and second is the number of cycles (n). This would be different for each team and estimator must take into consideration the history of the team.</p>
+
+
+<p><strong><em><span style="text-decoration: underline;">Should I deliver my application to clients?</span></em></strong></p>
+
+
+<p>The managers are often confused when there are bugs in their application and they have to deliver to clients. On these occasions one should repeat the <em>Law of Conservation of bugs </em>(jokingly) and do some measurement analysis regarding these.</p>
+
+
+<p>On this issue, Maggie Tompkins has presented a very useful measurement technique. She categorizes the bugs into different categories (<strong><em>Fatal Flaws, Critical Concerns, Preventable Problems, Minor Defects and Insignificant defects</em></strong>). She assigns defect points to each category which increases exponentially with each increasing level. This is the same as we defined the level of bugs (α) earlier and assigned values to each level.</p>
+
+
+<p>The difference is that she measures the defect points in a build and comparing it to the size of project as measured through Function Points based on IFPUG standards, she decides whether the build is ready to be delivered to client or not. I think there are following limitations in this model:</p>
+
+
+<ul>
+<li>There may be hidden defect in the build which could not be found out by SQA. These defects should also be considered when making a decision about build delivery. My discussion is all about estimation after the design and before assignment to individual engineer for the implementation. For this I have presented a complete mathematical model for estimation. What you have to do is to estimate earlier in the implementation phase. After the SQA, you have to analyze whether the defects are as per the expectation or not. If not so, run another cycle until nearly all the dormant defects are surfaced which are up to the quality requirement of the project and organization.</li>
+</ul>
+
+
+<ul>
+<li>The implementation has to be done by engineers. She has not taken any consideration of the defect history of work done by individual engineers.</li>
+</ul>
+
+
+<p>&nbsp;</p>
+
+
+<p><strong><em><span style="text-decoration: underline;">Creating Competitive Organizational Environment</span></em></strong>:-</p>
+
+
+<p>For an organization to work, manager should create an environment of competitive collaboration between employees of same level in the organization hierarchy. I think defect density can be a great measure for measuring employee’s productivity. Yearly accolades may be offered to the engineer with lowest annual defect density. The formula for measuring defect density at any time may be given as:</p>
+
+
+<p><a href="http://www.headspring.com/2012/03/defect-density-estimation/attachment/15" rel="attachment wp-att-3930"><img class="alignnone size-full wp-image-3930" alt="" src="http://www.headspring.com/wp-content/uploads/2012/03/15.jpg" width="229" height="92" /></a></p>
+
+
+<p>Finally we define defect density according to my model:</p>
+
+
+<p><strong>“Defect density is the ratio between total unit level defects to total unit level complex components.”</strong></p>
+
+
+<h2><span style="text-decoration: underline;">References:</span></h2>
+
+
+<p><em>IEEE Software</em>, Vol. 14, No. 3, May/June 1997</p>
+
+
+<p>STANDARDS AND MEASURES OF QUALITY<strong> </strong><em>Margaret Tompkins, Defense Finance and Accounting Service</em></p>
+
+
+<p><strong><em><span style="text-decoration: underline;">Websites:</span></em></strong></p>
+
+
+<ul>
+<li><a href="http://www.stevemcconnell.com/">http://www.stevemcconnell.com</a></li>
+<li><a href="http://irb.cs.tu-berlin.de/">http://irb.cs.tu-berlin.de</a></li>
+<li><a href="http://software.isixsigma.com/">http://software.isixsigma.com</a></li>
+<li><a href="http://www.softrel.com/">http://www.softrel.com</a></li>
+</ul>
+
+
+<p><i>Muhammad is a passionate blogger. He loves to explore various technologies and discuss their amazing features with the other software enthusiasts. He is a co-author of <a title="MVVM Survival Guide for Enterprise Architectures in Silverlight and WPF" href="http://www.amazon.com/Survival-Guide-Enterprise-Architectures-Silverlight/dp/1849683425" target="_blank">MVVM Survival Guide for Enterprise Architectures in Silverlight and WPF</a>. [Blogs http://<a title="shujaat.net" href="http://www.shujaat.net/" target="_blank">shujaat.net</a><span style="color: #585757; font-family: SegoeUI, 'Open Sans', Arial, Helvetica, Tahoma, sans-serif; font-size: small;">; Twitter: @SiddiqiMuhammad]</span></i></p>
+
+]]></content>
+  </entry>
+  
+</feed>

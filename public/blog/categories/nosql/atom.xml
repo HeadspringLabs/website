@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: nosql | Headspring Labs]]></title>
+  <link href="http://headspringlabs.com/blog/categories/nosql/atom.xml" rel="self"/>
+  <link href="http://headspringlabs.com/"/>
+  <updated>2013-07-15T23:13:23-05:00</updated>
+  <id>http://headspringlabs.com/</id>
+  <author>
+    <name><![CDATA[Headspring Labs]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Getting Started with RavenDB]]></title>
+    <link href="http://headspringlabs.com/blog/getting-started-with-ravendb/"/>
+    <updated>2012-03-19T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/getting-started-with-ravendb</id>
+    <content type="html"><![CDATA[<p>I have been following the NoSQL movement for a while now. I have <a href="http://alonsorobles.com/2012/01/10/nosql-big-data-polyglot-persistence-a-new-era/">blogged about the movement</a> and even written a how to post on <a href="http://alonsorobles.com/2011/08/08/running-apache-cassandra-0-8-2-on-windows-7/">setting up a popular column oriented data store</a>. It’s exciting to see the development of so many persistence alternatives. Don’t get me wrong either. The RDBMS is not dead. It just no longer the only kid on the block.</p>
+
+
+<p>Document databases are another persistence alternative to the traditional RDBMS and there are plenty to chose from (like <a href="http://couchdb.apache.org/">CouchDB</a>, <a href="http://aws.amazon.com/simpledb/">SimpleDB</a>, <a href="http://ravendb.net/">RavenDB</a>,  and <a href="http://wiki.basho.com/Riak.html">Riak</a> to name a few). This post is intended to help get you started using RavenDB.</p>
+
+
+<p>Let’s get started!<!--more--></p>
+
+
+<h3><span style="font-weight: bold;">Installing RavenDB</span></h3>
+
+
+<p>There are <a href="http://ravendb.net/download">a few different options for obtaining RavenDB</a>. When it’s available, I prefer using <a href="http://nuget.org/">Nuget</a> via the package manager console. So that’s how we are going to do it… Here we go.</p>
+
+
+<p>I am assuming you already have a Visual Studio solution with some projects in it. I have a class library project targeting the .NET 4.0 framework called Persistence where all of my persistence logic goes. Using the package manager console, I install the RavenDB package.</p>
+
+
+<p><div><script src='https://gist.github.com/1987578.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>From the output you can see a number of dependencies were installed. Feel free to hit your easy button now.</p>
+
+
+<h3><span style="font-weight: bold;">Starting the Server</span></h3>
+
+
+<p>The next thing we need to do is to start up the server. Please note that these steps are here to get you started, not the steps you should follow for production use. I’ll throw in some other pointers along the way.</p>
+
+
+<p>To start the server, open up windows explorer and navigate to your solution directory. You should find a packages directory there which was created by Nuget.</p>
+
+
+<p><a href="http://www.headspring.com/2012/03/getting-started-with-ravendb/image-png-32" rel="attachment wp-att-3954"><img class="alignnone size-medium wp-image-3954" src="http://www.headspring.com/wp-content/uploads/2012/03/image.png" alt="" width="440" height="232" /></a></p>
+
+
+<p>Navigate into the packages directory, then into the RavenDB directory, then into the server directory and locate the Raven.Server.exe file.</p>
+
+
+<p><a href="http://www.headspring.com/2012/03/getting-started-with-ravendb/image-png-33" rel="attachment wp-att-3956"><img class="alignnone size-medium wp-image-3956" src="http://www.headspring.com/wp-content/uploads/2012/03/image1.png" alt="" width="440" height="232" /></a></p>
+
+
+<p>Double click the Raven.Server.exe file to start the server. This will start a console window that looks like this:</p>
+
+
+<p><a href="http://www.headspring.com/2012/03/getting-started-with-ravendb/image-png-34" rel="attachment wp-att-3958"><img class="alignnone size-medium wp-image-3958" src="http://www.headspring.com/wp-content/uploads/2012/03/image2.png" alt="" width="440" height="232" /></a></p>
+
+
+<p>Feel free to hit that easy button again!</p>
+
+
+<p>The server has automatically created a data directory and started an HTTP server on port 8080. These settings can be changed in the Raven.Server.exe.config file as needed. Let’s move on.</p>
+
+
+<h3><span style="font-weight: bold;">The Basics</span></h3>
+
+
+<p>Before we start fiddling with data, we need to understand the basic mechanics of a document database. The concepts are pretty easy, but can be a mental leap if you spent years working with traditional relational databases. Here are the basic concepts from the top down.</p>
+
+
+<p><strong>Database </strong>– The server is made up of database instances. Each database is made up of document collections. I like to think of a database like a filing cabinet.</p>
+
+
+<p><strong>Collection</strong> – The instance is made up of collections which are nothing more than logical grouping of documents. I like to think of them as a folder or a bin that contain related documents.</p>
+
+
+<p><strong>Document</strong> – A document is a single unit of data. It is made up of fields. Think about an email. It is a document which contains a single sender, one or more recipients, a subject, a timestamp, and a body. It is important to note that every document does not necessarily contain all the fields. That means there is no enforced schema for the documents. It may be helpful to think about a handwritten letter. A letter will most likely contain a recipient, a body, and a sender. But you could optionally add a return address, a subject line, a post script message, and/or a date.</p>
+
+
+<p><strong>Field</strong> – A field is a key value pair. The key describes the contents of the field. The value maybe an array or a scalar value. It could also be a document or an array of documents. They are pretty flexible.</p>
+
+
+<p>If you are still having a hard time wrapping your mind around these concepts, then you may find it useful to conceptually map these terms to relational data terms. Just remember that these mappings are not literally identical, they are somewhat similar concepts. I have also added a real world equivalent for comparison.</p>
+
+
+<table width="374" border="1" cellspacing="0" cellpadding="2">
+<tbody>
+<tr>
+<td valign="top" width="195"><strong>Document DB Concept/Term</strong></td>
+<td valign="top" width="177"><strong>Similar SQL Concept/Term</strong></td>
+</tr>
+<tr>
+<td valign="top" width="208">Database</td>
+<td valign="top" width="183">Database</td>
+</tr>
+<tr>
+<td valign="top" width="211">Collection</td>
+<td valign="top" width="186">Table</td>
+</tr>
+<tr>
+<td valign="top" width="211">Document</td>
+<td valign="top" width="187">Row</td>
+</tr>
+<tr>
+<td valign="top" width="210">Field</td>
+<td valign="top" width="188">Column</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>You may still not fully understand the difference and that’s okay. The differences will become more apparent as you play with document databases.</p>
+
+
+<p>Let’s get some hands on experience now.</p>
+
+
+<p>Fire up the management studio by using your favorite browser and navigating to http://localhost:8080 while the server is still running.</p>
+
+
+<p><a href="http://www.headspring.com/2012/03/getting-started-with-ravendb/image-png-35" rel="attachment wp-att-3960"><img class="alignnone size-medium wp-image-3960" src="http://www.headspring.com/wp-content/uploads/2012/03/image3.png" alt="" width="440" height="286" /></a></p>
+
+
+<p>By default, the RavenDB server has created a “Default” database instance and that is the instance the management studio has connected to. The first thing we are going to do is create a database instance that we will use for the remainder of this discussion.</p>
+
+
+<p>Click on the “Database” link towards the top right of the studio.</p>
+
+
+<p><a href="http://www.headspring.com/2012/03/getting-started-with-ravendb/image-png-36" rel="attachment wp-att-3962"><img class="alignnone size-medium wp-image-3962" src="http://www.headspring.com/wp-content/uploads/2012/03/image4.png" alt="" width="440" height="286" /></a></p>
+
+
+<p>Next click on the “New Database” button.</p>
+
+
+<p><a href="http://www.headspring.com/2012/03/getting-started-with-ravendb/image-png-37" rel="attachment wp-att-3964"><img class="alignnone size-medium wp-image-3964" src="http://www.headspring.com/wp-content/uploads/2012/03/image5.png" alt="" width="300" height="96" /></a></p>
+
+
+<p>Enter “ShoppingCartDemo” for the database name and click the “OK” button. You may be prompted for credentials. Go ahead and enter them.</p>
+
+
+<p><a href="http://www.headspring.com/2012/03/getting-started-with-ravendb/image-png-38" rel="attachment wp-att-3966"><img class="alignnone size-medium wp-image-3966" src="http://www.headspring.com/wp-content/uploads/2012/03/image6.png" alt="" width="440" height="286" /></a></p>
+
+
+<p>Click on the “ShoppingCartDemo” database. Notice the navigation bar changed from “Databases &gt; Default” to “Databases &gt; ShoppingCartDemo”.</p>
+
+
+<p><a href="http://www.headspring.com/2012/03/getting-started-with-ravendb/image-png-39" rel="attachment wp-att-3968"><img class="alignnone size-medium wp-image-3968" src="http://www.headspring.com/wp-content/uploads/2012/03/image7.png" alt="" width="440" height="286" /></a></p>
+
+
+<p>Congrats! You now have a new database instance and the management studio is now working in its context.</p>
+
+
+<p>We could have done the same thing with some code. It looks like this.</p>
+
+
+<p><div><script src='https://gist.github.com/2176197.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>Now we are ready to add some data.</p>
+
+
+<h3><span style="font-weight: bold;">Creating Documents</span></h3>
+
+
+<p>First we need to define our classes. We can do that with some simple C# like this:</p>
+
+
+<p><div><script src='https://gist.github.com/1988820.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>Then the application can do something like this:</p>
+
+
+<p><div><script src='https://gist.github.com/2176205.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>After that code is executed by the application you can see a few things in the RavenDB management studio.</p>
+
+
+<p>Let’s take a look at the collections page which can be accessed by clicking the “Collections” tab at the top of the studio.</p>
+
+
+<p><a href="http://www.headspring.com/2012/03/getting-started-with-ravendb/image-png-33" rel="attachment wp-att-3956"><img class="alignnone size-medium wp-image-3956" src="http://www.headspring.com/wp-content/uploads/2012/03/image8.png" alt="" width="440" height="286" /></a></p>
+
+
+<p>Notice that RavenDB has created a “ShoppingCarts” collection for us. This collection is a logical grouping of the ShoppingCart documents. Now click on the pencil icon on the document.</p>
+
+
+<p><a href="http://www.headspring.com/2012/03/getting-started-with-ravendb/image-png-33" rel="attachment wp-att-3956"><img class="alignnone size-medium wp-image-3956" src="http://www.headspring.com/wp-content/uploads/2012/03/image9.png" alt="" width="440" height="286" /></a></p>
+
+
+<p>Notice that the document is just a JSON serialized representation of the created cart. There is some metadata that RavenDB keeps to help it serialize and deserialize the JSON documents to plain old CLR objects.</p>
+
+
+<p>Now we can retrieve documents.</p>
+
+
+<h3><span style="font-weight: bold;">Retrieving Documents</span></h3>
+
+
+<p>We can now retrieve the shopping cart.</p>
+
+
+<p><div><script src='https://gist.github.com/2176209.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<h3></h3>
+
+
+<h3><span style="font-weight: bold;">Updating Documents</span></h3>
+
+
+<p>After retrieving a document, you will probably want to persist changes to it. This easy pretty easy to do.</p>
+
+
+<p>We can refactor the shopping cart class a little here. By changing the array of line items to a list of line items, we can now easily add items to the cart.</p>
+
+
+<p><div><script src='https://gist.github.com/1989715.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>Now our application can make changes like this:</p>
+
+
+<p><div><script src='https://gist.github.com/2176221.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>Take a look at the document data in the management studio</p>
+
+
+<p><a href="http://www.headspring.com/2012/03/getting-started-with-ravendb/image-png-33" rel="attachment wp-att-3956"><img class="alignnone size-medium wp-image-3956" src="http://www.headspring.com/wp-content/uploads/2012/03/image10.png" alt="" width="440" height="286" /></a></p>
+
+
+<p>Notice that the change in the shopping cart class had no impact in this operation. This is one of the neat features of a document DB. Adding and changing fields is pretty easy without having to worry about migrating data most of the time. There are some caveats with this. But that is a topic for another discussion.</p>
+
+
+<h3></h3>
+
+
+<h3><span style="font-weight: bold;">Deleting Documents</span></h3>
+
+
+<p>We can now add a delete a cart easily like this:</p>
+
+
+<p><div><script src='https://gist.github.com/2176223.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>Take another look at collections tab in the management studio:</p>
+
+
+<p><a href="http://www.headspring.com/2012/03/getting-started-with-ravendb/image-png-33" rel="attachment wp-att-3956"><img class="alignnone size-medium wp-image-3956" src="http://www.headspring.com/wp-content/uploads/2012/03/image11.png" alt="" width="440" height="286" /></a></p>
+
+
+<p>Notice the document is gone, but RavenDB remembers the ShoppingCarts collection.</p>
+
+
+<p>We have looked at:</p>
+
+
+<ol>
+<li>How to install RavenDB using Nuget for development</li>
+<li>How to start up the RavenDB server (again for development and tinkering)</li>
+<li>How to access the management studio</li>
+<li>How to create a database using code and the studio</li>
+<li>How to perform simplistic CRUD operations (create, retrieve, update, and delete) using the RavenDB client.</li>
+</ol>
+
+
+<p>There is much more to discuss about Raven. Make sure you look at the <a href="http://ravendb.net/">official RavenDB site for more information</a>.</p>
+
+
+<p><strong>Update:</strong> Thanks for the feedback. I removed the repository pattern from the examples as the implementation example was taking away from the intent of the post.</p>
+
+]]></content>
+  </entry>
+  
+</feed>

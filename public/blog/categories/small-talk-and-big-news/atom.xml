@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Small Talk &amp; Big News | Headspring Labs]]></title>
+  <link href="http://headspringlabs.com/blog/categories/small-talk-and-big-news/atom.xml" rel="self"/>
+  <link href="http://headspringlabs.com/"/>
+  <updated>2013-07-15T23:13:23-05:00</updated>
+  <id>http://headspringlabs.com/</id>
+  <author>
+    <name><![CDATA[Headspring Labs]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[MVC Boot Camp updated for ASP.NET MVC 4]]></title>
+    <link href="http://headspringlabs.com/blog/mvc-boot-camp-updated-for-asp-net-mvc-4/"/>
+    <updated>2012-09-25T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/mvc-boot-camp-updated-for-asp-net-mvc-4</id>
+    <content type="html"><![CDATA[<p>With the release of ASP.NET MVC 4, we’ve updated <a title="MVC4 Boot Camp Curriculum" href="http://www.headspring.com/headspring/mvc-boot-camp/" target="_blank">our boot camp curriculum</a> to include the latest enhancements and features - the biggest of which is the inclusion of ASP.NET Web API. We’ll look at where Web API fits with modern web applications, and where we’ve seen Web API fit best.</p>
+
+
+<p>ASP.NET MVC 4 also includes a number of mobile enhancements, AJAX improvements, bundling and minification, all of which will be covered in the course.</p>
+
+
+<p>Hope to see you there!</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Get to Know a Developer: Kyle Nunery]]></title>
+    <link href="http://headspringlabs.com/blog/get-to-know-a-developer-kyle-nunery/"/>
+    <updated>2012-07-27T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/get-to-know-a-developer-kyle-nunery</id>
+    <content type="html"><![CDATA[<p><a href="http://www.headspring.com/wp-content/uploads/2012/07/photo-51.jpg"><img class="alignright size-medium wp-image-5674" title="kyle nunery" src="http://www.headspring.com/wp-content/uploads/2012/07/photo-51-224x300.jpg" alt="kyle nunery" width="224" height="300" /></a>I should have posted this last week, so forgive my tardiness. We've hired three amazing new developers in the month of July! The first of which is Kyle Nunery, Senior Consultant. He relocated from Florida for the position. Kyle lucked out, because his first Friday with us happened to be a quarterly company offsite at <a href="http://www.headspring.com/blog/small-talk-and-big-news/new-office-and-k1-racing/">K1 Speed Go Kart Racing</a>. He and I joined the rest of the crew for lunch at Chuy's (yum!) before we headed to the track.  There, we talked with Tim Thomas about the direction of front-end development and how crucial Javascript knowledge has become. Interesting talk. Here are some other things he had to say:<!--more--></p>
+
+
+<p><strong>Are you an expert at anything?</strong></p>
+
+
+<p>I like to think I am an expert at building business websites.  My strongest programming languages are C# and JavaScript.</p>
+
+
+<p><strong>What led you to software development?</strong></p>
+
+
+<p>In middle school I wanted to make a video game, so my step dad bought me a book on programming in C.  This passion for programming continued on into college and led to my career in software development.</p>
+
+
+<p><strong>What did you learn first?</strong></p>
+
+
+<p>My first programming language was C using the Borland Turbo C++ compiler.</p>
+
+
+<p><strong>Where do you begin when learning something new?</strong></p>
+
+
+<p>I will typically build many small programs testing out various features of a new technology.  Besides reading blogs and Googling I will often reference books via Safari Books Online.</p>
+
+
+<p><strong>How do you gauge “time well spent”?</strong></p>
+
+
+<p>At work, “time well spent”, is anything that will help in delivering the highest quality solution for your customer as quickly as possible.</p>
+
+
+<p><strong>What are your plans for the future?</strong></p>
+
+
+<p>I am interested in making more mobile applications.  In general, I would like to become a stronger voice in the development community.</p>
+
+
+<p>&nbsp;</p>
+
+
+<p>To learn more about Kyle, tweet: <a href="https://twitter.com/knunery" target="_blank">@knunery</a></p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[New Office and K1 Racing]]></title>
+    <link href="http://headspringlabs.com/blog/new-office-and-k1-racing/"/>
+    <updated>2012-07-19T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/new-office-and-k1-racing</id>
+    <content type="html"><![CDATA[<p>Last time I posted we were just packing up to move from the Spicewood Office. We're set up nicely now at the Avallon Building on Braker and Jollyville. I updated the slideshow with pics of our new place:</p>
+
+
+<p><object width="400" height="300"><param name="flashvars" value="offsite=true&lang=en-us&page_show_url=%2Fphotos%2Fheadspring%2Fsets%2F72157630451128500%2Fshow%2F&page_show_back_url=%2Fphotos%2Fheadspring%2Fsets%2F72157630451128500%2F&set_id=72157630451128500&jump_to="></param><param name="movie" value="http://www.flickr.com/apps/slideshow/show.swf?v=109615"></param><param name="allowFullScreen" value="true"></param><embed type="application/x-shockwave-flash" src="http://www.flickr.com/apps/slideshow/show.swf?v=109615" allowFullScreen="true" flashvars="offsite=true&lang=en-us&page_show_url=%2Fphotos%2Fheadspring%2Fsets%2F72157630451128500%2Fshow%2F&page_show_back_url=%2Fphotos%2Fheadspring%2Fsets%2F72157630451128500%2F&set_id=72157630451128500&jump_to=" width="400" height="300"></embed></object></p>
+
+
+<p>Also, last week we had our quarterly offsite meeting and headed over to K1 Speed for Go Kart Racing. I came in last place and was just fine with it - going fast is dangerous. But the rest of the crowd had a grand ole time racing, bumping and running each other off the track like a bunch of professionals. Oh, we had a meeting too. Key points: the company is still growing strong and everyone still like working here.</p>
+
+
+<p><object width="400" height="300"><param name="flashvars" value="offsite=true&lang=en-us&page_show_url=%2Fphotos%2Fheadspring%2Fsets%2F72157630653691854%2Fshow%2F&page_show_back_url=%2Fphotos%2Fheadspring%2Fsets%2F72157630653691854%2F&set_id=72157630653691854&jump_to="></param><param name="movie" value="http://www.flickr.com/apps/slideshow/show.swf?v=109615"></param><param name="allowFullScreen" value="true"></param><embed type="application/x-shockwave-flash" src="http://www.flickr.com/apps/slideshow/show.swf?v=109615" allowFullScreen="true" flashvars="offsite=true&lang=en-us&page_show_url=%2Fphotos%2Fheadspring%2Fsets%2F72157630653691854%2Fshow%2F&page_show_back_url=%2Fphotos%2Fheadspring%2Fsets%2F72157630653691854%2F&set_id=72157630653691854&jump_to=" width="400" height="300"></embed></object></p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Saying Goodbye to Spicewood Springs Road]]></title>
+    <link href="http://headspringlabs.com/blog/saying-goodbye-to-spicewood-springs-road/"/>
+    <updated>2012-07-06T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/saying-goodbye-to-spicewood-springs-road</id>
+    <content type="html"><![CDATA[<p>We're moving offices tomorrow, which means today is packing day.  Although we'll miss the awesome view, we're looking forward to spreading out in our (giant) new home on Jollyville and Braker in the Avallon building.  Keep in touch, Dovetail folks!</p>
+
+
+<p>I'll be sure to post pictures of the new place once we move in.<br />
+<object width="400" height="300" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"><param name="flashvars" value="offsite=true&amp;lang=en-us&amp;page_show_url=%2Fphotos%2Fheadspring%2Fsets%2F72157630451128500%2Fshow%2F&amp;page_show_back_url=%2Fphotos%2Fheadspring%2Fsets%2F72157630451128500%2F&amp;set_id=72157630451128500&amp;jump_to=" /><param name="allowFullScreen" value="true" /><param name="src" value="http://www.flickr.com/apps/slideshow/show.swf?v=109615" /><param name="allowfullscreen" value="true" /><embed width="400" height="300" type="application/x-shockwave-flash" src="http://www.flickr.com/apps/slideshow/show.swf?v=109615" flashvars="offsite=true&amp;lang=en-us&amp;page_show_url=%2Fphotos%2Fheadspring%2Fsets%2F72157630451128500%2Fshow%2F&amp;page_show_back_url=%2Fphotos%2Fheadspring%2Fsets%2F72157630451128500%2F&amp;set_id=72157630451128500&amp;jump_to=" allowFullScreen="true" allowfullscreen="true" /></object></p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Bowling Night]]></title>
+    <link href="http://headspringlabs.com/blog/bowling-night/"/>
+    <updated>2012-06-27T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/bowling-night</id>
+    <content type="html"><![CDATA[<p>Summer is here and the livin' is...hot!  And busy!  New projects, family vacations, conferences (and sleep) have kept our plates so full that I almost forgot to update the blog! Never fear; pictures are here.</p>
+
+
+<p>Recently, we were selected for the highly coveted 4<a href="http://www.headspring.com/news/headspring-named-one-of-top-5-best-places-to-work-in-austin/" target="_blank">th place ranking</a> on the ABJ's Best Places to Work in Central Texas list.  In celebration, the team managed to wrangle their families together for bowling night at the Main Event.  Our company bowling team, the Headspring Hurwitzes, attempted to show off their skills, but they were no match for the kids. Those of us that knew better than to compete, delighted in the endless supply of nachos. We had a blast!</p>
+
+
+<p>Check out the photos:</p>
+
+
+<p><object width="600" height="400" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"><param name="src" value="https://picasaweb.google.com/s/c/bin/slideshow.swf" /><param name="flashvars" value="host=picasaweb.google.com&amp;hl=en_US&amp;feat=flashalbum&amp;RGB=0x000000&amp;feed=https%3A%2F%2Fpicasaweb.google.com%2Fdata%2Ffeed%2Fapi%2Fuser%2F116995917277898038900%2Falbumid%2F5756332069269080945%3Falt%3Drss%26kind%3Dphoto%26hl%3Den_US" /><param name="pluginspage" value="http://www.macromedia.com/go/getflashplayer" /><embed width="600" height="400" type="application/x-shockwave-flash" src="https://picasaweb.google.com/s/c/bin/slideshow.swf" flashvars="host=picasaweb.google.com&amp;hl=en_US&amp;feat=flashalbum&amp;RGB=0x000000&amp;feed=https%3A%2F%2Fpicasaweb.google.com%2Fdata%2Ffeed%2Fapi%2Fuser%2F116995917277898038900%2Falbumid%2F5756332069269080945%3Falt%3Drss%26kind%3Dphoto%26hl%3Den_US" pluginspage="http://www.macromedia.com/go/getflashplayer" /></object></p>
+
+]]></content>
+  </entry>
+  
+</feed>

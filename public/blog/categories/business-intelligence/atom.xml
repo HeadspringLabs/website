@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: business intelligence | Headspring Labs]]></title>
+  <link href="http://headspringlabs.com/blog/categories/business-intelligence/atom.xml" rel="self"/>
+  <link href="http://headspringlabs.com/"/>
+  <updated>2013-07-15T23:13:23-05:00</updated>
+  <id>http://headspringlabs.com/</id>
+  <author>
+    <name><![CDATA[Headspring Labs]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Metrics, reports, KPIs, and the stuff developers must provide to executives]]></title>
+    <link href="http://headspringlabs.com/blog/metrics-reports-kpis-and-the-stuff-developers-must-provide-to-executives/"/>
+    <updated>2012-04-12T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/metrics-reports-kpis-and-the-stuff-developers-must-provide-to-executives</id>
+    <content type="html"><![CDATA[<p>In September of 2007, I joined <a href="http://www.headspring.com/">Headspring</a> as the CTO.  Now I serve as President and Chief Operating Officer.  When I joined, there were 4 other employees including the original founder serving as CEO.  He founded the company in 2001.  It has always been professional services, but the strategy has changed a few times over the years.  I started my career as a developer in the mid nineties, and now I’m an executive with lots of great developers that I support.  Like most, our company runs on metrics.  As a manager, I understand their worth.  Earlier in my career, I had no idea.</p>
+
+
+<p>Every day, I glance at our <strong>operational dashboard</strong>.  While I won’t share full screen-shots yet, I want to share some of the graphs I use every day to ensure the company is doing well.  Consider this graph.</p>
+
+
+<p><a href="http://www.headspring.com/wp-content/uploads/2012/04/CropperCapture22.png"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/04/CropperCapture22_thumb.png" alt="Time allocation BI chart" width="540" height="294" border="0" /></a></p>
+
+
+<p>&nbsp;</p>
+
+
+<p><!--more--></p>
+
+
+<p><strong>“BD” stands for “big dial”.</strong>  We have 3 big dials we glance at every day.  If we don’t like what we see, we have some “smaller dials” we can look at.  We use the analogy of a plane cockpit. There are a few things pilots always glance at, and then there are smaller, more detailed ones that are consulted as the need arises.</p>
+
+
+<p>This graph shows us our utilization breakdown in the categories that are relevant.  Here are the categories:</p>
+
+
+<ul>
+<li><strong>Personal Time</strong>: holidays, vacations, dentist appts, etc.</li>
+<li><strong>Assigned Time</strong>: Department meetings, 1x1’s, stand-up meetings, etc</li>
+<li><strong>Bench Time</strong>: Time without available project work (doesn’t show because it’s zero)</li>
+<li><strong>Other Time</strong>: Unplanned unproductive time, such as having a flat tire on the way to work</li>
+<li><strong>Sales Time</strong>: Mostly used by the sales department: work to acquire a client</li>
+<li><strong>Billed Time</strong>: self-explanatory</li>
+<li><strong>Unbilled Time</strong>: Working for a client, but not charging</li>
+<li><strong>CI Time</strong>: Continuous Improvement time:  We expect that our people are working to improve.</li>
+<li><strong>Client Time:</strong>  sum of billed and unbilled time.</li>
+</ul>
+
+
+<p>You will notice the big dip during the week of 4/7.  We had our Q1 <strong>quarterly off-site</strong> during that week.  We spent 12% of that week to use as a fun off-site where the entire company toured Inner Space Cavern hundreds of feet under Georgetown.  It shows up on the dashboard because it affects the performance of the company.  As an executive team, we decided it was a good investment in the future productivity of our staff.</p>
+
+
+<p>You might have also noticed that 4/7 was a Thursday in 2011.  How can it be the week of 4/7?  We use the concept of <strong>“moving weeks”</strong> instead of calendar weeks.  We used to use calendar weeks, but the last data point of the graph was always skewed because it didn’t represent a full data point until people logged their time for Friday.  By taking data from a moving week, when I look at the data on Thursday, it pulls data from the previous Thursday through this Wednesday (yesterday).  That way, every point on the graph represents exactly the same size of a data point.  We do the same for months, quarters and years.</p>
+
+
+<p><strong>There is a big problem with pull metrics by calendar month (for 2011)</strong>:</p>
+
+
+<ul>
+<li>January has <strong>21</strong> business days</li>
+<li>February has <strong>20</strong> business days</li>
+<li>March has <strong>23</strong> business days</li>
+<li>April has <strong>21</strong> business days</li>
+<li>May has <strong>22</strong> business days</li>
+</ul>
+
+
+<p>You can see how using calendar months can <strong>wreak havoc</strong> on the comparability of month metrics.  We expect larger months to pose better numbers than the smaller months.  On the financial side, we have to accrue the payroll appropriately as well in order to keep net income from becoming skewed.</p>
+
+
+<p>To deal with this, we use the concept of a <strong>moving month</strong>.  There are 13 moving months in a year.  Each moving month is a 28-day time period from yesterday to 28 days before yesterday.  In this way, every data point will be exactly the same size as the other.  There are also 4, 13-week moving quarters in a year.  The following graph is our 2nd big dial shown by moving month.</p>
+
+
+<p><img src="http://jeffreypalermo.com/files/media/image/Windows-Live-Writer/d066af3fb6f3_8D6C/CropperCapture%5B28%5D_thumb_1.png" alt="CropperCapture[28]" /></p>
+
+
+<p>Before moving to moving months, the calendar month line was consistently <strong>misrepresented</strong> by the larger months.  Where the line moves, we need to know why.  We made the switch so that every curve of the line was meaningful.  We didn’t want our data communicating falsehoods or April-fools jokes.  You think I’m kidding, but April always looks bad coming straight out of March, which boasts 2 more full business days.  In professional services, a business day accounts for a <strong>significant amount of revenue</strong>.</p>
+
+
+<p>Using Big Dial 1 and Big Dial 2, we can keep the ship on the right course.  As long as our staff is billing a consistently high percentage: we shoot for 78-79%, and our hourly margins are high enough to account for our unbillable staff (sales, marketing, corporate) and our fixed costs (facilities, supplies, etc.), our company will remain healthy.</p>
+
+
+<p><strong>These dials are tactical, not strategic</strong>.  The next dial is strategic.</p>
+
+
+<p><img src="http://jeffreypalermo.com/files/media/image/Windows-Live-Writer/d066af3fb6f3_8D6C/CropperCapture%5B31%5D_thumb.png" alt="CropperCapture[31]" /></p>
+
+
+<p>This gives us a view into the <strong>structure</strong> of our company.  <strong>We have hired at least 7 new employees since November, 2011</strong>.  With that, it’s important to keep tabs on how we are changing the structure of our company.  When we hired <a href="http://lostechies.com/chrismissal/">Chris Missal</a> for the operations department, we expanded billable staff.  When we hired <a href="http://www.headspring.com/author/mchauvin">Mary Chauvin</a> for marketing, we increased non-billable staff.  Keeping the right balance is important.</p>
+
+
+<p>You can see that our % of Operations staff to the rest has dipped a little bit over the last 7 months.  We have done that while growing, and we are re-leveling the organization now.  To level out the organization, we need to <strong>add about five more people</strong> to the Operations department.  This graph, while very high level, gives critical insight into how the other two graphs affect our income statement.</p>
+
+
+<p>Using these three charts together, I have a very good sense of what I need to do to improve the financial performance of the company.  Right now:</p>
+
+
+<ol>
+<li>I need to hire 5 more great .Net developers</li>
+<li>I need to keep Client Time at the level of Operations % plus Contractor % (since both types bill)</li>
+</ol>
+
+
+<p>I hope that this helps some developers understand how different types of reports can give answers and perspective to managers.  If a picture is worth a thousand words, shouldn’t more of our reports be pictures?</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Failure Leads to Success]]></title>
+    <link href="http://headspringlabs.com/blog/failure-leads-to-success/"/>
+    <updated>2011-11-23T00:00:00-06:00</updated>
+    <id>http://headspringlabs.com/blog/failure-leads-to-success</id>
+    <content type="html"><![CDATA[<p>Anyone who has ever achieved success has also experienced failure. However, in the moment, we tend to see failure as a bad thing for several reasons, mostly because it is an unpleasant experience. Putting your heart and soul into reaching a goal or a desired result and falling short makes us feel inadequate. Although many may give up in the face of failure, it is those who remain persistent and determined who ultimately become successful in their mission. Throughout time, the most successful people weren’t the ones who just fell into success but those who experienced failure and worked through the mistakes and criticism to achieve success.<!--more--></p>
+
+
+<p>Let’s look at some examples:</p>
+
+
+<ul>
+<li>In 1944, young modeling hopeful Norma Jean Baker was told by the director of Blue Book Modeling Agency she should get secretarial work or get married. Norma Jean Baker later became a world-known pop cultural icon, Marilyn Monroe.</li>
+<li>In 1954, an unknown performer was fired by the manager of the Grand Ole Opry who advised him to go back to driving a truck. This singer became the most popular singer in American history and left a legend as the “King of Rock and Roll,” but most know him as Elvis Presley.</li>
+<li>In 1962, Decca Recording Company turned down a record deal with a band of four British musicians citing they were left unimpressed and disliked their sound. This group later became the international phenomenon known as The Beatles.</li>
+</ul>
+
+
+<p>&nbsp;</p>
+
+
+<p>So what changed for these people? What led them from failure to success? It wasn’t luck; it was acquired knowledge. They were, at the very least, able to eliminate one course of action in order to develop a new plan.</p>
+
+
+<p>The greatest opportunity success through experiencing failure offers is knowledge. Most of us probably don’t remember learning to walk, but surely our parents do, and they can vouch that we didn’t get it right the first time we tried. Did we give up and continue to crawl? No. We tried again until we got it right. But not only did we try again, we practiced walking so much we were eventually able to run. We weren’t born knowing everything, but we were born with the ability to learn and grow. So, similarly when faced with challenges in our professional and personal life, if at first you don’t succeed, try again and continue to practice your skills so they become second nature to you.</p>
+
+
+<p>So, success means gaining knowledge from a good, hard failure.  Open yourself to new situations by being vulnerable and exposed to criticism. Understand what it is that holds you back from success, embrace it as motivation and envision yourself in an ideal situation. Essentially, change what failure means to you and harness it as confidence to create further success.</p>
+
+
+<p><em>All you need is ignorance and confidence and the success is sure.</em>  -<a href="http://www.brainyquote.com/quotes/quotes/m/marktwain109620.html">Mark Twain</a></p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Crafting an Extensible Reporting Schema]]></title>
+    <link href="http://headspringlabs.com/blog/crafting-an-extensible-reporting-schema/"/>
+    <updated>2011-09-28T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/crafting-an-extensible-reporting-schema</id>
+    <content type="html"><![CDATA[<p>Traditional relational database schemas are designed to keep computers happy. Indexes, foreign keys, joins...all of these tools allow for the highest level of optimization so data can be recorded and read back in record time. However, humans are typically very <em>un</em>happy when it comes time to answer business questions from this data.</p>
+
+
+<p>Imagine your boss approaches you and asks for a report of all orders placed by the Acme Corporation on Thursdays. You recall how many times you and your team optimized the database containing this information so data could be written at break-neck speeds and moan when you think of the complex script you'll need to write to retrieve the report your boss requires. Wouldn't it be nice if, instead of lines and lines of arcane SQL, we could ask a database something like the following and get back exactly what we expect?<!--more--></p>
+
+
+<pre>&lt;code&gt; select * from Orders where Customer = &#39;Acme&#39; and DayOfWeek = &#39;Thursday&#39;&lt;/code&gt;</pre>
+
+
+<p>No joins, no convoluted date parsing...in fact, this SQL statement is almost identical to the sentence your boss used, isn't it? How do we get to this level of utopian question-answering? The key is in the concept of "complex writes and simple reads": instead of saving data to a database only in some crazy "normal form" fashion, flatten out your data so you can more easily query against it. Let's take a look at a simple date...say, my birthday this year: 13 December 2011 2:18 PM.</p>
+
+
+<p>Normally, we'd stick this value into a column designed for holding dates...and that's fine, assuming the only question we'll ever want to ask is "show me something that occurred on 13 December 2011 at 2:18 PM". Unfortunately, that sort of question almost never gets asked. Instead, it's queries like "on Tuesdays" or "in the afternoon". To answer these questions, our schema needs to be modified a bit. The original "date-only" schema might look something like this:</p>
+
+
+<pre>&lt;code&gt; OrderDate : datetime&lt;/code&gt;</pre>
+
+
+<p>After we flatten out the date and time, our schema might look something like this:</p>
+
+
+<pre>&lt;code&gt; Day : int Month : nvarchar Year : int DayOfWeek : nvarchar Hour : int Minute : int PM : bit&lt;/code&gt;</pre>
+
+
+<p>Given this schema, we can now ask a multitude of questions about the single record represented, such as:</p>
+
+
+<ul style="margin-bottom: 1.0em;">
+<li>How many orders were placed in January?
+<pre>&lt;code&gt; select count(1) from Orders where Month = &#39;January&#39;&lt;/code&gt;</pre>
+</li>
+<li>What orders did Acme place on Friday afternoons?
+<pre>&lt;code&gt; select * from Orders where DayOfWeek = &#39;Friday&#39; and PM = &#39;1&#39;&lt;/code&gt;</pre>
+</li>
+</ul>
+
+
+<p>Getting data into this type of schema is actually surprisingly easy; in fact, each of these values can be extracted from a single .NET DateTime object:</p>
+
+
+<pre>&lt;code&gt; var timsBirthday = DateTime.Parse(&quot;13 December 2011 2:18 PM&quot;); var day = timsBirthday.Day; var month = timsBirthday.ToString(&quot;MMMM&quot;); var year = timsBirthday.Year; var dayOfWeek = timsBirthday.DayOfWeek; var hour = timsBirthday.Hour; var minute = timsBirthday.Minute; var pm = timsBirthday.Hour &amp;gt;= 12;&lt;/code&gt;</pre>
+
+
+<p>It's not just dates that can be flattened out in this manner! For a hypothetical generic Customer object, for example, you can extrapolate (and answer business questions on!) properties like these:</p>
+
+
+<ul style="margin-bottom: 1.0em;">
+<li>Name</li>
+<li>Primary Contact</li>
+<li>Phone</li>
+<li>City</li>
+<li>State</li>
+<li>ZIP Code</li>
+</ul>
+
+
+<p>Happy reporting!</p>
+
+]]></content>
+  </entry>
+  
+</feed>

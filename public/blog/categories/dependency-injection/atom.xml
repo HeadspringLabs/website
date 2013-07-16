@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: dependency injection | Headspring Labs]]></title>
+  <link href="http://headspringlabs.com/blog/categories/dependency-injection/atom.xml" rel="self"/>
+  <link href="http://headspringlabs.com/"/>
+  <updated>2013-07-15T23:13:23-05:00</updated>
+  <id>http://headspringlabs.com/</id>
+  <author>
+    <name><![CDATA[Headspring Labs]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[WCF IOC Away the need for Named Pipes]]></title>
+    <link href="http://headspringlabs.com/blog/wcf-ioc-away-the-need-for-named-pipes/"/>
+    <updated>2013-02-13T00:00:00-06:00</updated>
+    <id>http://headspringlabs.com/blog/wcf-ioc-away-the-need-for-named-pipes</id>
+    <content type="html"><![CDATA[<p>The NetNamedPipeBinding is the optimized binding for on-machine communication.  For most WCF implementations I have seen WCF is really only there to help facilitate RPC (Remote Procedure Calls).  When WCF is simply a way to segment your service layer into an optionally distributed deployment architecture there may be a much better way.  WCF has additional overhead that seams useless if the code is being executed on the same machine.  IOC (Inversion of Control) using DI (Dependency Injection) provides a relatively simple way to avoid WCF all together.</p>
+
+
+<p>Lets take a simple WCF Service Contract for Customers.<br />
+<div><script src='https://gist.github.com/4945825.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>The client creates a proxy and through WCF configuration the proper binding can be used to communicate with the Service.  In order to make the client know where the service is without hardcoding this you would have the following configuration settings.</p>
+
+
+<pre class="csharpcode">  &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;system.serviceModel&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;bindings&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;basicHttpBinding&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;binding&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&quot;BasicHttpBinding_ICustomerService&quot;&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;/&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;basicHttpBinding&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;bindings&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;endpoint&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;address&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&quot;http://localhost:26859/CustomerService.svc&quot;&lt;/span&gt;
+        &lt;span class=&quot;attr&quot;&gt;binding&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&quot;basicHttpBinding&quot;&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;bindingConfiguration&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&quot;BasicHttpBinding_ICustomerService&quot;&lt;/span&gt;
+        &lt;span class=&quot;attr&quot;&gt;contract&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&quot;OptionalWCF.Contracts.ICustomerService&quot;&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&quot;BasicHttpBinding_IUserProfileService&quot;&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;system.serviceModel&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;</pre>
+
+
+<p>Most clients stop there rather than have a explicit setting for NetNamedPipes.  If they decided to “Optimize” they could add the WCF configuration endpoint for NetNamedPipes and modify the Service to expose a NetNamedPipe endpoint.  Now the client can use the NetNamedPipe endpoint and the performance has been improved.  In reality the performance between NetTcp and NetNamedPipe is rather minimal with a slighter advantage over BasicHttp.  The most optimal invocation is in-process so why not just go around WCF all together.  We already have the interface separation that DI can use and either way if we want optimal performance we will be tweaking configuration files for different deployment environments.</p>
+
+
+<p>For this blog I choose StructureMap as my DI library.  My client Code only needs to get a handle to the interface.</p>
+
+
+<div class="csharpcode">
+<pre class="alt">var customerServices = ObjectFactory.GetInstance&amp;lt;ICustomerService&amp;gt;();</pre>
+</div>
+
+
+<p>The client is configured to either use WCF or use the direct reference to the service implementation of the service Contract.</p>
+
+
+<pre class="csharpcode">&lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;StructureMap&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;MementoStyle&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&quot;Attribute&quot;&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;rem&quot;&gt;&amp;lt;!-- WCF Service Through Proxy --&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;DefaultInstance&lt;/span&gt;
+      &lt;span class=&quot;attr&quot;&gt;PluginType&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&quot;OptionalWCF.Contracts.ICustomerService, OptionalWCF&quot;&lt;/span&gt;
+      &lt;span class=&quot;attr&quot;&gt;PluggedType&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&quot;OptionalWCF.Client.CustomerServiceProxyWrapper, OptionalWCF.Client&quot;&lt;/span&gt;
+      &lt;span class=&quot;attr&quot;&gt;Scope&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&quot;Singleton&quot;&lt;/span&gt;
+      &lt;span class=&quot;kwrd&quot;&gt;/&amp;gt;&lt;/span&gt;
+
+    &lt;span class=&quot;rem&quot;&gt;&amp;lt;!--Real Service--&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;rem&quot;&gt;&amp;lt;!--&amp;lt;DefaultInstance&lt;/span&gt;
+&lt;span class=&quot;rem&quot;&gt;      PluginType=&quot;OptionalWCF.Contracts.ICustomerService, OptionalWCF&quot;&lt;/span&gt;
+&lt;span class=&quot;rem&quot;&gt;      PluggedType=&quot;OptionalWCF.ServiceImpl.CustomerService, OptionalWCF.ServiceImpl&quot;&lt;/span&gt;
+&lt;span class=&quot;rem&quot;&gt;      Scope=&quot;Singleton&quot;&lt;/span&gt;
+&lt;span class=&quot;rem&quot;&gt;      /&amp;gt;--&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;kwrd&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;StructureMap&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;</pre>
+
+
+<p>Now if the client is running on the same machine WCF is discarded.  If the service is moved to another machine with a simple configuration file tweak WCF is used.  The clients code is none the wiser.</p>
+
+
+<p>This pattern can be extending to support duplex communication by using .Net events instead of exposing the callback contracts to the clients.  I plan on writing an additional blog to cover this topic.</p>
+
+
+<p>The full source to this post can be downloaded here <a href="http://www.headspring.com/wp-content/uploads/2013/02/OptionalWCF.zip">OptionalWCF</a></p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[You Want To Change What?]]></title>
+    <link href="http://headspringlabs.com/blog/you-want-to-change-what/"/>
+    <updated>2012-03-26T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/you-want-to-change-what</id>
+    <content type="html"><![CDATA[<p>Change is inevitable. It is a simple fact of life which permeates into just about everything. Software development is no exception. Many software development life cycles have evolved and others have come into existence in an effort to help us deal with change. Programming languages, tools and techniques are also continuously evolving as well. Yet with all these improvements many project teams continue to struggle with change.</p>
+
+
+<p>What can we do about change? The truth is change doesn’t have to be hard. There are many things we can do such as plan for change, design for change, and code for change.<!--more--></p>
+
+
+<p>Sounds great doesn’t it? There are actually dozens of books and a plethora of blog posts that talk about those principles.</p>
+
+
+<p>If you are still reading this, then you are probably wondering how to put those principles into practice. I will share a practical example with you.</p>
+
+
+<p>A short while ago, I blogged <a href="http://www.headspring.com/2012/02/i-have-frameworkcommitment-issues">about selecting a framework</a>. The premise was a real situation in which a company I was consulting for selected a framework, changed their mind, and then changed it back. The actual frameworks involved are not important. The important thing is that the change was essentially painless.</p>
+
+
+<p>Here is how pain was avoided.</p>
+
+
+<p>I worked on a subsystem with very well defined boundaries of responsibility. One thing the subsystem had to do was to send a message to another subsystem. That was easy enough.</p>
+
+
+<p>I started working on the core domain logic of the subsystem and I reached the point where a domain object implemented the business logic that decided to send a message to the other subsystem. The details of the message format and content were still fuzzy and that was a clear indicator that change was coming. Anticipating change here, I decided to use an interface to allow me to continue developing the business logic while the details of the messages were in limbo.</p>
+
+
+<p>My code looked something like this:</p>
+
+
+<p><div><script src='https://gist.github.com/1979430.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>I used unit tests to make sure the business logic was sound and leveraged a mocking framework to mock the message publisher. Shortly thereafter a decision was made to implement a third party message bus to handle some of the messaging details. Again this was easy enough to do. We just implemented the IMessagePublisher interface.</p>
+
+
+<p><div><script src='https://gist.github.com/1979561.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>I ended up using a dependency injection framework to inject a MessagePublisher instance into the BusinessObject during runtime. We were also able to use a combination of unit tests and integration tests to make sure the third party message bus worked correctly. The key thing to take away here is that this MessagePublisher class and a couple of supporting classes (omitted from the code sample) were the only places where the third party code touched our subsystem.</p>
+
+
+<p>When the client decided to change to another third party message bus, we only had to change one class.</p>
+
+
+<p><div><script src='https://gist.github.com/1979613.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<p>Honestly, it was a little more involved. There were a couple of other classes involved that handled the set up and configuration of the third party message bus. But the net effect of the change was limited to about three small classes, a few unit tests, and a few integration tests.</p>
+
+
+<p>When the client decided to change back to the original third party message bus, I just recovered the previous implementation, unit tests, and integration tests from source control.</p>
+
+
+<p>It was pretty much painless.</p>
+
+
+<p>Granted not all changes are this easy. But when we plan, design, and code with change in mind we end up in a position where we can respond to change.</p>
+
+]]></content>
+  </entry>
+  
+</feed>
