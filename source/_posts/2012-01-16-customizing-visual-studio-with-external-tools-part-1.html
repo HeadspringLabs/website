@@ -19,41 +19,25 @@ meta:
   _aioseop_title: Customizing Visual Studio With External Tools, Part 1
   dsq_thread_id: '832107869'
 ---
-Visual Studio has some deep customization options and extensibility points that many of us just ignore. Once such option is “External Tools” which allow you to create a menu item (and optional toolbar) that can run any external program you wish.
-
-I recently had to set up a couple of new computing environments so I went through my typical routine of setting up <em>Explorer.exe</em> as an external tool, and while doing so I pondered a few other tools that might be useful. In this and subsequent posts, I’ll describe how to set up some simple external tools, create a custom tool bar for them and even add them to the context menu.<!--more-->
-
-In your menu, go to <strong>Tools &gt; External Tools</strong>. You may already have some present like Dotfuscator or a Guid generator.
-
-<img style="padding-left: 0px;padding-right: 0px;padding-top: 0px;border-style: initial;border-color: initial;border-width: 0px" src="http://www.headspring.com/wp-content/uploads/2012/01/image2.png" alt="Visual Studio External Tools" width="371" height="362" border="0" />
-
-Setting up a tool is fairly simple: You can see above I have Windows Explorer configured with the /select argument to select the file based on the $(ItemPath) variable. More on this on <a href="http://msdn.microsoft.com/en-us/library/ekbzk5f8.aspx" target="_blank">MSDN – Arguments for External Tools</a>. When you launch this tool it will open Explorer to the currently active/selected file (either in your editor or the one selected in your solution explorer). I find it a handy shortcut when I need to explore to a file deep within a solution.
+<p>Visual Studio has some deep customization options and extensibility points that many of us just ignore. Once such option is “External Tools” which allow you to create a menu item (and optional toolbar) that can run any external program you wish.</p>
+<p>I recently had to set up a couple of new computing environments so I went through my typical routine of setting up <em>Explorer.exe</em> as an external tool, and while doing so I pondered a few other tools that might be useful. In this and subsequent posts, I’ll describe how to set up some simple external tools, create a custom tool bar for them and even add them to the context menu.<!--more--></p>
+<p>In your menu, go to <strong>Tools &gt; External Tools</strong>. You may already have some present like Dotfuscator or a Guid generator.</p>
+<p><img style="padding-left: 0px;padding-right: 0px;padding-top: 0px;border-style: initial;border-color: initial;border-width: 0px" src="http://www.headspring.com/wp-content/uploads/2012/01/image2.png" alt="Visual Studio External Tools" width="371" height="362" border="0" /></p>
+<p>Setting up a tool is fairly simple: You can see above I have Windows Explorer configured with the /select argument to select the file based on the $(ItemPath) variable. More on this on <a href="http://msdn.microsoft.com/en-us/library/ekbzk5f8.aspx" target="_blank">MSDN – Arguments for External Tools</a>. When you launch this tool it will open Explorer to the currently active/selected file (either in your editor or the one selected in your solution explorer). I find it a handy shortcut when I need to explore to a file deep within a solution.</p>
 <h2>Other External Tools</h2>
-I recently added my other favorite editor, <em>Notepad++,</em> to my tools.  Instead of exploring to the currently active file, it will open it up in Notepad++ which is where I find myself editing project files, csv files and other documents that I don’t need to edit with Visual Studio. You can configure Notepad++ with:
-
-<strong>Title</strong>: Notepad++ (or anything you wish)
-
-<strong>Command</strong>: C:Program Files (x86)Notepad++notepad++.exe (location of the exe)
-
-<strong>Arguments</strong>: $(ItemPath)
-
-At Headspring, we use the open-source <a href="https://bitbucket.org/headspringlabs/tarantino/wiki/Home" target="_blank">Tarantino Project</a> to deploy many of our applications. On some projects the deployer executable resides somewhere in a <em>lib</em> folder within the project which means you have to walk through at least a few directories to get to it. I recently made a batch file to launch it straight from the command line from the root of a project, and so I went ahead and turned this .bat file into an external tool while I was at it.
-
-<strong>Title</strong>: Tarantino Deployer
-
-<strong>Command</strong>: $(SolutionDir)..Deploy.bat
-
-<strong>Arguments</strong>: /min (this hides the cmd window)
-
-The Deploy.bat file sites in the same folder as the .sln file does and simply points to the relative location of the deployer exe:
-
-@echo off
-Start /D.libdeployer .libdeployerTarantino.Deployer.exe
+<p>I recently added my other favorite editor, <em>Notepad++,</em> to my tools.  Instead of exploring to the currently active file, it will open it up in Notepad++ which is where I find myself editing project files, csv files and other documents that I don’t need to edit with Visual Studio. You can configure Notepad++ with:</p>
+<p><strong>Title</strong>: Notepad++ (or anything you wish)</p>
+<p><strong>Command</strong>: C:Program Files (x86)Notepad++notepad++.exe (location of the exe)</p>
+<p><strong>Arguments</strong>: $(ItemPath)</p>
+<p>At Headspring, we use the open-source <a href="https://bitbucket.org/headspringlabs/tarantino/wiki/Home" target="_blank">Tarantino Project</a> to deploy many of our applications. On some projects the deployer executable resides somewhere in a <em>lib</em> folder within the project which means you have to walk through at least a few directories to get to it. I recently made a batch file to launch it straight from the command line from the root of a project, and so I went ahead and turned this .bat file into an external tool while I was at it.</p>
+<p><strong>Title</strong>: Tarantino Deployer</p>
+<p><strong>Command</strong>: $(SolutionDir)..Deploy.bat</p>
+<p><strong>Arguments</strong>: /min (this hides the cmd window)</p>
+<p>The Deploy.bat file sites in the same folder as the .sln file does and simply points to the relative location of the deployer exe:</p>
+<p>@echo off<br />
+Start /D.libdeployer .libdeployerTarantino.Deployer.exe</p>
 <h2>Launching External Tools</h2>
-Once you’ve set up your tools in the dialog shown above, they will appear in your tools menu like so:
-
-<img style="padding-left: 0px;padding-right: 0px;padding-top: 0px;border-style: initial;border-color: initial;border-width: 0px" src="http://www.headspring.com/wp-content/uploads/2012/01/image3.png" alt="Visual Studio Tools Menu" width="238" height="383" border="0" />
-
-Stay tuned for more! In the next post I’ll walk you through making your own custom Visual Studio toolbar to contain your tools.
-
-<a title="Customizing Visual Studio With External Tools, Part 2" href="http://www.headspring.com/2012/01/customizing-visual-studio-with-external-tools-part-2">Part 2: Creating a custom toolbar</a>
+<p>Once you’ve set up your tools in the dialog shown above, they will appear in your tools menu like so:</p>
+<p><img style="padding-left: 0px;padding-right: 0px;padding-top: 0px;border-style: initial;border-color: initial;border-width: 0px" src="http://www.headspring.com/wp-content/uploads/2012/01/image3.png" alt="Visual Studio Tools Menu" width="238" height="383" border="0" /></p>
+<p>Stay tuned for more! In the next post I’ll walk you through making your own custom Visual Studio toolbar to contain your tools.</p>
+<p><a title="Customizing Visual Studio With External Tools, Part 2" href="http://www.headspring.com/2012/01/customizing-visual-studio-with-external-tools-part-2">Part 2: Creating a custom toolbar</a></p>

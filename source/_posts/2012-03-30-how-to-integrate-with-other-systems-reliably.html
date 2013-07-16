@@ -17,38 +17,28 @@ meta:
   _aioseop_title: Integrate with Other Systems Reliably
   _podPressPostSpecific: a:6:{s:15:"itunes:subtitle";s:15:"##PostExcerpt##";s:14:"itunes:summary";s:15:"##PostExcerpt##";s:15:"itunes:keywords";s:17:"##WordPressCats##";s:13:"itunes:author";s:10:"##Global##";s:15:"itunes:explicit";s:7:"Default";s:12:"itunes:block";s:7:"Default";}
 ---
-A couple of years ago, I started working with a client on a system that worked as an integration point and decision engine for a large, nationwide brick-and-mortar store that was just beginning to introduce a customer loyalty program (think like Best Buy Rewards).
-
-The system built was like the ones I’ve always built, with the caveat that there was very little in terms of a user interface. Instead, customers never interacted directly with the application, and we received notices of external events (and then notified others) through a variety of integration patterns, including:<!--more-->
+<p>A couple of years ago, I started working with a client on a system that worked as an integration point and decision engine for a large, nationwide brick-and-mortar store that was just beginning to introduce a customer loyalty program (think like Best Buy Rewards).</p>
+<p>The system built was like the ones I’ve always built, with the caveat that there was very little in terms of a user interface. Instead, customers never interacted directly with the application, and we received notices of external events (and then notified others) through a variety of integration patterns, including:<!--more--></p>
 <ul>
-	<li>Producing flat files</li>
-	<li>Consuming flat files (CSV, XML etc.)</li>
-	<li>Consuming 3rd party webservices</li>
-	<li>Exposing web services to 3rd parties</li>
+<li>Producing flat files</li>
+<li>Consuming flat files (CSV, XML etc.)</li>
+<li>Consuming 3rd party webservices</li>
+<li>Exposing web services to 3rd parties</li>
 </ul>
-This system had to consume a lot of information that it didn’t originate, and there was a lot of potential for failures all up and down the line. Just about everything in the system was done synchronously, and not much could easily (if at all) recover from any kinds of failures or downtime.
-
-We had files we would process that would sometimes get halfway through, something would mess up, and we’d have to process the file over again. But what about all those records we already processed? Even if we had ways to figure out what was processed and what wasn’t, we would have to re-process a million lines in the file before finding the record  that was the next one to process.
+<p>This system had to consume a lot of information that it didn’t originate, and there was a lot of potential for failures all up and down the line. Just about everything in the system was done synchronously, and not much could easily (if at all) recover from any kinds of failures or downtime.</p>
+<p>We had files we would process that would sometimes get halfway through, something would mess up, and we’d have to process the file over again. But what about all those records we already processed? Even if we had ways to figure out what was processed and what wasn’t, we would have to re-process a million lines in the file before finding the record  that was the next one to process.</p>
 <h3>Dealing with failures</h3>
-One of the critical files we received were customers that went into the stores to sign up for the loyalty program. Customers would provide their email address, the stores would collect them, and hand them to our system for processing. We would take the emails, make sure that there weren’t already anyone associated with that email address, and send the member an email.
-
-It was a lot more complicated than that, and currently we communicate with two separate customer management systems through a dozen or so web service calls to fully enter a new member into the system. What became complicated was that each of these processors was essentially a giant “foreach” loop, chugging through the file and doing things. But what would happen if the web services went down? Or the server restarted? Or we needed to deploy the system?
-
-We would have to wait until all these critical processes were done to deploy. If it was interrupted, we often dropped files, and no matter how much proactive saving we did, we always lost records. You know that guy that hits “Save” in Microsoft Office obsessively? That’s what we tried to do.
+<p>One of the critical files we received were customers that went into the stores to sign up for the loyalty program. Customers would provide their email address, the stores would collect them, and hand them to our system for processing. We would take the emails, make sure that there weren’t already anyone associated with that email address, and send the member an email.</p>
+<p>It was a lot more complicated than that, and currently we communicate with two separate customer management systems through a dozen or so web service calls to fully enter a new member into the system. What became complicated was that each of these processors was essentially a giant “foreach” loop, chugging through the file and doing things. But what would happen if the web services went down? Or the server restarted? Or we needed to deploy the system?</p>
+<p>We would have to wait until all these critical processes were done to deploy. If it was interrupted, we often dropped files, and no matter how much proactive saving we did, we always lost records. You know that guy that hits “Save” in Microsoft Office obsessively? That’s what we tried to do.</p>
 <h3>Coupling, coupling everywhere</h3>
-Eventually, our system came to make many critical decisions throughout processing. For example, new enrollees, if it was close to your birthday, would receive a birthday reward. Issuing rewards could get complicated, however, since we needed to make sure that what we generated satisfied all the guidelines for the POS systems (unique coupons/barcodes, etc.).
-
-However, the act of issuing a reward to someone during registration was fairly rare, but also fairly expensive. We have to do work to make sure we don’t double-issue and the like. But because we didn’t really have a way to signal that “a reward needed to be issued”, and not slow down the registration processing.
-
-Ultimately, we wanted separate the event of “CustomerRegistered” with the side effect of “IssueBirthdayReward”. But without some sort of messaging, we had to have it all-in-one. And all that coupling just made it hard for the system to evolve.
+<p>Eventually, our system came to make many critical decisions throughout processing. For example, new enrollees, if it was close to your birthday, would receive a birthday reward. Issuing rewards could get complicated, however, since we needed to make sure that what we generated satisfied all the guidelines for the POS systems (unique coupons/barcodes, etc.).</p>
+<p>However, the act of issuing a reward to someone during registration was fairly rare, but also fairly expensive. We have to do work to make sure we don’t double-issue and the like. But because we didn’t really have a way to signal that “a reward needed to be issued”, and not slow down the registration processing.</p>
+<p>Ultimately, we wanted separate the event of “CustomerRegistered” with the side effect of “IssueBirthdayReward”. But without some sort of messaging, we had to have it all-in-one. And all that coupling just made it hard for the system to evolve.</p>
 <h3></h3>
 <h3>Towards messaging</h3>
-Because of the brittleness of our current architecture, we decided to go towards a message-oriented approach. Why is that? For one, we were already processing what were effectively messages. Each line in the files, each web service call received already was a message. However, our existing approach was to try and process them all at once, synchronously.
-
-It was fairly straightforward to imagine this system using asynchronous, durable messages for doing what we were doing in the “foreach” loop, but the question became “which technology?”. I had used MSMQ in the past, but it was EXTEREMELY painful to try and use that API directly. Even looking at other queuing technologies, I didn’t want to build a system directly on top of a queue system. Queuing systems often don’t talk about messages in terms of C# classes and the like, and products like NServiceBus and Mass Transit made it ridiculously easy to send and receive messages over a queue.
-
-So where are we now? Currently, I have a system with around 20 different NServiceBus endpoints, about 10 or so separate sagas, performing operations like waking up to retrieve files from an FTP to writing files to calling web services to bulk import and export operations. It was a long journey, but we’ve seen incidences of failures drastically decrease as we brought processing into messaging. How much better? That registration file, from customer stores, had been dropping about a file a day since the program’s inception, to a total of about 500 files.
-
-When we moved to messaging, not a single file has ever been skipped.
-
-See how easy it is to get started with NServiceBus, check out my <a href="http://www.headspring.com/resources/videos/" target="_blank">quickstart video</a> that takes you through the steps.
+<p>Because of the brittleness of our current architecture, we decided to go towards a message-oriented approach. Why is that? For one, we were already processing what were effectively messages. Each line in the files, each web service call received already was a message. However, our existing approach was to try and process them all at once, synchronously.</p>
+<p>It was fairly straightforward to imagine this system using asynchronous, durable messages for doing what we were doing in the “foreach” loop, but the question became “which technology?”. I had used MSMQ in the past, but it was EXTEREMELY painful to try and use that API directly. Even looking at other queuing technologies, I didn’t want to build a system directly on top of a queue system. Queuing systems often don’t talk about messages in terms of C# classes and the like, and products like NServiceBus and Mass Transit made it ridiculously easy to send and receive messages over a queue.</p>
+<p>So where are we now? Currently, I have a system with around 20 different NServiceBus endpoints, about 10 or so separate sagas, performing operations like waking up to retrieve files from an FTP to writing files to calling web services to bulk import and export operations. It was a long journey, but we’ve seen incidences of failures drastically decrease as we brought processing into messaging. How much better? That registration file, from customer stores, had been dropping about a file a day since the program’s inception, to a total of about 500 files.</p>
+<p>When we moved to messaging, not a single file has ever been skipped.</p>
+<p>See how easy it is to get started with NServiceBus, check out my <a href="http://www.headspring.com/resources/videos/" target="_blank">quickstart video</a> that takes you through the steps.</p>

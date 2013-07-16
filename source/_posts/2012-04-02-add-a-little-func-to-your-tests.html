@@ -14,26 +14,15 @@ meta:
   _aioseop_title: Add a Little Func to Your Tests
   dsq_thread_id: '859140018'
 ---
-Yes this is a lame title, but it made me chuckle. I thought I’d share a quick shortcut that good ole Func&lt;&gt; provides as an alternative to a private method.
-
-With Func&lt;&gt; it’s easy to clean up tests. Let’s assume you need to test a query that returns a list of books in a particular genre.
-
-[gist id=2015251]
-
-By creating a Func&lt;&gt; to set the properties on an object, it shortens the test and makes it much more readable. Obviously if you have more than one test that needs new books, then I'd recommend using a private method. If you're wondering about the .ShouldEqual or .ShouldBeTrue in the test, I'm using the <a title="Should Assertion Library" href="http://nuget.org/packages/Should" target="_blank">Should Assertion Library</a> because I like the readability.<!--more-->
-
-If you want to set more than just the Genre, it would look like this:
-
-[gist id=2015265]
-
-The above example would be called like this:
-
-[gist id=2015266]
-
-If you want to specify even more properties, try this out:
-
-[gist id=2015268]
-
-The above example would look like this:
-
-[gist id=2015272] 
+<p>Yes this is a lame title, but it made me chuckle. I thought I’d share a quick shortcut that good ole Func&lt;&gt; provides as an alternative to a private method.</p>
+<p>With Func&lt;&gt; it’s easy to clean up tests. Let’s assume you need to test a query that returns a list of books in a particular genre.</p>
+<p>[gist id=2015251]</p>
+<p>By creating a Func&lt;&gt; to set the properties on an object, it shortens the test and makes it much more readable. Obviously if you have more than one test that needs new books, then I'd recommend using a private method. If you're wondering about the .ShouldEqual or .ShouldBeTrue in the test, I'm using the <a title="Should Assertion Library" href="http://nuget.org/packages/Should" target="_blank">Should Assertion Library</a> because I like the readability.<!--more--></p>
+<p>If you want to set more than just the Genre, it would look like this:</p>
+<p>[gist id=2015265]</p>
+<p>The above example would be called like this:</p>
+<p>[gist id=2015266]</p>
+<p>If you want to specify even more properties, try this out:</p>
+<p>[gist id=2015268]</p>
+<p>The above example would look like this:</p>
+<p>[gist id=2015272] </p>

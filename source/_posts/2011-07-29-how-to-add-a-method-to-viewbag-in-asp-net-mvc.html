@@ -17,26 +17,19 @@ meta:
   _aioseop_title: How to add a method to ViewBag in ASP.NET MVC
   _podPressPostSpecific: a:6:{s:15:"itunes:subtitle";s:15:"##PostExcerpt##";s:14:"itunes:summary";s:15:"##PostExcerpt##";s:15:"itunes:keywords";s:17:"##WordPressCats##";s:13:"itunes:author";s:10:"##Global##";s:15:"itunes:explicit";s:7:"Default";s:12:"itunes:block";s:7:"Default";}
 ---
-We are all familiar with the basic HomeController in the default ASP.NET MVC project.  We know we can pass values from the controller to the view.  Sometimes we are tempted to pass the controller itself to the view so that we can call methods on it.  The view should not have to depend on the controller.  This post provides a way to accomplish this.  For more on ASP.NET MVC, check out my book, <a href="http://bit.ly/aspnetmvc3inaction">ASP.NET MVC 3 in Action</a>. <!--more--> You can also check out the <a href="http://www.headspring.com/headspring/mvc-boot-camp/" target="_blank">MVC Boot Camp</a> training we offer at <a href="http://www.headspring.com">Headspring</a>.  We start with the HomeController.
-
-<a href="http://www.headspring.com/wp-content/uploads/2011/07/image2.png"><img style="border: 0px;" alt="image" src="http://www.headspring.com/wp-content/uploads/2011/07/image_thumb2.png" width="530" height="403" border="0" /></a>
-
-We know from just a little reading that the ViewBag property on HomeController is a dynamic object – using the new .Net 4 dynamic capabilities.  Merely setting the Message property on the object creates the property.  It is not completely obvious how to create a new method on the object, though.
+<p>We are all familiar with the basic HomeController in the default ASP.NET MVC project.  We know we can pass values from the controller to the view.  Sometimes we are tempted to pass the controller itself to the view so that we can call methods on it.  The view should not have to depend on the controller.  This post provides a way to accomplish this.  For more on ASP.NET MVC, check out my book, <a href="http://bit.ly/aspnetmvc3inaction">ASP.NET MVC 3 in Action</a>. <!--more--> You can also check out the <a href="http://www.headspring.com/headspring/mvc-boot-camp/" target="_blank">MVC Boot Camp</a> training we offer at <a href="http://www.headspring.com">Headspring</a>.  We start with the HomeController.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2011/07/image2.png"><img style="border: 0px;" alt="image" src="http://www.headspring.com/wp-content/uploads/2011/07/image_thumb2.png" width="530" height="403" border="0" /></a></p>
+<p>We know from just a little reading that the ViewBag property on HomeController is a dynamic object – using the new .Net 4 dynamic capabilities.  Merely setting the Message property on the object creates the property.  It is not completely obvious how to create a new method on the object, though.</p>
 <h1>Usage</h1>
-If I were to want to use a method in my Razor view like this. . .
+<p>If I were to want to use a method in my Razor view like this. . .</p>
 <div class="csharpcode"><a href="http://www.headspring.com/wp-content/uploads/2011/07/image3.png"><img style="border: 0px;" alt="image" src="http://www.headspring.com/wp-content/uploads/2011/07/image_thumb3.png" width="535" height="274" border="0" /></a></div>
-. . . then I would need to figure out how to get the GetCurrentTime() method onto the ViewBag.  The following is the solution to that problem.
+<p>. . . then I would need to figure out how to get the GetCurrentTime() method onto the ViewBag.  The following is the solution to that problem.</p>
 <h1>Solution</h1>
-There are two technical capabilities of C# 4 that provide the ability to accomplish our new method.  The first is that I can create and set any new property on the dynamic object.  The second is actually a feature of .Net 2 – delegates.  I will create a method and then wrap it in a delegate and assign it as a property of ViewBag.
-
-<a href="http://www.headspring.com/wp-content/uploads/2011/07/image4.png"><img style="border: 0px;" alt="image" src="http://www.headspring.com/wp-content/uploads/2011/07/image_thumb4.png" width="538" height="344" border="0" /></a>
-
-.Net 3.5 brought us the Func&lt;&gt; and the lambda expressions.  These make delegates so much more concise to write and read.  I have now create a method, assigned it to a object and set it as a property on ViewBag.
-
-The only thing left to do is to dereference the property and invoke it with ().
-
-For those of you who have been programming for a while, you know that I technically haven’t create a method on the ViewBag object.  That is correct.  We have to think back to why I asked for the method in the first place.
+<p>There are two technical capabilities of C# 4 that provide the ability to accomplish our new method.  The first is that I can create and set any new property on the dynamic object.  The second is actually a feature of .Net 2 – delegates.  I will create a method and then wrap it in a delegate and assign it as a property of ViewBag.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2011/07/image4.png"><img style="border: 0px;" alt="image" src="http://www.headspring.com/wp-content/uploads/2011/07/image_thumb4.png" width="538" height="344" border="0" /></a></p>
+<p>.Net 3.5 brought us the Func&lt;&gt; and the lambda expressions.  These make delegates so much more concise to write and read.  I have now create a method, assigned it to a object and set it as a property on ViewBag.</p>
+<p>The only thing left to do is to dereference the property and invoke it with ().</p>
+<p>For those of you who have been programming for a while, you know that I technically haven’t create a method on the ViewBag object.  That is correct.  We have to think back to why I asked for the method in the first place.</p>
 <h1>Why do we need methods?</h1>
-We need methods in order to retrieve values that are resolved at run time.  For instance, if I need to pass in some view-specific value to my ViewBag for evaluation, I need a method. If you were ever tempted to pass a reference to the controller to the view just to be able to execute a method on a value the controller owned, this is your ticket to accomplishing that.  Because the method/closure/delegate in the controller has full scope access to the controller memory space, the ViewBag now holds the gateway to the controller’s state that is necessary.
-
-<a href="http://www.headspring.com/headspring/mvc-boot-camp/">Check out ASP.NET MVC 4 Bootcamp</a>
+<p>We need methods in order to retrieve values that are resolved at run time.  For instance, if I need to pass in some view-specific value to my ViewBag for evaluation, I need a method. If you were ever tempted to pass a reference to the controller to the view just to be able to execute a method on a value the controller owned, this is your ticket to accomplishing that.  Because the method/closure/delegate in the controller has full scope access to the controller memory space, the ViewBag now holds the gateway to the controller’s state that is necessary.</p>
+<p><a href="http://www.headspring.com/headspring/mvc-boot-camp/">Check out ASP.NET MVC 4 Bootcamp</a></p>

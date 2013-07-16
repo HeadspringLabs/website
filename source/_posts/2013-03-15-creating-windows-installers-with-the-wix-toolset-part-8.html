@@ -17,44 +17,38 @@ meta:
   _aioseop_title: Turning on logging when running a windows installer
   _podPressPostSpecific: a:6:{s:15:"itunes:subtitle";s:15:"##PostExcerpt##";s:14:"itunes:summary";s:15:"##PostExcerpt##";s:15:"itunes:keywords";s:17:"##WordPressCats##";s:13:"itunes:author";s:10:"##Global##";s:15:"itunes:explicit";s:7:"Default";s:12:"itunes:block";s:7:"Default";}
 ---
-<address>This article is part of a series exploring how to create installers for Windows software.  Here's the complete contents of the series.</address><address><a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-01/">Part 1 – What Kinds of Software Projects Benefit From an Installer?</a>
-<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-02/">Part 2 – An Overview Of Windows Installer and its Features</a>
-<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-03/">Part 3 – Tooling Options for Building Installers</a>
-<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-04/">Part 4 – The Windows Installer Runtime Sequence</a>
-<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-5/">Part 5 – The Contents of an MSI</a>
-<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-6/">Part 6 – The Structure of a WiX File</a>
-<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-7/">Part 7 – Generating an MSI Package From Your WiX</a>
-<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-8/">Part 8 – Troubleshooting Installer Runtime Problems</a>
-<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-summary/">Part 9 - Summary</a>
-</address><br/><span style="font-size: 13px;">This entry describes how to enable diagnostic logging when running an installer and some tools for analyzing the output.</span>
+<address>This article is part of a series exploring how to create installers for Windows software.  Here's the complete contents of the series.</address>
+<address><a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-01/">Part 1 – What Kinds of Software Projects Benefit From an Installer?</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-02/">Part 2 – An Overview Of Windows Installer and its Features</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-03/">Part 3 – Tooling Options for Building Installers</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-04/">Part 4 – The Windows Installer Runtime Sequence</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-5/">Part 5 – The Contents of an MSI</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-6/">Part 6 – The Structure of a WiX File</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-7/">Part 7 – Generating an MSI Package From Your WiX</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-8/">Part 8 – Troubleshooting Installer Runtime Problems</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-summary/">Part 9 - Summary</a><br />
+</address>
+<p><br/><span style="font-size: 13px;">This entry describes how to enable diagnostic logging when running an installer and some tools for analyzing the output.</span></p>
 <h2>Troubleshooting Runtime Problems - When All Else Fails, Print</h2>
-Let’s face it: things don’t always work the way they’re supposed to and installers are no different. If you’re making anything more complex than the simple Hello World example we’ve been using in this series, you’re going to run into situation where something doesn’t work quite right and you can’t figure out why.
-
-Probably the world’s oldest debugging technique that predates debuggers themselves is printing a line of output with the current program location and variable values at runtime.  Windows installer doesn’t provide a native way to do this in the UI itself, but we do have the next best thing: log files.
+<p>Let’s face it: things don’t always work the way they’re supposed to and installers are no different. If you’re making anything more complex than the simple Hello World example we’ve been using in this series, you’re going to run into situation where something doesn’t work quite right and you can’t figure out why.</p>
+<p>Probably the world’s oldest debugging technique that predates debuggers themselves is printing a line of output with the current program location and variable values at runtime.  Windows installer doesn’t provide a native way to do this in the UI itself, but we do have the next best thing: log files.</p>
 <h2>Enabling Logging During an Installation</h2>
-<pre>Use msiexec (builts into Windows) to run your msi in a diagnostic mode and get a log file. Here’s an example invocation that asks for verbose logging into a file called HelloWorld.log:  %windir%\system32\msiexec.exe /i artifacts\installer\HelloWorld.msi /l*v HelloWorld.log</pre>
-The content of the log for our simple Hello World is 749 lines. I’m obviously not going to paste it in here, but I will briefly describe some of the contents you’ll see in a log file.
+<pre>Use msiexec (builts into Windows) to run your msi in a diagnostic mode and get a log file. Here’s an example invocation that asks for verbose logging into a file called HelloWorld.log: &#160;%windir%\system32\msiexec.exe /i artifacts\installer\HelloWorld.msi /l*v HelloWorld.log</pre>
+<p>The content of the log for our simple Hello World is 749 lines. I’m obviously not going to paste it in here, but I will briefly describe some of the contents you’ll see in a log file.</p>
 <ul>
-	<li>Machine environment settings, such as whether the computer can have patches applied or not</li>
-	<li>The value of properties (variables), such as the install directory</li>
-	<li>The beginning and end of the execute stage</li>
-	<li>The value of all properties at the end of the installation</li>
+<li>Machine environment settings, such as whether the computer can have patches applied or not</li>
+<li>The value of properties (variables), such as the install directory</li>
+<li>The beginning and end of the execute stage</li>
+<li>The value of all properties at the end of the installation</li>
 </ul>
-Most importantly, any errors that occurred should be contained here as well. You can simply search through the log for “error”.
+<p>Most importantly, any errors that occurred should be contained here as well. You can simply search through the log for “error”.</p>
 <h2>Tools for Analyzing a Log File</h2>
-I have not gotten a large amount of use from the tool I’m about to introduce, but I want to make you aware of it because it might be valuable to you.
-
-The Windows SDK includes a utility reader for installer logs located at %PROGRAMFILES%\Microsoft SDKs\Windows\v7.1\Bin (or something similar). The utility is named WiLogUtl.exe. When you start the log analyzer, you’ll need to browse to your log file and open it. I’ve already done that step in the screenshot below.
-
-<a href="http://www.headspring.com/wp-content/uploads/2013/03/logAnalyzer.png"><img class="alignnone size-full wp-image-6466" alt="logAnalyzer" src="http://www.headspring.com/wp-content/uploads/2013/03/logAnalyzer.png" width="638" height="335" /></a>
-
-When you click Analyze, you’re taken to another screen.
-
-<a href="http://www.headspring.com/wp-content/uploads/2013/03/analysis.png"><img class="alignnone size-full wp-image-6467" alt="analysis" src="http://www.headspring.com/wp-content/uploads/2013/03/analysis.png" width="669" height="545" /></a>
-
-The most prominent UI element at the top is an errors list. Our log doesn’t have any, but this view makes it easy to see them all in one place.
-We also have a variety of options on the right. States will show you the detected status of the features in your package – whether they are already installed or not. Properties will give you a list of all the properties (variables) and their values in your installer.
-
-The HTML Log is rather nice because it will color code all the log entries by category, and provide controls for navigating between any errors.
-
-<a href="http://www.headspring.com/wp-content/uploads/2013/03/htmlLogFile.png"><img class="alignnone size-large wp-image-6468" alt="htmlLogFile" src="http://www.headspring.com/wp-content/uploads/2013/03/htmlLogFile-970x709.png" width="970" height="709" /></a>
+<p>I have not gotten a large amount of use from the tool I’m about to introduce, but I want to make you aware of it because it might be valuable to you.</p>
+<p>The Windows SDK includes a utility reader for installer logs located at %PROGRAMFILES%\Microsoft SDKs\Windows\v7.1\Bin (or something similar). The utility is named WiLogUtl.exe. When you start the log analyzer, you’ll need to browse to your log file and open it. I’ve already done that step in the screenshot below.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/03/logAnalyzer.png"><img class="alignnone size-full wp-image-6466" alt="logAnalyzer" src="http://www.headspring.com/wp-content/uploads/2013/03/logAnalyzer.png" width="638" height="335" /></a></p>
+<p>When you click Analyze, you’re taken to another screen.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/03/analysis.png"><img class="alignnone size-full wp-image-6467" alt="analysis" src="http://www.headspring.com/wp-content/uploads/2013/03/analysis.png" width="669" height="545" /></a></p>
+<p>The most prominent UI element at the top is an errors list. Our log doesn’t have any, but this view makes it easy to see them all in one place.<br />
+We also have a variety of options on the right. States will show you the detected status of the features in your package – whether they are already installed or not. Properties will give you a list of all the properties (variables) and their values in your installer.</p>
+<p>The HTML Log is rather nice because it will color code all the log entries by category, and provide controls for navigating between any errors.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/03/htmlLogFile.png"><img class="alignnone size-large wp-image-6468" alt="htmlLogFile" src="http://www.headspring.com/wp-content/uploads/2013/03/htmlLogFile-970x709.png" width="970" height="709" /></a></p>

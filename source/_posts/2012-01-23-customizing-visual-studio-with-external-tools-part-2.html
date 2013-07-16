@@ -18,24 +18,15 @@ meta:
   _aioseop_title: Customizing Visual Studio With External Tools, Part 2
   dsq_thread_id: '832794308'
 ---
-In my <a href="http://www.headspring.com/2012/01/customizing-visual-studio-with-external-tools-part-1">previous post</a> I showed you how to configure your own External Tools in Visual Studio, such as a command that opens up the current document in an external text editor, or a tool that launches a custom deployment executable. External Tools by default are accessed through the Tools menu, but this is lame. In this post I’ll show you to create your own toolbar to contain your tools so they are no more than one click away.<!--more-->
+<p>In my <a href="http://www.headspring.com/2012/01/customizing-visual-studio-with-external-tools-part-1">previous post</a> I showed you how to configure your own External Tools in Visual Studio, such as a command that opens up the current document in an external text editor, or a tool that launches a custom deployment executable. External Tools by default are accessed through the Tools menu, but this is lame. In this post I’ll show you to create your own toolbar to contain your tools so they are no more than one click away.<!--more--></p>
 <h2>Creating a custom toolbar</h2>
-To create a custom toolbar, click Tools &gt; Customize... or right-click in the open space in the toolbar area and select “Customize…” at the very bottom of this context menu. Click “New…” to create a new toolbar and give it a name and click OK, then close this dialog box.
-
-<img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/01/image4.png" alt="Creating a new toolbar" width="445" height="456" border="0" />
-
-It may appear that nothing has happened, but your toolbar has been added, it’s just empty. Look closely at your toolbars and you should be able to spot it:
-
-<img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/01/image5.png" alt="Customize your toolbar" width="204" height="77" border="0" />
-
-Click on the arrow, then “Add or Remove Buttons” then “Customize”. From this dialog, click “Add Command…”. Here you’ll see two lists, one for categories and another for the commands associated with the selected category.  Find and select the “Tools” category, then select the “External Command 1” command.
-
-<img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/01/image6.png" alt="Add commands to your toolbar" width="494" height="355" border="0" />
-
-The process is certainly a little cumbersome, but you’ll get the hang of it after doing it once or twice. The “External Commands” listed in the Commands window correspond with the external tools you have [previously configured –link to post #1]. It’s not magical enough to know the name of the external tools you’ve configured, so you’ll have to keep track of what you’ve created and the order they are in. In my example, I have three external tools configured, and I’m going to add each of them to my toolbar: External Command 1, External Command 2, and External Command 3.
-
-<img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/01/image7.png" alt="External Commands correspond to the External Tools you have, in order" width="324" height="229" border="0" />
-
-When you are done, close out any remaining open dialogs and your custom toolbar should be all set!
-
-<img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/01/image8.png" alt="A custom toolbar!" width="266" height="42" border="0" />
+<p>To create a custom toolbar, click Tools &gt; Customize... or right-click in the open space in the toolbar area and select “Customize…” at the very bottom of this context menu. Click “New…” to create a new toolbar and give it a name and click OK, then close this dialog box.</p>
+<p><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/01/image4.png" alt="Creating a new toolbar" width="445" height="456" border="0" /></p>
+<p>It may appear that nothing has happened, but your toolbar has been added, it’s just empty. Look closely at your toolbars and you should be able to spot it:</p>
+<p><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/01/image5.png" alt="Customize your toolbar" width="204" height="77" border="0" /></p>
+<p>Click on the arrow, then “Add or Remove Buttons” then “Customize”. From this dialog, click “Add Command…”. Here you’ll see two lists, one for categories and another for the commands associated with the selected category.  Find and select the “Tools” category, then select the “External Command 1” command.</p>
+<p><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/01/image6.png" alt="Add commands to your toolbar" width="494" height="355" border="0" /></p>
+<p>The process is certainly a little cumbersome, but you’ll get the hang of it after doing it once or twice. The “External Commands” listed in the Commands window correspond with the external tools you have [previously configured –link to post #1]. It’s not magical enough to know the name of the external tools you’ve configured, so you’ll have to keep track of what you’ve created and the order they are in. In my example, I have three external tools configured, and I’m going to add each of them to my toolbar: External Command 1, External Command 2, and External Command 3.</p>
+<p><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/01/image7.png" alt="External Commands correspond to the External Tools you have, in order" width="324" height="229" border="0" /></p>
+<p>When you are done, close out any remaining open dialogs and your custom toolbar should be all set!</p>
+<p><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/01/image8.png" alt="A custom toolbar!" width="266" height="42" border="0" /></p>

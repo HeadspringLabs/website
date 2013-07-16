@@ -14,22 +14,16 @@ meta:
   _aioseop_title: Jazz-Up Your CSS with Transitions
   dsq_thread_id: '832438433'
 ---
-While JavaScript has historically been the go-to technology for animating CSS properties, CSS 3 brings us transitions: a declarative syntax for defining the transition between styles.
-
-Adding transitions to your CSS is quite simple. First, define the "start" and "end" states of your HTML elements as separate rules, like so.
-
-[gist id=1114324]
-
-Then, add the appropriate properties for transitioning your elements to both states (necessary since we'll be transitioning both <em>to</em> and <em>from</em> each state).<!--more--> Since the transitions specification <a href="http://www.w3.org/TR/css3-transitions/" target="_blank">hasn't been finalized</a>, you'll need to add some vendor-specific rules to support the majority of modern browsers. I've found <a title="CSS3Please" href="http://css3please.com/" target="_blank">CSS3Please</a> to be an invaluable resource for this, as I always forget the correct vendor syntax to use.
-
-[gist id=1114331]
-
-Each of these lines, for the browser it targets, sets the following properties for animation:
+<p>While JavaScript has historically been the go-to technology for animating CSS properties, CSS 3 brings us transitions: a declarative syntax for defining the transition between styles.</p>
+<p>Adding transitions to your CSS is quite simple. First, define the "start" and "end" states of your HTML elements as separate rules, like so.</p>
+<p>[gist id=1114324]</p>
+<p>Then, add the appropriate properties for transitioning your elements to both states (necessary since we'll be transitioning both <em>to</em> and <em>from</em> each state).<!--more--> Since the transitions specification <a href="http://www.w3.org/TR/css3-transitions/" target="_blank">hasn't been finalized</a>, you'll need to add some vendor-specific rules to support the majority of modern browsers. I've found <a title="CSS3Please" href="http://css3please.com/" target="_blank">CSS3Please</a> to be an invaluable resource for this, as I always forget the correct vendor syntax to use.</p>
+<p>[gist id=1114331]</p>
+<p>Each of these lines, for the browser it targets, sets the following properties for animation:</p>
 <ul>
-	<li>"all": The name of the property to animate (in this case, all of them).</li>
-	<li>"0.5s": The duration of the animation in seconds.</li>
-	<li>"ease": A description of how the animation will behave over time. Experiment with some of the <a href="http://www.w3.org/TR/css3-transitions/#transition-timing-function" target="_blank">other variations</a>!</li>
+<li>"all": The name of the property to animate (in this case, all of them).</li>
+<li>"0.5s": The duration of the animation in seconds.</li>
+<li>"ease": A description of how the animation will behave over time. Experiment with some of the <a href="http://www.w3.org/TR/css3-transitions/#transition-timing-function" target="_blank">other variations</a>!</li>
 </ul>
-For your convenience, here's a JSFiddle so you can try it out yourself. Click on the "CSS" tab to see all the stylistic goodness and the "Result" tab to see it in action (assuming you're using a modern browser, of course).
-
-<iframe style="width: 100%; height: 150px;" src="http://jsfiddle.net/TimGThomas/vKB8N/embedded/result,html,css,js" width="320" height="240"></iframe>
+<p>For your convenience, here's a JSFiddle so you can try it out yourself. Click on the "CSS" tab to see all the stylistic goodness and the "Result" tab to see it in action (assuming you're using a modern browser, of course).</p>
+<p><iframe style="width: 100%; height: 150px;" src="http://jsfiddle.net/TimGThomas/vKB8N/embedded/result,html,css,js" width="320" height="240"></iframe></p>

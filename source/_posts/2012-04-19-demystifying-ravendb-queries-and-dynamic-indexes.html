@@ -18,99 +18,61 @@ meta:
   _aioseop_title: Demystifying RavenDB Queries and Dynamic Indexes
   dsq_thread_id: '832179702'
 ---
-Not long a go, I wrote a detailed blog post on <a href="http://www.headspring.com/2012/03/getting-started-with-ravendb">getting started with RavenDB</a> and described the process of performing the most basic CRUD (create, retrieve, update, and delete) operations. The operations covered in the post are great for working with single data entities. One thing I didn’t discuss was how to retrieve a set of data entities and that is exactly what I want to dive into here.
-
-Retrieving data from RavenDB is dead simple and the .NET client offers excellent support for LINQ based queries. Let’s start by reviewing the IDocumentSession interface:
-
-[gist id=2153059]
-
-The query method in the interface is the gateway to retrieving sets of data and offers three signatures which give us immense flexibility with our queries.
-
-Let’s explore the Query&lt;T&gt;() method! Beginning with the example context…
-
-<!--more-->
-
-Imagine we have a database of orders. Each order has some customer and payment information and a list of line items. Each line item consists of a product and a quantity. Our very simplified domain model might  resemble something like this:
-
-[gist id=2423417]
-
-Let’s also assume we have a RavenDB instance with some orders in it. Using the management studio we take a peek at the orders collection and see 324 orders sitting in it!
-
-<a href="http://www.headspring.com/wp-content/uploads/2012/04/image.png"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border-width: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/04/image_thumb.png" alt="image" width="480" height="310" border="0" /></a>
+<p>Not long a go, I wrote a detailed blog post on <a href="http://www.headspring.com/2012/03/getting-started-with-ravendb">getting started with RavenDB</a> and described the process of performing the most basic CRUD (create, retrieve, update, and delete) operations. The operations covered in the post are great for working with single data entities. One thing I didn’t discuss was how to retrieve a set of data entities and that is exactly what I want to dive into here.</p>
+<p>Retrieving data from RavenDB is dead simple and the .NET client offers excellent support for LINQ based queries. Let’s start by reviewing the IDocumentSession interface:</p>
+<p>[gist id=2153059]</p>
+<p>The query method in the interface is the gateway to retrieving sets of data and offers three signatures which give us immense flexibility with our queries.</p>
+<p>Let’s explore the Query&lt;T&gt;() method! Beginning with the example context…</p>
+<p><!--more--></p>
+<p>Imagine we have a database of orders. Each order has some customer and payment information and a list of line items. Each line item consists of a product and a quantity. Our very simplified domain model might  resemble something like this:</p>
+<p>[gist id=2423417]</p>
+<p>Let’s also assume we have a RavenDB instance with some orders in it. Using the management studio we take a peek at the orders collection and see 324 orders sitting in it!</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2012/04/image.png"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border-width: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/04/image_thumb.png" alt="image" width="480" height="310" border="0" /></a></p>
 <h3>The Simplest and Most Dangerous Query</h3>
-What can we do this with this? A whole lot. The simplest thing we can do is ask Raven to give us all the orders in the collection. The query would look something like this:
-
-[gist id=2423510]
-
-Or you could use lambda expressions if you prefer:
-
-[gist id=2423571]
-
-Both of the code snippets generate the same query and return the same result set. You end up with an array containing 128 Order instances. Wait a minute…. Didn’t we have 324 orders in the database? Where are the rest? Raven limits unbounded queries to 128 result by default. This is a really neat safety measure that keeps you from doing something silly like asking for all objects in an huge dataset. Imagine issuing a similar query against Amazon’s order database… Yeah, that probably wouldn’t be good. Of course you can override this behavior specifying it using the <em>Take&lt;TSource&gt;</em> method. So if you really mean give me everything, then you need to say it explicitly.
+<p>What can we do this with this? A whole lot. The simplest thing we can do is ask Raven to give us all the orders in the collection. The query would look something like this:</p>
+<p>[gist id=2423510]</p>
+<p>Or you could use lambda expressions if you prefer:</p>
+<p>[gist id=2423571]</p>
+<p>Both of the code snippets generate the same query and return the same result set. You end up with an array containing 128 Order instances. Wait a minute…. Didn’t we have 324 orders in the database? Where are the rest? Raven limits unbounded queries to 128 result by default. This is a really neat safety measure that keeps you from doing something silly like asking for all objects in an huge dataset. Imagine issuing a similar query against Amazon’s order database… Yeah, that probably wouldn’t be good. Of course you can override this behavior specifying it using the <em>Take&lt;TSource&gt;</em> method. So if you really mean give me everything, then you need to say it explicitly.</p>
 <h3>Under the Hood of the .NET Client</h3>
-A lot of other interesting things happen when a query is prepared and executed in the code snippets. Let’s take a look under the hood of the Raven client and see what is going on.
-
-The <em>session.Query&lt;Order&gt;()</em> method call is the first point of interest. The document session instance will begin by picking a dynamic index to use for the query. In this case, it selects a dynamic index named “dynamic/Orders”. It will then build a <em>RavenQueryStatistics</em> instance and a <em>RavenQueryProvider&lt;Order&gt;</em> instance and use them to build and return a <em>RavenQueryInspector&lt;Order&gt;</em> instance. The inspector object implements the <em>IRavenQueryable&lt;T&gt;</em> interface. At this point, the facilities for generating the query. There is a subtle difference between the LINQ expression and the lambda expression here. With the lambda expression, the <em>RavenQueryInspector&lt;Order&gt;</em> instance is immediately assigned to the <em>results</em> variable. The LINQ statement on the other hand then invokes the  <em>Select</em> LINQ extension method as a result of the LINQ syntax. This subtle difference forces the <em>RavenQueryProvider&lt;Orders&gt; </em>contained in the inspector object execute a few additional instructions that result in a second (yet identical) inspector instance that is assigned to the <em>results</em> variable.
-
-Notice that no query has actually been issued to the RavenDB server yet. That happens in the <em>results.ToArray()</em> method call. This method will make the <em>RavenQueryInspector&lt;Order&gt;</em> instance enumerate itself. When this happens, the inspector asks the underlying <em>RavenQueryProvider&lt;Order&gt;</em> instance to execute the select expression.  The provider will then get a processor object to help execute the expression. The processor first translates the expression into a Lucene query and issues the query command against RavenDB server. The details of the query command execution can vary quite a bit based on your configuration and is beyond the scope of this post. Take it on trust, the client knows what it’s doing. Now the client waits for the result from the server and begins processing it as soon as it receives it. The result contains some additional data including the time to execute, number or results returned, the number of results matched, and the actual index used. These results are available to you via the <em>Statistics</em> method declared in the <em>IRavenQueryable&lt;T&gt;</em> interface. After processing the result, the execution continues back up the call stack where the inspector instance finally returns the enumerator that becomes the final array of Order instances that is assigned to the <em>orders</em> variable.
+<p>A lot of other interesting things happen when a query is prepared and executed in the code snippets. Let’s take a look under the hood of the Raven client and see what is going on.</p>
+<p>The <em>session.Query&lt;Order&gt;()</em> method call is the first point of interest. The document session instance will begin by picking a dynamic index to use for the query. In this case, it selects a dynamic index named “dynamic/Orders”. It will then build a <em>RavenQueryStatistics</em> instance and a <em>RavenQueryProvider&lt;Order&gt;</em> instance and use them to build and return a <em>RavenQueryInspector&lt;Order&gt;</em> instance. The inspector object implements the <em>IRavenQueryable&lt;T&gt;</em> interface. At this point, the facilities for generating the query. There is a subtle difference between the LINQ expression and the lambda expression here. With the lambda expression, the <em>RavenQueryInspector&lt;Order&gt;</em> instance is immediately assigned to the <em>results</em> variable. The LINQ statement on the other hand then invokes the  <em>Select</em> LINQ extension method as a result of the LINQ syntax. This subtle difference forces the <em>RavenQueryProvider&lt;Orders&gt; </em>contained in the inspector object execute a few additional instructions that result in a second (yet identical) inspector instance that is assigned to the <em>results</em> variable.</p>
+<p>Notice that no query has actually been issued to the RavenDB server yet. That happens in the <em>results.ToArray()</em> method call. This method will make the <em>RavenQueryInspector&lt;Order&gt;</em> instance enumerate itself. When this happens, the inspector asks the underlying <em>RavenQueryProvider&lt;Order&gt;</em> instance to execute the select expression.  The provider will then get a processor object to help execute the expression. The processor first translates the expression into a Lucene query and issues the query command against RavenDB server. The details of the query command execution can vary quite a bit based on your configuration and is beyond the scope of this post. Take it on trust, the client knows what it’s doing. Now the client waits for the result from the server and begins processing it as soon as it receives it. The result contains some additional data including the time to execute, number or results returned, the number of results matched, and the actual index used. These results are available to you via the <em>Statistics</em> method declared in the <em>IRavenQueryable&lt;T&gt;</em> interface. After processing the result, the execution continues back up the call stack where the inspector instance finally returns the enumerator that becomes the final array of Order instances that is assigned to the <em>orders</em> variable.</p>
 <h3>Enter the Dynamic Index</h3>
-Interestingly enough, the simplest query uses the “Raven/DocumentsByEntityName” index which is the default static index RavenDB creates to access all of the documents stored within it. You can see this index by clicking on the “Indexes” tab in the management studio.
-
-<a href="http://www.headspring.com/wp-content/uploads/2012/04/image1.png"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border-width: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/04/image_thumb1.png" alt="image" width="480" height="310" border="0" /></a>
-
-By the way, its not a good idea to delete this index. The server will complain quite a bit if this happens. But if you do, don’t worry Raven is self healing. Just shut restart the server process and Raven will add the missing index and stop complaining.
-
-You may have noticed that I haven’t talked one bit about how the server processes the request and I have done that on purpose. There is a lot to be said about what happens on the server side. For now, lets build another more useful query and see what happens.
-
-Hypothetically speaking, let’s say that we need to find all the orders placed by one of our customers named “Jane Doe”. A query for that may look like:
-
-[gist id=2424678]
-
-When executed the client will send “dynamic/Orders” index to the server. If you inspect the results you will see that the actual index used is the “Temp/Orders/ByName” index. Why is this? The server noticed that the default index was not sufficient to efficiently find the records queried. The server then creates a temporary index and returns the result set containing 108 orders for a total operation time of 321ms. Not bad. If I execute the query again, it returns in under 1ms. I can live with that. Here is the really cool part, RavenDB cleans up after itself. If RavenDB doesn’t receive any more queries like this for some time, it will simply delete the temporary index. You can see the temporary indexes in the management studio.
-
-<a href="http://www.headspring.com/wp-content/uploads/2012/04/image2.png"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border-width: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/04/image_thumb2.png" alt="image" width="480" height="310" border="0" /></a>
+<p>Interestingly enough, the simplest query uses the “Raven/DocumentsByEntityName” index which is the default static index RavenDB creates to access all of the documents stored within it. You can see this index by clicking on the “Indexes” tab in the management studio.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2012/04/image1.png"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border-width: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/04/image_thumb1.png" alt="image" width="480" height="310" border="0" /></a></p>
+<p>By the way, its not a good idea to delete this index. The server will complain quite a bit if this happens. But if you do, don’t worry Raven is self healing. Just shut restart the server process and Raven will add the missing index and stop complaining.</p>
+<p>You may have noticed that I haven’t talked one bit about how the server processes the request and I have done that on purpose. There is a lot to be said about what happens on the server side. For now, lets build another more useful query and see what happens.</p>
+<p>Hypothetically speaking, let’s say that we need to find all the orders placed by one of our customers named “Jane Doe”. A query for that may look like:</p>
+<p>[gist id=2424678]</p>
+<p>When executed the client will send “dynamic/Orders” index to the server. If you inspect the results you will see that the actual index used is the “Temp/Orders/ByName” index. Why is this? The server noticed that the default index was not sufficient to efficiently find the records queried. The server then creates a temporary index and returns the result set containing 108 orders for a total operation time of 321ms. Not bad. If I execute the query again, it returns in under 1ms. I can live with that. Here is the really cool part, RavenDB cleans up after itself. If RavenDB doesn’t receive any more queries like this for some time, it will simply delete the temporary index. You can see the temporary indexes in the management studio.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2012/04/image2.png"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border-width: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/04/image_thumb2.png" alt="image" width="480" height="310" border="0" /></a></p>
 <h3>More Query Fu</h3>
-Now let’s say that we reviewed the results and learned that what we really wanted was all the orders placed by either Jane Doe or her husband, John Doe. We can fix our query to look like this:
-
-[gist id=2424749]
-
-This query will also be sent with the “dynamic/Orders” index (the rest of the examples in this blog post will use the same dynamic index) and the server will reuse the “Temp/Orders/ByName” index. In fact, any additional queries that only make use of the name property will use this index.
-
-Let’s say that we really meant all orders placed by any member of the Doe family. We may then use this variation of the query:
-
-[gist id=2424767]
-
-We can also use the <em>StartsWith() </em>and <em>Contains()</em> methods with strings. With numeric fields we can use all the typical operators such as equals (=), not equals (!=), greater than (&gt;), greater than or equal to (&gt;=), less than (&lt;), and less than or equal to (&lt;=). By the way, we can also make use of some calculated values and we can combine them with others. For example, may we want to find all the orders placed by Jane Doe that had single line item.
-
-[gist id=2424816]
+<p>Now let’s say that we reviewed the results and learned that what we really wanted was all the orders placed by either Jane Doe or her husband, John Doe. We can fix our query to look like this:</p>
+<p>[gist id=2424749]</p>
+<p>This query will also be sent with the “dynamic/Orders” index (the rest of the examples in this blog post will use the same dynamic index) and the server will reuse the “Temp/Orders/ByName” index. In fact, any additional queries that only make use of the name property will use this index.</p>
+<p>Let’s say that we really meant all orders placed by any member of the Doe family. We may then use this variation of the query:</p>
+<p>[gist id=2424767]</p>
+<p>We can also use the <em>StartsWith() </em>and <em>Contains()</em> methods with strings. With numeric fields we can use all the typical operators such as equals (=), not equals (!=), greater than (&gt;), greater than or equal to (&gt;=), less than (&lt;), and less than or equal to (&lt;=). By the way, we can also make use of some calculated values and we can combine them with others. For example, may we want to find all the orders placed by Jane Doe that had single line item.</p>
+<p>[gist id=2424816]</p>
 <h3>Even More Query Fu</h3>
-There are a couple of other useful operations for filtering results. They are the <em>In</em> and <em>Any</em> operations. Let’s see them in action!
-
-Say, we need to find all the orders containing a line item requested in bulk quantity. Assume that by bulk quantity we mean at least two dozen or more of a line item. The query will look something like this:
-
-[gist id=2483951]
-
-Now, imagine we really wanted was the orders containing products valued over $100.00 in bulk quantity. Then the query would look like this:
-
-[gist id=2484054]
-
-Remember when we wanted find all of the orders from just Jane and John Doe. We can rewrite that query and leverage the <em>In </em>operator. This example maybe trivial, but imaging you had a larger list of names to compare against. This operator can make the query very readable.
-
-[gist id=2484118]
-
-Just like we did with the string and numeric comparisons, we can also combine these operators and nest them to give us some pretty advanced queries. For example, assume we needed to find all orders with bulk quantity line items of our “Better Thingy” or “Thingy” products:
-
-[gist id=2484165]
-
-Combine these operators with the other string and numeric comparisons and you are equipped to write some serious queries!
+<p>There are a couple of other useful operations for filtering results. They are the <em>In</em> and <em>Any</em> operations. Let’s see them in action!</p>
+<p>Say, we need to find all the orders containing a line item requested in bulk quantity. Assume that by bulk quantity we mean at least two dozen or more of a line item. The query will look something like this:</p>
+<p>[gist id=2483951]</p>
+<p>Now, imagine we really wanted was the orders containing products valued over $100.00 in bulk quantity. Then the query would look like this:</p>
+<p>[gist id=2484054]</p>
+<p>Remember when we wanted find all of the orders from just Jane and John Doe. We can rewrite that query and leverage the <em>In </em>operator. This example maybe trivial, but imaging you had a larger list of names to compare against. This operator can make the query very readable.</p>
+<p>[gist id=2484118]</p>
+<p>Just like we did with the string and numeric comparisons, we can also combine these operators and nest them to give us some pretty advanced queries. For example, assume we needed to find all orders with bulk quantity line items of our “Better Thingy” or “Thingy” products:</p>
+<p>[gist id=2484165]</p>
+<p>Combine these operators with the other string and numeric comparisons and you are equipped to write some serious queries!</p>
 <h3>Know Your Limits</h3>
-Just because you can write it doesn’t mean you can query it. While the query processor is very good, there are some things it can’t do. Here are a few limitations:
+<p>Just because you can write it doesn’t mean you can query it. While the query processor is very good, there are some things it can’t do. Here are a few limitations:</p>
 <ul>
-	<li>The <strong>let</strong> keyword is not currently supported.</li>
-	<li>The only LINQ aggregate operations currently supported are <em>Distinct</em> and <em>Count</em></li>
+<li>The <strong>let</strong> keyword is not currently supported.</li>
+<li>The only LINQ aggregate operations currently supported are <em>Distinct</em> and <em>Count</em></li>
 </ul>
-You will see these limitations arise when the query processor object we talked about earlier fails to generate (or translate) an expression to a document query at runtime. So make sure you write tests around your queries. Also you should know there are solutions and workarounds to get beyond the limitations such as using MapReduce index or N+1 queries.
+<p>You will see these limitations arise when the query processor object we talked about earlier fails to generate (or translate) an expression to a document query at runtime. So make sure you write tests around your queries. Also you should know there are solutions and workarounds to get beyond the limitations such as using MapReduce index or N+1 queries.</p>
 <h3>From Temporary To Permanent</h3>
-One last note about the temporary indexes… When a temporary index gets significant usage, Raven may decide to promote them permanently. When this happens their name changes from “Temp/Foo/Bar” to “Auto/Foo/Bar” and are really easy to spot in the management studio.
-
-<a href="http://www.headspring.com/wp-content/uploads/2012/04/image3.png"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border-width: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/04/image_thumb3.png" alt="image" width="480" height="392" border="0" /></a>
+<p>One last note about the temporary indexes… When a temporary index gets significant usage, Raven may decide to promote them permanently. When this happens their name changes from “Temp/Foo/Bar” to “Auto/Foo/Bar” and are really easy to spot in the management studio.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2012/04/image3.png"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border-width: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/04/image_thumb3.png" alt="image" width="480" height="392" border="0" /></a></p>

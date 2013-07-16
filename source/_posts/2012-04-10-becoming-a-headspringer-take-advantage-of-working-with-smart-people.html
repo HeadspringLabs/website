@@ -19,30 +19,20 @@ meta:
     People'
   dsq_thread_id: '834006721'
 ---
-As I was pondering a new topic to blog, I stumbled into one this morning. I was running some ideas by a few Headspringers, and they provided several options. I decided to go with a hybrid of their suggestions. What I originally planned to blog was a way to test Enumeration subclasses of the <a href="https://bitbucket.org/headspringlabs/tarantino/wiki/Home" target="_blank">Enumeration class from Tarantino</a>. What I ended up with was an even better way to test them. This is not an unusual happenstance at Headspring. If you talk to other Headspringers, you’re going to learn something new. It never ceases to amaze me how often I’m learning something. I like to think I’m doing some teaching, too, but I’m confident that I’m currently learning more than teaching.
-
-In case it isn’t clear by the title, part of becoming a Headspringer is to learn from the great people you get to work with every day. So, if you'd like the opportunity to work with talented, passionate people, <a href="http://www.headspring.com/about-us/careers">we are hiring!</a>
-
-Now let’s get to the original idea of testing the Enumeration subclasses. I will walk through my original code, then what <a href="http://www.headspring.com/2012/02/get-to-know-a-developer-brandon-barry">Mr. Brandon Barry</a> showed me, and why it’s an improvement.<!--more-->
-
-Originally, I had a test that gets all the subclasses of Enumeration, loops through them, and verifies all the values are unique. The test looked like this:
-[gist id=2348233 file=All_Enumerations_should_contain_unique_ids_test.cs]
-After talking to a few Headspringers, Brandon mentioned TestCaseSource, which turned out to be pretty perfect for this situation. Using TestCaseSource is similar to TestCase, which <a href="http://www.headspring.com/2012/03/why-i-like-testcase">Chris Missal blogged</a> about a couple weeks ago. You could use TestCase for this if you only wanted to test a few specific enumerations. Since I want to test all subclasses of Enumeration all the time, TestCaseSource was a much better fit. Now I don't have to worry about forgetting to add an Enumeration to the test.
-
-Now the test looks like this:
-[gist id=2348235 file=Enumeration_should_contain_unique_ids_test.cs]
-Basically, NUnit runs a test per type in EnumerationTypes and passes that type into the now-parameterized test. The primary benefit of this method is that it tests one Enumeration at a time. It also makes the test simpler by removing the muck and letting you focus on the actual test. As an added bonus, it integrates with <a href="http://www.jetbrains.com/resharper/">Resharper</a>’s test runner, which means you can debug an individual test without having to loop through the set to get to the one you want.
-
-I created three test subclasses, and TestEnum3 has duplicate values of 1. Here’s what the runner looks like:
-
-<a href="http://www.headspring.com/wp-content/uploads/2012/04/CropperCapture4.jpg"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border-width: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/04/CropperCapture4_thumb.jpg" alt="CropperCapture[4]" width="560" border="0" /></a>
-<span style="font-size: x-small; color: #666;">Click image to enlarge</span>
-
-You can see in the image above that my original test just fails with "TestEnum3 contains duplicate ID of 1". When using the TestCaseSource you get the test breakdown of each Enumeration, can clearly see that TestEnum3 is the one that fails, and can re-run that one individually. It also shows you what exactly is being tested, so you can verify you're testing everything you think you're testing.
-
-And now it’s fixed:
-
-<a href="http://www.headspring.com/wp-content/uploads/2012/04/CropperCapture6.jpg"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border-width: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/04/CropperCapture6_thumb.jpg" alt="CropperCapture[6]" width="560" border="0" /></a>
-<span style="font-size: x-small; color: #666;">Click image to enlarge</span>
-
-If you would like to see more details on the Enumeration class, you can <a href="http://lostechies.com/jimmybogard/2008/08/12/enumeration-classes/">read Jimmy Bogard’s post on the subject</a>. If you would like more details about this particular test, feel free to leave a comment.
+<p>As I was pondering a new topic to blog, I stumbled into one this morning. I was running some ideas by a few Headspringers, and they provided several options. I decided to go with a hybrid of their suggestions. What I originally planned to blog was a way to test Enumeration subclasses of the <a href="https://bitbucket.org/headspringlabs/tarantino/wiki/Home" target="_blank">Enumeration class from Tarantino</a>. What I ended up with was an even better way to test them. This is not an unusual happenstance at Headspring. If you talk to other Headspringers, you’re going to learn something new. It never ceases to amaze me how often I’m learning something. I like to think I’m doing some teaching, too, but I’m confident that I’m currently learning more than teaching.</p>
+<p>In case it isn’t clear by the title, part of becoming a Headspringer is to learn from the great people you get to work with every day. So, if you'd like the opportunity to work with talented, passionate people, <a href="http://www.headspring.com/about-us/careers">we are hiring!</a></p>
+<p>Now let’s get to the original idea of testing the Enumeration subclasses. I will walk through my original code, then what <a href="http://www.headspring.com/2012/02/get-to-know-a-developer-brandon-barry">Mr. Brandon Barry</a> showed me, and why it’s an improvement.<!--more--></p>
+<p>Originally, I had a test that gets all the subclasses of Enumeration, loops through them, and verifies all the values are unique. The test looked like this:<br />
+[gist id=2348233 file=All_Enumerations_should_contain_unique_ids_test.cs]<br />
+After talking to a few Headspringers, Brandon mentioned TestCaseSource, which turned out to be pretty perfect for this situation. Using TestCaseSource is similar to TestCase, which <a href="http://www.headspring.com/2012/03/why-i-like-testcase">Chris Missal blogged</a> about a couple weeks ago. You could use TestCase for this if you only wanted to test a few specific enumerations. Since I want to test all subclasses of Enumeration all the time, TestCaseSource was a much better fit. Now I don't have to worry about forgetting to add an Enumeration to the test.</p>
+<p>Now the test looks like this:<br />
+[gist id=2348235 file=Enumeration_should_contain_unique_ids_test.cs]<br />
+Basically, NUnit runs a test per type in EnumerationTypes and passes that type into the now-parameterized test. The primary benefit of this method is that it tests one Enumeration at a time. It also makes the test simpler by removing the muck and letting you focus on the actual test. As an added bonus, it integrates with <a href="http://www.jetbrains.com/resharper/">Resharper</a>’s test runner, which means you can debug an individual test without having to loop through the set to get to the one you want.</p>
+<p>I created three test subclasses, and TestEnum3 has duplicate values of 1. Here’s what the runner looks like:</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2012/04/CropperCapture4.jpg"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border-width: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/04/CropperCapture4_thumb.jpg" alt="CropperCapture[4]" width="560" border="0" /></a><br />
+<span style="font-size: x-small; color: #666;">Click image to enlarge</span></p>
+<p>You can see in the image above that my original test just fails with "TestEnum3 contains duplicate ID of 1". When using the TestCaseSource you get the test breakdown of each Enumeration, can clearly see that TestEnum3 is the one that fails, and can re-run that one individually. It also shows you what exactly is being tested, so you can verify you're testing everything you think you're testing.</p>
+<p>And now it’s fixed:</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2012/04/CropperCapture6.jpg"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border-width: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/04/CropperCapture6_thumb.jpg" alt="CropperCapture[6]" width="560" border="0" /></a><br />
+<span style="font-size: x-small; color: #666;">Click image to enlarge</span></p>
+<p>If you would like to see more details on the Enumeration class, you can <a href="http://lostechies.com/jimmybogard/2008/08/12/enumeration-classes/">read Jimmy Bogard’s post on the subject</a>. If you would like more details about this particular test, feel free to leave a comment.</p>
