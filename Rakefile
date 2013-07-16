@@ -402,6 +402,27 @@ task :convert_gists, :dir do |t, args|
   end
 end
 
+desc "Convert tags to categories"
+task :convert_tags, :dir do |t, args|
+  puts ">> !! Please provide a directory, eg. rake convert_tags[source/_new_posts]" unless args.dir
+  if args.dir
+    if args.dir == "/"
+      dir = ""
+    else
+      dir = args.dir.sub(/(\/*)(.+)/, "\\2").sub(/\/$/, '');
+    end
+    Dir.open dir do |d|
+      d.each do |file|
+        next if file == '.' or file == '..'
+        file_location = File.join(dir, file)
+        text = File.read(file_location)
+        new_text = text.gsub(/(tags:)(.*)(\n)/, 'categories:\2\3')
+        File.open(file_location, "w") { |f| f.puts new_text }
+      end
+    end
+  end
+end
+
 def ok_failed(condition)
   if (condition)
     puts "OK"
