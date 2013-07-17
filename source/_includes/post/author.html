@@ -1,14 +1,8 @@
 {% if post.author %}
-  {% assign author_key = post.author %}
+  {% assign author = post.author %}
 {% elsif page.author %}
-  {% assign author_key = page.author %}
+  {% assign author = page.author %}
 {% else %}
-  {% assign author_key = site.author %}
+  {% assign author = site.author %}
 {% endif %}
-{% assign author = site.authors[author_key] %}
-{% if author %}
-<img src="http://0.gravatar.com/avatar/{{ author.gravatar }}?s=100" alt="{{ author.name }}" />
-<span class="byline author vcard">Posted by <span class="fn">
-  <a href="/author/{{ author_key }}">{{ author.name }}</a>
-</span></span>
-{% endif %}
+{% if author %}<span class="byline author vcard">Posted by <span class="fn">{{ author }}</span></span>{% endif %}

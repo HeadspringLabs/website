@@ -1,81 +1,101 @@
 
-<!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE HTML>
+<html>
 <head>
-  <meta charset="utf-8">
-  <title>Headspring Labs</title>
-  <meta name="author" content="Headspring Labs">
+	<meta charset="utf-8">
+	<title>Headspring Labs</title>
+	<meta name="author" content="Headspring Labs">
 
-  
-  <meta name="description" content="When writing software, we constantly create abstractions. The goal each time is to present a simple interface in front of something more complex, &hellip;">
-  
+	
+	<meta name="description" content="When writing software, we constantly create abstractions. The goal each time is to present a simple interface in front of something more complex, &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <!-- http://t.co/dKP3o1e -->
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  
-  <link rel="canonical" href="http://headspringlabs.com/blog/page/18">
-  <link href="/favicon.png" rel="icon">
-  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-
-  
-
+	<link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script async="true" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
 </head>
 
-<body   >
-  <header role="banner"><hgroup>
-  <h1><a href="/">Headspring Labs</a></h1>
-  
-    <h2>Experiments by Headspringers!</h2>
-  
-</hgroup>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">Headspring Labs</a></h1>
+<nav id="main-nav"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:headspringlabs.com">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/HeadspringLabs" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/HeadspringLabs" title="GitHub">GitHub</a>
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+    
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:headspringlabs.com">
+	</form>
+</nav>
 
 </header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
-</ul>
-  
-<form action="http://google.com/search" method="get">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:headspringlabs.com" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-  </fieldset>
-</form>
-  
-<ul class="main-navigation">
-  <li><a href="/">Blog</a></li>
-  <li><a href="/blog/archives">Archives</a></li>
-</ul>
+	
+		
+	
+	<div id="content" class="inner">
 
-</nav>
-  <div id="main">
-    <div id="content">
-      <div class="blog-index">
-  
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/finding-closure/">Finding Closure</a></h1>
-    
-    
-      <p class="meta">
-        
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/finding-closure/">
+		
+			Finding Closure</a>
+	</h2>
+	<div class="entry-content">
+		<p>When writing software, we constantly create abstractions.  The goal each time is to present a simple interface in front of something more complex, hiding the gory details from us so we can focus on other things.  The problem is, <a href="http://en.wikipedia.org/wiki/Leaky_abstraction">abstractions leak</a>.  Even when you go to great effort to create a really exellent abstraction, some unfortunate implementation detail manages to rear its ugly head.  This even happens with things so fundamental that we take them for granted.  Take the &#8216;foreach&#8217; keyword in C#:
+		
+		<a href="/blog/finding-closure/" class="more-link">Read on &rarr;</a>
+	</div>
+
+
+<div class="meta">
+	<div class="date">
 
 
 
@@ -87,74 +107,36 @@
   
 
 
-<time datetime="2012-03-09T00:00:00-06:00" pubdate data-updated="true">Mar 9<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
+<time datetime="2012-03-09T00:00:00-06:00" pubdate data-updated="true">Mar 9<span>th</span>, 2012</time></div>
+	<div class="tags">
 
 
-  <div class="entry-content"><p>When writing software, we constantly create abstractions.  The goal each time is to present a simple interface in front of something more complex, hiding the gory details from us so we can focus on other things.  The problem is, <a href="http://en.wikipedia.org/wiki/Leaky_abstraction">abstractions leak</a>.  Even when you go to great effort to create a really exellent abstraction, some unfortunate implementation detail manages to rear its ugly head.  This even happens with things so fundamental that we take them for granted.  Take the &#8216;foreach&#8217; keyword in C#:</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/finding-closure/">Read on &rarr;</a>
-    </footer>
-  
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/developing-with-c-number/'>developing with C#</a>
 
 
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/dallas-day-of-dot-net-get-nerdy-with-it/">Dallas Day of Dot NET: Get Nerdy With It</a></h1>
-    
-    
-      <p class="meta">
-        
+</div>
+	
+</div>
+</article>
 
 
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/dallas-day-of-dot-net-get-nerdy-with-it/">
+		
+			Dallas Day of Dot NET: Get Nerdy With It</a>
+	</h2>
+	<div class="entry-content">
+		<p>The bags are packed and we’re ready to head out for Dallas Day of Dot NET.  We&#8217;ve heard through event organizers that over 500 people are expected to attend.  Woo Hoo!  Half of our team is going, including President, Jeffrey Palermo, sporting a fresh polo from his recently bestowed and 7<sup>th</sup> consecutive Microsoft MVP title.</p>
+<p style="text-align: center;"><a href="http://www.headspring.com/2012/03/dallas-day-of-dot-net-get-nerdy-with-it/photo-2" rel="attachment wp-att-4036"><img class="alignnone size-medium wp-image-4036" title="Katie and Jeffrey heading to Dallas Day of Dot NET" src="http://www.headspring.com/wp-content/uploads/2012/03/photo-2-224x300.jpg" alt="" width="224" height="300" /></a><a href="http://www.headspring.com/2012/03/dallas-day-of-dot-net-get-nerdy-with-it/photo-1" rel="attachment wp-att-4037"><img class="alignnone size-medium wp-image-4037" title="photo (1)" src="http://www.headspring.com/wp-content/uploads/2012/03/photo-1-224x300.jpg" alt="" width="224" height="300" />
+		
+		<a href="/blog/dallas-day-of-dot-net-get-nerdy-with-it/" class="more-link">Read on &rarr;</a>
+	</div>
 
 
-
-
-
-
-  
-
-
-<time datetime="2012-03-08T00:00:00-06:00" pubdate data-updated="true">Mar 8<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>The bags are packed and we’re ready to head out for Dallas Day of Dot NET.  We&#8217;ve heard through event organizers that over 500 people are expected to attend.  Woo Hoo!  Half of our team is going, including President, Jeffrey Palermo, sporting a fresh polo from his recently bestowed and 7<sup>th</sup> consecutive Microsoft MVP title.</p>
-<p style="text-align: center;"><a href="http://www.headspring.com/2012/03/dallas-day-of-dot-net-get-nerdy-with-it/photo-2" rel="attachment wp-att-4036"><img class="alignnone size-medium wp-image-4036" title="Katie and Jeffrey heading to Dallas Day of Dot NET" src="http://www.headspring.com/wp-content/uploads/2012/03/photo-2-224x300.jpg" alt="" width="224" height="300" /></a><a href="http://www.headspring.com/2012/03/dallas-day-of-dot-net-get-nerdy-with-it/photo-1" rel="attachment wp-att-4037"><img class="alignnone size-medium wp-image-4037" title="photo (1)" src="http://www.headspring.com/wp-content/uploads/2012/03/photo-1-224x300.jpg" alt="" width="224" height="300" /></div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/dallas-day-of-dot-net-get-nerdy-with-it/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/defect-density-estimation/">Guest Blog [Muhammad Shujaat Siddiqi]: Defect Density as Estimation Tool</a></h1>
-    
-    
-      <p class="meta">
-        
+<div class="meta">
+	<div class="date">
 
 
 
@@ -166,77 +148,79 @@
   
 
 
-<time datetime="2012-03-07T00:00:00-06:00" pubdate data-updated="true">Mar 7<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
+<time datetime="2012-03-08T00:00:00-06:00" pubdate data-updated="true">Mar 8<span>th</span>, 2012</time></div>
+	<div class="tags">
 
 
-  <div class="entry-content"><p><em><strong>Introduction</strong></em>:</p>
-<p><em>This article is about defect density as an estimation tool. This attempts to create a simple mathematical model for estimation based on historic defect density about total number of defects and project delivery time. This also presents proposal for creating organizational competitiveness based on defect density of individuals.</div>
+	<a class='category' href='/blog/categories/small-talk-and-big-news/'>Small Talk &amp; Big News</a>, <a class='category' href='/blog/categories/conferences/'>conferences</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/defect-density-estimation/">
+		
+			Guest Blog [Muhammad Shujaat Siddiqi]: Defect Density as Estimation Tool</a>
+	</h2>
+	<div class="entry-content">
+		<p><em><strong>Introduction</strong></em>:</p>
+<p><em>This article is about defect density as an estimation tool. This attempts to create a simple mathematical model for estimation based on historic defect density about total number of defects and project delivery time. This also presents proposal for creating organizational competitiveness based on defect density of individuals.
+		
+		<a href="/blog/defect-density-estimation/" class="more-link">Read on &rarr;</a>
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
   
-  
-    <footer>
-      <a rel="full-article" href="/blog/defect-density-estimation/">Read on &rarr;</a>
-    </footer>
-  
 
 
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/make-the-most-of-sxswi-for-free/">Make the Most of SXSWi for Free</a></h1>
-    
-    
-      <p class="meta">
-        
+<time datetime="2012-03-07T00:00:00-06:00" pubdate data-updated="true">Mar 7<span>th</span>, 2012</time></div>
+	<div class="tags">
 
 
+	<a class='category' href='/blog/categories/defect-density/'>Defect Density</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/estimation/'>Estimation</a>, <a class='category' href='/blog/categories/project-management/'>Project Management</a>, <a class='category' href='/blog/categories/developer-productivity/'>developer productivity</a>
 
 
+</div>
+	
+</div>
+</article>
 
 
-
-
-  
-
-
-<time datetime="2012-03-06T00:00:00-06:00" pubdate data-updated="true">Mar 6<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>The second week of March is upon us, and I could not be more excited.</p>
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/make-the-most-of-sxswi-for-free/">
+		
+			Make the Most of SXSWi for Free</a>
+	</h2>
+	<div class="entry-content">
+		<p>The second week of March is upon us, and I could not be more excited.</p>
 <p>SXSW Interactive is going to be bigger and better than ever – over 19,000 are expected to attend this year.   I’m really looking forward to being a part of it.  Even the Juggalos will be there!  Juggalos and Bruce Springsteen featured in the same event; I never thought I would see the day.</p>
 <p>If you have a badge, make sure to find me and say hello. In between panels, I plan to visit the Microsoft and Beacon Lounges or browse the Trade Show and ScreenBurn Arcade.  Here’s my schedule:   <a href="http://schedule.sxsw.com/2012/user_events/user_60347">http://schedule.sxsw.com/2012/user_events/user_60347</a></p>
-<p>However, if you don’t have badge, there is still plenty of opportunity to get in on the action.  Of course, I’ve made a list:</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/make-the-most-of-sxswi-for-free/">Read on &rarr;</a>
-    </footer>
-  
+<p>However, if you don’t have badge, there is still plenty of opportunity to get in on the action.  Of course, I’ve made a list:
+		
+		<a href="/blog/make-the-most-of-sxswi-for-free/" class="more-link">Read on &rarr;</a>
+	</div>
 
 
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/why-isnt-software-as-reliable-as-a-car/">Why Isn’t Software as Reliable as a Car?</a></h1>
-    
-    
-      <p class="meta">
-        
+<div class="meta">
+	<div class="date">
 
 
 
@@ -248,14 +232,28 @@
   
 
 
-<time datetime="2012-03-02T00:00:00-06:00" pubdate data-updated="true">Mar 2<span>nd</span>, 2012</time>
-        
-      </p>
-    
-  </header>
+<time datetime="2012-03-06T00:00:00-06:00" pubdate data-updated="true">Mar 6<span>th</span>, 2012</time></div>
+	<div class="tags">
 
 
-  <div class="entry-content"><p>According to this is a popular <a href="http://programmers.stackexchange.com/questions/41050/why-isnt-software-as-reliable-as-a-car">question</a> on Programmers – Stack Exchange, a user once asked a programmer the innocent question, “Why isn’t software as reliable as a car”?</p>
+	<a class='category' href='/blog/categories/small-talk-and-big-news/'>Small Talk &amp; Big News</a>, <a class='category' href='/blog/categories/conferences/'>conferences</a>, <a class='category' href='/blog/categories/sxswi/'>sxswi</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/why-isnt-software-as-reliable-as-a-car/">
+		
+			Why Isn’t Software as Reliable as a Car?</a>
+	</h2>
+	<div class="entry-content">
+		<p>According to this is a popular <a href="http://programmers.stackexchange.com/questions/41050/why-isnt-software-as-reliable-as-a-car">question</a> on Programmers – Stack Exchange, a user once asked a programmer the innocent question, “Why isn’t software as reliable as a car”?</p>
 <p>The highest voted and overly pedantic answer is, “it isn’t: cars themselves have software that is far more reliable than the mechanical parts of the car”. I guess that’s what you get when you leave it to programmers to answer such a question.</p>
 <p>Maybe some software is reliable, but I bet you’ve used a custom software system that was far less reliable than your car, haven’t you? I know I have. I’ve built a few them in my past. I’ll take my Honda over some custom software systems any day!</p>
 <h2>Why is my custom software system so unreliable?</h2>
@@ -273,63 +271,55 @@
 <h2>Reliable custom software</h2>
 <p>If you have a custom software system that you don’t trust as much as your car, I wouldn’t be surprised. Software can be immensely complex and built in a way the nearly ensures a lack of reliability. And for every bug fixed, another one might be introduced. Custom software isn’t for the faint of heart.</p>
 <p>At Headspring, reliable custom software is our specialty. We employ <a href="http://www.headspring.com/resources/whitepapers/" target="_blank">agile and test-driven development methods</a> to mitigate the challenges of custom software development. Most importantly, we understand that our job isn’t just to build software, but to deliver satisfaction to our clients. A reliable system is worth little if it isn’t the right one for the job.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-02T00:00:00-06:00" pubdate data-updated="true">Mar 2<span>nd</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/mythical-man-month/'>Mythical Man-Month</a>, <a class='category' href='/blog/categories/what-the-tech/'>What the tech?</a>, <a class='category' href='/blog/categories/reliability/'>reliability</a>, <a class='category' href='/blog/categories/software/'>software</a>
+
+
 </div>
-  
-  
+	
+</div>
+</article>
 
 
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/migrating-from-bitbucket-to-github/">Migrating From Bitbucket to GitHub</a></h1>
-    
-    
-      <p class="meta">
-        
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/migrating-from-bitbucket-to-github/">
+		
+			Migrating From Bitbucket to GitHub</a>
+	</h2>
+	<div class="entry-content">
+		<p>Git and Mercurial certainly have their differences, but in the grand scheme of things they are both equally-viable source control tools.  Bitbucket and GitHub are also both equally-viable hosts for Mercurial and Git projects.</p>
+<p>All other things being equal, when it comes to open-source software the Capricious and Arbitrary Popularity Contest kicks in with the deciding vote.  Git, and in particular GitHub, has won the popularity contest in recent years and will own the title of Open Source Thingamabob for the near future.  Something cooler will come along and take its place, but for now GitHub is the place to be.
+		
+		<a href="/blog/migrating-from-bitbucket-to-github/" class="more-link">Read on &rarr;</a>
+	</div>
 
 
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-02T00:00:00-06:00" pubdate data-updated="true">Mar 2<span>nd</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Git and Mercurial certainly have their differences, but in the grand scheme of things they are both equally-viable source control tools.  Bitbucket and GitHub are also both equally-viable hosts for Mercurial and Git projects.</p>
-<p>All other things being equal, when it comes to open-source software the Capricious and Arbitrary Popularity Contest kicks in with the deciding vote.  Git, and in particular GitHub, has won the popularity contest in recent years and will own the title of Open Source Thingamabob for the near future.  Something cooler will come along and take its place, but for now GitHub is the place to be.</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/migrating-from-bitbucket-to-github/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/get-to-know-a-developer-chris-missal/">Get to Know a Developer: Chris Missal</a></h1>
-    
-    
-      <p class="meta">
-        
+<div class="meta">
+	<div class="date">
 
 
 
@@ -341,36 +331,37 @@
   
 
 
-<time datetime="2012-03-01T00:00:00-06:00" pubdate data-updated="true">Mar 1<span>st</span>, 2012</time>
-        
-      </p>
-    
-  </header>
+<time datetime="2012-03-02T00:00:00-06:00" pubdate data-updated="true">Mar 2<span>nd</span>, 2012</time></div>
+	<div class="tags">
 
 
-  <div class="entry-content"><p><a href="http://www.headspring.com/2012/03/get-to-know-a-developer-chris-missal/2909_85bb896665_quarter" rel="attachment wp-att-3847"><img class="alignright size-full wp-image-3847" title="Chris Missal" src="http://www.headspring.com/wp-content/uploads/2012/03/2909_85bb896665_quarter.png" alt="" width="160" height="160" /></a>Chris Missal, Senior Consultant at Headspring, is our newest addition to the team.  His background is mostly in web development using ASP.NET and MVC in the eCommerce industry.  At his last job, J&amp;P Cycles, he helped create a system for allowing third-party widgets to more clearly communicate with each other, therefore allowing his team to better understand and utilize information picked up from visitors of the site.  Yes, Chris is the guy that knows how to see everything that you see on the internet.  But for good, not for bad!</p>
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/get-to-know-a-developer-chris-missal/">
+		
+			Get to Know a Developer: Chris Missal</a>
+	</h2>
+	<div class="entry-content">
+		<p><a href="http://www.headspring.com/2012/03/get-to-know-a-developer-chris-missal/2909_85bb896665_quarter" rel="attachment wp-att-3847"><img class="alignright size-full wp-image-3847" title="Chris Missal" src="http://www.headspring.com/wp-content/uploads/2012/03/2909_85bb896665_quarter.png" alt="" width="160" height="160" /></a>Chris Missal, Senior Consultant at Headspring, is our newest addition to the team.  His background is mostly in web development using ASP.NET and MVC in the eCommerce industry.  At his last job, J&amp;P Cycles, he helped create a system for allowing third-party widgets to more clearly communicate with each other, therefore allowing his team to better understand and utilize information picked up from visitors of the site.  Yes, Chris is the guy that knows how to see everything that you see on the internet.  But for good, not for bad!</p>
 <p>And his interests don’t stop there.  He’s currently learning Python, and along with coding, he likes disc golf and bowling.  He just moved to Austin from Iowa, and is really looking forward to getting into the social scene.  “The developer community is so lively here that I’ll be looking to get involved with groups that are passionate about making their communities so wonderful,” said Chris.</p>
-<p>Here is how the rest of our talk went:</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/get-to-know-a-developer-chris-missal/">Read on &rarr;</a>
-    </footer>
-  
+<p>Here is how the rest of our talk went:
+		
+		<a href="/blog/get-to-know-a-developer-chris-missal/" class="more-link">Read on &rarr;</a>
+	</div>
 
 
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/becoming-a-headspringer-know-thy-resharper/">Becoming a Headspringer: Know Thy ReSharper</a></h1>
-    
-    
-      <p class="meta">
-        
+<div class="meta">
+	<div class="date">
 
 
 
@@ -382,211 +373,160 @@
   
 
 
-<time datetime="2012-02-29T00:00:00-06:00" pubdate data-updated="true">Feb 29<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
+<time datetime="2012-03-01T00:00:00-06:00" pubdate data-updated="true">Mar 1<span>st</span>, 2012</time></div>
+	<div class="tags">
 
 
-  <div class="entry-content"><p>Since I&#8217;m new to Headspring and we are hiring, I thought I would help give an edge to anyone applying and subscribing to our blog. There are many “features” (pun attempted) that make up a Headspringer and I’m hoping my fellow Headspring bloggers will help me verbalize them through the “Becoming a Headspringer” blog series. I will be starting this series with some quick tips on <a href="http://www.jetbrains.com/resharper/">ReSharper</a>. If you do not already have ReSharper or know what it is, immediately after reading this post is as good a time as any to try it out.</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/becoming-a-headspringer-know-thy-resharper/">Read on &rarr;</a>
-    </footer>
-  
+	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/get-to-know-a-headspringer/'>Get To Know a Headspringer</a>, <a class='category' href='/blog/categories/what-the-tech/'>What the tech?</a>
 
 
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/creative-leap-year-ideas-for-the-office/">Creative Leap Year Ideas for the Office</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-28T00:00:00-06:00" pubdate data-updated="true">Feb 28<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Because it’s a leap year, we get to take advantage of an extra day of work.  What are you going to do with all the extra time?! Here is a list of great ideas to make February 29th 2012 a day to remember:</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/creative-leap-year-ideas-for-the-office/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/i-have-frameworkcommitment-issues/">I Have Framework Commitment Issues</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-27T00:00:00-06:00" pubdate data-updated="true">Feb 27<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Once upon a time, a problem was identified. Shortly thereafter a solution was found. After all it wasn&#8217;t a tough problem and the solution was simple. A commercial framework was selected and the solution was implemented. Then it was re-implemented with an open source framework and then rolled back to the commercial framework. Both frameworks were evaluated and the findings revealed both frameworks had the features and functionality to solve the problem within the context of the solution. So what was the reason for indecisiveness?</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/i-have-frameworkcommitment-issues/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  <div class="pagination">
-    
-      <a class="prev" href="/blog/page/19/">&larr; Older</a>
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-    <a class="next" href="/blog/page/17/">Newer &rarr;</a>
-    
-  </div>
 </div>
-<aside class="sidebar">
-  
-    <section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/dry-test-inheritance/">DRY Test Inheritance</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/the-sincerest-form-of-flattery/">The Sincerest Form of Flattery</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/fixies-life-bicycle/">Fixie&#8217;s Life Bicycle</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/test-discovery/">Test Discovery</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/enabling-change/">Enabling Change</a>
-      </li>
-    
-  </ul>
-</section>
+	
+</div>
+</article>
 
-<section>
-  <h1>GitHub Repos</h1>
-  <ul id="gh_repos">
-    <li class="loading">Status updating&#8230;</li>
-  </ul>
-  
-  <a href="https://github.com/HeadspringLabs">@HeadspringLabs</a> on GitHub
-  
-  <script type="text/javascript">
-    $(document).ready(function(){
-        if (!window.jXHR){
-            var jxhr = document.createElement('script');
-            jxhr.type = 'text/javascript';
-            jxhr.src = '/javascripts/libs/jXHR.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(jxhr, s);
-        }
 
-        github.showRepos({
-            user: 'HeadspringLabs',
-            count: 0,
-            skip_forks: true,
-            target: '#gh_repos'
-        });
-    });
-  </script>
-  <script src="/javascripts/github.js" type="text/javascript"> </script>
-</section>
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/becoming-a-headspringer-know-thy-resharper/">
+		
+			Becoming a Headspringer: Know Thy ReSharper</a>
+	</h2>
+	<div class="entry-content">
+		<p>Since I&#8217;m new to Headspring and we are hiring, I thought I would help give an edge to anyone applying and subscribing to our blog. There are many “features” (pun attempted) that make up a Headspringer and I’m hoping my fellow Headspring bloggers will help me verbalize them through the “Becoming a Headspringer” blog series. I will be starting this series with some quick tips on <a href="http://www.jetbrains.com/resharper/">ReSharper</a>. If you do not already have ReSharper or know what it is, immediately after reading this post is as good a time as any to try it out.
+		
+		<a href="/blog/becoming-a-headspringer-know-thy-resharper/" class="more-link">Read on &rarr;</a>
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
 
 
 
 
 
   
-</aside>
 
-    </div>
-  </div>
-  <footer role="contentinfo"><p>
-  Copyright &copy; 2013 - Headspring Labs -
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
-</p>
+
+<time datetime="2012-02-29T00:00:00-06:00" pubdate data-updated="true">Feb 29<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/what-the-tech/'>What the tech?</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/creative-leap-year-ideas-for-the-office/">
+		
+			Creative Leap Year Ideas for the Office</a>
+	</h2>
+	<div class="entry-content">
+		<p>Because it’s a leap year, we get to take advantage of an extra day of work.  What are you going to do with all the extra time?! Here is a list of great ideas to make February 29th 2012 a day to remember:
+		
+		<a href="/blog/creative-leap-year-ideas-for-the-office/" class="more-link">Read on &rarr;</a>
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-28T00:00:00-06:00" pubdate data-updated="true">Feb 28<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/i-have-frameworkcommitment-issues/">
+		
+			I Have Framework Commitment Issues</a>
+	</h2>
+	<div class="entry-content">
+		<p>Once upon a time, a problem was identified. Shortly thereafter a solution was found. After all it wasn&#8217;t a tough problem and the solution was simple. A commercial framework was selected and the solution was implemented. Then it was re-implemented with an open source framework and then rolled back to the commercial framework. Both frameworks were evaluated and the findings revealed both frameworks had the features and functionality to solve the problem within the context of the solution. So what was the reason for indecisiveness?
+		
+		<a href="/blog/i-have-frameworkcommitment-issues/" class="more-link">Read on &rarr;</a>
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-27T00:00:00-06:00" pubdate data-updated="true">Feb 27<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/what-the-tech/'>What the tech?</a>
+
+
+</div>
+	
+</div>
+</article>
+
+<nav id="pagenavi">
+    
+        <a href="/blog/page/17/" class="prev">Prev</a>
+    
+    
+        <a href="/blog/page/19/" class="next">Next</a>
+    
+    <div class="center"><a href="/blog/archives">Blog Archives</a></div>
+</nav></div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Headspring Labs
 
 </footer>
-  
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
 
-
-
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) {return;}
-  js = d.createElement(s); js.id = id; js.async = true;
-  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-
-
-
-
-
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = '//platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
 
 
 
