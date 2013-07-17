@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Javascript first-letter mystery
-categories:
+tags:
 - Blog
 status: publish
 type: post
@@ -12,33 +12,62 @@ meta:
   _podPressPostSpecific: a:6:{s:15:"itunes:subtitle";s:15:"##PostExcerpt##";s:14:"itunes:summary";s:15:"##PostExcerpt##";s:15:"itunes:keywords";s:17:"##WordPressCats##";s:13:"itunes:author";s:10:"##Global##";s:15:"itunes:explicit";s:7:"Default";s:12:"itunes:block";s:7:"Default";}
   dsq_thread_id: '832428189'
 ---
-<p>I was working on producing something that had to look like this:</p>
-<p><a href="http://www.headspring.com/2012/05/javascript-first-letter-mystery/goal-2" rel="attachment wp-att-5237"><img class="alignnone size-full wp-image-5237" title="goal" src="http://www.headspring.com/wp-content/uploads/2012/05/goal1.png" alt="" width="112" height="35" /></a></p>
-<p>I though I'd be clever and avoid having to wrap the ! in a span by using the pseudo-element first-letter to grab that initial exclamation point. first-element selects the first letter of the block it used</p>
-<p>on. Sounds perfect, right? Well, when I tried it I got:</p>
-<p><a href="http://www.headspring.com/2012/05/javascript-first-letter-mystery/badimage1" rel="attachment wp-att-5235"><img class="alignnone size-full wp-image-5235" title="badimage1" src="http://www.headspring.com/wp-content/uploads/2012/05/badimage1.png" alt="" width="110" height="43" /></a></p>
-<p><!--more-->This was not at all what I wanted! It looked not only odd but clearly wrong - first doesn't mean first and second! I tried playing with spacing and a few other things, and finally produced the following jsfiddle to simply illustrate the problem:</p>
-<p>&nbsp;</p>
-<p><iframe style="width: 100%; height: 300px;" src="http://jsfiddle.net/27jp6/embedded/result/" frameborder="0" width="320" height="240"></iframe></p>
-<p>With the jsfiddle at hand, I tweeted my confusion:</p>
-<p><a href="http://www.headspring.com/2012/05/javascript-first-letter-mystery/confusedtweet" rel="attachment wp-att-5238"><img class="alignnone size-medium wp-image-5238" title="confusedTweet" src="http://www.headspring.com/wp-content/uploads/2012/05/confusedTweet-300x82.png" alt="" width="300" height="82" /></a></p>
-<p>In moments, I received a dual barrage of twitter responses: half reponding in amazement/surprise, and half with the actual specification of first-letter and the reason for what I was seeing.</p>
-<p>It turns out that, though odd, the behavior I was seesing was reasonably to spec. "Punctuation (i.e, characters defined in Unicode in the "open" (Ps), "close" (Pe), "initial" (Pi). "final" (Pf) and "other" (Po) punctuation classes), that precedes or follows the first letter should be included."[<a href="#w3c">1</a>] It really is less obvious then I'd thought: see <a href="https://developer.mozilla.org/En/CSS/::first-letter" target="_blank">https://developer.mozilla.org/En/CSS/::first-letter</a> for a whole discussion of first-letter subtleties: But browsers must be a little confused too: they all act a little bit different in this situation:</p>
-<p>Chrome</p>
-<p><a href="http://www.headspring.com/2012/05/javascript-first-letter-mystery/chrome" rel="attachment wp-att-5245"><img class="alignnone size-full wp-image-5245" title="chrome" src="http://www.headspring.com/wp-content/uploads/2012/05/chrome.png" alt="" width="150" height="53" /></a></p>
-<p>(Note the blue ! and O)</p>
+I was working on producing something that had to look like this:
+
+<a href="http://www.headspring.com/2012/05/javascript-first-letter-mystery/goal-2" rel="attachment wp-att-5237"><img class="alignnone size-full wp-image-5237" title="goal" src="http://www.headspring.com/wp-content/uploads/2012/05/goal1.png" alt="" width="112" height="35" /></a>
+
+I though I'd be clever and avoid having to wrap the ! in a span by using the pseudo-element first-letter to grab that initial exclamation point. first-element selects the first letter of the block it used
+
+on. Sounds perfect, right? Well, when I tried it I got:
+
+<a href="http://www.headspring.com/2012/05/javascript-first-letter-mystery/badimage1" rel="attachment wp-att-5235"><img class="alignnone size-full wp-image-5235" title="badimage1" src="http://www.headspring.com/wp-content/uploads/2012/05/badimage1.png" alt="" width="110" height="43" /></a>
+
+<!--more-->This was not at all what I wanted! It looked not only odd but clearly wrong - first doesn't mean first and second! I tried playing with spacing and a few other things, and finally produced the following jsfiddle to simply illustrate the problem:
+
+&nbsp;
+
+<iframe style="width: 100%; height: 300px;" src="http://jsfiddle.net/27jp6/embedded/result/" frameborder="0" width="320" height="240"></iframe>
+
+With the jsfiddle at hand, I tweeted my confusion:
+
+<a href="http://www.headspring.com/2012/05/javascript-first-letter-mystery/confusedtweet" rel="attachment wp-att-5238"><img class="alignnone size-medium wp-image-5238" title="confusedTweet" src="http://www.headspring.com/wp-content/uploads/2012/05/confusedTweet-300x82.png" alt="" width="300" height="82" /></a>
+
+In moments, I received a dual barrage of twitter responses: half reponding in amazement/surprise, and half with the actual specification of first-letter and the reason for what I was seeing.
+
+It turns out that, though odd, the behavior I was seesing was reasonably to spec. "Punctuation (i.e, characters defined in Unicode in the "open" (Ps), "close" (Pe), "initial" (Pi). "final" (Pf) and "other" (Po) punctuation classes), that precedes or follows the first letter should be included."[<a href="#w3c">1</a>] It really is less obvious then I'd thought: see <a href="https://developer.mozilla.org/En/CSS/::first-letter" target="_blank">https://developer.mozilla.org/En/CSS/::first-letter</a> for a whole discussion of first-letter subtleties: But browsers must be a little confused too: they all act a little bit different in this situation:
+
+Chrome
+
+<a href="http://www.headspring.com/2012/05/javascript-first-letter-mystery/chrome" rel="attachment wp-att-5245"><img class="alignnone size-full wp-image-5245" title="chrome" src="http://www.headspring.com/wp-content/uploads/2012/05/chrome.png" alt="" width="150" height="53" /></a>
+
+(Note the blue ! and O)
+
 <hr />
-<p>Firefox</p>
-<p><a href="http://www.headspring.com/2012/05/javascript-first-letter-mystery/firefox" rel="attachment wp-att-5246"><img class="alignnone size-full wp-image-5246" title="firefox" src="http://www.headspring.com/wp-content/uploads/2012/05/firefox.png" alt="" width="148" height="51" /></a></p>
-<p>(Note that neither the ! or O are blue)</p>
+
+Firefox
+
+<a href="http://www.headspring.com/2012/05/javascript-first-letter-mystery/firefox" rel="attachment wp-att-5246"><img class="alignnone size-full wp-image-5246" title="firefox" src="http://www.headspring.com/wp-content/uploads/2012/05/firefox.png" alt="" width="148" height="51" /></a>
+
+(Note that neither the ! or O are blue)
+
 <hr />
-<p>IE something</p>
-<p><a href="http://www.headspring.com/2012/05/javascript-first-letter-mystery/ie9" rel="attachment wp-att-5247"><img class="alignnone size-full wp-image-5247" title="IE9" src="http://www.headspring.com/wp-content/uploads/2012/05/IE9.png" alt="" width="158" height="48" /></a></p>
-<p>(Note that the ! is blue, but the O is not - what I actually wanted!)</p>
+
+IE something
+
+<a href="http://www.headspring.com/2012/05/javascript-first-letter-mystery/ie9" rel="attachment wp-att-5247"><img class="alignnone size-full wp-image-5247" title="IE9" src="http://www.headspring.com/wp-content/uploads/2012/05/IE9.png" alt="" width="158" height="48" /></a>
+
+(Note that the ! is blue, but the O is not - what I actually wanted!)
+
 <hr />
-<p>Opera</p>
-<p><a href="http://www.headspring.com/2012/05/javascript-first-letter-mystery/opera-cropped" rel="attachment wp-att-5248"><img class="alignnone size-full wp-image-5248" title="Opera-cropped" src="http://www.headspring.com/wp-content/uploads/2012/05/Opera-cropped.png" alt="" width="150" height="51" /></a></p>
-<p>(Interestingly, Opera matches IE here.)</p>
+
+Opera
+
+<a href="http://www.headspring.com/2012/05/javascript-first-letter-mystery/opera-cropped" rel="attachment wp-att-5248"><img class="alignnone size-full wp-image-5248" title="Opera-cropped" src="http://www.headspring.com/wp-content/uploads/2012/05/Opera-cropped.png" alt="" width="150" height="51" /></a>
+
+(Interestingly, Opera matches IE here.)
+
 <hr />
-<p>In summary, I've learned that css is a little weirder than I had thought, and when they say letter, they really mean letter. Mostly. Sorta.</p>
-<p><a name="w3c"></a>[1] <a href="http://www.w3.org/TR/css3-selectors/#first-letter" target="_blank">http://www.w3.org/TR/css3-selectors/#first-letter</a></p>
+
+In summary, I've learned that css is a little weirder than I had thought, and when they say letter, they really mean letter. Mostly. Sorta.
+
+<a name="w3c"></a>[1] <a href="http://www.w3.org/TR/css3-selectors/#first-letter" target="_blank">http://www.w3.org/TR/css3-selectors/#first-letter</a>

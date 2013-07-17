@@ -1,7 +1,7 @@
 ---
 layout: post
 title: ! 'Unit Testing Best Practices: Know your test''s lifecycle, Part 1'
-categories:
+tags:
 - Developer Deep Dive
 - quattro
 status: publish
@@ -19,15 +19,23 @@ meta:
     1'
   _podPressPostSpecific: a:6:{s:15:"itunes:subtitle";s:15:"##PostExcerpt##";s:14:"itunes:summary";s:15:"##PostExcerpt##";s:15:"itunes:keywords";s:17:"##WordPressCats##";s:13:"itunes:author";s:10:"##Global##";s:15:"itunes:explicit";s:7:"Default";s:12:"itunes:block";s:7:"Default";}
 ---
-<p>A long time ago, my development team decided to write our own unit test framework. Today that would be ridiculous, because there are so many mature options from the .NET community (NUnit, MbUnit, xUnit, MsTest, to name a few). But this was 2002, .NET was brand new, and we thought attribute-based metadata was a better approach to describing tests than the interface-and-naming-convention pattern that NUnit required at the time.</p>
-<p>Of course, about the same time we'd gotten our homegrown framework running and built a couple thousand tests with it, NUnit 2.0 came out with a brand-new and shiny attribute-based metadata approach. We spent the next 3 years wishing we had the time to port all our tests to NUnit, and stealing features from it for our custom test runner.<!--more--></p>
-<p>One of the things I really envied about NUnit was its test method lifecycle. We support setup and teardown methods, but we never went beyond that. NUnit, by comparison has a rich set of events that occur for each test that gets run. Whenever I teach our <a title="Agile Bootcamp" href="http://www.headspring.com/services/developer-training/agile-bootcamp">Agile Boot Camp class</a>, I always make sure to walk students through the finer points of a test fixture's life, so they'll know the best way to organize their test code. When you're first writing unit tests, knowing whether to put something in the test method, the setup, the fixture setup, or somewhere else, just isn't all that obvious. Oftentimes, I see people putting expensive initialization code into every single test method, which causes their tests to run slower than they need to.</p>
-<p><strong>Note: </strong>I'm using NUnit for these examples. Other frameworks have different semantics, and I recommend you write some similar code for whatever library you use. For me, NUnit's always been the draft horse of .NET test frameworks - stable, steady, gets along with everybody, and does what I expect.</p>
-<p>If you're not already familiar with NUnit, take a look at their <a title="NUnit Quick-start guide" href="http://www.nunit.org/index.php?p=quickStart&amp;r=2.6">quick-start guide </a>and then come back. I'll wait.</p>
-<p>Now, take a look at this simple test fixture class:</p>
-<p>{% gist 1200910 %}</p>
-<p>This fixture has two test methods, one which passes and one which fails. When we run the test framework in NUnit's test runner, we get this output:</p>
-<p>&nbsp;</p>
+A long time ago, my development team decided to write our own unit test framework. Today that would be ridiculous, because there are so many mature options from the .NET community (NUnit, MbUnit, xUnit, MsTest, to name a few). But this was 2002, .NET was brand new, and we thought attribute-based metadata was a better approach to describing tests than the interface-and-naming-convention pattern that NUnit required at the time.
+
+Of course, about the same time we'd gotten our homegrown framework running and built a couple thousand tests with it, NUnit 2.0 came out with a brand-new and shiny attribute-based metadata approach. We spent the next 3 years wishing we had the time to port all our tests to NUnit, and stealing features from it for our custom test runner.<!--more-->
+
+One of the things I really envied about NUnit was its test method lifecycle. We support setup and teardown methods, but we never went beyond that. NUnit, by comparison has a rich set of events that occur for each test that gets run. Whenever I teach our <a title="Agile Bootcamp" href="http://www.headspring.com/services/developer-training/agile-bootcamp">Agile Boot Camp class</a>, I always make sure to walk students through the finer points of a test fixture's life, so they'll know the best way to organize their test code. When you're first writing unit tests, knowing whether to put something in the test method, the setup, the fixture setup, or somewhere else, just isn't all that obvious. Oftentimes, I see people putting expensive initialization code into every single test method, which causes their tests to run slower than they need to.
+
+<strong>Note: </strong>I'm using NUnit for these examples. Other frameworks have different semantics, and I recommend you write some similar code for whatever library you use. For me, NUnit's always been the draft horse of .NET test frameworks - stable, steady, gets along with everybody, and does what I expect.
+
+If you're not already familiar with NUnit, take a look at their <a title="NUnit Quick-start guide" href="http://www.nunit.org/index.php?p=quickStart&amp;r=2.6">quick-start guide </a>and then come back. I'll wait.
+
+Now, take a look at this simple test fixture class:
+
+[gist id=1200910]
+
+This fixture has two test methods, one which passes and one which fails. When we run the test framework in NUnit's test runner, we get this output:
+
+&nbsp;
 <pre>Constructor
 TestFixtureSetup
 SetUp
@@ -38,19 +46,22 @@ Second Test fails!
 TearDown
 TestFixtureTearDown
 Dispose</pre>
-<p>So, what does this tell us about the lifecycle of a test within a fixture?</p>
+So, what does this tell us about the lifecycle of a test within a fixture?
 <ol>
-<li><strong>The Test Fixture class is constructed once.</strong>  NUnit invokes all the test methods on the same fixture instance.</li>
-<li><strong>TestFixtureSetup and TestFixtureTeardDown run one time. </strong>TestFixtureSetup is run immediately after construction, and only runs once for the entire test run. TestFixtureTearDown is called immediately after all test methods have been run.</li>
-<li><strong>TestSetup and TestTearDown run around every test</strong>. These two methods execute immediately before, and immediately after, each test method.</li>
-<li><strong>TestTearDown runs even when a test fails.</strong> Noice that Even when the second test exits with a failed assertion, the TearDown method is still called for that method.</li>
-<li><strong>NUnit knows about IDisposable.</strong> Did you notice that our class implemented IDisposable? IDisposable is .NET's canonical interface for when you have a resource whose scope needs to be managed. The IDisposable.Dispose method is the last method called on our fixture class.</li>
+	<li><strong>The Test Fixture class is constructed once.</strong>  NUnit invokes all the test methods on the same fixture instance.</li>
+	<li><strong>TestFixtureSetup and TestFixtureTeardDown run one time. </strong>TestFixtureSetup is run immediately after construction, and only runs once for the entire test run. TestFixtureTearDown is called immediately after all test methods have been run.</li>
+	<li><strong>TestSetup and TestTearDown run around every test</strong>. These two methods execute immediately before, and immediately after, each test method.</li>
+	<li><strong>TestTearDown runs even when a test fails.</strong> Noice that Even when the second test exits with a failed assertion, the TearDown method is still called for that method.</li>
+	<li><strong>NUnit knows about IDisposable.</strong> Did you notice that our class implemented IDisposable? IDisposable is .NET's canonical interface for when you have a resource whose scope needs to be managed. The IDisposable.Dispose method is the last method called on our fixture class.</li>
 </ol>
 <div>So now that we know what interesting methods are called, when, and how often, what can we conclude? Well, here's my first guideline for you:</div>
 <div>
 <ol>
-<li><strong>Use constructors for class-wide setup. Use IDisposable for class-wide cleanup. Avoid TestFixtureSetup and TestFixtureTearDown. </strong>I've found that the fixture-level setup and teardown methods create more confusion than they're worth. In Part 2, we'll see just how complicated this can get when you have a base class for your test fixture. But even with a simple fixture class like the above, There's no reason to have two places for your class' initialization and cleanup code. That's basically a guarantee that it's going to get chopped up between the two with no rhyme or reason. Every .NET developer knows the constructor/dispose pattern. We don't need another one.</li>
+	<li><strong>Use constructors for class-wide setup. Use IDisposable for class-wide cleanup. Avoid TestFixtureSetup and TestFixtureTearDown. </strong>I've found that the fixture-level setup and teardown methods create more confusion than they're worth. In Part 2, we'll see just how complicated this can get when you have a base class for your test fixture. But even with a simple fixture class like the above, There's no reason to have two places for your class' initialization and cleanup code. That's basically a guarantee that it's going to get chopped up between the two with no rhyme or reason. Every .NET developer knows the constructor/dispose pattern. We don't need another one.</li>
 </ol>
-<p>Hopefully this paints a clearer picture of what happens when you actually run a set of unit tests. Next time, we're going to see what happens when we give our test fixture a base class with its own setup, teardown, and test methods, and how they interact with the ones we already have.</p>
+Hopefully this paints a clearer picture of what happens when you actually run a set of unit tests. Next time, we're going to see what happens when we give our test fixture a base class with its own setup, teardown, and test methods, and how they interact with the ones we already have.
+
 </div>
-<p><a href="http://www.headspring.com/resources/whitepapers/">Learn more about unit tests and the Agile Difference by visiting our Whitepapers page</a>.</p>
+
+<a href="http://www.headspring.com/resources/whitepapers/">Learn more about unit tests and the Agile Difference by visiting our Whitepapers page</a>.
+

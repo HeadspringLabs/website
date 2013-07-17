@@ -1,7 +1,7 @@
 ---
 layout: post
 title: What is Hg Rebase?
-categories:
+tags:
 - Developer Deep Dive
 - mercurial
 - source control
@@ -17,9 +17,12 @@ meta:
   _aioseop_title: What is Hg Rebase? Explaining Mercurial's Rebase Extension
   dsq_thread_id: '832097778'
 ---
-<p>A couple weeks ago I introduced a client developer I'm working with on a project to <a href="http://mercurial.selenic.com/wiki/RebaseExtension">Hg Rebase</a> because the work we were doing at the time didn't really need feature branches of any kind. When I was asked how this works over the phone, I explained it the best I could on the spot, but here's a better attempt.<!--more--></p>
+A couple weeks ago I introduced a client developer I'm working with on a project to <a href="http://mercurial.selenic.com/wiki/RebaseExtension">Hg Rebase</a> because the work we were doing at the time didn't really need feature branches of any kind. When I was asked how this works over the phone, I explained it the best I could on the spot, but here's a better attempt.<!--more-->
 <h3><strong>Rebase vs Merge</strong></h3>
-<p>Instead of adding several changesets and committing them on top as a "merge" commit, Rebase uses graft (essentially a cherry-pick in the git world). My typical workflow includes taking an entirely new branch and place it "on top" of another branch. After this is done, it looks more like a straight line instead of something that has been braided. As you can see by the three diagrams below. A rebase removes the unnecessary merge commit and gives you a cleaner history. This tends to be easier for people to follow and understand than the messes you can end up with after loads of merge commits all over the place.</p>
-<p>[gallery link="file" order="DESC"]</p>
-<p>For a more detailed look into Rebase, visit <a href="http://mercurial.selenic.com/wiki/RebasePlan">the official Mercurial site</a>.</p>
-<p>If you're interested in looking at the extension's code, it can be found on BitBucket at <a href="https://bitbucket.org/astratto/rebase-soc/">https://bitbucket.org/astratto/rebase-soc/</a>. I'm glad I was asked the question about how rebase works. Learning the internal details was really helpful for me and hopefully for you too!</p>
+Instead of adding several changesets and committing them on top as a "merge" commit, Rebase uses graft (essentially a cherry-pick in the git world). My typical workflow includes taking an entirely new branch and place it "on top" of another branch. After this is done, it looks more like a straight line instead of something that has been braided. As you can see by the three diagrams below. A rebase removes the unnecessary merge commit and gives you a cleaner history. This tends to be easier for people to follow and understand than the messes you can end up with after loads of merge commits all over the place.
+
+[gallery link="file" order="DESC"]
+
+For a more detailed look into Rebase, visit <a href="http://mercurial.selenic.com/wiki/RebasePlan">the official Mercurial site</a>.
+
+If you're interested in looking at the extension's code, it can be found on BitBucket at <a href="https://bitbucket.org/astratto/rebase-soc/">https://bitbucket.org/astratto/rebase-soc/</a>. I'm glad I was asked the question about how rebase works. Learning the internal details was really helpful for me and hopefully for you too!

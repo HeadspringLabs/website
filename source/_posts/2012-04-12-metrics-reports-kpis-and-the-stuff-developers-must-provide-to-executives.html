@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Metrics, reports, KPIs, and the stuff developers must provide to executives
-categories:
+tags:
 - Bonus!
 - business intelligence
 - dashboard
@@ -23,46 +23,63 @@ meta:
     executives
   _podPressPostSpecific: a:6:{s:15:"itunes:subtitle";s:15:"##PostExcerpt##";s:14:"itunes:summary";s:15:"##PostExcerpt##";s:15:"itunes:keywords";s:17:"##WordPressCats##";s:13:"itunes:author";s:10:"##Global##";s:15:"itunes:explicit";s:7:"Default";s:12:"itunes:block";s:7:"Default";}
 ---
-<p>In September of 2007, I joined <a href="http://www.headspring.com/">Headspring</a> as the CTO.  Now I serve as President and Chief Operating Officer.  When I joined, there were 4 other employees including the original founder serving as CEO.  He founded the company in 2001.  It has always been professional services, but the strategy has changed a few times over the years.  I started my career as a developer in the mid nineties, and now I’m an executive with lots of great developers that I support.  Like most, our company runs on metrics.  As a manager, I understand their worth.  Earlier in my career, I had no idea.</p>
-<p>Every day, I glance at our <strong>operational dashboard</strong>.  While I won’t share full screen-shots yet, I want to share some of the graphs I use every day to ensure the company is doing well.  Consider this graph.</p>
-<p><a href="http://www.headspring.com/wp-content/uploads/2012/04/CropperCapture22.png"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/04/CropperCapture22_thumb.png" alt="Time allocation BI chart" width="540" height="294" border="0" /></a></p>
-<p>&nbsp;</p>
-<p><!--more--></p>
-<p><strong>“BD” stands for “big dial”.</strong>  We have 3 big dials we glance at every day.  If we don’t like what we see, we have some “smaller dials” we can look at.  We use the analogy of a plane cockpit. There are a few things pilots always glance at, and then there are smaller, more detailed ones that are consulted as the need arises.</p>
-<p>This graph shows us our utilization breakdown in the categories that are relevant.  Here are the categories:</p>
+In September of 2007, I joined <a href="http://www.headspring.com/">Headspring</a> as the CTO.  Now I serve as President and Chief Operating Officer.  When I joined, there were 4 other employees including the original founder serving as CEO.  He founded the company in 2001.  It has always been professional services, but the strategy has changed a few times over the years.  I started my career as a developer in the mid nineties, and now I’m an executive with lots of great developers that I support.  Like most, our company runs on metrics.  As a manager, I understand their worth.  Earlier in my career, I had no idea.
+
+Every day, I glance at our <strong>operational dashboard</strong>.  While I won’t share full screen-shots yet, I want to share some of the graphs I use every day to ensure the company is doing well.  Consider this graph.
+
+<a href="http://www.headspring.com/wp-content/uploads/2012/04/CropperCapture22.png"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/04/CropperCapture22_thumb.png" alt="Time allocation BI chart" width="540" height="294" border="0" /></a>
+
+&nbsp;
+
+<!--more-->
+
+<strong>“BD” stands for “big dial”.</strong>  We have 3 big dials we glance at every day.  If we don’t like what we see, we have some “smaller dials” we can look at.  We use the analogy of a plane cockpit. There are a few things pilots always glance at, and then there are smaller, more detailed ones that are consulted as the need arises.
+
+This graph shows us our utilization breakdown in the categories that are relevant.  Here are the categories:
 <ul>
-<li><strong>Personal Time</strong>: holidays, vacations, dentist appts, etc.</li>
-<li><strong>Assigned Time</strong>: Department meetings, 1x1’s, stand-up meetings, etc</li>
-<li><strong>Bench Time</strong>: Time without available project work (doesn’t show because it’s zero)</li>
-<li><strong>Other Time</strong>: Unplanned unproductive time, such as having a flat tire on the way to work</li>
-<li><strong>Sales Time</strong>: Mostly used by the sales department: work to acquire a client</li>
-<li><strong>Billed Time</strong>: self-explanatory</li>
-<li><strong>Unbilled Time</strong>: Working for a client, but not charging</li>
-<li><strong>CI Time</strong>: Continuous Improvement time:  We expect that our people are working to improve.</li>
-<li><strong>Client Time:</strong>  sum of billed and unbilled time.</li>
+	<li><strong>Personal Time</strong>: holidays, vacations, dentist appts, etc.</li>
+	<li><strong>Assigned Time</strong>: Department meetings, 1x1’s, stand-up meetings, etc</li>
+	<li><strong>Bench Time</strong>: Time without available project work (doesn’t show because it’s zero)</li>
+	<li><strong>Other Time</strong>: Unplanned unproductive time, such as having a flat tire on the way to work</li>
+	<li><strong>Sales Time</strong>: Mostly used by the sales department: work to acquire a client</li>
+	<li><strong>Billed Time</strong>: self-explanatory</li>
+	<li><strong>Unbilled Time</strong>: Working for a client, but not charging</li>
+	<li><strong>CI Time</strong>: Continuous Improvement time:  We expect that our people are working to improve.</li>
+	<li><strong>Client Time:</strong>  sum of billed and unbilled time.</li>
 </ul>
-<p>You will notice the big dip during the week of 4/7.  We had our Q1 <strong>quarterly off-site</strong> during that week.  We spent 12% of that week to use as a fun off-site where the entire company toured Inner Space Cavern hundreds of feet under Georgetown.  It shows up on the dashboard because it affects the performance of the company.  As an executive team, we decided it was a good investment in the future productivity of our staff.</p>
-<p>You might have also noticed that 4/7 was a Thursday in 2011.  How can it be the week of 4/7?  We use the concept of <strong>“moving weeks”</strong> instead of calendar weeks.  We used to use calendar weeks, but the last data point of the graph was always skewed because it didn’t represent a full data point until people logged their time for Friday.  By taking data from a moving week, when I look at the data on Thursday, it pulls data from the previous Thursday through this Wednesday (yesterday).  That way, every point on the graph represents exactly the same size of a data point.  We do the same for months, quarters and years.</p>
-<p><strong>There is a big problem with pull metrics by calendar month (for 2011)</strong>:</p>
+You will notice the big dip during the week of 4/7.  We had our Q1 <strong>quarterly off-site</strong> during that week.  We spent 12% of that week to use as a fun off-site where the entire company toured Inner Space Cavern hundreds of feet under Georgetown.  It shows up on the dashboard because it affects the performance of the company.  As an executive team, we decided it was a good investment in the future productivity of our staff.
+
+You might have also noticed that 4/7 was a Thursday in 2011.  How can it be the week of 4/7?  We use the concept of <strong>“moving weeks”</strong> instead of calendar weeks.  We used to use calendar weeks, but the last data point of the graph was always skewed because it didn’t represent a full data point until people logged their time for Friday.  By taking data from a moving week, when I look at the data on Thursday, it pulls data from the previous Thursday through this Wednesday (yesterday).  That way, every point on the graph represents exactly the same size of a data point.  We do the same for months, quarters and years.
+
+<strong>There is a big problem with pull metrics by calendar month (for 2011)</strong>:
 <ul>
-<li>January has <strong>21</strong> business days</li>
-<li>February has <strong>20</strong> business days</li>
-<li>March has <strong>23</strong> business days</li>
-<li>April has <strong>21</strong> business days</li>
-<li>May has <strong>22</strong> business days</li>
+	<li>January has <strong>21</strong> business days</li>
+	<li>February has <strong>20</strong> business days</li>
+	<li>March has <strong>23</strong> business days</li>
+	<li>April has <strong>21</strong> business days</li>
+	<li>May has <strong>22</strong> business days</li>
 </ul>
-<p>You can see how using calendar months can <strong>wreak havoc</strong> on the comparability of month metrics.  We expect larger months to pose better numbers than the smaller months.  On the financial side, we have to accrue the payroll appropriately as well in order to keep net income from becoming skewed.</p>
-<p>To deal with this, we use the concept of a <strong>moving month</strong>.  There are 13 moving months in a year.  Each moving month is a 28-day time period from yesterday to 28 days before yesterday.  In this way, every data point will be exactly the same size as the other.  There are also 4, 13-week moving quarters in a year.  The following graph is our 2nd big dial shown by moving month.</p>
-<p><img src="http://jeffreypalermo.com/files/media/image/Windows-Live-Writer/d066af3fb6f3_8D6C/CropperCapture%5B28%5D_thumb_1.png" alt="CropperCapture[28]" /></p>
-<p>Before moving to moving months, the calendar month line was consistently <strong>misrepresented</strong> by the larger months.  Where the line moves, we need to know why.  We made the switch so that every curve of the line was meaningful.  We didn’t want our data communicating falsehoods or April-fools jokes.  You think I’m kidding, but April always looks bad coming straight out of March, which boasts 2 more full business days.  In professional services, a business day accounts for a <strong>significant amount of revenue</strong>.</p>
-<p>Using Big Dial 1 and Big Dial 2, we can keep the ship on the right course.  As long as our staff is billing a consistently high percentage: we shoot for 78-79%, and our hourly margins are high enough to account for our unbillable staff (sales, marketing, corporate) and our fixed costs (facilities, supplies, etc.), our company will remain healthy.</p>
-<p><strong>These dials are tactical, not strategic</strong>.  The next dial is strategic.</p>
-<p><img src="http://jeffreypalermo.com/files/media/image/Windows-Live-Writer/d066af3fb6f3_8D6C/CropperCapture%5B31%5D_thumb.png" alt="CropperCapture[31]" /></p>
-<p>This gives us a view into the <strong>structure</strong> of our company.  <strong>We have hired at least 7 new employees since November, 2011</strong>.  With that, it’s important to keep tabs on how we are changing the structure of our company.  When we hired <a href="http://lostechies.com/chrismissal/">Chris Missal</a> for the operations department, we expanded billable staff.  When we hired <a href="http://www.headspring.com/author/mchauvin">Mary Chauvin</a> for marketing, we increased non-billable staff.  Keeping the right balance is important.</p>
-<p>You can see that our % of Operations staff to the rest has dipped a little bit over the last 7 months.  We have done that while growing, and we are re-leveling the organization now.  To level out the organization, we need to <strong>add about five more people</strong> to the Operations department.  This graph, while very high level, gives critical insight into how the other two graphs affect our income statement.</p>
-<p>Using these three charts together, I have a very good sense of what I need to do to improve the financial performance of the company.  Right now:</p>
+You can see how using calendar months can <strong>wreak havoc</strong> on the comparability of month metrics.  We expect larger months to pose better numbers than the smaller months.  On the financial side, we have to accrue the payroll appropriately as well in order to keep net income from becoming skewed.
+
+To deal with this, we use the concept of a <strong>moving month</strong>.  There are 13 moving months in a year.  Each moving month is a 28-day time period from yesterday to 28 days before yesterday.  In this way, every data point will be exactly the same size as the other.  There are also 4, 13-week moving quarters in a year.  The following graph is our 2nd big dial shown by moving month.
+
+<img src="http://jeffreypalermo.com/files/media/image/Windows-Live-Writer/d066af3fb6f3_8D6C/CropperCapture%5B28%5D_thumb_1.png" alt="CropperCapture[28]" />
+
+Before moving to moving months, the calendar month line was consistently <strong>misrepresented</strong> by the larger months.  Where the line moves, we need to know why.  We made the switch so that every curve of the line was meaningful.  We didn’t want our data communicating falsehoods or April-fools jokes.  You think I’m kidding, but April always looks bad coming straight out of March, which boasts 2 more full business days.  In professional services, a business day accounts for a <strong>significant amount of revenue</strong>.
+
+Using Big Dial 1 and Big Dial 2, we can keep the ship on the right course.  As long as our staff is billing a consistently high percentage: we shoot for 78-79%, and our hourly margins are high enough to account for our unbillable staff (sales, marketing, corporate) and our fixed costs (facilities, supplies, etc.), our company will remain healthy.
+
+<strong>These dials are tactical, not strategic</strong>.  The next dial is strategic.
+
+<img src="http://jeffreypalermo.com/files/media/image/Windows-Live-Writer/d066af3fb6f3_8D6C/CropperCapture%5B31%5D_thumb.png" alt="CropperCapture[31]" />
+
+This gives us a view into the <strong>structure</strong> of our company.  <strong>We have hired at least 7 new employees since November, 2011</strong>.  With that, it’s important to keep tabs on how we are changing the structure of our company.  When we hired <a href="http://lostechies.com/chrismissal/">Chris Missal</a> for the operations department, we expanded billable staff.  When we hired <a href="http://www.headspring.com/author/mchauvin">Mary Chauvin</a> for marketing, we increased non-billable staff.  Keeping the right balance is important.
+
+You can see that our % of Operations staff to the rest has dipped a little bit over the last 7 months.  We have done that while growing, and we are re-leveling the organization now.  To level out the organization, we need to <strong>add about five more people</strong> to the Operations department.  This graph, while very high level, gives critical insight into how the other two graphs affect our income statement.
+
+Using these three charts together, I have a very good sense of what I need to do to improve the financial performance of the company.  Right now:
 <ol>
-<li>I need to hire 5 more great .Net developers</li>
-<li>I need to keep Client Time at the level of Operations % plus Contractor % (since both types bill)</li>
+	<li>I need to hire 5 more great .Net developers</li>
+	<li>I need to keep Client Time at the level of Operations % plus Contractor % (since both types bill)</li>
 </ol>
-<p>I hope that this helps some developers understand how different types of reports can give answers and perspective to managers.  If a picture is worth a thousand words, shouldn’t more of our reports be pictures?</p>
+I hope that this helps some developers understand how different types of reports can give answers and perspective to managers.  If a picture is worth a thousand words, shouldn’t more of our reports be pictures?
