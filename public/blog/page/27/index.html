@@ -7,7 +7,7 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="In my travels I&#8217;ve encountered systems chugging happily along on outdated, discontinued, unsupported technology stacks. Apps written in VB6, &hellip;">
+	<meta name="description" content="In my first post in the Unit Testing Best Practices series, I introduced you to the basic lifecycle of an NUnit test fixture. This time, we&#8217;re &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -83,14 +83,301 @@
     <article class="post">
 	<h2 class="title">
 		
+		<a href="/blog/unit-testing-best-practices-know-your-tests-lifecycle-part-2/">
+		
+			Unit Testing Best Practices: Know Your Test’s Lifecycle, Part 2</a>
+	</h2>
+	<div class="entry-content">
+		<p>In my <a title="Unit Testing Best Practices: Know your test’s lifecycle, Part 1" href="http://www.headspring.com/2011/08/unit-testing-best-practices-know-your-tests-lifecycle-part-1">first post in the Unit Testing Best Practices series</a>, I introduced you to the basic lifecycle of an NUnit test fixture. This time, we&#8217;re going to see what happens when we give our tests a common test fixture base class.<br />
+<span class="Apple-style-span" style="font-size: 26px"><strong>Why a base class?</strong></span><br />
+There are two cases where having a base test fixture can be useful in keeping your test code simpler:</p>
+<ol>
+<li><strong>You have lots of the same kind of tests. </strong>Maybe you&#8217;re writing integration tests for your persistence layer. Your tests are going to all be performing some similar operations, like creating a database connection. Maybe they all need to reference an Inversion of Control container like StructureMap or Autofac in order to retrieve repository instances. You don&#8217;t want to write that boilerplate code for every fixture, do you?</li>
+<li><strong>You have a hierarchy of classes that need testing.</strong> If you have a base class in your domain, you will probably want to set up a parallel type hierarchy of test fixtures. In this case, a base test fixture gives you one place to define tests that verify the base class invariants to which all your derived classes need to conform.</li>
+</ol>
+<p><span class="Apple-style-span" style="font-size: 26px"><strong>The Code</strong></span></p>
+<div>Let&#8217;s take a look at what happens to our simple test fixture when we give it a base class:</p>
+<p><span class="Apple-style-span" style="font-family: Consolas, Monaco, monospace;font-size: 12px;line-height: 18px"><div><script src='https://gist.github.com/1262440.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</span></p>
+</div>
+<p>Notice that the base class isn&#8217;t attributed with the [TestFixture] attribute. I only want this class to act as a base for my actual fixtures. I don&#8217;t intend for it to be run as a fixture in its own right.</p>
+<p>Note too that I&#8217;m reinforcing the fact that this class doesn&#8217;t stand alone by making the base class abstract, and following standard practices for an abstract base class by making the constructor protected instead of public. We&#8217;ve also made the IDisposable.Dispose method implementation virtual so we can extend its behavior in derived classes.</p>
+<p><em>Test code is still code. Follow the same design practices here that you would in your application code.</em></p>
+<p><span class="Apple-style-span" style="font-size: 26px"><strong>The Results</strong></span><br />
+Now when we run our tests, we get the following output:</p>
+<ul>
+<li>Base Constructor</li>
+<li>Derived Constructor</li>
+<ul>
+<li>Base TestFixtureSetup</li>
+<li>Derived TestFixtureSetup</li>
+<ul>
+<li>Base SetUp</li>
+<li>Derived SetUp</li>
+<ul>
+<li>Derived First Test passes!</li>
+</ul>
+<li>Derived TearDown</li>
+<li>Base TearDown</li>
+<li>Base SetUp</li>
+<li>Derived SetUp</li>
+<ul>
+<li>Derived Second Test fails!</li>
+</ul>
+<li>Derived TearDown</li>
+<li>Base TearDown</li>
+<li>Base SetUp</li>
+<li>Derived SetUp</li>
+<ul>
+<li>Base First Test passes!</li>
+</ul>
+<li>Derived TearDown</li>
+<li>Base TearDown</li>
+<li>Base SetUp</li>
+<li>Derived SetUp</li>
+<ul>
+<li>Base Second Test fails!</li>
+</ul>
+<li>Derived TearDown</li>
+<li>Base TearDown</li>
+</ul>
+<li>Derived TestFixtureTearDown</li>
+<li>Base TestFixtureTearDown</li>
+</ul>
+<li>Derived Dispose</li>
+<li>Base Dispose</li>
+</ul>
+<p><span class="Apple-style-span" style="font-size: 26px"><strong>Observations</strong></span><br />
+Note that even with a base class, all our observations from last time are still true:</p>
+<ol>
+<li>The Test Fixture class is constructed once.</li>
+<li>TestFixtureSetup and TestFixtureTeardDown run one time.</li>
+<li>TestSetup and TestTearDown run around every test.</li>
+<li>TestTearDown runs even when a test fails.</li>
+<li>NUnit knows about IDisposable.</li>
+</ol>
+<div>But now we can also see the following new behaviors:</div>
+<div>
+<ol>
+<li><strong>TestFixture constructors and dispose methods are called in the same order as for any other class. </strong>This is one of the reasons I prefer using constructor/disposable semantics with test fixtures instead of relying on the special FixtureSetUp/FixtureTearDown attributes - we already know the rules for constructors and disposables.</li>
+<li><strong>The base class SetUp and TearDown methods run <em>around</em> those from the derived class.</strong> This is true for both Fixture- and Test- SetUp and TearDown methods. You can think of your base class wrapping your derived class, like Russian nested dolls. This pattern also extends as you create deeper inheritance hierarchies. SetUp is run from the outermost base class down to the leaf derived class, and TearDown is run in exactly the opposite order.</li>
+<li><strong>All Test-level SetUp and TearDown methods are run for <em>every</em> test. </strong>This behavior is a little surprising. Notice that even on the test methods defined in the base class, <em>the derived class&#8217; SetUp and TearDown methods are still getting run</em>. If you start seeing base class tests failing because something they expected from SetUp is suddenly different, this is a likely culprit.</li>
+<li><strong>Tests are run in alphabetical order</strong>. Ok, you can&#8217;t infer this one from the output, you&#8217;re just going to have to take my word for it (or go play with the test names yourself and see what happens.) NUnit sorts all tests on the fixture by name, from A to Z, and then runs them in that order. Base class test methods are identified as &lt;ClassName&gt;.&lt;TestMethodName&gt; for purposes of sorting. This means that your base class tests will all be grouped together when the fixture is run, but they could all run right in the middle of your derived class&#8217; tests.</li>
+</ol>
+</div>
+<div><span class="Apple-style-span" style="font-size: 26px"><strong>Guidelines</strong></span></div>
+<p>You can quickly see from the results above that our first guideline, <em>Use constructors for class-wide setup. Use IDisposable for class-wide cleanup. Avoid TestFixtureSetup and TestFixtureTearDown, </em>is even more relevant once we start creating a hierarchy of test fixtures.  Constructors and IDisposable keep our test fixtures working like any other class we&#8217;d write.</p>
+<div>Let&#8217;s add two more guidelines:</div>
+<div>
+<ol>
+<li><strong>Don&#8217;t rely on test run order</strong>. Test method run order varies between different hosts. NUnit and ReSharper and Gallio rarely all agree on which order to run your tests. As a developer, you&#8217;re often not even running a full test suite -you&#8217;re running specific fixtures, or even just a few tests within a fixture. If your tests only pass when they&#8217;re run in a specific order, you&#8217;re going to waste a lot of time hunting down false failures. Remember, the closer you are to release, the more likely that your tests will start failing for &#8220;no reason at all.&#8221; Keep your tests independent of each other, and you&#8217;ll <em>always</em> be able to run them with confidence.</li>
+<li><strong>Limit test-level SetUp and TearDown semantics<em>. </em></strong>It&#8217;s bad enough when a test fails. It&#8217;s even worse when you have to jump around between base and derived class code to stitch together what&#8217;s happening for each test. If at all possible, limit the definition of SetUp and TearDown methods to your base class. In recent years, I find that if I get my fixture initialization right in the constructor, then I rarely have to do much resetting around each individual test.</li>
+</ol>
+</div>
+<div>You&#8217;ve now got a clear understanding of how an individual test fixture is created, initialized, and executed, and how that changes when the fixture has a derived class with its own lifecycle. You&#8217;ve also got a few more guidelines to help you keep your unit tests easy to maintain and extend.</div>
+<p>Next time, we&#8217;re going to see how to run our own initialization code <em>before any of our test fixtures are even created. </em></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-09-07T00:00:00-05:00" pubdate data-updated="true">Sep 7<span>th</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/agile-benefits/'>agile benefits</a>, <a class='category' href='/blog/categories/best-practices/'>best practices</a>, <a class='category' href='/blog/categories/unit-testing/'>unit testing</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/youre-doing-your-code-reviews-wrong-2/">
+		
+			You&#8217;re Doing Your Code Reviews Wrong!</a>
+	</h2>
+	<div class="entry-content">
+		<p>Well, not YOU, of course. YOUR team&#8217;s code reviews, I&#8217;m sure, are pleasant, productive engagements where everybody leaves feeling good about the results. They happen early and regularly in the development process, the goal of the review is well understood, and you wouldn&#8217;t dream of shipping a line of code that hadn&#8217;t been through your review process. Your team loves doing them, and you don&#8217;t worry about who does the review because you&#8217;ve got a consistent standard that your whole team agrees with. You&#8217;re just reading this article because there&#8217;s this <em>other </em>team in the building that you think would benefit from reading it, and you&#8217;re going to forward it to them when you&#8217;re done reading.</p>
+<p>I&#8217;m with you. Personally, I&#8217;ve <em>never</em> sat around a meeting table with 15 other developers, all checking their email, while one poor sacrificial lamb walked us through a line-by-line explanation of code in &#8220;Representative changeset XYZ&#8221; the day <em>after</em> we put it into production. I&#8217;ve <em>never</em> been told (or said!) &#8220;That&#8217;s good feedback, but we don&#8217;t have time to re-test those changes before the release date.&#8221; And I&#8217;ve <em>never, ever</em> had an hours-long debate about where our braces should go.</p>
+<p>Really.</p>
+<p>But, for the benefit of that <em>other</em> team, I&#8217;ve put together some advice about  <span style="color: #000000;"><a href="http://www.headspring.com/resources/whitepapers/" target="_blank">how to conduct effective code reviews</a></span>. Some of the things I cover are:</p>
+<ul>
+<li>Understanding why we do code reviews in the first place</li>
+<li>Using code reviews to drive quality in your products early</li>
+<li>Getting a consistent code style across your team so you can focus on higher-level issues</li>
+<li>And more.</li>
+</ul>
+<p>&nbsp;</p>
+<div>Come take a look at <em><span style="color: #ff0000;"><a href="http://www.headspring.com/resources/whitepapers/" target="_blank">Conducting Effective Code Reviews</a></span></em>, and remember to share it with the guys down the hall who <em>actually</em> need it!</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-09-02T00:00:00-05:00" pubdate data-updated="true">Sep 2<span>nd</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/what-the-tech/'>What the tech?</a>, <a class='category' href='/blog/categories/best-practices/'>best practices</a>, <a class='category' href='/blog/categories/code-reviews/'>code reviews</a>, <a class='category' href='/blog/categories/developer-productivity/'>developer productivity</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/improve-developer-productivity-by-losing-your-mouse/">
+		
+			Improve Developer Productivity by Losing Your Mouse</a>
+	</h2>
+	<div class="entry-content">
+		<p>I started my development career working for a very small company that developed accessibility software for the blind. I was fresh out of school and working on a screen reader for Windows 3.1. It was quite a challenge, in more ways than one.</p>
+<p>One of the things I had to learn was how blind people used the computer at all. My boss (the owner of the company) was blind and taught me a lot – but he could only work in DOS, as there just weren’t any screen readers for Windows yet. So I had to figure out a lot of things on my own.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2011/08/image.png"><img style="margin: 0px 30px 25px 0px; padding-left: 0px; padding-right: 0px; float: left; padding-top: 0px; border: 0px;" src="http://www.headspring.com/wp-content/uploads/2011/08/image_thumb.png" alt="image" width="165" height="169" align="left" border="0" /></a>As you might guess, blind people have terrible eye-hand coordination, so they never use a mouse. I decided that I would also learn to avoid my mouse as much as possible. One of the best things for me was to just push the mouse out of reach – if it wasn’t there, it made it more inconvenient to use it. Sometimes I would go so far as disconnecting it or dropping down behind my desk. I very quickly learned that the Alt key would let me get to menus, and that the tab key would move me between controls in a dialog. I learned that the Enter key in a dialog would (usually) press the default button, which looked different than other buttons. Over time, I developed a very strong ability to use nothing but the keyboard – and it has helped in many ways.</p>
+<p>One thing I noticed as I moved on to other jobs is that many developers had not learned the same keyboard skills that I had. I would frequently wince as I watched someone use the mouse to do something, and then I would gently suggest the (much faster) keyboard way of doing the same thing. One time I was working with someone on a word processing document, and they wanted to change the font of the whole document. I t was painful to watch them first click on the up arrow in the scroll bar to get to the top of the document, then use the mouse to select the whole document. They thought it was pretty cool when I showed them that CTRL+A almost always works to “select all”. One of my other favorites is that when I am filling in a form on a website, when it gets to asking about my address, there is almost always a huge dropdown for State. Since I live in Texas, hitting T twice gets me right where I need to be super-fast. You can also do this for those “what year were you born in” dropdowns – rather than pointing and clicking, just start typing, and it will select the right year.</p>
+<p>Pair programming is a great way to share these kinds of tips and tricks. Attending a coding dojo is another one. Of course, the <a href="http://www.headspring.com/services/developer-training">Headspring training classes</a> usually introduce students to all kinds of productivity enhancing techniques too!</p>
+<p>There are too many keyboard shortcuts to list here, but start looking around for lists of keyboard shortcuts for the programs you use most often. Use something like <a href="http://osherove.com/tools">Key Jedi</a> when you pair with someone so you can learn they shortcuts they use. and try ‘losing’ your mouse every once in a while to force yourself out of your comfort zone. It may take longer at first, but when you master them, you will be faster than ever.</p>
+<p>Here are a few keyboard shortcut references to get you started:</p>
+<p><a href="http://support.microsoft.com/kb/126449">Keyboard Shortcuts for Windows</a> – a nice general list to get you started.</p>
+<p><a href="http://windows.microsoft.com/en-US/windows7/Keyboard-shortcuts">Windows 7 Shortcuts</a> – some duplicates here, but some things that are Windows 7 specific.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-31T00:00:00-05:00" pubdate data-updated="true">Aug 31<span>st</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/what-the-tech/'>What the tech?</a>, <a class='category' href='/blog/categories/accessibility/'>accessibility</a>, <a class='category' href='/blog/categories/keyboard/'>keyboard</a>, <a class='category' href='/blog/categories/learning/'>learning</a>, <a class='category' href='/blog/categories/productivity/'>productivity</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/pair-programming-in-agile/">
+		
+			How Pair Programming Benefits Agile Teams</a>
+	</h2>
+	<div class="entry-content">
+		<div>Hands down, pair programming is one of the most valuable agile techniques, but at the same it is one of the most controversial because it can be a tough sell to a manager or non-technical stakeholder. At face value, two developers and one keyboard sounds like a perfect recipe for double the cost. The problem with that equation is it naively assumes that value is limited to the speed at which developers type, and that adding a second developer won&#8217;t do any good unless he also has a keyboard to pound on. In reality though, pair programming helps agile teams solve difficult problems quicker as well as help keep your team up-to-date on the latest business and technical knowledge. I want to give you the arguments to use to quell those management fears and allow you to get all the benefits of pair programming for your agile team.</div>
+<p>&nbsp;</p>
+<div>Have you ever watched Wheel of Fortune with a friend, without the slightest idea what the answer could be, then your friend, thinking out-loud, says one of the words and instantly you can complete the rest of the phrase? Neither of you knew the answer, but as a team you were able to solve the problem neither of you could solve on your own. Given enough time, one of you would likely have figured it out, but by working as a team you arrived at it much quicker. When developing software, the same type of problems can pop-up, and two people can solve them quicker as a team than either could individually&#8230; and most often times, far beyond twice as quickly! When situations like these pop-up, it just makes sense from a cost perspective to pair on them so the total amount of time spent on the task is reduced.</div>
+<p>&nbsp;</p>
+<div>The other fundamental justification for pair programming is knowledge transfer. Knowledge transfer is the process where one person shares his wisdom with a peer. This can be done countless was, such as just sitting in a room and talking to a group of other developers, but with pair programming it is baked right it. There are two types of knowledge that can be transferred: business and technical. Transferring business knowledge, such as what must happen in a system for a user to be considered a preferred customer, help to ensure multiple developers in the organization know how the system works and mitigate risk for the company when an employee leaves. Transferring technical knowledge, such as one partner in the pair sharing a keyboard shortcut key with the other, allows developers to become more efficient in how they operate and increase their productivity over the lifetime of the project.</div>
+<p>&nbsp;</p>
+<div>The caveat to pair programming is you shouldn&#8217;t over do it. In practice, I&#8217;ve found about 20% of the time I pair program, and about 80% I work solo. This varies greatly week to week, and I tend to pair program more (sometimes even 80-100%) earlier in the life-cycle of an application when there are lots of difficult portions to think though and even small design mistakes can be costly down the road. As a project becomes more mature, I usually taper down to closer to a few hours a week, and then there is more emphasis on the knowledge transfer aspect&#8211;both what business rules have been developed in parallel that I have not found out about yet as well as what can I be doing to be more efficient while developing.</div>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-29T00:00:00-05:00" pubdate data-updated="true">Aug 29<span>th</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/what-the-tech/'>What the tech?</a>, <a class='category' href='/blog/categories/agile/'>agile</a>, <a class='category' href='/blog/categories/agile-benefits/'>agile benefits</a>, <a class='category' href='/blog/categories/best-practices/'>best practices</a>, <a class='category' href='/blog/categories/knowledge-transfer/'>knowledge transfer</a>, <a class='category' href='/blog/categories/pair-programming/'>pair programming</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
 		<a href="/blog/legacy-operating-systems-and-legacy-languages-if-it-aint-broke-it-still-needs-fixing/">
 		
 			Legacy Operating Systems and Legacy Languages: If It Ain&#8217;t Broke, It Still Needs Fixing</a>
 	</h2>
 	<div class="entry-content">
-		<p>In my travels I&#8217;ve encountered systems chugging happily along on outdated, discontinued, unsupported technology stacks. Apps written in VB6, FoxPro, Classic ASP, still running without a hitch because the kinks had been shaken out years ago&#8230; Software users delicately avoiding upgrading their Windows 95 machine because it does what they need, in a manner they understand, running the apps they&#8217;ve built their business on&#8230; As a techie, the idea makes your hair curl, but the thing is: these applications <em>work</em>. They&#8217;ve been working, and they give the appearance of continuing to work indefinitely.
+		<p>In my travels I&#8217;ve encountered systems chugging happily along on outdated, discontinued, unsupported technology stacks. Apps written in VB6, FoxPro, Classic ASP, still running without a hitch because the kinks had been shaken out years ago&#8230; Software users delicately avoiding upgrading their Windows 95 machine because it does what they need, in a manner they understand, running the apps they&#8217;ve built their business on&#8230; As a techie, the idea makes your hair curl, but the thing is: these applications <em>work</em>. They&#8217;ve been working, and they give the appearance of continuing to work indefinitely.</p>
+<p>It&#8217;s an illusion, though. I sympathize with getting taken in by that illusion. After all, I&#8217;ve owned the same cell phone for seven years—I don&#8217;t mind that it doesn&#8217;t do the <em>latest</em> stuff because it does everything I need (makes phone calls). To replace it, just because someone else has something shinier, sounds ridiculous. I&#8217;m the same way with cars, computers, furniture: I evaluate an item&#8217;s utility against my own needs, not something else&#8217;s capabilities. Taking the same view of your software applications can seem like good sense.</p>
+<p>Here&#8217;s the difference with software. Factors outside your control can make your application stop working. This is especially true when it is running on a legacy operating system or a legacy language.</p>
+<p>I just had a sharp lesson in this on one of my personal websites. My site uses a content-management system written in PHP, which I had allowed to drift a bit behind on version updates. Last weekend my webhost, quite reasonably, upgraded their servers with the latest stable version of PHP. They had notified me, so I was looking out for it, and sure enough: my site was broken. My outdated version of the content-management system was calling deprecated and discontinued PHP methods. To drive the lesson home, I was enough out of date that upgrading the content-management system wasn&#8217;t trivial, either. Here is a case where &#8220;if it ain&#8217;t broke&#8221; turned into &#8220;it&#8217;s broke anyway.&#8221;</p>
+<p>Keeping software platforms current is not about wanting the latest features. It is about routine maintenance that keeps your critical systems comfortably supported. If you fall behind the pack, software patches and operating system upgrades offer no guarantees. That&#8217;s what it means when a technology is no longer supported: it means the manufacturer won&#8217;t be testing whether their latest change will impact that end-of-life technology. Complacency is perilous.</p>
+<p>You might find it daunting to estimate the value of rewriting an application in a supported language. The cost is plain, but what is the return? It can sound like spending considerable time and resources to end up with the same feature set. We have helped some of our clients make such an assessment, so that they can decide when it is prudent to bring their technology stack up to date. <a href="http://www.headspring.com/services/consulting-development">Please get in touch</a> if you are weighing similar trade-offs.</p>
+<p>In order to make an informed decision, consider what it would cost to lose the application, to have it rendered non-functional—even non-starting—by an environment change. Is the application critical to your business? Is it your business&#8217;s product? What would it cost to lose it? Keeping current is insurance against that cost.</p>
+
 		
-		<a href="/blog/legacy-operating-systems-and-legacy-languages-if-it-aint-broke-it-still-needs-fixing/" class="more-link">Read on &rarr;</a>
+		
 	</div>
 
 
@@ -130,9 +417,15 @@
 	<div class="entry-content">
 		<p>* - Disclaimer: if you&#8217;re looking for a simple list of &#8220;You Must, You Must Not&#8221; rules, this isn&#8217;t it. And you should be wary of any list that claims to be that list. Read on for more details.</p>
 <p>Agile is not about specific rules. It is about attitude - willingness to change, adapt, and continuously improve and expand. There is no clean-cut set of rules that make one an aglie developer- it is a craft and a way of thinking that must be practiced and honed. That is not to say there are not resources out there to put you on the right path- Headspring offers<a href="http://www.headspring.com/services/developer-training"> an agile boot camp</a> that shows what steps you can take to put the agile attitude into practice. But there is no easy list of things that one can do to be an agile developer- and the push to find this list of things can create what some call &#8220;Agile Theater.&#8221; This is where teams use the &#8220;right&#8221; names for meetings, and call it agile development, but don&#8217;t really change their old ways of thinking. This can actually be quite detrimental to a software development team, as the added semantics of agile just add more work without actually changing the way things are done on a daily basis.</p>
-<p>The name agile implies something other than just raw speed- 
+<p>The name agile implies something other than just raw speed- the name also conjures up the idea of being able to adapt quickly to new situations. This is a very practical name- agile developers must be ready to develop quickly (the idea of releasing early and often is a core idea of agile), but they must also be ready to adapt to changes in customer needs and other factors- customer needs change on a constant basis, and at the end the needs and the product need to match up.</p>
+<p>Just as the customer&#8217;s needs change constantly, so do an agile team&#8217;s needs- as people come and go onto a team, the skill set and standard work flow may change bit by bit. What works for one team at one time is never guaranteed to work for the same team at a different time, or a different team altogether. This is why agile development cannot be a list of rules- the way teams implement the core ideas of agile must fit the team itself as its needs change.</p>
+<p>This may make agile development seem like a daunting task to implement, but it is a very valid investment towards zero-surprises development. Agile teams are responsive to client&#8217;s needs, and release working software early and improve on it often, which makes for much happier clients, and a project with little wasted effort, because the feedback loop is shorter.</p>
+<p>Overall, agile is far from a list of rules that teams can follow to become agile developers. Rather, it is a list of ideas that developers should strive towards, using any tactics that they feel fits them best as a team. This makes agile teams responsive not only to their customer&#8217;s needs, but to their team&#8217;s needs as well, creating a stable environment for both customers and developers.</p>
+<p><a href="http://www.headspring.com/services/developer-training">Want to learn more about agile? Headspring offers a fantastic Agile Boot Camp that you can attend to get you on the right path.</a></p>
+<p>&nbsp;</p>
+
 		
-		<a href="/blog/agile-best-practices/" class="more-link">Read on &rarr;</a>
+		
 	</div>
 
 
@@ -172,9 +465,16 @@
 	<div class="entry-content">
 		<p>When I sit down to write a unit test, my first step is to describe for myself, in English instead of code, what I intend to test. The words I choose give clues as to the structure of the test and the style: interaction-based versus state-based. I&#8217;ll describe an example below.</p>
 <p>RhinoMocks, and other mocking frameworks like Moq and TypeMock, are a support structure that let you write briefer, more expressive unit tests. RhinoMocks simplifies the quick creation of fake classes that your class under test relies on and interacts with. You can use those fakes for both styles of tests; RhinoMocks can make assertions about interactions in interaction-based tests, and it can provide non-exception-throwing behavior when you just need a stand-in for your state-based tests. I listen to the language of my description to know how I want to use that Rhino Mock.</p>
-<p>For example, your application might have an EmailDispatcher that decides which emails to send, then calls an EmailService to send the emails. You&#8217;d like to unit test the logic in the EmailDispatcher without sending thousands of real emails. This is a perfect scenario for RhinoMocks.
+<p>For example, your application might have an EmailDispatcher that decides which emails to send, then calls an EmailService to send the emails. You&#8217;d like to unit test the logic in the EmailDispatcher without sending thousands of real emails. This is a perfect scenario for RhinoMocks. RhinoMocks can build you a fake EmailService when your tests are running, and let you make assertions about when the EmailDispatcher calls that EmailService. RhinoMocks allows you to assert &#8220;When the EmailDispatcher is given input like <em>this</em>, it should call the EmailService with <em>that</em> info.&#8221;</p>
+<p>Another great use for RhinoMocks is to support a class that has dependencies that aren&#8217;t interesting to the test you are writing—the class under test calls some other classes, but they aren&#8217;t relevant to the scenario you are testing. You merely need them to not be null and not throw Null Reference Exceptions when your test is running. Continuing with the above example, the EmailDispatcher could rely on a TemplateFormatter class to prepare the text of the email, but because you are writing a test fixture focusing on when emails get sent, and you are not testing how those emails are formatted, the TemplateFormatter should be as low profile in your test as possible. If TemplateFormatter is a simple class, you could just instantiate one and pass it to your EmailDispatcher under test. On the other hand, if TemplateFormatter requires its own swarm of dependencies, or if some of its operations rely on time-consuming, out-of-process dependencies like a database, replacing it with a fake class generated by RhinoMocks will keep your unit test quick and brief.</p>
+<p>What is an example of misusing a Rhino Mock? Where RhinoMocks becomes a burden is when it over-specifies the interactions between classes. RhinoMocks can make assertions about how one class calls another, which is its power and its danger. This excessive over-specification inhibits refactoring because it entrenches the coupling between those classes—you&#8217;d want to change the internals of one class, but that would break so many tests and require tedious fixing of those tests, dissuading you from making the refactoring. Anything that makes you queasy about doing the right thing is a bad deal. From the EmailDispatcher example, I do want to test that emails are well formatted, but I don&#8217;t really care whether this is done by a TemplateFormatter, or some other class, or an EmailDispatcher method, or a private class within the EmailDispatcher, or&#8230; whatever. I don&#8217;t need to enforce the method by which the EmailDispatcher accomplishes its work, therefore I don&#8217;t want to write tests that enforce the way emails get formatted.</p>
+<p>My rule of thumb is to tell myself, in English, what I want to verify and listen to the words I choose. Here are two examples.</p>
+<p>&#8220;I want to test <em>when</em> the EmailDispatcher <em>tells</em> the EmailSender to send mail.&#8221; I used words that refer to testing the conditions under which one class calls another. Therefore, I&#8217;ll write an interaction-based test, using RhinoMocks&#8217; AssertWasCalled and AssertWasNotCalled methods.</p>
+<p>&#8220;I want to test that the <em>result</em> from the EmailDispatcher&#8217;s work is an email in a <em>certain format</em>.&#8221; Looking at the properties on the result of an operation is a good fit for state-based tests. I&#8217;ll probably still use RhinoMocks to create a fake EmailSender, since I know the EmailDispatcher is going to call the EmailSender at the end, but I am not going to make any assertions about the methods called by the EmailDispatcher.</p>
+<p>There&#8217;s lots of great power in RhinoMocks, where it can give you just the right tool&#8230; or enough rope to hang yourself. We talk about responsible Rhino Mocking in our <a href="http://www.headspring.com/services/developer-training/agile-bootcamp">Agile Bootcamp</a>, and I&#8217;ll be presenting some of the <a href="http://www.ctxdnug.net/Meetings/October-2011-Meeting.aspx">finer points of RhinoMocks at the Central Texas .NET User Group on October 13</a>.</p>
+
 		
-		<a href="/blog/when-to-use-a-rhino-mock-and-when-not-to/" class="more-link">Read on &rarr;</a>
+		
 	</div>
 
 
@@ -216,9 +516,32 @@
 <p>Unfortunately, we can <em>still</em> be surprised by Powershell&#8217;s error handling behavior. There are two main categories of errors your Powershell script might encounter:</p>
 <ol>
 <li>Uncaught exceptions thrown by your Powershell process.</li>
-<li>Failure exit codes returned by external programs that your Powershell process invoked.
+<li>Failure exit codes returned by external programs that your Powershell process invoked.</li>
+</ol>
+<p>When we set the ErrorActionPreference to &#8220;Stop&#8221;, we only change the behavior of uncaught exceptions. We have to work a little harder to cover the other category. Consider a Powershell script that calls out to an external program which returns its own failure exit code:</p>
+<p><div><script src='https://gist.github.com/1150145.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>External executables are invoked using similar syntax as Powershell commands like <code>write-host</code>, so it isn&#8217;t obvious that there&#8217;s anything special about the call to <code>schtasks</code>. Since it is an external program, however, it can&#8217;t exactly throw a .NET exception - it might not even <em>be</em> a .NET program.</p>
+<p>The lingua franca of command-line failure is exit codes, rather than exceptions. An exit code of 0 means &#8220;all is well&#8221;, and anything else should be treated as a failure.</p>
+<p>We have two problems:</p>
+<ol>
+<li>calls to external programs don&#8217;t feel special to the reader, even though they behave differently from normal Powershell commands</li>
+<li>we&#8217;re tempted to explicitly follow each external call with a corresponding test-and-throw code block, which would be ugly and distracting to the reader</li>
+</ol>
+<p>Fortunately, we can take advantage of Powershell&#8217;s flexible syntax to address both of these concerns. It turns out that a Powershell function can accept a <em>code block</em> as an argument, effectively allowing us to add new keywords to the language. Consider the helper function &#8216;exec&#8217;:</p>
+<p><div><script src='https://gist.github.com/1150147.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>When we use exec, we can pass it a { code block surrounded in braces }. This way we can make our external commands stand out as special, using just one new &#8216;keyword&#8217;, and we get the error handling we wanted to boot:</p>
+<p><div><script src='https://gist.github.com/1150152.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Eureka! We can ensure that both categories of failures will stop execution dead in its tracks.</p>
+<p>To sum up, the default error handling behavior in Powershell is dramatically different from that of other .NET languages. <strong>By default, your script will happily and disasterously continue running even when throwing exceptions.</strong> This can leave the user of the script confused as to whether the process has actually succeeded or failed. By setting the global ErrorActionPreference and by wrapping external commands with the &#8216;exec&#8217; helper function, Powershell&#8217;s behavior can become what we expected in the first place.</p>
+
 		
-		<a href="/blog/powershell-and-calling-external-executables/" class="more-link">Read on &rarr;</a>
+		
 	</div>
 
 
@@ -257,9 +580,45 @@
 	</h2>
 	<div class="entry-content">
 		<p>A long time ago, my development team decided to write our own unit test framework. Today that would be ridiculous, because there are so many mature options from the .NET community (NUnit, MbUnit, xUnit, MsTest, to name a few). But this was 2002, .NET was brand new, and we thought attribute-based metadata was a better approach to describing tests than the interface-and-naming-convention pattern that NUnit required at the time.</p>
-<p>Of course, about the same time we&#8217;d gotten our homegrown framework running and built a couple thousand tests with it, NUnit 2.0 came out with a brand-new and shiny attribute-based metadata approach. We spent the next 3 years wishing we had the time to port all our tests to NUnit, and stealing features from it for our custom test runner.
+<p>Of course, about the same time we&#8217;d gotten our homegrown framework running and built a couple thousand tests with it, NUnit 2.0 came out with a brand-new and shiny attribute-based metadata approach. We spent the next 3 years wishing we had the time to port all our tests to NUnit, and stealing features from it for our custom test runner.</p>
+<p>One of the things I really envied about NUnit was its test method lifecycle. We support setup and teardown methods, but we never went beyond that. NUnit, by comparison has a rich set of events that occur for each test that gets run. Whenever I teach our <a title="Agile Bootcamp" href="http://www.headspring.com/services/developer-training/agile-bootcamp">Agile Boot Camp class</a>, I always make sure to walk students through the finer points of a test fixture&#8217;s life, so they&#8217;ll know the best way to organize their test code. When you&#8217;re first writing unit tests, knowing whether to put something in the test method, the setup, the fixture setup, or somewhere else, just isn&#8217;t all that obvious. Oftentimes, I see people putting expensive initialization code into every single test method, which causes their tests to run slower than they need to.</p>
+<p><strong>Note: </strong>I&#8217;m using NUnit for these examples. Other frameworks have different semantics, and I recommend you write some similar code for whatever library you use. For me, NUnit&#8217;s always been the draft horse of .NET test frameworks - stable, steady, gets along with everybody, and does what I expect.</p>
+<p>If you&#8217;re not already familiar with NUnit, take a look at their <a title="NUnit Quick-start guide" href="http://www.nunit.org/index.php?p=quickStart&amp;r=2.6">quick-start guide </a>and then come back. I&#8217;ll wait.</p>
+<p>Now, take a look at this simple test fixture class:</p>
+<p><div><script src='https://gist.github.com/1200910.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>This fixture has two test methods, one which passes and one which fails. When we run the test framework in NUnit&#8217;s test runner, we get this output:</p>
+<p>&nbsp;</p>
+<pre>Constructor
+TestFixtureSetup
+SetUp
+First Test passes!
+TearDown
+SetUp
+Second Test fails!
+TearDown
+TestFixtureTearDown
+Dispose</pre>
+<p>So, what does this tell us about the lifecycle of a test within a fixture?</p>
+<ol>
+<li><strong>The Test Fixture class is constructed once.</strong>  NUnit invokes all the test methods on the same fixture instance.</li>
+<li><strong>TestFixtureSetup and TestFixtureTeardDown run one time. </strong>TestFixtureSetup is run immediately after construction, and only runs once for the entire test run. TestFixtureTearDown is called immediately after all test methods have been run.</li>
+<li><strong>TestSetup and TestTearDown run around every test</strong>. These two methods execute immediately before, and immediately after, each test method.</li>
+<li><strong>TestTearDown runs even when a test fails.</strong> Noice that Even when the second test exits with a failed assertion, the TearDown method is still called for that method.</li>
+<li><strong>NUnit knows about IDisposable.</strong> Did you notice that our class implemented IDisposable? IDisposable is .NET&#8217;s canonical interface for when you have a resource whose scope needs to be managed. The IDisposable.Dispose method is the last method called on our fixture class.</li>
+</ol>
+<div>So now that we know what interesting methods are called, when, and how often, what can we conclude? Well, here&#8217;s my first guideline for you:</div>
+<div>
+<ol>
+<li><strong>Use constructors for class-wide setup. Use IDisposable for class-wide cleanup. Avoid TestFixtureSetup and TestFixtureTearDown. </strong>I&#8217;ve found that the fixture-level setup and teardown methods create more confusion than they&#8217;re worth. In Part 2, we&#8217;ll see just how complicated this can get when you have a base class for your test fixture. But even with a simple fixture class like the above, There&#8217;s no reason to have two places for your class&#8217; initialization and cleanup code. That&#8217;s basically a guarantee that it&#8217;s going to get chopped up between the two with no rhyme or reason. Every .NET developer knows the constructor/dispose pattern. We don&#8217;t need another one.</li>
+</ol>
+<p>Hopefully this paints a clearer picture of what happens when you actually run a set of unit tests. Next time, we&#8217;re going to see what happens when we give our test fixture a base class with its own setup, teardown, and test methods, and how they interact with the ones we already have.</p>
+</div>
+<p><a href="http://www.headspring.com/resources/whitepapers/">Learn more about unit tests and the Agile Difference by visiting our Whitepapers page</a>.</p>
+
 		
-		<a href="/blog/unit-testing-best-practices-know-your-tests-lifecycle-part-1/" class="more-link">Read on &rarr;</a>
+		
 	</div>
 
 
@@ -298,9 +657,20 @@
 	</h2>
 	<div class="entry-content">
 		<p>In <a href="http://www.headspring.com/2011/07/powershell-and-the-principle-of-most-astonishment">Powershell and the Principle of Most Astonishment</a>, I covered some of the surprises that new Powershell users encounter when trying to reliably return results from functions. The next area where Powershell suprises new users is in its approach to error handling. Fortunately, there are some useful workarounds for making the surprising default behavior work more like you would expect.</p>
-<p>While learning Powershell, I was trying to create a deployment script. The script needed to perform several tasks including, copying the deployment package to the target machine, setting up services, and the like. While testing it out locally,
+<p>While learning Powershell, I was trying to create a deployment script. The script needed to perform several tasks including, copying the deployment package to the target machine, setting up services, and the like. While testing it out locally, I would deliberately cause certain steps to fail in order to ensure that the user of the script would be clearly alerted to failures. To my surprise, when I caused exceptions to be thrown, the script would happily continue on to the next step, ultimately printing a success message to the user. Consider this example:</p>
+<p><div><script src='https://gist.github.com/1149682.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>What the heck just happened? If you can&#8217;t rely on uncaught exceptions to stop execution, how can you reliably deal with failures? What if we throw an exception and then blindly move along to a subsequent step that <em>depends</em> on the success of previous steps?</p>
+<p><strong>Powershell reintroduces VB&#8217;s &#8220;ON ERROR RESUME NEXT&#8221;, but goes one step further by making it the default!</strong> Abandon all hope, ye who etc, etc.</p>
+<p>To make Powershell error handling work more like error handling in other .NET languages, we can set <strong>$global:ErrorActionPreference = &#8220;Stop&#8221;</strong> at the start of our script. With this variable set, uncaught exceptions thrown by Powershell code will cause the whole script to stop. Altering our example with this line, we get the output that we originally expected:</p>
+<p><div><script src='https://gist.github.com/1149691.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>This solves most of our problem: the behavior of Powershell code that throws errors. Unfortunately, it doesn&#8217;t help us when we invoke an <em>external</em> executable that fails in the middle of our script. In my next post, I&#8217;ll show you how to address the failure of external executables.</p>
+
 		
-		<a href="/blog/avoiding-on-error-resume-next-when-using-powershell/" class="more-link">Read on &rarr;</a>
+		
 	</div>
 
 
@@ -322,181 +692,6 @@
 
 
 	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/powershell/'>Powershell</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/visual-studio-lightswitch-and-upgrade-path-for-microsoft-access-to-net/">
-		
-			Visual Studio Lightswitch, an Upgrade Path for Microsoft Access to .Net</a>
-	</h2>
-	<div class="entry-content">
-		<p>There are lots of business systems written in Microsoft Access.  One of the most successful companies I know is <a href="http://www.fairsoftware.com/aboutgladstone.aspx">Gladstone, Inc</a>, makers of <a href="http://www.fairsoftware.com/">ShoWorks</a> software.  This software runs most of the county fairs in the U.S.  From entries, to checks, to vendors, this piece of software does it all to help manage and run a fair and keep track of all the data.  And it is written in Access.  Started on Access 97, I have watched this software grow through the various Access upgrades, and it tests the limits of the platform.  It’s author, <a href="http://www.hnatt.com/">Mike Hnatt</a>, is one of the premiere Access gurus, and Microsoft has previous invited him up to the Redmond campus to be a part of internal Software Design Reviews, or SDR’s.  Mike knows the limits of access, but even with the vast array of other development options out there, nothing comes close to parity with the capabilities he relies on – until today.
-		
-		<a href="/blog/visual-studio-lightswitch-and-upgrade-path-for-microsoft-access-to-net/" class="more-link">Read on &rarr;</a>
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-07-30T00:00:00-05:00" pubdate data-updated="true">Jul 30<span>th</span>, 2011</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/two-reasons-to-use-abstract-classes-in-c/">
-		
-			Two Reasons to Use Abstract Classes in C#</a>
-	</h2>
-	<div class="entry-content">
-		<p>Do you find yourself writing the same methods over and over in different classes? Say your project needs both a &#8220;Dog&#8221; class and a &#8220;Cat&#8221; class &#8211; do you end up writing a &#8220;sleep&#8221; method for both? What if, in two months, the client needs you to add a &#8220;possum&#8221; to the system? Do you end up going in and retyping &#8220;sleep&#8221; instructions yet again? When you&#8217;re modeling a system with many similar parts, it takes way too much time and effort to keep duplicating code for each class. Imagine how hard it would be to maintain a large project with thousands of classes! Besides, it violates the DRY principle of good programming: Don&#8217;t Repeat Yourself! There must be a better way.
-		
-		<a href="/blog/two-reasons-to-use-abstract-classes-in-c/" class="more-link">Read on &rarr;</a>
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-07-29T00:00:00-05:00" pubdate data-updated="true">Jul 29<span>th</span>, 2011</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/dry/'>DRY</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/best-practices/'>best practices</a>, <a class='category' href='/blog/categories/c-sharp/'>c sharp</a>, <a class='category' href='/blog/categories/class-inheritance/'>class inheritance</a>, <a class='category' href='/blog/categories/developing-with-c-number/'>developing with C#</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/true-confessions-public-shaming-and-test-driven-development/">
-		
-			True Confessions, Public Shaming, and Test-Driven Development</a>
-	</h2>
-	<div class="entry-content">
-		<p>Okay, I admit it. Sometimes I write unit tests second instead of first. I also bite my nails and rest my elbows on the dinner table. But when I&#8217;ve got a bug to fix, and I&#8217;ve already found the offending line, I can hardly resist the urge to just&#8230; just&#8230; <em>change</em> it. I&#8217;ll follow up with unit tests afterwards, promise.</p>
-<p>I admit this to you because admitting my wrongs is a step towards rehabilitation. I admit this to save you pain. Learn from my example. Test-second is so much less efficient than test-first. Consider the following workflow:</p>
-<ol>
-<li>Reproduce, identify, debug the issue.</li>
-<li>Fix the code.</li>
-<li>Compile and try it out.</li>
-<li>Write a test that proves I fixed it.</li>
-<li>Compile and run the test.</li>
-<li>Change the code back to make sure my test really proves what it is trying to prove.</li>
-<li>Compile and see the test fail.</li>
-<li>Re-fix the code.</li>
-<li>Compile and see the test pass.</li>
-</ol>
-<p>&nbsp;</p>
-<p>I humble myself before you. How much time am I wasting there? It&#8217;s embarrassing.
-		
-		<a href="/blog/true-confessions-public-shaming-and-test-driven-development/" class="more-link">Read on &rarr;</a>
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-07-29T00:00:00-05:00" pubdate data-updated="true">Jul 29<span>th</span>, 2011</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/continuous-improvement/'>continuous improvement</a>, <a class='category' href='/blog/categories/developer-productivity/'>developer productivity</a>, <a class='category' href='/blog/categories/test-driven-development/'>test-driven development</a>, <a class='category' href='/blog/categories/unit-testing/'>unit testing</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/the-secret-sauce-of-business-intelligence-olap-vs-relational-schemas/">
-		
-			The Secret Sauce of Business Intelligence: OLAP vs Relational Schemas</a>
-	</h2>
-	<div class="entry-content">
-		<p>Ever heard the terms <em>star schema, OLAP, fact table, dimension, </em>or<em> business intelligence</em> and wondered what they meant and/or why you should care?  I learned what these terms meant five years ago, and I have found powerful usages for these concepts ever since.</p>
-<p>Imagine your business owner is a restaurant manager.  You&#8217;ve built a point of sale system that records what customers have ordered.  Begrudgingly, you have also built some canned reports to list out sales transactions within a user-entered date range.  The restaurant manager could browse the transaction history for a particular month to learn
-		
-		<a href="/blog/the-secret-sauce-of-business-intelligence-olap-vs-relational-schemas/" class="more-link">Read on &rarr;</a>
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-07-29T00:00:00-05:00" pubdate data-updated="true">Jul 29<span>th</span>, 2011</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
 
 
 </div>

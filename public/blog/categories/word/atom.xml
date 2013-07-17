@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Word | Headspring Labs]]></title>
   <link href="http://headspringlabs.com/blog/categories/word/atom.xml" rel="self"/>
   <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-16T19:59:03-05:00</updated>
+  <updated>2013-07-17T00:19:02-05:00</updated>
   <id>http://headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
@@ -21,7 +21,7 @@
     <content type="html"><![CDATA[<p>It's probably because I never learned to play first-person shooters, but I have a devil of a time in Word selecting the element I want out of a page full of drawing shapes. Trying to select a text box, I click on what I think is that one-pixel box border, and end up selecting the canvas behind it, or a nearby rectangle, or nothing at all. Have you experienced this frustration? I've even resorted to "Send to Back" to get something out of my way so that I can select the thing I want.</p>
 
 
-<p>I stumbled onto the solution. To explain it, I have made a <a href="http://www.youtube.com/watch?v=1puMOp7d-kk">video demo of MS Word's Selection Pane</a> feature.<!--more--></p>
+<p>I stumbled onto the solution. To explain it, I have made a <a href="http://www.youtube.com/watch?v=1puMOp7d-kk">video demo of MS Word's Selection Pane</a> feature.</p>
 
 
 <p>http://www.youtube.com/watch?v=1puMOp7d-kk</p>

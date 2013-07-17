@@ -4,7 +4,7 @@
   <title><![CDATA[Category: debugging | Headspring Labs]]></title>
   <link href="http://headspringlabs.com/blog/categories/debugging/atom.xml" rel="self"/>
   <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-16T19:59:03-05:00</updated>
+  <updated>2013-07-17T00:19:02-05:00</updated>
   <id>http://headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
@@ -24,7 +24,7 @@
 <p>Sometimes, it can be very convenient to use lambda expressions as event handlers.  If the event handler does something short and sweet, it can also be a lot easier to read than having to jump down to the method that implements the handler.</p>
 
 
-<p>However, as with all events handlers, you really need to understand the lifetime of the instance that exposes the event or you can leak, leak, leak. <!--more--></p>
+<p>However, as with all events handlers, you really need to understand the lifetime of the instance that exposes the event or you can leak, leak, leak. </p>
 
 
 <p>Let's take a look at some code.  The following is a typical way to hook up to an event using a method as an event handler.</p>
@@ -140,7 +140,7 @@
 <h2>Glimpse Plugins</h2>
 
 
-<p>Plugins are implemented by a simple class that implements the IGlimpsePlugin interface. There are a couple of great “hello world” example plugins on the Glimpse <a href="http://getglimpse.com/Help/CreatingPlugins" target="_blank">creating plugins page</a>. Besides setting the name and some optional start-up code, a plugin’s main job is just to return some set of data that will be rendered to the Glimpse UI. What that data is and how we get it is the real magic, so read on below.<!--more--></p>
+<p>Plugins are implemented by a simple class that implements the IGlimpsePlugin interface. There are a couple of great “hello world” example plugins on the Glimpse <a href="http://getglimpse.com/Help/CreatingPlugins" target="_blank">creating plugins page</a>. Besides setting the name and some optional start-up code, a plugin’s main job is just to return some set of data that will be rendered to the Glimpse UI. What that data is and how we get it is the real magic, so read on below.</p>
 
 
 <p>The actual code for this NHibernate Glimpse plugin is fairly simple. We create a header column, add a row indicating the number of SQL statements that were executed and then add all the actual SQL to the plugin data. The SqlLogger class referenced here is just a static class that acts as a wrapper for the HttpContext.Items collection, which is where we’re logging the SQL itself. You can find a full gist including this class and all of the following code snippets, with comments, <a href="https://gist.github.com/1114503" target="_blank">here</a>.</p>

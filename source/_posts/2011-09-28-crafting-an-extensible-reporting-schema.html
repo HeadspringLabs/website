@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Crafting an Extensible Reporting Schema
-tags:
+categories:
 - business intelligence
 - Developer Deep Dive
 - reporting schema
@@ -14,34 +14,32 @@ meta:
   _aioseop_title: Crafting an Extensible Reporting Schema
   dsq_thread_id: '890328194'
 ---
-Traditional relational database schemas are designed to keep computers happy. Indexes, foreign keys, joins...all of these tools allow for the highest level of optimization so data can be recorded and read back in record time. However, humans are typically very <em>un</em>happy when it comes time to answer business questions from this data.
-
-Imagine your boss approaches you and asks for a report of all orders placed by the Acme Corporation on Thursdays. You recall how many times you and your team optimized the database containing this information so data could be written at break-neck speeds and moan when you think of the complex script you'll need to write to retrieve the report your boss requires. Wouldn't it be nice if, instead of lines and lines of arcane SQL, we could ask a database something like the following and get back exactly what we expect?<!--more-->
-<pre><code> select * from Orders where Customer = 'Acme' and DayOfWeek = 'Thursday'</code></pre>
-No joins, no convoluted date parsing...in fact, this SQL statement is almost identical to the sentence your boss used, isn't it? How do we get to this level of utopian question-answering? The key is in the concept of "complex writes and simple reads": instead of saving data to a database only in some crazy "normal form" fashion, flatten out your data so you can more easily query against it. Let's take a look at a simple date...say, my birthday this year: 13 December 2011 2:18 PM.
-
-Normally, we'd stick this value into a column designed for holding dates...and that's fine, assuming the only question we'll ever want to ask is "show me something that occurred on 13 December 2011 at 2:18 PM". Unfortunately, that sort of question almost never gets asked. Instead, it's queries like "on Tuesdays" or "in the afternoon". To answer these questions, our schema needs to be modified a bit. The original "date-only" schema might look something like this:
-<pre><code> OrderDate : datetime</code></pre>
-After we flatten out the date and time, our schema might look something like this:
-<pre><code> Day : int Month : nvarchar Year : int DayOfWeek : nvarchar Hour : int Minute : int PM : bit</code></pre>
-Given this schema, we can now ask a multitude of questions about the single record represented, such as:
+<p>Traditional relational database schemas are designed to keep computers happy. Indexes, foreign keys, joins...all of these tools allow for the highest level of optimization so data can be recorded and read back in record time. However, humans are typically very <em>un</em>happy when it comes time to answer business questions from this data.</p>
+<p>Imagine your boss approaches you and asks for a report of all orders placed by the Acme Corporation on Thursdays. You recall how many times you and your team optimized the database containing this information so data could be written at break-neck speeds and moan when you think of the complex script you'll need to write to retrieve the report your boss requires. Wouldn't it be nice if, instead of lines and lines of arcane SQL, we could ask a database something like the following and get back exactly what we expect?</p>
+<pre>&lt;code&gt; select * from Orders where Customer = &#39;Acme&#39; and DayOfWeek = &#39;Thursday&#39;&lt;/code&gt;</pre>
+<p>No joins, no convoluted date parsing...in fact, this SQL statement is almost identical to the sentence your boss used, isn't it? How do we get to this level of utopian question-answering? The key is in the concept of "complex writes and simple reads": instead of saving data to a database only in some crazy "normal form" fashion, flatten out your data so you can more easily query against it. Let's take a look at a simple date...say, my birthday this year: 13 December 2011 2:18 PM.</p>
+<p>Normally, we'd stick this value into a column designed for holding dates...and that's fine, assuming the only question we'll ever want to ask is "show me something that occurred on 13 December 2011 at 2:18 PM". Unfortunately, that sort of question almost never gets asked. Instead, it's queries like "on Tuesdays" or "in the afternoon". To answer these questions, our schema needs to be modified a bit. The original "date-only" schema might look something like this:</p>
+<pre>&lt;code&gt; OrderDate : datetime&lt;/code&gt;</pre>
+<p>After we flatten out the date and time, our schema might look something like this:</p>
+<pre>&lt;code&gt; Day : int Month : nvarchar Year : int DayOfWeek : nvarchar Hour : int Minute : int PM : bit&lt;/code&gt;</pre>
+<p>Given this schema, we can now ask a multitude of questions about the single record represented, such as:</p>
 <ul style="margin-bottom: 1.0em;">
-	<li>How many orders were placed in January?
-<pre><code> select count(1) from Orders where Month = 'January'</code></pre>
+<li>How many orders were placed in January?
+<pre>&lt;code&gt; select count(1) from Orders where Month = &#39;January&#39;&lt;/code&gt;</pre>
 </li>
-	<li>What orders did Acme place on Friday afternoons?
-<pre><code> select * from Orders where DayOfWeek = 'Friday' and PM = '1'</code></pre>
+<li>What orders did Acme place on Friday afternoons?
+<pre>&lt;code&gt; select * from Orders where DayOfWeek = &#39;Friday&#39; and PM = &#39;1&#39;&lt;/code&gt;</pre>
 </li>
 </ul>
-Getting data into this type of schema is actually surprisingly easy; in fact, each of these values can be extracted from a single .NET DateTime object:
-<pre><code> var timsBirthday = DateTime.Parse("13 December 2011 2:18 PM"); var day = timsBirthday.Day; var month = timsBirthday.ToString("MMMM"); var year = timsBirthday.Year; var dayOfWeek = timsBirthday.DayOfWeek; var hour = timsBirthday.Hour; var minute = timsBirthday.Minute; var pm = timsBirthday.Hour &gt;= 12;</code></pre>
-It's not just dates that can be flattened out in this manner! For a hypothetical generic Customer object, for example, you can extrapolate (and answer business questions on!) properties like these:
+<p>Getting data into this type of schema is actually surprisingly easy; in fact, each of these values can be extracted from a single .NET DateTime object:</p>
+<pre>&lt;code&gt; var timsBirthday = DateTime.Parse(&quot;13 December 2011 2:18 PM&quot;); var day = timsBirthday.Day; var month = timsBirthday.ToString(&quot;MMMM&quot;); var year = timsBirthday.Year; var dayOfWeek = timsBirthday.DayOfWeek; var hour = timsBirthday.Hour; var minute = timsBirthday.Minute; var pm = timsBirthday.Hour &amp;gt;= 12;&lt;/code&gt;</pre>
+<p>It's not just dates that can be flattened out in this manner! For a hypothetical generic Customer object, for example, you can extrapolate (and answer business questions on!) properties like these:</p>
 <ul style="margin-bottom: 1.0em;">
-	<li>Name</li>
-	<li>Primary Contact</li>
-	<li>Phone</li>
-	<li>City</li>
-	<li>State</li>
-	<li>ZIP Code</li>
+<li>Name</li>
+<li>Primary Contact</li>
+<li>Phone</li>
+<li>City</li>
+<li>State</li>
+<li>ZIP Code</li>
 </ul>
-Happy reporting!
+<p>Happy reporting!</p>

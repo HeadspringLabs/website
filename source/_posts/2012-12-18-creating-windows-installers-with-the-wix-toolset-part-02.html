@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Creating Windows Installers With the WiX Toolset, Part 02
-tags:
+categories:
 - Blog
 - Developer Deep Dive
 - windows installer
@@ -15,29 +15,28 @@ meta:
   _aioseop_title: Creating Windows Installers With the WiX Toolset, Part 02
   _podPressPostSpecific: a:6:{s:15:"itunes:subtitle";s:15:"##PostExcerpt##";s:14:"itunes:summary";s:15:"##PostExcerpt##";s:15:"itunes:keywords";s:17:"##WordPressCats##";s:13:"itunes:author";s:10:"##Global##";s:15:"itunes:explicit";s:7:"Default";s:12:"itunes:block";s:7:"Default";}
 ---
-<address>This article is part of a series exploring how to create installers for Windows software.  Here's the complete contents of the series.</address><address><a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-01/">Part 1 – What Kinds of Software Projects Benefit From an Installer?</a>
-<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-02/">Part 2 – An Overview Of Windows Installer and its Features</a>
-<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-03/">Part 3 – Tooling Options for Building Installers</a>
-<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-04/">Part 4 – The Windows Installer Runtime Sequence</a>
-<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-5/">Part 5 – The Contents of an MSI</a>
-<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-6/">Part 6 – The Structure of a WiX File</a>
-<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-7/">Part 7 – Generating an MSI Package From Your WiX</a>
-<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-8/">Part 8 – Troubleshooting Installer Runtime Problems</a>
-<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-summary/">Part 9 - Summary</a>
-</address><br/>
+<address>This article is part of a series exploring how to create installers for Windows software.  Here's the complete contents of the series.</address>
+<address><a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-01/">Part 1 – What Kinds of Software Projects Benefit From an Installer?</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-02/">Part 2 – An Overview Of Windows Installer and its Features</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-03/">Part 3 – Tooling Options for Building Installers</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-04/">Part 4 – The Windows Installer Runtime Sequence</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-5/">Part 5 – The Contents of an MSI</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-6/">Part 6 – The Structure of a WiX File</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-7/">Part 7 – Generating an MSI Package From Your WiX</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-8/">Part 8 – Troubleshooting Installer Runtime Problems</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-summary/">Part 9 - Summary</a><br />
+</address>
+<p><br/></p>
 <h2>Windows Installer is Actually A Feature</h2>
-Something many Windows users are unaware of is that there is actually a feature in Windows called "Windows Installer".  You won't find it listed in Programs and Features in the Control Panel, but its included in the same way as a feature almost all Windows users have encountered (and cursed) called Windows Update.  You can see a release history and the default version shipped with the various Windows operating systems <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/aa371185.aspx">here.</a>
+<p>Something many Windows users are unaware of is that there is actually a feature in Windows called "Windows Installer".  You won't find it listed in Programs and Features in the Control Panel, but its included in the same way as a feature almost all Windows users have encountered (and cursed) called Windows Update.  You can see a release history and the default version shipped with the various Windows operating systems <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/aa371185.aspx">here.</a></p>
 <h2>Basic Features</h2>
-Windows Installer has a number of features that make it attractive to use.  The foremost is transactional operations:  if an error occurs while installing (or uninstalling) your software, Windows Installer is able to rollback all of the changes made so far and revert the computer back to its state before the operation began.  This means the system will never be left in a half installed state.
-
-Also highly useful is the capability to add Start menu, quick launch, and Desktop shortcuts for the users to easily start your software.
-
-Another feature is the ability to do repairs.  Imagine a user is trying to free up disk space on their hard drive and unwittingly deletes some of your application files.  Windows Installer provides a mechanism that allows an installed program to be repaired, where any missing files are replaced.
-
-Windows Installer also has a number of capabilities to control file sprawl and minimize disk usage.  With plummeting storage costs these capabilities aren't as important as they once were, but if your application is very large then they're still useful.  Windows Installer can track versions of your application and perform in place upgrades and patches so a user doesn't have to completely install the entire application (which could take a long time if the application has a lot of physical files).  On demand install allows features of an application to appear available, but they aren't actually installed on the machine until used, saving disk space.
+<p>Windows Installer has a number of features that make it attractive to use.  The foremost is transactional operations:  if an error occurs while installing (or uninstalling) your software, Windows Installer is able to rollback all of the changes made so far and revert the computer back to its state before the operation began.  This means the system will never be left in a half installed state.</p>
+<p>Also highly useful is the capability to add Start menu, quick launch, and Desktop shortcuts for the users to easily start your software.</p>
+<p>Another feature is the ability to do repairs.  Imagine a user is trying to free up disk space on their hard drive and unwittingly deletes some of your application files.  Windows Installer provides a mechanism that allows an installed program to be repaired, where any missing files are replaced.</p>
+<p>Windows Installer also has a number of capabilities to control file sprawl and minimize disk usage.  With plummeting storage costs these capabilities aren't as important as they once were, but if your application is very large then they're still useful.  Windows Installer can track versions of your application and perform in place upgrades and patches so a user doesn't have to completely install the entire application (which could take a long time if the application has a lot of physical files).  On demand install allows features of an application to appear available, but they aren't actually installed on the machine until used, saving disk space.</p>
 <h2>Custom Actions</h2>
-One very compelling ability is custom actions.  Custom actions can be written in C++, C#, and others and invoked in the middle of your install.  This allows you to add any sort of capability you need to have during the middle of the install process.  There are several caveats to go along with this power however.  First, make sure you're not baking in some sort of setup that will need to be run outside the installer as a normal maintenance operation.  Second, sometimes what you're trying to accomplish might not be worth the effort to make a custom action when it can be done in normal application code.  I'm not saying to never use custom actions, but just be careful not to turn them into a golden hammer to drive in everything, including screws.
+<p>One very compelling ability is custom actions.  Custom actions can be written in C++, C#, and others and invoked in the middle of your install.  This allows you to add any sort of capability you need to have during the middle of the install process.  There are several caveats to go along with this power however.  First, make sure you're not baking in some sort of setup that will need to be run outside the installer as a normal maintenance operation.  Second, sometimes what you're trying to accomplish might not be worth the effort to make a custom action when it can be done in normal application code.  I'm not saying to never use custom actions, but just be careful not to turn them into a golden hammer to drive in everything, including screws.</p>
 <h2>Other Advanced Features</h2>
-There are a plethora of other features aimed at big enterprises that are worth a passing mention.  Administrative install allows a network admin to  "install" onto on a network share location, and then users can install the application from that network share.  This allows the admin to ensure that users get the application installed in a consistent manner, reducing maintenance time.  Windows Installer can also be used to perform unattended installs so that an application can be pushed and installed in an automatic fashion, saving IT staff from having to make the rounds of hundreds or thousands of desks.
+<p>There are a plethora of other features aimed at big enterprises that are worth a passing mention.  Administrative install allows a network admin to  "install" onto on a network share location, and then users can install the application from that network share.  This allows the admin to ensure that users get the application installed in a consistent manner, reducing maintenance time.  Windows Installer can also be used to perform unattended installs so that an application can be pushed and installed in an automatic fashion, saving IT staff from having to make the rounds of hundreds or thousands of desks.</p>
 <h2>In Summary</h2>
-You can see a fairly comprehensive list of the features <a title="http://msdn.microsoft.com/en-us/library/windows/desktop/aa367449(v=vs.85).aspx" href="http://msdn.microsoft.com/en-us/library/windows/desktop/aa367449(v=vs.85).aspx">here</a>.  You're probably not going to avail yourself to all of the more advanced functionality, but many of the simpler benefits (transactional operations, shortcuts, custom actions, and repairs) are a big win for a local Windows client application.
+<p>You can see a fairly comprehensive list of the features <a title="http://msdn.microsoft.com/en-us/library/windows/desktop/aa367449(v=vs.85).aspx" href="http://msdn.microsoft.com/en-us/library/windows/desktop/aa367449(v=vs.85).aspx">here</a>.  You're probably not going to avail yourself to all of the more advanced functionality, but many of the simpler benefits (transactional operations, shortcuts, custom actions, and repairs) are a big win for a local Windows client application.</p>

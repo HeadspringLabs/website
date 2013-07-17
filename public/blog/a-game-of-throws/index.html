@@ -80,7 +80,7 @@
 	<div id="content" class="inner"><article class="post">
 	<h2 class="title">A Game of Throws</h2>
 	<div class="entry-content"><p>In <a href="http://www.headspring.com/blog/developer-deep-dive/infinite-laziness/">Infinite Laziness</a>, we saw how the <code>yield</code> keyword lets us work with <em>lazy evaluation</em>, in which work is deferred and performed on demand once something else actually needs to consume the result.  Lazy evaluation with <code>yield</code> isn&#8217;t free, though; it has some unfortunate consequences.</p>
-<p>This week, we&#8217;ll see how lazy evaluation affects exception handling.  Next week, we&#8217;ll see how <code>yield</code> complects brevity with laziness, resulting in some undesirable patterns.<!--more--></p>
+<p>This week, we&#8217;ll see how lazy evaluation affects exception handling.  Next week, we&#8217;ll see how <code>yield</code> complects brevity with laziness, resulting in some undesirable patterns.</p>
 <p>Let&#8217;s say you&#8217;re lazily producing a series of objects, but the creation of each object has a real potential to throw an exception.  The developer calling the lazy method knows that the operation could fail, and attempts to protect the rest of the system:</p>
 <p><div><script src='https://gist.github.com/3792131.js'></script>
 <noscript><pre><code></code></pre></noscript></div>

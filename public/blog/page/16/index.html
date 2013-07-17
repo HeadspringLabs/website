@@ -7,7 +7,8 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="This post is going to cover a pair of topics that aren’t truly related, but topics that I like to use together. When combined they can give you a &hellip;">
+	<meta name="description" content="Introduction
+In this post we will be discussing how DbContext API helps us in validation of entities in Entity Framework Code First workflow. The &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -83,6 +84,344 @@
     <article class="post">
 	<h2 class="title">
 		
+		<a href="/blog/entity-framework-code-first-dbcontext-validation/">
+		
+			Guest Blog [Muhammad Shujaat Siddiqi]: Entity Framework Code First DbContext - Validation</a>
+	</h2>
+	<div class="entry-content">
+		<h2><strong>Introduction</strong></h2>
+<p>In this post we will be discussing how DbContext API helps us in validation of entities in Entity Framework Code First workflow. The API allows various options to define validation of entities and their properties. It also makes it easier to execute these validations providing validation results. We are going to be using some basic entities in a simple Institute and introduce various forms of validations using different options available in the framework. The whole intent is to learn these available options. In a real world example you might be more or less inclined to be using any of these options.</p>
+<h2><strong>Prerequisite</strong></h2>
+<p>In order to keep focus on the validation discussion, let&#8217;s build on top of already existing example code. You can find the download here:</p>
+<p><a href="https://github.com/msiddiqi/EFCodeFirstValidation">https://github.com/msiddiqi/EFCodeFirstValidation</a></p>
+<p>The download is a simple console application with the following:</p>
+<ul>
+<li>Added Nuget packages &#8217;<em>Entity Framework 4.3.1</em>, SQL Server Compact and <em>EntityFramework.SqlServerCompact</em>. These Nugets would take care fo adding all the related assemblies to the project.</li>
+<li>Added a SQL Server Compact database file, named <em>InstituteDB</em>. We needed to add the connection string in app.config.</li>
+<li>Added a <em>Student</em> and <em>Department</em> POCO type and <em>InstituteEntities</em> [DbContext] with <em>DbSet&lt;Student&gt;</em> and DbSet&lt;Department&gt;.</li>
+</ul>
+<p>&nbsp;</p>
+<h2><strong>Enabling Validation for Entities</strong></h2>
+<p><em>DbContext</em> supports turning on or off the validation feature. By default, this is enabled.</p>
+<p><span style="color: #339966;"><a href="http://www.headspring.com/2012/04/entity-framework-code-first-dbcontext-validation/validationdbconfigurationoption" rel="attachment wp-att-4610"><img class="alignnone size-full wp-image-4610" alt="" src="http://www.headspring.com/wp-content/uploads/2012/04/ValidationDbConfigurationOption.png" width="587" height="124" /></a><br />
+</span></p>
+<p>This can be turned on and off during the lifetime of the application based on our requirements. We can set it in the constructor of <em>DbContext</em> as follows:</p>
+<p><div><script src='https://gist.github.com/2225969.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+ [/gist]</p>
+<p>We can also control this based on the entity type. Let&#8217;s assume that we don&#8217;t want any validation for Student Entity. We just need to override <em>ShouldValidateEntity()</em> method of <em>DbContext</em> and make such decisions there.</p>
+<p><div><script src='https://gist.github.com/2267626.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+ [/gist]</p>
+<p>Currently this is used with <em>DbContext.SaveChanges()</em> and <em>DbContext.GetValidationErrors()</em> only for added / modified entities. It would be better in future versions if it is used with <em>DbEntityEntry</em> as well. This would enable us to be making decisions when a single entity or its property is being validated on-demand.</p>
+<h2><strong>Defining Validations</strong></h2>
+<p>EF Code first supports various ways to define the validations. We can define validation details using available data annotation validation attributes, Fluent API configurations and implementation of <em>IValidatableObject</em> interface. The greatest thing is that Entity Framework provides all these different options to define validation of our entities. It combines all these implementations when the validation logic is being executed.</p>
+<h3><strong>Data Annotation Attributes</strong></h3>
+<p>As we discussed above, Entity framework code first entities can be decorated with Data Annotation attributes. Most of these attributes come from DataAnnotations assembly. EF team also has added a few attributes. In the future, they might also make their way into the main DataAnnotation library. Still they are in the same namespace i.e. <em>System.ComponentModel.DataAnnotations</em>.</p>
+<div><span style="color: #339966;"><a href="http://www.headspring.com/2012/04/entity-framework-code-first-dbcontext-validation/validationattributeclasshierarchy" rel="attachment wp-att-4611"><img class="size-full wp-image-4611 aligncenter" alt="" src="http://www.headspring.com/wp-content/uploads/2012/04/ValidationAttributeClassHierarchy.png" width="1211" height="396" /></a><br />
+</span></div>
+<div>Simpler attributes are mostly defined on the properties of an entity. They include the attributes which don&#8217;t involve checking the value of another property within the same entity. The validation might need to check anything else too from the same entity or anywhere from the outside. These complex attributes are defined on Entity type instead. We can use Custom Validation attribute to check for validation in this case. Let&#8217;s make sure that department names follow certain pattern in our institute.</div>
+<p>It&#8217;s definitely adulteration of entities with validation attributes. But I think it should be fine until we use an attribute from Entity Framework library as that makes us dependent on the framework which is definitely we wanted to avoid as we are very careful about P in our POCO [Plain Old Clr Object]. But we can have the best of both worlds. This can be achieved using Associated Metadata [buddy] classes [See Julia Lerman&#8217;s book: <a href="http://www.amazon.com/Programming-Entity-Framework-Julia-Lerman/dp/1449312969/ref=sr_1_1?ie=UTF8&amp;qid=1332421133&amp;sr=8-1">DbContext</a>].</p>
+<p><a href="http://www.shujaat.net/2012/03/associated-metadata-buddy-classes-in-c.html">http://www.shujaat.net/2012/03/associated-metadata-buddy-classes-in-c.html</a></p>
+<p>So we would be keeping the data layer clean with our POCO entities. We would not be adding any validation attributes there. Now we would be adding separate buddy classes for our entities. We will be adding DataAnnotation attributes to our properties there. At compile time, these attributes are applied to the entities and then used by Entity Framework runtime. Zindabad!</p>
+<p><div><script src='https://gist.github.com/2236288.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+ [/gist]</p>
+<p>Similarly, we can define validation for Department. Let&#8217;s make sure that all the departments have their name following a certain format. So Electrical Engineering should be entered as &#8220;Department of Electrical Engineering&#8221;.</p>
+<p><div><script src='https://gist.github.com/2236337.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+ [/gist]</p>
+<p>Now we need to associate these metadata classes to our entities so that Entity Framework pick them up for validation. A type can be decorated with <em>MetadataTypeAttribute</em> for specifying the associated metadata class. Now we can directly specify <em>[Metadatatype(typeof(StudentAssociatedMetadata)]</em> with the class but some developers would consider even this as adulteration of their POCO types.</p>
+<p><div><script src='https://gist.github.com/2236440.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+ [/gist]</p>
+<p>We can still utilize these associated classes by defining our entities as partial classes. Now one part of the partial class would be a simple POCO. The other part might have this association defined.</p>
+<h3><strong>Fluent API</strong></h3>
+<p>Entity Framework Code First allows us to define validation with Fluent API as well. Compared to the other features of EF Code First, Fluent API seems to be more limiting and there are only certain validations that you might add to an entity using Fluent API. This is unlike other features where Fluent API is more powerful. Like in our example there are no counterparts of adding range and regular expression validation details to a property using Fluent API. But still we can define other validations including the maximum and minimum length of a string.</p>
+<p><div><script src='https://gist.github.com/2237085.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+ [/gist]</p>
+<p><em>DbContext</em> allows to define entities configuration to be  further defined. This is just before the model is created using <em>DbSet</em> and their associated members by Entity Framework Code First workflow API. In the above code, we added configuration to <em>Department</em> entity that the maximum length of <em>DepartmentName</em> property must not be more than 25. DbContext also allows configuration of entities to be defined separately using <em>EntityTypeConfiguration&lt;EntityType&gt;</em>. The same is used for <em>Student</em> entity. It can be defined as follows:</p>
+<p><div><script src='https://gist.github.com/2237285.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+ [/gist]</p>
+<p>Now Code First would use this configuration to generate Database (if required). But it would also use these configurations to check if it is worth a trip to database and cause failure by checking the entities&#8217; data with validation related configurations.</p>
+<h3><strong>Using IValidatableObject</strong></h3>
+<p>EF Code First workflow also supports <em>IValidatableObject</em> as introduce in .net framework 4.0 in<em> System.ComponentModel.DataAnnotations</em>. The definition of <em>IValidatableObject</em> just provides a contract with <em>Validate</em> method as follows:</p>
+<p><div><script src='https://gist.github.com/2266621.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+ [/gist]</p>
+<p>Here <em>ValidationContext</em> and <em>ValidationResult</em> are introduced in .net framework 4.0. Let&#8217;s validate if <em>City</em> is not empty in Student&#8217;s address.</p>
+<p><div><script src='https://gist.github.com/2266997.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+ [/gist]</p>
+<p>If there is a Student entity with empty city information then the validation would result in failure with error message: <em>&#8220;City can not be empty&#8221;</em>.</p>
+<h3><strong>Using CustomValidationAttribute for Validation</strong></h3>
+<p><em>CustomValidationAttribute</em> is introduced in .net framework 4.0.  These attributes can be applied on the type or property level. Let&#8217;s make sure that only those students are declared outstanding whose GPA is more than 3.7.</p>
+<p><div><script src='https://gist.github.com/2267241.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+ [/gist]</p>
+<p>We can add this attribute to one of Student partial class defined for EF Code First validation.</p>
+<p><div><script src='https://gist.github.com/2267319.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+ [/gist]</p>
+<p>We can also use custom validation attributes for properties of an entity.</p>
+<h3><strong>Introducing Customized ValidationAttribute:</strong></h3>
+<p>We can also introduce new specialized validation attributes. They need to be inherited from <em>ValidationAttribute</em>. We just need to override one of the IsValid() method.</p>
+<p><div><script src='https://gist.github.com/2178720.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+ [/gist]</p>
+<p>Basically <em>ValidationAttribute</em> was introduced in .net framework 3.5 sp1. Based on the implementation of then released framework we needed to inherit method pair [<em>IsValid</em>() - <em>FormatErrorMessage</em>()] in order for a Validation framework to check for validation and customized error message in case of validation failure. In .net framework 4.0, various other types are also introduced to better support validation. They also include <em>ValidationContext</em> [an implementation of <em>IServiceProvider</em>] and <em>ValidationResult</em>. <em>ValidationAttribute</em> is also enhanced to support these types by introducing a new overload for <em>IsValid</em>().</p>
+<p>Wait a minute!! Can overloaded method have return types as the previous one was returning bool? Yes they can!!! If they don&#8217; t only differ by return types. They sure can, if the parameter list is also different. The compiler is definitely not confused which implementation to call as it can easily infer this based on the arguments supplied for the call.</p>
+<p>This new overload is better for a lot of different reasons. Let&#8217;s discuss them:</p>
+<ul>
+<li>It provides an additional parameter of type <em>ValidationContext</em>. In our case, this is the type encapsulating the property for which this attribute is added. It might also be a proxy of the entity if it is enabled. Anyway, you have the Student instance. You can make use of any other property from the same instance using <em>ValidationContext.ObjectInstance</em>.</li>
+<li>Return type = <em>ValidationResult</em> &#8211; Don&#8217;t need to implement <em>FormatMessage</em></li>
+<li>Non-Virtual Interface [NVI] pattern as the virtual method is protected instead of <em>public</em>.</li>
+</ul>
+<p>&nbsp;</p>
+<p><div><script src='https://gist.github.com/2267084.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+ [/gist]</p>
+<p>We can update the associated metadata class for Student to include additional attribute for LastName property as follows:</p>
+<p><div><script src='https://gist.github.com/2267137.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+ [/gist]</p>
+<p>We have included this attribute in the associated metadata class for Student entity.</p>
+<h2><strong>Implicit Validation Execution</strong></h2>
+<p>It gets executed implicitly when <em>SaveChanges()</em> is called. Obviously, we need to have this turned on by using <em>DbContext.Configuration.ValidateOnSaveEnabled</em>. If it fails validation then calling <em>DbContext.SaveChanges()</em> would cause <em>DbEntityValidationException</em>.</p>
+<p><span style="color: #339966;"><a href="http://www.headspring.com/2012/04/entity-framework-code-first-dbcontext-validation/validationexceptionsavechanges" rel="attachment wp-att-4612"><img class="alignnone size-full wp-image-4612" alt="" src="http://www.headspring.com/wp-content/uploads/2012/04/ValidationExceptionSaveChanges.png" width="847" height="278" /></a><br />
+</span></p>
+<p>But we don&#8217;t have to wait until <em>SaveChanges()</em> is called and result in exception. EF Code first Validation can also be executed explicitly for all the entities tracked by <em>DbContext</em>. It can also be executed for an individual entity using <em>DbEntityEntry</em>. Doing this would not show weird exception dialog to the user wondering what he should do.</p>
+<p><span style="color: #339966;"><a href="http://www.headspring.com/2012/04/entity-framework-code-first-dbcontext-validation/validationfaileddialog" rel="attachment wp-att-4613"><img class="alignnone size-full wp-image-4613" alt="" src="http://www.headspring.com/wp-content/uploads/2012/04/ValidationFailedDialog.png" width="366" height="206" /></a><br />
+</span></p>
+<p>We definitely need to handle this gracefully by handling this exception and doing the appropriate action i.e. showing the validation result to the user specifying the details of the issue. We can also log the issue.The user can correct the entry and again try to save the data. Since the failed validation from <em>DbContext.SaveChanges()</em> always results in <em>DbEntityValidationException</em>, we can handle the validation failure using a <em>try / catch</em> block.</p>
+<p><div><script src='https://gist.github.com/2267381.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+ [/gist]</p>
+<p>where the definition of <em>DbEntityValidationExceptionMessageParser</em> can be as follows:</p>
+<p><div><script src='https://gist.github.com/2232206.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+ [/gist]</p>
+<p>Here <em>DbEntityValidationMessageParser </em>has three overloads of <em>GetErrorMessage()</em>. They are all internal as we don&#8217;t expect them to be used outside the data layer assembly. All of them are supposed to generate error message using <em>DbValidationError </em>provided directly from the method argument or obtained through <em>DbEntityValidationResult</em>, which in-turn, can be obtained from <em>DbEntityValidationException</em>.</p>
+<h2><strong>On-Demand Validation</strong></h2>
+<p>We can also execute validation logic explicitly. We don&#8217;t have to wait for exception when <em>DbContext.SaveChanges()</em> is called. We can get all the issues with the updated data [added / modified entities].</p>
+<h3><strong>Validating an Entity</strong></h3>
+<p>We can use <em>DbEntityEntry</em> to find out all the validation errors for an entity. In the following example we are creating a <em>Student</em> entity. We are updating some properties of the entity and adding it to the <em>DbContext</em>.<em> DbEntityEntry.GetValidationResult()</em> returns the validation issues as <em>DbEntityValidationResult</em>. It holds the validation errors in ValidationErrors property [<em>ICollection&lt;DbValidationError&gt;</em>].  If there is any validation error then <em>IsValid</em> property returns false.</p>
+<p><div><script src='https://gist.github.com/2267434.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+ [/gist]</p>
+<p>Here we are creating entities of Student and Department type. After adding it to the context we are checking validation issues of <em>Student</em> entity using <em>DbEntityEntry</em> created for the entity. As you can see there are validation issues with <em>Department</em> entity as well but only the issues [<em>DbEntityValidationResult</em>] with <em>Students</em> are queried using <em>DbEntityEntry.GetValidationErrors()</em>. Later it is parsed in a string using <em>DbEntityValidationMessageParser.GetErrorMessage()</em> defined above and printed on the console.</p>
+<h3><strong>Validating a Property</strong></h3>
+<p>Entity Framework Code First supports limiting the scope of validation checks even further. We can even check if there are validation issues with the value of a certain property of an entity without even worry about any other property of the entity.</p>
+<p><div><script src='https://gist.github.com/2267473.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+ [/gist]</p>
+<p>Here more than one properties of Student entity have validation issues. We are interested with checking for only <em>StudentLastName</em> property.</p>
+<h3><strong>Validating all Entities tracked by DbContext</strong></h3>
+<p>We might also want to check for validation for all the entities tracked by the <em>context. DbContext.GetValidationErrors(). </em>This returns an <em>IEnumerable&lt;DbEntityValidationResult&gt; </em>which can be used to get the actual errors and show them to the user if so desired.<em><br />
+</em></p>
+<p><div><script src='https://gist.github.com/2267502.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+ [/gist]</p>
+<p>Again we are creating the same entities as previous examples and adding them to DbContext. There are deliberate issues with the values assigned to the properties. Then we are finding the issues using<em> DbContext.GetValidationErrors()</em> and printing it on the console. This would result in more meaningful message to the user about the actual issue with the data.</p>
+<h2>Summary</h2>
+<p><em>Entity Framework Code First DbContext API</em> provides a comprehensive support for validating entities before they are being pushed to the database. The also allow on-demand validation of entities and their properties. It also supports turning off these validations.</p>
+<h2><strong>About the Author</strong></h2>
+<p><i>Muhammad is a passionate blogger. He loves to explore various technologies and discuss their amazing features with the other software enthusiasts. He is a co-author of <a title="MVVM Survival Guide for Enterprise Architectures in Silverlight and WPF" href="http://www.amazon.com/Survival-Guide-Enterprise-Architectures-Silverlight/dp/1849683425" target="_blank">MVVM Survival Guide for Enterprise Architectures in Silverlight and WPF</a>. [Blogs http://<a title="shujaat.net" href="http://www.shujaat.net/" target="_blank">shujaat.net</a><span style="color: #585757; font-family: SegoeUI, 'Open Sans', Arial, Helvetica, Tahoma, sans-serif; font-size: small;">; Twitter: @SiddiqiMuhammad]</span></i></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-11T00:00:00-05:00" pubdate data-updated="true">Apr 11<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/code-first/'>Code First</a>, <a class='category' href='/blog/categories/dbcontext/'>DbContext</a>, <a class='category' href='/blog/categories/dbentityentry/'>DbEntityEntry</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/entity-framework/'>Entity Framework</a>, <a class='category' href='/blog/categories/validation/'>Validation</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/becoming-a-headspringer-take-advantage-of-working-with-smart-people/">
+		
+			Becoming a Headspringer: Take Advantage of Working With Smart People</a>
+	</h2>
+	<div class="entry-content">
+		<p>As I was pondering a new topic to blog, I stumbled into one this morning. I was running some ideas by a few Headspringers, and they provided several options. I decided to go with a hybrid of their suggestions. What I originally planned to blog was a way to test Enumeration subclasses of the <a href="https://bitbucket.org/headspringlabs/tarantino/wiki/Home" target="_blank">Enumeration class from Tarantino</a>. What I ended up with was an even better way to test them. This is not an unusual happenstance at Headspring. If you talk to other Headspringers, you’re going to learn something new. It never ceases to amaze me how often I’m learning something. I like to think I’m doing some teaching, too, but I’m confident that I’m currently learning more than teaching.</p>
+<p>In case it isn’t clear by the title, part of becoming a Headspringer is to learn from the great people you get to work with every day. So, if you&#8217;d like the opportunity to work with talented, passionate people, <a href="http://www.headspring.com/about-us/careers">we are hiring!</a></p>
+<p>Now let’s get to the original idea of testing the Enumeration subclasses. I will walk through my original code, then what <a href="http://www.headspring.com/2012/02/get-to-know-a-developer-brandon-barry">Mr. Brandon Barry</a> showed me, and why it’s an improvement.</p>
+<p>Originally, I had a test that gets all the subclasses of Enumeration, loops through them, and verifies all the values are unique. The test looked like this:<br />
+[gist id=2348233 file=All_Enumerations_should_contain_unique_ids_test.cs]<br />
+After talking to a few Headspringers, Brandon mentioned TestCaseSource, which turned out to be pretty perfect for this situation. Using TestCaseSource is similar to TestCase, which <a href="http://www.headspring.com/2012/03/why-i-like-testcase">Chris Missal blogged</a> about a couple weeks ago. You could use TestCase for this if you only wanted to test a few specific enumerations. Since I want to test all subclasses of Enumeration all the time, TestCaseSource was a much better fit. Now I don&#8217;t have to worry about forgetting to add an Enumeration to the test.</p>
+<p>Now the test looks like this:<br />
+[gist id=2348235 file=Enumeration_should_contain_unique_ids_test.cs]<br />
+Basically, NUnit runs a test per type in EnumerationTypes and passes that type into the now-parameterized test. The primary benefit of this method is that it tests one Enumeration at a time. It also makes the test simpler by removing the muck and letting you focus on the actual test. As an added bonus, it integrates with <a href="http://www.jetbrains.com/resharper/">Resharper</a>’s test runner, which means you can debug an individual test without having to loop through the set to get to the one you want.</p>
+<p>I created three test subclasses, and TestEnum3 has duplicate values of 1. Here’s what the runner looks like:</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2012/04/CropperCapture4.jpg"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border-width: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/04/CropperCapture4_thumb.jpg" alt="CropperCapture[4]" width="560" border="0" /></a><br />
+<span style="font-size: x-small; color: #666;">Click image to enlarge</span></p>
+<p>You can see in the image above that my original test just fails with &#8220;TestEnum3 contains duplicate ID of 1&#8221;. When using the TestCaseSource you get the test breakdown of each Enumeration, can clearly see that TestEnum3 is the one that fails, and can re-run that one individually. It also shows you what exactly is being tested, so you can verify you&#8217;re testing everything you think you&#8217;re testing.</p>
+<p>And now it’s fixed:</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2012/04/CropperCapture6.jpg"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border-width: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/04/CropperCapture6_thumb.jpg" alt="CropperCapture[6]" width="560" border="0" /></a><br />
+<span style="font-size: x-small; color: #666;">Click image to enlarge</span></p>
+<p>If you would like to see more details on the Enumeration class, you can <a href="http://lostechies.com/jimmybogard/2008/08/12/enumeration-classes/">read Jimmy Bogard’s post on the subject</a>. If you would like more details about this particular test, feel free to leave a comment.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-10T00:00:00-05:00" pubdate data-updated="true">Apr 10<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/developing-with-c-number/'>developing with C#</a>, <a class='category' href='/blog/categories/unit-testing/'>unit testing</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/notepad-will-corrupt-your-data/">
+		
+			Notepad Will Corrupt Your Data</a>
+	</h2>
+	<div class="entry-content">
+		<h2>Summary</h2>
+<p>The notepad.exe built into Windows will silently convert characters represented in binary as all zeros into spaces.  Don&#8217;t use notepad to edit files that contain ANY binary data, such as digital signatures.  There are other editors that will not convert the null characters, I use and recommend Notepad++.</p>
+<h2>Observing the Issue</h2>
+<p>Recently I worked on a development project involving cryptography and digital signatures.  If you aren&#8217;t familiar with digital signatures, they can be briefly described as a way to securely &#8220;sign&#8221; some content so a receiver can verify that the content actually came from a particular verified party.  This is very useful since electronic communication, unlike face to face communication, offers little innate assurance of whom you&#8217;re speaking with.  You definitely want some assurance an electronic message that says &#8220;sell all your stock&#8221; actually came from your broker! If you&#8217;d like to learn more about how digital signatures work, try doing some internet searches on &#8220;public key encryption&#8221; or &#8220;public key cryptography&#8221;.</p>
+<p>One approach to digital signatures is using a single file with both the content being signed and the signature itself (technical background: I was processing AS2 messages, but that&#8217;s not important to the discussion).  Here&#8217;s a simple example of a short text message with a corresponding signature for it (although you could sign other media types like sound or picture files).  We can see the plain text message, and some of the signature itself is just plain text.  But because this is binary it has bytes that are all zero, which in text is represented as a null character.  Notepad++ shows these as NUL, but Notepad converts them into regular spaces.</p>
+<p>(screenshots from each)</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2012/03/asignedMessageInNpp.png"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/03/asignedMessageInNpp_thumb.png" alt="Simple digital signature in Notepad++.  Null characters are visible." width="244" height="135" border="0" /></a>    <a href="http://www.headspring.com/wp-content/uploads/2012/03/asignedMessageInNotepad.png"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/03/asignedMessageInNotepad_thumb.png" alt="Simple digital signature in Notepad.exe.  Null characters are turned into spaces." width="244" height="120" border="0" /></a></p>
+<p>Here&#8217;s what happens when we save this digital signature with notepad.exe.  When we reopen it in Notepad++, we can see that notepad converted the null characters into spaces.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2012/03/acorruptedInNpp.png"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/03/acorruptedInNpp_thumb.png" alt="Signature in Notepad++ after it was saved by Notepad.exe.  Null characters have been converted into spaces." width="244" height="127" border="0" /></a></p>
+<p>The binary data is now corrupted.  Bytes of all zero aren&#8217;t significant in text because they represent a null character that no one is going to miss, or even usually see.  They are very significant in binary data, however. In this particular case, when the null characters are changed the signature will no longer validate because it has been altered, a potential sign of tampering.</p>
+<p>There are two lessons here.  The first is not to be lulled into thinking binary data can be treated as text, even if a lot of it LOOKS like text.  The second is don&#8217;t ever, ever use notepad with binary data.  My personal preference is to never, ever use notepad anyway; I ran into this issue when I received some signatures from someone else.  There are so many better alternatives available like Notepad++, Sublime, e, Notepad2, Ultraedit&#8230;well, you get the idea.  Find one that works for you and throw away notepad.exe!</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-09T00:00:00-05:00" pubdate data-updated="true">Apr 9<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/notepad/'>notepad</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/headspring-experiences-dynamic-growth-moves-to-bigger-office/">
+		
+			Headspring Experiences Dynamic Growth, Moves to Bigger Office</a>
+	</h2>
+	<div class="entry-content">
+		<p><em>New Space Will Preserve Culture While Expanding Staff Levels and Service Offerings </em></p>
+<p><strong>AUSTIN, TX – April 9 , 2012</strong>, Headspring, an Austin-based custom software consultancy, will triple their square footage as they move into a new office space in the Avalon Building, located in northwest Austin.  As the privately funded company continues to contract new and larger projects, they vow to preserve a fun and collaborative culture, while planning to hire two new employees per month in 2012.<img title="More..." src="http://www.headspring.com/wp-includes/js/tinymce/plugins/wordpress/img/trans.gif" alt="" /></p>
+<p>The signed lease comes on the tails of President Jeffrey Palermo’s search to satisfy all employee requests for new office amenities.  “It is important that we continue to foster a creative and collaborative environment for our consultants.  I solicited requests from the team - from natural lighting, to nearby eateries, to covered parking.  I even mapped out the most ideal commute according to everyone’s residential address,” said Palermo.</p>
+<p>Headspring continues to attract the attention of Texas companies, large and small, after experiencing monumental growth in 2011, which included 47 percent growth in revenue and 162 percent increase in clients.  As a result, the company is in the process of promoting current employees – five promotions so far in 2012 – and increasing staff levels by hiring two new full time positions each month.</p>
+<p>“We are really looking forward to this move. A larger space means we can offer more to our team members, clients, and community,” says CEO Dustin Wells. “Expanding allows us to reach more people on our mission to solve the hardest problems and provide the most maintainable software solutions.”</p>
+<p>As Headspring leads the way in project consulting and developer training, its new space, which went from 4,233 sq ft. to 11,319 sq. ft., will contain eight conference rooms for project teams to host clients and utilize as presentation and meeting space.  Also, the training room will seat up to 100 people, allowing instructors to offer the acclaimed educational courses to a larger audience, and more space for employees to host community events. Headspring’s first training session in the new office space will be its HTML5 Boot Camp open to developers nationwide.</p>
+<p>For more information about available positions, visit: <a href="http://www.headspring.com/about-us/careers" target="_blank">http://www.headspring.com/<wbr>about-us/careers</wbr></a>.</p>
+<p><strong>About Headspring<br />
+</strong>Headspring delivers custom business applications to help growing companies. The Austin-based company has proudly served Texas businesses since 2001. Headspring is committed to helping local companies compete in their markets by delivering custom business applications for growing companies using consultative and collaborative processes. Headspring provides customers with maintainable custom applications to fit business specific needs to enable continued growth and efficiencies. In 2009, the company was named #127 on Inc. 500, the exclusive ranking of the nation’s fastest-growing private companies. For more information, go to <a href="http://www.headspring.com/" target="_blank">www.headspring.com</a> or call <a href="tel:%28877%29%20459%E2%80%932260" target="_blank">(877) 459–2260</a>.<br />
+###</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-09T00:00:00-05:00" pubdate data-updated="true">Apr 9<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/press/'>Press</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
 		<a href="/blog/the-null-object-pattern-in-c-and-system-lazy/">
 		
 			The Null Object Pattern in C# and System.Lazy</a>
@@ -95,9 +434,25 @@
 <p><div><script src='https://gist.github.com/2206415.js'></script>
 <noscript><pre><code></code></pre></noscript></div>
 <br />
-[gist id=&#8221;2206371&#8221; file=&#8221;Signature.cs&#8221;]
+[gist id=&#8221;2206371&#8221; file=&#8221;Signature.cs&#8221;]</p>
+<p>Another reason I’m a fan of this pattern is when it can be used in sets. Imagine your email signature for a moment. You could have multiple signatures to choose from when you compose an email. Rather than having code to check for the existence of signatures, we can now simply always assume that there will be at least one signature.</p>
+<p>[gist id=&#8221;2206371&#8221; file=&#8221;EmailUser.cs&#8221;]</p>
+<p>While this code example isn’t too complex, one could imagine that creating a new object every time a property is accessed could get a bit expensive depending on the project. In our example with Email and Signatures, we would be perfectly fine using a Singleton. We might also want to set up our code this way if we needed to worry about reference equality. Just something to keep in mind.</p>
+<p>When creating singletons over the years, I’ve seen it done many ways, each better than the next. If we’re going to manage our object’s lifestyle ourselves, there’s a couple of approaches. Each of these is better than the previous:</p>
+<p><div><script src='https://gist.github.com/2206342.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>You’ll notice that making sure this code is lazily initialized and thread safe can add a lot of “noise” to your code.</p>
+<h3><strong>Using .Net’s System.Lazy</strong></h3>
+<p>This is where <a href="http://msdn.microsoft.com/en-us/library/dd642331.aspx">Lazy</a> can help me out. The following code will achieve the same result as the double-checked locking method above.</p>
+<p><div><script src='https://gist.github.com/2206450.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>It is much cleaner, right? I like Lazy because it removes the noise around thread safety from my code, where it really shouldn’t exist anyway.</p>
+<p>I’ve found places that these two patterns work together nicely for me, but one doesn&#8217;t require the other. Keep an eye open for areas to use these individually if the opportunity is right.</p>
+
 		
-		<a href="/blog/the-null-object-pattern-in-c-and-system-lazy/" class="more-link">Read on &rarr;</a>
+		
 	</div>
 
 
@@ -135,9 +490,37 @@
 			Publishing a Library to SymbolSource.org</a>
 	</h2>
 	<div class="entry-content">
-		<p>Last week, we saw how to <a href="http://www.headspring.com/2012/03/publishing-a-library-with-nuget">publish a library with NuGet</a>.  By including DLL files in our NuGet package under the special &#8220;lib&#8221; folder, NuGet knows to install them as assembly references in the target project.  This is a great way to get your open-source library into the hands of your audience, but it also provides them with a pretty lame debugging scenario.
+		<p>Last week, we saw how to <a href="http://www.headspring.com/2012/03/publishing-a-library-with-nuget">publish a library with NuGet</a>.  By including DLL files in our NuGet package under the special &#8220;lib&#8221; folder, NuGet knows to install them as assembly references in the target project.  This is a great way to get your open-source library into the hands of your audience, but it also provides them with a pretty lame debugging scenario.</p>
+<h2>Black Box Debugging</h2>
+<p>Using that NuGet package from last week, I installed <a href="https://github.com/plioi/parsley">Parsley</a> into another project that consumes it.  While trying to debug <em>that</em> project, I got to a point where I wanted to just step the debugger into one of Parsley&#8217;s methods.  Even with the PDB file included in the NuGet package, Visual Studio just plain didn&#8217;t have enough information to let me step through Parsley&#8217;s code.</p>
+<p>Too much information about the original source gets lost when a PDB is produced.  We need to make the source code available to the consumer when they install our packages, and we need to so in a way that Visual Studio can take advantage of at debugging time.</p>
+<h2>Publishing a Symbol Package</h2>
+<p>Fortunately there is a free service, <a href="http://SymbolSource.org">SymbolSource.org</a>, which is easy to integrate with both NuGet (for the publisher) and Visual Studio (for the consumer).  Although getting a SymbolSource account is an option, you won&#8217;t actually need one.  You&#8217;ll be able to publish a special variant of your NuGet package to NuGet.org, and then NuGet.org shakes hands with SymbolSource.org on your behalf.  All it takes is a slight tweak to your <code>.nuspec</code> file, and an extra command-line argument when converting that <code>.nuspec</code> into a <code>.nupkg</code>!</p>
+<p>The previous version of my <code>.nuspec</code>&#8217;s <code>files</code> tag just copied DLLs and PDBs into the package&#8217;s special &#8220;lib&#8221; folder:</p>
+<p><div><script src='https://gist.github.com/2231973.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>The new version also copies all of the source code to the package&#8217;s special &#8220;src&#8221; folder.  We don&#8217;t need to copy auxiliary files like <code>.csproj</code> or <code>.sln</code>.  We just need to copy the code files that the debugger will need to display, namely all the *.cs files:</p>
+<p><div><script src='https://gist.github.com/2288725.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>I used this single <code>.nuspec</code> to produce <em>two</em> <code>.nupkg</code> files, by including the <code>-Symbols</code> command line argument:</p>
+<blockquote><p>
+  $ nuget pack Parsley.nuspec -Symbols
+</p></blockquote>
+<p>This produced Parsley.0.0.2.nupkg like normal, but it also produced Parsley.0.0.2.symbols.nupkg.  NuGet.exe is smart enough to know that the first package only needed the DLLs (used at installation time), and that the symbol package needs to contain the PDBs and C# files (used at debugging time).  When I pushed the main package to NuGet.org, NuGet.exe noticed the symbol package was also present, and submitted that one too:</p>
+<blockquote>
+<p>$ nuget push Parsley.0.0.2.nupkg<br />
+    Pushing Parsley 0.0.2 to the NuGet gallery (https://www.nuget.org)&#8230;<br />
+    Your package was pushed.<br />
+    Pushing Parsley 0.0.2 to the symbol server (http://nuget.gw.symbolsource/Public/NuGet)&#8230;<br />
+    Your package was pushed.</p>
+</blockquote>
+<p>I then followed the instructions for <a href="http://www.symbolsource.org/Public/Home/VisualStudio">configuring Visual Studio to work with SymbolSource.org</a>.  Remember, you don&#8217;t have to follow the suggestion to create a SymbolSource account.</p>
+<p>I updated the package in the consumer project, which installed the DLLs.  The next time I tried to step into a Parsley method, I got a quick dialog that said it was downloading the relevant files from SymbolSource, and then I was able to step through the read-only C# files found within the symbol package!</p>
+
 		
-		<a href="/blog/publishing-a-library-to-symbolsource-org/" class="more-link">Read on &rarr;</a>
+		
 	</div>
 
 
@@ -182,9 +565,16 @@
 <li>Your boss wants personal space too</li>
 <li>You’re probably not going to get it</li>
 </ol>
-<p>So…
+<p>So…</p>
+<p><strong>If you can’t communicate well with your boss, these problems will always be problems.</strong></p>
+<p>Sometimes, there is a greater, systematic reason why open and honest communication never happens at a company.  But most of the time it’s definitely possible to alleviate the pressure by simply talking to your boss about what you’re dealing with. Bosses aren’t evil; they really do want you to be as comfortable as possible.</p>
+<p>One way to breakdown the communication barrier is to ask more questions. Being considerate of your boss’s situation is the first step, and don’t expect have to have all the answers right up front.  Instead of pointing the finger by listing your complaints, try to ask questions like, “How can I make this more comfortable for you?” or “I have some ideas about how to make the room quieter; can we talk?” or “You usually have great advice for me, so is it ok if we talk things through a little more before deciding on a solution?”</p>
+<p>Once you are able to talk openly about any problem, it makes it a lot easier to tackle other problems together.</p>
+<p>For the record: I really like sharing an office with my boss, Katie. Because we share space, we have a much more casual and relaxed relationship.  If I’m struggling with something, I’m able to talk it through with her before giving up. If we were in a separate space, I don’t think I would be as willing to admit failures or shortcomings without “explaining them away.”  We have discussed this scenario before, and labeled it the “no room for error relationship.”  Because she is here, she understands the context of my day, and can help me accomplish my own goals. Conversely, she doesn’t have to be brilliant all by herself.  I’m here to bounce ideas around, brainstorm, or remind her of details in my work that could positively or negatively affect her strategy and decision making.  She&#8217;s smart, not perfect, and it helps that she knows it.</p>
+<p>What are some other pros/cons of sharing space with a boss, and how do you cope?</p>
+
 		
-		<a href="/blog/sharing-an-office-with-your-boss/" class="more-link">Read on &rarr;</a>
+		
 	</div>
 
 
@@ -227,9 +617,26 @@
 <p><div><script src='https://gist.github.com/2015251.js'></script>
 <noscript><pre><code></code></pre></noscript></div>
 </p>
-<p>By creating a Func&lt;&gt; to set the properties on an object, it shortens the test and makes it much more readable. Obviously if you have more than one test that needs new books, then I&#8217;d recommend using a private method. If you&#8217;re wondering about the .ShouldEqual or .ShouldBeTrue in the test, I&#8217;m using the <a title="Should Assertion Library" href="http://nuget.org/packages/Should" target="_blank">Should Assertion Library</a> because I like the readability.
+<p>By creating a Func&lt;&gt; to set the properties on an object, it shortens the test and makes it much more readable. Obviously if you have more than one test that needs new books, then I&#8217;d recommend using a private method. If you&#8217;re wondering about the .ShouldEqual or .ShouldBeTrue in the test, I&#8217;m using the <a title="Should Assertion Library" href="http://nuget.org/packages/Should" target="_blank">Should Assertion Library</a> because I like the readability.</p>
+<p>If you want to set more than just the Genre, it would look like this:</p>
+<p><div><script src='https://gist.github.com/2015265.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>The above example would be called like this:</p>
+<p><div><script src='https://gist.github.com/2015266.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>If you want to specify even more properties, try this out:</p>
+<p><div><script src='https://gist.github.com/2015268.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>The above example would look like this:</p>
+<p><div><script src='https://gist.github.com/2015272.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+ </p>
+
 		
-		<a href="/blog/add-a-little-func-to-your-tests/" class="more-link">Read on &rarr;</a>
+		
 	</div>
 
 
@@ -270,9 +677,14 @@
 		<p>Most people in the industry are undoubtedly familiar with the Software Development Lifecycle (SDLC).</p>
 <p><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/CPT-SystemLifeSycle.svg/500px-CPT-SystemLifeSycle.svg.png" alt="" /></p>
 <p>Reference: Wikipedia</p>
-<p>I was having lunch with a recruiter colleague, and I was learning about the QA requests from lots of customers.  Most defined the QA role well within the “Testing” oval as shown in the picture.  From my questioning, it appears that the agile movement has done little to alter this SDLC.  In fact, this process is still alive and very will, even within agile teams.  The difference is in the batch size.  Rather than doing analysis on a batch of 50 features and then moving that full batch to design, the agile movement has reduced that batch size considerably, and in some cases reduced it down to a batch size of 1.  Lean agile teams are likely to use a batch size of 1 and continuously pull features through the lifecycle.  As an aside, I find that even when working on a single feature, this cycle is still in play, although the feature is more likely to jump backward and redo a portion of the phase before if new information is found.
+<p>I was having lunch with a recruiter colleague, and I was learning about the QA requests from lots of customers.  Most defined the QA role well within the “Testing” oval as shown in the picture.  From my questioning, it appears that the agile movement has done little to alter this SDLC.  In fact, this process is still alive and very will, even within agile teams.  The difference is in the batch size.  Rather than doing analysis on a batch of 50 features and then moving that full batch to design, the agile movement has reduced that batch size considerably, and in some cases reduced it down to a batch size of 1.  Lean agile teams are likely to use a batch size of 1 and continuously pull features through the lifecycle.  As an aside, I find that even when working on a single feature, this cycle is still in play, although the feature is more likely to jump backward and redo a portion of the phase before if new information is found.</p>
+<p>The reason for the reflection on QA is that my recruiter colleague still predominantly  receives requests for QA folks to fill the roll of the testing phase.  This means that the QA involvement happens after analysis, after design, after implementation, and only when defects can no longer be prevented.  They can only be discovered.  Inspectors at the end of an assembly line are powerless to prevent defective parts.  They can only discover them through inspection and serve a Quality Control role to prevent defective parts from being shipped.  The same is true in software, and many others have written the same.</p>
+<p>I shared a very successful project where we incorporated what would otherwise be a very traditional QA Manager into an agile process and yielded great results and a very low defect rate.  When crafting the team’s process, the QA Manager worked in between the analysis and design phases of a given feature to understand and then define the test cases.  That is, based on the current understanding of the feature, how will we test it?  The work required to create the test cases was sufficient to find analysis gaps early and force them to be filled.  The additional information and context contained in the test cases added the design activity as well and yield, in my opinion, a more robust design that was less prone to defects of oversight.  In this project, we saw the time spent coding reduced to less than 50% of the overall project effort.  In fact, at the beginning of the project, programmers were about 50% of project staff, and half-way through, the programmer staff had been reduced to 1/3 of overall project staff.  By crafting a process that pulled thoughts of QA to the beginning of the process, we modified the environment to one in which it was hard for defects to be created in the first place.  In the end, we found no need to create a defect tracking database, and the team was applauded for its quality.  The production launch, which always carries some risk, was a trivial affair, and the system is currently being used by many to perform their daily job.</p>
+<p>Our industry stills see QA not as assuring quality, but merely controlling quality through inspection.  Some savvy development managers already have changed traditional QA job descriptions, but there is a long way to go before these notions reach the mainstream of the industry.</p>
+<p>What are your experiences with QA?</p>
+
 		
-		<a href="/blog/the-confusion-around-qa-why-doesnt-the-industry-agree/" class="more-link">Read on &rarr;</a>
+		
 	</div>
 
 
@@ -310,9 +722,21 @@
 			Publishing a Library With NuGet</a>
 	</h2>
 	<div class="entry-content">
-		<p>Last week, we saw how to <a href="http://www.headspring.com/2012/03/publishing-a-simple-nuget-package">publish a simple NuGet package</a>.  When installed into your solution in Visual Studio, that package would copy some text files into the target project.  That&#8217;s convenient, but it isn&#8217;t a typical use case for NuGet.  Instead, you usually want to publish compiled assemblies, and you want installation to add those assemblies to the target project&#8217;s list of assembly references.
+		<p>Last week, we saw how to <a href="http://www.headspring.com/2012/03/publishing-a-simple-nuget-package">publish a simple NuGet package</a>.  When installed into your solution in Visual Studio, that package would copy some text files into the target project.  That&#8217;s convenient, but it isn&#8217;t a typical use case for NuGet.  Instead, you usually want to publish compiled assemblies, and you want installation to add those assemblies to the target project&#8217;s list of assembly references.</p>
+<p>In <a href="http://www.headspring.com/2011/11/recognizing-covariance-issues-in-your-code">Recognizing Covariance Issues in Your Code</a>, I introduced my hobby project, <a href="https://github.com/plioi/Parsley">Parsley</a>.  This project has gotten fairly stable in recent weeks, and I decided to publish it so that I could use NuGet to install it in other projects.</p>
+<p>In the <a href="http://www.headspring.com/2012/03/publishing-a-simple-nuget-package">simple NuGet package</a>, we created a *.nuspec file containing a <code>files</code> tag.  That <code>files</code> tag listed the files we wanted to copy into the target project upon installation.  We described the target path starting with &#8220;content&#8221;:</p>
+<p><div><script src='https://gist.github.com/2231965.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p><a href="https://github.com/plioi/parsley/blob/c89236d7f253a13f0eaa3354b9714488d1742d65/default.ps1">Parsley&#8217;s build script</a> generates a *.nuspec file with a slightly different naming convention for the target paths:</p>
+<p><div><script src='https://gist.github.com/2231973.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Starting these paths with &#8220;lib&#8221; instead of &#8220;content&#8221; indicates to NuGet that they are libraries and should be added to the target project&#8217;s list of referenced assemblies.  The &#8220;net40&#8221; folder is also a part of the naming convention, indicating that the assembly was built for .NET 4.0.  If we&#8217;re targeting several different runtimes, we could include them all in one package using folder names like &#8220;net11&#8221;, &#8220;net20&#8221;, etc&#8230;</p>
+<p>Above, I&#8217;m also copying the *.pdb files into the package.  Next week, we&#8217;ll see a better alternative to enhance the debugging experience for your library&#8217;s users: integrating with <a href="http://symbolsource.org/">SymbolSource.org</a>.</p>
+
 		
-		<a href="/blog/publishing-a-library-with-nuget/" class="more-link">Read on &rarr;</a>
+		
 	</div>
 
 
@@ -334,170 +758,6 @@
 
 
 	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/how-to-integrate-with-other-systems-reliably/">
-		
-			How to Integrate With Other Systems Reliably</a>
-	</h2>
-	<div class="entry-content">
-		<p>A couple of years ago, I started working with a client on a system that worked as an integration point and decision engine for a large, nationwide brick-and-mortar store that was just beginning to introduce a customer loyalty program (think like Best Buy Rewards).</p>
-<p>The system built was like the ones I’ve always built, with the caveat that there was very little in terms of a user interface. Instead, customers never interacted directly with the application, and we received notices of external events (and then notified others) through a variety of integration patterns, including:
-		
-		<a href="/blog/how-to-integrate-with-other-systems-reliably/" class="more-link">Read on &rarr;</a>
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-30T00:00:00-05:00" pubdate data-updated="true">Mar 30<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/onion-architecture-part-4-after-four-years/">
-		
-			Onion Architecture: Part 4 - After Four Years</a>
-	</h2>
-	<div class="entry-content">
-		<p>In 2008, I coined a new pattern name called Onion Architecture.  You can read the previous parts here: <a href="http://jeffreypalermo.com/blog/the-onion-architecture-part-1/">part 1</a>, <a href="http://jeffreypalermo.com/blog/the-onion-architecture-part-2/">part 2</a>, <a href="http://jeffreypalermo.com/blog/the-onion-architecture-part-3/">part 3</a>.  Over these four years, I’ve spoken about this pattern at user groups, conferences, and it’s even published in one of the chapters of <a href="http://manning.com/palermo3">ASP.NET MVC in Action</a> from <a href="http://manning.com/palermo3">Manning</a>.</p>
-<p>I’ve been overwhelmed by the traction this pattern name has enjoyed.  Folks from all over the country have written about and have talked about the pattern.  Some of the ones I’ve noticed are here (please comment with more – I welcome it).
-		
-		<a href="/blog/onion-architecture-part-4-after-four-years/" class="more-link">Read on &rarr;</a>
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-29T00:00:00-05:00" pubdate data-updated="true">Mar 29<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/mvc/'>MVC</a>, <a class='category' href='/blog/categories/architecture/'>architecture</a>, <a class='category' href='/blog/categories/design/'>design</a>, <a class='category' href='/blog/categories/onion/'>onion</a>, <a class='category' href='/blog/categories/patterns/'>patterns</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/what-is-technology/">
-		
-			What Is Technology?</a>
-	</h2>
-	<div class="entry-content">
-		<p><a href="http://www.headspring.com/2012/03/what-is-technology/frustrating-printer" rel="attachment wp-att-4418"><img class="alignleft size-full wp-image-4418" title="frustrating printer" src="http://www.headspring.com/wp-content/uploads/2012/03/frustrating-printer.jpg" alt="" width="200" height="271" /></a>I have never met a printer I liked. They break all the time, they are buggy and noisy, and cartridges are way too expensive.</p>
-<p>Printers are a terrible bane on my existence, and I have made a purpose to rid myself of needing them at all. I have come to realize that I am not alone in this grievance, and going on without the need for a frustrating printer is no longer a difficult task. Google Docs, EchoSign and a whole host of other cloud-based offerings have significantly reduced our reliance on printers, and they have added years back to my life.</p>
-<p>But this post isn’t <em>all</em> about how much I hate printers – it’s old news. I work for a technology company, and technology is about new news.
-		
-		<a href="/blog/what-is-technology/" class="more-link">Read on &rarr;</a>
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-28T00:00:00-05:00" pubdate data-updated="true">Mar 28<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/what-is-hg-rebase/">
-		
-			What Is Hg Rebase?</a>
-	</h2>
-	<div class="entry-content">
-		<p>A couple weeks ago I introduced a client developer I&#8217;m working with on a project to <a href="http://mercurial.selenic.com/wiki/RebaseExtension">Hg Rebase</a> because the work we were doing at the time didn&#8217;t really need feature branches of any kind. When I was asked how this works over the phone, I explained it the best I could on the spot, but here&#8217;s a better attempt.
-		
-		<a href="/blog/what-is-hg-rebase/" class="more-link">Read on &rarr;</a>
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-27T00:00:00-05:00" pubdate data-updated="true">Mar 27<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/mercurial/'>mercurial</a>, <a class='category' href='/blog/categories/source-control/'>source control</a>
 
 
 </div>

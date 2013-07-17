@@ -7,7 +7,8 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="The Austin Startup Games were a flying success this past Saturday, February 16th at the Austin Music Hall. Headspring was proud to participate for &hellip;">
+	<meta name="description" content="This article is part of a series exploring how to create installers for Windows software.  Here&#8217;s the complete contents of the series.
+Part 1 &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -83,6 +84,326 @@
     <article class="post">
 	<h2 class="title">
 		
+		<a href="/blog/creating-windows-installers-with-the-wix-toolset-part-6/">
+		
+			Creating Windows Installers With the WiX Toolset Part 6</a>
+	</h2>
+	<div class="entry-content">
+		<address>This article is part of a series exploring how to create installers for Windows software.  Here&#8217;s the complete contents of the series.</address>
+<address><a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-01/">Part 1 – What Kinds of Software Projects Benefit From an Installer?</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-02/">Part 2 – An Overview Of Windows Installer and its Features</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-03/">Part 3 – Tooling Options for Building Installers</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-04/">Part 4 – The Windows Installer Runtime Sequence</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-5/">Part 5 – The Contents of an MSI</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-6/">Part 6 – The Structure of a WiX File</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-7/">Part 7 – Generating an MSI Package From Your WiX</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-8/">Part 8 – Troubleshooting Installer Runtime Problems</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-summary/">Part 9 - Summary</a><br />
+</address>
+<p><br/></p>
+<h2>Summary</h2>
+<p>This post is a companion to the previous post in Part 5 - it shows and explains the structure of the WiX file that was used to generate the MSI.</p>
+<h2>Tooling and References For Editing WiX Files</h2>
+<p>Since the name of the toolkit is &#8220;Windows Installer in XML&#8221;, you probably won&#8217;t be terribly surprised to find out that the source files you edit are&#8230;wait for it&#8230;XML. This means you can author and edit in your favorite XML editor of choice, whether that&#8217;s Notepad++, some incredibly expensive specialty tool like Altova XML Spy, or Visual Studio. If you use Visual Studio and you&#8217;ve installed WiX on your local machine, you can leverage the included Votive project types to get Intellisense in Visual Studio.</p>
+<p>[caption id=&#8221;attachment_6409&#8221; align=&#8221;alignnone&#8221; width=&#8221;582&#8221;]<a href="http://www.headspring.com/wp-content/uploads/2013/02/votiveIntellisense.png"><img class=" wp-image-6409 " alt="Picture of editing with Visual Studio and Intellisense supplied by Votive" src="http://www.headspring.com/wp-content/uploads/2013/02/votiveIntellisense-970x562.png" width="582" height="337" /></a> Visual Studio Intellisense with Votive[/caption]</p>
+<p>There&#8217;s reference documentation for the schema at <a href=" http://wix.sourceforge.net/manual-wix3/schema_index.htm">SourceForge</a>. The first link is for the WiX schema itself, and there are other schema references for the various extensions that are available.</p>
+<h2>The Complete Hello World</h2>
+<p><div><script src='https://gist.github.com/5014691.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<h2>Dissecting the Elements</h2>
+<p>Line 3 is pretty straightforward: declare our root Wix element and specify the namespace. No that isn&#8217;t a typo at the end; the namespace really doesn&#8217;t have an x at the end of it. I have no idea why.</p>
+<p>Line 5 declares our Product for the installer (recall Product has a cardinality of 1). Some of the supporting attributes like Manufacturer, Name, and Version will show up in the Add Program and Features list for Windows.</p>
+<p>Line 12 defines the Package (also cardinality of 1), which is the installer itself. Attributes here will show up in the properties of the MSI file.</p>
+<p>Line 19 introduces the concept of Media, which wasn&#8217;t discussed in the MSI examination. Windows Installer has a profuse amount of options for the physical layout of the files to be deployed, including things like spanning multiple DVDs (or floppies - <a href="http://superuser.com/questions/231273/what-are-the-windows-a-and-b-drives-used-for">remember those?</a> The need for this has fallen by the wayside as most software is downloaded from the internet or an internal network these days. In this example, we only have one physical media target, and the EmbedCab attribute will package all the deployables into the MSI directly since we don&#8217;t need disc spanning.</p>
+<p>Line 21 defines our target directory structure. Note it&#8217;s nested. I&#8217;m not going to discuss it exhaustively, but will point out a few interesting things. Line 22 specifies we&#8217;re installing into this machine&#8217;s Program Files directory, and line 23 is the INSTALLDIR, which is our root target directory. More sophisticated installers will allow the user to specify their own directory and replace the value of INSTALLDIR.</p>
+<p>Line 24 defines our one and only component. Recall from the previous post its possible for a component to have more than one deployable in it, but there are advantages to having a component for every file. Components have a unique ID to identify them.</p>
+<p>In this example we&#8217;ve associated our component with a target directory by simply nesting it under the desired directory. This works for simple scenarios, but if you have more than one target directory for your product or if your code generating your component definitions, it might be easier to declare the directory structure and components separately and use the DirectoryRef attribute on the component to make the association.</p>
+<p>Line 25 contains a file that is part of this component. The name attribute is what the file will be called when it is placed on the target file system, and the source attribute specifies where to get the file when compiling the MSI package.</p>
+<p>Line 26 does what you hopefully would guess; it removes the installation folder from the machine when the component &#8216;MainExecutable&#8217; gets uninstalled.</p>
+<p>Line 32 finishes things out by declaring our single feature (although you&#8217;ll recall there could be multiple Features in a Product), and associating our component with it.</p>
+<h2>Tying It All Together</h2>
+<p>So we have:</p>
+<ul>
+<li>File HelloWorld.exe containing our executable</li>
+<li>Component MainExecutable containing the HelloWorld.exe File</li>
+<li>Directory INSTALLDIR (which itself is a subdirectory) associated with the MainExecutable Component</li>
+<li>Feature called Complete containing the MainExecutable Component</li>
+<li>Product that contains the Complete Feature (this is implied and doesn&#8217;t have to be explicitly defined)</li>
+</ul>
+<p>All of this maps neatly to the MSI we took apart in the <a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-05/">last post</a>. In the next installment, we&#8217;ll look at the process for actually turning WiX into an MSI.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-28T00:00:00-06:00" pubdate data-updated="true">Feb 28<span>th</span>, 2013</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/blog/'>Blog</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/wix/'>WiX</a>, <a class='category' href='/blog/categories/windows-installer/'>windows installer</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/graphiti/">
+		
+			Graphiti</a>
+	</h2>
+	<div class="entry-content">
+		<p>Back in college, I stumbled across a great tool called <a href="http://www.graphviz.org/">GraphViz</a>.  I used it to generate class diagrams from the source of a PHP application I was working on.  More recently, I&#8217;ve found it useful again for visualizing the <em>runtime</em> relationships between objects.  GraphViz can turn a plaintext description of relationships into a graph image.  Not &#8220;graph&#8221; as in &#8220;charts and graphs&#8221;, but &#8220;graph&#8221; as in &#8220;computer science graph&#8221;.  Nodes and edges:</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/02/simple.png"><img src="http://www.headspring.com/wp-content/uploads/2013/02/simple.png" alt="simple" width="179" height="251" class="aligncenter size-medium wp-image-6425" /></a></p>
+<p>Today, we&#8217;ll see how to easily generate images like this.  Along the way, we&#8217;ll see an interesting use case for anonymous objects.</p>
+<h2>The Dot File Format</h2>
+<p>The image above can be generated from the following text file, using a GraphViz tool called dot.exe.  Note the use of the word &#8216;digraph&#8217;.  A graph is anything made up of nodes and edges; a digraph is a graph where the edges have <em>di</em>rection from a source node to a destination node.</p>
+<p><div><script src='https://gist.github.com/5014220.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>To create the image from the dot file, run the command: <code>dot.exe Simple.dot -Tpng -o Simple.png</code>.</p>
+<p>The dot file format supports a lot of options.  For instance, we can customize the original dot file like so:</p>
+<p><div><script src='https://gist.github.com/5014224.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Optional attributes appear in square brackets.  Here, we give one of our edges a label, alter the colors, and change one of the nodes from an ellipse to a box:</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/02/fancy.png"><img src="http://www.headspring.com/wp-content/uploads/2013/02/fancy.png" alt="fancy" width="179" height="275" class="aligncenter size-full wp-image-6424" /></a></p>
+<p>One can imagine generating these dot files programmatically with a StringBuilder.  Doing so would be a little monotonous, especially when the optional attributes like shapes and colors are included.  You have to busy yourself with the dot format&#8217;s quoting rules as well as C#&#8217;s quoting rules.  Even when you succeed, you&#8217;ll be left with some ugly code.  I&#8217;d much rather generate the above two dot files like so:</p>
+<p><div><script src='https://gist.github.com/5014233.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p><div><script src='https://gist.github.com/5014237.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<h2>Implementing the Digraph Class</h2>
+<p>First, it&#8217;ll be handy to define an extension method to apply the dot quoting rules to any .NET value.  The double-quote character is special in dot files and must be preceded with a slash.  Of course, double-quotes and slashes are also meaningful in C# strings, so we have to double-escape these in the substitution:</p>
+<p><div><script src='https://gist.github.com/5014242.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Next, take a look at the way the optional parameters were supplied in the earlier code sample: <code>new { label = 1, color="red" }</code>.  This is an anonymous object.  It creates an instance of a class whose name we never see, with read-only properties named &#8220;label&#8221; and &#8220;color&#8221;.  We pass this to a method that doesn&#8217;t know what type is being passed to it, but that&#8217;s OK because we can use reflection to inspect such an object.  Here&#8217;s a helper that can look at these anonymous objects and turn them into an equivalent dictionary, whose ToString produces the dot syntax for attributes:</p>
+<p><div><script src='https://gist.github.com/5014245.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>I <em>could</em> have instead provided a real named class with all the possible dot properties already defined.  Doing so would be useful as it would give the developer statement completion suggestions, but the <a href="http://www.graphviz.org/doc/info/attrs.html">dot file format is actually quite extensive</a>.  In this case, it&#8217;s a very reasonable tradeoff to use anonymous objects and reflection for these node and edge attributes.  Even with statement completion, you&#8217;d find yourself frequently looking up details in the documentation anyway, so the return on investment would be ridiculous.</p>
+<p>We can represent a single node in the graph like so:</p>
+<p><div><script src='https://gist.github.com/5014249.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>An Edge is defined by the two Nodes it connects:</p>
+<p><div><script src='https://gist.github.com/5014253.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Armed with all of the above classes, we can finally implement the Digraph class with ease:</p>
+<p><div><script src='https://gist.github.com/5014257.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<h2>Criticism</h2>
+<p>Since the scope of this sample program is <em>entirely</em> devoted to generating the dot file format, I don&#8217;t mind the fact that I mixed state (node and edge definitions) with presentation (string formatting in each ToString override).  An earlier implementation put all of the string formatting in the Digraph class, but it was fairly ugly.  If the requirements expanded such that we needed to use the node/edge structure for things in addition to presentation in dot format, I would want to move all string formatting out of the Node, Edge, and Digraph classes, having a dedicated class just for traversing a Digraph to produce a dot file.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-27T00:00:00-06:00" pubdate data-updated="true">Feb 27<span>th</span>, 2013</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/creating-windows-installers-with-the-wix-toolset-part-5/">
+		
+			Creating Windows Installers With the WiX Toolset Part 5</a>
+	</h2>
+	<div class="entry-content">
+		<address>This article is part of a series exploring how to create installers for Windows software.  Here&#8217;s the complete contents of the series.</address>
+<address><a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-01/">Part 1 – What Kinds of Software Projects Benefit From an Installer?</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-02/">Part 2 – An Overview Of Windows Installer and its Features</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-03/">Part 3 – Tooling Options for Building Installers</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-04/">Part 4 – The Windows Installer Runtime Sequence</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-5/">Part 5 – The Contents of an MSI</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-6/">Part 6 – The Structure of a WiX File</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-7/">Part 7 – Generating an MSI Package From Your WiX</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-8/">Part 8 – Troubleshooting Installer Runtime Problems</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-summary/">Part 9 - Summary</a><br />
+</address>
+<p><br/></p>
+<h2>Summary</h2>
+<p>This post discusses what an MSI is, We&#8217;ll use a Microsoft SDK tool called Orca to examine what the internal structure looks like.  We&#8217;ll also talk about how the internal structure maps to Windows Installer concepts.  While this post is not about WiX directly, authoring in WiX requires a good understanding of these internal structures and how they interconnect.</p>
+<h2>The Contents of an MSI</h2>
+<p>If you&#8217;ve installed several software applications like Office or Halo on your computer, chances are you&#8217;ve come across a file with type of MSI.  MSI stands for Microsoft Installer, and is the primary package type that Windows Installer consumes to install a product.</p>
+<p>There are other file types used by Windows Installer, but MSI is the only &#8220;required&#8221; type for making an installer.  I&#8217;m not going to discuss the other types, but you can find out more about them <a href="http://msdn.microsoft.com/en-us/library/aa372842.aspx">here</a>.</p>
+<p>For our dissection we&#8217;re going to use an MSI that installs a single file - HelloWorld.exe.  Here&#8217;s the installer:</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/msi.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="msi" alt="msi" src="http://www.headspring.com/wp-content/uploads/2013/01/msi_thumb.png" width="244" height="83" border="0" /></a></p>
+<p>The installer has no user interface.  This is what happens when you double click the MSI to install it:</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/installing.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="installing" alt="installing" src="http://www.headspring.com/wp-content/uploads/2013/01/installing_thumb.png" width="244" height="94" border="0" /></a></p>
+<p>What happens next is the window changes to say &#8220;Please wait while Windows configures Edgewolf HelloWorld&#8221; with a progess bar, and then performs the installation and closes.  This happens so fast I couldn&#8217;t get a screenshot of it before it disappeared.  After we run the installer, we have a new entry in Programs and Features that looks like this:</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/programsAndFeatures.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="programsAndFeatures" alt="programsAndFeatures" src="http://www.headspring.com/wp-content/uploads/2013/01/programsAndFeatures_thumb.png" width="244" height="58" border="0" /></a></p>
+<p>And we can find our installed program here:</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/installed.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="installed" alt="installed" src="http://www.headspring.com/wp-content/uploads/2013/01/installed_thumb.png" width="244" height="83" border="0" /></a></p>
+<p>It doesn&#8217;t get much simpler then that, right?</p>
+<h2>MSI Internal Structure</h2>
+<p>It&#8217;s interesting how trends in software development affect technical implementations.  For example, the programming language Java was rising to prominence around the same time the XML file format was being widely touted as THE way to store data for a variety of reasons.  As a result, Java Enterprise Edition (J2EE) relies heavily on XML files, to the point that I&#8217;ve heard jokes that enterprise Java development consists of writing one line of code and editing twenty XML files.</p>
+<p>Windows Installer is no different, and its source of large inspiration is relational databases.  An msi package is, quite literally, a database file with tables and rows in it.  Here&#8217;s a partial schema diagram:</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/payloadTables.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="payloadTables" alt="payloadTables" src="http://www.headspring.com/wp-content/uploads/2013/01/payloadTables_thumb.png" width="244" height="111" border="0" /></a></p>
+<p>Since an installer is for a single product, there&#8217;s dedicated table for that.  But a product like Microsoft Office does have multiple features such as Word, Excel, and PowerPoint.  Large features will typically be composed of a collection of subfeatures that can be installed or not installed and still have a working feature.  Examples of subfeatures for Word would be items like spellcheck, or clipart.</p>
+<p>Features and subfeatures are &#8220;above the water&#8221; concepts in the way that they are exposed directly to the person using the installer.  The user sees them and has a chance to choose what features they do or do not want.</p>
+<p>Features are composed of one or more components.  Components are tangible items like files, start menu shortcuts, and registry entries.  Components are &#8220;below the water&#8221; in the sense that they aren&#8217;t meant to be exposed to users.  When you&#8217;re installing Word, you could care less that you&#8217;re getting the files winword.exe, wordcnv.dll, wordcnvpxy.cnv&#8230;.well you get the idea.  Components are linked to a directory where they are installed, and are composed of one or more files.  Because the directory link is at the component level, obviously all of the files in the component need to target the same directory.</p>
+<p>Components are tied to features with a linking Feature Component table.</p>
+<p>In addition to the payload tables we just looked at, an MSI also has sequence tables that instruct Windows Installer what steps to execute and in what order.  There are a number standard actions included in Windows Installer such as calculating the disk space needed to perform the installation.  It&#8217;s also possible to write your own custom actions, I plan on talking about that in a later post.</p>
+<h2>Installing Orca</h2>
+<p>Microsoft provides a free tool called Orca that can be used to examine an MSI file.  It isn&#8217;t part of Windows, but it&#8217;s included with the Windows 7 SDK.  You can get an ISO of the Windows 7 SDK <a href="http://www.microsoft.com/en-us/download/details.aspx?id=8442">here</a> and the Windows 8 SDK is available <a href="http://msdn.microsoft.com/en-us/windows/hardware/hh852363.aspx">here</a>.</p>
+<p>Once you&#8217;ve installed the SDK, you can find an installer for Orca in the Bin directory (something similar to C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin).  Run the installer, and then you&#8217;ll have Orca in your start menu.</p>
+<h2>Examining the Hello World MSI</h2>
+<p>Start Orca.  Click File..Open, and open the MSI you want to load.  Here’s what you’ll see:</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/msiTablesInOrca.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="msiTablesInOrca" alt="msiTablesInOrca" src="http://www.headspring.com/wp-content/uploads/2013/01/msiTablesInOrca_thumb.png" width="244" height="179" border="0" /></a></p>
+<p>In addition to tables, the installer stores some nonrelational information in a Summary Stream.  You can view this by clicking &#8220;View..Summary Information&#8221;.  Most of it is product related, but the target architecture (32bit or 64bit) is also stored here.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/summaryStreamInOrca.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="summaryStreamInOrca" alt="summaryStreamInOrca" src="http://www.headspring.com/wp-content/uploads/2013/01/summaryStreamInOrca_thumb.png" width="229" height="244" border="0" /></a></p>
+<p>Looking at the feature table, we see this installer only has one feature - Complete (as in a complete install).</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/tableFeature.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="tableFeature" alt="tableFeature" src="http://www.headspring.com/wp-content/uploads/2013/01/tableFeature_thumb.png" width="244" height="53" border="0" /></a></p>
+<p>The FeatureComponent table links one component to our feature, the component called MainExecutable.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/tableFeatureComponent.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="tableFeatureComponent" alt="tableFeatureComponent" src="http://www.headspring.com/wp-content/uploads/2013/01/tableFeatureComponent_thumb.png" width="244" height="75" border="0" /></a></p>
+<p>Heading over to the component table, we see MainExecutable, and it targets the INSTALLDIR for the directory.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/tableComponent.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="tableComponent" alt="tableComponent" src="http://www.headspring.com/wp-content/uploads/2013/01/tableComponent_thumb.png" width="244" height="54" border="0" /></a></p>
+<p>The INSTALLDIR is going into an Edgewolf HelloWorld subdirectory under Program Files.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/tableDirectory.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="tableDirectory" alt="tableDirectory" src="http://www.headspring.com/wp-content/uploads/2013/01/tableDirectory_thumb.png" width="244" height="71" border="0" /></a></p>
+<p>So where&#8217;s the actual exe?  In the File table, and we see its linked to the MainExecutable component.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/tableFile.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="tableFile" alt="tableFile" src="http://www.headspring.com/wp-content/uploads/2013/01/tableFile_thumb.png" width="244" height="54" border="0" /></a></p>
+<p>I didn&#8217;t mention it earlier, but there&#8217;s also a Property table that&#8217;s a catch-all name value pair collection.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/tableProperty.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="tableProperty" alt="tableProperty" src="http://www.headspring.com/wp-content/uploads/2013/01/tableProperty_thumb.png" width="244" height="170" border="0" /></a></p>
+<p>The sequence tables instruct Windows Installer in what steps to take to run the installer.  Recall that there are two install stages (the UI stage and the Execution stage).  There are tables for each, and looking at the pictures below we can see the difference between the two:</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/installUiSequence.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="installUiSequence" alt="installUiSequence" src="http://www.headspring.com/wp-content/uploads/2013/01/installUiSequence_thumb.png" width="244" height="115" border="0" /></a><a href="http://www.headspring.com/wp-content/uploads/2013/01/installExecuteSequence.png"><img style="background-image: none; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="installExecuteSequence" alt="installExecuteSequence" src="http://www.headspring.com/wp-content/uploads/2013/01/installExecuteSequence_thumb.png" width="244" height="191" border="0" /></a></p>
+<p>That&#8217;s enough for this post.  Now we have a solid understanding of the basic building blocks in an installer package.  In the next post we&#8217;ll take a look at the WiX that generated this MSI.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-26T00:00:00-06:00" pubdate data-updated="true">Feb 26<span>th</span>, 2013</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/blog/'>Blog</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/wix/'>WiX</a>, <a class='category' href='/blog/categories/windows-installer/'>windows installer</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/headspring-ceo-finalist-for-austin-under-40-awards/">
+		
+			Headspring CEO Finalist for Austin Under 40 Awards</a>
+	</h2>
+	<div class="entry-content">
+		<p style="text-align: left;" align="center"><i>Dustin Wells, Founder &amp; CEO of Headspring, Nominated for Austin Under 40 Awards for Technology and Sciences</i></p>
+<p><b> </b></p>
+<p><b>AUSTIN, Texas – (Feb. 22, 2013) –</b> Dustin Wells, founder and CEO of leading custom software development company Headspring, was honored as a top five finalists for the <a href="http://www.austinunder40.org/" target="_blank">2013 Austin Under 40 Award</a> for excellence in technology and sciences.</p>
+<p>Austin Under 40 Awards, by the Austin’s Young Women’s Alliance and Young Men’s Business Alliance, honors the best and brightest young professionals in Austin. Nominees are recognized for both their professional achievements and considerable contributions to the community.</p>
+<p>“I was thrilled to be nominated,” said Dustin Wells, CEO of Headspring. “Headspring’s growth and success is representative of the hard work of our entire team.”</p>
+<p>Last year, Headspring achieved a 67 percent growth in revenue. With more than 35 employees, the company expects to exceed 60 by the end of the year.  Recently, the company announced its move into the Houston market and plans to launch Headspring Mobile in the spring.</p>
+<p>“Our team is our best asset. We put a lot of focus on the trajectory of their career and that strong and supportive culture is reflected in the results of our work, and our excellent client relationships,” said Wells.</p>
+<p>Headspring is a leader in its industry and has achieved over a 95 percent success rate in an industry where 42 percent is standard. Through rigorous work and seamless communications with clients, the company delivers software solutions with no surprises that are reliable and effective.</p>
+<p>&nbsp;</p>
+<p><b>About Headspring:</b></p>
+<p>Headspring delivers custom business applications to help growing companies. The Austin-based company has proudly served Texas businesses since 2001. Headspring is committed to helping companies compete in their markets by delivering custom business applications for growing companies. Headspring provides customers with scalable custom applications to fit business specific needs to enable continued growth. In 2009, the company was named #127 on Inc. 500, the exclusive ranking of the nation’s fastest-growing private companies. For more information, go to <a href="http://www.headspring.com/">www.headspring.com</a> or call (877) 459–2260.</p>
+<p align="center">###</p>
+<p align="center">
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-25T00:00:00-06:00" pubdate data-updated="true">Feb 25<span>th</span>, 2013</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/press/'>Press</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
 		<a href="/blog/headspring-competes-at-2013-austin-startup-games/">
 		
 			Headspring Competes at 2013 Austin Startup Games</a>
@@ -90,9 +411,28 @@
 	<div class="entry-content">
 		<p>The Austin Startup Games were a flying success this past Saturday, February 16th at the Austin Music Hall. Headspring was proud to participate for the first time!</p>
 <p>The Austin Startup Games is a one-day event in which sixteen Austin companies compete in various activities, including beer pong, ping pong, shuffleboard, foosball, pop-a-shot, darts, Connect 4, trivia and flip cup. The mechanical bull was the surprise event.</p>
-<p>
+<p><img class="alignnone size-medium wp-image-6417" alt="IMAGE_B2E4A8A6-E1D4-47B2-B540-53AA3B0AE653" src="http://www.headspring.com/wp-content/uploads/2013/02/IMAGE_B2E4A8A6-E1D4-47B2-B540-53AA3B0AE653-400x300.jpg" width="400" height="300" /> <img class="alignnone size-medium wp-image-6418" alt="IMAGE_E7ED9347-5418-44A0-B09F-55DEC43F43B8" src="http://www.headspring.com/wp-content/uploads/2013/02/IMAGE_E7ED9347-5418-44A0-B09F-55DEC43F43B8-400x300.jpg" width="400" height="300" /></p>
+<p>We sported these awesome Headspring shirts. We call it &#8220;From Our Heads&#8221; because it&#8217;s an abstract mash-up of the Headspring culture. It combines what we do and tools we use (bit bucket, technology, code, the cloud, mobile apps) and the things we enjoy (bowling, the Internet, providing great customer service).</p>
+<p><img class="aligncenter size-medium wp-image-6414" alt="BDQfHQVCAAImy5p" src="http://www.headspring.com/wp-content/uploads/2013/02/BDQfHQVCAAImy5p-369x300.jpeg" width="369" height="300" /></p>
+<p>Each company represented a charity of its choice, and Headspring chose The Cancer Connection. (link: http://www.thecancerconnection.org/) The organization provides one-on-one mentoring and oncology and hospital support to patients. The Cancer Connection volunteers provide comfort, support and informational resources to cancer patients and their families.</p>
+<p>There were very intense and close competitions, and at the end of the day, Headspring walked away victoriously with a couple of medals and a proud team.</p>
+<ul>
+<li>Justin P. won Bronze in Connect Four</li>
+<li>Chris M. and Patrick M. won Silver in Beer Pong</li>
+<li>Glenn B. and Kevin H. won Bronze in Foosball</li>
+</ul>
+<p><img class="alignnone size-medium wp-image-6415" alt="20130216_142241" src="http://www.headspring.com/wp-content/uploads/2013/02/20130216_142241-225x300.jpg" width="225" height="300" />  <img class="alignnone size-medium wp-image-6416" alt="732970388" src="http://www.headspring.com/wp-content/uploads/2013/02/732970388-225x300.jpeg" width="225" height="300" /></p>
+<p>Total results:</p>
+<ul>
+<li>533 lbs (about 480 meals) of food was donated to Capital Area Food Bank</li>
+<li>500-600 attendees was expected and actually had 800 attendees show up</li>
+</ul>
+<p>The Austin Startup Games was a great opportunity to bring out our competitive side, represent Headspring among numerous Austin companies, support The Cancer Connection and bring our team together for some fun and bonding time.</p>
+<p><strong>For more photos, <a href="https://www.facebook.com/media/set/?set=a.459745877414576.108919.280556282000204&amp;type=1&amp;l=92e3753744" target="_blank">check out our Facebook page!</a></strong></p>
+<p>&nbsp;</p>
+
 		
-		<a href="/blog/headspring-competes-at-2013-austin-startup-games/" class="more-link">Read on &rarr;</a>
+		
 	</div>
 
 
@@ -492,9 +832,73 @@
 <li>A Basic Understanding of Web Development Languages, Including HTML</li>
 <li>A Basic Understanding of the Web Life-Cycle</li>
 </ul>
-<p><em>
+<p><em></em>Cost $1,975</p>
+<p>If you have any concerns whether or not this course is a fit, contact us for help at (512) 459 – 2260..</p>
+<p>Training located in Austin, Texas (8:30 a.m. to 5:00 p.m.)</p>
+<p>View a <a title="Contact" href="http://www.headspring.com/contact/">map to our facility</a> and nearby hotels.</p>
+<p>Although it is unlikely, class dates are subject to change. We encourage you to obtain transferable airline/hotel reservations in the event that this should occur.</p>
+<p>By signing up for a Headspring training course, you are accepting the terms and conditions of our <a title="Education Services Agreement" href="http://www.headspring.com/education-services-agreement/" target="_blank">Education Services Agreement</a>.</p>
+<p>&nbsp;</p>
+<p><strong>Agenda</strong></p>
+<p><strong>Day 1</strong></p>
+<p><strong>Session 1.1 – MVC Overview</strong><br />
+<em>Background<br />
+MVC parts</em></p>
+<p><strong>Session 1.2 – Controller basics</strong><br />
+<em>Anatomy of an Action<br />
+Querystring parameters<br />
+Working with forms<br />
+Model binding<br />
+View data</em></p>
+<p><strong>Session 1.3 – View basics</strong><br />
+<em>WebForms view engine<br />
+Razor view engine<br />
+Folder structure<br />
+Execution order<br />
+View data<br />
+Helpers<br />
+URLs</em></p>
+<p><strong>Session 1.4 – Model basics</strong><br />
+<em>Persistence/Domain Model vs. View Model<br />
+Projection<br />
+Repositories</em></p>
+<p>&nbsp;</p>
+<p><strong>Day 2</strong></p>
+<p><strong>Session 2.1 – Routing</strong><br />
+<em>Routing in the MVC pipeline<br />
+Designing URLs<br />
+SEO<br />
+Custom routes</em></p>
+<p><strong>Session 2.2 – Controller in depth</strong><br />
+<em>ActionResults<br />
+ActionFilters<br />
+Customizing the controller</em></p>
+<p><strong>Session 2.3 – Model in depth</strong><br />
+<em>ViewModels<br />
+AutoMapper<br />
+Custom ModelBinders</em></p>
+<p><strong>Session 2.4 – View in depth</strong><br />
+<em>Layouts and Master Pages<br />
+Partials<br />
+Child actions</em></p>
+<p>&nbsp;</p>
+<p><strong>Day 3</strong></p>
+<p><strong>Session 3.1 – Templates and validation</strong><br />
+<em>View/Edit templates<br />
+Validation<br />
+Custom validators</em></p>
+<p><strong>Session 3.2 – AJAX and jQuery</strong><br />
+<em>Intro to jQuery<br />
+Integrating jQuery<br />
+AJAX and MVC</em></p>
+<p><strong>Session 3.3 – Testing ASP.NET MVC</strong><br />
+<em>Unit testing MVC pieces<br />
+UI testing</em></p>
+<p><strong>Session 3.4 – Best Practices in ASP.NET MVC</strong><br />
+<em>Lessons learned from large ASP.NET MVC projects</em></p>
+
 		
-		<a href="/blog/mvc-boot-camp/" class="more-link">Read on &rarr;</a>
+		
 	</div>
 
 
@@ -516,306 +920,6 @@
 
 
 	<a class='category' href='/blog/categories/events/'>Events</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/whittling-parsley/">
-		
-			Whittling Parsley</a>
-	</h2>
-	<div class="entry-content">
-		<p>A few weeks back, I introduced the idea of <a href="http://www.headspring.com/patrick/code-whittling/">Code Whittling</a>, in which you actively remove code from an unfamiliar project in order to learn about it and discover its most interesting core functionality.  I used this technique to learn about 3 open source projects: <a href="http://www.headspring.com/patrick/whittling-rhino-licensing/">Rhino Licensing</a>, <a href="http://www.headspring.com/patrick/whittling-xunit/">xUnit</a>, and <a href="http://www.headspring.com/patrick/whittling-nunit/">NUnitLite</a>.  I&#8217;ve got one more open-source project I&#8217;d like to apply this to, but in a <em>Shyamalanian twist</em> I&#8217;ll use this approach to teach something about one of my <em>own</em> projects, instead of using it to learn about someone else&#8217;s project.</p>
-<p>I&#8217;ve written about <a href="https://github.com/plioi/parsley">Parsley</a> here before: it&#8217;s a library that lets you declaratively parse complex text patterns, like a super-duper regex.  This week, we&#8217;ll tear this project down to get to the nuts-and-bolts of text traversal and pattern recognition, and next week we&#8217;ll rebuild some of the layers destroyed along the way.  We&#8217;ll discard the high-level useful bits this week, revealing a simple-yet-frustratingly-verbose core, so that next week we can reintroduce the layers that make it ultimately useful and terse.  We can make an analogy with C versus assembly: you don&#8217;t want to write assembly, even though that is the truth happening under the surface, but you&#8217;ll better-understand C once you&#8217;ve seen assembly.</p>
-<h2>A Little Background</h2>
-<p>If .NET didn&#8217;t already have an excellent <a href="http://json.codeplex.com/">JSON parsing library</a>, for instance, and someone needed your app to inspect and make use of some JSON as input, you might first reach for some kind of enormously complex regex, only to run into trouble describing the recursive nature of JSON (JSON objects can contain JSON objects (within JSON objects (within JSON objects))).  Regexes aren&#8217;t quite powerful enough to describe such patterns, and even if a complex regex is enough to handle your parsing needs, interpreting the results of a regex with multiple returned groups can be tedious.</p>
-<p>Instead, you could use a library like Parsley to simply describe what a valid JSON string <em>looks</em> like, as well as describe how each part of JSON corresponds with your own classes.  Then, the library does the heavy lifting for you.  For instance, <a href="https://github.com/plioi/parsley/blob/cb69098da8135f7ac5fb1b0f84071e0e8b94b8a0/src/Parsley.Test/IntegrationTests/Json/JsonGrammarTests.cs">Parsley&#8217;s integration tests</a> contain a <a href="https://github.com/plioi/parsley/blob/cb69098da8135f7ac5fb1b0f84071e0e8b94b8a0/src/Parsley.Test/IntegrationTests/Json/JsonGrammar.cs">JSON parser</a> which produces .NET bools, decimals, strings, arrays, and dictionaries when given an arbitrary JSON string as input.</p>
-<p>Parsley is an <a href="http://martinfowler.com/bliki/DomainSpecificLanguage.html">internal DSL for creating external DSLs</a>, so the normal use case involves simply declaring what successful input looks like, at a high level:</p>
-<p><div><script src='https://gist.github.com/4688571.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<h2>High-Level Architecture</h2>
-<p><a href="http://www.headspring.com/wp-content/uploads/2013/02/ParsleyArchitecture.png"><img src="http://www.headspring.com/wp-content/uploads/2013/02/ParsleyArchitecture-466x165.png" alt="Parsley Architecture" width="466" height="165" class="aligncenter size-medium wp-image-6369" /></a></p>
-<p>Parsley can be broken down into 2 distinct subsystems: tokenization and grammars.  The grammar subsystem includes a low-level means of processing the input as well as a high-level DSL to make it all pretty like the example above.</p>
-<p>In a tokenization phase, a JSON string like &#8220;[1, 10, 100]&#8221; is chopped up into a series of substrings: &#8220;[&#8220;, &#8220;1&#8221;, &#8220;10&#8221;, &#8220;100&#8221;, and &#8220;]&#8221;.  Note that tokens can be multiple characters, as long as they represent a single meaningful thing in JSON.  A token could be an operator, a keyword, a number, or a whole quoted string literal.  Cutting any of these things into a smaller substring would remove its meaning, so we say &#8220;that&#8217;s small enough&#8221; and stop there.  We also remember what <em>kind</em> of token each substring is, so in our example the tokenizer really turns &#8220;[1, 10, 100]&#8221; into (&#8220;[&#8220;, OpenArray), (&#8220;1&#8221;, Number), (&#8220;,&#8221;, Comma), (&#8220;10&#8221;, Number), (&#8220;,&#8221;, Comma), (&#8220;100&#8221;, Number), (&#8220;]&#8221;, CloseArray).</p>
-<p>This collection of token objects is then handed off to the second subsystem, in which a grammar for our language is declared.  Parsley takes the collection of tokens, applies the grammar to it, and out pops plain old .NET objects like arrays, dictionaries, or instances of your own classes.</p>
-<p><strong>My goal today is to reveal that low-level processing within the grammar subsystem.  To get there, we&#8217;re going to have to whittle away a most of the project:</strong></p>
-<p><a href="http://www.headspring.com/wp-content/uploads/2013/02/WhittledParsleyArchitecture.png"><img src="http://www.headspring.com/wp-content/uploads/2013/02/WhittledParsleyArchitecture-466x164.png" alt="Whittled Parsley Architecture" width="466" height="164" class="aligncenter size-medium wp-image-6370" /></a></p>
-<h2>The Whittle - Removing the Tokenizer Subsystem</h2>
-<p>I started by creating a new clone of https://github.com/plioi/parsley.git.</p>
-<p>As with the last three weeks, the first thing I got rid of was the unit testing project.  We&#8217;re about to start throwing away things left and right, and the tests were just going to be in the way.</p>
-<p>Next, I focused on removing the entire tokenization subsystem.  I deliberately made it so that you could use the grammar subsystem without the tokenizer subsystem.  There are very real reasons why the default tokenizer wouldn&#8217;t be enough for your needs: Python&#8217;s significant indentation, for instance, requires that you maintain some extra state and make some extra decisions along the way just to produce meaningful tokens.  Since I wanted a simple tokenizer that would work for most people, and also wanted to leave the door open for Python-style gymnastics, you can provide your own drop-in replacement tokenizer: anything that produces a collection of Token objects will satisfy the grammar subsystem.</p>
-<p>Tokenizing isn&#8217;t the interesting part.  If we inspect the next few characters in the input, surely we can decide whether we&#8217;re looking at a word, or an operator, or whatever.  We could go through the details, but it wouldn&#8217;t be surprising or enlightening.  To kill off the default tokenizer, I removed several classes we can ignore for the rest of today&#8217;s discussion: I dropped Lexer, which does the string-chopping action, as well as some classes that lived only to serve Lexer.</p>
-<blockquote><p>At this point, the tokenizer subsystem was dead, may it rest in pieces.</p></blockquote>
-<h2>The Whittle - Removing the DSL</h2>
-<p>This left me with the right-hand side of the archtecture diagram above.  Time to whittle away anything that contributes to the high-level DSL seen in the JSON example grammar above.  I won&#8217;t belabor the point by listing all the classes that got removed in this step.  We&#8217;ll revisit them next week when we see how they build on top of the low-level pattern recognition code.</p>
-<h2>Core Pattern-Recognition Classes</h2>
-<p>Only a few classes survived this attack, representing the bottom-right portion of the architecture diagram.</p>
-<p><strong>Token</strong> - Recall that the tokenizer subsystem&#8217;s job is to turn the input string into a collection of these Token objects.  They are our input.  It&#8217;s easier to work with these than to work with the original raw input string.  A token is a string like &#8220;100&#8221;, a position like &#8220;row 1, col 3&#8221;, and a TokenKind like &#8220;Number&#8221;:</p>
-<p><div><script src='https://gist.github.com/4688648.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p><strong>Position</strong> - This class is a pair of integers representing the line # and column # that a token was found at.  It inherits from Value, which just provides a basic equality and GetHashCode implementation:</p>
-<p><div><script src='https://gist.github.com/4688659.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p><strong>TokenKind</strong> - When you use Parsley to define your tokenizer phase, you provide a list of TokenKind objects.  If you&#8217;re making a JSON parser, you create an instance for each operator, each keyword, one for Number, one for Quotation&#8230; Each TokenKind also knows how to recognize itself in the raw input; a TokenKind representing variable names in the language you are parsing will be able to look at the raw input and say &#8220;Yes, the next 6 characters are a variable name,&#8221; or &#8220;Nope, the next few characters are not a variable name.&#8221;  Since the string-recognizing methods are irrelevant outside of the tokenizer phase, I&#8217;ve omitted them here:</p>
-<p><div><script src='https://gist.github.com/4688687.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p><strong>TokenStream</strong> - Admittedly weird, <a href="https://github.com/plioi/parsley/blob/cb69098da8135f7ac5fb1b0f84071e0e8b94b8a0/src/Parsley/TokenStream.cs">TokenStream</a> takes the arbitrary collection of Tokens produced by the tokenizer subsystem and presents them to the grammar subsystem in a way that provides traversal without needing state change.  If you ask this to advance to the next token, <em>the object doesn&#8217;t change</em>; instead you get a new TokenStream representing everything except for the token you are advancing beyond.  This action resembles the <code>Skip(int) IEnumerable</code> extension method.  Rather than dwell on the weird implementation, it&#8217;s easier to just see its usage within <a href="https://github.com/plioi/parsley/blob/cb69098da8135f7ac5fb1b0f84071e0e8b94b8a0/src/Parsley.Test/TokenStreamTests.cs">TokenStreamTests</a>.  When you have a TokenStream containing the tokens &#8220;[&#8220;, &#8220;10&#8221;, and &#8220;]&#8221;, and you call .Advance(), you&#8217;ll get a TokenStream containing only the tokens &#8220;10&#8221; and &#8220;]&#8221;.</p>
-<p><strong>Parser, Reply, Parsed, and Error</strong> - These are our fundamental building blocks.  A Parser is anything that consumes <em>some</em> Tokens from the stream and produces a Reply.  A Reply is either successful (Parsed), or unsuccessful (Error).  When successful, a Reply holds a Value, the .NET object you wanted to pull out of the original plain text.  Successful or not, the Reply also holds a reference to the <em>remaining, not yet consumed</em> Tokens.  A Reply basically says &#8220;I worked, and now we&#8217;re <em>here</em>,&#8221; or &#8220;I failed, and we&#8217;re still <em>there</em>.&#8221;  The whittled and simplified versions of these classes appear below:</p>
-<p><div><script src='https://gist.github.com/4688743.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<h2>The Result - Tedious Pattern Recognition</h2>
-<p>These classes don&#8217;t look like much, and their emphasis on zero-state-change is atypical for .NET development, but when combined they let us deliberately walk through the input Token collection, recognizing patterns along the way.</p>
-<p>Let&#8217;s consider a simple example.  We want to be given a string and then decide whether or not it is a parenthesized letter like &#8220;(A)&#8221; or &#8220;(B)&#8221;.  If we&#8217;re given &#8220;(&#8220;, &#8220;(A&#8221;, &#8220;(AB)&#8221;, or &#8220;Resplendent Quatzal&#8221;, then we want to report failure.  Sure, we could do this with a regex, but any <em>simple</em> example could work with a regex.  I only need an example complex enough to show how these Parser/Reply/TokenStream classes work together.</p>
-<p>Let&#8217;s assume we&#8217;ve implemented our tokenizer phase correctly already.  The tokenizer phase defined 3 TokenKind instances:</p>
-<p><div><script src='https://gist.github.com/4688912.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>The tokenizer hands us the tokens to evaluate:</p>
-<p><div><script src='https://gist.github.com/4688919.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>We want to write a function which receives these Token objects and tells us whether or not it is a parenthesized letter.  If it is, we want to report what the letter was.  If it isn&#8217;t, we want to tell them exactly what went wrong.  Before we do that, we&#8217;ll need to provide a useful implementation of the Parser<T> interface.  For our needs, we want a parser that produces strings on success, so that we can report what the letter was on success.  We&#8217;ll also define a convenience method for creating instances of this class:</p>
-<p><div><script src='https://gist.github.com/4688947.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Finally, we have enough to write IsParenthesizedLetter(Token[]):</p>
-<p><div><script src='https://gist.github.com/4688927.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Phew!  That is monotonous.  Writing this is nearly as tedious as writing assembly.  Each time I wanted to progress a little further, I had to indent again and declare some new local variables.  I had to carefully pass along the remaining unparsed tokens at each step, and I had to concern myself with failure at each step.</p>
-<p>To make matters worse, this stuff motivates having lots of returns from a single function, making it extremely hard to break the function apart into smaller parts.  <a href="http://www.headspring.com/patrick/detect-reflect-decomplect/">Return statements are &#8220;Extract Method&#8221; fences</a>.</p>
-<p>Consider, though, that if we wanted to concern ourselves with concepts like &#8220;the next token has to be either a Foo or a Bar or a Baz&#8221;, we could use this approach to &#8220;test the waters&#8221; as we go: Require(Foo) and if the reply was a failure, just Require(Bar) using the same original TokenStream, and if <em>that</em> reply is a failure just Require(Baz) <em>again using the same TokenStream</em>.  <strong>We get backtracking for free without having to take on the dangers of tracking some global, writable int represting our progress through the token array.</strong></p>
-<p>With all the downsides, allowing backtracking in this manner doesn&#8217;t seem very worthwhile, but writing in assembly doesn&#8217;t seem very worthwhile either.</p>
-<p>Next week, we&#8217;ll see how we can build a more useful, declarative API on top of these low-level pattern recognition primitives.  The suspense is killing you!</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-02-01T00:00:00-06:00" pubdate data-updated="true">Feb 1<span>st</span>, 2013</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/headspring-announces-employee-promotions/">
-		
-			Headspring Announces Employee Promotions</a>
-	</h2>
-	<div class="entry-content">
-		<p style="text-align: left;" align="center"><i>Company committed to continued growth and development of its team</i></p>
-<p><b>AUSTIN, Texas, Jan., 2013</b> – Headspring, a custom software provider, is proud to announce the promotion of five employees: Justin Pope and Pedro Reys to principal consultant and Patrick Lioi, Graham Swor, and Cedric Yao to Senior Consultant 4.</p>
-<p>“One of our primary objectives at Headspring is focusing on the development of our team and providing them opportunities to grow professionally,” said Dustin Wells, CEO of Headspring.” “We’re proud to give our employees well-earned promotions for their hard work.”</p>
-<p>Prior to their promotions, both Pope and Reys were senior consultants and client leads. Their new role will focus on managing project teams, overseeing architectural decisions, and acting as liaison with clients. Pope joined the Headspring team in 2010 and is an expert in front-end development. Reys also joined the team in 2010 and focuses on back-end development.</p>
-<p>Lioi, Swor, and Yao have been promoted to Senior Consultant 4. They are being recognized for their proactive client and company leadership, as well as their software development and project delivery skills.</p>
-<p>Headspring is committed to the continued growth and development of its team. The company currently has 35 employees and hired 12 new employees within the past year.</p>
-<p>&nbsp;</p>
-<p><b>About Headspring                                                                                                           </b></p>
-<p>Headspring delivers custom business applications to help growing companies. The Austin-based company has proudly served Texas businesses since 2001. Headspring is committed to helping local companies compete in their markets by delivering custom business applications using consultative and collaborative processes. Headspring provides customers with maintainable custom applications to fit business specific needs to enable continued growth and efficiencies. The company has been named 127 on Inc. 500, the exclusive ranking of the nation’s fastest-growing private companies. For more information, go to <a href="http://www.headspring.com">www.headspring.com</a> or call (877) 459–2260.<b></b></p>
-<p align="center">
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-02-01T00:00:00-06:00" pubdate data-updated="true">Feb 1<span>st</span>, 2013</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/press/'>Press</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/headspring-reports-year-end-results-and-projections-for-2013/">
-		
-			Headspring Reports Year-End Results and Projections for 2013</a>
-	</h2>
-	<div class="entry-content">
-		<h2 style="text-align: left;" align="center"><i>67 percent growth in sales generates launch of mobile software brand and new Texas location</i></h2>
-<p><b>AUSTIN, TX – (January 29, 2013) – </b>Headspring, a leading custom software development company, today announced a 67 percent growth in revenue. Headspring grew 50 percent year over year for the past two years and in 2012 exceeded its unprecedented growth cycle.</p>
-<p>The company increased its client base, as well as the size and scope of its software development and consulting projects. Among Headspring’s 76 clients are government agencies, retail chains, e-commerce firms, and software vendors.  Headspring&#8217;s clients include both Fortune 500 companies and mid-market firms based in Austin, Dallas, and Houston, Texas.</p>
-<p>“From day one, we focused on building a team that is creative and dedicated to top-notch results for our clients,” said Dustin Wells, CEO, Headspring. “But our success is about more than just the bottom-line, it’s about company culture.  If culture isn’t measured as a business priority, a company will lose ground quickly.”</p>
-<p>To help manage its rapid growth, in June 2012, Headspring nearly tripled its office space and moved into an 11,319-square-foot headquarters building. In addition, Headspring hired 12 new employees, growing the team to 35, and promoted 17 employees.  Last year, Headspring ranked 4<sup>th</sup> of the “Best Places to Work in Central Texas” by <i>Austin Business Journal</i>, placed in the “Top 100 Best Companies to Work for in Texas” by <i>Texas Monthly</i>, and made national honors on the list of “101 Best and Brightest Companies to Work For.”</p>
-<p>In 2013, Headspring forecasts continued growth and job expansion.  The company will increase the number of employees by adding 24 overall positions.  Headspring Houston will open in May, adding up to 10 team members at that location by the end of the year.  Expansion into the Houston market reflects the growing software needs of companies. One of the biggest challenges facing the industry is the need for more qualified and talented software developers.</p>
-<p>“Opening an office in Houston will give Headspring the ability to attract from a broader pool of developers and also serve the increasing needs of the Houston business market,” said Glenn Burnside, vice president of engineering, Headspring.</p>
-<p>In April, Headspring will launch Headspring Mobile, an independent brand focused strictly on delivering mobile application solutions. Headspring has developed a number of mobile applications under its Headspring brand, such as <a href="http://bit.ly/Vs4Tya">1<sup>st</sup> Down Technologies</a>. According to a recent report by research firm Strategy Analytics, more than 200 million mobile workers will be using mobile business applications in 2013.</p>
-<p>“We are very excited about Headspring Mobile,” Wells said. “Headspring is plugged into what our customers are saying they need, and with the tremendous growth of the mobile industry, it makes sense to make this part of our product solutions.”</p>
-<p><b>About Headspring:</b></p>
-<p>Headspring delivers custom business applications to help growing companies. The Austin-based company has proudly served Texas businesses since 2001. Headspring is committed to helping companies compete in their markets by delivering custom business applications for growing companies. Headspring provides customers with scalable custom applications to fit business specific needs to enable continued growth. In 2009, the company was named #127 on Inc. 500, the exclusive ranking of the nation’s fastest-growing private companies. For more information, go to <a href="http://www.headspring.com/">www.headspring.com</a> or call (877) 459–2260.</p>
-<p>&nbsp;</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-29T00:00:00-06:00" pubdate data-updated="true">Jan 29<span>th</span>, 2013</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/press/'>Press</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/whittling-nunit/">
-		
-			Whittling NUnit</a>
-	</h2>
-	<div class="entry-content">
-		<p>Last week, we applied <a href="http://www.headspring.com/patrick/code-whittling/">Code Whittling</a> to learn about <a href="http://www.headspring.com/patrick/whittling-xunit/">xUnit</a>.  This week, we&#8217;ll do the same for NUnit, and contrast the two testing frameworks.  NUnit has been around a long time, and has accumulated many features.  <a href="http://www.nunitlite.com/">NUnitLight</a> is a recent endeavor to make a smaller version of the core features.  Since my goal is to get to the core features anyway, I&#8217;ll start with NUnitLight instead of the full NUnit.</p>
-<h2>The Whittle</h2>
-<p>I started by grabbing a copy of the <a href="https://launchpad.net/nunitlite">NUnitLite source code on Launchpad</a>.</p>
-<p>The first thing I noticed is that it has an atypical structure in Solution Explorer.  Project names include .NET version numbers (2.0, 3.5, 4.0), and these projects are placed within solution folders NET-2.0, NET-3.5, and NET-4.0.  Comparing this to the actual file structure on disk, it looks like the same code files are shared by each of these version-based projects.</p>
-<p>Why have multiple projects containing the exact same files?  Viewing project properties, I see that each project has version-specific &#8220;conditional compilation symbols&#8221; like NET_2_0 or CLR_4_0 to distinguish them.  Within the code, there are lots of tests against these symbols:</p>
-<p><div><script src='https://gist.github.com/4457122.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>The developers were therefore able to use one set of files to create builds for each version they will run on, accounting for the differences with these preprocessor conditions.  That doesn&#8217;t sound like fun, but keep in mind NUnit is ubiquitous, and you don&#8217;t want to be surprised by incompatibility with your environment.</p>
-<p>For my purposes, I picked a single version to focus on, and removed the other versions&#8217; projects from the solution (leaving the actual shared code files intact).</p>
-<p>When I whittled down xUnit last week, one of the first steps was to remove its own tests, and I did the same here with NUnitLite.  Remember, this is supposed to be a destructive exercise.  The goal is to remove everything that is in the way of my understanding the fundamentals of the project: how tests are discovered, how tests are executed, and how test results are accumulated.  I was left with a single project in the solution: nunitlite-3.5.</p>
-<p>Again, as with xUnit, I removed all assertion code, since I use the <a href="http://nuget.org/packages/Should">Should</a> assertion library instead.  This was actually a much larger undertaking than with xUnit.  NUnit has been around for a long time, and the assertion library grew while keeping backward-compatibility as a priority.  It looks like a significant amount of effort went into avoiding duplication of code in the <em>implementation</em> of assertions, even while the main end-user-facing assertion APIs gained support for different styles:</p>
-<p><div><script src='https://gist.github.com/4457213.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Behind this API lies a large family of classes called Constraints, which represent concepts like is-equal-to-x.  Both lines in the sample above would ultimately rely on the same constraint class to perform the comparison.</p>
-<p>Next, I removed several attributes I never use, so I could instead focus on the main lifecycle attributes: [TestFixture], [TestFixtureSetUp], [TestFixtureTearDown], [SetUp], [TearDown], and [Test].</p>
-<p>I made a mostly-random pass through the solution, removing things that were no longer reachable.  When interfaces eventually had a single implementation, I&#8217;d phase out the interface.  Once it got down to a manageable size, I tweaked and simplified some of the types and methods as the mood struck me.  Now that I was familiar with the overall solution structure, I took a closer look at the test discovery and execution code.</p>
-<h2>Results - Test Discovery</h2>
-<p>Let&#8217;s consider NUnitLiteTestAssemblyRunner to be our entry point.  Given an Assembly (a project containing tests), we want to discover and run all the tests.  I whittled it down to this:</p>
-<p><div><script src='https://gist.github.com/4457272.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>It defers to NUnitLiteTestAssemblyBuilder to create <em>something</em> representing the tests to run, creates a work item to process the tests, kicks off the work item, and waits for the work item to finish.</p>
-<p>NUnitLiteTestAssemblyBuilder&#8217;s job is to traverse the assembly, discover the test fixtures and their tests, and then return a TestSuite summarizing all the work that is to be done.  It does so using reflection, not surprisingly with a very similar implementation as xUnit.  I whittled NUnitLiteTestAssemblyBuilder&#8217;s pivotal method down to:</p>
-<p><div><script src='https://gist.github.com/4457304.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>The CanBuildFrom(Type) method returns true if the Type has a [TestFixture] attribute or if any of its methods have a [Test] attribute.  The BuildFrom method then builds a test fixture description by reflecting on the Type&#8217;s methods, converting each test method into a Test:</p>
-<p><div><script src='https://gist.github.com/4457322.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>To build a single test case, it performs a similar CanBuildFrom/BuildFrom pair as we saw for the fixture as a whole.  In this case, CanBuildFrom tests whether the given method has a [Test] attribute, and BuildFrom constructs a new TestMethod instance, which simply describes the test to be executed.</p>
-<p>All of the above lets us go from a given Assembly to a tree of all the tests that need to be executed.</p>
-<h2>Results - Test Execution</h2>
-<p>To actually run the tests, recall that we hand that work off to something called a WorkItem.  The work item was initialized with the TestSuite (aka the test fixture) to run, and this in turn creates yet more work items, one per test.  Running one of these per-test work items takes us to TestMethodCommand.Execute(&#8230;), which I whittled down to:</p>
-<p><div><script src='https://gist.github.com/4457342.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Again, much like xUnit, we use reflection to call the test method.  If an exception is thrown, that will cause the test to fail.  If no exception is thrown, we happily reach the next line and set the result to Success.</p>
-<h2>Contrasting xUnit with NUnitLight</h2>
-<p>NUnitLight and xUnit accomplish virtually the same thing, and from a very high level they do it in the same way:</p>
-<ol>
-<li>Provide an assertion API so that failed assertions present themselves as exceptions thrown from test methods.</li>
-<li>Use reflection to traverse the test Assembly, building up a tree that describes what fixtures are to be executed, and which tests appear on each fixture.</li>
-<li>Walk through those trees, using reflection to invoke each test method.</li>
-<li>If that invocation didn&#8217;t throw an exception, consider the test passed.</li>
-</ol>
-<p>Despite this similarity, their implementations differ a great deal.  I thought xUnit was big, but even NUnit<em>Light</em> seems quite a bit larger.  It was really easy to remove xUnit&#8217;s assertion code, and very tough to remove NUnitLight&#8217;s.  I&#8217;m not saying &#8220;ease of destruction&#8221; should be anywhere on a developer&#8217;s radar when writing an API, but it does speak to the history of the two projects.  As I wrote earlier, NUnit&#8217;s history involves more than one user-facing API for writing assertions, and they needed to avoid duplicating implementation details; naturally the design of assertions here is more complex than with xUnit.  I started pulling the assertion thread in NUnitLight, and quickly wound up with a long series of dependencies to remove before it would compile again.</p>
-<p>Before looking at either of these projects, I figured that after removing the assertion code, there would be very little left, but I was wrong.  As with anything that gets used by such a large audience, the devil is in the details.  Projects this popular have to handle many environments and situations that no single developer ever encounters on their own.</p>
-<p>Although I doubt I could make a meaningfully-large contribution to these projects right away, I&#8217;m now much closer to that level of knowledge.  Passively reading through the code would not have been as effective as destroying them from the outside in.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-25T00:00:00-06:00" pubdate data-updated="true">Jan 25<span>th</span>, 2013</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
 
 
 </div>

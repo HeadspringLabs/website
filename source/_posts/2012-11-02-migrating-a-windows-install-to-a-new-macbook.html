@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Migrating a Windows Install to a New Macbook
-tags:
+categories:
 - Blog
 status: publish
 type: post
@@ -14,54 +14,34 @@ meta:
   _podPressPostSpecific: a:6:{s:15:"itunes:subtitle";s:15:"##PostExcerpt##";s:14:"itunes:summary";s:15:"##PostExcerpt##";s:15:"itunes:keywords";s:17:"##WordPressCats##";s:13:"itunes:author";s:10:"##Global##";s:15:"itunes:explicit";s:7:"Default";s:12:"itunes:block";s:7:"Default";}
   dsq_thread_id: '911446876'
 ---
-Recently here at Headspring my workstation got upgraded from a PC laptop to a Macbook Pro. While I was excited about the new hardware and taking the plunge into Mac OS X (that’s the Roman numeral ten, not the 24th letter of the alphabet), I still needed to be able to run Windows and Visual Studio. This post summarizes the various options I explored, and my final setup.
+<p>Recently here at Headspring my workstation got upgraded from a PC laptop to a Macbook Pro. While I was excited about the new hardware and taking the plunge into Mac OS X (that’s the Roman numeral ten, not the 24th letter of the alphabet), I still needed to be able to run Windows and Visual Studio. This post summarizes the various options I explored, and my final setup.</p>
 <h3>Multiboot or Virtual Machine?</h3>
-Multibooting is using a software tool that hooks your computer’s normal power on sequence and provides you a way to choose what operating system you want to load.
-
-Microsoft has supported multibooting since Windows XP as way to install new versions of Windows while still keeping older versions for your legacy software that won’t work on the newer Windows version. It’s also been possible to multiboot Linux and Windows for a long time.
-
-A virtual machine is software that pretends to be a computer, and runs another operating system inside of it. You can use a virtual machine to run an instance of Windows 98 while booted into Windows 7 for example.
-
-The advantage to multibooting is performance - running an operating system inside a virtual machine causes it to run more slowly than it would if it was natively booted - but the disadvantage is you can only work within the one operating system you booted into.
-
-Virtual machines can perform slower, but allow you to run both operating systems at the same time.
-
-I’ve done multibooting with multiple versions of Windows and Linux in the past. It works well, but its amazing how much of a psychological barrier having to boot into an alternate OS to do something gets created. “I got an email response...I need to go update that spreadsheet...rats, it’s in the other OS...I really don’t want to close everything and reboot, I’ll do it later...”.
-
-The new workstation is top of the line: Intel I7, 16GB memory, solid state hard disk. It would be more than capable of running Windows in a virtual machine without much overhead. Choosing a virtual machine over multibooting was a pretty easy choice.
-
-There were several candidates for the virtual machine software - VMWare Fusion, Oracle VirtualBox, and Parallels Desktop. VirtualBox was ruled out pretty quickly as underperforming. Parallels and Fusion are fairly similar. We ended up going with Parallels.
+<p>Multibooting is using a software tool that hooks your computer’s normal power on sequence and provides you a way to choose what operating system you want to load.</p>
+<p>Microsoft has supported multibooting since Windows XP as way to install new versions of Windows while still keeping older versions for your legacy software that won’t work on the newer Windows version. It’s also been possible to multiboot Linux and Windows for a long time.</p>
+<p>A virtual machine is software that pretends to be a computer, and runs another operating system inside of it. You can use a virtual machine to run an instance of Windows 98 while booted into Windows 7 for example.</p>
+<p>The advantage to multibooting is performance - running an operating system inside a virtual machine causes it to run more slowly than it would if it was natively booted - but the disadvantage is you can only work within the one operating system you booted into.</p>
+<p>Virtual machines can perform slower, but allow you to run both operating systems at the same time.</p>
+<p>I’ve done multibooting with multiple versions of Windows and Linux in the past. It works well, but its amazing how much of a psychological barrier having to boot into an alternate OS to do something gets created. “I got an email response...I need to go update that spreadsheet...rats, it’s in the other OS...I really don’t want to close everything and reboot, I’ll do it later...”.</p>
+<p>The new workstation is top of the line: Intel I7, 16GB memory, solid state hard disk. It would be more than capable of running Windows in a virtual machine without much overhead. Choosing a virtual machine over multibooting was a pretty easy choice.</p>
+<p>There were several candidates for the virtual machine software - VMWare Fusion, Oracle VirtualBox, and Parallels Desktop. VirtualBox was ruled out pretty quickly as underperforming. Parallels and Fusion are fairly similar. We ended up going with Parallels.</p>
 <h3>How I Migrated My Old Windows Install to Parallels</h3>
-I didn’t want to have to start over with a brand new install of Windows, my old setup was perfectly fine. Fortunately Parallels supports migrating Windows from your old PC to your new Mac. It took three tries before I figured out the best way to do it, so I wanted to share and hopefully save someone else the learning experience. It wasn’t painful, but did consume a fair amount of wasted setup time.
-
-There are several options for doing the migration: using a special USB cable you can buy from Parallels, over the network, or copying to an external hard drive.
-
-We didn’t buy the cable, so attempt number one was over the wireless network. Big mistake. It took over twenty hours to transfer, and the virtual machine wouldn’t boot afterwards. Somehow it got corrupted during the transfer.
-
-Attempt number two was copying to external storage. This took about as long, and was going to take another twenty hours to pull off the drive to the Macbook.
-
-Fortunately at this point a coworker intervened and told me using a network crossover would be much quicker.\
+<p>I didn’t want to have to start over with a brand new install of Windows, my old setup was perfectly fine. Fortunately Parallels supports migrating Windows from your old PC to your new Mac. It took three tries before I figured out the best way to do it, so I wanted to share and hopefully save someone else the learning experience. It wasn’t painful, but did consume a fair amount of wasted setup time.</p>
+<p>There are several options for doing the migration: using a special USB cable you can buy from Parallels, over the network, or copying to an external hard drive.</p>
+<p>We didn’t buy the cable, so attempt number one was over the wireless network. Big mistake. It took over twenty hours to transfer, and the virtual machine wouldn’t boot afterwards. Somehow it got corrupted during the transfer.</p>
+<p>Attempt number two was copying to external storage. This took about as long, and was going to take another twenty hours to pull off the drive to the Macbook.</p>
+<p>Fortunately at this point a coworker intervened and told me using a network crossover would be much quicker.\</p>
 <h3>What You’ll Need</h3>
-The new Macbooks don’t have a built in ethernet port, so you’ll need a Thunderbolt to NIC adapter for this. You’ll also need an ethernet crossover cable - this is a special cable that crosses the wires from plug to the other, allowing you to connect two computers directly as if they were both on a network. Because it’s a direct connection there’s virtually no transfer overhead at all.
+<p>The new Macbooks don’t have a built in ethernet port, so you’ll need a Thunderbolt to NIC adapter for this. You’ll also need an ethernet crossover cable - this is a special cable that crosses the wires from plug to the other, allowing you to connect two computers directly as if they were both on a network. Because it’s a direct connection there’s virtually no transfer overhead at all.</p>
 <h3>Performing the Transfer</h3>
-On your Windows machine you need to go download and install Parallels Transporter. Start Parallels Transporter. The screen looks like this:
-
-<img class="alignnone size-medium wp-image-5836" title="Parallels Transporter for Windows" src="http://www.headspring.com/wp-content/uploads/2012/11/parallelsTransporterWindows-300x177.png" alt="Screenshot of Parallels Transporter for Windows with three options: usb cable, network, external drive" width="300" height="177" />
-
-&nbsp;
-
-On the Mac download Parallels 8 and start it. Click File..Migrate. This will launch the migration wizard.
-
-<a href="http://www.headspring.com/wp-content/uploads/2012/11/001-wizard.png"><img class="alignnone size-medium wp-image-5834" title="Parallels migration on Mac" src="http://www.headspring.com/wp-content/uploads/2012/11/001-wizard-300x252.png" alt="Screenshot of Parallels migration on Macbook" width="300" height="252" /></a>
-
-If you haven’t already done so, connect the crossover between the two computers. Choose Network. Choose IP Address instead. Select your Windows computer from the list. Alternately you can use ipconfig on your Windows machine to get your IP address and specify it manually if needed.
-
-<strong> When asked how to configure the image, choose Like a PC.</strong> You can customize the settings later, but if you choose Like a Mac, Parallels will automatically copy your Documents folder into your Home directory in Mac OS, leaving you with two copies of everything.
-
-That’s it! Using a crossover took about two hours - much faster than using the wireless network or copying it to external storage. When the transfer was complete, the virtual machine started without any issues (well, almost - I had to reactivate Windows) and I didn’t have to setup (and endlessly tweak) a new install.
+<p>On your Windows machine you need to go download and install Parallels Transporter. Start Parallels Transporter. The screen looks like this:</p>
+<p><img class="alignnone size-medium wp-image-5836" title="Parallels Transporter for Windows" src="http://www.headspring.com/wp-content/uploads/2012/11/parallelsTransporterWindows-300x177.png" alt="Screenshot of Parallels Transporter for Windows with three options: usb cable, network, external drive" width="300" height="177" /></p>
+<p>&nbsp;</p>
+<p>On the Mac download Parallels 8 and start it. Click File..Migrate. This will launch the migration wizard.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2012/11/001-wizard.png"><img class="alignnone size-medium wp-image-5834" title="Parallels migration on Mac" src="http://www.headspring.com/wp-content/uploads/2012/11/001-wizard-300x252.png" alt="Screenshot of Parallels migration on Macbook" width="300" height="252" /></a></p>
+<p>If you haven’t already done so, connect the crossover between the two computers. Choose Network. Choose IP Address instead. Select your Windows computer from the list. Alternately you can use ipconfig on your Windows machine to get your IP address and specify it manually if needed.</p>
+<p><strong> When asked how to configure the image, choose Like a PC.</strong> You can customize the settings later, but if you choose Like a Mac, Parallels will automatically copy your Documents folder into your Home directory in Mac OS, leaving you with two copies of everything.</p>
+<p>That’s it! Using a crossover took about two hours - much faster than using the wireless network or copying it to external storage. When the transfer was complete, the virtual machine started without any issues (well, almost - I had to reactivate Windows) and I didn’t have to setup (and endlessly tweak) a new install.</p>
 <h3>Wrapping Up</h3>
-I’m still getting used to my new Mac. There’s a lot that’s different from Windows and I’m now fighting twenty years of muscle memory (I started using Windows on version 3.11 in 1993). I plan on writing a follow up post on adjusting from Windows to Mac OS sometime in the future.
-
-The transition pain is more than worth it - there are a lot of advantages to using a Mac with Windows. The hardware is rock solid, fast, and very light (it’s less than half the weight of my old workstation). The Retina display is gorgeous and highly readable. Also of note is the ability to now develop for multiple platforms - I can still use Visual Studio for .NET development, but also write apps for IOS and MacOS as well. Support for platforms like Ruby and node.js are also better on Mac than Windows.
-
-Are you running Windows on a Mac? Are you using Parallels, or something else? Share your experiences or current setup in the comments!
+<p>I’m still getting used to my new Mac. There’s a lot that’s different from Windows and I’m now fighting twenty years of muscle memory (I started using Windows on version 3.11 in 1993). I plan on writing a follow up post on adjusting from Windows to Mac OS sometime in the future.</p>
+<p>The transition pain is more than worth it - there are a lot of advantages to using a Mac with Windows. The hardware is rock solid, fast, and very light (it’s less than half the weight of my old workstation). The Retina display is gorgeous and highly readable. Also of note is the ability to now develop for multiple platforms - I can still use Visual Studio for .NET development, but also write apps for IOS and MacOS as well. Support for platforms like Ruby and node.js are also better on Mac than Windows.</p>
+<p>Are you running Windows on a Mac? Are you using Parallels, or something else? Share your experiences or current setup in the comments!</p>

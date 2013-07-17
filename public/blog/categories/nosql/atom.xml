@@ -4,7 +4,7 @@
   <title><![CDATA[Category: nosql | Headspring Labs]]></title>
   <link href="http://headspringlabs.com/blog/categories/nosql/atom.xml" rel="self"/>
   <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-16T19:59:03-05:00</updated>
+  <updated>2013-07-17T00:19:02-05:00</updated>
   <id>http://headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
@@ -24,7 +24,7 @@
 <p>Document databases are another persistence alternative to the traditional RDBMS and there are plenty to chose from (like <a href="http://couchdb.apache.org/">CouchDB</a>, <a href="http://aws.amazon.com/simpledb/">SimpleDB</a>, <a href="http://ravendb.net/">RavenDB</a>,  and <a href="http://wiki.basho.com/Riak.html">Riak</a> to name a few). This post is intended to help get you started using RavenDB.</p>
 
 
-<p>Let’s get started!<!--more--></p>
+<p>Let’s get started!</p>
 
 
 <h3><span style="font-weight: bold;">Installing RavenDB</span></h3>

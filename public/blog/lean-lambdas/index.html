@@ -81,7 +81,7 @@ Albert: Let&#8217;s say I have a long expression that has become hard to read, a
 	<div id="content" class="inner"><article class="post">
 	<h2 class="title">Lean Lambdas</h2>
 	<div class="entry-content"><p><strong>Shirley:</strong> Tell me about the Extract-Variable refactoring.</p>
-<p><strong>Albert:</strong> Let&#8217;s say I have a long expression that has become hard to read, and that I can identify a noteworthy subexpression within it.  I can &#8216;extract&#8217; that subexpression from the original by introducing a new local variable.  The variable is initialized to the subexpression, and then the larger original expression is rewritten in terms of the new variable.  Doing so can make things easier to read: the original expression is shorter, and we&#8217;ve given a useful name to the part we took out.  For example:<!--more--></p>
+<p><strong>Albert:</strong> Let&#8217;s say I have a long expression that has become hard to read, and that I can identify a noteworthy subexpression within it.  I can &#8216;extract&#8217; that subexpression from the original by introducing a new local variable.  The variable is initialized to the subexpression, and then the larger original expression is rewritten in terms of the new variable.  Doing so can make things easier to read: the original expression is shorter, and we&#8217;ve given a useful name to the part we took out.  For example:</p>
 <p><div><script src='https://gist.github.com/4264666.js'></script>
 <noscript><pre><code></code></pre></noscript></div>
 </p>

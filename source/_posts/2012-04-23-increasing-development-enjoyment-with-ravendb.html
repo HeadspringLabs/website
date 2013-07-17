@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Increasing Development Enjoyment with RavenDB
-tags:
+categories:
 - Developer Deep Dive
 - productivity
 - ravendb
@@ -18,28 +18,21 @@ meta:
   _aioseop_title: Increasing Development Enjoyment with RavenDB
   dsq_thread_id: '833697019'
 ---
-We have a lot of different options for data storage and retrieval available today. These options include the traditional relational database, document databases, key value stores, and even flat files. Every option has its benefits over the others, making some options better for some things and other options better for other things. Once the data storage and retrieval option is selected, we then typically have to select a product. Within a solution space, most products offer some distinction from their competitors. Such distinctions make certain products popular choices for a particular technology stack. For example, MySQL is a common choice for the LAMP stack, as is Microsoft SQL Server for the .NET stack.
-
-Why is this so? There are several reasons for this, and their importance varies between administrators, developers, managers, and even executives.
-
-From a developer's point of view, it comes down to whether or not the product in the solution space makes the work more enjoyable.<!--more-->
-
-As a .NET developer, <a href="http://ravendb.net">RavenDB</a> is a ton of fun to work with. Here is what it offers me:
+<p>We have a lot of different options for data storage and retrieval available today. These options include the traditional relational database, document databases, key value stores, and even flat files. Every option has its benefits over the others, making some options better for some things and other options better for other things. Once the data storage and retrieval option is selected, we then typically have to select a product. Within a solution space, most products offer some distinction from their competitors. Such distinctions make certain products popular choices for a particular technology stack. For example, MySQL is a common choice for the LAMP stack, as is Microsoft SQL Server for the .NET stack.</p>
+<p>Why is this so? There are several reasons for this, and their importance varies between administrators, developers, managers, and even executives.</p>
+<p>From a developer's point of view, it comes down to whether or not the product in the solution space makes the work more enjoyable.</p>
+<p>As a .NET developer, <a href="http://ravendb.net">RavenDB</a> is a ton of fun to work with. Here is what it offers me:</p>
 <ol>
-	<li>RavenDB is available as a <a href="http://nuget.org">NuGet</a> package, which means I don’t even have to leave Visual Studio to start working with it.</li>
-	<li>The .NET client is very well designed and supports the IQueryable interface and LINQ very well.  This makes storing, deleting, and loading data easy. It also makes querying data easy and extremely powerful.</li>
-	<li>Facilities to quickly define indexes and even MapReduce queries in code with minimal effort are supported.</li>
-	<li>The amount of time I spend on the data model is greatly reduced, since mapping .NET objects to JSON documents is easy.</li>
-	<li>I don’t have to use an object relational mapper (ORM).</li>
-	<li>An HTTP API is available as an integration option.</li>
-	<li>I can completely embed RavenDB in my application.</li>
+<li>RavenDB is available as a <a href="http://nuget.org">NuGet</a> package, which means I don’t even have to leave Visual Studio to start working with it.</li>
+<li>The .NET client is very well designed and supports the IQueryable interface and LINQ very well.  This makes storing, deleting, and loading data easy. It also makes querying data easy and extremely powerful.</li>
+<li>Facilities to quickly define indexes and even MapReduce queries in code with minimal effort are supported.</li>
+<li>The amount of time I spend on the data model is greatly reduced, since mapping .NET objects to JSON documents is easy.</li>
+<li>I don’t have to use an object relational mapper (ORM).</li>
+<li>An HTTP API is available as an integration option.</li>
+<li>I can completely embed RavenDB in my application.</li>
 </ol>
-The net result is I can spend most of my time focused on my application and its problem space. Reasons 4 and 5 are also true for other document databases, but reasons 1, 2, and 3 really distinguish RavenDB in the .NET space.
-
-Let’s look at an example. Take for instance reason #4 and assume we were tasked with creating a domain model for a shopping cart and the persistence logic for it.  The very first thing we would do is create the domain model. After some conversations and collaboration with a stakeholder, we come up with the following initial domain model along with the unit tests which validate the correct behavior of the model:
-
-[gist id=2399488]
-
-At this point we are ready to start working on persisting the shopping cart object to a database. If we are using Microsoft SQL Server, we would now have to create some tables in SQL or perhaps use a code-first approach with our ORM of choice. We may need to create a map for our ORM and probably a repository class to facilitate the storage and retrieval of our domain object to and from the database. If we are using RavenDB, we are pretty much done. Regardless of the data storage solution selected, we can usually count on some tweaks and enhancements during the demo and develop iterations with the stakeholder. But when RavenDB is used, those changes are going to happen here in the domain model. Contrast this with a traditional relational database, which may require changes to the domain model, ORM maps, repositories, and SQL tables.
-
-I can’t get over how easy the .NET client is to use and how powerful RavenDB can be. If you are interested in trying RavenDB out, check out my <a href="http://www.headspring.com/2012/03/getting-started-with-ravendb">Getting Started with RavenDB</a> post for a quick introduction.
+<p>The net result is I can spend most of my time focused on my application and its problem space. Reasons 4 and 5 are also true for other document databases, but reasons 1, 2, and 3 really distinguish RavenDB in the .NET space.</p>
+<p>Let’s look at an example. Take for instance reason #4 and assume we were tasked with creating a domain model for a shopping cart and the persistence logic for it.  The very first thing we would do is create the domain model. After some conversations and collaboration with a stakeholder, we come up with the following initial domain model along with the unit tests which validate the correct behavior of the model:</p>
+<p>{% gist 2399488 %}</p>
+<p>At this point we are ready to start working on persisting the shopping cart object to a database. If we are using Microsoft SQL Server, we would now have to create some tables in SQL or perhaps use a code-first approach with our ORM of choice. We may need to create a map for our ORM and probably a repository class to facilitate the storage and retrieval of our domain object to and from the database. If we are using RavenDB, we are pretty much done. Regardless of the data storage solution selected, we can usually count on some tweaks and enhancements during the demo and develop iterations with the stakeholder. But when RavenDB is used, those changes are going to happen here in the domain model. Contrast this with a traditional relational database, which may require changes to the domain model, ORM maps, repositories, and SQL tables.</p>
+<p>I can’t get over how easy the .NET client is to use and how powerful RavenDB can be. If you are interested in trying RavenDB out, check out my <a href="http://www.headspring.com/2012/03/getting-started-with-ravendb">Getting Started with RavenDB</a> post for a quick introduction.</p>

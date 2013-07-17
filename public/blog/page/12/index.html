@@ -7,7 +7,7 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="I&#8217;ll never understand why it works, but it turns out that generating pseudorandom numbers takes very little code. Consider the following &hellip;">
+	<meta name="description" content="In this cast, Logan Turner and Jeffrey Palermo discuss Mercurial basics.  Logan Turner is a Headspring intern and a student at LeTourneau University &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -83,14 +83,300 @@
     <article class="post">
 	<h2 class="title">
 		
+		<a href="/blog/mercurial-basics/">
+		
+			Mercurial Basics With Logan Turner</a>
+	</h2>
+	<div class="entry-content">
+		<p><a href="http://feeds.headspring.com/headspringpodcast"><img class="alignleft size-full wp-image-5635" src="http://www.headspring.com/wp-content/uploads/2012/06/rss-icon40.jpg" alt="" width="40" height="40" /></a>In this cast, Logan Turner and Jeffrey Palermo discuss Mercurial basics.  Logan Turner is a Headspring intern and a student at LeTourneau University.  Logan has recently learned Mercurial, and he has helped another new employee come up to speed with this distributed version control system.</p>
+<p>You might be interested in these Mercurial resources:</p>
+<ul>
+<li><a href="http://mercurial.selenic.com/">Mercurial/TortoiseHg</a></li>
+<li><a href="http://hgbook.red-bean.com/read/">Free Mercurial ebook by Bryan O&#8217;Sullivan</a></li>
+</ul>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-06-26T00:00:00-05:00" pubdate data-updated="true">Jun 26<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/podcast/'>Podcast</a>, <a class='category' href='/blog/categories/logan-turner/'>logan turner</a>, <a class='category' href='/blog/categories/mercurial/'>mercurial</a>, <a class='category' href='/blog/categories/source-control/'>source control</a>, <a class='category' href='/blog/categories/tortoisehg/'>tortoisehg</a>, <a class='category' href='/blog/categories/vcs/'>vcs</a>, <a class='category' href='/blog/categories/version-control/'>version control</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/loops-obfuscate/">
+		
+			Loops Obfuscate</a>
+	</h2>
+	<div class="entry-content">
+		<p>Most of the world&#8217;s loops have already been written, and their names are &#8220;Where&#8221; and &#8220;Select&#8221;.</p>
+<p>Loops are so commonplace in software that it barely deserves mentioning.  It&#8217;s like saying &#8220;saws are ubiquitous in woodworking&#8221; or &#8220;epic guitar solos are ubiquitous in Journey albums&#8221;.  Although there is nothing good or bad about loop constructs themselves, LINQ has changed the way I think about them over the last few years.</p>
+<p>Let&#8217;s start with some typical, monotonous loops:</p>
+<p><div><script src='https://gist.github.com/2969701.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>There&#8217;s nothing Earth-shattering about these methods, and there&#8217;s nothing particularly wrong with them.  Let&#8217;s assume, though, that as requirements change the condition for <em>valuable-ness</em> and the means of formatting items become more comlex.  Keeping that logic inside these methods would start to feel a little wrong, as it would <a href="http://en.wiktionary.org/wiki/complect">complect</a> the low-level details of iteration and list-building with the high-level business concepts of product value and formatting.</p>
+<p><strong>I don&#8217;t want to think about iteration and list-building when I&#8217;m also trying to think about business concepts.</strong></p>
+<p>Let&#8217;s say that once these rules got complicated enough, and reading them as monolithic methods got a little too painful, we simplify by doing an Extract-Method refactoring on them:</p>
+<p><div><script src='https://gist.github.com/2969706.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Now it&#8217;s easier to see that we&#8217;re building up <code>List</code> objects just so that we can return them for <code>IEnumerable</code> iteration.  Armed with the <code>yield</code> keyword, we clean up further:</p>
+<p><div><script src='https://gist.github.com/2969708.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Imagine we have performed a similar refactoring all over a large project.  Our code would be littered with these annoying loop methods that are all suspiciously similar to each other.  All the methods like <code>ValuableProducts</code> would take a collection, loop through it, and apply a filter condition function to each item. All the methods like <code>FormattedProducts</code> would take a collection, loop through it, and apply some transforming function on each item.</p>
+<p>They&#8217;re all so similar that you might be tempted to reach for your copy/paste shortcuts to write them, and that should tell us something about the value of writing that code: <strong>the operations of iterating, filtering, and transforming collections are so fundamental that we shouldn&#8217;t have to write them out.</strong></p>
+<p>Using delegates and generics, we can pluck out the tiny parts that vary from one copy/pasted loop method to another, collapsing all those methods down to two:</p>
+<p><div><script src='https://gist.github.com/2969718.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>At this point we have accidentally reinvented the <code>Enumerable</code> extension methods <code>Where</code> and <code>Select</code>, so even these two methods can be removed.  We&#8217;re left with the now-commonplace alternatives:</p>
+<p><div><script src='https://gist.github.com/2969719.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Once you start writing in this style rather than the original imperative style, <strong>the surface area of your code that corresponds with your actual goals increases compared to that of your infrastructure</strong>.  The focus is on <em>what</em> your goal is, and not on <em>how</em> you intend to trick a box of wires into reaching that goal.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-06-22T00:00:00-05:00" pubdate data-updated="true">Jun 22<span>nd</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/using-waithandles-to-test-asynchronous-events/">
+		
+			Using WaitHandles to Test Asynchronous Events</a>
+	</h2>
+	<div class="entry-content">
+		<p><em>By Casey Gum</em></p>
+<p>In my last post, I talked about some of the dangers of using lambda expressions (anonymous delegates) as event handlers.  However, one place where this can be really handy is when you are unit testing classes that raise events. </p>
+<p>Occasionally, you will find yourself in a situation where you need to unit test a class that raises an event or calls a callback method on a different thread than the one that initiated the action in the first place.  This is especially common when dealing with web requests and can lead to some obtuse unit testing techniques.  In this post, I&#8217;ll demonstrate a technique that I use that relies on WaitHandles that is pretty darn handy.</p>
+<p>Let&#8217;s say that we have to unit test the following class.</p>
+<p><div><script src='https://gist.github.com/2942373.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>This class has a method, StartJob() and an event JobComplete.  StartJob() spins up a new thread and sleeps for the executionTime to simulate work and then raises an event, notifying the caller that the job is complete.  (ProTip: If I initialize the event to an empty delegate{}, I don&#8217;t have to null-check the event before raising it.)  However, JobComplete is being raised on the new thread.  What implications do you think this will have on a unit test?  Let&#8217;s take a look.</p>
+<p>Here&#8217;s a unit test one might write that would work perfectly provided there was no thread-switching going on.</p>
+<p><div><script src='https://gist.github.com/2942411.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>A test like this *might* even work if there was a thread-switch, but it would all depend on how quickly the code executed and the thread scheduler.  However, I would suspect that most of the time it would fail.</p>
+<p>The next approach someone might take to solve this unit testing dilemma is to use a Thread.Sleep() in the unit test.</p>
+<p><div><script src='https://gist.github.com/2942427.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>This may work most of the time, but if the unit of work exceeds the period provided in the Thread.Sleep() call, the test will fail even though the class under test functions properly.  But under normal circumstances, it would just make your unit test take longer to run.</p>
+<p>Another approach one might take is to use polling and a Thread.Sleep().</p>
+<p><div><script src='https://gist.github.com/2942442.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>This one will definitely work and is more time-efficient, but has one big drawback: if the thing being tested actually does fail, this unit test will spin forever and prevent any other unit tests from running.  In a continuous integration or production build environment, it might even take awhile before anyone realizes there&#8217;s a problem.  The build just doesn&#8217;t finish.</p>
+<p>Okay, next thing to try is to bail out after a certain number of spins.</p>
+<p><div><script src='https://gist.github.com/2942450.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>This one will definitely work and will timeout if the test doesn&#8217;t complete within 30 seconds, but it is obtuse.  Just look at how much code is spent dealing with waiting long enough, but not too long.</p>
+<p>A better approach is to use a WaitHandle, specifically the ManualResetEvent class.</p>
+<p><div><script src='https://gist.github.com/2942461.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>The whole purpose of WaitHandles is to pass signals across thread boundaries.  Using a WaitHandle is much more concise and is perfectly efficient.  The unit test code will sit there on the waitHandle.WaitOne(timeout) line until either the timeout period expires or the waitHandle.Set() method is called.  If Set() is called, WaitOne() returns true.  If the timeout expires before Set() is called, it returns false.  All you need to do is Assert that the result of WaitOne() is true.</p>
+<p>Pretty neat, don&#8217;t you think?</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-06-20T00:00:00-05:00" pubdate data-updated="true">Jun 20<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/blog/'>Blog</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/events/'>events</a>, <a class='category' href='/blog/categories/unit-testing/'>unit testing</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/sneaky-leaky-lambda-listeners/">
+		
+			Sneaky Leaky Lambda Listeners</a>
+	</h2>
+	<div class="entry-content">
+		<p><em>By Casey Gum</em></p>
+<p>Sometimes, it can be very convenient to use lambda expressions as event handlers.  If the event handler does something short and sweet, it can also be a lot easier to read than having to jump down to the method that implements the handler.</p>
+<p>However, as with all events handlers, you really need to understand the lifetime of the instance that exposes the event or you can leak, leak, leak. </p>
+<p>Let&#8217;s take a look at some code.  The following is a typical way to hook up to an event using a method as an event handler.</p>
+<p><div><script src='https://gist.github.com/2941654.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>This next block of code uses a lambda expression instead. As you can see, it is much more concise.</p>
+<p><div><script src='https://gist.github.com/2941702.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Interestingly, when you do this, behind the scenes, the compiler will actually add a method to your class.  So, you&#8217;re really not making your class any smaller, you&#8217;re just making it easier to read.  You can see this if you look at it using <a title=".Net Reflector" href="http://www.reflector.net/" target="_blank">.Net Reflector</a>.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2012/06/reflector.png"><img class="alignnone size-full wp-image-5590" src="http://www.headspring.com/wp-content/uploads/2012/06/reflector.png" alt="" width="240" height="91" /></a></p>
+<p>Okay, so that&#8217;s all well and good, but now let&#8217;s consider the implementation of the <strong>Publisher</strong> class.  For simplicity sake (normally I let my IoC container sort this out), I did a quick Singleton pattern implementation on it so that we can get a Publisher instance by calling the <strong>static</strong> .Instance property.  When you see the &#8220;static&#8221; keyword, you should really think &#8220;immortal&#8221;.  From the perspective of the GarbageCollector, once it has a value, it&#8217;s not going away unless you set it to null.</p>
+<p>Now, consider this block of code.</p>
+<p><div><script src='https://gist.github.com/2941741.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>If you haven&#8217;t had to deal much with memory leaks in the past, you might think that the code above would nuke all instances of Listener, but it does not.  As a matter of fact, after making the call to this function, here&#8217;s what <a title=".Net Memory Profiler" href="http://memprofiler.com/" target="_blank">.Net Memory Profiler</a> shows.  We have 10 new instances and they are not going away.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2012/06/snapshot12-e1339861888756.png"><img class="alignnone size-full wp-image-5593" src="http://www.headspring.com/wp-content/uploads/2012/06/snapshot12-e1339861888756.png" alt="" width="500" height="79" /></a></p>
+<p>The following image shows what it looks like to the GarbageCollector.  The static instance of Publisher is rooted and will not go away.  Its event variable is a MulticastDelegate.  The MulticastDelegate holds a reference to a System.Action&lt;string&gt; delegate. And the Action delegate holds a reference to your Listener.  So, even though your listener instance has fallen out of scope, it will survive garbage collection because there is a reference path to it via the Publisher.PublishedMessage event.  Incidentally, this is true whether you use a traditionally implemented event handler or a lambda expression.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2012/06/root-path1.png"><img class="alignnone size-full wp-image-5594" src="http://www.headspring.com/wp-content/uploads/2012/06/root-path1.png" alt="" width="151" height="445" /></a><a href="http://www.headspring.com/wp-content/uploads/2012/06/root-path21.png"><img class="alignnone size-full wp-image-5596" src="http://www.headspring.com/wp-content/uploads/2012/06/root-path21.png" alt="" width="172" height="450" /></a></p>
+<p>What to do, what to do?  Well, one thing we could do is to implement IDisposable and unhook our event handler in the Dispose() method.  Of course, we will also need to actually call Dispose() after we are done with our listener.</p>
+<p><div><script src='https://gist.github.com/2941797.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>This totally works and now here&#8217;s what the memory profiler reports:</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2012/06/snapshot2.png"><img class="alignnone size-full wp-image-5598" src="http://www.headspring.com/wp-content/uploads/2012/06/snapshot2.png" alt="" width="512" height="94" /></a></p>
+<p>Can you do the same thing with a lambda listeners?  Unfortunately, no, you cannot, but we can give it a try just to see what happens.  The following is our desperate attempt to unhook a lambda event handler in the Dispose() method.</p>
+<p><div><script src='https://gist.github.com/2941810.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>So, why doesn&#8217;t that work?  Well, because the compiler is creating a different method for each of our lambdas, one in the constructor and one in Dispose().  Again, this can be proven using .Net Reflector.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2012/06/reflector2.png"><img class="alignnone size-full wp-image-5599" src="http://www.headspring.com/wp-content/uploads/2012/06/reflector2.png" alt="" width="288" height="188" /></a></p>
+<p><strong>CONCLUSION</strong></p>
+<p>The C# language makes dealing with events very easy. Unfortunately, by hiding some of the implementation details from the developer, it may lull you into a false sense of security with respect to memory management.  Whenever you are dealing with events, you need to carefully consider the lifetimes of both the publisher and the listener and make sure you unhook your event handlers or risk dealing with OutOfMemoryExecptions that are very difficult to diagnose.  This is ESPECIALLY important if you are doing WPF, Silverlight or Metro development.  If your View Model is listening for events on a long-lived object, and your View is listening to your View Model&#8217;s INotifyPropertyChanged.PropertyChanged event, and your View&#8217;s .Parent property holds a reference to its container, you can see that you can easily keep a very large object graph from being garbage collected.</p>
+<p>If you are doing UI development, object graph teardown can get extremely complex.  You can simplify these event/lifetime management headaches by using an Event Aggregator that uses weak reference eventing such as the one found in the Microsoft PRISM composite application framework.</p>
+<p>I should probably cover that in a future post.</p>
+<p>Until then, remember, you can be freaky, but try not to be leaky!</p>
+<p>&nbsp;</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-06-16T00:00:00-05:00" pubdate data-updated="true">Jun 16<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/debugging/'>debugging</a>, <a class='category' href='/blog/categories/events/'>events</a>, <a class='category' href='/blog/categories/memory-leaks/'>memory_leaks</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
 		<a href="/blog/public-private-super-private/">
 		
 			Public, Private, Super-Private</a>
 	</h2>
 	<div class="entry-content">
-		<p>I&#8217;ll never understand <em>why</em> it works, but it turns out that generating pseudorandom numbers takes very little code. Consider the following Random class. Given a seed integer to get started, it will produce an apparently-random list of ints as you repeatedly call Next():
+		<p>I&#8217;ll never understand <em>why</em> it works, but it turns out that generating pseudorandom numbers takes very little code. Consider the following Random class. Given a seed integer to get started, it will produce an apparently-random list of ints as you repeatedly call Next():</p>
+<p><div><script src='https://gist.github.com/2938870.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Easy as pie. Shortest blog post ever.</p>
+<p><strong>*Record Scratch*</strong></p>
+<p>Wait, why is <code>x</code> public? It&#8217;s so wrong, your gut says &#8220;That should be private!&#8221; long before your brain catches up and agrees. The downside, of course, is that the coder using this class can mess with <code>x</code>, and that could have the effect of the algorithm no longer producing a &#8220;fair&#8221; sequence.</p>
+<p>We mark that field private and call it a day. Later, we revisit the class to start adding convenience methods, written in terms of the existing <code>Next()</code> method:</p>
+<p><div><script src='https://gist.github.com/2938877.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>We balked at <code>x</code> being public because more code <em>could</em> mess with it than <em>should</em> mess with it. By marking it public, we were <em>telling</em> the next coder that altering the value of <code>x</code> was something you might want to do <em>from anywhere</em>.</p>
+<p>However, if the person implementing additional methods on this class doesn&#8217;t already know that <code>x</code> is sacred, not to be altered anywhere but within <code>Next()</code>, then marking it private hasn&#8217;t actually helped. We&#8217;re stuck with the same problem: by merely marking it private, we are <em>telling</em> the next coder that altering the value of <code>x</code> is something you might want to do <em>from anywhere within the class</em>.</p>
+<p>That&#8217;s a risk we&#8217;re likely willing to take in practice, but in a perfect world we could further constrain <code>x</code> so that it is only visible to the method that deserves to see it. Consider the following, in which <code>x</code> is promoted from private to super-private:</p>
+<p><div><script src='https://gist.github.com/2938890.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>This produces the same results. Although <code>x</code> is declared local to the constructor, it will still live on after construction because the <code>Next</code> lambda expression &#8220;closes over&#8221; or &#8220;grabs onto&#8221; it. The lambda is even allowed to change it. Think of every lambda expression as being an instance of a class that has fields of its own, and those fields are implied by which local variables we happen to refer to in the lambda&#8217;s body.</p>
+<p>I&#8217;m <em>not</em> recommending that you start obfuscating all of your classes in this fashion. The main point, though, is that once you get comfortable with the idea that lambdas have their own &#8216;super private&#8217; state that lives on for the lambda&#8217;s lifetime, you may find that you just don&#8217;t need as many class-level fields as you used to.</p>
+
 		
-		<a href="/blog/public-private-super-private/" class="more-link">Read on &rarr;</a>
+		
 	</div>
 
 
@@ -133,9 +419,63 @@
 <p><a href="http://www.eventbrite.com/event/4433649164?ref=ebtnebregn" target="_blank"><img src="http://www.eventbrite.com/custombutton?eid=4433649164" alt="Eventbrite - Headspring Developer Boot Camp" /></a></p>
 <p>Leave the course with working code, built with the techniques and practices taught! <strong>Plus, students will receive 25% off a ReSharper license.</strong></p>
 <p><strong>Cost $1,975.00. Enroll automatically through Eventbrite,  or call (512) 459 - 2260 to speak with a sales representative. </strong></p>
-<p>
+<div>
+<h3>1. Topics Covered</h3>
+<div>
+<p><strong>Real-World Issues Tackled</strong></p>
+<ul>
+<li>Domain Driven-Design</li>
+<li>Test-Driven Development</li>
+<li>Source Control Management</li>
+<li>Build automation and continuous Integration</li>
+<li>Database Migrations</li>
+<li>Team dynamics</li>
+<li>Automated deployments</li>
+<li>Onion architecture</li>
+<li>Inversion of Control</li>
+<li>Interfaced-based programming</li>
+<li>Separation of Concerns</li>
+<li>Design patterns</li>
+<li>Object-relational mapping</li>
+<li>Pair programming</li>
+<li>Refactoring</li>
+<li>Automated unit and Integration testing</li>
+</ul>
+</div>
+<h3>2. Tools to be Mastered</h3>
+<p><strong>This series shows students how to get more from the real-world tools that we use every day:</strong></p>
+<ul>
+<li>Visual Studio 2010</li>
+<li>Resharper</li>
+<li>SQL Profiler</li>
+<li>Distributed Source Control with Mercurial</li>
+<li>ASP.NET MVC 3</li>
+<li>StructureMap</li>
+<li>NUnit</li>
+<li>Rhino Mocks</li>
+<li>AutoMapper</li>
+<li>NHibernate and Entity Framework</li>
+<li>Psake</li>
+<li>Pstrami</li>
+<li>Tarantino</li>
+</ul>
+<h3>3. Who Benefits Most</h3>
+</div>
+<p><strong>Developers with:</strong></p>
+<ul>
+<li>1+ years of experience in C#, 2+ years developing software</li>
+<li>Understanding of basic web development languages including HTML</li>
+<li>Understanding of the basics of .NET</li>
+<li>Desire to Avoid Common Web Development Pitfalls</li>
+<li>Desire to Write Maintainable System</li>
+</ul>
+<p><em>If you have any concerns whether or not this course is a fit, contact us for help.</em></p>
+<p>Training located in Austin, Texas at the <a href="http://www.headspring.com/contact/" target="_blank">Headspring office</a> (8:30 a.m. to 5:00 p.m.)</p>
+<p>Although it is unlikely, class dates are subject to change. We encourage you to obtain transferable airline/hotel reservations in the event that this should occur.</p>
+<p>By signing up for a Headspring training course, you are accepting the terms and conditions of our<a title="Education Services Agreement" href="http://headspring.wpengine.com/education-services-agreement/" target="_blank">Education Services Agreement</a>.</p>
+
 		
-		<a href="/blog/headspring-developer-boot-cam/" class="more-link">Read on &rarr;</a>
+		
 	</div>
 
 
@@ -179,9 +519,30 @@
 <p>So, the natural thing to do is to commandeer the enormous and conveniently located Caps Lock key and make it act like the escape key.  (<strong>Note:  </strong>If you need to type OMG LOL ROFL, you can just hold down the shift key and type – you don’t actually need to use Caps Lock – just saying…)</p>
 <p><a href="http://www.headspring.com/2012/06/power-to-the-pinkies/esc-hands-2" rel="attachment wp-att-5472"><img class="aligncenter size-full wp-image-5472" src="http://www.headspring.com/wp-content/uploads/2012/06/esc-hands1.jpg" alt="" width="500" height="257" /><br />
 </a></p>
-<p>Here&#8217;s how you do it&#8230; 
+<p>Here&#8217;s how you do it&#8230; </p>
+<p><span style="text-decoration: underline"><span style="color: #000000"><strong>In Windows:</strong></span></span></p>
+<p><strong>Note: </strong>If you are running Windows in Parallels on a Mac, this won’t work – go to the section on how to do it in OSX.</p>
+<p>Take the block of text below and copy it into notepad.  Then, save the file as EscapeKeyRemap.reg and double-click it to run it.  (You can also <strong>Start &gt; Run &gt; regedit</strong> and then choose <strong>File &gt; Import</strong> and import the file.)  As you can easily see,  it sets the &#8220;Scancode Map&#8221; key to a bunch of random numbers.  This causes the Caps Lock key to behave like an escape key, which is all that really matters.</p>
+<div style="font-size: 10px;padding: 10px;border: solid 1px gray;background-color: silver">
+<p>Windows Registry Editor Version 5.00</p>
+<p>[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Keyboard Layout]<br />
+&#8220;Scancode Map&#8221;=hex:00,00,00,00,00,00,00,00,02,00,00,00,01,00,3a,00,00,00,00,00</p>
+</div>
+<p><strong>EDIT</strong>: The previous registry key entry was wrong - I fixed it.</p>
+<p>After you have modified the registry, you will need to reboot the system.  Once you are done rebooting, you will be good to go.</p>
+<p><span style="text-decoration: underline"><strong>In OSX:</strong></span></p>
+<p>In OSX, you will need to install <strong>PCKeyboardHack</strong>.  You can download it from here: <a href="http://download.cnet.com/PCKeyboardHack/3000-2110_4-75363152.html">http://download.cnet.com/PCKeyboardHack/3000-2110_4-75363152.html</a>.</p>
+<p>After you download and run the disk image (.dmg file) you will see an icon on your desktop called <strong>PCKeyboardHack-7.4.0</strong>.  Double-click it and it will open a new window with a file in it called <strong>PCKeyboardHack.reg</strong>.  Double-click that to install it using all the default options.  After it is done installing, you will need to reboot.</p>
+<p><a href="http://www.headspring.com/2012/06/power-to-the-pinkies/screen-shot-2012-06-12-at-8-42-03-pm" rel="attachment wp-att-5475"><img class="aligncenter size-medium wp-image-5475" src="http://www.headspring.com/wp-content/uploads/2012/06/Screen-Shot-2012-06-12-at-8.42.03-PM-300x187.png" alt="" width="300" height="187" /></a></p>
+<p>After rebooting, go to your system preferences and double-click the <strong>PCKeyboardHack</strong> icon.</p>
+<p><a href="http://www.headspring.com/2012/06/power-to-the-pinkies/screen-shot-2012-06-12-at-8-40-29-pm" rel="attachment wp-att-5476"><img class="aligncenter size-medium wp-image-5476" src="http://www.headspring.com/wp-content/uploads/2012/06/Screen-Shot-2012-06-12-at-8.40.29-PM-300x251.png" alt="" width="300" height="251" /></a></p>
+<p>This will bring up a dialog that allows you to remap your Caps Lock key.  Check the Change Caps Lock box and enter the keycode <strong>53</strong>.</p>
+<p><a href="http://www.headspring.com/2012/06/power-to-the-pinkies/screen-shot-2012-06-12-at-8-42-59-pm" rel="attachment wp-att-5477"><img class="aligncenter size-medium wp-image-5477" src="http://www.headspring.com/wp-content/uploads/2012/06/Screen-Shot-2012-06-12-at-8.42.59-PM-300x294.png" alt="" width="300" height="294" /></a></p>
+<p>Close the dialog and you’ll be good to go.  This will carry over to Windows running under Parallels as well.</p>
+<p>Happy Vimming!</p>
+
 		
-		<a href="/blog/power-to-the-pinkies/" class="more-link">Read on &rarr;</a>
+		
 	</div>
 
 
@@ -274,9 +635,48 @@
 <li>Coffee Script</li>
 <li>and More</li>
 </ul>
-<p>
+<p><strong>Who Benefits Most? Developers with:</strong></p>
+<ul>
+<li>A Basic Understanding of Microsoft Web Technologies</li>
+<li>A Basic Understanding of Web Development Languages</li>
+<li>A Basic Understanding of the Web Life-Cycle</li>
+</ul>
+<div>
+<hr />
+<p><em>If you have any concerns whether or not this course is a fit, contact us for help.</em></p>
+</div>
+<p>Training located in Austin, Texas (8:30 a.m. to 5:00 p.m.)</p>
+<p>Although it is unlikely, class dates are subject to change. We encourage you to obtain transferable airline/hotel reservations in the event that this should occur.</p>
+<p>By signing up for a Headspring training course, you are accepting the terms and conditions of our <a title="Education Services Agreement" href="http://headspring.wpengine.com/education-services-agreement/" target="_blank">Education Services Agreement</a>.</p>
+<p>View the detailed course curriculum below for more information.</p>
+<hr />
+<p><strong>Course Curriculum</strong></p>
+<p><strong>Day 1</strong></p>
+<p><strong>Session 1.1 – </strong>Introduction to HTML and CSS<br />
+<strong></strong></p>
+<p><strong>Session 1.2 – </strong>Getting Started with JavaScript</p>
+<p><strong>Session 1.3 – </strong>Crafting Semantic HTML<br />
+<strong></strong></p>
+<p><strong>Session 1.4 – </strong>HTML5′s New Features</p>
+<p><em><br />
+</em></p>
+<p><strong>Day 2</strong></p>
+<p><strong>Session 2.1 – </strong>jQuery and Other DOM Tools<br />
+<strong></strong></p>
+<p><strong>Session 2.2 – </strong>Application Frameworks</p>
+<p><strong>Session 2.3 – </strong>Writing Maintainable CSS</p>
+<p><strong>Session 2.4 – </strong>Less, SASS, and CoffeeScript</p>
+<p><em><br />
+</em></p>
+<p><strong>Day 3</strong></p>
+<p><strong>Session 3.1 – </strong>Interacting with the Server<br />
+<strong></strong></p>
+<p><strong>Session 3.2 – </strong>Fitting the Pieces Together</p>
+<p><strong>Session 3.3 – </strong>The Future of Web Development</p>
+<p><strong>Session 3.4 – </strong>Course Retrospective</p>
+
 		
-		<a href="/blog/html5-boot-camp/" class="more-link">Read on &rarr;</a>
+		
 	</div>
 
 
@@ -315,9 +715,52 @@
 	</h2>
 	<div class="entry-content">
 		<p>When you define two methods with the same name in C#, they have to take in different argument types in order for them to be distinguished from each other.  Sometimes, I find myself wishing that you could also overload a method name when the inputs are the same, but return types differ.</p>
-<p>Technically, you can&#8217;t do that in C#, but you can fake it.
+<p>Technically, you can&#8217;t do that in C#, but you can fake it.</p>
+<h2>What would that even <em>mean</em>?</h2>
+<p>Let&#8217;s imagine a hypothetical C# in which you were allowed to overload on return types.  Consider the following class:</p>
+<p><div><script src='https://gist.github.com/2891704.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>In the call to <code>foo.GetValue()</code>, we cannot tell which method should be called.  However, what if we tried to call it with some more context?</p>
+<p><div><script src='https://gist.github.com/2891706.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>When we have some local type information available, we really could make an unambiguous decision about which overload to call.  When initializing <code>i</code>, the only overload that could work is the one returning an <code>int</code>.  When initializing <code>b</code>, the only overload that could work is the one returning a <code>bool</code>.</p>
+<p>We could conceivably find the right overload to call <em>based on how the return value is used</em>.  That seems odd at first, but there&#8217;s nothing really Earth-shattering about it.  Even in today&#8217;s real C#, overloads are picked based on what call-site types we happen to be using, and this would simply be yet another bit of call-site type information at our disposal.  Also, today&#8217;s real C# figures out the type of a lambda expression based on how it&#8217;s <em>used</em> as well, so there&#8217;s a precedent for being able to use usage-site context.</p>
+<h2>Using &#8216;out&#8217; Parameters</h2>
+<p>Let&#8217;s rewrite the original invalid class, using &#8216;out&#8217; parameters instead of return types:</p>
+<p><div><script src='https://gist.github.com/2891722.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>This is completely valid.  <strong>When picking the right overload to call, the compiler considers &#8216;out&#8217; parameters as if they were inputs.</strong></p>
+<blockquote><p>
+  There is no substantive difference between a method that returns some type <code>T</code>, and a <code>void</code> method with an &#8216;out&#8217; parameter of type <code>T</code>.  The difference is only skin deep.
+</p></blockquote>
+<h2>A Concrete Example</h2>
+<p>I&#8217;ve encountered this in the real world on a few projects, dealing with the unfortunate interface <code>IDataReader</code>.  This is the interface used to process low-level ADO.NET result sets one row at a time.  Nowadays, most of us access databases with higher-level tools like NHibernate or PetaPoco, but this interface serves as a good example because:</p>
+<blockquote>
+<p>1) It was written before .NET gained generics, so it has some awkwardly-named methods we&#8217;d like to work around.<br />
+  2) Using it leads you to write hard-to-read, monotonous code.</p>
+</blockquote>
+<p>Both of these issues will be resolved with the &#8216;out&#8217; keyword.</p>
+<p>This interface exposes many methods that take in an <code>int</code> and return a value.  The input <code>int</code> indicates which column of the result set you are interested in, and the method <em>name</em> says what type you hope to find in that column.  <code>reader.GetInt32(2)</code> gives you the <code>int</code> found in the third column, <code>reader.GetDataTime(3)</code> gives you the <code>DateTime</code> found in the fourth column, etc.  To further complicate matters, you shouldn&#8217;t call these methods when the result set contains the special <code>DBNull</code> value.  When using this interface, you end up writing ugly things like this:</p>
+<p><div><script src='https://gist.github.com/2891743.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Note that every time you want call one of these Get* methods, you answer two questions:</p>
+<blockquote>
+<p>1) What type do I expect to find at the given position?<br />
+  2) Are null values possible at the given position?</p>
+</blockquote>
+<p>Note also that in each line, both of these questions are answered by the declared type of the left-hand-side.  Why should we have to repeat those answers on the right-hand-side?  Armed with some extension methods and the &#8216;out&#8217; keyword, things get much less repetative:</p>
+<p><div><script src='https://gist.github.com/2891749.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>When you&#8217;re reading in 10 or so columns, the brevity adds up.  When writing a method that needs to read in a record from an <code>IDataReader</code>, you are <em>thinking</em> &#8220;I expect to get back values with these names, at these positions, with these types&#8221;.  You are <em>not</em> thinking &#8220;I expect to pull a Guid out of the first position so I&#8217;ll GetGuid, and I expect to pull an int out of the second position so I&#8217;ll GetInt32 but watch out for DBNull, and&#8230;&#8221;.  By &#8220;overloading on the return type&#8221;, we get to say what we mean <em>and nothing else</em>.</p>
+<p>I rarely use &#8216;out&#8217; parameters, but it&#8217;s nice to know they actually have a purpose every now and again, when the need presents itself.</p>
+
 		
-		<a href="/blog/overloading-on-return-types/" class="more-link">Read on &rarr;</a>
+		
 	</div>
 
 
@@ -339,195 +782,6 @@
 
 
 	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/headspring-named-one-of-top-5-best-places-to-work-in-austin/">
-		
-			Headspring Named One of Top 5 Best Places to Work in Austin</a>
-	</h2>
-	<div class="entry-content">
-		<p align="center"><strong><em><img class="alignright size-full wp-image-5533" title="BPTW-logo-hollywood-glam" src="http://headspring.wpengine.com/wp-content/uploads/2012/06/BPTW-logo-hollywood-glam.jpg" alt="" width="270" height="233" />Leadership Team Honored for Dedication to Employee Engagement, Culture and Benefits</em></strong></p>
-<p><strong><em></em></strong>Austin, TX – June 07, 2012, Austin-based Headspring, a custom application development and consulting firm, today announced it has been recognized as one of the Austin Business Journal’s “Best Places to Work” in Central Texas.  Headspring ranked number four in the Small Companies category of the 2012 list.</p>
-<p>Headspring was chosen as one of the top-five Best Places to Work in Central Texas after a series of voluntary employee surveys which examined climate, team atmosphere, benefits and employee engagement. <img title="More..." src="http://www.headspring.com/wp-includes/js/tinymce/plugins/wordpress/img/trans.gif" alt="" /></p>
-<p>“It is such an honor to be named one of the 2012 Best Places to Work in Austin,” says CEO/Founder Dustin Wells. “Austin is a rapidly growing city with an expansive job market; job seekers have a lot of options. We are really touched by the fact our talented team of employees choose to work here and evangelize on behalf of our unique culture.”</p>
-<p>Award recipients were announced at a Hollywood-themed luncheon and ceremony on June 6<sup>th</sup> at the AT&amp;T Executive Education and Conference Center. The ceremony presentation included pictures and videos submitted by Headspring employees as a testament to their enthusiasm for the award-winning culture and work environment.</p>
-<p>This award comes on the heels of Headspring’s announcement earlier this year to hire two new employees per month in 2012 and to promote the existing twenty-five employees within the company. Headspring is experiencing rapid growth and is set to triple the office’s square footage by moving into the Avalon Building, located in northwest Austin, at the end of July.  As Headspring continues to contract new and larger projects, they vow to preserve a fun and collaborative culture, while planning to hire two new employees per month in 2012.</p>
-<p>For more information about careers at Headspring, visit: <a href="http://www.headspring.com/about-us/careers">http://www.headspring.com/about-us/careers</a></p>
-<div><strong style="color: #000000; text-align: left;"><br />
-</strong></div>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-06-07T00:00:00-05:00" pubdate data-updated="true">Jun 7<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/press/'>Press</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/win-a-copy-of-asp-net-mvc-4-in-action/">
-		
-			Win a Copy of ASP.NET MVC 4 in Action</a>
-	</h2>
-	<div class="entry-content">
-		<p><a href="http://headspring.wpengine.com/wp-content/uploads/2012/06/Palermo-ASPNET4-fc-website.jpg"><img class="alignright size-full wp-image-5557" title="Palermo-ASPNET4-fc-website" src="http://headspring.wpengine.com/wp-content/uploads/2012/06/Palermo-ASPNET4-fc-website.jpg" alt="" width="239" height="300" /></a>Hey everyone, the wait is over! Jeffrey Palermo and Jimmy Bogard&#8217;s newest book,<em> ASP.NET MVC 4 in Action</em>, is finally available.  <strong>To celebrate the release, Headspring is giving away 3 free copies!</strong>  We&#8217;re taking entries for the drawing all week, and winners will be announced next Monday (June 11th, 2012). Also, if you&#8217;re attending Code Camp Austin this weekend, be sure to stop by the booth for an additional chance to win.  </p>
-<p>If waiting is not an option, and you must read it before your friends, don&#8217;t sweat it. You can purchase your own copy through the publisher: <a href="http://www.manning.com/palermo3/">http://www.manning.com/palermo3/</a></p>
-<p>Good luck!</p>
-<p><strong>UPDATE (6/11/2012):</strong></p>
-<p>The winners are in! Congratulations to  Robertson Sagolsem, David Perkalis, and Jamie Cross. Check your email for information on receiving your copy.</p>
-<p>To those who missed out, check your email tomorrow for a special consolation prize :)</p>
-<p>Thanks for playing!</p>
-<p>&nbsp;</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-06-05T00:00:00-05:00" pubdate data-updated="true">Jun 5<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/small-talk-and-big-news/'>Small Talk &amp; Big News</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/why-try-vi-part-1/">
-		
-			Why Try Vi? (Part 1)</a>
-	</h2>
-	<div class="entry-content">
-		<p>Like most people, the majority of my time on a computer has been spent on systems having an O/S with a graphical user interface.  Because I was not raised in the arcane dungeons of the command-line interface, I never [thought I] had any reason to learn to use vi.</p>
-<p>For those of you who don’t know what vi is, it is a powerful text editor that is built in to pretty much every Unix/Linux-based operating system on the planet.  Even present-day Macs have vi and you can access it from the terminal.</p>
-<p>Having watched a proficient Linux user use vi a few times, I concluded that it was originally designed for programmer prisoners of war whose wrists were rigidly shackled to the bases of their keyboards and were therefore unable to reach either the mouse or the arrow keys. And for good measure, were punished for venturing too far from the home row.  I, a free, and enlightened programmer certainly had no use for this nonsense.</p>
-<p>Then one day about 4 or 5 years ago, during a .Net boot camp given by <a href="http://blog.developwithpassion.com/">JP Boodhoo</a>, it was revealed to me the true power of vi.  JP coded and refactored so quickly, so effortlessly, it was almost impossible to track what he was doing – and he did this without ever having his hands leave the keyboard.  What was his secret?  It was <a href="http://www.jetbrains.com/resharper/">ReSharper</a> and <a href="http://www.viemu.com/">ViEmu</a>. 
-		
-		<a href="/blog/why-try-vi-part-1/" class="more-link">Read on &rarr;</a>
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-06-04T00:00:00-05:00" pubdate data-updated="true">Jun 4<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/viemu/'>ViEmu</a>, <a class='category' href='/blog/categories/vimium/'>Vimium</a>, <a class='category' href='/blog/categories/vi/'>vi</a>, <a class='category' href='/blog/categories/vim/'>vim</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/ravendb-with-alonso-robles-and-jeffrey-palermo/">
-		
-			RavenDB With Alonso Robles and Jeffrey Palermo</a>
-	</h2>
-	<div class="entry-content">
-		<p><a href="http://feeds.headspring.com/headspringpodcast"><img class="alignleft size-full wp-image-5225" title="Subscribe to podcast" src="http://www.headspring.com/wp-content/uploads/2012/05/rss-icon402.jpg" alt="Subscribe to podcast" width="40" height="40" /></a>In this cast, Alonso Robles and Jeffrey Palermo discuss RavenDB.  RavenDB is a document database that is very easy to use with .Net applications.  Alonso is a Principal Consultant at Headspring and teaches the RavenDB Boot Camp.  Along with spending time with his family, he enjoys learning new programming languages and is a self-described technology junkie.</p>
-<p>You might be interested in these RavenDB resources:</p>
-<ul>
-<li><a href="http://ravendb.net/">http://ravendb.net/</a></li>
-<li><a href="http://www.codeproject.com/Articles/74322/RavenDB-An-Introduction">RavenDB quickstart on CodeProject</a></li>
-<li><a href="https://github.com/ravendb">Source code on GitHub</a></li>
-<li><a href="http://blog.hibernatingrhinos.com/8193/ravendb-webinar-1-now-available-on-youtube">RavenDB webinar</a></li>
-<li><a href="http://ayende.com/blog/4499/why-raven-db">Justification for RavenDB</a></li>
-</ul>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-06-02T00:00:00-05:00" pubdate data-updated="true">Jun 2<span>nd</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/podcast/'>Podcast</a>
 
 
 </div>

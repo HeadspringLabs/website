@@ -80,7 +80,7 @@
 	<div id="content" class="inner"><article class="post">
 	<h2 class="title">How I Learned to Stop Worrying and Love the Data Tier</h2>
 	<div class="entry-content"><p>At some point in 2005 or so, I started using ORMs to perform data access to a RDBMS. ORMs solved a lot of problems I was running into as a developer, namely all the boring ADO.NET code to deal with reading data and populating objects. Previously, my data mapping strategy was something like writing a bunch of stored procedures and corresponding ADO.NET code that is hard to write and even harder to maintain.</p>
-<p>I would wind up with a lot of code dealing with DBNull and such, but not much of the code dealt with actually reading information out. It was annoying. It was easy to get wrong. In my attempt to rid myself of this kind of code, I ditched all the things that SQL Server does well.<!--more--></p>
+<p>I would wind up with a lot of code dealing with DBNull and such, but not much of the code dealt with actually reading information out. It was annoying. It was easy to get wrong. In my attempt to rid myself of this kind of code, I ditched all the things that SQL Server does well.</p>
 <p>Using an ORM, especially with databases with large amounts of data, does not preclude the developer from learning these systems. It’s one thing to say we’re ditching Stored Procedures, but yet another to ignore all of the other things that RDBMS does well, and can very much impact the end-user experience of a system.</p>
 <p>I had ditched a lot of things in SQL Server when going to ORMs, namely:</p>
 <ul>

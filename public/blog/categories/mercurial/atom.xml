@@ -4,7 +4,7 @@
   <title><![CDATA[Category: mercurial | Headspring Labs]]></title>
   <link href="http://headspringlabs.com/blog/categories/mercurial/atom.xml" rel="self"/>
   <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-16T19:59:03-05:00</updated>
+  <updated>2013-07-17T00:19:02-05:00</updated>
   <id>http://headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
@@ -37,7 +37,7 @@
     <link href="http://headspringlabs.com/blog/what-is-hg-rebase/"/>
     <updated>2012-03-27T00:00:00-05:00</updated>
     <id>http://headspringlabs.com/blog/what-is-hg-rebase</id>
-    <content type="html"><![CDATA[<p>A couple weeks ago I introduced a client developer I'm working with on a project to <a href="http://mercurial.selenic.com/wiki/RebaseExtension">Hg Rebase</a> because the work we were doing at the time didn't really need feature branches of any kind. When I was asked how this works over the phone, I explained it the best I could on the spot, but here's a better attempt.<!--more--></p>
+    <content type="html"><![CDATA[<p>A couple weeks ago I introduced a client developer I'm working with on a project to <a href="http://mercurial.selenic.com/wiki/RebaseExtension">Hg Rebase</a> because the work we were doing at the time didn't really need feature branches of any kind. When I was asked how this works over the phone, I explained it the best I could on the spot, but here's a better attempt.</p>
 
 
 <h3><strong>Rebase vs Merge</strong></h3>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: What the tech? | Headspring Labs]]></title>
   <link href="http://headspringlabs.com/blog/categories/what-the-tech/atom.xml" rel="self"/>
   <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-16T19:59:03-05:00</updated>
+  <updated>2013-07-17T00:19:02-05:00</updated>
   <id>http://headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
@@ -19,9 +19,6 @@
     <updated>2013-01-11T00:00:00-06:00</updated>
     <id>http://headspringlabs.com/blog/get-to-know-a-developer-jose-basilio</id>
     <content type="html"><![CDATA[<p><img class="alignright size-medium wp-image-6321" alt="Jose Basilio" src="http://www.headspring.com/wp-content/uploads/2013/01/photo-2-e1357940416657-224x300.jpg" width="224" height="300" />This week we welcomed Jose Basilio to the team! Jose currently lives in Houston, but he’s originally from the Dominican Republic. I was so excited to speak with him because he told me that participating in <a href="http://www.headspring.com/mary/headspring-hosts-central-texas-givecamp-to-benefit-10-local-non-profits/" target="_blank">CTX GiveCamp</a> (one of my projects last year) convinced him to look into working for us full time. In fact, Jose was on the TX Kidney Foundation team, which won CTX GiveCamp’s highest honor: the “Meg Ryan Facelift Award for Coolest UI”. I knew he was a winner. Here’s the rest of our conversation:</p>
-
-
-<p><!--more--></p>
 
 
 <p>Where did you work, and what did you do before coming to Headspring?</p>
@@ -76,7 +73,7 @@
 <p><strong>Where did you work, and what did you do before coming to Headspring?</strong></p>
 
 
-<p>My last two jobs were completely different from each other, but Headspring is interestingly kind of a mix between the two.  At the tech startup Tilde, I worked with the LAMP stack (as well as some C# and Python) to create a B-to-B tool for businesses to streamline their back-office processes.  At DRSdigital, I worked directly with new and existing clients to create, customize, and maintain secure data rooms (typically for potential merger and acquisition deals).<!--more--></p>
+<p>My last two jobs were completely different from each other, but Headspring is interestingly kind of a mix between the two.  At the tech startup Tilde, I worked with the LAMP stack (as well as some C# and Python) to create a B-to-B tool for businesses to streamline their back-office processes.  At DRSdigital, I worked directly with new and existing clients to create, customize, and maintain secure data rooms (typically for potential merger and acquisition deals).</p>
 
 
 <p><strong>Are you an expert at anything?</strong></p>
@@ -113,7 +110,7 @@
     <link href="http://headspringlabs.com/blog/get-to-know-a-developer-andrew-west/"/>
     <updated>2012-08-02T00:00:00-05:00</updated>
     <id>http://headspringlabs.com/blog/get-to-know-a-developer-andrew-west</id>
-    <content type="html"><![CDATA[<p><a href="http://www.headspring.com/wp-content/uploads/2012/08/andrew-west.png"><img class="alignright size-medium wp-image-5681" title="andrew west" src="http://www.headspring.com/wp-content/uploads/2012/08/andrew-west-300x300.png" alt="" width="300" height="300" /></a>This week's developer actually started last week: Andrew West, Senior Consultant.  Andrew has been riding the contract train for all kinds of companies for about 10 years.  He's done some server side work for mobile geo-caching apps, developed a bar code app for hazardous waste tracking in the healthcare industry, worked on projects in the financial and academic worlds, and more.  Now, he's happy to give Headspring and our clients his full attention, telling me that he intentionally steered away from other offers because he knew he wanted to work here.  Here's more of our conversation:<!--more--></p>
+    <content type="html"><![CDATA[<p><a href="http://www.headspring.com/wp-content/uploads/2012/08/andrew-west.png"><img class="alignright size-medium wp-image-5681" title="andrew west" src="http://www.headspring.com/wp-content/uploads/2012/08/andrew-west-300x300.png" alt="" width="300" height="300" /></a>This week's developer actually started last week: Andrew West, Senior Consultant.  Andrew has been riding the contract train for all kinds of companies for about 10 years.  He's done some server side work for mobile geo-caching apps, developed a bar code app for hazardous waste tracking in the healthcare industry, worked on projects in the financial and academic worlds, and more.  Now, he's happy to give Headspring and our clients his full attention, telling me that he intentionally steered away from other offers because he knew he wanted to work here.  Here's more of our conversation:</p>
 
 
 <p><strong>Are you an expert at anything?</strong></p>
@@ -171,7 +168,7 @@
 <p>Cedric has been in Austin for a few years, and just welcomed his first born son into the family 5 weeks ago!  We talked about Austin, why working here is so much fun, and what we really love about technology.  As it turns out we share a lot of the same interests in bringing together communities through technology.  His experiences are going to be a real help to me with planning and preparation for Headspring’s Central Texas <a href="http://ctxgivecamp.org/">Give Camp</a> in September.</p>
 
 
-<p>Here’s how the rest of our conversation went:<!--more--></p>
+<p>Here’s how the rest of our conversation went:</p>
 
 
 <p><strong>Are you an expert at anything?</strong></p>
@@ -232,7 +229,7 @@
 <p>Reference: Wikipedia</p>
 
 
-<p>I was having lunch with a recruiter colleague, and I was learning about the QA requests from lots of customers.  Most defined the QA role well within the “Testing” oval as shown in the picture.  From my questioning, it appears that the agile movement has done little to alter this SDLC.  In fact, this process is still alive and very will, even within agile teams.  The difference is in the batch size.  Rather than doing analysis on a batch of 50 features and then moving that full batch to design, the agile movement has reduced that batch size considerably, and in some cases reduced it down to a batch size of 1.  Lean agile teams are likely to use a batch size of 1 and continuously pull features through the lifecycle.  As an aside, I find that even when working on a single feature, this cycle is still in play, although the feature is more likely to jump backward and redo a portion of the phase before if new information is found.<!--more--></p>
+<p>I was having lunch with a recruiter colleague, and I was learning about the QA requests from lots of customers.  Most defined the QA role well within the “Testing” oval as shown in the picture.  From my questioning, it appears that the agile movement has done little to alter this SDLC.  In fact, this process is still alive and very will, even within agile teams.  The difference is in the batch size.  Rather than doing analysis on a batch of 50 features and then moving that full batch to design, the agile movement has reduced that batch size considerably, and in some cases reduced it down to a batch size of 1.  Lean agile teams are likely to use a batch size of 1 and continuously pull features through the lifecycle.  As an aside, I find that even when working on a single feature, this cycle is still in play, although the feature is more likely to jump backward and redo a portion of the phase before if new information is found.</p>
 
 
 <p>The reason for the reflection on QA is that my recruiter colleague still predominantly  receives requests for QA folks to fill the roll of the testing phase.  This means that the QA involvement happens after analysis, after design, after implementation, and only when defects can no longer be prevented.  They can only be discovered.  Inspectors at the end of an assembly line are powerless to prevent defective parts.  They can only discover them through inspection and serve a Quality Control role to prevent defective parts from being shipped.  The same is true in software, and many others have written the same.</p>

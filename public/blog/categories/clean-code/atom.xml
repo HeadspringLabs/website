@@ -4,7 +4,7 @@
   <title><![CDATA[Category: clean code | Headspring Labs]]></title>
   <link href="http://headspringlabs.com/blog/categories/clean-code/atom.xml" rel="self"/>
   <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-16T19:59:03-05:00</updated>
+  <updated>2013-07-17T00:19:02-05:00</updated>
   <id>http://headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
@@ -33,7 +33,7 @@
 <p><div><script src='https://gist.github.com/2206415.js'></script>
 <noscript><pre><code></code></pre></noscript></div>
 <br />
-[gist id="2206371" file="Signature.cs"]<!--more--></p>
+[gist id="2206371" file="Signature.cs"]</p>
 
 
 <p>Another reason I’m a fan of this pattern is when it can be used in sets. Imagine your email signature for a moment. You could have multiple signatures to choose from when you compose an email. Rather than having code to check for the existence of signatures, we can now simply always assume that there will be at least one signature.</p>
@@ -83,7 +83,7 @@
     <content type="html"><![CDATA[<p>Change is inevitable. It is a simple fact of life which permeates into just about everything. Software development is no exception. Many software development life cycles have evolved and others have come into existence in an effort to help us deal with change. Programming languages, tools and techniques are also continuously evolving as well. Yet with all these improvements many project teams continue to struggle with change.</p>
 
 
-<p>What can we do about change? The truth is change doesn’t have to be hard. There are many things we can do such as plan for change, design for change, and code for change.<!--more--></p>
+<p>What can we do about change? The truth is change doesn’t have to be hard. There are many things we can do such as plan for change, design for change, and code for change.</p>
 
 
 <p>Sounds great doesn’t it? There are actually dozens of books and a plethora of blog posts that talk about those principles.</p>
@@ -153,7 +153,7 @@
     <content type="html"><![CDATA[<p><a href="http://nunit.org/?p=testCase&amp;r=2.5" target="_blank">TestCase</a> is one way you can run parameterized tests with NUnit. An example of how this is useful is testing a whitelist or blacklist. You only need to write the test once, then pass in your items to test some sort of output. If the requirements change and words need to be added to or removed from your list, you simply add another entry without the need for writing another test or set of tests.</p>
 
 
-<p>I've found myself using TestCase (formerly <a title="What Happened to NUnit's RowTest" href="http://stackoverflow.com/questions/4069841/what-happended-to-nunit-extensions-rowtest" target="_blank">RowTest</a>) more and more often. If you see lots of very similar tests that shared assertions, or test method names with numbers/values in them, these are signs that you might be wanting to use TestCase. Let's take a look at the following examples.<!--more--></p>
+<p>I've found myself using TestCase (formerly <a title="What Happened to NUnit's RowTest" href="http://stackoverflow.com/questions/4069841/what-happended-to-nunit-extensions-rowtest" target="_blank">RowTest</a>) more and more often. If you see lots of very similar tests that shared assertions, or test method names with numbers/values in them, these are signs that you might be wanting to use TestCase. Let's take a look at the following examples.</p>
 
 
 <h3><strong>One Test, Many Assertions</strong></h3>

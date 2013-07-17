@@ -84,7 +84,7 @@
 <p><div><script src='https://gist.github.com/1877234.js'></script>
 <noscript><pre><code></code></pre></noscript></div>
 </p>
-<p>I want to determine if my to-do list has any items that are late, so I use <code>.Where()</code> to filter my list of deliverables down to items with a deadline in the past; then I take a <code>.Count()</code> of the resulting list, and see if that number is greater than zero. This is a plausible solution, and our years of SQL lead us to write LINQ this way. But it can be better.<!--more--></p>
+<p>I want to determine if my to-do list has any items that are late, so I use <code>.Where()</code> to filter my list of deliverables down to items with a deadline in the past; then I take a <code>.Count()</code> of the resulting list, and see if that number is greater than zero. This is a plausible solution, and our years of SQL lead us to write LINQ this way. But it can be better.</p>
 <p>Testing &#8220;count greater than zero&#8221; is a programmer&#8217;s way of saying &#8220;are there any?&#8221; So let&#8217;s just say <em>any</em>. As you might expect, <code>.Any()</code> returns a Boolean indicating whether the collection contains any items. Further, you can pass a lambda expression to specify the predicate &#8220;any <em>like this</em>.&#8221; (<code>.Count()</code> takes a predicate, too, by the way, but I really have seen &#8221;<code>.Where().Count()</code>&#8221; in use, so I wanted to start from there.)</p>
 <p>Here&#8217;s the new version:</p>
 <p><div><script src='https://gist.github.com/1877236.js'></script>

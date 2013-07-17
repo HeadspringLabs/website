@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Powershell | Headspring Labs]]></title>
   <link href="http://headspringlabs.com/blog/categories/powershell/atom.xml" rel="self"/>
   <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-16T19:59:03-05:00</updated>
+  <updated>2013-07-17T00:19:02-05:00</updated>
   <id>http://headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
@@ -21,7 +21,7 @@
     <content type="html"><![CDATA[<p>In <a href="http://www.headspring.com/2011/07/powershell-and-the-principle-of-most-astonishment">Powershell and the Principle of Most Astonishment</a>, I covered some of the surprises that new Powershell users encounter when trying to reliably return results from functions. The next area where Powershell suprises new users is in its approach to error handling. Fortunately, there are some useful workarounds for making the surprising default behavior work more like you would expect.</p>
 
 
-<p>While learning Powershell, I was trying to create a deployment script. The script needed to perform several tasks including, copying the deployment package to the target machine, setting up services, and the like. While testing it out locally,<!--more--> I would deliberately cause certain steps to fail in order to ensure that the user of the script would be clearly alerted to failures. To my surprise, when I caused exceptions to be thrown, the script would happily continue on to the next step, ultimately printing a success message to the user. Consider this example:</p>
+<p>While learning Powershell, I was trying to create a deployment script. The script needed to perform several tasks including, copying the deployment package to the target machine, setting up services, and the like. While testing it out locally, I would deliberately cause certain steps to fail in order to ensure that the user of the script would be clearly alerted to failures. To my surprise, when I caused exceptions to be thrown, the script would happily continue on to the next step, ultimately printing a success message to the user. Consider this example:</p>
 
 
 <p><div><script src='https://gist.github.com/1149682.js'></script>

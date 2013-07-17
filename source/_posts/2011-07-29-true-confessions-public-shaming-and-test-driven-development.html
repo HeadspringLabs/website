@@ -1,7 +1,7 @@
 ---
 layout: post
 title: True Confessions, Public Shaming, and Test-Driven Development
-tags:
+categories:
 - Bonus!
 - continuous improvement
 - Developer Deep Dive
@@ -20,34 +20,29 @@ meta:
   _aioseop_title: True Confessions, Public Shaming, and Test-Driven Development
   dsq_thread_id: '846789467'
 ---
-Okay, I admit it. Sometimes I write unit tests second instead of first. I also bite my nails and rest my elbows on the dinner table. But when I've got a bug to fix, and I've already found the offending line, I can hardly resist the urge to just... just... <em>change</em> it. I'll follow up with unit tests afterwards, promise.
-
-I admit this to you because admitting my wrongs is a step towards rehabilitation. I admit this to save you pain. Learn from my example. Test-second is so much less efficient than test-first. Consider the following workflow:
+<p>Okay, I admit it. Sometimes I write unit tests second instead of first. I also bite my nails and rest my elbows on the dinner table. But when I've got a bug to fix, and I've already found the offending line, I can hardly resist the urge to just... just... <em>change</em> it. I'll follow up with unit tests afterwards, promise.</p>
+<p>I admit this to you because admitting my wrongs is a step towards rehabilitation. I admit this to save you pain. Learn from my example. Test-second is so much less efficient than test-first. Consider the following workflow:</p>
 <ol>
-	<li>Reproduce, identify, debug the issue.</li>
-	<li>Fix the code.</li>
-	<li>Compile and try it out.</li>
-	<li>Write a test that proves I fixed it.</li>
-	<li>Compile and run the test.</li>
-	<li>Change the code back to make sure my test really proves what it is trying to prove.</li>
-	<li>Compile and see the test fail.</li>
-	<li>Re-fix the code.</li>
-	<li>Compile and see the test pass.</li>
+<li>Reproduce, identify, debug the issue.</li>
+<li>Fix the code.</li>
+<li>Compile and try it out.</li>
+<li>Write a test that proves I fixed it.</li>
+<li>Compile and run the test.</li>
+<li>Change the code back to make sure my test really proves what it is trying to prove.</li>
+<li>Compile and see the test fail.</li>
+<li>Re-fix the code.</li>
+<li>Compile and see the test pass.</li>
 </ol>
-&nbsp;
-
-I humble myself before you. How much time am I wasting there? It's embarrassing.<!--more-->
-
-There's also a subtle point in step 1. What if I could use unit tests instead of the debugger to find the issue? That will be faster, too.
-
-We can do better:
+<p>&nbsp;</p>
+<p>I humble myself before you. How much time am I wasting there? It's embarrassing.</p>
+<p>There's also a subtle point in step 1. What if I could use unit tests instead of the debugger to find the issue? That will be faster, too.</p>
+<p>We can do better:</p>
 <ol>
-	<li>Reproduce the issue and formulate a theory.</li>
-	<li>Write a test that exercises the theory.</li>
-	<li>Compile and see the test fail, corroborating the theory.</li>
-	<li>Fix the code.</li>
-	<li>Compile and see the test pass, validating the theory.</li>
+<li>Reproduce the issue and formulate a theory.</li>
+<li>Write a test that exercises the theory.</li>
+<li>Compile and see the test fail, corroborating the theory.</li>
+<li>Fix the code.</li>
+<li>Compile and see the test pass, validating the theory.</li>
 </ol>
-&nbsp;
-
-Perhaps you can relate. Perhaps you even bite your nails, too. I won't judge. Flog me or join me, the comments are open: Confess your bad habits (um, your <em>unit-testing</em> bad habits, please), and commit yourself to improvement. I challenge you to improve your efficiency and write your unit tests first, even—especially—for the little bug fixes.
+<p>&nbsp;</p>
+<p>Perhaps you can relate. Perhaps you even bite your nails, too. I won't judge. Flog me or join me, the comments are open: Confess your bad habits (um, your <em>unit-testing</em> bad habits, please), and commit yourself to improvement. I challenge you to improve your efficiency and write your unit tests first, even—especially—for the little bug fixes.</p>

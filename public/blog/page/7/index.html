@@ -7,7 +7,8 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="Imagine for a moment that you are a member of the government in colonial India during the period of British rule. You&#8217;re concerned about the &hellip;">
+	<meta name="description" content="Shirley: Tell me about the Extract-Variable refactoring.
+Albert: Let&#8217;s say I have a long expression that has become hard to read, and that I &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -83,6 +84,253 @@
     <article class="post">
 	<h2 class="title">
 		
+		<a href="/blog/lean-lambdas/">
+		
+			Lean Lambdas</a>
+	</h2>
+	<div class="entry-content">
+		<p><strong>Shirley:</strong> Tell me about the Extract-Variable refactoring.</p>
+<p><strong>Albert:</strong> Let&#8217;s say I have a long expression that has become hard to read, and that I can identify a noteworthy subexpression within it.  I can &#8216;extract&#8217; that subexpression from the original by introducing a new local variable.  The variable is initialized to the subexpression, and then the larger original expression is rewritten in terms of the new variable.  Doing so can make things easier to read: the original expression is shorter, and we&#8217;ve given a useful name to the part we took out.  For example:</p>
+<p><div><script src='https://gist.github.com/4264666.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p><strong>Shirley:</strong> Since we&#8217;re doing this extra step with an extra variable, will the result run a little slower than the original?</p>
+<p><strong>Albert:</strong> No, silly!  We&#8217;re doing the same amount of work in both versions.  Even with the original version, the compiler had to break down the expression into many smaller steps just like the change we made.  We&#8217;re just introducing a useful nickname for one of those intermediate steps.</p>
+<p><strong>S:</strong> Is there any way Extract-Variable <em>could</em> make something faster?</p>
+<p><strong>A:</strong> Aren&#8217;t you listening!?  Oh, wait.  If the expression you are pulling out appears multiple times in the larger expression, and the cost of evaluating it is large enough to notice, then Extract-Variable could actually speed things up, since you&#8217;ll only evaluate it once.</p>
+<p><strong>S:</strong> If you do that, is there any chance you&#8217;ll change the runtime behavior?</p>
+<p><strong>A:</strong> Only if the subexpression has side effects.  We used to evaluate it multiple times, and now we evaluate it once.  If the expression <em>does</em> something to the world other than just provide a value, we&#8217;d be introducing a breaking change.  That&#8217;s why you want to keep as much of your code as pure as reasonably possible.</p>
+<p><strong>S:</strong> Pure?</p>
+<p><strong>A:</strong> An expression or function is pure if it depends only on its inputs and has no side effects.  It just looks at the inputs and returns a result.  For the same inputs, it always gives the same output.  <code>x+5</code> is pure, while <code>SendAnEmailToGrandma()</code> isn&#8217;t.  It&#8217;s safe to Extract-Variable with pure code, even when the subexpression showed up multiple times beforehand.  Pure stuff is easier to chop up, reorder, and move around.  It&#8217;s easier to reason about.</p>
+<p><strong>S:</strong> Imagine that we&#8217;ve got a large expression, and that the subexpression we&#8217;re extracting only appears <em>once</em>.  What if I told you we could <em>still</em> get a performance boost out of it?</p>
+<p><strong>A:</strong> Shirley, you&#8217;re joking.</p>
+<p><strong>S:</strong> Nope! I&#8217;ve got two situations in mind.  Let&#8217;s start with the easy one.  This loop is taking way too long to execute:</p>
+<p><div><script src='https://gist.github.com/4264673.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p><strong>A:</strong> Oh, I see what you&#8217;re getting at.  We saw earlier how you can get a performance boost when extracting a subexpression that appeared multiple times in the original expression.  In this loop, we&#8217;ve got the same problem in a different format.  The subexpression <em>appears</em> once, but it gets <em>evalutated</em> a whole lot, each time with the same result.  We&#8217;d fix this with two refactorings: we&#8217;d Extract-Variable, and then we&#8217;d move that variable declaration <em>before</em> the loop:</p>
+<p><div><script src='https://gist.github.com/4264675.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p><strong>S:</strong> Great! Earlier, I said I was thinking about two examples in which code with a singly-occurring subexpression could be sped up with Extract-Variable.  The easy one was the <code>foreach</code> you just fixed, but the second one&#8217;s tough.  Let&#8217;s improve upon the previous example.  Instead of building up a big list of all the values in the column, we&#8217;ll make a column object that uses a Func&lt;Row&gt; to evaluate each cell only as needed:</p>
+<p><div><script src='https://gist.github.com/4264677.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p><strong>A:</strong> Again, we don&#8217;t want to keep on performing the costly CompileUserExpression(&#8230;) call every time we need to display a grid cell.  The problem is, if I Extract-Variable here, we&#8217;re left with the same wasteful recompilation:</p>
+<p><div><script src='https://gist.github.com/4264685.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p><strong>S:</strong> If the lambda gets called a bajillion times, how many times will we evaluate the costly part?</p>
+<p><strong>A:</strong> A bajillion.</p>
+<p><strong>S:</strong> Hmmph.</p>
+<p><strong>A:</strong> &#8230;</p>
+<p><strong>S:</strong> How is this any different from the <code>foreach</code> example?</p>
+<p><strong>A:</strong> When the costly bit was in a <code>foreach</code>, we could just move the variable to the outer scope.  Here, we have a lambda.</p>
+<p><strong>S:</strong> Doesn&#8217;t a lambda introduce a scope too?</p>
+<p><strong>A:</strong> Well, yeah, but if we move <code>compiledExpression</code> outside of the lambda, wouldn&#8217;t it become available for garbage collection as soon as we returned from <code>CreateCalculatedColumn</code>?  Let&#8217;s see:</p>
+<p><div><script src='https://gist.github.com/4264688.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p><strong>A:</strong> It works!  Our lambda is referring to a variable in the surrounding scope, and we&#8217;re returning the lambda.  Lambdas are just objects, so this is just like returning any other object that references a locally-constructed thing.  The garbage collector only cleans up unreachable things, and <code>compiledExpression</code> will be reachable for as long as the lambda is reachable.  We get to avoid all that rework no matter how many times the lambda is called!</p>
+<p><strong>S:</strong> Slick.</p>
+<p><strong>A:</strong> How does one end a Socratic Dialogue?</p>
+<p><strong>S:</strong> How about with a summary?</p>
+<p><strong>A:</strong> Extract-Variable starts out as a simple refactoring to improve the readability of large expressions.  When working with pure code, the change is both safe and easy to perform.  In addition to aiding readability, Extract-Variable can occasionally improve performance, when the extraction keeps us from doing a lot of excess work.  After extracting a variable, we can consider moving it to an outer scope, so long as doing so preserves behavior.  Moving it outside of a loop can prevent wasteful reevaluation across many iterations.  Likewise, moving it outside of a lambda can prevent wasteful reevaluation across many invocations of the lambda.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-12T00:00:00-06:00" pubdate data-updated="true">Dec 12<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/the-solution-is-never-inheritance/">
+		
+			The Solution Is Never Inheritance</a>
+	</h2>
+	<div class="entry-content">
+		<p>That&#8217;s how fellow-Headspringer <a href="https://twitter.com/scichelli">Sharon Cichelli</a> started a conversation today:  &#8220;The solution is never inheritance.&#8221;  It&#8217;s a controversial title.  Afterall, one must never, <em><strong>under any circumstances</strong></em> speak in absolutes.  &#8220;The maintainable solution is quite oft not inheritance&#8221; may be closer to the truth while missing the point entirely.  Judicious use of inheritance in small chunks can be useful, but implementation inheritance in the wild is usually a mess that gets out of hand quickly.</p>
+<p>The general advice to <a href="https://www.google.com/search?q=composition+over+inheritance">favor composition over inheritance</a> has been written about countless times.  In <a href="http://www.headspring.com/patrick/spaghetti-alla-code/">Spaghetti alla Code</a>, I blamed the problem on the way that <code>virtual/override/base</code> keywords achieve code reuse at the cost of littering your implementation with subtle <code>goto</code>-like complexity: you have to execute every line of a class hierarchy in your head in order to know what any one class is actually going to do.  When favoring composition, you&#8217;re more likely to understand what a class does by just reading that class.</p>
+<p>I don&#8217;t always use implementation inheritance, but when I do, I use the Template Method Pattern and the Bucket of Small-Scope Helper Methods Pattern.</p>
+<h2>The Template Method Pattern</h2>
+<p>In this pattern, an abstract base class provides a basic algorithm, leaving a detail or two undefined as abstract methods.  A single-level of child classes completes the story by providing implementations for the undefined steps.    I never decide up front to use this pattern.  Rather, I refactor toward it when it&#8217;s the clearest way to remove some code duplication.</p>
+<h2>The Bucket of Small-Scope Helper Methods Pattern</h2>
+<p>Sure, this isn&#8217;t an official Gang of Four pattern, but it comes up often enough that it deserves a name.  I arrive at this kind of inheritance incrementally.  If I have an <em>interface</em> whose implementations take on suspiciously-similar private helper methods, and the duplication mounts up, I promote the interface to an abstract class and move the common private methods up to the base class.</p>
+<p>When the scope of these helper methods is very small, the base class is an appropriate home for them, but watch out: you may be hiding a new concept here that would be more useful to the rest of your system as a separate public class.</p>
+<p>I use the BoSSHM Pattern when the thought of a new public class feels like overkill or overengineering.  I don&#8217;t want to distract the reader with rarely-used classes, just for the sake of having <em>small</em> classes.</p>
+<h2>Evolve Towards Inheritance</h2>
+<p>Off the top of my head, I can&#8217;t think of any other time I use implementation inheritance and later think to myself, &#8220;That was a good idea!&#8221;  Also, the way I arrive at these patterns is just as important as the result: rather than being the product of up-front design, I arrive at them in small steps as code duplication pains present themselves.  Each solves <em>small</em> kinds of code duplication problems, so the resulting inheritance hierarchies are also small and therefore easy to understand.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-07T00:00:00-06:00" pubdate data-updated="true">Dec 7<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/get-to-know-a-developer-wayne-denier/">
+		
+			Get to Know a Developer: Wayne Denier</a>
+	</h2>
+	<div class="entry-content">
+		<p>A native of Frederick, MD, Wayne has lived in Austin for two years and we welcome him to the Headspring team! At Headspring, Wayne focuses on the user interface and general feature coding. He previously worked at Dell Inc. and Enforme Interactive. Wayne is passionate about game development and design and is experienced in HTML, Javascript, CSS, JQuery, C# and .NET MVC.</p>
+<p>We are thrilled that Wayne has become part of our Headspring family! Keep reading to learn more about Wayne.</p>
+<p><strong><img class="size-medium wp-image-6262 alignright" title="waynephoto" src="http://www.headspring.com/wp-content/uploads/2012/12/waynephoto-215x300.jpg" alt="" width="215" height="300" /></strong></p>
+<p><strong>What made you want to work here?</strong></p>
+<p>I like working with people that get excited about what they are doing, and I believe that passion leads to pushing the boundaries of what is possible. I see a lot of that passion in the team at Headspring. Anyone who has worked with or for the company has a great standard for technical excellence, an attitude of sharing and learning, and they are passionate about their discipline.</p>
+<p><strong>Who is on your list of ideal clients to work for or individuals to work with?</strong></p>
+<p>When it comes to clients, I like providing solutions that make complex problems seem easy. I like to make tools for people to remove frustrations in the little things they have to do to perform their jobs and enjoy building software for someone to help achieve that goal.</p>
+<p><strong> </strong></p>
+<p><strong>What led you to software development?</strong></p>
+<p>Communicating with people. I come from roots in graphic design and enjoy conveying ideas to people. Naturally, designing for the web became a necessity and so a few Wrox books later I was well into the world of developing software for the web. Also, programming is fun!</p>
+<p><strong>Do you like teaching?</strong></p>
+<p>A lot. It’s fun to plan out a frame of time and present a topic to a room of people. I like setting the pacing and revealing information to people in a way that can both get them excited and present them with practical knowledge. Mentoring is another great avenue for that. I try very hard to mentor others, as well as find someone to learn from myself. The philosophy of experiential education emphasizes the pattern “see one, do one, teach one”, and I try to keep that active as much as I can.</p>
+<p><strong>How do you gauge “time well spent”?</strong></p>
+<p>Anytime something is produced, learned, improved or passion is rekindled. Shipping viable software or improving it based on features that are in use is an obvious good use of time.</p>
+<p>&nbsp;</p>
+<p>Learn more about Wayne at <a href="http://rightbrainleft.net/" target="_blank">his website</a> and on <a href="http://twitter.com/wheresyourbrain" target="_blank">Twitter</a>.</p>
+<p>&nbsp;</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-06T00:00:00-06:00" pubdate data-updated="true">Dec 6<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/get-to-know-a-headspringer/'>Get To Know a Headspringer</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/austin-based-custom-software-company-named-one-of-the-best-companies-to-work-for-in-texas/">
+		
+			Austin-Based Custom Software Company Named One of the Best Companies to Work for in Texas</a>
+	</h2>
+	<div class="entry-content">
+		<p align="center"><em>Headspring Honored with “Best Companies to Work for in Texas</em>”<em> Award Based on Its Employees’ Engagement and Satisfaction and the Company’s </em><em>Benefits and Policies</em><strong> </strong></p>
+<p style="text-align: center;"><img class="aligncenter  wp-image-6259" title="2009 BCTWFIT" src="http://www.headspring.com/wp-content/uploads/2012/12/2013BCTWFIT-330x300.jpg" alt="" width="264" height="240" /></p>
+<p><strong>AUSTIN, TX (Dec. 4, 2012) –</strong> <a href="http://www.headspring.com/" target="_blank">Headspring</a>, an Austin-based <a href="http://www.headspring.com/services/software-consulting/" target="_blank">software development company</a>, today announced it was named one of the 2013 Best Companies to Work for in Texas.</p>
+<p><em>Texas Monthly</em>, the Texas Association of Business (TAB), the Texas State Council of the Society for Human Resource Management (TSC-SHRM) and Best Companies Group, statewide survey and awards program was designed to identify, recognize and honor the best Texas companies benefiting the economy, its workforce and businesses. Headspring completed a two-part evaluation involving the analysis of the company&#8217;s workplace policies, systems, philosophies, practices, demographics and employee surveys.</p>
+<p>“The Headspring team is excited and honored to be named as one of the best places to work in Texas,” said Dustin Wells, CEO of Headspring. “Our company puts tremendous focus on <a href="http://www.headspring.com/about/" target="_blank">work culture</a> and we’re proud of the passionate and ambitious people that work at Headspring.”</p>
+<p>The list is made up of 100 companies and the rankings will be revealed at the Best Companies to Work for in Texas Gala on Tuesday, March 19, 2013 at the Hyatt Regency<strong> </strong>in Austin. The results will also be listed in the April 2013 issue of <em>Texas Monthly</em>. <em>Texas Monthly</em> will produce a special publication profiling the winning companies to be released in conjunction with the event.</p>
+<p>To learn more about the Best Companies to Work for in Texas program, please visit <a href="http://www.bestcompaniestx.com" target="_blank">http://www.bestcompaniestx.com</a>. To learn more about Headspring and its community initiatives, visit <a href="http://www.headspring.com" target="_blank">http://www.Headspring.com</a> or follow Headspring on Facebook at <a href="http://www.facebook.com/HeadspringAustin" target="_blank">http://www.facebook.com/HeadspringAustin</a> and Twitter at <a href="http://www.twitter.com/Headspring" target="_blank">http://www.twitter.com/Headspring</a>.</p>
+<p>&nbsp;</p>
+<p><strong>About Headspring                                                                                                           </strong></p>
+<p>Headspring delivers custom business applications to help growing companies. The Austin-based company has proudly served <a href="http://www.headspring.com/success-stories/" target="_blank">Texas businesses</a> since 2001. Headspring is committed to helping local companies compete in their markets by delivering custom software applications for growing companies using consultative and collaborative processes. Headspring provides customers with maintainable custom applications to fit business specific needs to enable continued growth and efficiencies. In 2009, the company was named #127 on Inc. 500, the exclusive ranking of the nation’s fastest-growing private companies. For more information, go to <a href="http://www.headspring.com" target="_blank">http://www.headspring.com</a> or call (877) 459–2260.</p>
+<p>&nbsp;</p>
+<p align="center">###</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-04T00:00:00-06:00" pubdate data-updated="true">Dec 4<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/press/'>Press</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
 		<a href="/blog/the-cobra-effect/">
 		
 			The Cobra Effect</a>
@@ -91,9 +339,26 @@
 		<p>Imagine for a moment that you are a member of the government in colonial India during the period of British rule.  You&#8217;re concerned about the population of venomous cobras, so you attempt to impose a solution.  You offer a reward to anyone who brings you a dead cobra.  After a while, though, you start to get suspicious of some of the cobra hunters.  They seem to be bringing in far more cobras that any single person is likely to encounter, let alone trap and kill.  You discover that some individuals have begun raising cobras in order to turn a profit!  Clearly, your plan isn&#8217;t working, so you stop offering the bounty.  Countless cobra farmers&#8217; snakes become worthless, so they are released into the wild, increasing the population of cobras.</p>
 <p>You meant well, but your attempt to impose a solution to the problem actually made things worse.</p>
 <p>The <a href="http://en.wikipedia.org/wiki/Cobra_effect">Cobra Effect</a> is similar to the more frequently-referenced <a href="http://en.wikipedia.org/wiki/Murphy's_law">Murphy&#8217;s Law</a>.  Murphy&#8217;s a bit of a pessimist: if something can go wrong, it will, as if the universe is out to get you.  The Cobra Effect, on the other hand, has more to do with human nature: you see a problem and attempt to impose a solution on a group of people, and their natural reaction to your solution ends up making the original problem worse.</p>
-<p>Cobra Effect problems have 4 parts: a) recognizing a problem, b) imposing a solution on a group of people, c) people react naturally <em>to the solution</em>, and d) in turn that reaction makes the problem worse.  Years ago, I experienced these 4 stages on a software project.
+<p>Cobra Effect problems have 4 parts: a) recognizing a problem, b) imposing a solution on a group of people, c) people react naturally <em>to the solution</em>, and d) in turn that reaction makes the problem worse.  Years ago, I experienced these 4 stages on a software project.</p>
+<h2>Farming Venomous Comments</h2>
+<p><strong>The problem:</strong> Reading other people&#8217;s code can be frustrating when it doesn&#8217;t communicate enough of the intent.  You may not feel tempted to add lots of comments to your own code, but sometimes when looking at something ugly or unfamiliar, you find yourself wishing the other developers <em>were</em> writing lots of informative comments.  The more experienced developers on the team naturally fear the ocean of undocumented code that the rest of the team is sure to write in the coming months.</p>
+<p><strong>Imposing a solution:</strong> We need to ensure everyone is writing documented code, therefore commits will not pass code review unless each method has complete <a href="http://msdn.microsoft.com/en-us/library/aa288481(v=vs.71).aspx">XML documentation comments</a>.  Each method will tell you what it is, what each of its arguments is, and what the returned value is.  The user of your code will see this information as they type via IntelliSense.</p>
+<p><strong>People react naturally to the solution:</strong> It <em>hurts</em> to write those XML comments.  They are verbose, they are usually redundant, they are time consuming, and they are usually redundant.  If your product is a library to be used by other developers, you owe it to them to document the non-obvious details of your public interface, but beyond that writing these comments is absolutely painful.  Enter <a href="http://visualstudiogallery.msdn.microsoft.com/46A20578-F0D5-4B1E-B55D-F001A6345748">GhostDoc</a>, a Visual Studio extension that writes these comments for you by inspecting the names and types of your methods and parameters.  You start with an undocumented method like so:</p>
+<p><div><script src='https://gist.github.com/4159059.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>You place your cursor on the first line, hit a keyboard shortcut, and it automatically turns into this:</p>
+<p><div><script src='https://gist.github.com/4159061.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Code Review Accomplished.</p>
+<p><strong>That reaction makes the problem worse:</strong> GhostDoc was <em>encouraged</em> because meeting the code review requirement <em>hurt</em> so much.  Every time I used it, a sarcastic little voice in the back of my head said &#8220;Oh, is <em>that</em> what a customerId is?&#8221; or &#8220;Oh, is <em>that</em> what that method does?&#8221;  That voice started getting louder and I soon started to block out all XML comments whenever I read through anybody&#8217;s code.  It wasn&#8217;t even a conscious decision: my eyes started scanning right by the comments as if they were whitespace.  <em>When I actually needed one of these comments to communicate something real about my intent, nobody would ever notice it; it was a an intent-needle in an angle-bracket-haystack.</em></p>
+<p>Compare that last sentence to the original problem: &#8220;Reading other people&#8217;s code can be frustrating when it doesn&#8217;t communicate enough of the intent.&#8221;  The imposed solution made that problem <em>worse</em> by making it even harder to see important information about intent when the need actually arose, and it made it harder to see the intent that was already present in the code itself because you could only fit a few real lines of code on the screen at a time.  </p>
+<h2>People Smells</h2>
+<p>We talk about &#8220;code smells&#8221;, simple things we see in a snippet of code that give us a negative gut reaction, suggesting a deeper problem.  There are also &#8220;people smells&#8221;, where a solution to a human problem should give us a similar negative gut reaction.  With the notable exception of dubstep fans, people naturally try to avoid pain.  We seek out the path of least resistence.  When the solution to a human problem hurts more than the problem, you may get exactly what you asked for.</p>
+
 		
-		<a href="/blog/the-cobra-effect/" class="more-link">Read on &rarr;</a>
+		
 	</div>
 
 
@@ -174,9 +439,20 @@
 	</h2>
 	<div class="entry-content">
 		<p>What event sells out as fast as a Justin Beiber concert? <a href="http://codemash.org/" target="_blank">CodeMash</a>! Last year’s CodeMash conference sold out in 22 minutes. Bieber actually sold his entire North American tour in that time, but why mince words?</p>
-<p>
+<p>We are excited to get together with developers from across the country for <a href="http://codemash.org/" target="_blank">CodeMash 2013</a> being held January 8 – 11, 2013 in Sandusky, Ohio. The conference is filled with information about updated practices, methodologies, and technology trends in a variety of platforms and development languages. There are terrific keynote speakers, workshops, time to geek out with fellow attendees and talk “code”, and possibly take a dip in Ohio’s largest indoor waterpark.</p>
+<p>Our team members Jimmy Bogard and Sharon Cichelli will be leading sessions at CodeMash.  Sharon will present “Hello, Arduino: Write Code that Interacts with the Real World” and Jimmy will be involved in the PreCompiler workshop.</p>
+<p style="text-align: center;"><a href="http://www.headspring.com/wp-content/uploads/2012/11/img_1647.jpg"><img class="aligncenter size-medium wp-image-5847" title="img_1647" src="http://www.headspring.com/wp-content/uploads/2012/11/img_1647-229x300.jpg" alt="" width="229" height="300" /></a></p>
+<p>Jimmy is also on his own world tour. He is speaking at various international locations over the next three months beginning on December 4, 2012 in London, England where he’ll talk about “Real World Polyglot Persistence”.  Check out other scheduled events below:</p>
+<ul>
+<li><a href="http://warmcrocconf.net/" target="_blank">Warm Crocodile Developer Conference</a>, January 16-17, 2013 in Copenhagen, Denmark</li>
+<li><a href="http://confoo.ca/en" target="_blank">ConFoo Conference</a>, February 25-March 1, 2013 in Montreal, Canada.</li>
+</ul>
+<p>&nbsp;</p>
+<p>Attending any of these conferences? We look forward to meeting you!</p>
+<p>Have an event where you’d like us to present? Let’s talk!</p>
+
 		
-		<a href="/blog/headspring-is-ready-to-rock/" class="more-link">Read on &rarr;</a>
+		
 	</div>
 
 
@@ -215,9 +491,26 @@
 	</h2>
 	<div class="entry-content">
 		<p>The DRY principle is pretty simple.  Don&#8217;t Repeat Yourself.  When you find yourself reaching for the copy/paste commands, you&#8217;re probably creating some technical debt.  If you copy/paste a method or class from one part of your application to another with the intent to make a small change in the copy, there&#8217;s a very big chance that those two implementations will begin to drift.  Maybe a bug needs to be fixed in both, but the developer performing the fix doesn&#8217;t know that the copy took place: they&#8217;ll fix some occurrences of the bug but allow others to continue.  Even when you know about both copies, you may find yourself doing double the work each time you need to make a change to one of them.  It&#8217;s costly in development time, brain cycles, and QA time.</p>
-<p>Strangely, I find that when the technical debt brought on by a DRY violation is <em>particularly</em> bad, the solution involves deliberately causing yet more duplication in the short term.  Sometimes, you need to take a DIP to get DRY.
+<p>Strangely, I find that when the technical debt brought on by a DRY violation is <em>particularly</em> bad, the solution involves deliberately causing yet more duplication in the short term.  Sometimes, you need to take a DIP to get DRY.</p>
+<h2>A DRY Violation in the Wild</h2>
+<p>I was faced with a large DRY violation this week.  Earlier in the history of this project, a class was written in the UI layer to perform some relatively complex validation to ensure the user properly filled out a set of options.  The validation rules weren&#8217;t rocket science, but they also weren&#8217;t trivial rules like &#8216;Field A is required&#8217; or &#8216;Field B cannot exceed 20 characters&#8217;.  All told, it was about 150 lines of logic split out over about 10 methods.  Eventually, the same rules needed to be applied in a related EXE that has no UI, and at that point in time the logic was copied, pasted into an assembly that the other EXE had access to, and tweaked slightly to fit in its new home.  Naturally, the problem got worse since then, as both versions drifted away from each other.</p>
+<p>Once this problem was discovered, I was tasked with resolving the duplication by phasing out the deprecated UI implementation.  The new UI would defer to the newer implementation, so both EXEs would share the same code.  Because of the drift, it wasn&#8217;t clear whether doing this the quick-and-dirty way would be remotely safe: there was a good chance the new implementation was missing important rules enforced in the UI version.  Viewing a diff between the two files wasn&#8217;t helpful, as so much had been tweaked, renamed, and refactored on both sides.  You could tell they were effectively doing the same thing, but the details were too difficult to discern all at once.</p>
+<h2>Duplicate It Purposely</h2>
+<p>When faced with this kind of DRY violation, my first step is to make the situation more clear by <em>deliberately introducing even more blatant duplication</em>.  I Duplicate It Purposely (DIP).  I start with a diff between the two files, and identify the low-hanging fruit: code that is only superficially different due to things like variable and method renames.  I start by making superficial changes to the deprecated code, making it look more and more like the version I want to keep around.  The workflow might look like the following:</p>
+<blockquote>
+<ol>
+<li>View a diff.  Rename variable.  Rename variable.  Rename method.  Commit.</li>
+<li>View a diff.  Rename method.  Extract method.  Reorder members. Commit.</li>
+<li>View a diff.  Inline method.  Extract variable.  Commit.</li>
+<li>View a diff&#8230;</li>
+</ol>
+</blockquote>
+<p>After these quick, low-risk, automatable refactorings are applied to the deprecated code, the diff becomes more illuminating.  You may finally see that the two implementations truly are doing the same thing, in which case it&#8217;s time to drop the original in favor of the second.  In my case, on the other hand, I got to a point where it was clear there were a few places where the logic actually did differ.  In fact, the differences highlighted a real bug in the version I had intended to <em>keep</em>, and I never would have realized that just comparing the two original files to each other.  Armed with a useful diff, I was able to alter the newer code to cover the missing scenarios.</p>
+<p>At that point, I had two code files that were almost character-for-character the same.  The class names were different, but that was about it.  I could now safely drop the original and point the UI at the newer, corrected, shared version.</p>
+<p>Even when fixing a small-scale DRY violation, such as refactoring two suspiciously-similar methods within a single class, I find myself doing this.  I start by making the duplication painfullly obvious by making them look as much like each other as possible.  That extreme duplication highlights the actual differences, giving useful hints as to how to best rephrase both implementations.</p>
+
 		
-		<a href="/blog/take-a-dip-to-get-dry/" class="more-link">Read on &rarr;</a>
+		
 	</div>
 
 
@@ -326,9 +619,24 @@
 			Want to Learn to Be a Better Leader?</a>
 	</h2>
 	<div class="entry-content">
-		<p>Headspring is honored to invite you to a free half-day conference hosted by the Austin chapter of Entreprenuer Organization (EO) at Headspring’s headquarters.
+		<p>Headspring is honored to invite you to a free half-day conference hosted by the Austin chapter of Entreprenuer Organization (EO) at Headspring’s headquarters.</p>
+<p>The EO24 event will feature world-renowned speaker Sharon Birkman who will talk about <a href="https://www.birkman.com/" target="_blank">The Birkman Method®</a>, an industry-leading personality assessment tool that allows people to achieve accurate self-awareness through reliable metrics.</p>
+<p>Participants will receive a full personality assessment profile valued at nearly $500 that teaches self-motivation, how to be more effective managing stress behaviors and minimizing stress reactions, areas to excel, contribute, communicate and lead based on assessment results.</p>
+<p><strong>Seating is limited to 75 people and only 28 spots remain.  </strong><span style="color: #ff0000;">A personality assessment test must be completed by Monday, November 5, 2012 and can be accessed after completing the online registration process.</span>  If you’d like to attend, please register at <a href="http://eoaustin24.eventbrite.com" target="_blank">http://eoaustin24.eventbrite.com</a>.</p>
+<p><strong> </strong></p>
+<p><strong>Details</strong></p>
+<p>Date: Thursday, November 15, 2012</p>
+<p>Time: 8:30 a.m. – 11:30 a.m.</p>
+<p>Location: Headspring HQ, 10415 Morado Circle, Building 3, Suite 300, Austin, TX  78759</p>
+<p>Cost: <strong>Free but pre-registration required</strong></p>
+<p><a href="http://eoaustin24.eventbrite.com" target="_blank">http://eoaustin24.eventbrite.com</a></p>
+<p>&nbsp;</p>
+<p><strong>About Entrepreneurs’ Organization</strong></p>
+<p>The Entrepreneurs’ Organization (EO) is a dynamic global network of more than 8,000 business owners in 40 countries. Headspring CEO Dustin Wells is president-elect of EO Austin. Founded in 1987 by a group of young entrepreneurs, the year 2012 marks EO’s 25th anniversary. With its transformative experiences and unparalleled peer network, EO transforms the lives of the entrepreneurs who transform the world. EO is the catalyst that enables entrepreneurs to learn and grow from each other, leading to greater business success and an enriched personal life. For more information on EO, visit <a href="http://www.eonetwork.org" target="_blank">www.eonetwork.org</a> or call +1.703.519.6700.</p>
+<p>&nbsp;</p>
+
 		
-		<a href="/blog/want-to-learn-to-be-a-better-leader/" class="more-link">Read on &rarr;</a>
+		
 	</div>
 
 
@@ -346,199 +654,6 @@
 
 
 <time datetime="2012-11-01T00:00:00-05:00" pubdate data-updated="true">Nov 1<span>st</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/mentorship-and-pie-potential/">
-		
-			Mentorship and Pie Potential</a>
-	</h2>
-	<div class="entry-content">
-		<p>This past summer, the Headspring staff took a trip to <a href="http://www.k1speed.com/austin-location.html">K1 Speed</a> for a quarterly meeting.  When we weren&#8217;t &#8220;testing the safety equipment&#8221; around the track, we were talking about our performance for the quarter as well as plans for the future.  We were asked to imagine a much larger Headspring 1-2 years out, and describe what it would take to get there.</p>
-<p>I shared a hard truth, suggesting we start considering more recent grads in our hiring process.  This may seem counter-intuitive.  Hiring talented folks for software development is extremely tough, and real-world experience matters a lot when evaluating candidates, right?  On the flip side, though, most experienced software developers have a long list of horror stories from past jobs: office politics, bureaucracy, teams spread too thin, death marches, and the like.  Wouldn&#8217;t it be great, for both you and the new hire, if they got to skip all that luck-of-the-draw stuff and instead got <em>all</em> of their real-world experience at a healthy company right from the start?</p>
-<p>From a candidate&#8217;s point of view, they could enter the workforce surrounded by experienced people who have already faced and rejected all those problems.  They could learn from everyone&#8217;s example far more quickly than they would otherwise on their own, and they wouldn&#8217;t run the risk of being set <em>back</em> by the examples of struggling teams.</p>
-<p>In reaction to my suggestion, I was asked to take on a mentorship role with a current student, with the goal of preparing him for an internship here at Headspring.</p>
-<p>That&#8217;s the way things work here: if you make a suggestion to improve things, don&#8217;t be surprised if <em>you</em> get to make it a reality.  In light of this policy, next time I think I should share another hard truth with the team: <strong>we need to be eating more cakes and delicious pies</strong>.</p>
-<p>We&#8217;ve only been meeting for a few weeks, but it&#8217;s already a rewarding experience for both of us.  Once per week and for about an hour, Dan and I meet to bring him up the C# / MVC learning curve.  When we first met at a <a href="http://www.polyglotprogrammers.org/">Polyglot</a> meeting, Dan had some experience with C++ and Lua, but hadn&#8217;t worked with C# yet.  Our initial meetings have focused on the nuts and bolts of C# itself, but even early on we got to cover other topics such as automated testing, readability concerns, the DRY principle, etc.</p>
-<p>On the selfish side of the equation, this experience helps me to improve my own skills.  Having to explain things that I take for granted forces me to challenge my own assumptions, and improves my ability to discuss complex technical subjects with clients.  On more than one occasion, Dan&#8217;s questions have left me initially thinking to myself, &#8221;<em>Why</em> exactly, do I feel so strongly about this opinion?&#8221;</p>
-<p>I would have appreciated having a mentor at that age, but filling the opposite role is looking to be a pretty sweet deal.  Not as sweet as my cake/pie suggestion, but sweet nonetheless.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-10-31T00:00:00-05:00" pubdate data-updated="true">Oct 31<span>st</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/windows-8-for-business-breakfast-with-jeffrey-palermo/">
-		
-			Windows 8 for Business: Breakfast With Jeffrey Palermo</a>
-	</h2>
-	<div class="entry-content">
-		<p>Join Headspring President &amp; COO Jeffrey Palermo for a Windows 8 Small Business Workshop to learn how the new operating system can help your business succeed. Jeffrey will teach you how to navigate all the new features and demonstrate ways to make your business more productive.</p>
-<p>Learn to:<br />
-• Stay connected to your team and clients<br />
-• Access documents from anywhere<br />
-• Protect your business<br />
-• Take control of your business</p>
-<p>Event details:<br />
-Tuesday, December 18, 2012<br />
-8:00 a.m. – 9:30 a.m.<br />
-(Breakfast, networking and workshop)</p>
-<p>Location:<br />
-Microsoft Store<br />
-3309 Esperanza Crossing<br />
-Ste. 104<br />
-Austin, Texas 78758</p>
-<p>Registration:<br />
-Space is limited. To register, please <a href="https://msevents.microsoft.com/CUI/EventDetail.aspx?EventID=1032537757&amp;Culture=en-US&amp;community=1" target="_blank">RSVP</a>.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-10-28T00:00:00-05:00" pubdate data-updated="true">Oct 28<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/events/'>Events</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/jack-welch-mba-course-business-communication-and-ethics/">
-		
-			Jack Welch MBA Course: Business Communication and Ethics</a>
-	</h2>
-	<div class="entry-content">
-		<p>Earlier, <a href="http://www.headspring.com/jeffrey/jack-welch-mbaa-new-graduate/">I wrote</a> about my experience at the <a href="https://twitter.com/jack_welch"><a href="http://www.jwmi.com">Jack Welch Management Institute</a>.</a>&nbsp; One of the courses in the program is Business Communications and Ethics.&nbsp; In hindsight, it was very appropriate that this course be the very first course in the program.&nbsp; After an overview of communications and ethics, the course pressed two things very hard.</p>
-<h2>Candor and differentiation</h2>
-<p>Mr. Welch <a href="http://www.jwmi.com/content/business-communication-and-ethics-candor">contends</a> that “the biggest dirty little secret in business” is the absence of candor (Winning).&nbsp; The course teaches that so many problems rise out of the fear of honest communication.&nbsp; We are reminded that children are naturally candid and have no filter in what they say.&nbsp; It is through cultural conditioning that we learn to hold in what we are really thinking.&nbsp; In some organizations, the culture discourages real candor.&nbsp; Instead, saving face is valued more.</p>
-<p>A key example of candor taught in this course relates to performance appraisals.&nbsp; Jack is famous for teaching a 20/70/10 differentiation method where management communicates to employees where they stand.&nbsp; This is most important for the bottom 10%.&nbsp; He contends that it is unfair to the employee to keep that honest feedback from those employees, who may spend more years at the company not understanding why they are not progressing in their careers.&nbsp; Instead, Jack contends that being candid with these employees, and helping them leave, is much more fair to them.&nbsp; The central idea in this is the belief that everyone is a star at the right company and the faster they realize the current company isn’t tapping their unique strengths, the sooner they can find the company and role that helps them shine.&nbsp; </p>
-<p>This method of candid performance communication drives a lot of controversy, but usually not from the top 20%.&nbsp; After this course, we slowly implemented this method at <a href="http://www.headspring.com/">Headspring</a>, and I have to attest that it works.&nbsp; We do quarterly performance reviews, and we differentiate.&nbsp; Through some conference call questions with Mr. Welch during the program, students were able to ask him questions, and he clarified his method for smaller companies where the law of large numbers doesn’t yield a good 20/70/10 distribution.&nbsp; He said that the benefit is there as long as there is real differentiation.&nbsp; He coaches that management must be honest with itself and realize that not all employees are the same.&nbsp; </p>
-<h2>Ethics and managing a crisis</h2>
-<p>After some academic reading on case studies involving corporate ethics, we were able to discuss a timely scandal.&nbsp; That was the scandal of BP and the communication method used after the oil spill in the Gulf of Mexico.&nbsp; Tony Hayward, the CEO of BP at the time, failed to get out ahead of the crisis.&nbsp; When a crisis happens, the curriculum teaches that leaders need to get out ahead of crisis communication and be the source of new information.&nbsp; Tony Hayward failed to do this.&nbsp; Because of it, news media filled the role of finding and communicating new pieces of information.&nbsp; When the news is coming from reporters, the revelations allude to a cover-up, where there is one or not.&nbsp; As a leader, claiming the role of briefer positions one as transparent.&nbsp; Regardless of mistakes made in a crisis, a worse mistake is not owning and leading crisis resolution.</p>
-<p>You can read one of the <a href="http://www.jwmi.com/content/business-communication-and-ethics-candor">lectures of this course here</a>.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-10-26T00:00:00-05:00" pubdate data-updated="true">Oct 26<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/bottom-ten-percent/'>bottom ten percent</a>, <a class='category' href='/blog/categories/business-communications/'>business communications</a>, <a class='category' href='/blog/categories/candor/'>candor</a>, <a class='category' href='/blog/categories/differentiation/'>differentiation</a>, <a class='category' href='/blog/categories/ethics/'>ethics</a>, <a class='category' href='/blog/categories/jack-welch-mba/'>jack welch mba</a>, <a class='category' href='/blog/categories/jwmi/'>jwmi</a>, <a class='category' href='/blog/categories/mba/'>mba</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/headspring-out-on-the-town/">
-		
-			Headspring Out on the Town</a>
-	</h2>
-	<div class="entry-content">
-		<p>We often think of bonding and rapport as something done with clients, but it’s just as valuable with your colleagues.  At Headspring, we believe it’s important to celebrate our successes and reenergize by bonding as a team.  We do this daily through teamwork, but every once in a while we simply need to have some fun together.  For our Q3 get together, we teamed up with City Sleuth, an expert city scavenger hunt company, to enjoy an afternoon of solving riddles and scavenging around downtown.  We sure got to know Austin really well!  In the end, we honored team members with awards, ate a great lunch, and created memories outside of the office environment.
-		
-		<a href="/blog/headspring-out-on-the-town/" class="more-link">Read on &rarr;</a>
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-10-26T00:00:00-05:00" pubdate data-updated="true">Oct 26<span>th</span>, 2012</time></div>
 	<div class="tags">
 
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Estimation | Headspring Labs]]></title>
   <link href="http://headspringlabs.com/blog/categories/estimation/atom.xml" rel="self"/>
   <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-16T19:59:03-05:00</updated>
+  <updated>2013-07-17T00:19:02-05:00</updated>
   <id>http://headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
@@ -21,7 +21,7 @@
     <content type="html"><![CDATA[<p><em><strong>Introduction</strong></em>:</p>
 
 
-<p><em>This article is about defect density as an estimation tool. This attempts to create a simple mathematical model for estimation based on historic defect density about total number of defects and project delivery time. This also presents proposal for creating organizational competitiveness based on defect density of individuals.<!--more--></em></p>
+<p><em>This article is about defect density as an estimation tool. This attempts to create a simple mathematical model for estimation based on historic defect density about total number of defects and project delivery time. This also presents proposal for creating organizational competitiveness based on defect density of individuals.</em></p>
 
 
 <p>For historical reasons, defects are generally termed as bugs in Computer Systems Design &amp; Development community.</p>
@@ -84,9 +84,6 @@
 <ol start="4">
 <li>But the most important point is that most of the code is auto generated code and it is very cumbersome to divide the code of one class to be auto generated or programmer’s written and counts the number of lines for each.</li>
 </ol>
-
-
-<p><!--more--></p>
 
 
 <p>So let's see if we could come up with a different concept of measuring the defect density which includes software units (forms etc.) and their complexities. Obviously one can also relate them with lines of code. You can also call them Extended Function Points.</p>

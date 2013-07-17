@@ -1,7 +1,7 @@
 ---
 layout: post
 title: You Want To Change What?
-tags:
+categories:
 - agile
 - clean code
 - code for change
@@ -26,40 +26,22 @@ meta:
   _aioseop_title: You Want To Change What?
   dsq_thread_id: '833928835'
 ---
-Change is inevitable. It is a simple fact of life which permeates into just about everything. Software development is no exception. Many software development life cycles have evolved and others have come into existence in an effort to help us deal with change. Programming languages, tools and techniques are also continuously evolving as well. Yet with all these improvements many project teams continue to struggle with change.
-
-What can we do about change? The truth is change doesn’t have to be hard. There are many things we can do such as plan for change, design for change, and code for change.<!--more-->
-
-Sounds great doesn’t it? There are actually dozens of books and a plethora of blog posts that talk about those principles.
-
-If you are still reading this, then you are probably wondering how to put those principles into practice. I will share a practical example with you.
-
-A short while ago, I blogged <a href="http://www.headspring.com/2012/02/i-have-frameworkcommitment-issues">about selecting a framework</a>. The premise was a real situation in which a company I was consulting for selected a framework, changed their mind, and then changed it back. The actual frameworks involved are not important. The important thing is that the change was essentially painless.
-
-Here is how pain was avoided.
-
-I worked on a subsystem with very well defined boundaries of responsibility. One thing the subsystem had to do was to send a message to another subsystem. That was easy enough.
-
-I started working on the core domain logic of the subsystem and I reached the point where a domain object implemented the business logic that decided to send a message to the other subsystem. The details of the message format and content were still fuzzy and that was a clear indicator that change was coming. Anticipating change here, I decided to use an interface to allow me to continue developing the business logic while the details of the messages were in limbo.
-
-My code looked something like this:
-
-[gist id=1979430]
-
-I used unit tests to make sure the business logic was sound and leveraged a mocking framework to mock the message publisher. Shortly thereafter a decision was made to implement a third party message bus to handle some of the messaging details. Again this was easy enough to do. We just implemented the IMessagePublisher interface.
-
-[gist id=1979561]
-
-I ended up using a dependency injection framework to inject a MessagePublisher instance into the BusinessObject during runtime. We were also able to use a combination of unit tests and integration tests to make sure the third party message bus worked correctly. The key thing to take away here is that this MessagePublisher class and a couple of supporting classes (omitted from the code sample) were the only places where the third party code touched our subsystem.
-
-When the client decided to change to another third party message bus, we only had to change one class.
-
-[gist id=1979613]
-
-Honestly, it was a little more involved. There were a couple of other classes involved that handled the set up and configuration of the third party message bus. But the net effect of the change was limited to about three small classes, a few unit tests, and a few integration tests.
-
-When the client decided to change back to the original third party message bus, I just recovered the previous implementation, unit tests, and integration tests from source control.
-
-It was pretty much painless.
-
-Granted not all changes are this easy. But when we plan, design, and code with change in mind we end up in a position where we can respond to change.
+<p>Change is inevitable. It is a simple fact of life which permeates into just about everything. Software development is no exception. Many software development life cycles have evolved and others have come into existence in an effort to help us deal with change. Programming languages, tools and techniques are also continuously evolving as well. Yet with all these improvements many project teams continue to struggle with change.</p>
+<p>What can we do about change? The truth is change doesn’t have to be hard. There are many things we can do such as plan for change, design for change, and code for change.</p>
+<p>Sounds great doesn’t it? There are actually dozens of books and a plethora of blog posts that talk about those principles.</p>
+<p>If you are still reading this, then you are probably wondering how to put those principles into practice. I will share a practical example with you.</p>
+<p>A short while ago, I blogged <a href="http://www.headspring.com/2012/02/i-have-frameworkcommitment-issues">about selecting a framework</a>. The premise was a real situation in which a company I was consulting for selected a framework, changed their mind, and then changed it back. The actual frameworks involved are not important. The important thing is that the change was essentially painless.</p>
+<p>Here is how pain was avoided.</p>
+<p>I worked on a subsystem with very well defined boundaries of responsibility. One thing the subsystem had to do was to send a message to another subsystem. That was easy enough.</p>
+<p>I started working on the core domain logic of the subsystem and I reached the point where a domain object implemented the business logic that decided to send a message to the other subsystem. The details of the message format and content were still fuzzy and that was a clear indicator that change was coming. Anticipating change here, I decided to use an interface to allow me to continue developing the business logic while the details of the messages were in limbo.</p>
+<p>My code looked something like this:</p>
+<p>{% gist 1979430 %}</p>
+<p>I used unit tests to make sure the business logic was sound and leveraged a mocking framework to mock the message publisher. Shortly thereafter a decision was made to implement a third party message bus to handle some of the messaging details. Again this was easy enough to do. We just implemented the IMessagePublisher interface.</p>
+<p>{% gist 1979561 %}</p>
+<p>I ended up using a dependency injection framework to inject a MessagePublisher instance into the BusinessObject during runtime. We were also able to use a combination of unit tests and integration tests to make sure the third party message bus worked correctly. The key thing to take away here is that this MessagePublisher class and a couple of supporting classes (omitted from the code sample) were the only places where the third party code touched our subsystem.</p>
+<p>When the client decided to change to another third party message bus, we only had to change one class.</p>
+<p>{% gist 1979613 %}</p>
+<p>Honestly, it was a little more involved. There were a couple of other classes involved that handled the set up and configuration of the third party message bus. But the net effect of the change was limited to about three small classes, a few unit tests, and a few integration tests.</p>
+<p>When the client decided to change back to the original third party message bus, I just recovered the previous implementation, unit tests, and integration tests from source control.</p>
+<p>It was pretty much painless.</p>
+<p>Granted not all changes are this easy. But when we plan, design, and code with change in mind we end up in a position where we can respond to change.</p>

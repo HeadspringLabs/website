@@ -1,7 +1,7 @@
 ---
 layout: post
 title: How I learned to stop worrying and love the data tier
-tags:
+categories:
 - Developer Deep Dive
 status: publish
 type: post
@@ -12,28 +12,20 @@ meta:
   _aioseop_title: How I learned to stop worrying and love the data tier
   dsq_thread_id: '833909298'
 ---
-At some point in 2005 or so, I started using ORMs to perform data access to a RDBMS. ORMs solved a lot of problems I was running into as a developer, namely all the boring ADO.NET code to deal with reading data and populating objects. Previously, my data mapping strategy was something like writing a bunch of stored procedures and corresponding ADO.NET code that is hard to write and even harder to maintain.
-
-I would wind up with a lot of code dealing with DBNull and such, but not much of the code dealt with actually reading information out. It was annoying. It was easy to get wrong. In my attempt to rid myself of this kind of code, I ditched all the things that SQL Server does well.<!--more-->
-
-Using an ORM, especially with databases with large amounts of data, does not preclude the developer from learning these systems. It’s one thing to say we’re ditching Stored Procedures, but yet another to ignore all of the other things that RDBMS does well, and can very much impact the end-user experience of a system.
-
-I had ditched a lot of things in SQL Server when going to ORMs, namely:
+<p>At some point in 2005 or so, I started using ORMs to perform data access to a RDBMS. ORMs solved a lot of problems I was running into as a developer, namely all the boring ADO.NET code to deal with reading data and populating objects. Previously, my data mapping strategy was something like writing a bunch of stored procedures and corresponding ADO.NET code that is hard to write and even harder to maintain.</p>
+<p>I would wind up with a lot of code dealing with DBNull and such, but not much of the code dealt with actually reading information out. It was annoying. It was easy to get wrong. In my attempt to rid myself of this kind of code, I ditched all the things that SQL Server does well.</p>
+<p>Using an ORM, especially with databases with large amounts of data, does not preclude the developer from learning these systems. It’s one thing to say we’re ditching Stored Procedures, but yet another to ignore all of the other things that RDBMS does well, and can very much impact the end-user experience of a system.</p>
+<p>I had ditched a lot of things in SQL Server when going to ORMs, namely:</p>
 <ul>
-	<li>Views</li>
-	<li>Indexes</li>
-	<li>Custom SQL projections</li>
-	<li>Aggregation</li>
-	<li><a href="http://msdn.microsoft.com/en-us/library/ms190766.aspx">Common Table Expressions</a> (CTEs)</li>
+<li>Views</li>
+<li>Indexes</li>
+<li>Custom SQL projections</li>
+<li>Aggregation</li>
+<li><a href="http://msdn.microsoft.com/en-us/library/ms190766.aspx">Common Table Expressions</a> (CTEs)</li>
 </ul>
-In short, all of the things that make RDBMS work well. It wasn’t the ORM that forced me down this path. It was my own bias.
-
-Recently, we hit an issue where we were wanting to enforce uniqueness of the member’s email in the system. We had a set of code on a user creating an account:
-
-[gist id=1871924]
-
-This worked well when only one user tried to save their email at any given time. But in a messaging system, we often do things like increase throughput by increasing workers. But that introduces the problem of dirty reads. If between the time the system checks the database for uniqueness and finally saves the member, that email could (and did) sneak in.
-
-So how did we solve this? Not by removing this code, but putting in a unique constraint and an index on that column. Now I’ve <em>guaranteed</em> uniqueness for that value, instead of having just a hope that the value is unique. It’s something that the database does, and does well. So instead of worrying about logic in SQL stored procedures, which I won’t do, I’ll look at what SQL does well, and take advantage of those features as necessary.
-
-It’s the same side of the coin of “use the right tool for the job”. It’s “be aware of what tools work best in what scenarios, and tradeoffs for those scenarios.”
+<p>In short, all of the things that make RDBMS work well. It wasn’t the ORM that forced me down this path. It was my own bias.</p>
+<p>Recently, we hit an issue where we were wanting to enforce uniqueness of the member’s email in the system. We had a set of code on a user creating an account:</p>
+<p>{% gist 1871924 %}</p>
+<p>This worked well when only one user tried to save their email at any given time. But in a messaging system, we often do things like increase throughput by increasing workers. But that introduces the problem of dirty reads. If between the time the system checks the database for uniqueness and finally saves the member, that email could (and did) sneak in.</p>
+<p>So how did we solve this? Not by removing this code, but putting in a unique constraint and an index on that column. Now I’ve <em>guaranteed</em> uniqueness for that value, instead of having just a hope that the value is unique. It’s something that the database does, and does well. So instead of worrying about logic in SQL stored procedures, which I won’t do, I’ll look at what SQL does well, and take advantage of those features as necessary.</p>
+<p>It’s the same side of the coin of “use the right tool for the job”. It’s “be aware of what tools work best in what scenarios, and tradeoffs for those scenarios.”</p>

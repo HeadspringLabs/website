@@ -1,139 +1,131 @@
 ---
 layout: post
 title: How to create just-in-time requirements and the benefits of this approach
-tags: []
+categories: []
 status: pending
 type: post
 published: false
 meta:
   _edit_last: '4'
 ---
-<img style="float: right; padding: 3px 0px 3px 10px;" title="Just-In-Time Requirements" src="http://blogs.headspring.com/content/binary/just-in-time.gif" alt="Just-In-Time Requirements" />
-
-Assuming that a team has a 6-week to 3-month milestone upfront and a goal of a production
-date at which point a team is to bring a business capability online, then the scope
-of a just-in-time requirement is an individual feature.
+<p><img style="float: right; padding: 3px 0px 3px 10px;" title="Just-In-Time Requirements" src="http://blogs.headspring.com/content/binary/just-in-time.gif" alt="Just-In-Time Requirements" /></p>
+<p>Assuming that a team has a 6-week to 3-month milestone upfront and a goal of a production<br />
+date at which point a team is to bring a business capability online, then the scope<br />
+of a just-in-time requirement is an individual feature.</p>
 <h2>How does the team come up with an individual feature?</h2>
-Given a 6-week to 3-month milestone, one should have upfront the major feature areas
-that will be accomplished within the milestone which will go into production, the
-types of users that will be served by the features, and perhaps the titles (tag lines)
-of each feature to define them as features. From the features, one will proceed into
-just-in-time requirements for the features sequentially as one moves through the milestone.
-
-At <a href="http://www.headspring.com/" target="_blank">Headspring</a> we've had a
-lot of success creating feature specifications.
+<p>Given a 6-week to 3-month milestone, one should have upfront the major feature areas<br />
+that will be accomplished within the milestone which will go into production, the<br />
+types of users that will be served by the features, and perhaps the titles (tag lines)<br />
+of each feature to define them as features. From the features, one will proceed into<br />
+just-in-time requirements for the features sequentially as one moves through the milestone.</p>
+<p>At <a href="http://www.headspring.com/" target="_blank">Headspring</a> we've had a<br />
+lot of success creating feature specifications.</p>
 <ul>
-	<li>This means is a sharp contrast to a big-design-upfront approach in which a team attempts
-to write formal use cases for every feature for the full breadth of a system. Instead
-specifications are restrained to a milestone and the writers of the specifications
+<li>This means is a sharp contrast to a big-design-upfront approach in which a team attempts<br />
+to write formal use cases for every feature for the full breadth of a system. Instead<br />
+specifications are restrained to a milestone and the writers of the specifications<br />
 must stay ahead of the development team's progress.</li>
-	<li>So we do one feature at a time thoroughly analyzing each one and this work is the
-domain of the architect.<!--more--></li>
+<li>So we do one feature at a time thoroughly analyzing each one and this work is the<br />
+domain of the architect.</li>
 </ul>
 <h2>The Architect</h2>
-<strong>understands the business goals</strong>
-
-...as well as the materials that are going to be used to deliver the system.
-
-<img title="the Architect, writing requirements (and staying ahead of the development)" src="http://blogs.headspring.com/content/binary/architect.jpg" alt="the Architect, writing requirements (and staying ahead of the development)" />
-
-And so, the architect is well positioned to create feature specifications so that
-the developers understand exactly how the feature needs to be built. For instance,
-does the feature need to interface with a checkbox list or a date control? Does it
-need to flow data from one point to another? Does it need to cash some data or does
-data need to be delivered to another part of the system immediately? The architect
-has the knowledge to answer such questions, and the architect will communicate this
-knowledge to the developers.
-
-The architect is the party best suited to deliver a demo to a customer as well. Instead
-of waiting until the end of a development integration to get a demo in front of a
-customer (at which point a customer may suggest changes), an architect may provide
-feature specs to customers which will include mockups of what screens will look like
-and details about business rules allowing for an intelligent discussion between the
-architect and client to determine if the work specified will meet needs. The architect
-may pose the questions:
+<p><strong>understands the business goals</strong></p>
+<p>...as well as the materials that are going to be used to deliver the system.</p>
+<p><img title="the Architect, writing requirements (and staying ahead of the development)" src="http://blogs.headspring.com/content/binary/architect.jpg" alt="the Architect, writing requirements (and staying ahead of the development)" /></p>
+<p>And so, the architect is well positioned to create feature specifications so that<br />
+the developers understand exactly how the feature needs to be built. For instance,<br />
+does the feature need to interface with a checkbox list or a date control? Does it<br />
+need to flow data from one point to another? Does it need to cash some data or does<br />
+data need to be delivered to another part of the system immediately? The architect<br />
+has the knowledge to answer such questions, and the architect will communicate this<br />
+knowledge to the developers.</p>
+<p>The architect is the party best suited to deliver a demo to a customer as well. Instead<br />
+of waiting until the end of a development integration to get a demo in front of a<br />
+customer (at which point a customer may suggest changes), an architect may provide<br />
+feature specs to customers which will include mockups of what screens will look like<br />
+and details about business rules allowing for an intelligent discussion between the<br />
+architect and client to determine if the work specified will meet needs. The architect<br />
+may pose the questions:</p>
 <ul>
-	<li>Is this what's necessary?</li>
-	<li>Do we need to capture any other data?</li>
-	<li>Does this work the way you would expect it?</li>
-	<li>Is this going help run your business?</li>
+<li>Is this what's necessary?</li>
+<li>Do we need to capture any other data?</li>
+<li>Does this work the way you would expect it?</li>
+<li>Is this going help run your business?</li>
 </ul>
 <h2>Comps</h2>
-A picture of a screen-to-be is sort of like a straw-man model the first time it is
-put in front of the customer, allowing the customer to upon looking at it to really
-quickly say:
+<p>A picture of a screen-to-be is sort of like a straw-man model the first time it is<br />
+put in front of the customer, allowing the customer to upon looking at it to really<br />
+quickly say:</p>
 <ul>
-	<li>"No, no, no, no. We need another field for another data point. It's very clear at
+<li>"No, no, no, no. We need another field for another data point. It's very clear at<br />
 this point, we need another field."</li>
-	<li><strong>or</strong> "You know, we really don't need that field."</li>
-	<li><strong>or</strong> "Yes, that's exactly what I want."</li>
-	<li><strong>or</strong> "This doesn't make any sense to me."</li>
+<li><strong>or</strong> "You know, we really don't need that field."</li>
+<li><strong>or</strong> "Yes, that's exactly what I want."</li>
+<li><strong>or</strong> "This doesn't make any sense to me."</li>
 </ul>
-Either way, you get that feedback really, really quickly before you've actually spent
-a lot of time developing the software. Once you have a meeting of the minds where
-the customer says "yeah, exactly, that's going to work for me" it's a pretty easy
-job to make software behave as agreed.
+<p>Either way, you get that feedback really, really quickly before you've actually spent<br />
+a lot of time developing the software. Once you have a meeting of the minds where<br />
+the customer says "yeah, exactly, that's going to work for me" it's a pretty easy<br />
+job to make software behave as agreed.</p>
 <h2>But why avoid big-design-upfront?</h2>
-It's really an interesting dichotomy between trying to create a detailed design specification
-for an entire system at the beginning of a project versus doing it one week at a time
-while striving to stay ahead of the development. If you compare the two approaches,
-trying to define all of the requirements in detail before you begin has a few major
-drawbacks:
+<p>It's really an interesting dichotomy between trying to create a detailed design specification<br />
+for an entire system at the beginning of a project versus doing it one week at a time<br />
+while striving to stay ahead of the development. If you compare the two approaches,<br />
+trying to define all of the requirements in detail before you begin has a few major<br />
+drawbacks:</p>
 <ol>
-	<li>It is very difficult for someone to envision something so large as multi-month software
-project. It is equivalent to envisioning all of the bolts and screws on an aircraft
-carrier. Large software engagements are large artifacts with thousands and thousands
-of moving parts, so trying to conceive of something that interoperates properly where
-all of the moving parts function together is very difficult. It is much easier to
-get one part working, move on to the next part, and then see how the second part connects
-to the first.
+<li>It is very difficult for someone to envision something so large as multi-month software<br />
+project. It is equivalent to envisioning all of the bolts and screws on an aircraft<br />
+carrier. Large software engagements are large artifacts with thousands and thousands<br />
+of moving parts, so trying to conceive of something that interoperates properly where<br />
+all of the moving parts function together is very difficult. It is much easier to<br />
+get one part working, move on to the next part, and then see how the second part connects<br />
+to the first.</p>
 <div style="width: 580px; height: 235px; padding-top: 15px;">
-<div style="float: left; width: 285px;">Do you know how many of these...
+<div style="float: left; width: 285px;">Do you know how many of these...<br />
 <img title="Bolts and Screws" src="http://blogs.headspring.com/content/binary/BoltsAndScrews.jpg" alt="Bolts and Screws" /></div>
-<div style="float: right; width: 285px;">...are inside here?
-<img title="Aircraft Carrier" src="http://blogs.headspring.com/content/binary/AircraftCarrier.jpg" alt="Aircraft Carrier" />
-
-If you can't tell at a glance, it's normal.</div>
-</div></li>
-	<li>If a team does have someone capable of architecting a large software project upfront,
-someone so knowledgeable of a client's business that they are capable of visualizing
-and creating such a design, it is still almost impossible for the client to understand
-specifications of such detail. (Imagine presenting a complete blueprint of all of
-the design specifications for an aircraft carrier to someone whose competency is in
+<div style="float: right; width: 285px;">...are inside here?<br />
+<img title="Aircraft Carrier" src="http://blogs.headspring.com/content/binary/AircraftCarrier.jpg" alt="Aircraft Carrier" /></p>
+<p>If you can't tell at a glance, it's normal.</p></div>
+</div>
+</li>
+<li>If a team does have someone capable of architecting a large software project upfront,<br />
+someone so knowledgeable of a client's business that they are capable of visualizing<br />
+and creating such a design, it is still almost impossible for the client to understand<br />
+specifications of such detail. (Imagine presenting a complete blueprint of all of<br />
+the design specifications for an aircraft carrier to someone whose competency is in<br />
 a totally different field.)</li>
 </ol>
-Most of our clients are not software designers. They are not in a position to accept
-system-wide architecture upfront.
+<p>Most of our clients are not software designers. They are not in a position to accept<br />
+system-wide architecture upfront.</p>
 <h2>In contrast to big-design-upfront...</h2>
-If you instead ask "What are the benefits of defining these detailed requirements
-one week at a time?" you will find that:
+<p>If you instead ask "What are the benefits of defining these detailed requirements<br />
+one week at a time?" you will find that:</p>
 <ol>
-	<li>A client is in a position to understand something that would take three or four days
-to build. Compared to a system-wide blueprint, it is a much smaller piece of software.
+<li>A client is in a position to understand something that would take three or four days<br />
+to build. Compared to a system-wide blueprint, it is a much smaller piece of software.<br />
 It is much easier to explain and understand.</li>
-	<li>Once a milestone is implemented the team may use the existing design to assist in
-coming up with the requirements for the next design. For example, if a team has a
-screen that they are to add a field to in the name of satisfying an existing requirement,
-the team may take a picture of the existing screen and produce a comp of how the screen
-would look with one new field upon it. (Often in trying to define all requirements
-upfront, a designer will miss a requirement such as this when crafting comps or the
-client will miss the need for it upon reviewing documentation, and compensatory changes
-to correct after the fact draw a project away from the shape specified in the documentation,
-and the said documentation, that a client has already spent 25% to 40% of a product's
+<li>Once a milestone is implemented the team may use the existing design to assist in<br />
+coming up with the requirements for the next design. For example, if a team has a<br />
+screen that they are to add a field to in the name of satisfying an existing requirement,<br />
+the team may take a picture of the existing screen and produce a comp of how the screen<br />
+would look with one new field upon it. (Often in trying to define all requirements<br />
+upfront, a designer will miss a requirement such as this when crafting comps or the<br />
+client will miss the need for it upon reviewing documentation, and compensatory changes<br />
+to correct after the fact draw a project away from the shape specified in the documentation,<br />
+and the said documentation, that a client has already spent 25% to 40% of a product's<br />
 budget in building, can become obsolete quickly.)</li>
-	<li>Requirements built on the existing system cannot become obsolete because they are
+<li>Requirements built on the existing system cannot become obsolete because they are<br />
 built just-in-time.</li>
 </ol>
-Often as the result of trying to define all requirements upfront, it is becomes tragic
-to look back at how differently a project was defined from what was ultimately produced.
-The feedback from clients will prove that the initial design simply isn't acceptable,
-either because the architect did not have a clear definition of what was required
-or because the requirements simply changed as several months of development necessitated
-change. There seems a horrible waste of money that could have been prevented by simply
-deciding on the details of what the development team should be building as they build
-it.
-
-Always working within the confines of milestones and incremental deliverables that
-can be deployed to production is superior.
-
-<img src="http://blogs.headspring.com/aggbug.ashx?id=63712fd2-4468-480c-a951-2377b82636c8" alt="" width="0" height="0" />
+<p>Often as the result of trying to define all requirements upfront, it is becomes tragic<br />
+to look back at how differently a project was defined from what was ultimately produced.<br />
+The feedback from clients will prove that the initial design simply isn't acceptable,<br />
+either because the architect did not have a clear definition of what was required<br />
+or because the requirements simply changed as several months of development necessitated<br />
+change. There seems a horrible waste of money that could have been prevented by simply<br />
+deciding on the details of what the development team should be building as they build<br />
+it.</p>
+<p>Always working within the confines of milestones and incremental deliverables that<br />
+can be deployed to production is superior.</p>
+<p><img src="http://blogs.headspring.com/aggbug.ashx?id=63712fd2-4468-480c-a951-2377b82636c8" alt="" width="0" height="0" /></p>

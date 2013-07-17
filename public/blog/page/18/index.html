@@ -7,7 +7,7 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="When writing software, we constantly create abstractions. The goal each time is to present a simple interface in front of something more complex, &hellip;">
+	<meta name="description" content="In languages like Java and C#, most objects wind up on the heap instead of the stack. Heap-allocated objects can only be cleaned up by garbage &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -83,14 +83,334 @@
     <article class="post">
 	<h2 class="title">
 		
+		<a href="/blog/escape-analysis/">
+		
+			Escape Analysis</a>
+	</h2>
+	<div class="entry-content">
+		<p>In languages like Java and C#, most objects wind up on the heap instead of the stack.  Heap-allocated objects can only be cleaned up by garbage collection, while stack-allocated objects get cleaned up &#8216;for free&#8217; when the function that they were created in returns.</p>
+<p>If you have a method that constructs a new instance of a class, uses it a little, and then discards it, there&#8217;s no real reason to put it on the heap.  It&#8217;s not going to need to exist after we return, so we might as well put it on the stack and get the deallocation for free.</p>
+<p>If you instead have a method that constructs a new instance of a class and <em>returns</em> that to the caller, we <strong>definitely</strong> have to put it on the heap, because we need to ensure it still exists after we return.  There are lots of things we might do with an object that would require us to use the heap.  We can return it, pass it to another thread, pass it to another function that passes it to another thread, etc.</p>
+<p>The basic idea is that if, after your function exits, there could not possibly be any remaining references to that object, then it might as well be put on the stack and cleaned away without the need for garbage collection.</p>
+<p><a href="http://en.wikipedia.org/wiki/Escape_analysis">Escape analysis</a> is a compiler optimization that can be applied to languages like these.  If the compiler can prove to itself that the object can&#8217;t &#8220;escape&#8221; beyond the lifetime of the method, it will use the stack.</p>
+<p>Although escape analysis really just refers to this compiler trick, I like to use the term to describe a specific kind of refactoring effort.  Before I get to that, though, we need to talk about your arch-nemesis.</p>
+<h2>Code Doesn&#8217;t Just Rot</h2>
+<p>Over the long life of a software project, certain parts of the code will become more difficult than they deserve to be.  One area might be a frequent source of bugs, and the fixes applied by many hands may make it needlessly complex, for instance.</p>
+<p>Sometimes it seems that even when an area doesn&#8217;t go through much flux, it still rots.  Newer and better ideas are introduced to the project, and one area may be left behind the times.  By the time you come across it again, it feels like it&#8217;s rotting away.</p>
+<p>Code rot taken to its extreme gives you a <a href="http://miksovsky.blogs.com/flowstate/2010/09/every-app-has-a-scary-basement.html">spooky basement</a>, the part of the project <em>nobody</em> wants to touch.  It&#8217;s a tangled mass of patches and awkward abstractions.</p>
+<p>I don&#8217;t really like the code rot metaphor because it makes the problem code out to be a passive byproduct.  I prefer to think of bad/awkward/old design decisions as being an <strong>active and malicious adversary hell-bent on escaping from the confines of its files</strong> with the goal of making the rest of your project rot along with it.</p>
+<p>Code doesn&#8217;t just rot.  The rot escapes and spreads.  This thing is out to get you.</p>
+<h2>Escape Analysis at Refactoring Time</h2>
+<p>When I&#8217;m working in a clean area of a project, refactoring is an easy process.  You rename things to make them read better, extract a method or class here or there to organize responsibilities better, and the like.</p>
+<p>When I&#8217;m working on a spooky basement, or even a not-so-bad eerie breakfast nook, I put on the Escape Analysis Hat.  Unlike the compiler optimization which asks &#8220;At runtime, how can this <em>instance</em> escape into the rest of the running system&#8221;, I ask &#8220;How do <em>references</em> to this unwanted method/property/field/class escape into the rest of the code?&#8221;</p>
+<p>This starts with ReSharper, but tools like this can only get you started.  You find usages of the unwanted thing&#8217;s identifier, and then find usages of those usages, and usages of <em>those</em> usages, to start to get a feel for what other areas depend on it.</p>
+<p>That&#8217;s not enough!  Remember, this method/property/field/class is actively trying to escape into the rest of your system.  It wants to escape in any sneaky, devious way it can.  Maybe it gets AutoMapped to some other type, whose usages you&#8217;ll need to investigate.  Maybe it gets serialized to JSON which in turn gets consumed by some javascript you&#8217;ll need to investigate.  Maybe it gets accessed via reflection, or appears in a binding in a XAML file, or gets passed to a web service…</p>
+<h2>A Particularly Tricky Example</h2>
+<p>I was recently refactoring an area of a project that wasn&#8217;t a serious problem yet.  Left alone, the complexity would have eventually gotten out of control, so we decided to address a particular source of the growing complexity.  I encountered a property in a View Model class that I wanted to simplify; I didn&#8217;t quite see the need for it at first.  After seeing how references to this property escaped into the rest of the system, my first thought was &#8220;Oh, this really does get used in a lot of places, and not just in the UI layer.  It needs to exist.&#8221;</p>
+<p>After looking into the escape paths again, though, I realized it was largely unnecessary.  It satisfied a UI requirement, but that could have been satisfied in a simpler way and in only the UI layer.</p>
+<p>The escape path was pretty intricate.  This property had a few real and meaningful usages.  Additionally, it got AutoMapped to another type, which ultimately got serialized and later deserialized so it could be AutoMapped <em>back</em> to the original type.  This circuitous route was not actually used for anything (anymore) and could be removed.</p>
+<p>The next time you find yourself refactoring, and you reach a point where it&#8217;s not obvious what the next step should be, find a suspicious identifier and see where he&#8217;s escaping to.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-16T00:00:00-05:00" pubdate data-updated="true">Mar 16<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/sxsw-interactive-2012-over-and-out/">
+		
+			SXSW Interactive 2012: Over and Out</a>
+	</h2>
+	<div class="entry-content">
+		<p>Last Friday I took to the Austin Convention Center for the five day frenzy known as SXSW Interactive.  Basically, I made this meme summing up my time spent downtown quite nicely:</p>
+<p style="text-align: center;"><a href="http://www.headspring.com/2012/03/sxsw-interactive-2012-over-and-out/sxswwhatiactuallydo" rel="attachment wp-att-4127"><img class="size-large wp-image-4127 aligncenter" title="sxswWhatIActuallyDo" src="http://www.headspring.com/wp-content/uploads/2012/03/sxswWhatIActuallyDo-1024x651.png" alt="" width="517" height="329" /></a></p>
+<p>The lines were insane! I waited three hours to pick up my badge.  However, the rest of the time I experienced very little trouble getting into the panels I wanted to see or any of the other events on my schedule.  I would have been lost without the iPhone and iPad app.</p>
+<p>During the event, I exercised the full use of all available resources:  time, research, relationships, and drink tickets.  I kept a full schedule each day, beginning at 9:00 AM and lasting into the late evening.  During the day, I made it to as many presentations, panels, and discussions as possible - usually 3 to 4.  The first few days there, I was being carried by adrenaline, and made the mistake of neglecting breaks.  Next year will be different.</p>
+<p>My favorite panels and presentations were those that were well thought out and prepared.  I really liked Ray Kurzweil’s discussion about AI and singularity, Jen Pahlka’s presentation on Code for America, and the panel on Agile Apps: Effective Moblie and Native Development.  Here are some more photos:</p>
+<p>&nbsp;</p>
+<p style="text-align: center;"><a href="http://www.headspring.com/2012/03/sxsw-interactive-2012-over-and-out/photo-3" rel="attachment wp-att-4117"><img class="size-medium wp-image-4117 aligncenter" title="ray kurzweil sxsw" src="http://www.headspring.com/wp-content/uploads/2012/03/photo-3-300x224.jpg" alt="" width="300" height="224" /></a><a href="http://www.headspring.com/2012/03/sxsw-interactive-2012-over-and-out/photo-4" rel="attachment wp-att-4118"><img class="size-medium wp-image-4118 aligncenter" title="jen pahlka sxsw" src="http://www.headspring.com/wp-content/uploads/2012/03/photo-4-300x224.jpg" alt="" width="300" height="224" /></a><a href="http://www.headspring.com/2012/03/sxsw-interactive-2012-over-and-out/photo-5" rel="attachment wp-att-4119"><img class="size-medium wp-image-4119 aligncenter" title="ogilvy notes sxsw" src="http://www.headspring.com/wp-content/uploads/2012/03/photo-5-300x224.jpg" alt="" width="300" height="224" /></a><a href="http://www.headspring.com/2012/03/sxsw-interactive-2012-over-and-out/photo-8" rel="attachment wp-att-4120"><img class="size-medium wp-image-4120 aligncenter" title="sxsw presentation crowd" src="http://www.headspring.com/wp-content/uploads/2012/03/photo-8-300x224.jpg" alt="" width="300" height="224" /></a></p>
+<p>In between scheduled events, I would browse the trade show floor, designated networking lounges and workshops. I reserved some time each day to check in with fellow industry friends, and exchange information on who’s who and where the free food was.</p>
+<p>The panels and discussions exceeded my expectations.  The content was current, interesting, and informative, and the presentations - led by credible industry influencers – were well prepared and polished.  Topics ranged from highly technical, to quirky and imaginative, or challenging and perceptive.  I took lots of notes.</p>
+<p>With over 30,000 attendees, there was no shortage of opportunity to network.  I made it a point to get to know the people around me at events, sitting next to me during presentations, or evening those that I stood in line with.  Because SXSW is designed to encourage community and relationship building, I found that most people were very open to participating in conversation when prompted. The parties each evening were great for meeting up, too, although we tried to keep the business chatter light.</p>
+<p>However the <em>best</em> part of the conference was supporting the<a href="http://www.headspring.com/2012/02/headspring-shows-some-love-at-knowbilitys-austin-air"> Headspring Hurwitzes</a> as they received 2<sup>nd</sup> Place in the Formula One division of Knowbility’s AIR Interactive Competition.  I’m so proud of my team!  Here is a picture of them with their award:</p>
+<p style="text-align: center;"><a href="http://www.headspring.com/2012/03/sxsw-interactive-2012-over-and-out/photo-6" rel="attachment wp-att-4123"><img class="size-medium wp-image-4123 aligncenter" title="headspring second place AIR Interactive" src="http://www.headspring.com/wp-content/uploads/2012/03/photo-6-300x224.jpg" alt="" width="300" height="224" /></a></p>
+<p>So, now that it’s over I’ll be catching up on my beauty rest and rehydrating.  I’m looking forward to next year!</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-15T00:00:00-05:00" pubdate data-updated="true">Mar 15<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/small-talk-and-big-news/'>Small Talk &amp; Big News</a>, <a class='category' href='/blog/categories/conferences/'>conferences</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/why-i-like-testcase/">
+		
+			Why I Like TestCase</a>
+	</h2>
+	<div class="entry-content">
+		<p><a href="http://nunit.org/?p=testCase&amp;r=2.5" target="_blank">TestCase</a> is one way you can run parameterized tests with NUnit. An example of how this is useful is testing a whitelist or blacklist. You only need to write the test once, then pass in your items to test some sort of output. If the requirements change and words need to be added to or removed from your list, you simply add another entry without the need for writing another test or set of tests.</p>
+<p>I&#8217;ve found myself using TestCase (formerly <a title="What Happened to NUnit's RowTest" href="http://stackoverflow.com/questions/4069841/what-happended-to-nunit-extensions-rowtest" target="_blank">RowTest</a>) more and more often. If you see lots of very similar tests that shared assertions, or test method names with numbers/values in them, these are signs that you might be wanting to use TestCase. Let&#8217;s take a look at the following examples.</p>
+<h3><strong>One Test, Many Assertions</strong></h3>
+<p>Here you can see that we have one test and many assertions. I&#8217;ve often seen this pattern in tests that have been around the project for a long time. It can be faster to add an assertion rather than to write a whole new test.  This might get the job done, but there are better ways.</p>
+<p><div><script src='https://gist.github.com/1981200.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>This isn&#8217;t ideal because your test can fail at the first assertion, skipping all the rest. Imagine a more complex test that fails at the first assert call and subsequent code changes make it fail at the second and so on. The feedback on the failed tests is less valuable in these situations. This is also why we don&#8217;t write one test for our entire application; tests are more helpful as they become more granular.</p>
+<h3><strong>Many Tests, Each with One Assertion</strong></h3>
+<p>Another not so great way to test this is breaking the assertions into many tests. This also technically works, but is prone to test names representing the wrong idea if values change and the name does not. Maintenance becomes a bit tougher when they&#8217;re written this way.</p>
+<p><div><script src='https://gist.github.com/1981202.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>The reason I wouldn&#8217;t recommend this is because you tend to see duplication in your values under test and your metadata (test method name). Since duplication is bad, we want to avoid this.</p>
+<h3><strong>One Test, Many Values</strong></h3>
+<p>A better approach is TestCase. As you&#8217;ll see by the following example. We&#8217;re writing the test in a way that doesn&#8217;t rely on values from within the test&#8217;s body, but to be supplied by attributes that are &#8220;stacked&#8221; on top.</p>
+<div><div><script src='https://gist.github.com/1935584.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</div>
+<p>I like this test because it&#8217;s very simply testing boundary conditions. The code is largely quite discoverable and very easy to modify if our requirements were to change.</p>
+<p>There&#8217;s nothing magical about TestCase. It&#8217;s just another tool I&#8217;ve found helpful when writing tests for code that I want to be able to take advantage of &#8220;given a set of inputs, verify some output&#8221;.</p>
+<p>What are you thoughts on this? Is TestCase new to you? Have you been using it already? Any drawbacks to using it?</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-14T00:00:00-05:00" pubdate data-updated="true">Mar 14<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/best-practices/'>best practices</a>, <a class='category' href='/blog/categories/clean-code/'>clean code</a>, <a class='category' href='/blog/categories/unit-testing/'>unit testing</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/making-conditional-validation-logic-readable/">
+		
+			Making Conditional Validation Logic Readable</a>
+	</h2>
+	<div class="entry-content">
+		<h2>Summary</h2>
+<p>Why are readable conditionals important?</p>
+<ul>
+<li>Reduce the chance of making an error while creating the initial implementation</li>
+<li>Reduce the time to understand the conditional while maintaining the implementation</li>
+</ul>
+<p>&nbsp;</p>
+<p>What techniques can I use?</p>
+<ul>
+<li>Invert if statements where possible
+<ul>
+<li>reduces nesting</li>
+<li>reduces vertical height of the conditionals</li>
+</ul>
+</li>
+<li>Extract methods from conditional payloads
+<ul>
+<li>emphasizes control flow decision logic instead of the implementations of the decisions</li>
+<li>reduces vertical height of the conditionals</li>
+</ul>
+</li>
+</ul>
+<p>&nbsp;</p>
+<p>The <em>Practical Example</em> section below contains a walkthrough demonstrating a refactoring using these techniques.</p>
+<h2>Why Conditionals Matter</h2>
+<p>Conditional logic is a large component of software.  While it’s certainly possible to write software without conditionals (usually some sort of number crunching calculation), it’s fairly rare.  Conditionals make it possible for a program to do different things based on a set of circumstances that might change while the program is running.  Almost all user input has to be filtered by conditional validation, since you can never be sure what a user is going to type into your program!</p>
+<p>Finding defects in conditionals can be difficult because it usually takes a set of specific circumstances to flow through the defective code.  In worst cases you may not even know how to reliably trigger the error because you don’t the exact circumstances that cause the defective lines to be reached.</p>
+<p>Since conditionals are so common, and the potential for problems is so high, it’s important to write conditional statements that are clear to understand and easy to follow.</p>
+<h2>Practical Example – Refactoring A Password Change Validation</h2>
+<p>Recently I needed to add an audit trail to a small web application.  The app was about 5 pages and I felt doing it explicitly would be quicker and simpler than spending time setting up and configuring an automated approach.</p>
+<p>One of the pages provided a way for users to change their password using the standard “enter your current password, type the new password twice” design:</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2012/02/changePassword1.png"><img style="padding-left: 0px; padding-right: 0px; float: none; margin-left: auto; margin-right: auto; padding-top: 0px; border-width: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/02/changePassword_thumb1.png" alt="changePassword" width="326" height="208" border="0" /></a></p>
+<p>Clicking Submit triggers two phases of validation.  The first phase checks the current password is correct, a new password is supplied, that the new password was typed correctly twice, and the new password was not used recently.  The second phase ensures the new password is sufficiently complex – e.g. a minimum length and a minimum number of numeric and alpha characters are used.</p>
+<p>I needed to add an audit entry for any password change attempt and the corresponding result.  This is what the original code looked like:</p>
+<p><div><script src='https://gist.github.com/1934704.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>There are several suboptimal things to note about the above code:</p>
+<ul>
+<li>There are six levels of nested if statements.</li>
+<li>The longest conditional block is 65 lines between the opening and closing.  I can’t even see the entire block at once in my editor, I have to scroll up and down.</li>
+<li>The phase two validation on lines 38-54 is buried inside error handling for phase one validation.  You cannot glance through the conditional and find it without reading almost the entire conditional.</li>
+<li>The logic for displaying a validation failure is duplicated several times.</li>
+</ul>
+<p>&nbsp;</p>
+<p>Implementing the auditing would require making multiple additions, and it would be easy for a particular condition to get missed if the validation logic changed later.  I decided to refactor the conditional.</p>
+<p>The first thing I did was reduce the vertical height by encapsulating the payloads of the conditionals into a call to a new method DenyChanges(string reason).  Your conditional payloads may not always be completely duplicated like this, but you can still encapsulate them into methods to reduce the space between the conditional clauses.</p>
+<p>[gist id = 1934740]</p>
+<p>&nbsp;</p>
+<p>This is already much easier to look at.</p>
+<ul>
+<li>The longest conditional block is 42 lines, and we can see the whole conditional at once.</li>
+<li>The decisions around control flow are emphasized over what the conditionals are doing.  It’s easier to spot a logic error in the conditionals.</li>
+<li>The normal case (user changes password) stands out much clearer from all the validation checks.</li>
+</ul>
+<p>&nbsp;</p>
+<p>Now that we can see the entire block in our screen, it becomes apparent the outer if statement doesn’t have an else clause.  We can remove an unnecessary level of nesting by inverting the history check and returning instead.  Here’s what that inversion looks like (see line 9 specifically):</p>
+<p>[gist id = 1934825]</p>
+<p>&nbsp;</p>
+<p>This reduces the nesting from 6 levels to 5.  Looking over the remainder of the validation, we can remove virtually ALL of the nesting by applying the same technique – perform a validation, and return if a failure occurred.  I’m not going to show each little step, but here’s the end result of continuing to invert ifs and extract methods.</p>
+<p>[gist id = 1934871]</p>
+<p>&nbsp;</p>
+<p>Much better!  In ChangePassword_Click we can tell what happens just by reading top to bottom.  Method names like ValidateChange and DenyChange, along with variable names like changeErrors, communicate the WHAT without forcing us to suffer through reading the HOW to implicitly figure out WHAT’s going on.</p>
+<h2>Practical Example – Wrap up</h2>
+<p>We’ve used two techniques to simplify a conditional that was nested 6 levels deep and difficult to quickly trace through the decision flow.  By extracting the conditional payloads into methods and inverting if clauses when possible, we’ve completely eliminated the nested conditionals, and also managed to eliminate all the else clauses as well.  The result is a much shorter block of conditionals that can be read and followed without having to understand the implementation of what each conditional state does, and will be much easier to modify in the future.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-13T00:00:00-05:00" pubdate data-updated="true">Mar 13<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/conditionals/'>Conditionals</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/refactoring/'>Refactoring</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
 		<a href="/blog/finding-closure/">
 		
 			Finding Closure</a>
 	</h2>
 	<div class="entry-content">
-		<p>When writing software, we constantly create abstractions.  The goal each time is to present a simple interface in front of something more complex, hiding the gory details from us so we can focus on other things.  The problem is, <a href="http://en.wikipedia.org/wiki/Leaky_abstraction">abstractions leak</a>.  Even when you go to great effort to create a really exellent abstraction, some unfortunate implementation detail manages to rear its ugly head.  This even happens with things so fundamental that we take them for granted.  Take the &#8216;foreach&#8217; keyword in C#:
+		<p>When writing software, we constantly create abstractions.  The goal each time is to present a simple interface in front of something more complex, hiding the gory details from us so we can focus on other things.  The problem is, <a href="http://en.wikipedia.org/wiki/Leaky_abstraction">abstractions leak</a>.  Even when you go to great effort to create a really exellent abstraction, some unfortunate implementation detail manages to rear its ugly head.  This even happens with things so fundamental that we take them for granted.  Take the &#8216;foreach&#8217; keyword in C#:</p>
+<p><div><script src='https://gist.github.com/1990055.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Where we would expect the output to be:<br />
+    Hello, Larry!<br />
+    Hello, Moe!<br />
+    Hello, Curly!</p>
+<p>Instead, we see:<br />
+    Hello, Curly!<br />
+    Hello, Curly!<br />
+    Hello, Curly!</p>
+<p>Fortunately, ReSharper points out that something fishy is going on with the reference to <code>name</code> that appears in the loop body: <strong>&#8220;Access to modified closure.&#8221;</strong>  If you follow the ReSharper suggested fix, you get this:</p>
+<p><div><script src='https://gist.github.com/1990084.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Oddly, introducing this local variable <em>does</em> fix the output, but why?  To find out, let&#8217;s first rewrite the original version using a transformation from a <code>foreach</code> loop to a <code>while</code> loop, since that&#8217;s the first thing the compiler does for us.  It still erroneously prints &#8220;Hello, Curly!&#8221; three times:</p>
+<p><div><script src='https://gist.github.com/1990116.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>ReSharper still highlights the use of <code>name</code> within the loop body, and still says it is an &#8220;Access to modified closure.&#8221;  Before we can try to fix the problem, we&#8217;re going to have to make sense of that warning.</p>
+<h2>What&#8217;s a Closure?</h2>
+<p>The word &#8220;closure&#8221; comes up a lot when talking about any language that has anonymous inline functions.  In C#, that means anonymous delegates and their shorthand lambda expressions introduced with <code>=&gt;</code>.  You have comparable anonymous functions in Javascript, Ruby, Python, etc.  Whenever you have an anonymous function whose body refers to identifiers in the surrounding scope, the function earns the right to call itself a closure.</p>
+<p>Lambdas are really shorthand for a class with one method as well as the instantiation of that class.  In our example above, the lambdas are living beyond the execution of the loop, and that means they need to live beyond the normal scope of the loop variable, <code>name</code>.  In order to work, they&#8217;ll need to hold onto something about that variable.  In fact, they hold onto the <em>environment</em> that was in effect at the moment the lambda was reached.  By environment, I mean <em>all</em> of the local variables they might be referring to.  It is as if we wrote the following, which also prints &#8220;Hello, Curly!&#8221; three times:</p>
+<p><div><script src='https://gist.github.com/1990154.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>AHA! See how we have only <em>one</em> instance of Environment shared by all the <code>Greeter</code>s, and each iteration of the loop messes with the <code>name</code> field <em>inside</em> that shared Environment?  No wonder our final loop prints out the same thing each time: all the items in <code>delayedGreetings</code> refer to the same Environment, which contains only one name, which equals whatever we set it to <em>last</em>.</p>
+<p>They call these lambdas &#8220;closures&#8221; because the secret object behind the scenes is grasping-at / enveloping / <em>closing-on</em> the local environment.  As we see in the last example, even after the environment is closed on, we can still affect that environment.  We say that the lambda is closing on the <em>variables themselves</em> rather than simply holding a reference to their <em>values</em>.</p>
+<p><strong>Even foreach leaks.</strong></p>
+<h2>Fixing foreach</h2>
+<p>So we&#8217;ve got this fancy compiler that can take a combination of <code>foreach</code> and lambda expressions, rewriting them into some equivalent-yet-verbose code, which in turn is easier to compile.  It&#8217;s a big abstraction that usually works so well we don&#8217;t stop to think it&#8217;s even <em>happening</em>.  How could we fix it?</p>
+<p>It seems the whole problem comes down to the fact that with one shared environment, each iteration messes with a shared mutable object.  We get one environment per scope, though, and the <code>while</code> loop body introduces a new, more-local scope of its own!  We could take advantage of that by declaring the loop-iteration variable <code>name</code> <em>within</em> the <code>while</code> instead of <em>before</em> it.  This way, each iteration will get its own Environment with its own <code>name</code>.  Nothing shared, nothing mutated, leaving us with the three distinct greetings we wanted.  In other words, we wish that <code>foreach</code> gets translated into a <code>while</code> loop like so:</p>
+<p><div><script src='https://gist.github.com/1990196.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>ReSharper&#8217;s suggestions basically accomplish the same thing.  By introducing a seemingly-redundant copy within the smaller scope, the environment used by the lambdas is different in each iteration.</p>
+<p>Usually when something as fundamental as a looping keyword has a problem like this, the language designers don&#8217;t really have the option of correcting it.  It&#8217;s technically a breaking change to make all <code>foreach</code> loops translate to the better version of the <code>while</code> seen in the last example.  <strong>However, they are going to be <a href="http://blogs.msdn.com/b/ericlippert/archive/2009/11/12/closing-over-the-loop-variable-considered-harmful.aspx">fixing foreach in C#5</a>.</strong> It&#8217;s a breaking change, but one that will <em>fix</em> more mistakes than it <em>creates</em>!</p>
+
 		
-		<a href="/blog/finding-closure/" class="more-link">Read on &rarr;</a>
+		
 	</div>
 
 
@@ -129,9 +449,23 @@
 	</h2>
 	<div class="entry-content">
 		<p>The bags are packed and we’re ready to head out for Dallas Day of Dot NET.  We&#8217;ve heard through event organizers that over 500 people are expected to attend.  Woo Hoo!  Half of our team is going, including President, Jeffrey Palermo, sporting a fresh polo from his recently bestowed and 7<sup>th</sup> consecutive Microsoft MVP title.</p>
-<p style="text-align: center;"><a href="http://www.headspring.com/2012/03/dallas-day-of-dot-net-get-nerdy-with-it/photo-2" rel="attachment wp-att-4036"><img class="alignnone size-medium wp-image-4036" title="Katie and Jeffrey heading to Dallas Day of Dot NET" src="http://www.headspring.com/wp-content/uploads/2012/03/photo-2-224x300.jpg" alt="" width="224" height="300" /></a><a href="http://www.headspring.com/2012/03/dallas-day-of-dot-net-get-nerdy-with-it/photo-1" rel="attachment wp-att-4037"><img class="alignnone size-medium wp-image-4037" title="photo (1)" src="http://www.headspring.com/wp-content/uploads/2012/03/photo-1-224x300.jpg" alt="" width="224" height="300" />
+<p style="text-align: center;"><a href="http://www.headspring.com/2012/03/dallas-day-of-dot-net-get-nerdy-with-it/photo-2" rel="attachment wp-att-4036"><img class="alignnone size-medium wp-image-4036" title="Katie and Jeffrey heading to Dallas Day of Dot NET" src="http://www.headspring.com/wp-content/uploads/2012/03/photo-2-224x300.jpg" alt="" width="224" height="300" /></a><a href="http://www.headspring.com/2012/03/dallas-day-of-dot-net-get-nerdy-with-it/photo-1" rel="attachment wp-att-4037"><img class="alignnone size-medium wp-image-4037" title="photo (1)" src="http://www.headspring.com/wp-content/uploads/2012/03/photo-1-224x300.jpg" alt="" width="224" height="300" /></a></p>
+<p>Obviously, we’re super excited about the main event:  keynote speaker Scott Hanselman.  Hanselman is well known for many things, most notably his evangelism for Microsoft and all things .NET.  His popular weekly podcast series <em>Hanselminutes</em> and blog <em>Scott Hanselman’s Computer Zen</em> will be the source of inspiration for his presentation titled <em>Making Your Blog Suck Less</em>.</p>
+<p>The posted <a href="http://dallasdayofdotnet.com/dallasdayofdotnet/Home/Agenda">agenda</a> doesn’t include any abstracts. Lucky for you, a few Headspringers are presenting and provided me with their details:</p>
+<p style="padding-left: 30px;"><strong>Jeffrey Palermo: </strong><em>Developing for Business Intelligence</em></p>
+<p style="padding-left: 30px;">With Microsoft aligning several of its products to serve BI needs, .Net developers are left with little support for providing analytical answers from data stored in system databases.  Even reports are often just formatted query results on a screen.  Business intelligence is about deriving knowledge from your data, not just view raw data.  From fact tables to star schemas to methods of visualization, Visual Studio doesn&#8217;t provide much support for these important and enabling concepts for BI.  This session will introduce developers to the fundamentals of BI development and the basic tools and techniques they can use to start extracting intelligence from their data.</p>
+<p style="padding-left: 30px;"><strong>Jimmy Bogard: </strong><em>Keeping Integration Sane with NServiceBus</em></p>
+<p style="padding-left: 30px;">Building apps used to be simple when we just needed to push data into a database. However, more and more we see our applications needing to communicate with other external applications via REST, SOAP, or for the less fortunate, flat files. We can assume these external services are always 100% up, but inevitably, someone trips over the cord and communication fails. Often, recovering from these kinds of failures are the hardest to recover from, causing developers and the business alike significant heartburn.</p>
+<p style="padding-left: 30px;">In this session we&#8217;ll examine the common causes for failures integrating with other systems. We&#8217;ll look at the basics of messaging and alternate UI interaction models to accommodate failure. Finally, we&#8217;ll dig in to NServiceBus and see how NServiceBus kicks the problems of flaky integration to the curb once and for all.</p>
+<p style="padding-left: 30px;"><strong>Tim Thomas: </strong><em>Building Games with .NET and XNA Game Studio</em></p>
+<p style="padding-left: 30px;"><em></em>Developing your own game can be a daunting task. In this session, you’ll see how easy it is to get started from scratch with XNA Game Studio 4.0, the latest version of Microsoft’s multi-platform game creation toolkit. You’ll be introduced to the developer-friendly—and free!—community resources available for building games for the PC, Xbox, and Windows Phone and learn more about this industry-changing game development technology.</p>
+<p style="padding-left: 30px;"><strong>Ryan Vice:  </strong><em>State Management in Windows 8 Metro Applications</em></p>
+<p style="padding-left: 30px;">Metro introduces a new application lifecyle in which your application could be terminated at anytime. This example driven session will explore how to write applications that sucessfully manage persisted, session and view state in the Metro environment allowing you to provide a good user experience for your end users. The concepts apply to all Metro development but will be demonstrated using C# and XAML.</p>
+<p>After that, Headspringers disperse to “get nerdy with it.”  If you’re in town, plan on stopping by to visit Katie in the sponsor area.  She’ll have swag, stickers, and as always, good conversation.  Pick up one of these beauties for your car bumper, and share the photo on our <a href="http://www.facebook.com/pages/Headspring/280556282000204">Facebook wall</a>!</p>
+<p><a href="http://www.headspring.com/2012/03/dallas-day-of-dot-net-get-nerdy-with-it/photo" rel="attachment wp-att-4038"><img class="size-medium wp-image-4038 aligncenter" title="Headspring bumper stickers" src="http://www.headspring.com/wp-content/uploads/2012/03/photo-224x300.jpg" alt="" width="224" height="300" /></a></p>
+
 		
-		<a href="/blog/dallas-day-of-dot-net-get-nerdy-with-it/" class="more-link">Read on &rarr;</a>
+		
 	</div>
 
 
@@ -170,9 +504,132 @@
 	</h2>
 	<div class="entry-content">
 		<p><em><strong>Introduction</strong></em>:</p>
-<p><em>This article is about defect density as an estimation tool. This attempts to create a simple mathematical model for estimation based on historic defect density about total number of defects and project delivery time. This also presents proposal for creating organizational competitiveness based on defect density of individuals.
+<p><em>This article is about defect density as an estimation tool. This attempts to create a simple mathematical model for estimation based on historic defect density about total number of defects and project delivery time. This also presents proposal for creating organizational competitiveness based on defect density of individuals.</em></p>
+<p>For historical reasons, defects are generally termed as bugs in Computer Systems Design &amp; Development community.</p>
+<p><strong><em><span style="text-decoration: underline;">Defect Density Defined: </span></em></strong>-</p>
+<p>The simplest definition of defect density is: “<em>The ratio of the number of defects to program size</em>”.</p>
+<p>But it leads to a debate about how to measure program size. Some managers define program size in terms of Lines of Code. So according to them, the definition of defect density becomes: “<em>The number of defects per thousand lines of code</em>” i.e</p>
+<div align="center">
+<table width="255" border="1" cellpadding="0">
+<tbody>
+<tr>
+<td width="40"><strong><strong>DD = Defects / (K)LOC</strong></strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Others define it in terms of function points. They define Defect Density as: “<em>Defect Density is the number of defect points per hundred function points</em>.” i.e.</p>
+<table border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td valign="top" width="590">
+<p align="center"><strong>Defect Density = (Total Defect Points / Function Point Count) * 100</strong></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong></strong>Let&#8217;s agree to both definitions but we want this information to be utilized for help of managers. Managers have to take decisions. For these decisions they do estimation about future events based on past data about current resources. The same principle should be applied for Software Managers. They should have historical data of defect density for code written by each and every software engineer. This data should help them answering questions about future project&#8217;s delivery.</p>
+<p><strong><em><span style="text-decoration: underline;">Limitation of above measures:</span></em></strong></p>
+<p><strong><em></em></strong>Function points are a very good measure but, for estimation of defects, it does not consider the present resources (engineers) of an organization. Lines of code may overcome this but I think this measure is not very accurate. I say this because of following reasons:</p>
+<ol>
+<li>The same functionality can be implemented with different number of total lines of code. Even if two persons write code about the same functionality then the number of lines of code would be different for both programmers.</li>
+<li>The numbers of lines of code are different for different programming languages or various code generators.</li>
+</ol>
+<ol start="3">
+<li>Programmers have different level of expertise in different programming languages, which results in different bug densities in their code written in different programming languages.</li>
+</ol>
+<ol start="4">
+<li>But the most important point is that most of the code is auto generated code and it is very cumbersome to divide the code of one class to be auto generated or programmer’s written and counts the number of lines for each.</li>
+</ol>
+<p>So let&#8217;s see if we could come up with a different concept of measuring the defect density which includes software units (forms etc.) and their complexities. Obviously one can also relate them with lines of code. You can also call them Extended Function Points.</p>
+<p><strong><em><span style="text-decoration: underline;">Defect Analysis for measuring Build delivery time</span></em></strong></p>
+<p>Defect Density analysis may also be used to estimate total time it would take for the build to be reaching to the hands of the client. Now this point needs some elaboration. Let&#8217;s consider a typical software solution with a number of modules. We divide our modules in different categories of complexities (ω) for example 1, 2, 3…….. etc. We assign ω = 1 for the simplest software unit (module) and assigns different level of complexities to other units based on their difficulty as compared to the module with ω = 1. For simplicity we keep it discrete but you may have it in decimal numbers as per your convenience. As a matter of fact different values of ω could also mean different lines of code. But the specialty of this design is that the user written code is kept in focus and level of complexity is assigned based on that.</p>
+<table border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td valign="top" width="590">
+<p align="center"><strong>Total estimated number of defects = Σ N<sub>i</sub> * D<sub>i</sub></strong></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Where Ni is the no. of software unit with ω<sub>i</sub> complexity and Di is the Defect density of programmers.</p>
+<p>The time of first build to SQA (Software Quality Assurance) is already estimated based on the industry standard estimation techniques. SQA productivity is analyzed by project manager in previous projects by some other density related matrices. The time for fixing for above estimated code can be found out very easily by simple arithmetic. This give total time for this build development, testing and bug removing. So the build delivery time can be estimated using.</p>
+<p style="text-align: center;"><em><strong>Total Time for Build Delivery = Time for build before SQA + Time for SQA phase + Time for defect fixing </strong></em></p>
+<p><strong><em><em></em></em></strong><em><span style="text-decoration: underline;">Example:</span></em></p>
+<p>Now we analyze a build based on the above theory. I have a programmer Shahbaz and his defect density for C#.net is 4.8, 11.3, 19.1 for ω = 1, 2 and 3 respectively. He develops 5 modules having ω = 1, 3 having ω = 2 and 2 having ω = 3. We can estimate the number of defects in his code as follows:</p>
+<p>Estimated defects in Shahbaz’s code = 5 * 4.8 + 11.3 * 3 + 19.1 * 2 = 96.1 defects.</p>
+<p>If SQA finds out 92 bugs in shahbaz’s code, it means nearly all potential bugs are identified and the build may be delivered to client with confidence.</p>
+<p><strong><em><span style="text-decoration: underline;">What’s next?</span></em></strong></p>
+<p>With the above calculation we still are not able to tell the build delivery time with sufficient trust because of different critical nature of defects α<sub>i</sub> . We must have some idea about the no. of defects of each critical level. For simplicity, we define three critical classes; they are α =1, 2, 3. The formula for total no. of bugs becomes:</p>
+<p style="text-align: center;"><strong>Estimated no. of defects = Φ (N, D) = <a href="http://www.headspring.com/2012/03/defect-density-estimation/attachment/1" rel="attachment wp-att-3916"><img class="alignnone size-full wp-image-3916" alt="" src="http://www.headspring.com/wp-content/uploads/2012/03/1.jpg" width="124" height="33" /></a>  (updated)</strong></p>
+<p>Where D<sub>ij</sub> is the no. of defects of α<sub>j</sub> criticality on the form of ω<sub>i</sub> complexity and N<sub>i</sub> is the no. of software units of ω<sub>i</sub> complexity. ‘p’ is the limit of complexities defined by your organization and ‘q’ is the levels of criticality of bugs defined.</p>
+<p><strong><em><span style="text-decoration: underline;">Time for Defect Fixing</span></em></strong></p>
+<p>Here we are more interested in the estimating the time required for fixing of these defects. By simply updating the above formula, we can reach to this:</p>
+<p>Time required for fixing bugs = <a href="http://www.headspring.com/2012/03/defect-density-estimation/attachment/2" rel="attachment wp-att-3917"><img class="alignnone size-full wp-image-3917" alt="" src="http://www.headspring.com/wp-content/uploads/2012/03/2.jpg" width="142" height="33" /></a> (hours)</p>
+<p>where <a href="http://www.headspring.com/2012/03/defect-density-estimation/attachment/16" rel="attachment wp-att-4015"><img class="alignnone size-full wp-image-4015" title="16" alt="" src="http://www.headspring.com/wp-content/uploads/2012/03/16.jpg" width="18" height="17" /></a> is the time (in hours) required for fixing a single bug of α<sub>j </sub>critical nature.</p>
+<p>Now you can covert this time in no. of days by dividing the result came out by putting values in above formula by working hours in a day in your organization. If H is the no. of working hours in a day, then:</p>
+<p>Days required for fixing of bugs = Ceil <a href="http://www.headspring.com/2012/03/defect-density-estimation/attachment/3" rel="attachment wp-att-3918"><img class="alignnone size-full wp-image-3918" alt="" src="http://www.headspring.com/wp-content/uploads/2012/03/3.jpg" width="177" height="33" /></a> (ideal)</p>
+<p>Now use your intuition and add some buffer days for unforeseen incidents. Let <a href="http://www.headspring.com/2012/03/defect-density-estimation/attachment/17" rel="attachment wp-att-4014"><img class="alignnone size-full wp-image-4014" title="17" alt="" src="http://www.headspring.com/wp-content/uploads/2012/03/17.jpg" width="16" height="18" /></a> be the same, then:</p>
+<p>Days required for fixing of bugs = Ceil [<a href="http://www.headspring.com/2012/03/defect-density-estimation/attachment/4" rel="attachment wp-att-3919"><img class="alignnone size-full wp-image-3919" alt="" src="http://www.headspring.com/wp-content/uploads/2012/03/4.jpg" width="177" height="33" /></a>] + <a href="http://www.headspring.com/2012/03/defect-density-estimation/attachment/5" rel="attachment wp-att-3920"><img class="alignnone size-full wp-image-3920" alt="" src="http://www.headspring.com/wp-content/uploads/2012/03/5.jpg" width="16" height="18" /></a>(realistic)</p>
+<p><strong><em><span style="text-decoration: underline;">Regression Defects</span></em>:</strong></p>
+<p>“<em>Defects can neither be created nor be destroyed but they can change from one form to other. The total number of defects in a module always remains constant</em>.”</p>
+<p>This is a joke in software development community and termed as “<em>Law of conservation of bugs</em>”. Although we don&#8217;t believe in this but one thing is for sure that there are defects which might be created while fixing other defects. With the calculations that we did above, these defects may not be included but there should be some other method to estimate them. Due to these defects , very often, we see a number of cycles of builds between development team and QA team. If we do not include this in our estimation analysis then, again, we are underestimating the time.</p>
+<p>There are few general observations which should be considered:</p>
+<ol>
+<li>The no. of defect (N) decreases with each cycle of build between development team and QA.</li>
+<li>The level of defect (α) increases with each cycle. Mostly integration issues with other components or development units.</li>
+</ol>
+<p>Now the greatest part of this discussion is to calculate the total number of defects. To estimate this, we proceed as follows:</p>
+<p><strong><em><span style="text-decoration: underline;">Solution</span></em></strong></p>
+<p>It is believed that the no. of defects produced in cycle 2 are all new bugs which are created in fixing other bugs, so they must be lesser than earlier defects. It is believed that they are some percentage of earlier bugs. This should also be kept in mind that this is also different for each engineer.</p>
+<p>The formula for total number of bugs should be something like this:</p>
+<table width="608" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td valign="top" width="608">
+<p align="center"><a href="http://www.headspring.com/2012/03/defect-density-estimation/attachment/6" rel="attachment wp-att-3921"><img class="alignnone size-full wp-image-3921" alt="" src="http://www.headspring.com/wp-content/uploads/2012/03/6.jpg" width="265" height="22" /></a>…………………………………Equation-1</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Let <a href="http://www.headspring.com/2012/03/defect-density-estimation/attachment/7" rel="attachment wp-att-3922"><img class="alignnone size-full wp-image-3922" alt="" src="http://www.headspring.com/wp-content/uploads/2012/03/7.jpg" width="16" height="20" /></a> percent more bugs are created at each next level than previous level. i.e.</p>
+<p><a href="http://www.headspring.com/2012/03/defect-density-estimation/attachment/8" rel="attachment wp-att-3923"><img class="alignnone size-full wp-image-3923" alt="" src="http://www.headspring.com/wp-content/uploads/2012/03/8.jpg" width="157" height="22" /></a></p>
+<p>Then <a href="http://www.headspring.com/2012/03/defect-density-estimation/attachment/9" rel="attachment wp-att-3924"><img class="alignnone size-full wp-image-3924" alt="" src="http://www.headspring.com/wp-content/uploads/2012/03/9.jpg" width="101" height="22" /></a>, <a href="http://www.headspring.com/2012/03/defect-density-estimation/attachment/10" rel="attachment wp-att-3925"><img class="alignnone size-full wp-image-3925" alt="" src="http://www.headspring.com/wp-content/uploads/2012/03/10.jpg" width="110" height="22" /></a>, <a href="http://www.headspring.com/2012/03/defect-density-estimation/attachment/11" rel="attachment wp-att-3926"><img class="alignnone size-full wp-image-3926" alt="" src="http://www.headspring.com/wp-content/uploads/2012/03/11.jpg" width="124" height="22" /></a> equation 1 becomes:</p>
+<p><a href="http://www.headspring.com/2012/03/defect-density-estimation/attachment/12" rel="attachment wp-att-3927"><img class="alignnone size-medium wp-image-3927" alt="" src="http://www.headspring.com/wp-content/uploads/2012/03/12-300x15.jpg" width="300" height="15" /></a></p>
+<p>Solving the above equation we come out to the following conclusion:</p>
+<p><a href="http://www.headspring.com/2012/03/defect-density-estimation/attachment/13" rel="attachment wp-att-3928"><img class="alignnone size-medium wp-image-3928" alt="" src="http://www.headspring.com/wp-content/uploads/2012/03/13-300x53.jpg" width="300" height="53" /></a></p>
+<p>We have come to a very nice conclusion but still we are left with a problem i.e. the value of n. How should we figure out this value? This needs some managerial acumen regarding understanding of our engineers and complexity of the project. For a very simple project with averagely competent engineers, this may be as minimum as 2 but for other cases this may go to some very high value. So there are two unknowns; first is the percentage of bugs created in each cycle (<a href="http://www.headspring.com/2012/03/defect-density-estimation/attachment/14" rel="attachment wp-att-3929"><img class="alignnone size-full wp-image-3929" alt="" src="http://www.headspring.com/wp-content/uploads/2012/03/14.jpg" width="16" height="20" /></a>) and second is the number of cycles (n). This would be different for each team and estimator must take into consideration the history of the team.</p>
+<p><strong><em><span style="text-decoration: underline;">Should I deliver my application to clients?</span></em></strong></p>
+<p>The managers are often confused when there are bugs in their application and they have to deliver to clients. On these occasions one should repeat the <em>Law of Conservation of bugs </em>(jokingly) and do some measurement analysis regarding these.</p>
+<p>On this issue, Maggie Tompkins has presented a very useful measurement technique. She categorizes the bugs into different categories (<strong><em>Fatal Flaws, Critical Concerns, Preventable Problems, Minor Defects and Insignificant defects</em></strong>). She assigns defect points to each category which increases exponentially with each increasing level. This is the same as we defined the level of bugs (α) earlier and assigned values to each level.</p>
+<p>The difference is that she measures the defect points in a build and comparing it to the size of project as measured through Function Points based on IFPUG standards, she decides whether the build is ready to be delivered to client or not. I think there are following limitations in this model:</p>
+<ul>
+<li>There may be hidden defect in the build which could not be found out by SQA. These defects should also be considered when making a decision about build delivery. My discussion is all about estimation after the design and before assignment to individual engineer for the implementation. For this I have presented a complete mathematical model for estimation. What you have to do is to estimate earlier in the implementation phase. After the SQA, you have to analyze whether the defects are as per the expectation or not. If not so, run another cycle until nearly all the dormant defects are surfaced which are up to the quality requirement of the project and organization.</li>
+</ul>
+<ul>
+<li>The implementation has to be done by engineers. She has not taken any consideration of the defect history of work done by individual engineers.</li>
+</ul>
+<p>&nbsp;</p>
+<p><strong><em><span style="text-decoration: underline;">Creating Competitive Organizational Environment</span></em></strong>:-</p>
+<p>For an organization to work, manager should create an environment of competitive collaboration between employees of same level in the organization hierarchy. I think defect density can be a great measure for measuring employee’s productivity. Yearly accolades may be offered to the engineer with lowest annual defect density. The formula for measuring defect density at any time may be given as:</p>
+<p><a href="http://www.headspring.com/2012/03/defect-density-estimation/attachment/15" rel="attachment wp-att-3930"><img class="alignnone size-full wp-image-3930" alt="" src="http://www.headspring.com/wp-content/uploads/2012/03/15.jpg" width="229" height="92" /></a></p>
+<p>Finally we define defect density according to my model:</p>
+<p><strong>“Defect density is the ratio between total unit level defects to total unit level complex components.”</strong></p>
+<h2><span style="text-decoration: underline;">References:</span></h2>
+<p><em>IEEE Software</em>, Vol. 14, No. 3, May/June 1997</p>
+<p>STANDARDS AND MEASURES OF QUALITY<strong> </strong><em>Margaret Tompkins, Defense Finance and Accounting Service</em></p>
+<p><strong><em><span style="text-decoration: underline;">Websites:</span></em></strong></p>
+<ul>
+<li><a href="http://www.stevemcconnell.com/">http://www.stevemcconnell.com</a></li>
+<li><a href="http://irb.cs.tu-berlin.de/">http://irb.cs.tu-berlin.de</a></li>
+<li><a href="http://software.isixsigma.com/">http://software.isixsigma.com</a></li>
+<li><a href="http://www.softrel.com/">http://www.softrel.com</a></li>
+</ul>
+<p><i>Muhammad is a passionate blogger. He loves to explore various technologies and discuss their amazing features with the other software enthusiasts. He is a co-author of <a title="MVVM Survival Guide for Enterprise Architectures in Silverlight and WPF" href="http://www.amazon.com/Survival-Guide-Enterprise-Architectures-Silverlight/dp/1849683425" target="_blank">MVVM Survival Guide for Enterprise Architectures in Silverlight and WPF</a>. [Blogs http://<a title="shujaat.net" href="http://www.shujaat.net/" target="_blank">shujaat.net</a><span style="color: #585757; font-family: SegoeUI, 'Open Sans', Arial, Helvetica, Tahoma, sans-serif; font-size: small;">; Twitter: @SiddiqiMuhammad]</span></i></p>
+
 		
-		<a href="/blog/defect-density-estimation/" class="more-link">Read on &rarr;</a>
+		
 	</div>
 
 
@@ -213,9 +670,20 @@
 		<p>The second week of March is upon us, and I could not be more excited.</p>
 <p>SXSW Interactive is going to be bigger and better than ever – over 19,000 are expected to attend this year.   I’m really looking forward to being a part of it.  Even the Juggalos will be there!  Juggalos and Bruce Springsteen featured in the same event; I never thought I would see the day.</p>
 <p>If you have a badge, make sure to find me and say hello. In between panels, I plan to visit the Microsoft and Beacon Lounges or browse the Trade Show and ScreenBurn Arcade.  Here’s my schedule:   <a href="http://schedule.sxsw.com/2012/user_events/user_60347">http://schedule.sxsw.com/2012/user_events/user_60347</a></p>
-<p>However, if you don’t have badge, there is still plenty of opportunity to get in on the action.  Of course, I’ve made a list:
+<p>However, if you don’t have badge, there is still plenty of opportunity to get in on the action.  Of course, I’ve made a list:</p>
+<p><strong>Thursday, March 8<sup>th</sup>: </strong><a href="http://door64.com/sxsw2012">Door64 Pre-SXSW Interactive Party</a></p>
+<p>Techies don’t usually need a party to prove how fun they are, but an open bar sponsored by Dell, Intel, and CyrusOne never hurts.  Along with free booze, there will be two bands, and Dell is giving out free laptops and other devices for door prizes. Tickets are cheap ($20) and half off if you’re an Austin Cloud User Goup member.  A steal of a deal!</p>
+<p><strong>Friday, March 9<sup>th</sup>:</strong> <a href="https://www.facebook.com/events/301931889872103">Refresh Austin’s SXSW Kickoff Lunch</a></p>
+<p>For the fourth year in a row, Refresh Austin has organized an opportunity for folks to mingle and catch up with Refreshers from all over the world.  It’s not sponsored, so you’ll have to pick up your own tab.  However, this is a great opportunity to meet up with badge-holding friends from out-of-town, and convince them to get a job at your company in Austin!</p>
+<p><strong>Sunday, March 11<sup>th</sup>: </strong><a href="http://www.eventida.com/events/2012_dewey_ceremony_air-interactive_awards/#SXSWparty">Dewey Awards Ceremony</a></p>
+<p>This event is also free, and is co-presented by our friends at Knowbility.  The party will honor 10 media do-gooders with tons of food, drink, and music.  Also, Knowbility will announce the winners for SXSW Interactive AIR.  We’re keeping our fingers crossed for the team of Headspringers that participated in the competition!</p>
+<p><strong>Monday, March 12<sup>th</sup>: </strong><a href="http://garann.com/allgirlhacknight/2012/cli.html">Austin All-Girl Dev Brunch</a></p>
+<p>The Austin All-Girl Hack Night and Girl Develop It groups have organized a brunch for techie chicks to get together and celebrate their awesomeness.  This year, Headspring is sponsoring because 1) we love All Girl Hack Night 2) we really love the Bloody Mary’s at Frank.  If you’re a girl and you love to code, I strongly encourage you to check this one out. And it’s totally free!</p>
+<p>As always, we’ll continue to keep our community events calendar updated with these events and more.</p>
+<p>If you know of any other non-badge required events going on during sxswi, please post in our comments.  Happy hunting!</p>
+
 		
-		<a href="/blog/make-the-most-of-sxswi-for-free/" class="more-link">Read on &rarr;</a>
+		
 	</div>
 
 
@@ -312,9 +780,45 @@
 	</h2>
 	<div class="entry-content">
 		<p>Git and Mercurial certainly have their differences, but in the grand scheme of things they are both equally-viable source control tools.  Bitbucket and GitHub are also both equally-viable hosts for Mercurial and Git projects.</p>
-<p>All other things being equal, when it comes to open-source software the Capricious and Arbitrary Popularity Contest kicks in with the deciding vote.  Git, and in particular GitHub, has won the popularity contest in recent years and will own the title of Open Source Thingamabob for the near future.  Something cooler will come along and take its place, but for now GitHub is the place to be.
+<p>All other things being equal, when it comes to open-source software the Capricious and Arbitrary Popularity Contest kicks in with the deciding vote.  Git, and in particular GitHub, has won the popularity contest in recent years and will own the title of Open Source Thingamabob for the near future.  Something cooler will come along and take its place, but for now GitHub is the place to be.</p>
+<p>We still trust Bitbucket with our client work, but we&#8217;re in the process of migrating our open-source projects to the new <a href="https://github.com/HeadspringLabs">GitHub &#8220;HeadspringLabs&#8221; organization</a>.</p>
+<p>After a few failed attempts and much gnashing of teeth, I successfully migrated the <a href="http://www.headspring.com/2011/11/building-rich-enums">Enumeration</a> project from Bitbucket to GitHub, complete with history.
+</p>
+<h2>Installing Hg-Git on Windows</h2>
+<p>If you&#8217;re migrating a Subversion project to GitHub, they already provide an simple import service.  They don&#8217;t yet offer a tool for importing Mercurial repositories, though, so I found a Mercurial-to-Git bridge called <a href="http://hg-git.github.com/">Hg-Git</a>.</p>
+<p>Hg-Git is intended to let you work continuously against a Git repository while using Mercurial tools on the client side.  I didn&#8217;t need all that, but it can also be used to do the initial push to GitHub from within a Mercurial repository.</p>
+<p>The documentation on the Hg-Git&#8217;s main site is a little brief, and after Googling around I found some good advice as well as some good advice that no longer applied.  To get Hg-Git installed on Windows, here&#8217;s all you really need to do:</p>
+<ol>
+<li>Install a recent TortoiseHg if you haven&#8217;t already.  I used TortoiseHg 2.3 (Mercurial 2.1).</li>
+<li>Open a command window and <code>cd</code> to a development folder.  We&#8217;ll be creating some repository folders underneath it:<br />
+$ <code>cd C:dev</code></li>
+<li>You install Hg-Git by simply cloning its own repository off of Bitbucket:<br />
+$ <code>hg clone https://bitbucket.org/durin42/hg-git</code><br />
+This creates a new folder named hg-git under the current directory, and underneath that you&#8217;ll see a folder named hggit.</li>
+<li>Mercurial needs to be told that this extension exists.  Update C:&#92;Users&#92;&lt;username&gt;&#92;mercurial.ini and add the following (using whatever path you cloned to):<br />
+<code>[extensions]<br />
+bookmarks =<br />
+hggit = C:devhg-githggit</code></li>
+<li>Confirm that Mercurial knows what hggit is:<br />
+$ <code>hg help hggit</code></li>
+</ol>
+<h2>Initial Failure</h2>
+<p>You&#8217;ll need to have a new empty repository created on GitHub, and you&#8217;ll need to have the rights to push to it.  You&#8217;ll need to have a local clone of the Bitbucket project you wish to migrate.</p>
+<p>If you follow the advice on <a href="http://hg-git.github.com">the Hg-Git site</a>, you&#8217;ll try to issue a special &#8221;<code>hg push</code>&#8221; command using a git-specific destination URL.  <strong>This can push the history of commits only partially.  The GitHub repository will unforunately fail to show <em>who</em> performed each commit.</strong>  Yikes.  When I got this far, I had to delete the GitHub repo and start over.</p>
+<p>The problem is Mercurial uses one string to represent committer identity while Git uses two (name and email).  Additionally, GitHub pays special attention to the email part, allowing the site to recognize existing GitHub users and linking to their user page.  Since Hg-Git wasn&#8217;t populating email addresses, GitHub had little to go on.</p>
+<h2>Successfuly Migrating from Bitbucket to GitHub</h2>
+<p><strong>Instead</strong> of using Hg-Git to perform the whole push, we&#8217;ll follow some <a href="http://www.theleagueofpaul.com/hg-to-git">excellent Hg-Git advice</a> that lets us step in to fix committer identities along the way.</p>
+<p>That site has a shell script (which can be executed on Windows using the Git Bash command prompt).  The script will use Hg-Git for only one small part of the process: converting a local Mercurial repository folder into an equivalent local git repository.  The only thing wrong with that git repository will be the user names and email addresses.  The script then takes a chainsaw to that local git history, fixing the identity of each committer.  Finally, the script uses regular git commands to do the final push to GitHub.</p>
+<p>The downside is that you have to modify this script with a separate chunk for each real-world person that appears in the Mercurial history.  For instance, let&#8217;s say we have history in Bitbucket for users named hgjohn and hgjane.  John Doe has a GitHub account already and prefers to be known there as &#8220;John Doe&#8221; with email address &#8220;john@example.com&#8221;.  Jane Doe doesn&#8217;t have a GitHub account yet, but later on if she does she&#8217;ll want to be known as &#8220;Jane Doe&#8221; and &#8220;jane@example.com&#8221;.  With these transformations ready, we modify the script to the following:</p>
+<p><div><script src='https://gist.github.com/1954240.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>After saving this as &#8220;migrate_hg_to_git.sh&#8221; in our development folder, we execute the following command (all on one line).  This creates a local folder named &#8216;MyProject&#8217;, populates it with a Bitbucket clone, converts it to a Git repository, fixes the names, and pushes to GitHub:</p>
+<p>$ <code>./migrate_hg_to_git.sh MyProject https://bitbucket.org/johnd/MyProject git@github.com:jdoe/MyProject.git</code></p>
+<p>Now when you view the project on GitHub, John&#8217;s commits display his photo and link to his user page.</p>
+
 		
-		<a href="/blog/migrating-from-bitbucket-to-github/" class="more-link">Read on &rarr;</a>
+		
 	</div>
 
 
@@ -336,168 +840,6 @@
 
 
 	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/get-to-know-a-developer-chris-missal/">
-		
-			Get to Know a Developer: Chris Missal</a>
-	</h2>
-	<div class="entry-content">
-		<p><a href="http://www.headspring.com/2012/03/get-to-know-a-developer-chris-missal/2909_85bb896665_quarter" rel="attachment wp-att-3847"><img class="alignright size-full wp-image-3847" title="Chris Missal" src="http://www.headspring.com/wp-content/uploads/2012/03/2909_85bb896665_quarter.png" alt="" width="160" height="160" /></a>Chris Missal, Senior Consultant at Headspring, is our newest addition to the team.  His background is mostly in web development using ASP.NET and MVC in the eCommerce industry.  At his last job, J&amp;P Cycles, he helped create a system for allowing third-party widgets to more clearly communicate with each other, therefore allowing his team to better understand and utilize information picked up from visitors of the site.  Yes, Chris is the guy that knows how to see everything that you see on the internet.  But for good, not for bad!</p>
-<p>And his interests don’t stop there.  He’s currently learning Python, and along with coding, he likes disc golf and bowling.  He just moved to Austin from Iowa, and is really looking forward to getting into the social scene.  “The developer community is so lively here that I’ll be looking to get involved with groups that are passionate about making their communities so wonderful,” said Chris.</p>
-<p>Here is how the rest of our talk went:
-		
-		<a href="/blog/get-to-know-a-developer-chris-missal/" class="more-link">Read on &rarr;</a>
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-01T00:00:00-06:00" pubdate data-updated="true">Mar 1<span>st</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/get-to-know-a-headspringer/'>Get To Know a Headspringer</a>, <a class='category' href='/blog/categories/what-the-tech/'>What the tech?</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/becoming-a-headspringer-know-thy-resharper/">
-		
-			Becoming a Headspringer: Know Thy ReSharper</a>
-	</h2>
-	<div class="entry-content">
-		<p>Since I&#8217;m new to Headspring and we are hiring, I thought I would help give an edge to anyone applying and subscribing to our blog. There are many “features” (pun attempted) that make up a Headspringer and I’m hoping my fellow Headspring bloggers will help me verbalize them through the “Becoming a Headspringer” blog series. I will be starting this series with some quick tips on <a href="http://www.jetbrains.com/resharper/">ReSharper</a>. If you do not already have ReSharper or know what it is, immediately after reading this post is as good a time as any to try it out.
-		
-		<a href="/blog/becoming-a-headspringer-know-thy-resharper/" class="more-link">Read on &rarr;</a>
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-29T00:00:00-06:00" pubdate data-updated="true">Feb 29<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/what-the-tech/'>What the tech?</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/creative-leap-year-ideas-for-the-office/">
-		
-			Creative Leap Year Ideas for the Office</a>
-	</h2>
-	<div class="entry-content">
-		<p>Because it’s a leap year, we get to take advantage of an extra day of work.  What are you going to do with all the extra time?! Here is a list of great ideas to make February 29th 2012 a day to remember:
-		
-		<a href="/blog/creative-leap-year-ideas-for-the-office/" class="more-link">Read on &rarr;</a>
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-28T00:00:00-06:00" pubdate data-updated="true">Feb 28<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/i-have-frameworkcommitment-issues/">
-		
-			I Have Framework Commitment Issues</a>
-	</h2>
-	<div class="entry-content">
-		<p>Once upon a time, a problem was identified. Shortly thereafter a solution was found. After all it wasn&#8217;t a tough problem and the solution was simple. A commercial framework was selected and the solution was implemented. Then it was re-implemented with an open source framework and then rolled back to the commercial framework. Both frameworks were evaluated and the findings revealed both frameworks had the features and functionality to solve the problem within the context of the solution. So what was the reason for indecisiveness?
-		
-		<a href="/blog/i-have-frameworkcommitment-issues/" class="more-link">Read on &rarr;</a>
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-27T00:00:00-06:00" pubdate data-updated="true">Feb 27<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/what-the-tech/'>What the tech?</a>
 
 
 </div>

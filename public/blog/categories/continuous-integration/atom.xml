@@ -4,7 +4,7 @@
   <title><![CDATA[Category: continuous integration | Headspring Labs]]></title>
   <link href="http://headspringlabs.com/blog/categories/continuous-integration/atom.xml" rel="self"/>
   <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-16T19:59:03-05:00</updated>
+  <updated>2013-07-17T00:19:02-05:00</updated>
   <id>http://headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
@@ -24,7 +24,7 @@
 <p>Or have I?</p>
 
 
-<p>Incorporating automated tests into your Continuous Integration build process can feel similar. You're suddenly presented with all these errors. Your product seems to be broken all the time. You liked it better when things were quiet and you didn't know how bad it was.<!--more--></p>
+<p>Incorporating automated tests into your Continuous Integration build process can feel similar. You're suddenly presented with all these errors. Your product seems to be broken all the time. You liked it better when things were quiet and you didn't know how bad it was.</p>
 
 
 <p>There are two reasons I'm getting so many warnings from my car: It has more systems, more features, more <em>computers</em> than any car I've owned before; and it has more health sensors and warning lights. It's better at knowing when it's a little unhappy, and better at letting me know. I take care of these little maintenance tasks, and all is well. It never reaches the big, blow-up, throw-a-rod, leave-you-stranded, heartache-on-the-interstate meltdown that results from years of indifferent neglect.</p>

@@ -86,7 +86,7 @@
 <p><div><script src='https://gist.github.com/2206415.js'></script>
 <noscript><pre><code></code></pre></noscript></div>
 <br />
-[gist id=&#8221;2206371&#8221; file=&#8221;Signature.cs&#8221;]<!--more--></p>
+[gist id=&#8221;2206371&#8221; file=&#8221;Signature.cs&#8221;]</p>
 <p>Another reason I’m a fan of this pattern is when it can be used in sets. Imagine your email signature for a moment. You could have multiple signatures to choose from when you compose an email. Rather than having code to check for the existence of signatures, we can now simply always assume that there will be at least one signature.</p>
 <p>[gist id=&#8221;2206371&#8221; file=&#8221;EmailUser.cs&#8221;]</p>
 <p>While this code example isn’t too complex, one could imagine that creating a new object every time a property is accessed could get a bit expensive depending on the project. In our example with Email and Signatures, we would be perfectly fine using a Singleton. We might also want to set up our code this way if we needed to worry about reference equality. Just something to keep in mind.</p>

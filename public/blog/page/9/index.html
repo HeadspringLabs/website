@@ -7,7 +7,7 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="In A Game of Throws, we saw a frequently-blogged-about gotcha regarding the yield keyword and exception handling. This week, we&#8217;ll see how &hellip;">
+	<meta name="description" content="Sometimes I get a reputation for having a good memory, but I actually don&#8217;t trust it at all. When it comes to my short-term memory, I find &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -83,14 +83,388 @@
     <article class="post">
 	<h2 class="title">
 		
+		<a href="/blog/memory-management/">
+		
+			Memory Management</a>
+	</h2>
+	<div class="entry-content">
+		<p>Sometimes I get a reputation for having a good memory, but I actually don&#8217;t trust it at all.  When it comes to my short-term memory, I find that simple things slip my mind far too easily if I don&#8217;t place an unusual amount of concentration on them, so &#8220;automatic&#8221; tasks like locking a door fade too quickly and I&#8217;ll immediately wonder whether I actually did them.</p>
+<blockquote><p>Wait. Did I leave the stove on?</p></blockquote>
+<p>I trust my long-term memory only slightly more.  Maybe it&#8217;s all in my head, but the distrust is real.  Short-term and long-term memory matter when working on a large software project, so how do I deal with my memory distrust? <strong>I. Write. Down. <em>Everything.</em></strong> </p>
+<h2>Typical Workflow</h2>
+<p>If you peek over my shoulder on a typical day, you&#8217;ll see Visual Studio open on one monitor and Sublime Text open on the other.  I usually spend more keystrokes typing into Sublime than VS.</p>
+<p>I typically have one text file per topic branch, naturally with the same name as that branch.  As I work on a feature or diagnose a bug, my train of thought winds up in that file.  I document experiments, research of the relevant parts of the preexisting source code, key steps taken, and the like.</p>
+<p>When I&#8217;m working on a brand new feature, I may not have much to document, as the code I&#8217;m writing <em>is</em> the train of thought and there&#8217;s no point in being redundant about this.  When working on a difficult bug, on the other hand, just about every word that crosses my mind winds up in that file.  Even the puns.  (Especially the puns.)</p>
+<h2>Bug Hunting</h2>
+<p>Today, I was researching a particularly tricky bug.  The code involved callbacks within callbacks within callbacks, each of which was named &#8216;callback&#8217;.  Fortunately, the bug was trivially reproducible.  Unfortunately, stepping through the code wasn&#8217;t very illuminating.  It became way too easy to lose track of the train of thought.</p>
+<p>In order to maintain a useful train of thought, I had to start getting very specific in my notes.  What exact code paths were taken for <em>this</em> input, what exact code paths were taken for <em>that</em> input, where did they diverge and why, etc.</p>
+<p>I had some false starts, in which I thought I knew what was going on and later discovered evidence to the contrary.  When that happens, I make a point of keeping the details handy and permanent.  As with scientists experimenting in a lab, <em>a failed coding &#8220;experiment&#8221; is information</em> contributing to the larger effort.</p>
+<p>As I got closer and closer to the actual culprit, these notes and experiments got clearer and clearer.  The little bits of information gleaned in the early stages were starting to congeal into a relatively simple and accurate description of the problem.  Once that description became clear enough, it was obvious what I needed to do to solve the problem.  I spiked out a quick proof of concept for the solution, confirmed success, and then realized the end of the day had come and I was better off tackling the remainder of the work with fresh eyes in the morning.</p>
+<h2>Cool Story Bro, But Why?</h2>
+<p>If I had too much trust in my memory, I wouldn&#8217;t have this document handy first thing tomorrow morning.  Without the document, I would have faced a tough choice around 5:00 today: take a risk and work long mistake-prone hours through the evening while the details were fresh, or take a risk of forgetting it all by morning.  No, thanks.</p>
+<p><strong>First thing tomorrow, I&#8217;ll be able to relive my entire train of thought in about 5 minutes.</strong>  I&#8217;ll be entirely ready to fix the issue while in a responsible state of mind.</p>
+<h2>Coming Soon to A&E, <em>Hoarders: Text Edition</em></h2>
+<p>I keep these notes around forever, for the same reason source control tools keep past commits around forever.</p>
+<p>Recently, a coworker remembered that I worked in an area of the project that needed to be extended.  He asked if I remembered anything about what I had done, and naturally I had absolutely no idea what he was talking about.  I was certain I had never worked on such a thing.  I did, it turns out, work on it about a month ago.  A quick keyword search through my notes folder revealed my entire train of thought from that day, complete with the topic branch name and date so we could find the original commit history.</p>
+<p>A few months back, I was working on a fairly complex overhaul of the way certain events were detected in the UI.  This work involved wrestling with some inadequacies in a third-party UI control.  While fighting with that third-party control, I had performed some experiments with the available events.  One event&#8217;s name and documentation made it seem like a <em>perfect</em> fit, but my attempts revealed a subtle and serious reason to avoid it.  I documented this decision even though I never expected to revisit that event.  A week later, another developer said he&#8217;d found this event and suggested we use it; armed with the details, I could say that it was already attempted, failed, and failed <em>in this specific/subtle/serious way</em>.  We saved ourselves from wasted effort and from the cost of introducing a bug.</p>
+<p>All in all, I think the time I spend keeping these notes saves me time and improves the code I write.  They keep me focused in the moment, prevent rework in later moments, and allow me to hit the ground running each day.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-11T00:00:00-05:00" pubdate data-updated="true">Oct 11<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/ravendb-boot-camp/">
+		
+			RavenDB Boot Camp</a>
+	</h2>
+	<div class="entry-content">
+		<address>RavenDB is a transactional, open-source Document Database written in .NET, offering a flexible data model designed to address requirements coming from real-world systems. RavenDB allows you to build high-performance, low-latency applications quickly and efficiently.</address>
+<div>
+<p><a href="http://www.headspring.com/wp-content/uploads/2012/06/logo-ravendb.png"><img class="alignleft size-medium wp-image-5690" title="logo-ravendb" src="http://www.headspring.com/wp-content/uploads/2012/06/logo-ravendb-300x104.png" alt="" width="300" height="104" /></a>In this  hands–on, 2–day course you will learn how to use this quickly evolving Document Database efficiently in your applications to save time and effort on communicating with database storage.</p>
+<p><strong>Upon completion of this RavenDB course, you will be able to build database–backed applications faster and more efficiently.</strong></p>
+<p>&nbsp;</p>
+<p>For upcoming classes and registration options call (877) 459 - 2260</p>
+<p>&nbsp;</p>
+<p><strong>Topics covered in this workshop:</strong></p>
+<ul>
+<li>Overview of RDBMS, NoSQL, Document Databases and RavenDB</li>
+<li>Basic CRUD operations</li>
+<li>RavenDB’s indexes implementation</li>
+<li>Data modeling</li>
+<li>Caching</li>
+<li>Static indexes and Full–text search and spatial queries</li>
+<li>Map⁄Reduce, multi–map, boosting</li>
+<li>Live projections</li>
+<li>Scaling: replication, sharding, multi–tenancy</li>
+<li>Bundles</li>
+<li>Extending RavenDB by writing your own bundle</li>
+</ul>
+<div>
+<p><strong>Who Benefits Most?</strong></p>
+<ul>
+<li>Developers with experience in the .NET framework</li>
+<li>Developers that us C#</li>
+</ul>
+<div>
+<p><strong>For more information, call (877) 459-2260</strong></p>
+<p>Cost $1,495.00</p>
+<p>If you have any concerns whether or not this course is a fit, please feel free to contact us by filling out the form or calling (877) 459-2260.</p>
+<div>
+<hr />
+<p>Training located in Austin, Texas, 10415 Morado Circle, Bldg 3, Suite 300 (8:30 a.m. to 5:00 p.m.)</p>
+<p>Although it is unlikely, class dates are subject to change. We encourage you to obtain transferable airline/hotel reservations in the event that this should occur.</p>
+<p>By signing up for a Headspring training course, you are accepting the terms and conditions of our <a title="Education Services Agreement" href="http://headspring.wpengine.com/education-services-agreement/">Education Services Agreement</a>.</p>
+</div>
+</div>
+</div>
+</div>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-10T00:00:00-05:00" pubdate data-updated="true">Oct 10<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/events/'>Events</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/a-peek-inside-the-headspring-toolbox/">
+		
+			A Peek Inside the Headspring Toolbox</a>
+	</h2>
+	<div class="entry-content">
+		<p>Here is a peek into the Headspring toolbox.  I did a simple analysis of the tools used at Headspring by analyzing the Nuget package files for a subset of the projects we have in source control.  I created a PowerShell script to pull out the package names from the Nuget packages.config files.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2012/10/headspring-toolbox-2.png"><img src="http://www.headspring.com/wp-content/uploads/2012/10/headspring-toolbox-2-1024x564.png" alt="Headspring Toolbox" width="640" height="352" class="aligncenter size-large wp-image-5790" /></a></p>
+<p><div><script src='https://gist.github.com/3840798.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Here is a list of items we have used to build projects for our clients over the last several years at Headspring. The tool list includes both brownfield and greenfield projects and is by no means comprehensive. I manually added items that I felt were noteworthy but didn’t show up in the Nuget packages.</p>
+<h2>Automation</h2>
+<ul>
+<li>PowerShell of course!</li>
+<li>batch files</li>
+</ul>
+<h2>Build Tools</h2>
+<ul>
+<li><a href="https://github.com/psake">Psake</a></li>
+<li><a href="http://www.jetbrains.com/teamcity/">Team City</a></li>
+</ul>
+<h2>Deployment Tools</h2>
+<ul>
+<li><a href="http://pstrami.codeplex.com/">Pstrami<b>Added 10-18</b></a></li>
+</ul>
+<h2>CSS Frameworks</h2>
+<ul>
+<li><a href="http://foundation.zurb.com/">Foundation</a></li>
+<li><a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap</a></li>
+</ul>
+<h2>Data Access</h2>
+<ul>
+<li><a href="http://nhforge.org/">NHibernate</a></li>
+<li><a href="http://www.fluentnhibernate.org/">FluentNhibernate</a></li>
+<li><a href="http://nhprof.com/">NHibernateProfiler</a></li>
+<li><a href="http://www.toptensoftware.com/petapoco/">Petapoco</a></li>
+<li><a href="http://code.google.com/p/dapper-dot-net/">Dapper and DapperExtensions</a></li>
+<li><a href="http://ravendb.net/">RavenDB</a></li>
+<li><a href="http://entityframework.codeplex.com/">Entity Framework</a></li>
+<li>Mongo</li>
+<li><a href="http://system.data.sqlite.org">System.Data.SQLite</a></li>
+</ul>
+<h2>Dependency Injection</h2>
+<ul>
+<li><a href="http://docs.structuremap.net/">StructureMap</a></li>
+</ul>
+<h2>JavaScript Libraries</h2>
+<ul>
+<li><a href="http://jquery.com/">jQuery</a></li>
+<li><a href="http://modernizr.com/">Modernizr</a></li>
+<li><a href="http://jqueryui.com/">jQuery UI</a></li>
+<li><a href="http://backbonejs.org/">Backbone</a></li>
+<li><a href="http://knockoutjs.com/">Knockout</a></li>
+<li><a href="http://www.trirand.com/blog/">jqGrid</a></li>
+<li><a href="http://datatables.net/">DataTables</a></li>
+<li><a href="http://www.sencha.com/products/extjs/">ExtJS</a></li>
+<li><a href="http://www.highcharts.com/">Highcharts JS</a></li>
+<li><a href="http://www.kendoui.com/">Kendo UI</a></li>
+<li><a href="http://pivotal.github.com/jasmine/">Jasmine</a></li>
+</ul>
+<h2>Logging</h2>
+<ul>
+<li><a href="http://logging.apache.org/log4net/">log4net</a></li>
+<li><a href="http://nlog-project.org/">NLog</a></li>
+<li><a href="http://code.google.com/p/elmah/">Elmah</a></li>
+</ul>
+<h2>Misc. Open Source Libraries</h2>
+<ul>
+<li><a href="http://automapper.codeplex.com/">Automapper</a></li>
+<li><a href="https://github.com/Headspringlabs/Enumeration">Enumeration</a></li>
+<li><a href="http://nbuilder.org/">NBuilder</a></li>
+<li><a href="http://nservicebus.com/">NServiceBus</a></li>
+<li><a href="http://james.newtonking.com/projects/json-net.aspx">Newtonsoft.Json</a></li>
+<li><a href="http://dotnetzip.codeplex.com/">DotNetZip</a></li>
+<li><a href="http://quartznet.sourceforge.net/">Quartz.NET</a></li>
+<li><a href="http://commandline.codeplex.com/">CommandLineParser</a></li>
+<li><a href="http://nuget.org/packages/DocumentFormat.OpenXml">DocumentFormat.OpenXml</a></li>
+<li><a href="http://www.dotlesscss.org/">dotless</a></li>
+<li><a href="https://bitbucket.org/headspringlabs/tarantino/wiki/Home">Tarantino <b>Added 10-18</b></a></li>
+<li><a href="https://code.google.com/p/roundhouse/">Roundhouse <b>Added 10-18</b></a></li>
+<li><a href="https://github.com/dahlbyk/posh-git">Posh Git <b>Added 10-18</b></a></li>
+</ul>
+<h2>Reporting / Text Format Tools</h2>
+<ul>
+<li><a href="http://sourceforge.net/projects/itextsharp/">iTextSharp</a></li>
+<li><a href="http://code.google.com/p/linqtoexcel/">LinqToExcel</a></li>
+<li><a href="http://closedxml.codeplex.com/">ClosedXML</a></li>
+<li><a href="http://epplus.codeplex.com/">EPPlus</a></li>
+<li><a href="http://doddlereport.codeplex.com/">DoddleReport</a></li>
+<li><a href="http://www.essentialobjects.com/">Essential Objects</a></li>
+<li><a href="http://www.nitropdf.com/">Nitro PDF - <b>Updated 10-18</b></a></li>
+</ul>
+<h2>Source Control</h2>
+<ul>
+<li><a href="http://mercurial.selenic.com/">mercurial</a></li>
+<li><a href="http://git-scm.com/">git</a></li>
+</ul>
+<h2>Testing Tools</h2>
+<ul>
+<li><a href="http://watin.org/">WaitN</a></li>
+<li><a href="http://code.google.com/p/moq/">Moq</a></li>
+<li><a href="http://www.nunit.org/">NUnit</a></li>
+<li>Should</li>
+<li><a href="http://hibernatingrhinos.com/open-source/rhino-mocks">RhinoMocks</a></li>
+<li><a href="http://mvcrouteunittester.codeplex.com/">MvcRouteUnitTester</a></li>
+</ul>
+<h2>Validation</h2>
+<ul>
+<li><a href="http://nuget.org/packages/Castle.Components.Validator">Castle.Components.Validator</a></li>
+<li><a href="http://fluentvalidation.codeplex.com/">FluentValidation</a></li>
+</ul>
+<h2>WPF</h2>
+<ul>
+<li><a href="http://mvvmlight.codeplex.com/">MvvmLight</a></li>
+<li><a href="http://caliburnmicro.codeplex.com/">Caliburn.Micro</a></li>
+</ul>
+<p>The list of tools is by no means a recommendation list, as it includes tools from brownfield projects and greenfield projects started more than two years ago. Many of the tools listed would still be my weapon of choice if I started a new project today. I will follow up this post with a list of tools I would recommend for a greenfield ASP .NET MVC website.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-10T00:00:00-05:00" pubdate data-updated="true">Oct 10<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/blog/'>Blog</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/headspring-hosts-central-texas-givecamp/">
+		
+			Headspring Successfully Hosts Inaugural Central Texas GiveCamp</a>
+	</h2>
+	<div class="entry-content">
+		<p style="text-align: center;"><a href="http://www.headspring.com/wp-content/uploads/2012/10/IMG_2612.jpg"><img class="aligncenter size-large wp-image-5784" title="Central Texas GiveCamp" src="http://www.headspring.com/wp-content/uploads/2012/10/IMG_2612-1024x768.jpg" alt="Central Texas GiveCamp" width="640" height="480" /></a></p>
+<p>Last weekend, Headspring hosted a charity hackathon benefiting eight Central Texas nonprofits. Forty-nine GiveCamp volunteers, many of them Headspring employees, gathered at Headspring’s corporate office for a three-day marathon of pro-bono website design and development. </p>
+<p>Headspring jumped at the chance to host the first Central Texas edition of this national initiative.  The Headspring team is community-focused and participates annually in the Accessibility Internet Rally (held in March in conjunction with SXSW).  When we heard about the technology needs of local nonprofit organizations, we knew this would be another fun way to give back to the community and was right up our alley.</p>
+<p>The eight local nonprofit organizations included Arlington Urban Ministries, A.S.P.I.R.E. (Awarding Students and Promoting Increased Rigor in Education), Austin Partners in Education, Bluebonnet RCD, Texas Hill Country RCD, Texas Kidney Foundation, TexVet, and Big Dogs, Huge Paws. Our development teams met each nonprofits’ specific needs, including redesigning websites, automating donation processes, creating donor databases, and more.</p>
+<p>In the end, 1,029 hours of time and $75,000 worth of in-kind services were donated.<br />
+<iframe style="border: none;" src="http://www.slideshare.net/MaryChauvin/slideshelf" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" width="490px" height="470px"></iframe></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-05T00:00:00-05:00" pubdate data-updated="true">Oct 5<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/blog/'>Blog</a>, <a class='category' href='/blog/categories/bonus/'>Bonus!</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
 		<a href="/blog/the-defensive-toarray/">
 		
 			The Defensive ToArray</a>
 	</h2>
 	<div class="entry-content">
-		<p>In <a href="http://www.headspring.com/patrick/a-game-of-throws/">A Game of Throws</a>, we saw a frequently-blogged-about gotcha regarding the <code>yield</code> keyword and exception handling.  This week, we&#8217;ll see how there is more than one motivation for using the <code>yield</code> keyword, and when you opt into it for one you get the other whether you like it or not.  This leads to a code smell: littering our code with &#8216;defensive&#8217; calls to ToArray().
+		<p>In <a href="http://www.headspring.com/patrick/a-game-of-throws/">A Game of Throws</a>, we saw a frequently-blogged-about gotcha regarding the <code>yield</code> keyword and exception handling.  This week, we&#8217;ll see how there is more than one motivation for using the <code>yield</code> keyword, and when you opt into it for one you get the other whether you like it or not.  This leads to a code smell: littering our code with &#8216;defensive&#8217; calls to ToArray(). </p>
+<h2>Generalizing the Exception Gotcha</h2>
+<p>The exception handling case from last week is a specific example of a larger potential gotcha: with lazy evaluation, some work <em>happens</em> at a different time than the caller might expect.  It allows exceptions to get &#8220;smuggled&#8221; through try/catch blocks, but exceptions are just one way you might be surprised by the change in the order of events: if your <code>yield</code>ing method has any kind of side effect, the caller is likely to experience the odd order of evaluation.</p>
+<p>That can be good.  That can be bad.  It&#8217;s a sharp tool.</p>
+<h2>Complecting Brevity with Laziness</h2>
+<p>This week, I&#8217;d like to cover another problem with lazy evaluation.  Maybe it&#8217;s really just a corollary of the order-of-events gotcha, but I want to call it out specially because it has to do less with the nuts-and-bolts of code execution and more to do with the emergent human behavior that results <em>from</em> people&#8217;s understanding of the problem: the Defensive ToArray.</p>
+<p>There are two reasons to use the <code>yield</code> keyword:  laziness and brevity.</p>
+<p><strong>Laziness is the advertised feature:</strong> you can produce a collection&#8217;s items on demand, as the caller tries to loop through them.  Laziness enables awesome things like assembling LINQ queries over multiple statements before finally starting to iterate through the overall result.</p>
+<p><strong>Brevity is the tempting, likely-unintended feature</strong>: a really monotonous pattern can be shortened using the <code>yield</code> keyword:</p>
+<p><div><script src='https://gist.github.com/3823991.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>It&#8217;s tempting to look at that explicit list create/Add/return pattern and say, &#8220;I can shorten that with <code>yield</code>!&#8221;</p>
+<p><div><script src='https://gist.github.com/3823995.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Or even shorter:</p>
+<p><div><script src='https://gist.github.com/3823997.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>…but even that uses <code>yield</code>&#8217;s semantics under the surface.</p>
+<p>The problem is that we opted into <code>yield</code> (or equivalently Select) for the brevity, but we <em>got</em> laziness along with it.  Now we all have to be wary every time we call a method that returns an IEnumerable.  My inner monologue starts to sound like the following:</p>
+<blockquote><p>Is this call lazy?  Would it be unsafe to pass the result around before defensively <em>realizing</em> it with a call to .ToArray()?  If I <em>do</em> that .ToArray() call defensively, am I stomping all over the original developer&#8217;s intentions?</p></blockquote>
+<p>Now I have to start looking at the implementation of a method I&#8217;m calling in order to know whether or not its result is to be immediately distrusted.  <em>Do I have to finish writing that other developer&#8217;s method with a .ToArray because they were being particularly… er… lazy?</em></p>
+<p>I&#8217;m starting to think that most calls to .ToArray() are a code smell, or rather an in-your-face workaround for a code smell.  Even when it&#8217;s doing the right thing, it&#8217;s too wordy and puts the onus on the caller rather than the guilty callee.  I don&#8217;t want to have to fix the result of another method, and I don&#8217;t want to have to look at a thousand such fixes littered throughout a project.</p>
+<h2>Let&#8217;s Start Communicating Intent</h2>
+<p>In response to all this, I have two items on my wishlist.  One is a wish for an addition to C#, and the other we can use in our projects today.</p>
+<p>First, I wish that if a <code>yield</code>ing method were declared to return an array or anything that has a constructor accepting an IEnumerable&lt;T&gt;, that the items be immediately iterated through and packaged as that type.  This way, you could get the brevity while communicating that you are not interested in the side effects of laziness:</p>
+<p><div><script src='https://gist.github.com/3824003.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Second, something we can do today: I wish that we could start standardizing on a naming convention for extension methods similar to Select that are not lazy: Map is a common term in other platforms.  Select would still lazily produce one IEnumerable from another, but Map methods would always do a defensive .ToArray for you.  You&#8217;d have to write a Map overload for every collection type you care about, but there&#8217;s really just a handful of collection types you&#8217;ll care about in practice.  For instance:</p>
+<p><div><script src='https://gist.github.com/3824012.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Without these Map methods, every time you see a Select you have to wonder what the original developer&#8217;s intention was.  <strong>If instead Map was the first method you reached for, then you would only reach for Select when you actually wanted lazy evaluation.</strong>    Reading through someone else&#8217;s code, Select calls would communicate deliberate laziness with potential side effect gotchas, and Map calls would communicate deliberate brevity with no such gotchas.</p>
+
 		
-		<a href="/blog/the-defensive-toarray/" class="more-link">Read on &rarr;</a>
+		
 	</div>
 
 
@@ -129,9 +503,18 @@
 	</h2>
 	<div class="entry-content">
 		<p>In <a href="http://www.headspring.com/blog/developer-deep-dive/infinite-laziness/">Infinite Laziness</a>, we saw how the <code>yield</code> keyword lets us work with <em>lazy evaluation</em>, in which work is deferred and performed on demand once something else actually needs to consume the result.  Lazy evaluation with <code>yield</code> isn&#8217;t free, though; it has some unfortunate consequences.</p>
-<p>This week, we&#8217;ll see how lazy evaluation affects exception handling.  Next week, we&#8217;ll see how <code>yield</code> complects brevity with laziness, resulting in some undesirable patterns.
+<p>This week, we&#8217;ll see how lazy evaluation affects exception handling.  Next week, we&#8217;ll see how <code>yield</code> complects brevity with laziness, resulting in some undesirable patterns.</p>
+<p>Let&#8217;s say you&#8217;re lazily producing a series of objects, but the creation of each object has a real potential to throw an exception.  The developer calling the lazy method knows that the operation could fail, and attempts to protect the rest of the system:</p>
+<p><div><script src='https://gist.github.com/3792131.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Despite wrapping the dangerous method call with a <code>try/catch</code> block, callers of SafelyBuildGrenades are in for a surprise.  <strong>The call to BuildGrenades will never throw an ExplosionException, while callers of SafelyBuildGrenades might set off a grenade just by looking at them!</strong></p>
+<p>When you call a <code>yield</code>ing method, <strong>no work is performed and the call returns immediately</strong>.  It returns an object that <em>knows how</em> to produce the list of items on demand.  Those items won&#8217;t be produced until someone starts looping through them.  In our example above, this quickly-made object is likewise immediately returned by SafelyBuildGrenades.  The <em>consumer</em> of the result of SafelyBuildGrenades is then free to start looping through it, at which point the code in BuildGrenades will start to execute.  Since an ExplosionException could only be thrown way up in that consumer&#8217;s loop, the consumer&#8217;s loop is where the exception will start moving up the call stack.</p>
+<blockquote><p><code>yield</code> is an exception smuggler.  <code>yield</code> hides your dangerous code in a harmless-looking package in order to sneak it past unsuspecting <code>try/catch</code> blocks.  The harmful contents can then be unpacked by the recipient.</p></blockquote>
+<p>When using lazy evaluation, which includes the now-ubiquitous IEnumerable extension methods (Select, Where, Take, Skip&#8230;), take care.  Work won&#8217;t be performed until you begin to iterate through the results, so your exception handling will need to take place higher up the call stack.</p>
+
 		
-		<a href="/blog/a-game-of-throws/" class="more-link">Read on &rarr;</a>
+		
 	</div>
 
 
@@ -213,9 +596,23 @@
 	</h2>
 	<div class="entry-content">
 		<p>When your software includes faulty logic or conflicting requirements, you&#8217;re very likely to run into unexpected behavior.  These bugs are relatively easy to trigger and diagnose.</p>
-<p>A bug of omission, on the other hand, in which you <em>should</em> have included code to cover an edge case, might sit around lurking for quite a while.  When such a bug finally does surface, the behavior may be so counter to your expectations  that you&#8217;ll wonder if maybe, just maybe, a rogue pixie or trickster demigod has cursed your machine.
+<p>A bug of omission, on the other hand, in which you <em>should</em> have included code to cover an edge case, might sit around lurking for quite a while.  When such a bug finally does surface, the behavior may be so counter to your expectations  that you&#8217;ll wonder if maybe, just maybe, a rogue pixie or trickster demigod has cursed your machine.</p>
+<p>&#8220;This has been working <em>forever</em> and nobody has changed it!&#8221;  It can seem like things as fundamental as your language&#8217;s own operators can no longer be taken for granted.  Of course, the bug later turns out to be the fault of mere mortals; a particularly rare set of circumstances reveals the gap that was always there.</p>
+<p>Case in point: in <a href="http://www.headspring.com/blog/developer-deep-dive/building-rich-enums/">Building Rich Enums</a> we saw the Headspring <a href="https://github.com/Headspringlabs/Enumeration">Enumeration</a> class as a rich alternative to the <code>enum</code> keyword.  This base class makes it easy to create a finite set of named instances of your class.  This week, <em>all of a sudden and without overt provocation</em>, equality comparisons between Enumerations stopped working for us on one project.</p>
+<h2>This has been working <em>forever</em>&#8230;</h2>
+<p>Until this week, equality comparisons have worked perfectly fine for our Enumerations.  Consider a typical <code>Enumeration</code>:</p>
+<p><div><script src='https://gist.github.com/3759210.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>The constructor is private, so you will only be working with the three trusted instances.  If you store these to a database as their underlying integers, you can read them back out with the <code>FromInt32(int)</code> method to get a hold of the corresponding instance.  We even overrode the <code>Equals(object)</code> method just in case you ever passed these around as <code>object</code> instead of the concrete type and still needed to compare them.</p>
+<p>The default behavior of the <code>==</code> operator has been enough to date, because reference equality has been a safe assumption: any instance you ever get your hands on will come from one of the three explicit <code>Color</code> constructor calls in the class definition… <strong>but that&#8217;s a lie</strong> or, if we&#8217;re being generous, an untruth of omission.</p>
+<h2>…<em>except</em> for this new set of circumstances.</h2>
+<p>This week, we started comparing instances of an <code>Enumeration</code> like <code>Color</code> and got unexpected results.  Instances that appeared to be the same were coming back as &#8216;not equal&#8217;.  Stepping through with the debugger, we saw that the instances on the left and right of the <code>==</code> operator contained the same int Value, and the implementation of <code>Equals</code> was written to compare exactly those ints.  Where did we go wrong?</p>
+<p>For the first time, we were making comparisons between instances after some instances were serialized-to-JSON and subsequently deserialized-from-JSON.  Deserializing an Enumeration from a string of JSON effectively bypasses all of C#&#8217;s &#8220;protective&#8221; measures like <code>private</code> constructors.  We were producing multiple distinct instances which happened to contain the same int Value, and our reliance on reference equality was no longer enough.</p>
+<p>Fortunately, <a href="https://github.com/HeadspringLabs/Enumeration/commit/66afd7471f6588ce52653fa361c445815dc035fa">the fix was simple.</a>  We had omitted overloading the <code>==</code> operator to favor value equality over reference equality.  Now, whether your equal instances are literally the same object or not, you get the equality semantics you&#8217;d expect.</p>
+
 		
-		<a href="/blog/bugs-of-omission/" class="more-link">Read on &rarr;</a>
+		
 	</div>
 
 
@@ -254,9 +651,38 @@
 	</h2>
 	<div class="entry-content">
 		<p>&#8220;High Ceremony&#8221; software includes excessive detail which distracts from the essential thing the coder is trying to convey.  In C# for instance, you could argue that having to place <em>all</em> methods inside classes is needless ceremony.  Your Main() method shouldn&#8217;t need that extra boilerplate, but we just Have To Do It That Way.  We have to perform that ceremony.  Developers who favor dynamic languages would find type declarations to be High Ceremony as well, and even C#ers admit this whenever they use the <code>var</code> or <code>dynamic</code> keywords.</p>
-<p>High ceremony isn&#8217;t limited to language details, though.  We can be guilty of introducing it, ourselves.
+<p>High ceremony isn&#8217;t limited to language details, though.  We can be guilty of introducing it, ourselves.</p>
+<h2>Framework Ceremony</h2>
+<p>Frameworks often impose ceremony of their own.  ASP.NET MVC, NUnit, and xUnit all require you to litter your code with <code>[Attribte]</code>s in order to give instructions to the framework.  The framework reflects over your code, discovers these attributes, and takes action.  Usually this is all done so that the framework will know when, during its own lifecycle, your code should be invoked.  Take a look at NUnit test fixtures:</p>
+<p><div><script src='https://gist.github.com/3688610.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>We <em>want</em> to simply define a named test and make an assertion about our system.  Additionally, we have to pay the Attribute Tax so that NUnit knows which classes contain tests (<code>[TestFixture]</code>), and which methods within those classes are tests (<code>[Test]</code>).  When you take part in the rest of the NUnit fixture lifecycle, you have to litter even more attributes around like <code>[SetUp]</code>, <code>[TearDown]</code>, <code>[TestFixtureSetUp]</code>, and <code>[TestFixtureTearDown]</code>.  Since these lifecycle attributes usually decorate methods with the same name as the attribute, it gets even more pointlessly verbose:</p>
+<p><div><script src='https://gist.github.com/3688440.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>xUnit avoids <em>some</em> of this by using different conventions.  Test methods are still marked with an attribute (this time, <code>[Fact]</code> instead of <code>[Test]</code>).  Instead of marking test classes with an attribute, xUnit just infers the obvious: any class with <code>[Fact]</code>s must be a test class.  Instead of setup and teardown methods, xUnit relies on idioms already common in C#: default constructors for setup, and Dispose() for teardown.</p>
+<p>I&#8217;ve been using xUnit over NUnit for these reasons (however trivial they are in the context of a large project).  Still, I hate typing ceremony into a project, and it seems like xUnit&#8217;s default conventions got it backwards: why not place an attribute on the test class itself, and then just <em>assume</em> all the public methods in them are tests?</p>
+<h2>Minimizing xUnit&#8217;s Ceremony</h2>
+<p>One important benefit of xUnit over NUnit is that xUnit is partially customizable.  If you want to define your own alternative to <code>[Fact]</code>, you can.  Also, if you want to use your own convention for discovering which methods in a test class are actually test cases, you can define your own class-level attribute.  This custom attribute goes at the top of the test class and basically means, &#8220;Hold on xUnit, I&#8217;ll take it from here.&#8221;</p>
+<p>To implement your own test-method-discovery convention, you must implement ITestClassCommand.  Unfortunately, this interface violates the <a href="http://en.wikipedia.org/wiki/Interface_segregation_principle">Interface Segregation Principle</a>: this interface is large, serving several purposes.  I&#8217;m only interested in providing a new method which says whether or not a given method is a test method.  <strong>Instead of only telling xUnit how to do that, I have to also tell it how to do several other things for which I really just want the default behavior.</strong></p>
+<blockquote><p>ISP violations force you to take part in yet more ceremony, supplying boilerplate implementations for details you don&#8217;t wish to customize.</p></blockquote>
+<p>To account for this ISP violation, I first created an abstract implementation of ITestClassCommand which uses the default behavior for all these unrelated details, leaving subclasses the responsibility of only having to describe the &#8220;test method discovery&#8221; part.</p>
+<p><div><script src='https://gist.github.com/3688482.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Unfortunately, the ISP violation was so significant here that xUnit <em>really, really</em> wanted me to reimplement a fairly involved feature that I never use, <a href="http://xunit.codeplex.com/wikipage?title=Comparisons#note3">IUseFixture&lt;T&gt;</a>.  I decided to give up here, instead implementing the ClassStart method to fail fast: it complains if a developer ever assumes that TestDiscoveryCommands take part in this little-used feature.</p>
+<blockquote><p>ISP isn&#8217;t just about being pedantic or fearing all interfaces containing more than one method: in order to write this class properly, I had to read a great deal of xUnit&#8217;s implementation details and <em>still</em> had to gut the IUseFixture&lt;T&gt; feature.</p></blockquote>
+<p>Now that TestDiscoveryCommand insulates me from the ISP violation, I can very easily sublcass <em>that</em> to introduce my own test-method-discovery logic:</p>
+<p><div><script src='https://gist.github.com/3688532.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>(<em>Aside: <code>void</code> is not a type, but <code>typeof(void)</code> is a <code>Type</code>.  Yikes.</em>)</p>
+<p>With these 3 classes in my test assembly, I can convert the old, high-ceremony xUnit style (zero attributes on test classes, one <code>[Fact]</code> per test method) <a href="https://github.com/plioi/rook/compare/d48039983bebd2ee3dbaf09992ad48b438392204...ff8fb1c6896d20db2cd0a2a637a744f2d8827b71">into a slightly-cleaner style</a> (one <code>[Facts]</code> attribute per test class, zero attributes on test methods).</p>
+<p>Yes, I was bored.  Very, very bored.</p>
+
 		
-		<a href="/blog/low-ceremony-xunit/" class="more-link">Read on &rarr;</a>
+		
 	</div>
 
 
@@ -295,9 +721,15 @@
 	</h2>
 	<div class="entry-content">
 		<p>Since the basic product sold by software consultancies is consultant-time, you would expect there to be pressure (gentle or not), to put in as many billable hours as physically possible, to the detrement of quality.  Fortunately, Headspring takes the long view: excess hours this week may make this week&#8217;s revenue numbers jump, but sustainability matters more for all involved.  I first experienced this policy as a reliable 40 hour work week, but it doesn&#8217;t stop there.  When you take the long view, you respect the need to put some unbillable time towards improving your own skills.  This week, I got to take advantage of that flexibility by attending Headspring&#8217;s own <a href="http://www.headspring.com/events/ravendb-boot-camp/">RavenDB Boot Camp</a>, taught by <a href="http://coderwall.com/alonsorobles">Alonso Robles</a>.</p>
-<p>When new software tools come around, they almost always claim to &#8220;Just Work&#8221;.  Even <a href="http://ravendb.net/">ravendb.net</a> makes this claim.  Real software problems tend to involve lots of competing concerns, so we should always take such claims with a grain of salt in addition to an open mind.  During the Boot Camp, I got to see a perfect example of where this &#8220;It Just Works&#8221; claim comes from.
+<p>When new software tools come around, they almost always claim to &#8220;Just Work&#8221;.  Even <a href="http://ravendb.net/">ravendb.net</a> makes this claim.  Real software problems tend to involve lots of competing concerns, so we should always take such claims with a grain of salt in addition to an open mind.  During the Boot Camp, I got to see a perfect example of where this &#8220;It Just Works&#8221; claim comes from.</p>
+<p>RavenDB supports plugins called <a href="http://ravendb.net/docs/server/bundles">bundles</a>.  Bundles are installed by dropping a DLL into the Plugins folder beside the server exe.  One of the bundles demonstrated during the Boot Camp was for <a href="http://ravendb.net/docs/server/bundles/versioning">Versioning writes and deletions</a>.  This bundle has quite-reasonable default behavior, so installation is just a matter of dropping the DLL into the Plugins folder.</p>
+<p>We students didn&#8217;t know exactly how this audit trail would present itself to us.  How would we find the trail, inspect its contents, or revert to some older state?  To find out, we dropped the bundle in its new home and started creating and updating documents through Raven&#8217;s admin tool.  There was a collective, audible &#8220;AHA!&#8221; moment among all the students.  We were updating a document whose ID was &#8220;products/4&#8221;, and right beside it in the admin tool&#8217;s list of related documents, we started to see &#8220;products/4/revisions/1&#8221;, &#8220;products/4/revisions/2&#8221;, &#8220;products/4/revisions/3&#8221;&#8230;  A full copy of the document was being stored upon each change.</p>
+<p>The unit of storage of your primary data in Raven is Just Some Document, so why not also store the audit trail as Just Some More Documents?  A completely-understandable naming convention and a little metadata is all we need to work with.  Of course, the bundle also lets you fetch the revision history from your own application, and reverting to an older state would simply be a matter of fetching the revision you want and saving it again.  <strong>The beauty here lies in how the bundle leverages Raven&#8217;s world view.</strong>  Implementing an audit trail didn&#8217;t require some fundamental change to the way Raven works, and we didn&#8217;t have to roll our own audit trail by increasing complexity in our client application.  Instead, it just used the existing Raven infrastructure.</p>
+<p>Earlier, I warned that &#8220;It Just Works&#8221; claims need to stand up to competing concerns.  By allowing for this kind of low-impact behavior change, adding a Versioning feature to our application doesn&#8217;t have to compete with the rest of our application&#8217;s concerns.  We didn&#8217;t have to make some painful, sweeping change everywhere our client touched the database, and the opportunity to add a history viewer to the application itself was readily available.</p>
+<p>One is an extremely small sample size, so I&#8217;ll need to experience more of these &#8220;AHA!&#8221; moments, but this does suggest that the deliberately-simple mental model promoted by Raven leaves the door open for us to seamlessly introduce features into our projects.</p>
+
 		
-		<a href="/blog/seamless-audit-trails-in-ravendb/" class="more-link">Read on &rarr;</a>
+		
 	</div>
 
 
@@ -315,174 +747,6 @@
 
 
 <time datetime="2012-09-07T00:00:00-05:00" pubdate data-updated="true">Sep 7<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/get-to-know-a-developer-patrick-mcveety-mill/">
-		
-			Get to Know a Developer: Patrick McVeety-Mill</a>
-	</h2>
-	<div class="entry-content">
-		<p><a href="http://www.headspring.com/wp-content/uploads/2012/09/photo.jpg"><img class="alignright size-medium wp-image-5718" title="Patrick McVeety-Mill" src="http://www.headspring.com/wp-content/uploads/2012/09/photo-224x300.jpg" alt="Patrick McVeety-Mill" width="224" height="300" /></a>Patrick McVeety-Mill is one of a kind here at Headspring. We found him pretty much straight out of college, but his resume and <a href="http://loudandabrasive.com/">portfolio</a> showed a lot of potential.  We’ve never hired a fresh graduate before, but he’s proven to encompass every ounce of thoughtfulness, creativity and skill we have come to expect from a seasoned developer.  After a few weeks on the job, I’m convinced!</p>
-<p>Patrick is a native Austinite, but graduated from the Rochester Institute of Technology in Game Design and Development. We’ll forgive him.
-		
-		<a href="/blog/get-to-know-a-developer-patrick-mcveety-mill/" class="more-link">Read on &rarr;</a>
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-09-07T00:00:00-05:00" pubdate data-updated="true">Sep 7<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/blog/'>Blog</a>, <a class='category' href='/blog/categories/bonus/'>Bonus!</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/get-to-know-a-headspringer/'>Get To Know a Headspringer</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/headspring-1st-down-technologies/">
-		
-			Headspring & 1st Down Technologies Launch App That Delivers Complete Playbook Tool for Youth League Coaches and Players</a>
-	</h2>
-	<div class="entry-content">
-		<p><strong>AUSTIN, TX – Sept, 2012,</strong> Headspring, an Austin-based software development company, today announced the launch of FirstDown PlayBook™ Youth, a football app for mobile and tablet devices developed for 1st Down Technologies, LLC, an Austin-based sports software company.</p>
-<p>FirstDown PlayBook™ Youth app is a tool for youth league football coaches and players to browse formation packs full of professionally drawn plays, create playbooks, and develop practice and game plans. The app also allows users to print the coach’s playbook and player wristband sheets.  Using HTML5 technology, the playbook is web-based and gives coaches and players immediate access on multiple mobile and tablet devices. Real-time changes can be made offline during football games and updated online when an Internet connection is available. 
-		
-		<a href="/blog/headspring-1st-down-technologies/" class="more-link">Read on &rarr;</a>
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-09-05T00:00:00-05:00" pubdate data-updated="true">Sep 5<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/press/'>Press</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/headspring-hosts-central-texas-givecamp-to-benefit-10-local-non-profits/">
-		
-			Headspring Hosts Central Texas GiveCamp to Benefit Nine Local Non-profits</a>
-	</h2>
-	<div class="entry-content">
-		<p style="text-align: left;" align="center"><em>Sponsors and Web Developers Wanted for September Event</em></p>
-<p><strong><a href="http://www.headspring.com/wp-content/uploads/2012/06/Banner.png"><img class="alignright size-medium wp-image-5706" title="Central Texas GiveCamp Banner" src="http://www.headspring.com/wp-content/uploads/2012/06/Banner-300x300.png" alt="Central Texas GiveCamp Banner" width="300" height="300" /></a>AUSTIN, TX – August 2012,</strong> Headspring announces Central Texas GiveCamp, a three-day collaboration of software development teams building websites for 10 local non-profit organizations. <strong><em>The event begins on Friday, September 28 through Sunday, September 30, 2012</em></strong><em>.</em> GiveCamp is a national initiative that happens throughout the year in various cities. Central Texas GiveCamp is being hosted in Austin for the first time and will be held at Headspring’s new headquarters.</p>
-<p>“Employees at Headspring are community-minded and spearhead the company’s charitable efforts,” said Dustin Wells, CEO of Headspring. “We are excited to host this inaugural Central Texas GiveCamp and give back in a tangible way that helps sustain the good work being done by nonprofits in our communities.”</p>
-<p>Central Texas GiveCamp is open to all interested software developers. Software developers will gather at the Headspring office to design and develop updated websites for nine local non-profit organizations, including Arlington Urban Ministries, A.S.P.I.R.E. (Awarding Students and Promoting Increased Rigor in Education), Austin Partners in Education, Bluebonnet RCD, Colorado River Foundation, Dallas Rape Crisis Center, Texas Hill Country RCD, Texas Kidney Foundation, and TexVet.</p>
-<p>“Texas Association of Nonprofit Organizations (TANO) is looking forward to seeing what the teams will create at Central Texas GiveCamp,” said Ellen Tucker, Director of Member Services for TANO. “We’re honored to be a part of the event. The support of organizations like Headspring helps our nonprofits focus more energy on their mission, creating a more positive impact for the people of Texas.”</p>
-<p>To learn more about Central Texas GiveCamp and get involved as a developer or sponsor, please visit <a href="http://ctxgivecamp.org/">http://ctxgivecamp.org</a> or call Headspring at (512) 459-2260. For more information about TANO, visit www.TANO.org.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-08-30T00:00:00-05:00" pubdate data-updated="true">Aug 30<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/press/'>Press</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/a-c-feature-that-shocks-the-conscience/">
-		
-			A C# Feature That Shocks the Conscience</a>
-	</h2>
-	<div class="entry-content">
-		<p>The &#8220;default arguments&#8221; feature in C# seems like a great time-saver at first, but there is a sharp difference between what it <em>feels</em> like it does versus what it <em>actually</em> does which can lead to surprises.  Recently, fellow Headspring consultant <a href="https://twitter.com/pedroreys">Pedro Reys</a> discovered a particularly bizarre gotcha related to default arguments.
-		
-		<a href="/blog/a-c-feature-that-shocks-the-conscience/" class="more-link">Read on &rarr;</a>
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-08-29T00:00:00-05:00" pubdate data-updated="true">Aug 29<span>th</span>, 2012</time></div>
 	<div class="tags">
 
 

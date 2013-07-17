@@ -81,7 +81,7 @@ In my last post, I talked about some of the dangers of using lambda expressions 
 	<div id="content" class="inner"><article class="post">
 	<h2 class="title">Using WaitHandles to Test Asynchronous Events</h2>
 	<div class="entry-content"><p><em>By Casey Gum</em></p>
-<p>In my last post, I talked about some of the dangers of using lambda expressions (anonymous delegates) as event handlers.  However, one place where this can be really handy is when you are unit testing classes that raise events. <!--more--></p>
+<p>In my last post, I talked about some of the dangers of using lambda expressions (anonymous delegates) as event handlers.  However, one place where this can be really handy is when you are unit testing classes that raise events. </p>
 <p>Occasionally, you will find yourself in a situation where you need to unit test a class that raises an event or calls a callback method on a different thread than the one that initiated the action in the first place.  This is especially common when dealing with web requests and can lead to some obtuse unit testing techniques.  In this post, I&#8217;ll demonstrate a technique that I use that relies on WaitHandles that is pretty darn handy.</p>
 <p>Let&#8217;s say that we have to unit test the following class.</p>
 <p><div><script src='https://gist.github.com/2942373.js'></script>

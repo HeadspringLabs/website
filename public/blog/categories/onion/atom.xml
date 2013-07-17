@@ -4,7 +4,7 @@
   <title><![CDATA[Category: onion | Headspring Labs]]></title>
   <link href="http://headspringlabs.com/blog/categories/onion/atom.xml" rel="self"/>
   <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-16T19:59:03-05:00</updated>
+  <updated>2013-07-17T00:19:02-05:00</updated>
   <id>http://headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
@@ -21,7 +21,7 @@
     <content type="html"><![CDATA[<p>In 2008, I coined a new pattern name called Onion Architecture.  You can read the previous parts here: <a href="http://jeffreypalermo.com/blog/the-onion-architecture-part-1/">part 1</a>, <a href="http://jeffreypalermo.com/blog/the-onion-architecture-part-2/">part 2</a>, <a href="http://jeffreypalermo.com/blog/the-onion-architecture-part-3/">part 3</a>.  Over these four years, I’ve spoken about this pattern at user groups, conferences, and it’s even published in one of the chapters of <a href="http://manning.com/palermo3">ASP.NET MVC in Action</a> from <a href="http://manning.com/palermo3">Manning</a>.</p>
 
 
-<p>I’ve been overwhelmed by the traction this pattern name has enjoyed.  Folks from all over the country have written about and have talked about the pattern.  Some of the ones I’ve noticed are here (please comment with more – I welcome it).<!--more--></p>
+<p>I’ve been overwhelmed by the traction this pattern name has enjoyed.  Folks from all over the country have written about and have talked about the pattern.  Some of the ones I’ve noticed are here (please comment with more – I welcome it).</p>
 
 
 <ul>

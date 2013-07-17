@@ -79,7 +79,7 @@
 	
 	<div id="content" class="inner"><article class="post">
 	<h2 class="title">A C# Feature That Shocks the Conscience</h2>
-	<div class="entry-content"><p>The &#8220;default arguments&#8221; feature in C# seems like a great time-saver at first, but there is a sharp difference between what it <em>feels</em> like it does versus what it <em>actually</em> does which can lead to surprises.  Recently, fellow Headspring consultant <a href="https://twitter.com/pedroreys">Pedro Reys</a> discovered a particularly bizarre gotcha related to default arguments.<!--more--></p>
+	<div class="entry-content"><p>The &#8220;default arguments&#8221; feature in C# seems like a great time-saver at first, but there is a sharp difference between what it <em>feels</em> like it does versus what it <em>actually</em> does which can lead to surprises.  Recently, fellow Headspring consultant <a href="https://twitter.com/pedroreys">Pedro Reys</a> discovered a particularly bizarre gotcha related to default arguments.</p>
 <h2>Default Arugments Provide Brevity</h2>
 <p>Let&#8217;s start with the pain that default arguments are meant to solve.  When overloading a method, we often do so because some arguments aren&#8217;t always required or because some arguments have a reasonable default that you don&#8217;t want to make consumers explicitly write again and again:</p>
 <p><div><script src='https://gist.github.com/3456037.js'></script>

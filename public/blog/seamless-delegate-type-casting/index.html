@@ -80,7 +80,7 @@
 	<div id="content" class="inner"><article class="post">
 	<h2 class="title">Seamless Delegate Type Casting</h2>
 	<div class="entry-content"><p>In <a href="http://www.headspring.com/2011/10/seamless-generic-type-casting">Seamless Generic Type Casting</a>, we saw how the <code>in</code> and <code>out</code> keywords can make our generic interfaces polite with respect to casting. A <code>List&lt;string&gt;</code> can be treated as an <code>IEnumerable&lt;object&gt;</code> because a) all strings are objects and b) <code>IEnumerable</code> is declared with the <code>out</code> keyword. Now, we&#8217;ll see how these keywords can be applied to delegate types in addition to interface types.</p>
-<p>Suppose we have a a basic hierarchy of entity classes:<!--more--></p>
+<p>Suppose we have a a basic hierarchy of entity classes:</p>
 <p><div><script src='https://gist.github.com/1339376.js'></script>
 <noscript><pre><code></code></pre></noscript></div>
 </p>

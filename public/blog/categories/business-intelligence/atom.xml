@@ -4,7 +4,7 @@
   <title><![CDATA[Category: business intelligence | Headspring Labs]]></title>
   <link href="http://headspringlabs.com/blog/categories/business-intelligence/atom.xml" rel="self"/>
   <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-16T19:59:03-05:00</updated>
+  <updated>2013-07-17T00:19:02-05:00</updated>
   <id>http://headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
@@ -28,9 +28,6 @@
 
 
 <p>&nbsp;</p>
-
-
-<p><!--more--></p>
 
 
 <p><strong>“BD” stands for “big dial”.</strong>  We have 3 big dials we glance at every day.  If we don’t like what we see, we have some “smaller dials” we can look at.  We use the analogy of a plane cockpit. There are a few things pilots always glance at, and then there are smaller, more detailed ones that are consulted as the need arises.</p>
@@ -116,7 +113,7 @@
     <link href="http://headspringlabs.com/blog/failure-leads-to-success/"/>
     <updated>2011-11-23T00:00:00-06:00</updated>
     <id>http://headspringlabs.com/blog/failure-leads-to-success</id>
-    <content type="html"><![CDATA[<p>Anyone who has ever achieved success has also experienced failure. However, in the moment, we tend to see failure as a bad thing for several reasons, mostly because it is an unpleasant experience. Putting your heart and soul into reaching a goal or a desired result and falling short makes us feel inadequate. Although many may give up in the face of failure, it is those who remain persistent and determined who ultimately become successful in their mission. Throughout time, the most successful people weren’t the ones who just fell into success but those who experienced failure and worked through the mistakes and criticism to achieve success.<!--more--></p>
+    <content type="html"><![CDATA[<p>Anyone who has ever achieved success has also experienced failure. However, in the moment, we tend to see failure as a bad thing for several reasons, mostly because it is an unpleasant experience. Putting your heart and soul into reaching a goal or a desired result and falling short makes us feel inadequate. Although many may give up in the face of failure, it is those who remain persistent and determined who ultimately become successful in their mission. Throughout time, the most successful people weren’t the ones who just fell into success but those who experienced failure and worked through the mistakes and criticism to achieve success.</p>
 
 
 <p>Let’s look at some examples:</p>
@@ -154,7 +151,7 @@
     <content type="html"><![CDATA[<p>Traditional relational database schemas are designed to keep computers happy. Indexes, foreign keys, joins...all of these tools allow for the highest level of optimization so data can be recorded and read back in record time. However, humans are typically very <em>un</em>happy when it comes time to answer business questions from this data.</p>
 
 
-<p>Imagine your boss approaches you and asks for a report of all orders placed by the Acme Corporation on Thursdays. You recall how many times you and your team optimized the database containing this information so data could be written at break-neck speeds and moan when you think of the complex script you'll need to write to retrieve the report your boss requires. Wouldn't it be nice if, instead of lines and lines of arcane SQL, we could ask a database something like the following and get back exactly what we expect?<!--more--></p>
+<p>Imagine your boss approaches you and asks for a report of all orders placed by the Acme Corporation on Thursdays. You recall how many times you and your team optimized the database containing this information so data could be written at break-neck speeds and moan when you think of the complex script you'll need to write to retrieve the report your boss requires. Wouldn't it be nice if, instead of lines and lines of arcane SQL, we could ask a database something like the following and get back exactly what we expect?</p>
 
 
 <pre>&lt;code&gt; select * from Orders where Customer = &#39;Acme&#39; and DayOfWeek = &#39;Thursday&#39;&lt;/code&gt;</pre>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: best practices | Headspring Labs]]></title>
   <link href="http://headspringlabs.com/blog/categories/best-practices/atom.xml" rel="self"/>
   <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-16T19:59:03-05:00</updated>
+  <updated>2013-07-17T00:19:02-05:00</updated>
   <id>http://headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
@@ -21,7 +21,7 @@
     <content type="html"><![CDATA[<p><a href="http://nunit.org/?p=testCase&amp;r=2.5" target="_blank">TestCase</a> is one way you can run parameterized tests with NUnit. An example of how this is useful is testing a whitelist or blacklist. You only need to write the test once, then pass in your items to test some sort of output. If the requirements change and words need to be added to or removed from your list, you simply add another entry without the need for writing another test or set of tests.</p>
 
 
-<p>I've found myself using TestCase (formerly <a title="What Happened to NUnit's RowTest" href="http://stackoverflow.com/questions/4069841/what-happended-to-nunit-extensions-rowtest" target="_blank">RowTest</a>) more and more often. If you see lots of very similar tests that shared assertions, or test method names with numbers/values in them, these are signs that you might be wanting to use TestCase. Let's take a look at the following examples.<!--more--></p>
+<p>I've found myself using TestCase (formerly <a title="What Happened to NUnit's RowTest" href="http://stackoverflow.com/questions/4069841/what-happended-to-nunit-extensions-rowtest" target="_blank">RowTest</a>) more and more often. If you see lots of very similar tests that shared assertions, or test method names with numbers/values in them, these are signs that you might be wanting to use TestCase. Let's take a look at the following examples.</p>
 
 
 <h3><strong>One Test, Many Assertions</strong></h3>
@@ -93,7 +93,7 @@ There are two cases where having a base test fixture can be useful in keeping yo
 <p><span class="Apple-style-span" style="font-size: 26px"><strong>The Code</strong></span></p>
 
 
-<div>Let's take a look at what happens to our simple test fixture when we give it a base class:<!--more--></p>
+<div>Let's take a look at what happens to our simple test fixture when we give it a base class:</p>
 <p><span class="Apple-style-span" style="font-family: Consolas, Monaco, monospace;font-size: 12px;line-height: 18px"><div><script src='https://gist.github.com/1262440.js'></script>
 <noscript><pre><code></code></pre></noscript></div>
 </span></p>
@@ -216,7 +216,7 @@ Note that even with a base class, all our observations from last time are still 
     <content type="html"><![CDATA[<p>Well, not YOU, of course. YOUR team's code reviews, I'm sure, are pleasant, productive engagements where everybody leaves feeling good about the results. They happen early and regularly in the development process, the goal of the review is well understood, and you wouldn't dream of shipping a line of code that hadn't been through your review process. Your team loves doing them, and you don't worry about who does the review because you've got a consistent standard that your whole team agrees with. You're just reading this article because there's this <em>other </em>team in the building that you think would benefit from reading it, and you're going to forward it to them when you're done reading.</p>
 
 
-<p>I'm with you. Personally, I've <em>never</em> sat around a meeting table with 15 other developers,<!--more--> all checking their email, while one poor sacrificial lamb walked us through a line-by-line explanation of code in "Representative changeset XYZ" the day <em>after</em> we put it into production. I've <em>never</em> been told (or said!) "That's good feedback, but we don't have time to re-test those changes before the release date." And I've <em>never, ever</em> had an hours-long debate about where our braces should go.</p>
+<p>I'm with you. Personally, I've <em>never</em> sat around a meeting table with 15 other developers, all checking their email, while one poor sacrificial lamb walked us through a line-by-line explanation of code in "Representative changeset XYZ" the day <em>after</em> we put it into production. I've <em>never</em> been told (or said!) "That's good feedback, but we don't have time to re-test those changes before the release date." And I've <em>never, ever</em> had an hours-long debate about where our braces should go.</p>
 
 
 <p>Really.</p>
@@ -255,7 +255,7 @@ Note that even with a base class, all our observations from last time are still 
     <link href="http://headspringlabs.com/blog/pair-programming-in-agile/"/>
     <updated>2011-08-29T00:00:00-05:00</updated>
     <id>http://headspringlabs.com/blog/pair-programming-in-agile</id>
-    <content type="html"><![CDATA[<div>Hands down, pair programming is one of the most valuable agile techniques, but at the same it is one of the most controversial because it can be a tough sell to a manager or non-technical stakeholder. At face value, two developers and one keyboard sounds like a perfect recipe for double the cost. The problem with that equation is it naively assumes that value is limited to the speed at which developers type, and that adding a second developer won't do any good unless he also has a keyboard to pound on. In reality though, pair programming helps agile teams solve difficult problems quicker as well as help keep your team up-to-date on the latest business and technical knowledge. I want to give you the arguments to use to quell those management fears and allow you to get all the benefits of pair programming for your agile team.<!--more--></div>
+    <content type="html"><![CDATA[<div>Hands down, pair programming is one of the most valuable agile techniques, but at the same it is one of the most controversial because it can be a tough sell to a manager or non-technical stakeholder. At face value, two developers and one keyboard sounds like a perfect recipe for double the cost. The problem with that equation is it naively assumes that value is limited to the speed at which developers type, and that adding a second developer won't do any good unless he also has a keyboard to pound on. In reality though, pair programming helps agile teams solve difficult problems quicker as well as help keep your team up-to-date on the latest business and technical knowledge. I want to give you the arguments to use to quell those management fears and allow you to get all the benefits of pair programming for your agile team.</div>
 
 
 <p>&nbsp;</p>
@@ -283,7 +283,7 @@ Note that even with a base class, all our observations from last time are still 
     <link href="http://headspringlabs.com/blog/two-reasons-to-use-abstract-classes-in-c/"/>
     <updated>2011-07-29T00:00:00-05:00</updated>
     <id>http://headspringlabs.com/blog/two-reasons-to-use-abstract-classes-in-c</id>
-    <content type="html"><![CDATA[<p>Do you find yourself writing the same methods over and over in different classes? Say your project needs both a "Dog" class and a "Cat" class -- do you end up writing a "sleep" method for both? What if, in two months, the client needs you to add a "possum" to the system? Do you end up going in and retyping "sleep" instructions yet again? When you're modeling a system with many similar parts, it takes way too much time and effort to keep duplicating code for each class. Imagine how hard it would be to maintain a large project with thousands of classes! Besides, it violates the DRY principle of good programming: Don't Repeat Yourself! There must be a better way.<!--more--></p>
+    <content type="html"><![CDATA[<p>Do you find yourself writing the same methods over and over in different classes? Say your project needs both a "Dog" class and a "Cat" class -- do you end up writing a "sleep" method for both? What if, in two months, the client needs you to add a "possum" to the system? Do you end up going in and retyping "sleep" instructions yet again? When you're modeling a system with many similar parts, it takes way too much time and effort to keep duplicating code for each class. Imagine how hard it would be to maintain a large project with thousands of classes! Besides, it violates the DRY principle of good programming: Don't Repeat Yourself! There must be a better way.</p>
 
 
 <p>Thankfully, C# has built-in features for sharing code between classes. One of these is called an "abstract class". Just create a new class with the keyword "abstract" (e.g. "public abstract class Mammal") and write in its body all the methods you would like your other classes to share in common. Since an abstract class is still a class, your "Cat" and "Dog" classes can inherit from it using a colon (e.g. "public Cat : Mammal"). This means that instead of writing a "sleep" method for each animal, you only need to write it in the "Mammal" class, and the other animals will be able to use it too.<br />

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Creating Windows Installers with the WiX Toolset Part 04
-tags:
+categories:
 - Blog
 - Developer Deep Dive
 - windows installer
@@ -19,34 +19,28 @@ meta:
   _aioseop_title: Windows Installer sequence
   _podPressPostSpecific: a:6:{s:15:"itunes:subtitle";s:15:"##PostExcerpt##";s:14:"itunes:summary";s:15:"##PostExcerpt##";s:15:"itunes:keywords";s:17:"##WordPressCats##";s:13:"itunes:author";s:10:"##Global##";s:15:"itunes:explicit";s:7:"Default";s:12:"itunes:block";s:7:"Default";}
 ---
-<address>This article is part of a series exploring how to create installers for Windows software.  Here's the complete contents of the series.</address><address><a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-01/">Part 1 – What Kinds of Software Projects Benefit From an Installer?</a>
-<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-02/">Part 2 – An Overview Of Windows Installer and its Features</a>
-<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-03/">Part 3 – Tooling Options for Building Installers</a>
-<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-04/">Part 4 – The Windows Installer Runtime Sequence</a>
-<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-5/">Part 5 – The Contents of an MSI</a>
-<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-6/">Part 6 – The Structure of a WiX File</a>
-<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-7/">Part 7 – Generating an MSI Package From Your WiX</a>
-<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-8/">Part 8 – Troubleshooting Installer Runtime Problems</a>
-<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-summary/">Part 9 - Summary</a>
-</address><br/>
+<address>This article is part of a series exploring how to create installers for Windows software.  Here's the complete contents of the series.</address>
+<address><a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-01/">Part 1 – What Kinds of Software Projects Benefit From an Installer?</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-02/">Part 2 – An Overview Of Windows Installer and its Features</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-03/">Part 3 – Tooling Options for Building Installers</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-04/">Part 4 – The Windows Installer Runtime Sequence</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-5/">Part 5 – The Contents of an MSI</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-6/">Part 6 – The Structure of a WiX File</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-7/">Part 7 – Generating an MSI Package From Your WiX</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-8/">Part 8 – Troubleshooting Installer Runtime Problems</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-summary/">Part 9 - Summary</a><br />
+</address>
+<p><br/></p>
 <h2>The Windows Installer Runtime Sequence</h2>
-When a software installation actually takes place, there's actually a certain sequence of events that Windows Installer follows.  It's critical to understand this sequence for several reasons.  The entire sequence isn't always guaranteed to run (the user might perform a silent install), and only certain parts of the sequence are transactional and you don't want to affect the target machine outside that range of events.
-
-The installation process is divided into two phases:  the UI or acquisition phase, and the execution phase.
-
-<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-04/phasesofaninstall/" rel="attachment wp-att-6310"><img src="http://www.headspring.com/wp-content/uploads/2012/12/phasesOfAnInstall.png" alt="Diagram with UI or Acquisition phase followed by Execution phase with immediate mode and deferred mode. Rollback arrow across execution phase." title="Phases of a Windows Install" width="649" height="361" class="alignnone size-full wp-image-6310" /></a>
-
+<p>When a software installation actually takes place, there's actually a certain sequence of events that Windows Installer follows.  It's critical to understand this sequence for several reasons.  The entire sequence isn't always guaranteed to run (the user might perform a silent install), and only certain parts of the sequence are transactional and you don't want to affect the target machine outside that range of events.</p>
+<p>The installation process is divided into two phases:  the UI or acquisition phase, and the execution phase.</p>
+<p><a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-04/phasesofaninstall/" rel="attachment wp-att-6310"><img src="http://www.headspring.com/wp-content/uploads/2012/12/phasesOfAnInstall.png" alt="Diagram with UI or Acquisition phase followed by Execution phase with immediate mode and deferred mode. Rollback arrow across execution phase." title="Phases of a Windows Install" width="649" height="361" class="alignnone size-full wp-image-6310" /></a></p>
 <h3>UI/Acquisition phase</h3>
-This is usually the first phase.  This is the phase where the user is presented with a series of screens guiding them through the install process, possibly asking for any needed information and perhaps providing a chance to customize the location on the filesystem to install the application.
-
-However, if the user performs a silent install, this phase will be skipped!  Because of this you need to be sure that you have default values or actions for anything you prompt the user for.  You also need to be sure not to perform any setup actions in this phase because it might not run.
-
+<p>This is usually the first phase.  This is the phase where the user is presented with a series of screens guiding them through the install process, possibly asking for any needed information and perhaps providing a chance to customize the location on the filesystem to install the application.</p>
+<p>However, if the user performs a silent install, this phase will be skipped!  Because of this you need to be sure that you have default values or actions for anything you prompt the user for.  You also need to be sure not to perform any setup actions in this phase because it might not run.</p>
 <h3>Execution phase</h3>
-This is the second phase where Windows Installer actually performs the install.  Unlike the UI phase it will always run, and it does so in two modes that are rather confusingly named:  immediate and deferred.
-
-In immediate mode, Windows Installer scans through the entire MSI and prepares a script of steps to execute to perform the installation.  It doesn't actually make any changes at this point, it just compiles all the specified resources and actions into a transcript to be applied after the entire MSI is scanned and compiled into the transcript.
-
-In deferred mode the compiled transcript of changes is actually applied to the target computer.
-
+<p>This is the second phase where Windows Installer actually performs the install.  Unlike the UI phase it will always run, and it does so in two modes that are rather confusingly named:  immediate and deferred.</p>
+<p>In immediate mode, Windows Installer scans through the entire MSI and prepares a script of steps to execute to perform the installation.  It doesn't actually make any changes at this point, it just compiles all the specified resources and actions into a transcript to be applied after the entire MSI is scanned and compiled into the transcript.</p>
+<p>In deferred mode the compiled transcript of changes is actually applied to the target computer.</p>
 <h3>Rollback</h3>
-If at any point during the execution phase an error occurs, Windows Installer will halt and perform a rollback of all operations previously applied.  This makes the execution phase transactional - either the entire set of operations is applied, or none of them.  As always there are some caveats and exceptions around this (e.g. running a custom action method that doesn't have a compensating rollback method), but all basic file operations will be undone.
+<p>If at any point during the execution phase an error occurs, Windows Installer will halt and perform a rollback of all operations previously applied.  This makes the execution phase transactional - either the entire set of operations is applied, or none of them.  As always there are some caveats and exceptions around this (e.g. running a custom action method that doesn't have a compensating rollback method), but all basic file operations will be undone.</p>

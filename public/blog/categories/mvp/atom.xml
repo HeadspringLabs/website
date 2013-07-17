@@ -4,7 +4,7 @@
   <title><![CDATA[Category: mvp | Headspring Labs]]></title>
   <link href="http://headspringlabs.com/blog/categories/mvp/atom.xml" rel="self"/>
   <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-16T19:59:03-05:00</updated>
+  <updated>2013-07-17T00:19:02-05:00</updated>
   <id>http://headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
@@ -21,7 +21,7 @@
     <content type="html"><![CDATA[<p>There's something nice about returning to an old design pattern. Comparing it with the pattern you're currently using gives you new insights about both.</p>
 
 
-<p>When I was writing ASP.NET WebForms apps, my team organized the UI layer with an <a href="http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93presenter">MVP (Model View Presenter)</a> pattern, preferring the Passive View variant. This allowed us to write Views that were small and lean, pulling as much logic as possible out of that untestable wasteland of UI markup and code-behind. More recently, I've been developing ASP.NET MVC applications (using the <a href="http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller">MVC (Model View Controller)</a> pattern, naturally), and I like how my Views can be straightforward HTML with a few fill-in-the-blank spots for the data I want to display; much simpler to understand than the old WebForms server controls. But my most recent project, I wrote in <a href="http://windowsclient.net/wpf/">WPF (Windows Presentation Foundation)</a> due to some specific needs of the client, and I had to re-open the UI design pattern question.<!--more--> I decided on MVP, and this gave me a great opportunity to contrast the two patterns.</p>
+<p>When I was writing ASP.NET WebForms apps, my team organized the UI layer with an <a href="http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93presenter">MVP (Model View Presenter)</a> pattern, preferring the Passive View variant. This allowed us to write Views that were small and lean, pulling as much logic as possible out of that untestable wasteland of UI markup and code-behind. More recently, I've been developing ASP.NET MVC applications (using the <a href="http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller">MVC (Model View Controller)</a> pattern, naturally), and I like how my Views can be straightforward HTML with a few fill-in-the-blank spots for the data I want to display; much simpler to understand than the old WebForms server controls. But my most recent project, I wrote in <a href="http://windowsclient.net/wpf/">WPF (Windows Presentation Foundation)</a> due to some specific needs of the client, and I had to re-open the UI design pattern question. I decided on MVP, and this gave me a great opportunity to contrast the two patterns.</p>
 
 
 <p>My goal in choosing <em>any</em> pattern is readable, understandable code. Even if I'm the only developer on the project, reading my own code, if six months have elapsed, it might as well have been written by someone else. Patterns inherently give structure, but more importantly, they are recognizable. Reading the code, you can spot it: "Oh! This is an MVP app. Okay, I'll look for a Presenter class to be managing the interactions with the View. ...There it is!" Future maintainers and enhancers (including your Future Self) will appreciate your consistency; patterns help you write "No Surprises" software. Both MVP and MVC meet this criterion; they are recognizable patterns, each with a distinctive fingerprint.</p>

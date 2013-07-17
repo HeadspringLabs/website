@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ViEmu | Headspring Labs]]></title>
   <link href="http://headspringlabs.com/blog/categories/viemu/atom.xml" rel="self"/>
   <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-16T19:59:03-05:00</updated>
+  <updated>2013-07-17T00:19:02-05:00</updated>
   <id>http://headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
@@ -27,7 +27,7 @@
 <p>Having watched a proficient Linux user use vi a few times, I concluded that it was originally designed for programmer prisoners of war whose wrists were rigidly shackled to the bases of their keyboards and were therefore unable to reach either the mouse or the arrow keys. And for good measure, were punished for venturing too far from the home row.  I, a free, and enlightened programmer certainly had no use for this nonsense.</p>
 
 
-<p>Then one day about 4 or 5 years ago, during a .Net boot camp given by <a href="http://blog.developwithpassion.com/">JP Boodhoo</a>, it was revealed to me the true power of vi.  JP coded and refactored so quickly, so effortlessly, it was almost impossible to track what he was doing – and he did this without ever having his hands leave the keyboard.  What was his secret?  It was <a href="http://www.jetbrains.com/resharper/">ReSharper</a> and <a href="http://www.viemu.com/">ViEmu</a>. <!--more--> As many of you know, ReSharper is a code navigation, generation and refactoring plugin for Visual Studio.  (If you are not already using it, you are probably shaving months, if not years, off your life performing coding tasks that it can do almost instantaneously.)</p>
+<p>Then one day about 4 or 5 years ago, during a .Net boot camp given by <a href="http://blog.developwithpassion.com/">JP Boodhoo</a>, it was revealed to me the true power of vi.  JP coded and refactored so quickly, so effortlessly, it was almost impossible to track what he was doing – and he did this without ever having his hands leave the keyboard.  What was his secret?  It was <a href="http://www.jetbrains.com/resharper/">ReSharper</a> and <a href="http://www.viemu.com/">ViEmu</a>.  As many of you know, ReSharper is a code navigation, generation and refactoring plugin for Visual Studio.  (If you are not already using it, you are probably shaving months, if not years, off your life performing coding tasks that it can do almost instantaneously.)</p>
 
 
 <p>The second tool, ViEmu, is a plugin that allows Visual Studio to accept vi commands in its Text Editor windows.  There is a bit of a learning curve, but it is very surmountable and if you take the time to learn it, you will be able to transfer the skill into other computing avenues.  (For instance, in about 5 minutes and for almost nothing, you can set up an Amazon EC2 micro instance to tunnel through your company’s oppressive firewall and look at that Dilbert cartoon that someone sent you a link to.  However, you’ll need to use vi to change the SSH daemon’s port from 22 to 443.  Perhaps I’ll show how to do this in a later post.)</p>

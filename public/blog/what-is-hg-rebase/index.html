@@ -79,7 +79,7 @@
 	
 	<div id="content" class="inner"><article class="post">
 	<h2 class="title">What Is Hg Rebase?</h2>
-	<div class="entry-content"><p>A couple weeks ago I introduced a client developer I&#8217;m working with on a project to <a href="http://mercurial.selenic.com/wiki/RebaseExtension">Hg Rebase</a> because the work we were doing at the time didn&#8217;t really need feature branches of any kind. When I was asked how this works over the phone, I explained it the best I could on the spot, but here&#8217;s a better attempt.<!--more--></p>
+	<div class="entry-content"><p>A couple weeks ago I introduced a client developer I&#8217;m working with on a project to <a href="http://mercurial.selenic.com/wiki/RebaseExtension">Hg Rebase</a> because the work we were doing at the time didn&#8217;t really need feature branches of any kind. When I was asked how this works over the phone, I explained it the best I could on the spot, but here&#8217;s a better attempt.</p>
 <h3><strong>Rebase vs Merge</strong></h3>
 <p>Instead of adding several changesets and committing them on top as a &#8220;merge&#8221; commit, Rebase uses graft (essentially a cherry-pick in the git world). My typical workflow includes taking an entirely new branch and place it &#8220;on top&#8221; of another branch. After this is done, it looks more like a straight line instead of something that has been braided. As you can see by the three diagrams below. A rebase removes the unnecessary merge commit and gives you a cleaner history. This tends to be easier for people to follow and understand than the messes you can end up with after loads of merge commits all over the place.</p>
 <p>[gallery link=&#8221;file&#8221; order=&#8221;DESC&#8221;]</p>

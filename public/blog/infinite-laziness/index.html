@@ -79,7 +79,7 @@
 	
 	<div id="content" class="inner"><article class="post">
 	<h2 class="title">Infinite Laziness</h2>
-	<div class="entry-content"><p>In <a href="http://www.haskell.org/haskellwiki/Haskell">Haskell</a>, expressions are evaluated lazily by default.  This is quite different from the way most languages behave.  By taking a dramatically different approach to something we take for granted (expression evaluation), you gain the ability to solve problems in different ways.<!--more--></p>
+	<div class="entry-content"><p>In <a href="http://www.haskell.org/haskellwiki/Haskell">Haskell</a>, expressions are evaluated lazily by default.  This is quite different from the way most languages behave.  By taking a dramatically different approach to something we take for granted (expression evaluation), you gain the ability to solve problems in different ways.</p>
 <p>When you pass arguments to a method in C#, they are all evaluated right away.  Those calculated values are then passed to the method you are calling.  If the first argument to a function is a costly function call itself, the costly call takes place first.  Most languages do it this way, <strong>and that just makes sense</strong>.  Cause and effect seems to demand that arguments be evaluated before they are passed to another method, but Haskell actually turns cause and effect upside down.  When you pass arguments to a Haskell function, they are not evaluated right away.  Instead, they are only evaluated when the called-function actually needs to <em>look</em> at them!  We can simulate this behavior in C# using Func&lt;T&gt;:</p>
 <p><div><script src='https://gist.github.com/1531404.js'></script>
 <noscript><pre><code></code></pre></noscript></div>

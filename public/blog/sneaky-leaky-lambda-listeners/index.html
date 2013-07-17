@@ -82,7 +82,7 @@ Sometimes, it can be very convenient to use lambda expressions as event handlers
 	<h2 class="title">Sneaky Leaky Lambda Listeners</h2>
 	<div class="entry-content"><p><em>By Casey Gum</em></p>
 <p>Sometimes, it can be very convenient to use lambda expressions as event handlers.  If the event handler does something short and sweet, it can also be a lot easier to read than having to jump down to the method that implements the handler.</p>
-<p>However, as with all events handlers, you really need to understand the lifetime of the instance that exposes the event or you can leak, leak, leak. <!--more--></p>
+<p>However, as with all events handlers, you really need to understand the lifetime of the instance that exposes the event or you can leak, leak, leak. </p>
 <p>Let&#8217;s take a look at some code.  The following is a typical way to hook up to an event using a method as an event handler.</p>
 <p><div><script src='https://gist.github.com/2941654.js'></script>
 <noscript><pre><code></code></pre></noscript></div>

@@ -7,7 +7,7 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="TDD or Test Driven Development was considered an industry buzz for a while. Now a days it is considered more of a main stream development &hellip;">
+	<meta name="description" content="There are lots of business systems written in Microsoft Access.  One of the most successful companies I know is Gladstone, Inc, makers of ShoWorks &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -83,6 +83,218 @@
     <article class="post">
 	<h2 class="title">
 		
+		<a href="/blog/visual-studio-lightswitch-and-upgrade-path-for-microsoft-access-to-net/">
+		
+			Visual Studio Lightswitch, an Upgrade Path for Microsoft Access to .Net</a>
+	</h2>
+	<div class="entry-content">
+		<p>There are lots of business systems written in Microsoft Access.  One of the most successful companies I know is <a href="http://www.fairsoftware.com/aboutgladstone.aspx">Gladstone, Inc</a>, makers of <a href="http://www.fairsoftware.com/">ShoWorks</a> software.  This software runs most of the county fairs in the U.S.  From entries, to checks, to vendors, this piece of software does it all to help manage and run a fair and keep track of all the data.  And it is written in Access.  Started on Access 97, I have watched this software grow through the various Access upgrades, and it tests the limits of the platform.  It’s author, <a href="http://www.hnatt.com/">Mike Hnatt</a>, is one of the premiere Access gurus, and Microsoft has previous invited him up to the Redmond campus to be a part of internal Software Design Reviews, or SDR’s.  Mike knows the limits of access, but even with the vast array of other development options out there, nothing comes close to parity with the capabilities he relies on – until today.</p>
+<p><img style="border: 0pt none;" src="http://www.headspring.com/wp-content/uploads/2011/07/image_thumb9.png" alt="Application" width="524" height="333" border="0" /></p>
+<p>This is my first <a href="http://www.microsoft.com/visualstudio/en-us/lightswitch">Lightswitch</a> application.  I just installed the software, ran it, defined a table structure and a few screens.  It’s really simple, and I see that i runs a desktop version of Silverlight.  It feels like Access (I have done some of that programming earlier in my career) because you just define the tables and queries, and then ask for screens that work off the data.  You can customize the screens to some degree, and you can write code behind the screens, just like you can write VBA behind Access screens.  This is my first time looking at Lightswitch in a serious way since it was just released.  I will be looking at it more because it belongs in our toolbelt at <a href="http://www.headspring.com">Headspring</a>.  There are plenty of clients who have Access and FoxPro systems.  These systems have tremendously useful built-in functionality that is prohibitively expensive to duplicate in a custom way with raw WPF and C#, but Lightswitch provides a possible upgrade path that won’t break the bank.</p>
+<p>In case you are wondering what it looks like to develop this, here it is.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2011/07/image10.png"><img style="border: 0px;" src="http://www.headspring.com/wp-content/uploads/2011/07/image_thumb10.png" alt="image" width="510" height="304" border="0" /></a></p>
+<p>Notice that there is a Solution Explorer, and you are in Visual Studio with a new project type.  I was really pleased that I could write code easily.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2011/07/image11.png"><img style="border: 0px;" src="http://www.headspring.com/wp-content/uploads/2011/07/image_thumb11.png" alt="image" width="513" height="315" border="0" /></a></p>
+<p>I tried some <a href="http://www.jetbrains.com/resharper/">ReSharper</a> shortcuts, but they didn’t work.  I guess we’ll have to wait for ReSharper to enable this project type.  Here is my custom button that shows the message box.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2011/07/image12.png"><img style="border: 0px;" src="http://www.headspring.com/wp-content/uploads/2011/07/image_thumb12.png" alt="image" width="513" height="302" border="0" /></a></p>
+<p>I think Lightswitch as a lot of promise for legacy system rewrites, upgrades, and conversions.  Because it’s 100% .Net, you can mix and match with web services, desktop, SQL Server, etc.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-30T00:00:00-05:00" pubdate data-updated="true">Jul 30<span>th</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/two-reasons-to-use-abstract-classes-in-c/">
+		
+			Two Reasons to Use Abstract Classes in C#</a>
+	</h2>
+	<div class="entry-content">
+		<p>Do you find yourself writing the same methods over and over in different classes? Say your project needs both a &#8220;Dog&#8221; class and a &#8220;Cat&#8221; class &#8211; do you end up writing a &#8220;sleep&#8221; method for both? What if, in two months, the client needs you to add a &#8220;possum&#8221; to the system? Do you end up going in and retyping &#8220;sleep&#8221; instructions yet again? When you&#8217;re modeling a system with many similar parts, it takes way too much time and effort to keep duplicating code for each class. Imagine how hard it would be to maintain a large project with thousands of classes! Besides, it violates the DRY principle of good programming: Don&#8217;t Repeat Yourself! There must be a better way.</p>
+<p>Thankfully, C# has built-in features for sharing code between classes. One of these is called an &#8220;abstract class&#8221;. Just create a new class with the keyword &#8220;abstract&#8221; (e.g. &#8220;public abstract class Mammal&#8221;) and write in its body all the methods you would like your other classes to share in common. Since an abstract class is still a class, your &#8220;Cat&#8221; and &#8220;Dog&#8221; classes can inherit from it using a colon (e.g. &#8220;public Cat : Mammal&#8221;). This means that instead of writing a &#8220;sleep&#8221; method for each animal, you only need to write it in the &#8220;Mammal&#8221; class, and the other animals will be able to use it too.<br />
+But if any class can have inheritance, why not just use a regular class? The answer is that abstract classes have two special features:</p>
+<p>1. They cannot be instantiated (made into objects),<br />
+2. They can have special methods called &#8220;abstract methods&#8221;.</p>
+<p>&#8220;Wait a minute,&#8221; you may be thinking, &#8220;Why would I want a class that can&#8217;t become an object?!&#8221; Sounds useless, right? However, consider the purpose of an abstract class: it contains common methods (and fields) that multiple child classes inherit from, but it does not attempt to follow these directions itself. In fact, a parent class is often missing vital information about the methods and fields it contains, because each child may use them a little bit differently. The &#8220;Mammal&#8221; abstract class only has what is common to all mammals &#8211; since some mammals can&#8217;t crawl and other mammals can&#8217;t gallop, the &#8220;Mammal&#8221; class can&#8217;t do either one. Imagine what would happen if you tried to instantiate a &#8220;generic&#8221; mammal: you&#8217;d get a featureless mass of hair, muscle and bone that probably wouldn&#8217;t survive on its own! In the same way, it is undesirable (sometimes dangerous!) to leave a class open to instantiation when it is simply a placeholder for common features. Guard against this possibility by using an abstract class.</p>
+<p>What if two classes have methods so different that the only common factor is their name? This is where an abstract method comes in handy. An abstract method looks just like a normal method, except it has the word &#8220;abstract&#8221; (e.g. &#8220;abstract exampleMethod(args);&#8221; ) and a semicolon &#8220;;&#8221; instead of body brackets &#8220;{}&#8221;. What does it do? It basically tells each inheriting class to create its own method with that same name. For instance, since a dog and a bat both sleep, you could write a &#8220;sleep&#8221; method in the &#8220;Mammal&#8221; class. However, there are very few commonalities between a dog&#8217;s sleep and a bat&#8217;s sleep. So instead of trying to account for each individual animal&#8217;s sleeping habits, you would make the &#8220;sleep&#8221; method abstract. Now the code won&#8217;t even compile until each animal that inherits from &#8220;Mammal&#8221; has a method called &#8220;sleep&#8221;, using the &#8220;override&#8221; keyword to replace the abstract one (e.g. &#8220;public override sleep(args) {}&#8221; ). Now even though all mammals sleep, each individual mammal can sleep in its own way. After this, you may be wondering, &#8220;Why even bother putting that method in the parent class? Each inheritor is going to have its own version anyway.&#8221; You really do want to have that abstract class, not to prevent syntax errors, but to prevent human memory errors. You may know intellectually that all mammals sleep, but without a mechanism forcing you to write a &#8220;sleep&#8221; method for each mammal, it is all too easy to forget to do so. You may not even realize your mistake until you get a phone call from the client in the middle of the night. By refusing to compile until each abstract method is implemented in every inheriting class, the C# compiler is doing you a favor: it&#8217;s helping you remember the obvious.</p>
+<p>Abstract classes help you improve your code not only through what they can do, but also through what they can&#8217;t. They can hold common features for many classes to inherit, without accidentally becoming objects themselves. They can also force you to write unique implementations of a common method, preventing human errors of forgetfulness. When you set up a class hierarchy, seriously consider whether you need a normal class to inherit from, or whether an abstract class will do. It may end up making the difference between a solid or buggy program.</p>
+<p>Now, if only we had something to write the rest of our code for us&#8230;</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-29T00:00:00-05:00" pubdate data-updated="true">Jul 29<span>th</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/dry/'>DRY</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/best-practices/'>best practices</a>, <a class='category' href='/blog/categories/c-sharp/'>c sharp</a>, <a class='category' href='/blog/categories/class-inheritance/'>class inheritance</a>, <a class='category' href='/blog/categories/developing-with-c-number/'>developing with C#</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/true-confessions-public-shaming-and-test-driven-development/">
+		
+			True Confessions, Public Shaming, and Test-Driven Development</a>
+	</h2>
+	<div class="entry-content">
+		<p>Okay, I admit it. Sometimes I write unit tests second instead of first. I also bite my nails and rest my elbows on the dinner table. But when I&#8217;ve got a bug to fix, and I&#8217;ve already found the offending line, I can hardly resist the urge to just&#8230; just&#8230; <em>change</em> it. I&#8217;ll follow up with unit tests afterwards, promise.</p>
+<p>I admit this to you because admitting my wrongs is a step towards rehabilitation. I admit this to save you pain. Learn from my example. Test-second is so much less efficient than test-first. Consider the following workflow:</p>
+<ol>
+<li>Reproduce, identify, debug the issue.</li>
+<li>Fix the code.</li>
+<li>Compile and try it out.</li>
+<li>Write a test that proves I fixed it.</li>
+<li>Compile and run the test.</li>
+<li>Change the code back to make sure my test really proves what it is trying to prove.</li>
+<li>Compile and see the test fail.</li>
+<li>Re-fix the code.</li>
+<li>Compile and see the test pass.</li>
+</ol>
+<p>&nbsp;</p>
+<p>I humble myself before you. How much time am I wasting there? It&#8217;s embarrassing.</p>
+<p>There&#8217;s also a subtle point in step 1. What if I could use unit tests instead of the debugger to find the issue? That will be faster, too.</p>
+<p>We can do better:</p>
+<ol>
+<li>Reproduce the issue and formulate a theory.</li>
+<li>Write a test that exercises the theory.</li>
+<li>Compile and see the test fail, corroborating the theory.</li>
+<li>Fix the code.</li>
+<li>Compile and see the test pass, validating the theory.</li>
+</ol>
+<p>&nbsp;</p>
+<p>Perhaps you can relate. Perhaps you even bite your nails, too. I won&#8217;t judge. Flog me or join me, the comments are open: Confess your bad habits (um, your <em>unit-testing</em> bad habits, please), and commit yourself to improvement. I challenge you to improve your efficiency and write your unit tests first, even—especially—for the little bug fixes.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-29T00:00:00-05:00" pubdate data-updated="true">Jul 29<span>th</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/continuous-improvement/'>continuous improvement</a>, <a class='category' href='/blog/categories/developer-productivity/'>developer productivity</a>, <a class='category' href='/blog/categories/test-driven-development/'>test-driven development</a>, <a class='category' href='/blog/categories/unit-testing/'>unit testing</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/the-secret-sauce-of-business-intelligence-olap-vs-relational-schemas/">
+		
+			The Secret Sauce of Business Intelligence: OLAP vs Relational Schemas</a>
+	</h2>
+	<div class="entry-content">
+		<p>Ever heard the terms <em>star schema, OLAP, fact table, dimension, </em>or<em> business intelligence</em> and wondered what they meant and/or why you should care?  I learned what these terms meant five years ago, and I have found powerful usages for these concepts ever since.</p>
+<p>Imagine your business owner is a restaurant manager.  You&#8217;ve built a point of sale system that records what customers have ordered.  Begrudgingly, you have also built some canned reports to list out sales transactions within a user-entered date range.  The restaurant manager could browse the transaction history for a particular month to learn which menu items customers seem to like and at what times they tend to eat.  However, it will be difficult to really quantify those trends.  Are sales for the Caesar Salad going up or down?  How many more Caesar Salads were ordered than House Salads?  What was the most popular hour of the day to dine during weekdays?  On the weekends?  Inevitably, your business owner will get tired of trekking down to your desk to ask you those questions, and you will get tired of creating a seemingly endless set of &#8220;canned&#8221; reports.</p>
+<p>Wouldn&#8217;t it be great if your client could answer those questions herself?  She can - she just needs a business intelligence solution!</p>
+<p>First, design a star schema.  A star schema is a special type of relational database schema that has at least one <em>fact table</em> and zero to many <em>dimension tables</em>.  The dimension tables are optional, so let&#8217;s focus on the fact table.  A fact table has two types of columns, dimensions and facts.  <em>Dimension columns</em> for our sales fact table would include Hour of Day, Date, Month, Quarter, Year, Day Type (Weekday, Weekend), Product Category (Salad, Appetizer, Main Course, etc.), and Product.  Notice, although all of the date-related fields could be inferred from a transaction time-stamp, all of the columns are broken out individually.  This is an example of the secret sauce of business intelligence - <em>denormalization</em>. Also, the Hour of Day column should have user-readable values such as &#8220;3:00 PM - 4:00 PM&#8221;, not 15 or 15:00.  Our fact table could only have a single <em>fact column, </em>amount.</p>
+<p>Second, build an ETL (Extract, Transform, Load) process.  This process should run every night and import new records from the transactional point of sales system (OLTP) database into your star schema.  In some cases, it might just be easier to replace all of the data in your star schema on a nightly basis - it just depends on how much data you have.</p>
+<p>Third, use Excel&#8217;s ability to connect to a database server and add PivotTable functionality on top of your sales fact table.  Before you know it, your business user will be answering all of the questions I raised before, and a thousand others - without having to hound you for new canned reports!</p>
+<p>p.s.  OLAP is a different kind of data structure that can be built directly from your star schema.  It&#8217;s important when you have an enormous amount of data that must be sliced and diced quickly.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-29T00:00:00-05:00" pubdate data-updated="true">Jul 29<span>th</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
 		<a href="/blog/tdd-caveat-how-not-to-follow-test-driven-development/">
 		
 			TDD Caveat | How Not to Follow Test Driven Development</a>
@@ -114,9 +326,68 @@
 <div class="csharpcode">
 <pre>}</pre>
 </div>
-<p>As I moved further and realize power of maintainability and loosely coupled design,
+<p>As I moved further and realize power of maintainability and loosely coupled design, I started designing solution in terms of interfaces. With that my knowledge on TDD expanded towards interaction testing. Mocking frameworks like <a href="http://ayende.com/wiki/Rhino+Mocks.ashx" target="_blank">Rhino.Mock</a> and Moq, TypeMock etc emerged during that timeframe to support such testing scenarios. And those test now started looking like this:</p>
+<div class="csharpcode">
+<pre>[Test]</pre>
+</div>
+<div class="csharpcode">
+<pre>&lt;span class=&quot;kwrd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;void&lt;/span&gt; Use_Is_Anything_when_args_are_not_important()</pre>
+</div>
+<div class="csharpcode">
+<pre>{</pre>
+</div>
+<div class="csharpcode">
+<pre>    &lt;span class=&quot;kwrd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;int&lt;/span&gt; intToReturn = 5;</pre>
+</div>
+<div class="csharpcode">
+<pre>    _stub = MockRepository.GenerateStub&amp;lt;ISampleInterface&amp;gt;();</pre>
+</div>
+<div class="csharpcode">
+<pre>    _stub.Stub(s =&amp;gt; s.MethodThatReturnsInteger(&lt;span class=&quot;str&quot;&gt;&quot;foo&quot;&lt;/span&gt;)).Return(intToReturn);</pre>
+</div>
+<div class="csharpcode">
+<pre>    _stub.MethodThatReturnsInteger(&lt;span class=&quot;str&quot;&gt;&quot;foo&quot;&lt;/span&gt;).ShouldEqual(intToReturn);</pre>
+</div>
+<div class="csharpcode">
+<pre>}</pre>
+</div>
+<p>Exploring further, I started utilizing more features provided by those mocking framework. Now you have way to not only  ensure method on stub/mock returns predictable value, but also make assertion that it was called with right argument. Taking this even further, when you have more services to interact with, these frameworks have option to assert sequence in which you call them. Example of first case may look like this:</p>
+<div class="csharpcode">
+<pre>[Test]</pre>
+</div>
+<div class="csharpcode">
+<pre>&lt;span class=&quot;kwrd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;void&lt;/span&gt; Use_GetArgumentsForCallsMadeOn_to_inspect_arguments()</pre>
+</div>
+<div class="csharpcode">
+<pre>{</pre>
+</div>
+<div class="csharpcode">
+<pre>    var interactor = &lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; InteractingClass();</pre>
+</div>
+<div class="csharpcode">
+<pre>    interactor.CallTheInterfaceTwice(_mock);</pre>
+</div>
+<div class="csharpcode">
+<pre>    IList&amp;lt;&lt;span class=&quot;kwrd&quot;&gt;object&lt;/span&gt;[]&amp;gt; argsPerCall = _mock.&lt;strong&gt;GetArgumentsForCallsMadeOn&lt;/strong&gt;(m =&amp;gt; m.MethodThatReturnsInteger(&lt;span class=&quot;kwrd&quot;&gt;null&lt;/span&gt;));</pre>
+</div>
+<div class="csharpcode">
+<pre>    argsPerCall[0][0].ShouldEqual(&lt;span class=&quot;str&quot;&gt;&quot;foo&quot;&lt;/span&gt;);</pre>
+</div>
+<div class="csharpcode">
+<pre>    argsPerCall[1][0].ShouldEqual(&lt;span class=&quot;str&quot;&gt;&quot;bar&quot;&lt;/span&gt;);</pre>
+</div>
+<div class="csharpcode">
+<pre>}</pre>
+</div>
+<p>Picture looked quite rosy here until I passed over excitement phase and entered phase of maintaining such software. <a href="http://www.refactoring.com/" target="_blank">Refactoring</a> such code became painful job now. That is precisely because I have my logic duplicated at two places, one in production code and one in test. Every single change that I make in production code has to be reflected into test interaction as well. This is direct violation of fundamental principle of OOP.  This indeed is one of the code-smell whose root is buried in wrong choice of underlying software design.</p>
+<p>Now let’s step back and analyze what has gone wrong over this journey. Moving from state base test into interaction base test has its value under certain situation. However as we move towards “<strong>loosely coupled</strong>” and “<strong>highly cohesive</strong>” software architecture design, underlying elements are all services that works together to achieve given use case. Unit testing at those service level yields sweet fruit in terms of coverage and confidence in being able to refactor codebase at any give time. However there is little value in testing interaction between these services and their sequencing with much of mocks.</p>
+<p align="justify">Big question that remains here then would be “How do I ensure those end to end scenarios are covered under test?”. Well, the answer is hidden inside question itself. Coverage on “End to end scenarios” needs “End to End” testing. That’s exact where  Integration test has real value to demonstrate. For the case of web page which let user fill in form and take some action, typically such integration test will include testing all but the actual UI layer. In language of <strong>CommandProcessor</strong> from <a href="http://mvccontrib.codeplex.com/" target="_blank">MvcContrib</a>, it is called PageTester.  Last but not least is UI Tests which ensures application level configuration and environment is set up correctly.</p>
+<p>Till next time. Code smartly.</p>
+<p>&nbsp;</p>
+<p><em>Interested in Agile? Download a Copy of our Whitepaper &#8216;The Agile Difference&#8217; on our <a href="http://www.headspring.com/resources/whitepapers/">Whitepapers page</a></em></p>
+
 		
-		<a href="/blog/tdd-caveat-how-not-to-follow-test-driven-development/" class="more-link">Read on &rarr;</a>
+		
 	</div>
 
 
@@ -199,9 +470,12 @@
 	</h2>
 	<div class="entry-content">
 		<p>If it can&#8217;t be drawn, it can&#8217;t be built. It’s the mantra in our office. Having heard it almost every day that I have been here at Headspring, I never really understood its power before I set out on the (thought to be exciting) task of rebuilding the company website.</p>
-<p>I knew I’d have to gather requirements for the site. Having no idea of what requirement gathering techniques were out there I just started a word document list: pages, forms, content.  When I sat down with the team to start developing the site, they needed more information about site flow.
+<p>I knew I’d have to gather requirements for the site. Having no idea of what requirement gathering techniques were out there I just started a word document list: pages, forms, content.  When I sat down with the team to start developing the site, they needed more information about site flow.</p>
+<p>I tried explaining with my 17 page word document, highlighted and notes scribbled on the side, but no one was getting it (including myself). When one brilliant person suggested that we draw it out, markers opened and the drawing began: home page, top-nav pages, children pages, forms and so on.</p>
+<p>When we were done the picture finally became clear. All my requirements, even those that I had forgotten about, were there and easy to follow. No matter what you’re building, please learn from my mistake and start off drawing your requirements, because if it can’t be drawn, it can’t be built.</p>
+
 		
-		<a href="/blog/requirement-gathering-techniques-drawing-101/" class="more-link">Read on &rarr;</a>
+		
 	</div>
 
 
@@ -242,9 +516,22 @@
 		<p>When designing a user interface, it&#8217;s important to avoid conflicts between what an action actually does and what the user <em>expects</em> it to do. Our goal is to minimize surprises to ensure a smooth end-user experience. This is called the <a title="Principle of Least Astonishment" href="http://en.wikipedia.org/wiki/Principle_of_least_astonishment">Principle of Least Astonishment</a>.</p>
 <p>This principle should also be important to language designers. Just like a slick, AJAX-y web page is a user interface for the end user, a programming language&#8217;s syntax is a user interface for developers. When the rules of a language conflict with a typical developer&#8217;s mental model of what the rules <em>might</em> be, we have a problem every bit as serious as a confusing user-facing dialog.</p>
 <p>After running into some hurdles using PowerShell, it seems that this language follows the Principle of <em>Most</em> Astonishment. Because its actual model conflicts with the mental model most developers take for granted in similar languages, it is very easy to run into some frustrating bugs.</p>
-<p>Programming lanaguages can be dropped into several broad categories when they encourage similar mental models. For the Imperative Object-Oriented Languages, this makes it easy to start with Python and then learn Ruby, Java, and the like: they all have roughly similar notions of imperative control flow, 
+<p>Programming lanaguages can be dropped into several broad categories when they encourage similar mental models. For the Imperative Object-Oriented Languages, this makes it easy to start with Python and then learn Ruby, Java, and the like: they all have roughly similar notions of imperative control flow, classes, methods, arguments, return values, and I/O. Since PowerShell is an imperative .NET language, it is all too easy to make incorrect assumptions about how PowerShell will behave, even in the simplest of programs.</p>
+<p>When learning PowerShell, it&#8217;s important to avoid bringing all this imperative language baggage along for the ride. Start by realizing that <strong>PowerShell functions are not functions</strong>! Rather, they are commands.</p>
+<p>PowerShell is meant to replace old-school BAT files and as such its syntax and semantics lean heavily towards command-line instructions where I/O is king. In most imperative languages, functions take in arguments and return values, occasionally performing side-effects like I/O. In PowerShell, commands take in arguments, and then <strong>output values throughout their execution</strong>. The caller of a PowerShell command can often pretend that it is returning a value upon its completion, but it is always more accurate to say that all of the side-effect output of a command is made available to the caller upon its completion. Consider a simple function which intends to calculate some values while only returning a single value:</p>
+<p><div><script src='https://gist.github.com/1114530.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>If we call this command with $x = 1, the caller receives an <em>array</em> as the return value. The array contains three values: [1, 2, 3]. What&#8217;s going on here? First, every expression that gets evaluated will be included in the output. When multiple values are output like this, they get packaged up into an array for you. Second, using the &#8216;return&#8217; keyword with a value on the right-hand-side is misleading. Use the &#8216;return&#8217; keyword only when you need to exit from a command early. The above code is actually equivalent to the following:</p>
+<p><div><script src='https://gist.github.com/1114545.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>&#8220;return 5&#8221; really means &#8220;include 5 in the array of output and then return control to the caller&#8221;. Imagine how frustrating it can be to run into a problem like this. You start adding print statements to your buggy function in order to diagnose what is happening, and the very act of writing that output changes its return value!</p>
+<p>There are ways to prevent expressions from being returned to the caller. You can use the built-in command <strong>write-host</strong> to write output to the console without it being included in the output array. Assignment statements are also suppressed from the output because they represent intermediate work being performed.</p>
+<p>Any developer who approaches the first Output-And-Return definition above will make false assumptions about the behavior of the command. By recognizing that the PowerShell model differs from a typical model of functions-returning-values, you too can avoid mind-boggling debugging sessions.</p>
+
 		
-		<a href="/blog/powershell-and-the-principle-of-most-astonishment/" class="more-link">Read on &rarr;</a>
+		
 	</div>
 
 
@@ -287,9 +574,21 @@
 <p><div><script src='https://gist.github.com/1114324.js'></script>
 <noscript><pre><code></code></pre></noscript></div>
 </p>
-<p>Then, add the appropriate properties for transitioning your elements to both states (necessary since we&#8217;ll be transitioning both <em>to</em> and <em>from</em> each state).
+<p>Then, add the appropriate properties for transitioning your elements to both states (necessary since we&#8217;ll be transitioning both <em>to</em> and <em>from</em> each state). Since the transitions specification <a href="http://www.w3.org/TR/css3-transitions/" target="_blank">hasn&#8217;t been finalized</a>, you&#8217;ll need to add some vendor-specific rules to support the majority of modern browsers. I&#8217;ve found <a title="CSS3Please" href="http://css3please.com/" target="_blank">CSS3Please</a> to be an invaluable resource for this, as I always forget the correct vendor syntax to use.</p>
+<p><div><script src='https://gist.github.com/1114331.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Each of these lines, for the browser it targets, sets the following properties for animation:</p>
+<ul>
+<li>&#8220;all&#8221;: The name of the property to animate (in this case, all of them).</li>
+<li>&#8220;0.5s&#8221;: The duration of the animation in seconds.</li>
+<li>&#8220;ease&#8221;: A description of how the animation will behave over time. Experiment with some of the <a href="http://www.w3.org/TR/css3-transitions/#transition-timing-function" target="_blank">other variations</a>!</li>
+</ul>
+<p>For your convenience, here&#8217;s a JSFiddle so you can try it out yourself. Click on the &#8220;CSS&#8221; tab to see all the stylistic goodness and the &#8220;Result&#8221; tab to see it in action (assuming you&#8217;re using a modern browser, of course).</p>
+<p><iframe style="width: 100%; height: 150px;" src="http://jsfiddle.net/TimGThomas/vKB8N/embedded/result,html,css,js" width="320" height="240"></iframe></p>
+
 		
-		<a href="/blog/jazz-up-your-css-with-transitions/" class="more-link">Read on &rarr;</a>
+		
 	</div>
 
 
@@ -327,9 +626,25 @@
 			How to Add a Method to ViewBag in ASP.NET MVC</a>
 	</h2>
 	<div class="entry-content">
-		<p>We are all familiar with the basic HomeController in the default ASP.NET MVC project.  We know we can pass values from the controller to the view.  Sometimes we are tempted to pass the controller itself to the view so that we can call methods on it.  The view should not have to depend on the controller.  This post provides a way to accomplish this.  For more on ASP.NET MVC, check out my book, <a href="http://bit.ly/aspnetmvc3inaction">ASP.NET MVC 3 in Action</a>. 
+		<p>We are all familiar with the basic HomeController in the default ASP.NET MVC project.  We know we can pass values from the controller to the view.  Sometimes we are tempted to pass the controller itself to the view so that we can call methods on it.  The view should not have to depend on the controller.  This post provides a way to accomplish this.  For more on ASP.NET MVC, check out my book, <a href="http://bit.ly/aspnetmvc3inaction">ASP.NET MVC 3 in Action</a>.  You can also check out the <a href="http://www.headspring.com/headspring/mvc-boot-camp/" target="_blank">MVC Boot Camp</a> training we offer at <a href="http://www.headspring.com">Headspring</a>.  We start with the HomeController.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2011/07/image2.png"><img style="border: 0px;" alt="image" src="http://www.headspring.com/wp-content/uploads/2011/07/image_thumb2.png" width="530" height="403" border="0" /></a></p>
+<p>We know from just a little reading that the ViewBag property on HomeController is a dynamic object – using the new .Net 4 dynamic capabilities.  Merely setting the Message property on the object creates the property.  It is not completely obvious how to create a new method on the object, though.</p>
+<h1>Usage</h1>
+<p>If I were to want to use a method in my Razor view like this&#8230;</p>
+<div class="csharpcode"><a href="http://www.headspring.com/wp-content/uploads/2011/07/image3.png"><img style="border: 0px;" alt="image" src="http://www.headspring.com/wp-content/uploads/2011/07/image_thumb3.png" width="535" height="274" border="0" /></a></div>
+<p>&#8230; then I would need to figure out how to get the GetCurrentTime() method onto the ViewBag.  The following is the solution to that problem.</p>
+<h1>Solution</h1>
+<p>There are two technical capabilities of C# 4 that provide the ability to accomplish our new method.  The first is that I can create and set any new property on the dynamic object.  The second is actually a feature of .Net 2 – delegates.  I will create a method and then wrap it in a delegate and assign it as a property of ViewBag.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2011/07/image4.png"><img style="border: 0px;" alt="image" src="http://www.headspring.com/wp-content/uploads/2011/07/image_thumb4.png" width="538" height="344" border="0" /></a></p>
+<p>.Net 3.5 brought us the Func&lt;&gt; and the lambda expressions.  These make delegates so much more concise to write and read.  I have now create a method, assigned it to a object and set it as a property on ViewBag.</p>
+<p>The only thing left to do is to dereference the property and invoke it with ().</p>
+<p>For those of you who have been programming for a while, you know that I technically haven’t create a method on the ViewBag object.  That is correct.  We have to think back to why I asked for the method in the first place.</p>
+<h1>Why do we need methods?</h1>
+<p>We need methods in order to retrieve values that are resolved at run time.  For instance, if I need to pass in some view-specific value to my ViewBag for evaluation, I need a method. If you were ever tempted to pass a reference to the controller to the view just to be able to execute a method on a value the controller owned, this is your ticket to accomplishing that.  Because the method/closure/delegate in the controller has full scope access to the controller memory space, the ViewBag now holds the gateway to the controller’s state that is necessary.</p>
+<p><a href="http://www.headspring.com/headspring/mvc-boot-camp/">Check out ASP.NET MVC 4 Bootcamp</a></p>
+
 		
-		<a href="/blog/how-to-add-a-method-to-viewbag-in-asp-net-mvc/" class="more-link">Read on &rarr;</a>
+		
 	</div>
 
 
@@ -351,177 +666,6 @@
 
 
 	<a class='category' href='/blog/categories/blog/'>Blog</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/developing-asp-net-mvc-with-visual-web-developer-express-2010/">
-		
-			Developing ASP.NET MVC With Visual Web Developer Express 2010</a>
-	</h2>
-	<div class="entry-content">
-		<p>When the “Express” line of Visual Studio products was introduced with Visual Studio 2008, the Web Developer tool was a one-trick pony.  You could create a web site, and that was pretty much it.  No support for groupings of projects into solutions.  In other words, you couldn’t create libraries at the same time as the web site.</p>
-<p>When ASP.NET came on the scene, this posed a problem.  MVC required web application projects, not the web site directory.  Visual Web Developer was enhanced a few times along with the way, and now it is a much more usable package.
-		
-		<a href="/blog/developing-asp-net-mvc-with-visual-web-developer-express-2010/" class="more-link">Read on &rarr;</a>
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-07-29T00:00:00-05:00" pubdate data-updated="true">Jul 29<span>th</span>, 2011</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/creating-a-glimpse-plugin-to-log-sql-generated-by-nhibernate/">
-		
-			Creating a Glimpse Plugin to Log SQL Generated by NHibernate</a>
-	</h2>
-	<div class="entry-content">
-		<p>Glimpse has generated a lot of buzz since it was <a href="http://channel9.msdn.com/Shows/HanselminutesOn9/Hanselminutes-on-9-Glimpse-at-the-Mix11-Open-Source-Fest" target="_blank">unveiled</a> earlier this year during the “Open Source Fest” at the Mix 2011 conference. If you’re not already using it to debug your ASP.NET Web Forms or MVC application, you should be. Glimpse allows you to inspect several server-side diagnostic and request related information with a UI just like Firebug. Here’s some resources to get you started if you need an intro:</p>
-<ul>
-<li><a href="http://getglimpse.com/" target="_blank">GetGlimpse.com</a></li>
-<li><a href="http://www.hanselman.com/blog/NuGetPackageOfTheWeek5DebuggingASPNETMVCApplicationsWithGlimpse.aspx" target="_blank">NuGet Package of the Week – Glimpse</a></li>
-</ul>
-<p>There are several <a href="http://getglimpse.com/Help" target="_blank">built-in plugins</a> for Web Forms and MVC that will serve many needs, and you can even create your own. This tutorial will demonstrate how to create a plugin that will display the SQL generated by NHibernate.</p>
-<h2>Glimpse Plugins</h2>
-<p>Plugins are implemented by a simple class that implements the IGlimpsePlugin interface. There are a couple of great “hello world” example plugins on the Glimpse <a href="http://getglimpse.com/Help/CreatingPlugins" target="_blank">creating plugins page</a>. Besides setting the name and some optional start-up code, a plugin’s main job is just to return some set of data that will be rendered to the Glimpse UI. What that data is and how we get it is the real magic, so read on below.
-		
-		<a href="/blog/creating-a-glimpse-plugin-to-log-sql-generated-by-nhibernate/" class="more-link">Read on &rarr;</a>
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-07-29T00:00:00-05:00" pubdate data-updated="true">Jul 29<span>th</span>, 2011</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/debugging/'>debugging</a>, <a class='category' href='/blog/categories/glimpse/'>glimpse</a>, <a class='category' href='/blog/categories/nhibernate/'>nhibernate</a>, <a class='category' href='/blog/categories/sql/'>sql</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/from-programmer-to-manager/">
-		
-			From Programmer to Manager</a>
-	</h2>
-	<div class="entry-content">
-		<p>I started my career as a programmer. I was fortunate enough to get into computing as the Internet revolution was a strong possibility in the early nineties. My career has largely followed the rise of the PC, the Internet, and now cloud computing. Being one of the first on my block with an email address and a web site (which we called &#8221;<a href="http://en.wikipedia.org/wiki/Home_page">home pages</a>&#8221; back then), I started web development very early.
-		
-		<a href="/blog/from-programmer-to-manager/" class="more-link">Read on &rarr;</a>
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-07-27T00:00:00-05:00" pubdate data-updated="true">Jul 27<span>th</span>, 2011</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/quattro/'>quattro</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/test-driven-development/">
-		
-			Test-driven Development</a>
-	</h2>
-	<div class="entry-content">
-		<p>[caption id=&#8221;attachment_426&#8221; align=&#8221;alignright&#8221; width=&#8221;300&#8221;]<img class="size-medium wp-image-426" title="RubeGoldberg" alt="" src="http://www.headspring.com/wp-content/uploads/2011/07/RubeGoldberg-300x184.gif" width="300" height="184" /> A as you raise spoon of soup to your mouth B it pulls the string C thereby jerking the ladle D which throws the cracker E past the parrot which jumps F causing the perch to tilt G upsetting seeds H into the pail I adding the extra weight to pull the cord J which opens and lights the automatic cigar lighter K setting off the rocket L which causes the sickle M to cut the string allowing the napkin to swing wiping off your chin[/caption]</p>
-<p>TDD is an excellent safeguard against bugs. Why is test-driven development specifically vital in Agile development?</p>
-<p>The hardest part of implementing a new feature is keeping all of the existing features working.</p>
-<p>Software can be very complicated, and if you were trying to visualize it, although I don&#8217;t like to compare the software we build to a Rube Goldberg machine, you might be able to think of it in those terms, in that if you have a device which works in just such a way and then you add to it there is a good chance that it will no longer continue to work like it did.
-		
-		<a href="/blog/test-driven-development/" class="more-link">Read on &rarr;</a>
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-07-15T00:00:00-05:00" pubdate data-updated="true">Jul 15<span>th</span>, 2011</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/duo/'>duo</a>
 
 
 </div>

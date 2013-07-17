@@ -4,7 +4,7 @@
   <title><![CDATA[Category: tools | Headspring Labs]]></title>
   <link href="http://headspringlabs.com/blog/categories/tools/atom.xml" rel="self"/>
   <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-16T19:59:03-05:00</updated>
+  <updated>2013-07-17T00:19:02-05:00</updated>
   <id>http://headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
@@ -22,9 +22,6 @@
 
 
 <p>If you’ve been following along, you’ll have noticed that customizing Visual Studio in these ways is a bit cumbersome. Creating context menus are no better considering there are a ton of <em>different</em> menus depending on the <em>context</em> that you’ll have to independently configure.</p>
-
-
-<p><!--more--></p>
 
 
 <h2>Creating a right-click, Open in Notepad context menu</h2>
@@ -82,7 +79,7 @@
     <link href="http://headspringlabs.com/blog/customizing-visual-studio-with-external-tools-part-2/"/>
     <updated>2012-01-23T00:00:00-06:00</updated>
     <id>http://headspringlabs.com/blog/customizing-visual-studio-with-external-tools-part-2</id>
-    <content type="html"><![CDATA[<p>In my <a href="http://www.headspring.com/2012/01/customizing-visual-studio-with-external-tools-part-1">previous post</a> I showed you how to configure your own External Tools in Visual Studio, such as a command that opens up the current document in an external text editor, or a tool that launches a custom deployment executable. External Tools by default are accessed through the Tools menu, but this is lame. In this post I’ll show you to create your own toolbar to contain your tools so they are no more than one click away.<!--more--></p>
+    <content type="html"><![CDATA[<p>In my <a href="http://www.headspring.com/2012/01/customizing-visual-studio-with-external-tools-part-1">previous post</a> I showed you how to configure your own External Tools in Visual Studio, such as a command that opens up the current document in an external text editor, or a tool that launches a custom deployment executable. External Tools by default are accessed through the Tools menu, but this is lame. In this post I’ll show you to create your own toolbar to contain your tools so they are no more than one click away.</p>
 
 
 <h2>Creating a custom toolbar</h2>
@@ -128,7 +125,7 @@
     <content type="html"><![CDATA[<p>Visual Studio has some deep customization options and extensibility points that many of us just ignore. Once such option is “External Tools” which allow you to create a menu item (and optional toolbar) that can run any external program you wish.</p>
 
 
-<p>I recently had to set up a couple of new computing environments so I went through my typical routine of setting up <em>Explorer.exe</em> as an external tool, and while doing so I pondered a few other tools that might be useful. In this and subsequent posts, I’ll describe how to set up some simple external tools, create a custom tool bar for them and even add them to the context menu.<!--more--></p>
+<p>I recently had to set up a couple of new computing environments so I went through my typical routine of setting up <em>Explorer.exe</em> as an external tool, and while doing so I pondered a few other tools that might be useful. In this and subsequent posts, I’ll describe how to set up some simple external tools, create a custom tool bar for them and even add them to the context menu.</p>
 
 
 <p>In your menu, go to <strong>Tools &gt; External Tools</strong>. You may already have some present like Dotfuscator or a Guid generator.</p>

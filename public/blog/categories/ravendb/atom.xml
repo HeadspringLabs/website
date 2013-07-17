@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ravendb | Headspring Labs]]></title>
   <link href="http://headspringlabs.com/blog/categories/ravendb/atom.xml" rel="self"/>
   <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-16T19:59:03-05:00</updated>
+  <updated>2013-07-17T00:19:02-05:00</updated>
   <id>http://headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
@@ -24,7 +24,7 @@
 <p>Why is this so? There are several reasons for this, and their importance varies between administrators, developers, managers, and even executives.</p>
 
 
-<p>From a developer's point of view, it comes down to whether or not the product in the solution space makes the work more enjoyable.<!--more--></p>
+<p>From a developer's point of view, it comes down to whether or not the product in the solution space makes the work more enjoyable.</p>
 
 
 <p>As a .NET developer, <a href="http://ravendb.net">RavenDB</a> is a ton of fun to work with. Here is what it offers me:</p>
@@ -80,9 +80,6 @@
 
 
 <p>Let’s explore the Query&lt;T&gt;() method! Beginning with the example context…</p>
-
-
-<p><!--more--></p>
 
 
 <p>Imagine we have a database of orders. Each order has some customer and payment information and a list of line items. Each line item consists of a product and a quantity. Our very simplified domain model might  resemble something like this:</p>
@@ -270,7 +267,7 @@
 <p>Document databases are another persistence alternative to the traditional RDBMS and there are plenty to chose from (like <a href="http://couchdb.apache.org/">CouchDB</a>, <a href="http://aws.amazon.com/simpledb/">SimpleDB</a>, <a href="http://ravendb.net/">RavenDB</a>,  and <a href="http://wiki.basho.com/Riak.html">Riak</a> to name a few). This post is intended to help get you started using RavenDB.</p>
 
 
-<p>Let’s get started!<!--more--></p>
+<p>Let’s get started!</p>
 
 
 <h3><span style="font-weight: bold;">Installing RavenDB</span></h3>

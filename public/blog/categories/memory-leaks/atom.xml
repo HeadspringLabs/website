@@ -4,7 +4,7 @@
   <title><![CDATA[Category: memory_leaks | Headspring Labs]]></title>
   <link href="http://headspringlabs.com/blog/categories/memory-leaks/atom.xml" rel="self"/>
   <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-16T19:59:03-05:00</updated>
+  <updated>2013-07-17T00:19:02-05:00</updated>
   <id>http://headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
@@ -24,7 +24,7 @@
 <p>Sometimes, it can be very convenient to use lambda expressions as event handlers.  If the event handler does something short and sweet, it can also be a lot easier to read than having to jump down to the method that implements the handler.</p>
 
 
-<p>However, as with all events handlers, you really need to understand the lifetime of the instance that exposes the event or you can leak, leak, leak. <!--more--></p>
+<p>However, as with all events handlers, you really need to understand the lifetime of the instance that exposes the event or you can leak, leak, leak. </p>
 
 
 <p>Let's take a look at some code.  The following is a typical way to hook up to an event using a method as an event handler.</p>

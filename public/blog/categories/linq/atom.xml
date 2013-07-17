@@ -4,7 +4,7 @@
   <title><![CDATA[Category: linq | Headspring Labs]]></title>
   <link href="http://headspringlabs.com/blog/categories/linq/atom.xml" rel="self"/>
   <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-16T19:59:03-05:00</updated>
+  <updated>2013-07-17T00:19:02-05:00</updated>
   <id>http://headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
@@ -29,7 +29,7 @@
 </p>
 
 
-<p>I want to determine if my to-do list has any items that are late, so I use <code>.Where()</code> to filter my list of deliverables down to items with a deadline in the past; then I take a <code>.Count()</code> of the resulting list, and see if that number is greater than zero. This is a plausible solution, and our years of SQL lead us to write LINQ this way. But it can be better.<!--more--></p>
+<p>I want to determine if my to-do list has any items that are late, so I use <code>.Where()</code> to filter my list of deliverables down to items with a deadline in the past; then I take a <code>.Count()</code> of the resulting list, and see if that number is greater than zero. This is a plausible solution, and our years of SQL lead us to write LINQ this way. But it can be better.</p>
 
 
 <p>Testing "count greater than zero" is a programmer's way of saying "are there any?" So let's just say <em>any</em>. As you might expect, <code>.Any()</code> returns a Boolean indicating whether the collection contains any items. Further, you can pass a lambda expression to specify the predicate "any <em>like this</em>." (<code>.Count()</code> takes a predicate, too, by the way, but I really have seen "<code>.Where().Count()</code>" in use, so I wanted to start from there.)</p>

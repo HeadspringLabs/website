@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Conditionals | Headspring Labs]]></title>
   <link href="http://headspringlabs.com/blog/categories/conditionals/atom.xml" rel="self"/>
   <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-16T19:59:03-05:00</updated>
+  <updated>2013-07-17T00:19:02-05:00</updated>
   <id>http://headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
@@ -26,7 +26,7 @@
 
 <ul>
 <li>Reduce the chance of making an error while creating the initial implementation</li>
-<li>Reduce the time to understand the conditional while maintaining the implementation<!--more--></li>
+<li>Reduce the time to understand the conditional while maintaining the implementation</li>
 </ul>
 
 

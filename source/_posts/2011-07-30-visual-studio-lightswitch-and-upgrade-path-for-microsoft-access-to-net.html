@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Visual Studio Lightswitch, an upgrade path for Microsoft Access to .Net
-tags:
+categories:
 - Developer Deep Dive
 status: publish
 type: post
@@ -14,22 +14,13 @@ meta:
   _aioseop_title: Visual Studio Lightswitch, upgrade path for Microsoft Access
   dsq_thread_id: '832106287'
 ---
-There are lots of business systems written in Microsoft Access.  One of the most successful companies I know is <a href="http://www.fairsoftware.com/aboutgladstone.aspx">Gladstone, Inc</a>, makers of <a href="http://www.fairsoftware.com/">ShoWorks</a> software.  This software runs most of the county fairs in the U.S.  From entries, to checks, to vendors, this piece of software does it all to help manage and run a fair and keep track of all the data.  And it is written in Access.  Started on Access 97, I have watched this software grow through the various Access upgrades, and it tests the limits of the platform.  It’s author, <a href="http://www.hnatt.com/">Mike Hnatt</a>, is one of the premiere Access gurus, and Microsoft has previous invited him up to the Redmond campus to be a part of internal Software Design Reviews, or SDR’s.  Mike knows the limits of access, but even with the vast array of other development options out there, nothing comes close to parity with the capabilities he relies on – until today.<!--more-->
-
-<img style="border: 0pt none;" src="http://www.headspring.com/wp-content/uploads/2011/07/image_thumb9.png" alt="Application" width="524" height="333" border="0" />
-
-This is my first <a href="http://www.microsoft.com/visualstudio/en-us/lightswitch">Lightswitch</a> application.  I just installed the software, ran it, defined a table structure and a few screens.  It’s really simple, and I see that i runs a desktop version of Silverlight.  It feels like Access (I have done some of that programming earlier in my career) because you just define the tables and queries, and then ask for screens that work off the data.  You can customize the screens to some degree, and you can write code behind the screens, just like you can write VBA behind Access screens.  This is my first time looking at Lightswitch in a serious way since it was just released.  I will be looking at it more because it belongs in our toolbelt at <a href="http://www.headspring.com">Headspring</a>.  There are plenty of clients who have Access and FoxPro systems.  These systems have tremendously useful built-in functionality that is prohibitively expensive to duplicate in a custom way with raw WPF and C#, but Lightswitch provides a possible upgrade path that won’t break the bank.
-
-In case you are wondering what it looks like to develop this, here it is.
-
-<a href="http://www.headspring.com/wp-content/uploads/2011/07/image10.png"><img style="border: 0px;" src="http://www.headspring.com/wp-content/uploads/2011/07/image_thumb10.png" alt="image" width="510" height="304" border="0" /></a>
-
-Notice that there is a Solution Explorer, and you are in Visual Studio with a new project type.  I was really pleased that I could write code easily.
-
-<a href="http://www.headspring.com/wp-content/uploads/2011/07/image11.png"><img style="border: 0px;" src="http://www.headspring.com/wp-content/uploads/2011/07/image_thumb11.png" alt="image" width="513" height="315" border="0" /></a>
-
-I tried some <a href="http://www.jetbrains.com/resharper/">ReSharper</a> shortcuts, but they didn’t work.  I guess we’ll have to wait for ReSharper to enable this project type.  Here is my custom button that shows the message box.
-
-<a href="http://www.headspring.com/wp-content/uploads/2011/07/image12.png"><img style="border: 0px;" src="http://www.headspring.com/wp-content/uploads/2011/07/image_thumb12.png" alt="image" width="513" height="302" border="0" /></a>
-
-I think Lightswitch as a lot of promise for legacy system rewrites, upgrades, and conversions.  Because it’s 100% .Net, you can mix and match with web services, desktop, SQL Server, etc.
+<p>There are lots of business systems written in Microsoft Access.  One of the most successful companies I know is <a href="http://www.fairsoftware.com/aboutgladstone.aspx">Gladstone, Inc</a>, makers of <a href="http://www.fairsoftware.com/">ShoWorks</a> software.  This software runs most of the county fairs in the U.S.  From entries, to checks, to vendors, this piece of software does it all to help manage and run a fair and keep track of all the data.  And it is written in Access.  Started on Access 97, I have watched this software grow through the various Access upgrades, and it tests the limits of the platform.  It’s author, <a href="http://www.hnatt.com/">Mike Hnatt</a>, is one of the premiere Access gurus, and Microsoft has previous invited him up to the Redmond campus to be a part of internal Software Design Reviews, or SDR’s.  Mike knows the limits of access, but even with the vast array of other development options out there, nothing comes close to parity with the capabilities he relies on – until today.</p>
+<p><img style="border: 0pt none;" src="http://www.headspring.com/wp-content/uploads/2011/07/image_thumb9.png" alt="Application" width="524" height="333" border="0" /></p>
+<p>This is my first <a href="http://www.microsoft.com/visualstudio/en-us/lightswitch">Lightswitch</a> application.  I just installed the software, ran it, defined a table structure and a few screens.  It’s really simple, and I see that i runs a desktop version of Silverlight.  It feels like Access (I have done some of that programming earlier in my career) because you just define the tables and queries, and then ask for screens that work off the data.  You can customize the screens to some degree, and you can write code behind the screens, just like you can write VBA behind Access screens.  This is my first time looking at Lightswitch in a serious way since it was just released.  I will be looking at it more because it belongs in our toolbelt at <a href="http://www.headspring.com">Headspring</a>.  There are plenty of clients who have Access and FoxPro systems.  These systems have tremendously useful built-in functionality that is prohibitively expensive to duplicate in a custom way with raw WPF and C#, but Lightswitch provides a possible upgrade path that won’t break the bank.</p>
+<p>In case you are wondering what it looks like to develop this, here it is.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2011/07/image10.png"><img style="border: 0px;" src="http://www.headspring.com/wp-content/uploads/2011/07/image_thumb10.png" alt="image" width="510" height="304" border="0" /></a></p>
+<p>Notice that there is a Solution Explorer, and you are in Visual Studio with a new project type.  I was really pleased that I could write code easily.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2011/07/image11.png"><img style="border: 0px;" src="http://www.headspring.com/wp-content/uploads/2011/07/image_thumb11.png" alt="image" width="513" height="315" border="0" /></a></p>
+<p>I tried some <a href="http://www.jetbrains.com/resharper/">ReSharper</a> shortcuts, but they didn’t work.  I guess we’ll have to wait for ReSharper to enable this project type.  Here is my custom button that shows the message box.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2011/07/image12.png"><img style="border: 0px;" src="http://www.headspring.com/wp-content/uploads/2011/07/image_thumb12.png" alt="image" width="513" height="302" border="0" /></a></p>
+<p>I think Lightswitch as a lot of promise for legacy system rewrites, upgrades, and conversions.  Because it’s 100% .Net, you can mix and match with web services, desktop, SQL Server, etc.</p>

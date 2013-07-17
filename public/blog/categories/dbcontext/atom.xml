@@ -4,7 +4,7 @@
   <title><![CDATA[Category: DbContext | Headspring Labs]]></title>
   <link href="http://headspringlabs.com/blog/categories/dbcontext/atom.xml" rel="self"/>
   <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-16T19:59:03-05:00</updated>
+  <updated>2013-07-17T00:19:02-05:00</updated>
   <id>http://headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
@@ -21,7 +21,7 @@
     <content type="html"><![CDATA[<h2><strong>Introduction</strong></h2>
 
 
-<p>In this post we will be discussing how DbContext API helps us in validation of entities in Entity Framework Code First workflow. The API allows various options to define validation of entities and their properties. It also makes it easier to execute these validations providing validation results. We are going to be using some basic entities in a simple Institute and introduce various forms of validations using different options available in the framework. The whole intent is to learn these available options. In a real world example you might be more or less inclined to be using any of these options.<!--more--></p>
+<p>In this post we will be discussing how DbContext API helps us in validation of entities in Entity Framework Code First workflow. The API allows various options to define validation of entities and their properties. It also makes it easier to execute these validations providing validation results. We are going to be using some basic entities in a simple Institute and introduce various forms of validations using different options available in the framework. The whole intent is to learn these available options. In a real world example you might be more or less inclined to be using any of these options.</p>
 
 
 <h2><strong>Prerequisite</strong></h2>

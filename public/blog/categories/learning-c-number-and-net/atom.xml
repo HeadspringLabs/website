@@ -4,7 +4,7 @@
   <title><![CDATA[Category: learning c# and .net | Headspring Labs]]></title>
   <link href="http://headspringlabs.com/blog/categories/learning-c-number-and-net/atom.xml" rel="self"/>
   <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-16T19:59:03-05:00</updated>
+  <updated>2013-07-17T00:19:02-05:00</updated>
   <id>http://headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
@@ -33,7 +33,7 @@
 <p><div><script src='https://gist.github.com/2206415.js'></script>
 <noscript><pre><code></code></pre></noscript></div>
 <br />
-[gist id="2206371" file="Signature.cs"]<!--more--></p>
+[gist id="2206371" file="Signature.cs"]</p>
 
 
 <p>Another reason I’m a fan of this pattern is when it can be used in sets. Imagine your email signature for a moment. You could have multiple signatures to choose from when you compose an email. Rather than having code to check for the existence of signatures, we can now simply always assume that there will be at least one signature.</p>
@@ -87,9 +87,6 @@
 
 
 <p>Basically, getting to know Steve meant getting to know how diverse his background truly is, and his desire to really involve himself in the world that surrounds him.  Here is some of what we talked about:</p>
-
-
-<p><!--more--></p>
 
 
 <p><strong>What tools and technologies would you consider yourself an expert in?</strong></p>

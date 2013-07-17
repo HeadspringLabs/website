@@ -4,7 +4,7 @@
   <title><![CDATA[Category: quattro | Headspring Labs]]></title>
   <link href="http://headspringlabs.com/blog/categories/quattro/atom.xml" rel="self"/>
   <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-16T19:59:03-05:00</updated>
+  <updated>2013-07-17T00:19:02-05:00</updated>
   <id>http://headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
@@ -26,7 +26,7 @@
 
 <ol>
 <li>Uncaught exceptions thrown by your Powershell process.</li>
-<li>Failure exit codes returned by external programs that your Powershell process invoked.<!--more--></li>
+<li>Failure exit codes returned by external programs that your Powershell process invoked.</li>
 </ol>
 
 
@@ -85,7 +85,7 @@
     <content type="html"><![CDATA[<p>A long time ago, my development team decided to write our own unit test framework. Today that would be ridiculous, because there are so many mature options from the .NET community (NUnit, MbUnit, xUnit, MsTest, to name a few). But this was 2002, .NET was brand new, and we thought attribute-based metadata was a better approach to describing tests than the interface-and-naming-convention pattern that NUnit required at the time.</p>
 
 
-<p>Of course, about the same time we'd gotten our homegrown framework running and built a couple thousand tests with it, NUnit 2.0 came out with a brand-new and shiny attribute-based metadata approach. We spent the next 3 years wishing we had the time to port all our tests to NUnit, and stealing features from it for our custom test runner.<!--more--></p>
+<p>Of course, about the same time we'd gotten our homegrown framework running and built a couple thousand tests with it, NUnit 2.0 came out with a brand-new and shiny attribute-based metadata approach. We spent the next 3 years wishing we had the time to port all our tests to NUnit, and stealing features from it for our custom test runner.</p>
 
 
 <p>One of the things I really envied about NUnit was its test method lifecycle. We support setup and teardown methods, but we never went beyond that. NUnit, by comparison has a rich set of events that occur for each test that gets run. Whenever I teach our <a title="Agile Bootcamp" href="http://www.headspring.com/services/developer-training/agile-bootcamp">Agile Boot Camp class</a>, I always make sure to walk students through the finer points of a test fixture's life, so they'll know the best way to organize their test code. When you're first writing unit tests, knowing whether to put something in the test method, the setup, the fixture setup, or somewhere else, just isn't all that obvious. Oftentimes, I see people putting expensive initialization code into every single test method, which causes their tests to run slower than they need to.</p>
@@ -159,7 +159,7 @@ Dispose</pre>
     <content type="html"><![CDATA[<p>If it can't be drawn, it can't be built. It’s the mantra in our office. Having heard it almost every day that I have been here at Headspring, I never really understood its power before I set out on the (thought to be exciting) task of rebuilding the company website.</p>
 
 
-<p>I knew I’d have to gather requirements for the site. Having no idea of what requirement gathering techniques were out there I just started a word document list: pages, forms, content.  When I sat down with the team to start developing the site, they needed more information about site flow.<!--more--></p>
+<p>I knew I’d have to gather requirements for the site. Having no idea of what requirement gathering techniques were out there I just started a word document list: pages, forms, content.  When I sat down with the team to start developing the site, they needed more information about site flow.</p>
 
 
 <p>I tried explaining with my 17 page word document, highlighted and notes scribbled on the side, but no one was getting it (including myself). When one brilliant person suggested that we draw it out, markers opened and the drawing began: home page, top-nav pages, children pages, forms and so on.</p>
@@ -175,7 +175,7 @@ Dispose</pre>
     <link href="http://headspringlabs.com/blog/from-programmer-to-manager/"/>
     <updated>2011-07-27T00:00:00-05:00</updated>
     <id>http://headspringlabs.com/blog/from-programmer-to-manager</id>
-    <content type="html"><![CDATA[<p>I started my career as a programmer. I was fortunate enough to get into computing as the Internet revolution was a strong possibility in the early nineties. My career has largely followed the rise of the PC, the Internet, and now cloud computing. Being one of the first on my block with an email address and a web site (which we called "<a href="http://en.wikipedia.org/wiki/Home_page">home pages</a>" back then), I started web development very early.<!--more--></p>
+    <content type="html"><![CDATA[<p>I started my career as a programmer. I was fortunate enough to get into computing as the Internet revolution was a strong possibility in the early nineties. My career has largely followed the rise of the PC, the Internet, and now cloud computing. Being one of the first on my block with an email address and a web site (which we called "<a href="http://en.wikipedia.org/wiki/Home_page">home pages</a>" back then), I started web development very early.</p>
 
 
 <h1>In the beginning</h1>
@@ -242,7 +242,7 @@ Dispose</pre>
 <p>One: It sounded like a good idea at the time.</p>
 
 
-<p>As strange as it may sound, the BCS system was created to solve a problem. The old way of crowning a national champion failed for the first time in 1992. Mark Brunell's Washington Huskies had won their bowl game and finished the season undefeated. In most seasons this would have been enough to secure the national championship, but this year was different. The University of Miami (featuring Dwayne "The Rock" Johnson) had likewise finished the regular season undefeated and pummeled Nebraska in the Orange Bowl. Although The Rock would go on to claim to be "The People's Champion," the national title was declared a tie. Everyone threw a big fit because there were two national champions, and America doesn't do ties. Something had to be done—and the solution was to be the Bowl Championship Series. The BCS ranking formula would include the opinions of people who talk about sports on TV, coaches who are allowed to vote for their own teams, and six computers that would calculate secret algorithms. What could possibly go wrong?<!--more--></p>
+<p>As strange as it may sound, the BCS system was created to solve a problem. The old way of crowning a national champion failed for the first time in 1992. Mark Brunell's Washington Huskies had won their bowl game and finished the season undefeated. In most seasons this would have been enough to secure the national championship, but this year was different. The University of Miami (featuring Dwayne "The Rock" Johnson) had likewise finished the regular season undefeated and pummeled Nebraska in the Orange Bowl. Although The Rock would go on to claim to be "The People's Champion," the national title was declared a tie. Everyone threw a big fit because there were two national champions, and America doesn't do ties. Something had to be done—and the solution was to be the Bowl Championship Series. The BCS ranking formula would include the opinions of people who talk about sports on TV, coaches who are allowed to vote for their own teams, and six computers that would calculate secret algorithms. What could possibly go wrong?</p>
 
 
 <p>Like college football, businesses grow and change over time. Systems evolve naturally around activities and tasks that are of higher value to the bottom line. Back in the day, it was easy to tweak the system. Putting a file in a different inbox, or firing the guy with messy handwriting was how things got done. Then businesses grew and grew and grew, until they could produce no more without bringing in an IT expert to automate everything. To quote the slick talking software-salesman: "Using this great new system of expensive software that only a couple of people understand, your business will be free to expand, and the system probably won't have to ever be changed! Even if some minor adjustments have to be made, I'm sure it would be no problem to find someone who can do it right, and every employee will have no problem at all adjusting to the new features. What could possibly go wrong?"</p>

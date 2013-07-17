@@ -4,7 +4,7 @@
   <title><![CDATA[Category: open source | Headspring Labs]]></title>
   <link href="http://headspringlabs.com/blog/categories/open-source/atom.xml" rel="self"/>
   <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-16T19:59:03-05:00</updated>
+  <updated>2013-07-17T00:19:02-05:00</updated>
   <id>http://headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
@@ -24,7 +24,7 @@
 <h3><strong>What is ASP.NET Web API?</strong></h3>
 
 
-<p>I’ve worked with ASP.NET’s take on HTTP for quite some time, but I'm usually the guy that avoids the past opinions of the Microsoft team. I feel like I understand how the web works and bulky .NET classes around it seem heavy handed and usually overkill; I try to avoid them at all costs. This is why ASP.NET Web API appeals to me. It’s a lighter-weight approach to the web with C# and the .NET stack. A few individuals have been paying attention to this for a few months now and I decided to help out a little bit after.<!--more--></p>
+<p>I’ve worked with ASP.NET’s take on HTTP for quite some time, but I'm usually the guy that avoids the past opinions of the Microsoft team. I feel like I understand how the web works and bulky .NET classes around it seem heavy handed and usually overkill; I try to avoid them at all costs. This is why ASP.NET Web API appeals to me. It’s a lighter-weight approach to the web with C# and the .NET stack. A few individuals have been paying attention to this for a few months now and I decided to help out a little bit after.</p>
 
 
 <h3><strong>Why WebApiContrib?</strong></h3>
