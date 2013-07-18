@@ -102,90 +102,107 @@ facebook_like: true
 # ----------------------- #
 #    Author Information   #
 # ----------------------- #
+current_authors: [alonso, anne, cedric, chris, deran, jimmy, justinm, justin, kevin, kyle, logan, mahendra, nolan, patrick, sharon, tim]
 authors:
   alonso:
     name: Alonso Robles
     gravatar: 95a087322938a69b9670c28291e4f479
     twitter: alonsorobles
     github: alonsorobles
+    location: Austin, TX
   anne:
     name: Anne Epstein
     gravatar: 18d71aac83cd382ef818ea8480091546
     twitter: ajepst
     github: ajepst
+    location: Austin, TX
   cedric:
     name: Cedric Yao
     gravatar: 38e93c75af646c8b4032737b202c551c
     twitter: raspar
     github: cedricyao
+    location: Austin, TX
   chris:
     name: Chris Missal
     gravatar: 09f73b6f180bb61f39369784d5082d09
     twitter: ChrisMissal
     github: ChrisMissal
+    location: Austin, TX
   deran:
     name: Deran Schilling
     gravatar: f7f5ab2e221884860465b7b1b3e8b510
     twitter: derans
     github: derans
+    location: Houston, TX
   jimmy:
     name: Jimmy Bogard
     gravatar: 462cca297af6670cf47aaf5551740f12
     twitter: jbogard
     github: jbogard
+    location: Austin, TX
   justinm:
     name: Justin Mason
     gravatar: 8da49f2d2ef715b9c0286d16ead63da1
     twitter: 
     github: 
+    location: Austin, TX
   justin:
     name: Justin Pope
     gravatar: 52adb727732c916e9bbc756f33817d48
     twitter: 
     github: 
+    location: Austin, TX
   kevin:
     name: Kevin Hurwitz
     gravatar: 556e1c922da51113ba0fe95ec5314a1b
     twitter: 
     github: 
+    location: Austin, TX
   kurt:
     name: Kurt Schindler
     gravatar: 8e2b5e14b06394846485f4ccd92f7669
     twitter: kurtschindler
     github: kurtschindler
-    former: true
+    location: Austin, TX
   kyle:
     name: Kyle Nunery
     gravatar: 29a6abc71855afdb60312a6013772834
     twitter: knunery
     github: knunery
+    location: Austin, TX
   logan:
     name: Logan Turner
     gravatar: f5203a0532598243c6cc04296a19491e
     twitter: _loganturner
     github: loganturner
+    location: Austin, TX
   mahendra:
     name: Mahendra Mavani
     gravatar: 5b7c10a7fe37184b3e85187858b68cff
     twitter: mahendramavani
     github: mahendramavani
+    location: Austin, TX
   nolan:
     name: Nolan Egly
     gravatar: bd9b5f1fa3e3da40260b9124a6fa3178
     twitter: nolanegly
     github: nolanegly
+    location: Austin, TX
   patrick:
     name: Patrick Lioi
     gravatar: 132b05329f7c2dfa5fc9d04c4ab22ce3
     twitter: plioi
     github: plioi
+    location: Austin, TX
   sharon:
     name: Sharon Cichelli
     gravatar: 24e4848cfb6d2508ecebee4ad8ef1c47
     twitter: scichelli
     github: scichelli
+    location: Austin, TX
   tim:
     name: Tim G. Thomas
     gravatar: 9941404190648abe46e52c4b07bd6caf
     twitter: timgthomas
     github: timgthomas
+    location: Austin, TX

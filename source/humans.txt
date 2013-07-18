@@ -1,0 +1,12 @@
+---
+layout: nil
+---
+/* TEAM */
+
+{% for key in site.current_authors %}
+{% assign author = site.authors[key] %}
+	Headspringer: {{ author.name }}
+	{% if author.location %}From: {{ author.location }}{% endif %}
+	{% if author.twitter %}Twitter: @{{ author.twitter }}{% endif %}
+	{% if author.github %}GitHub: {{ author.github }}{% endif %}
+{% endfor %}
