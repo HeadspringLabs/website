@@ -23,19 +23,11 @@
 
 <body>
 	<header id="header" class="inner"><h1><a href="/">Headspring Labs</a></h1>
-<nav id="main-nav"><ul class="main">
-	<li><a href="/blog">Blog</a></li>
-	<li><a href="/blog/archives">Archives</a></li>
-	<li><a href="/open-source">Open Source</a></li>
-	<li><a href="/team">The Team</a></li>
-	<li><a href="/about-us">About Us</a></li>
-</ul>
-</nav>
 <nav id="mobile-nav">
 	<div class="alignleft menu">
 		<a class="button">Menu</a>
 		<div class="container"><ul class="main">
-	<li><a href="/blog">Blog</a></li>
+	<li><a href="/">Blog</a></li>
 	<li><a href="/blog/archives">Archives</a></li>
 	<li><a href="/open-source">Open Source</a></li>
 	<li><a href="/team">The Team</a></li>
@@ -63,9 +55,9 @@
 		
 		<a class="github" href="https://github.com/HeadspringLabs" title="GitHub">GitHub</a>
 		
-    
+	    
 		
-		<a class="coderwall" href="https://coderwall.com/headspring" title="Coderwall">Coderwall</a>
+		<a class="coderwall" href="https://coderwall.com/team/headspring" title="Coderwall">Coderwall</a>
 		
 		
 		
@@ -73,12 +65,20 @@
 		
 		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
 		
-    
+	    
 	</div>
 	<form class="search" action="http://google.com/search" method="get">
 		<input class="alignright" type="text" name="q" results="0">
 		<input type="hidden" name="q" value="site:headspringlabs.com">
 	</form>
+</nav>
+<nav id="main-nav"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+	<li><a href="/open-source">Open Source</a></li>
+	<li><a href="/team">The Team</a></li>
+	<li><a href="/about-us">About Us</a></li>
+</ul>
 </nav>
 
 </header>
@@ -88,6 +88,7 @@
 	<div id="content" class="inner"><article class="post">
 	<h2 class="title">By Your Command (Line)</h2>
 	<div class="entry-content"><p>Last week, we saw an example of <a href="http://www.headspring.com/dynamic-test-discovery/">Dynamic Test Discovery</a> in Fixie, in which the test runner can be made to run a different set of tests each time, depending on context. A Fixie convention could make decisions based on how the test run was initiated. This week, I&#8217;ll demonstrate a similar feature which takes advantage of yet more context.  For this example, our convention will get to make decisions based on the command line arguments used to kick off the test run.</p>
+<!--more-->
 <blockquote><p>Today&#8217;s code sample works against <a href="http://nuget.org/packages/Fixie/0.0.1.70">Fixie 0.0.1.70</a>. The customization API is in its infancy, and is likely to change in the coming weeks.</p></blockquote>
 <p>Before this build, Fixie.Console.exe treated <em>all</em> of its arguments as paths to test assembly files. As of Fixie 0.0.1.70, you can also specify arbitrary key/value pairs on the command line:</p>
 <p><div><script src='https://gist.github.com/5981304.js'></script>

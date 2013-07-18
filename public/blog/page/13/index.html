@@ -7,8 +7,8 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="Leadership Team Honored for Dedication to Employee Engagement, Culture and Benefits
-Austin, TX – June 07, 2012, Austin-based Headspring, a custom &hellip;">
+	<meta name="description" content="Shirley: Tell me about the Extract-Variable refactoring.
+Albert: Let&#8217;s say I have a long expression that has become hard to read, and that I &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -24,19 +24,11 @@ Austin, TX – June 07, 2012, Austin-based Headspring, a custom &hellip;">
 
 <body>
 	<header id="header" class="inner"><h1><a href="/">Headspring Labs</a></h1>
-<nav id="main-nav"><ul class="main">
-	<li><a href="/blog">Blog</a></li>
-	<li><a href="/blog/archives">Archives</a></li>
-	<li><a href="/open-source">Open Source</a></li>
-	<li><a href="/team">The Team</a></li>
-	<li><a href="/about-us">About Us</a></li>
-</ul>
-</nav>
 <nav id="mobile-nav">
 	<div class="alignleft menu">
 		<a class="button">Menu</a>
 		<div class="container"><ul class="main">
-	<li><a href="/blog">Blog</a></li>
+	<li><a href="/">Blog</a></li>
 	<li><a href="/blog/archives">Archives</a></li>
 	<li><a href="/open-source">Open Source</a></li>
 	<li><a href="/team">The Team</a></li>
@@ -64,9 +56,9 @@ Austin, TX – June 07, 2012, Austin-based Headspring, a custom &hellip;">
 		
 		<a class="github" href="https://github.com/HeadspringLabs" title="GitHub">GitHub</a>
 		
-    
+	    
 		
-		<a class="coderwall" href="https://coderwall.com/headspring" title="Coderwall">Coderwall</a>
+		<a class="coderwall" href="https://coderwall.com/team/headspring" title="Coderwall">Coderwall</a>
 		
 		
 		
@@ -74,12 +66,20 @@ Austin, TX – June 07, 2012, Austin-based Headspring, a custom &hellip;">
 		
 		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
 		
-    
+	    
 	</div>
 	<form class="search" action="http://google.com/search" method="get">
 		<input class="alignright" type="text" name="q" results="0">
 		<input type="hidden" name="q" value="site:headspringlabs.com">
 	</form>
+</nav>
+<nav id="main-nav"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+	<li><a href="/open-source">Open Source</a></li>
+	<li><a href="/team">The Team</a></li>
+	<li><a href="/about-us">About Us</a></li>
+</ul>
 </nav>
 
 </header>
@@ -92,20 +92,58 @@ Austin, TX – June 07, 2012, Austin-based Headspring, a custom &hellip;">
     <article class="post">
 	<h2 class="title">
 		
-		<a href="/blog/headspring-named-one-of-top-5-best-places-to-work-in-austin/">
+		<a href="/blog/lean-lambdas/">
 		
-			Headspring Named One of Top 5 Best Places to Work in Austin</a>
+			Lean Lambdas</a>
 	</h2>
 	<div class="entry-content">
-		<p align="center"><strong><em><img class="alignright size-full wp-image-5533" title="BPTW-logo-hollywood-glam" src="http://headspring.wpengine.com/wp-content/uploads/2012/06/BPTW-logo-hollywood-glam.jpg" alt="" width="270" height="233" />Leadership Team Honored for Dedication to Employee Engagement, Culture and Benefits</em></strong></p>
-<p><strong><em></em></strong>Austin, TX – June 07, 2012, Austin-based Headspring, a custom application development and consulting firm, today announced it has been recognized as one of the Austin Business Journal’s “Best Places to Work” in Central Texas.  Headspring ranked number four in the Small Companies category of the 2012 list.</p>
-<p>Headspring was chosen as one of the top-five Best Places to Work in Central Texas after a series of voluntary employee surveys which examined climate, team atmosphere, benefits and employee engagement. <img title="More..." src="http://www.headspring.com/wp-includes/js/tinymce/plugins/wordpress/img/trans.gif" alt="" /></p>
-<p>“It is such an honor to be named one of the 2012 Best Places to Work in Austin,” says CEO/Founder Dustin Wells. “Austin is a rapidly growing city with an expansive job market; job seekers have a lot of options. We are really touched by the fact our talented team of employees choose to work here and evangelize on behalf of our unique culture.”</p>
-<p>Award recipients were announced at a Hollywood-themed luncheon and ceremony on June 6<sup>th</sup> at the AT&amp;T Executive Education and Conference Center. The ceremony presentation included pictures and videos submitted by Headspring employees as a testament to their enthusiasm for the award-winning culture and work environment.</p>
-<p>This award comes on the heels of Headspring’s announcement earlier this year to hire two new employees per month in 2012 and to promote the existing twenty-five employees within the company. Headspring is experiencing rapid growth and is set to triple the office’s square footage by moving into the Avalon Building, located in northwest Austin, at the end of July.  As Headspring continues to contract new and larger projects, they vow to preserve a fun and collaborative culture, while planning to hire two new employees per month in 2012.</p>
-<p>For more information about careers at Headspring, visit: <a href="http://www.headspring.com/about-us/careers">http://www.headspring.com/about-us/careers</a></p>
-<div><strong style="color: #000000; text-align: left;"><br />
-</strong></div>
+		<p><strong>Shirley:</strong> Tell me about the Extract-Variable refactoring.</p>
+<p><strong>Albert:</strong> Let&#8217;s say I have a long expression that has become hard to read, and that I can identify a noteworthy subexpression within it.  I can &#8216;extract&#8217; that subexpression from the original by introducing a new local variable.  The variable is initialized to the subexpression, and then the larger original expression is rewritten in terms of the new variable.  Doing so can make things easier to read: the original expression is shorter, and we&#8217;ve given a useful name to the part we took out.  For example:</p>
+<p><div><script src='https://gist.github.com/4264666.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p><strong>Shirley:</strong> Since we&#8217;re doing this extra step with an extra variable, will the result run a little slower than the original?</p>
+<p><strong>Albert:</strong> No, silly!  We&#8217;re doing the same amount of work in both versions.  Even with the original version, the compiler had to break down the expression into many smaller steps just like the change we made.  We&#8217;re just introducing a useful nickname for one of those intermediate steps.</p>
+<p><strong>S:</strong> Is there any way Extract-Variable <em>could</em> make something faster?</p>
+<p><strong>A:</strong> Aren&#8217;t you listening!?  Oh, wait.  If the expression you are pulling out appears multiple times in the larger expression, and the cost of evaluating it is large enough to notice, then Extract-Variable could actually speed things up, since you&#8217;ll only evaluate it once.</p>
+<p><strong>S:</strong> If you do that, is there any chance you&#8217;ll change the runtime behavior?</p>
+<p><strong>A:</strong> Only if the subexpression has side effects.  We used to evaluate it multiple times, and now we evaluate it once.  If the expression <em>does</em> something to the world other than just provide a value, we&#8217;d be introducing a breaking change.  That&#8217;s why you want to keep as much of your code as pure as reasonably possible.</p>
+<p><strong>S:</strong> Pure?</p>
+<p><strong>A:</strong> An expression or function is pure if it depends only on its inputs and has no side effects.  It just looks at the inputs and returns a result.  For the same inputs, it always gives the same output.  <code>x+5</code> is pure, while <code>SendAnEmailToGrandma()</code> isn&#8217;t.  It&#8217;s safe to Extract-Variable with pure code, even when the subexpression showed up multiple times beforehand.  Pure stuff is easier to chop up, reorder, and move around.  It&#8217;s easier to reason about.</p>
+<p><strong>S:</strong> Imagine that we&#8217;ve got a large expression, and that the subexpression we&#8217;re extracting only appears <em>once</em>.  What if I told you we could <em>still</em> get a performance boost out of it?</p>
+<p><strong>A:</strong> Shirley, you&#8217;re joking.</p>
+<p><strong>S:</strong> Nope! I&#8217;ve got two situations in mind.  Let&#8217;s start with the easy one.  This loop is taking way too long to execute:</p>
+<p><div><script src='https://gist.github.com/4264673.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p><strong>A:</strong> Oh, I see what you&#8217;re getting at.  We saw earlier how you can get a performance boost when extracting a subexpression that appeared multiple times in the original expression.  In this loop, we&#8217;ve got the same problem in a different format.  The subexpression <em>appears</em> once, but it gets <em>evalutated</em> a whole lot, each time with the same result.  We&#8217;d fix this with two refactorings: we&#8217;d Extract-Variable, and then we&#8217;d move that variable declaration <em>before</em> the loop:</p>
+<p><div><script src='https://gist.github.com/4264675.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p><strong>S:</strong> Great! Earlier, I said I was thinking about two examples in which code with a singly-occurring subexpression could be sped up with Extract-Variable.  The easy one was the <code>foreach</code> you just fixed, but the second one&#8217;s tough.  Let&#8217;s improve upon the previous example.  Instead of building up a big list of all the values in the column, we&#8217;ll make a column object that uses a Func&lt;Row&gt; to evaluate each cell only as needed:</p>
+<p><div><script src='https://gist.github.com/4264677.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p><strong>A:</strong> Again, we don&#8217;t want to keep on performing the costly CompileUserExpression(&#8230;) call every time we need to display a grid cell.  The problem is, if I Extract-Variable here, we&#8217;re left with the same wasteful recompilation:</p>
+<p><div><script src='https://gist.github.com/4264685.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p><strong>S:</strong> If the lambda gets called a bajillion times, how many times will we evaluate the costly part?</p>
+<p><strong>A:</strong> A bajillion.</p>
+<p><strong>S:</strong> Hmmph.</p>
+<p><strong>A:</strong> &#8230;</p>
+<p><strong>S:</strong> How is this any different from the <code>foreach</code> example?</p>
+<p><strong>A:</strong> When the costly bit was in a <code>foreach</code>, we could just move the variable to the outer scope.  Here, we have a lambda.</p>
+<p><strong>S:</strong> Doesn&#8217;t a lambda introduce a scope too?</p>
+<p><strong>A:</strong> Well, yeah, but if we move <code>compiledExpression</code> outside of the lambda, wouldn&#8217;t it become available for garbage collection as soon as we returned from <code>CreateCalculatedColumn</code>?  Let&#8217;s see:</p>
+<p><div><script src='https://gist.github.com/4264688.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p><strong>A:</strong> It works!  Our lambda is referring to a variable in the surrounding scope, and we&#8217;re returning the lambda.  Lambdas are just objects, so this is just like returning any other object that references a locally-constructed thing.  The garbage collector only cleans up unreachable things, and <code>compiledExpression</code> will be reachable for as long as the lambda is reachable.  We get to avoid all that rework no matter how many times the lambda is called!</p>
+<p><strong>S:</strong> Slick.</p>
+<p><strong>A:</strong> How does one end a Socratic Dialogue?</p>
+<p><strong>S:</strong> How about with a summary?</p>
+<p><strong>A:</strong> Extract-Variable starts out as a simple refactoring to improve the readability of large expressions.  When working with pure code, the change is both safe and easy to perform.  In addition to aiding readability, Extract-Variable can occasionally improve performance, when the extraction keeps us from doing a lot of excess work.  After extracting a variable, we can consider moving it to an outer scope, so long as doing so preserves behavior.  Moving it outside of a loop can prevent wasteful reevaluation across many iterations.  Likewise, moving it outside of a lambda can prevent wasteful reevaluation across many invocations of the lambda.</p>
 
 		
 		
@@ -125,7 +163,167 @@ Austin, TX – June 07, 2012, Austin-based Headspring, a custom &hellip;">
   
 
 
-<time datetime="2012-06-07T00:00:00-05:00" pubdate data-updated="true">Jun 7<span>th</span>, 2012</time></div>
+<time datetime="2012-12-12T00:00:00-06:00" pubdate data-updated="true">Dec 12<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/the-solution-is-never-inheritance/">
+		
+			The Solution Is Never Inheritance</a>
+	</h2>
+	<div class="entry-content">
+		<p>That&#8217;s how fellow-Headspringer <a href="https://twitter.com/scichelli">Sharon Cichelli</a> started a conversation today:  &#8220;The solution is never inheritance.&#8221;  It&#8217;s a controversial title.  Afterall, one must never, <em><strong>under any circumstances</strong></em> speak in absolutes.  &#8220;The maintainable solution is quite oft not inheritance&#8221; may be closer to the truth while missing the point entirely.  Judicious use of inheritance in small chunks can be useful, but implementation inheritance in the wild is usually a mess that gets out of hand quickly.</p>
+<p>The general advice to <a href="https://www.google.com/search?q=composition+over+inheritance">favor composition over inheritance</a> has been written about countless times.  In <a href="http://www.headspring.com/patrick/spaghetti-alla-code/">Spaghetti alla Code</a>, I blamed the problem on the way that <code>virtual/override/base</code> keywords achieve code reuse at the cost of littering your implementation with subtle <code>goto</code>-like complexity: you have to execute every line of a class hierarchy in your head in order to know what any one class is actually going to do.  When favoring composition, you&#8217;re more likely to understand what a class does by just reading that class.</p>
+<p>I don&#8217;t always use implementation inheritance, but when I do, I use the Template Method Pattern and the Bucket of Small-Scope Helper Methods Pattern.</p>
+<h2>The Template Method Pattern</h2>
+<p>In this pattern, an abstract base class provides a basic algorithm, leaving a detail or two undefined as abstract methods.  A single-level of child classes completes the story by providing implementations for the undefined steps.    I never decide up front to use this pattern.  Rather, I refactor toward it when it&#8217;s the clearest way to remove some code duplication.</p>
+<h2>The Bucket of Small-Scope Helper Methods Pattern</h2>
+<p>Sure, this isn&#8217;t an official Gang of Four pattern, but it comes up often enough that it deserves a name.  I arrive at this kind of inheritance incrementally.  If I have an <em>interface</em> whose implementations take on suspiciously-similar private helper methods, and the duplication mounts up, I promote the interface to an abstract class and move the common private methods up to the base class.</p>
+<p>When the scope of these helper methods is very small, the base class is an appropriate home for them, but watch out: you may be hiding a new concept here that would be more useful to the rest of your system as a separate public class.</p>
+<p>I use the BoSSHM Pattern when the thought of a new public class feels like overkill or overengineering.  I don&#8217;t want to distract the reader with rarely-used classes, just for the sake of having <em>small</em> classes.</p>
+<h2>Evolve Towards Inheritance</h2>
+<p>Off the top of my head, I can&#8217;t think of any other time I use implementation inheritance and later think to myself, &#8220;That was a good idea!&#8221;  Also, the way I arrive at these patterns is just as important as the result: rather than being the product of up-front design, I arrive at them in small steps as code duplication pains present themselves.  Each solves <em>small</em> kinds of code duplication problems, so the resulting inheritance hierarchies are also small and therefore easy to understand.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-07T00:00:00-06:00" pubdate data-updated="true">Dec 7<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/get-to-know-a-developer-wayne-denier/">
+		
+			Get to Know a Developer: Wayne Denier</a>
+	</h2>
+	<div class="entry-content">
+		<p>A native of Frederick, MD, Wayne has lived in Austin for two years and we welcome him to the Headspring team! At Headspring, Wayne focuses on the user interface and general feature coding. He previously worked at Dell Inc. and Enforme Interactive. Wayne is passionate about game development and design and is experienced in HTML, Javascript, CSS, JQuery, C# and .NET MVC.</p>
+<p>We are thrilled that Wayne has become part of our Headspring family! Keep reading to learn more about Wayne.</p>
+<p><strong><img class="size-medium wp-image-6262 alignright" title="waynephoto" src="http://www.headspring.com/wp-content/uploads/2012/12/waynephoto-215x300.jpg" alt="" width="215" height="300" /></strong></p>
+<p><strong>What made you want to work here?</strong></p>
+<p>I like working with people that get excited about what they are doing, and I believe that passion leads to pushing the boundaries of what is possible. I see a lot of that passion in the team at Headspring. Anyone who has worked with or for the company has a great standard for technical excellence, an attitude of sharing and learning, and they are passionate about their discipline.</p>
+<p><strong>Who is on your list of ideal clients to work for or individuals to work with?</strong></p>
+<p>When it comes to clients, I like providing solutions that make complex problems seem easy. I like to make tools for people to remove frustrations in the little things they have to do to perform their jobs and enjoy building software for someone to help achieve that goal.</p>
+<p><strong> </strong></p>
+<p><strong>What led you to software development?</strong></p>
+<p>Communicating with people. I come from roots in graphic design and enjoy conveying ideas to people. Naturally, designing for the web became a necessity and so a few Wrox books later I was well into the world of developing software for the web. Also, programming is fun!</p>
+<p><strong>Do you like teaching?</strong></p>
+<p>A lot. It’s fun to plan out a frame of time and present a topic to a room of people. I like setting the pacing and revealing information to people in a way that can both get them excited and present them with practical knowledge. Mentoring is another great avenue for that. I try very hard to mentor others, as well as find someone to learn from myself. The philosophy of experiential education emphasizes the pattern “see one, do one, teach one”, and I try to keep that active as much as I can.</p>
+<p><strong>How do you gauge “time well spent”?</strong></p>
+<p>Anytime something is produced, learned, improved or passion is rekindled. Shipping viable software or improving it based on features that are in use is an obvious good use of time.</p>
+<p>&nbsp;</p>
+<p>Learn more about Wayne at <a href="http://rightbrainleft.net/" target="_blank">his website</a> and on <a href="http://twitter.com/wheresyourbrain" target="_blank">Twitter</a>.</p>
+<p>&nbsp;</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-06T00:00:00-06:00" pubdate data-updated="true">Dec 6<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/get-to-know-a-headspringer/'>Get To Know a Headspringer</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/austin-based-custom-software-company-named-one-of-the-best-companies-to-work-for-in-texas/">
+		
+			Austin-Based Custom Software Company Named One of the Best Companies to Work for in Texas</a>
+	</h2>
+	<div class="entry-content">
+		<p align="center"><em>Headspring Honored with “Best Companies to Work for in Texas</em>”<em> Award Based on Its Employees’ Engagement and Satisfaction and the Company’s </em><em>Benefits and Policies</em><strong> </strong></p>
+<p style="text-align: center;"><img class="aligncenter  wp-image-6259" title="2009 BCTWFIT" src="http://www.headspring.com/wp-content/uploads/2012/12/2013BCTWFIT-330x300.jpg" alt="" width="264" height="240" /></p>
+<p><strong>AUSTIN, TX (Dec. 4, 2012) –</strong> <a href="http://www.headspring.com/" target="_blank">Headspring</a>, an Austin-based <a href="http://www.headspring.com/services/software-consulting/" target="_blank">software development company</a>, today announced it was named one of the 2013 Best Companies to Work for in Texas.</p>
+<p><em>Texas Monthly</em>, the Texas Association of Business (TAB), the Texas State Council of the Society for Human Resource Management (TSC-SHRM) and Best Companies Group, statewide survey and awards program was designed to identify, recognize and honor the best Texas companies benefiting the economy, its workforce and businesses. Headspring completed a two-part evaluation involving the analysis of the company&#8217;s workplace policies, systems, philosophies, practices, demographics and employee surveys.</p>
+<p>“The Headspring team is excited and honored to be named as one of the best places to work in Texas,” said Dustin Wells, CEO of Headspring. “Our company puts tremendous focus on <a href="http://www.headspring.com/about/" target="_blank">work culture</a> and we’re proud of the passionate and ambitious people that work at Headspring.”</p>
+<p>The list is made up of 100 companies and the rankings will be revealed at the Best Companies to Work for in Texas Gala on Tuesday, March 19, 2013 at the Hyatt Regency<strong> </strong>in Austin. The results will also be listed in the April 2013 issue of <em>Texas Monthly</em>. <em>Texas Monthly</em> will produce a special publication profiling the winning companies to be released in conjunction with the event.</p>
+<p>To learn more about the Best Companies to Work for in Texas program, please visit <a href="http://www.bestcompaniestx.com" target="_blank">http://www.bestcompaniestx.com</a>. To learn more about Headspring and its community initiatives, visit <a href="http://www.headspring.com" target="_blank">http://www.Headspring.com</a> or follow Headspring on Facebook at <a href="http://www.facebook.com/HeadspringAustin" target="_blank">http://www.facebook.com/HeadspringAustin</a> and Twitter at <a href="http://www.twitter.com/Headspring" target="_blank">http://www.twitter.com/Headspring</a>.</p>
+<p>&nbsp;</p>
+<p><strong>About Headspring                                                                                                           </strong></p>
+<p>Headspring delivers custom business applications to help growing companies. The Austin-based company has proudly served <a href="http://www.headspring.com/success-stories/" target="_blank">Texas businesses</a> since 2001. Headspring is committed to helping local companies compete in their markets by delivering custom software applications for growing companies using consultative and collaborative processes. Headspring provides customers with maintainable custom applications to fit business specific needs to enable continued growth and efficiencies. In 2009, the company was named #127 on Inc. 500, the exclusive ranking of the nation’s fastest-growing private companies. For more information, go to <a href="http://www.headspring.com" target="_blank">http://www.headspring.com</a> or call (877) 459–2260.</p>
+<p>&nbsp;</p>
+<p align="center">###</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-04T00:00:00-06:00" pubdate data-updated="true">Dec 4<span>th</span>, 2012</time></div>
 	<div class="tags">
 
 
@@ -141,19 +339,31 @@ Austin, TX – June 07, 2012, Austin-based Headspring, a custom &hellip;">
     <article class="post">
 	<h2 class="title">
 		
-		<a href="/blog/win-a-copy-of-asp-net-mvc-4-in-action/">
+		<a href="/blog/the-cobra-effect/">
 		
-			Win a Copy of ASP.NET MVC 4 in Action</a>
+			The Cobra Effect</a>
 	</h2>
 	<div class="entry-content">
-		<p><a href="http://headspring.wpengine.com/wp-content/uploads/2012/06/Palermo-ASPNET4-fc-website.jpg"><img class="alignright size-full wp-image-5557" title="Palermo-ASPNET4-fc-website" src="http://headspring.wpengine.com/wp-content/uploads/2012/06/Palermo-ASPNET4-fc-website.jpg" alt="" width="239" height="300" /></a>Hey everyone, the wait is over! Jeffrey Palermo and Jimmy Bogard&#8217;s newest book,<em> ASP.NET MVC 4 in Action</em>, is finally available.  <strong>To celebrate the release, Headspring is giving away 3 free copies!</strong>  We&#8217;re taking entries for the drawing all week, and winners will be announced next Monday (June 11th, 2012). Also, if you&#8217;re attending Code Camp Austin this weekend, be sure to stop by the booth for an additional chance to win.  </p>
-<p>If waiting is not an option, and you must read it before your friends, don&#8217;t sweat it. You can purchase your own copy through the publisher: <a href="http://www.manning.com/palermo3/">http://www.manning.com/palermo3/</a></p>
-<p>Good luck!</p>
-<p><strong>UPDATE (6/11/2012):</strong></p>
-<p>The winners are in! Congratulations to  Robertson Sagolsem, David Perkalis, and Jamie Cross. Check your email for information on receiving your copy.</p>
-<p>To those who missed out, check your email tomorrow for a special consolation prize :)</p>
-<p>Thanks for playing!</p>
-<p>&nbsp;</p>
+		<p>Imagine for a moment that you are a member of the government in colonial India during the period of British rule.  You&#8217;re concerned about the population of venomous cobras, so you attempt to impose a solution.  You offer a reward to anyone who brings you a dead cobra.  After a while, though, you start to get suspicious of some of the cobra hunters.  They seem to be bringing in far more cobras that any single person is likely to encounter, let alone trap and kill.  You discover that some individuals have begun raising cobras in order to turn a profit!  Clearly, your plan isn&#8217;t working, so you stop offering the bounty.  Countless cobra farmers&#8217; snakes become worthless, so they are released into the wild, increasing the population of cobras.</p>
+<p>You meant well, but your attempt to impose a solution to the problem actually made things worse.</p>
+<p>The <a href="http://en.wikipedia.org/wiki/Cobra_effect">Cobra Effect</a> is similar to the more frequently-referenced <a href="http://en.wikipedia.org/wiki/Murphy's_law">Murphy&#8217;s Law</a>.  Murphy&#8217;s a bit of a pessimist: if something can go wrong, it will, as if the universe is out to get you.  The Cobra Effect, on the other hand, has more to do with human nature: you see a problem and attempt to impose a solution on a group of people, and their natural reaction to your solution ends up making the original problem worse.</p>
+<p>Cobra Effect problems have 4 parts: a) recognizing a problem, b) imposing a solution on a group of people, c) people react naturally <em>to the solution</em>, and d) in turn that reaction makes the problem worse.  Years ago, I experienced these 4 stages on a software project.</p>
+<h2>Farming Venomous Comments</h2>
+<p><strong>The problem:</strong> Reading other people&#8217;s code can be frustrating when it doesn&#8217;t communicate enough of the intent.  You may not feel tempted to add lots of comments to your own code, but sometimes when looking at something ugly or unfamiliar, you find yourself wishing the other developers <em>were</em> writing lots of informative comments.  The more experienced developers on the team naturally fear the ocean of undocumented code that the rest of the team is sure to write in the coming months.</p>
+<p><strong>Imposing a solution:</strong> We need to ensure everyone is writing documented code, therefore commits will not pass code review unless each method has complete <a href="http://msdn.microsoft.com/en-us/library/aa288481(v=vs.71).aspx">XML documentation comments</a>.  Each method will tell you what it is, what each of its arguments is, and what the returned value is.  The user of your code will see this information as they type via IntelliSense.</p>
+<p><strong>People react naturally to the solution:</strong> It <em>hurts</em> to write those XML comments.  They are verbose, they are usually redundant, they are time consuming, and they are usually redundant.  If your product is a library to be used by other developers, you owe it to them to document the non-obvious details of your public interface, but beyond that writing these comments is absolutely painful.  Enter <a href="http://visualstudiogallery.msdn.microsoft.com/46A20578-F0D5-4B1E-B55D-F001A6345748">GhostDoc</a>, a Visual Studio extension that writes these comments for you by inspecting the names and types of your methods and parameters.  You start with an undocumented method like so:</p>
+<p><div><script src='https://gist.github.com/4159059.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>You place your cursor on the first line, hit a keyboard shortcut, and it automatically turns into this:</p>
+<p><div><script src='https://gist.github.com/4159061.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Code Review Accomplished.</p>
+<p><strong>That reaction makes the problem worse:</strong> GhostDoc was <em>encouraged</em> because meeting the code review requirement <em>hurt</em> so much.  Every time I used it, a sarcastic little voice in the back of my head said &#8220;Oh, is <em>that</em> what a customerId is?&#8221; or &#8220;Oh, is <em>that</em> what that method does?&#8221;  That voice started getting louder and I soon started to block out all XML comments whenever I read through anybody&#8217;s code.  It wasn&#8217;t even a conscious decision: my eyes started scanning right by the comments as if they were whitespace.  <em>When I actually needed one of these comments to communicate something real about my intent, nobody would ever notice it; it was a an intent-needle in an angle-bracket-haystack.</em></p>
+<p>Compare that last sentence to the original problem: &#8220;Reading other people&#8217;s code can be frustrating when it doesn&#8217;t communicate enough of the intent.&#8221;  The imposed solution made that problem <em>worse</em> by making it even harder to see important information about intent when the need actually arose, and it made it harder to see the intent that was already present in the code itself because you could only fit a few real lines of code on the screen at a time.  </p>
+<h2>People Smells</h2>
+<p>We talk about &#8220;code smells&#8221;, simple things we see in a snippet of code that give us a negative gut reaction, suggesting a deeper problem.  There are also &#8220;people smells&#8221;, where a solution to a human problem should give us a similar negative gut reaction.  With the notable exception of dubstep fans, people naturally try to avoid pain.  We seek out the path of least resistence.  When the solution to a human problem hurts more than the problem, you may get exactly what you asked for.</p>
 
 		
 		
@@ -173,501 +383,11 @@ Austin, TX – June 07, 2012, Austin-based Headspring, a custom &hellip;">
   
 
 
-<time datetime="2012-06-05T00:00:00-05:00" pubdate data-updated="true">Jun 5<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/small-talk-and-big-news/'>Small Talk &amp; Big News</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/why-try-vi-part-1/">
-		
-			Why Try Vi? (Part 1)</a>
-	</h2>
-	<div class="entry-content">
-		<p>Like most people, the majority of my time on a computer has been spent on systems having an O/S with a graphical user interface.  Because I was not raised in the arcane dungeons of the command-line interface, I never [thought I] had any reason to learn to use vi.</p>
-<p>For those of you who don’t know what vi is, it is a powerful text editor that is built in to pretty much every Unix/Linux-based operating system on the planet.  Even present-day Macs have vi and you can access it from the terminal.</p>
-<p>Having watched a proficient Linux user use vi a few times, I concluded that it was originally designed for programmer prisoners of war whose wrists were rigidly shackled to the bases of their keyboards and were therefore unable to reach either the mouse or the arrow keys. And for good measure, were punished for venturing too far from the home row.  I, a free, and enlightened programmer certainly had no use for this nonsense.</p>
-<p>Then one day about 4 or 5 years ago, during a .Net boot camp given by <a href="http://blog.developwithpassion.com/">JP Boodhoo</a>, it was revealed to me the true power of vi.  JP coded and refactored so quickly, so effortlessly, it was almost impossible to track what he was doing – and he did this without ever having his hands leave the keyboard.  What was his secret?  It was <a href="http://www.jetbrains.com/resharper/">ReSharper</a> and <a href="http://www.viemu.com/">ViEmu</a>.  As many of you know, ReSharper is a code navigation, generation and refactoring plugin for Visual Studio.  (If you are not already using it, you are probably shaving months, if not years, off your life performing coding tasks that it can do almost instantaneously.)</p>
-<p>The second tool, ViEmu, is a plugin that allows Visual Studio to accept vi commands in its Text Editor windows.  There is a bit of a learning curve, but it is very surmountable and if you take the time to learn it, you will be able to transfer the skill into other computing avenues.  (For instance, in about 5 minutes and for almost nothing, you can set up an Amazon EC2 micro instance to tunnel through your company’s oppressive firewall and look at that Dilbert cartoon that someone sent you a link to.  However, you’ll need to use vi to change the SSH daemon’s port from 22 to 443.  Perhaps I’ll show how to do this in a later post.)</p>
-<p>Okay, so how do you make the leap into learning vi?  We’ll take some baby steps and start with something that will make you a more productive web browser right now by installing the Vimium extension for Chrome.  It is available for both Windows and Mac and will be especially helpful if you browse the web on a laptop.  You <em>are</em> using Google Chrome, right?  If you’re not, go ahead and <a href="https://www.google.com/intl/en/chrome/browser/">install it</a>.  Next, run it and click the little wrench icon and go to <strong>Tools</strong> &gt; <strong>Extensions</strong>.  Browse for extensions, look for Vimium and install it.  When I last checked, it had a 5-star review with over 850 reviews.  It’s got to be good, right???</p>
-<p><a href="http://www.headspring.com/2012/06/why-try-vi-part-1/vimium-1-med" rel="attachment wp-att-5379"><img class="aligncenter size-full wp-image-5379" src="http://www.headspring.com/wp-content/uploads/2012/06/vimium-1-med.png" alt="" width="500" height="95" /></a></p>
-<p>The first thing you have to learn with vi is navigation.  Vi has five main modes - for navigating (Normal mode), selecting (Visual mode), editing (Insert mode) and searching text, and for executing commands.  Up, down, left, right navigation is performed by the home row keys on your right hand: <strong>h</strong> (left), <strong>j</strong> (down), <strong>k</strong> (up), and <strong>l</strong> (right).</p>
-<p>To try these out, open up <a href="http://www.gizmag.com/">http://www.gizmag.com</a> (one of my favorites) and shrink your window so that content on the right is cut off.  Use the <strong>h</strong>, <strong>j</strong>, <strong>k</strong>, <strong>l</strong> navigation keys to scroll the text up, down, left and right.  See?  You’re already making progress towards a carpal tunnel syndrome-free life.  (Did you know, that even without Vimium, Gmail and Slashdot both support some vi keys?  Actually Vimium is disabled in Gmail, but Gmail already has many of its own keyboard shortcut commands which you can see, by pressing the <strong>?</strong> key.)</p>
-<p>Probably the coolest feature of Vimium is the ability to navigate form elements and hyperlinks from the keyboard.  All you have to do is hit the <strong>f</strong> key and all hyperlinks and form elements on the page will be decorated with a one or two-letter code.  Just type in the letters and it’s like selecting the form element or clicking the hyperlink.  If you type the letters in lower-case, you will navigate in the same tab.  If you type them in upper-case, you will open the link in a new tab.  That’s pretty sweet, right??</p>
-<p><a href="http://www.headspring.com/2012/06/why-try-vi-part-1/vimium-2-med" rel="attachment wp-att-5386"><img class="aligncenter size-full wp-image-5386" src="http://www.headspring.com/wp-content/uploads/2012/06/vimium-2-med.png" alt="" width="500" height="373" /></a></p>
-<p>You can press the <strong>esc</strong> key to turn them back off.</p>
-<p>The next thing you do frequently in vi is to search for text.  The search mode is activated using the <strong>/</strong> (forward slash) key.  This will cause a small box to appear at the bottom of the screen.  Just type the search string you are looking for and press <strong>Enter</strong>.</p>
-<p><a href="http://www.headspring.com/2012/06/why-try-vi-part-1/vimium-3-med" rel="attachment wp-att-5387"><img class="aligncenter size-full wp-image-5387" src="http://www.headspring.com/wp-content/uploads/2012/06/vimium-3-med.png" alt="" width="200" height="76" /></a></p>
-<p>Now, you can cycle through all instances of the search string in the browser text by pressing <strong>n </strong>or <strong>N</strong> to go forward or backward, respectively.</p>
-<p>To see the complete list of Vimium commands, you can just press the <strong>?</strong> key, but here are some more of my favorites:</p>
-<p><strong>r</strong> – reload</p>
-<p><strong>t</strong> – new tab</p>
-<p><strong>x</strong> – close tab</p>
-<p><strong>H</strong> – previous page in browser history</p>
-<p><strong>L</strong> – next page in browsing history</p>
-<p><strong>J</strong> – previous tab</p>
-<p><strong>K</strong> – next tab</p>
-<p><strong>[[</strong> – follow the link labeled previous or &lt;</p>
-<p><strong>]]</strong> – follow the link labeled next or &gt;</p>
-<p>Using Vimium is a good way to start getting comfortable with vi commands and pure keyboard navigation.  However, the most important thing to take away from this post is that every time your fingers leave the home row of your keyboard, move and click the mouse and come back to the home row to type, you waste precious seconds of your life.  Believe it or not, at the end of the day, week, month, year, it adds up.</p>
-<p>Challenge yourself by trying to do as much as possible without leaving your keyboard.  When I was learning to do this (and sometimes I do this when I pair with people) I would take my mouse and put it on the left side of the keyboard, or even behind my monitor.  Only if the action could not be done using the keyboard would I finally go to the mouse.</p>
-<p>Trust me, do this for a while and you will truly amaze yourself and others, just as I was amazed when I first saw JP do it.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-06-04T00:00:00-05:00" pubdate data-updated="true">Jun 4<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/viemu/'>ViEmu</a>, <a class='category' href='/blog/categories/vimium/'>Vimium</a>, <a class='category' href='/blog/categories/vi/'>vi</a>, <a class='category' href='/blog/categories/vim/'>vim</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/ravendb-with-alonso-robles-and-jeffrey-palermo/">
-		
-			RavenDB With Alonso Robles and Jeffrey Palermo</a>
-	</h2>
-	<div class="entry-content">
-		<p><a href="http://feeds.headspring.com/headspringpodcast"><img class="alignleft size-full wp-image-5225" title="Subscribe to podcast" src="http://www.headspring.com/wp-content/uploads/2012/05/rss-icon402.jpg" alt="Subscribe to podcast" width="40" height="40" /></a>In this cast, Alonso Robles and Jeffrey Palermo discuss RavenDB.  RavenDB is a document database that is very easy to use with .Net applications.  Alonso is a Principal Consultant at Headspring and teaches the RavenDB Boot Camp.  Along with spending time with his family, he enjoys learning new programming languages and is a self-described technology junkie.</p>
-<p>You might be interested in these RavenDB resources:</p>
-<ul>
-<li><a href="http://ravendb.net/">http://ravendb.net/</a></li>
-<li><a href="http://www.codeproject.com/Articles/74322/RavenDB-An-Introduction">RavenDB quickstart on CodeProject</a></li>
-<li><a href="https://github.com/ravendb">Source code on GitHub</a></li>
-<li><a href="http://blog.hibernatingrhinos.com/8193/ravendb-webinar-1-now-available-on-youtube">RavenDB webinar</a></li>
-<li><a href="http://ayende.com/blog/4499/why-raven-db">Justification for RavenDB</a></li>
-</ul>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-06-02T00:00:00-05:00" pubdate data-updated="true">Jun 2<span>nd</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/podcast/'>Podcast</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/dependency-by-required-coincidence/">
-		
-			Dependency by Required Coincidence</a>
-	</h2>
-	<div class="entry-content">
-		<p>Software developers talk a lot about dependencies.  Dependencies are necessary, but each one carries with it some intellectual weight that can threaten a system&#8217;s stability over time.  Your code is only as stable as its least-stable dependency, so we need to opt-into them with care.</p>
-<p>Usually when we talk about dependencies in .NET, we limit ourselves to discussing the ones that are known statically, at compile time.  Assembly A depends on assembly B because when B is removed, A fails to compile.  Class A depends on Class B because when B is removed, A fails to compile.  The nice thing about such static dependencies is that you can find exactly what lines of code truly depend on the the assembly/class in question: delete it and see what turns all red and squiggly in Visual Studio.</p>
-<p>Unfortunately, there&#8217;s another form of dependency.  It&#8217;s the dynamic and sneaky cousin of our familiar static variety: <strong>Dependency by Required Coincidence</strong>.</p>
-<h2>A Gentlemen&#8217;s Agreement</h2>
-<p>With a Dependency by Required Coincidence, you are writing code intended to be consumed dynamically in some very precise way by another system.  The agreement only works when you give in completely to the demands of the other system, when nearly every line of the class you control is written with full (or hopefully-full!) knowledge of how the other system will consume it.  When the dynamic consumer doesn&#8217;t provide the behavior you need, it is therefore <em>your fault</em> and you are expected to bend your code around the problem.</p>
-<p>Don&#8217;t get me wrong: dynamic languages/platforms/etc are not inherently bad.  It&#8217;s only when some dynamic consumer of your code forces a complex contract upon you that you are in serious trouble.</p>
-<p>Does your code take part in one of these &#8220;gentlemen&#8217;s agreements&#8221; with a system that is likely to change or be replaced?  If so, you&#8217;ve got yourself a required coincidence problem.  Your code must contain properties, methods, and types that are unused by the rest of your code but exist because you just happen to know exactly <em>how</em> the other system will require them to exist at runtime.</p>
-<h2>MVVM in WPF</h2>
-<p>I see this most often when working with the MVVM pattern in WPF applications.  <em>(I don&#8217;t have experience with the MVVM pattern(s) outside of WPF, so for the rest of this post whenever I say &#8220;MVVM&#8221;, assume I mean &#8220;MVVM in WPF&#8221;)</em></p>
-<blockquote><p>
-  MVVM was designed to make use of data binding functions in WPF to better facilitate the separation of view layer development from the rest of the pattern by removing virtually all GUI code (“code-behind”) from the view layer. (<a href="http://en.wikipedia.org/wiki/Model_View_ViewModel">source</a>)
-</p></blockquote>
-<p>This approach seems to have resulted from the following train of thought:<br />
-1. I remember having to work with unmainainable code-behinds when I worked with WinForms.  Therefore, code-behinds must be avoided.<br />
-2. The defining qualities of code-behinds are that they are code files which can directly access control state and can directly receive controls&#8217; events via public methods.<br />
-3. From (1) and (2), accessing control state and receiving events from controls must therefore be bad too.<br />
-4. Somebody else had better access control state and receive events for me: a data binding system.  Instead of a code-behind, I&#8217;ll provide a code-behi-… er… a <em>view model</em>.  This will be a class whose properties will describe the data to be displayed, and I&#8217;ll enter into a Required Coincidence Contract with the binding system so that my code will be properly manipulated by the binding system at runtime.</p>
-<p>I find the premise here faulty, so maybe I&#8217;ve set up a straw-man argument, but I&#8217;m unaware of motivations for MVVM aside from an aversion to code-behind hell.  Most of us have had to work with painfully-unmaintainable code-behinds, but I hold that these pains weren&#8217;t due to the fact that the code-behind classes access control state and receive events.  Rather, the problems came about when the code-behinds did just about anything <em>else</em>.</p>
-<p>This leaves me thinking that we&#8217;ve entered into this elaborate contract with the WPF data binding system just so that we can throw the baby out with the bathwater.  UI controls are inherently stateful/eventy things, and we&#8217;ve opted for a Required Coincidence just to remove stateful/eventy code.  Two examples and their workarounds come to mind:</p>
-<p><strong>First, my view model is not allowed to receive events.</strong>  If an item is removed from a list box control bound to one of my collections, WPF will mess with my collection for me.  That&#8217;s all well and good, but when my code just plain needs to react to some interesting event, it may not be covered by the finite list of things that WPF data binding is written to <em>do</em> to my view model.  Furthermore, the binding system admits the importance of &#8220;eventy&#8221; code by requiring me to publish view model state change events so the data binder can receive them!</p>
-<p>As a workaround, you can use something like <a href="http://caliburnmicro.codeplex.com/">Caliburn.Micro</a>.  Caliburn.Micro is a third-party framework which builds on MVVM so that you can, among other things, set up a control&#8217;s events to trigger calls against public methods on your view model.  An event handler!</p>
-<p><strong>Second, my view model is not allowed to access control state.</strong>  UI controls can be pretty intricate.  Even a lowly text box control has to deal with a lot of possibilities.  By default it will need to handle different kinds of keystrokes, some contributing to the text box content, some highlighting text, some performing other tasks such as cut/copy/paste, or tabbing to another control, etc.  When your application needs to customize the details of a control&#8217;s behavior, you just plain have to have access to its low-level state and events.</p>
-<p>As a workaround, you can use an <a href="http://www.codeproject.com/Articles/28959/Introduction-to-Attached-Behaviors-in-WPF">attached behavior</a>.  These are classes that are suspiciously/exactly like code-behinds!</p>
-<p>With MVVM, WPF isn&#8217;t the Windows Presentation Foundation.  It&#8217;s the Workaround Proliferation Framework.</p>
-<p>By surrendering control to the WPF data binding system, we set ourselves up for a nasty surprise the day that WPF falls by the wayside: our view model classes and attached behavior classes will be of absolutely no use to WPF&#8217;s replacement, but they will have absorbed a scary amount of application logic along the way that will have to be rewritten!</p>
-<h2>Instability by Required Coincidence</h2>
-<p>To sum up, systems like WPF&#8217;s data binding make you enter a Dependency by Required Coincidence.  You must create a great deal of code with hopefully-full knowledge of how the other system will consume it.  Your code is shaped by the thing it indirectly depends on, and may become useless when that unstable dependency is inevitably replaced.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-06-01T00:00:00-05:00" pubdate data-updated="true">Jun 1<span>st</span>, 2012</time></div>
+<time datetime="2012-11-29T00:00:00-06:00" pubdate data-updated="true">Nov 29<span>th</span>, 2012</time></div>
 	<div class="tags">
 
 
 	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/get-to-know-a-developer-casey-gum/">
-		
-			Get to Know a Developer: Casey Gum</a>
-	</h2>
-	<div class="entry-content">
-		<p><a href="http://www.headspring.com/2012/05/get-to-know-a-developer-casey-gum/headshot-1" rel="attachment wp-att-5334"><img class="alignright size-full wp-image-5334" title="Casey Gum" src="http://www.headspring.com/wp-content/uploads/2012/05/headshot-1.jpg" alt="Casey Gum" width="200" height="256" /></a>I&#8217;m so happy to finally have another new developer to write about!  Casey Gum just joined the team as a Principal Consultant yesterday, and so far he&#8217;s doing great with jumping right in to working with clients. He&#8217;s got a pretty full schedule already, but he spared me a few moments this morning.</p>
-<p>Casey is our first new Principal Consultant at Headspring since <a href="http://www.headspring.com/author/arobles" target="_blank">Alonso Robles</a> came on board in December, and boy did we need him for all the big projects we have taken on in 2012.  He comes from 8 years spent in tech consulting for military intelligence and law enforcement with Textron.  He is also one of the original founders of Austin&#8217;s <a href="http://www.fg2.com/" target="_blank">FG Squared</a>.</p>
-<p>Here&#8217;s a bit of our conversation:</p>
-<p><strong>Are you an expert at anything?</strong></p>
-<p>C# in general, Silverlight and WPF.  Other than that, I would merely categorize myself as proficient in a wide variety of technologies.</p>
-<p><strong>Who is on your list of ideal clients to work for or individuals to work with?</strong></p>
-<p>My ideal client is the one that can most benefit from my expertise.  As far as individuals, I like working with anyone with a good attitude and a passion for learning.</p>
-<p><strong>What led you to software development?</strong></p>
-<p>I have always loved computers. I knew from a very early age that I would be an engineer or a programmer.</p>
-<p><strong>What did you learn first?</strong></p>
-<p>The first language I learned was BASIC on a TI-99 in 1981.  I saved/loaded my (mostly Dungeons and Dragons-related) programs to a cassette tape.  Good times, good times.</p>
-<p><strong>Do you like teaching?</strong></p>
-<p>I do like teaching. I actually taught my first computer class to kids at Computerland in El Paso when I was 15.  I have taught a number of developer training sessions on Design Principles, Patterns and Practices.</p>
-<p><strong>What are your plans for the future?</strong></p>
-<p>For the next 10-12 years, I am going to do everything I can to prepare my children for a career in engineering. We need more engineers.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-05-31T00:00:00-05:00" pubdate data-updated="true">May 31<span>st</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/get-to-know-a-headspringer/'>Get To Know a Headspringer</a>, <a class='category' href='/blog/categories/small-talk-and-big-news/'>Small Talk &amp; Big News</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/building-a-language/">
-		
-			Building a Language</a>
-	</h2>
-	<div class="entry-content">
-		<p>I&#8217;ve had an on-again, off-again relationship with a hobby project for the last few years.  I&#8217;m (slowly) implementing a compiler for a new language, called <a href="https://github.com/plioi/rook">Rook</a>.  I recently gave a presentation at the <a href="http://www.polyglotprogrammers.org/">Polyglot Programmers of Austin</a> during the mid-meeting break.  The presentation was less focused on Rook itself, as it&#8217;s constantly in flux, and instead focused on how you might go about implementing a similar project yourself.  Whether you want to implement a full-blown programming language, or the next time-saving structured-text-processing tool like <a href="http://lesscss.org/">Less</a>, much of the same priciples and patterns apply.</p>
-<p>As <a href="http://www.headspring.com/2012/05/headspringers-at-austin-code-camp">Nolan Egly mentioned last week</a>, I&#8217;ve submitted the longer version of this presentation for this year&#8217;s <a href="http://austincodecamp2012.com/">Austin Code Camp</a> on June 9.</p>
-<p>Although the language&#8217;s syntax, priorities, and long term vision are a little wibbly/wobbly at the moment, here&#8217;s a basic rundown of what I have working so far.
-</p>
-<h2>Hello, World!</h2>
-<p>In this example, we print some text to standard out.  Note that the <code>Main</code> function doesn&#8217;t have to live inside of a boilerplate class.  Since the body of the function is just one little function call, we also don&#8217;t bother surrounding it with <code>{</code> curly braces <code>}</code>:<br />
-<div><script src='https://gist.github.com/2772642.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<h2>Everything&#8217;s an Expression</h2>
-<p>Well, most things are expressions.  Most of the things you see in a Rook program have a value, even things like <code>if/else</code> conditional logic.  Here, the value of the whole <code>if/else</code> is the value of the branch that was actually executed.  Since the <code>Factorial</code> function&#8217;s body is just a single expression, we have no need to bother with more <code>{</code> curly braces <code>}</code> or an explicit <code>return</code> keyword:<br />
-<div><script src='https://gist.github.com/2772676.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<h2>Blocks: Fancy Expressions</h2>
-<p>Sometimes you just need to go into &#8216;statement mode&#8217; and declare some local variables to work with.  Rook blocks are special compound expressions.  They are surrounded with <code>{</code> curly braces <code>}</code> and can contain zero or more local variable declarations followed by one or more body expressions.  The value of the whole block is the value of the last body expression evaluated.</p>
-<p>The local variables can have an explicit type declaration if you want one, but when you leave it off it will be inferred just like C#&#8217;s &#8216;var&#8217; keyword.  Here, Main() will return 50:</p>
-<p><div><script src='https://gist.github.com/2772851.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<h2>The Billion Dollar Feature</h2>
-<p>Allowing reference types to be nullable by default in languages like Java and C# has been called <a href="http://www.infoq.com/presentations/Null-References-The-Billion-Dollar-Mistake-Tony-Hoare">The Billion Dollar Mistake</a>.  Honestly, how often would it be meaningful for your domain objects to be nulls?  Most of the time, when your Customer/Account/Whathaveyou objects are null, you have encountered a bug and are moments away from a NullReferenceException cropping up <em>nowhere near</em> the actual point where the mistake was made.</p>
-<p>Nullability should be something you <em>ask for</em>, when it has <em>meaning</em> in your system.  Also, when you look at a method signature for a method someone else wrote, it would be nice to know right away whether or not the other programmer is taking on the responsibility of handling nulls.  Just like <code>int</code> is a different type from <code>int?</code> in C#, <code>string</code> is a different type from <code>string?</code> in Rook:<br />
-<div><script src='https://gist.github.com/2772701.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<h2>Collections</h2>
-<p>In C#, <code>IEnumerable&lt;T&gt;</code> has become extremely commonplace.  Any arbitrarily-sized collection that you could loop through implements this interface.  It&#8217;s useful, prevalent, <em>and the length of its name drives me bonkers</em>.  <strong>The most commonly-used things should take the fewest characters to write.</strong>  In Rook variable declarations, <code>int*</code> is shorthand for <code>IEnumerable&lt;int&gt;</code>.</p>
-<p>C#&#8217;s basic built in collection type, the one that get special syntax support and shorthand in variable declarations, is mutable.  This is The Million Dollar Mistake.  It&#8217;s not quite as offensive as nullability-by-default, but it does encourage some brittleness.  If a library call returns an array of something, and you mess with the result, you&#8217;re probably abusing the intent of the library developers.  This might even give you unintended access to the data that the library is trying to maintain privately.  Let&#8217;s use things like <code>List&lt;T&gt;</code> for mutation, and keep our array-like things immutable.  Again, the most commonplace things should take the fewest characters to write, so I&#8217;d rather devote shorthand like <code>int[]</code> to something I can really feel safe using everywhere.</p>
-<p>In Rook, <code>int[]</code> is shorthand for <code>Vector&lt;int&gt;</code>, where <code>Vector&lt;T&gt;</code> is an <em>abstract</em> base class for an immutable array-like collection.  Since it&#8217;s abstract, there&#8217;s the potential for multiple implementations benefiting from the same built-in syntax.</p>
-<p>Because <code>Vector&lt;T&gt;</code> isn&#8217;t a concrete type, we can play some neat tricks to keep these immutable collections efficient.  <code>Vector&lt;T&gt;</code> supports Python-style slicing operations with the [:] operator, which gives results similar to <code>String.Substring(...)</code>.  The operation returns a <code>Slice&lt;T&gt;</code>, which also happens to implement <code>Vector&lt;T&gt;</code>.  This structure allows the slicing operation to have O(1) performance characteristics (taking a large slice of a large collection is as fast as taking a small slice of a small collection).</p>
-<p><strong>Letting the language favor interfaces and abstract types right from the get-go opens the door to neat trickery like fast slicing.</strong>  We preach coding to abstractions when <em>using</em> languages, and our languages should start following that advice as well.</p>
-<p>Also similar to strings, operations like <code>Append()</code> produce a whole new collection instead of modifying the original:<br />
-<div><script src='https://gist.github.com/2772715.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<h2>Austin Code Camp</h2>
-<p>All of this is in constant flux as I figure out what I really want this to <em>be</em> in the long run, but the implementation and patterns involved have become more and more stable in the past year.  Come on by the Austin Code Camp on June 9 to see how this seemingly-complex task can be broken down into managable pieces.  Be there and be square!</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-05-25T00:00:00-05:00" pubdate data-updated="true">May 25<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/polyglot-programmers-of-austin-and-the-importance-of-industry-groups-with-sharon-cichelli-and-jeffrey-palermo/">
-		
-			Industry Groups With Sharon Cichelli, the Founder of Polyglot Programmers of Austin</a>
-	</h2>
-	<div class="entry-content">
-		<p><a href="http://feeds.headspring.com/headspringpodcast"><img class="alignleft size-full wp-image-5225" src="http://www.headspring.com/wp-content/uploads/2012/05/rss-icon402.jpg" alt="Subscribe to podcast" width="40" height="40" /></a>In this cast, Sharon Cichelli and Jeffrey Palermo discuss the importance of industry groups, both the benefits of participating in, and volunteering for them.</p>
-<p>Sharon is a Senior Consultant for Headspring.  Aside from building valuable custom business software, Sharon writes a blog at <a href="http://www.girlwritescode.com/">GirlWritesCode.com</a>, builds unusual home furnishings with Arduinos, and plays too much pinball. She founded Polyglot Programmers of Austin, a co-working study group which encourages developers to branch out and learn other languages and platforms.</p>
-<p>Here are some other relevant resources that were mentioned in the cast.</p>
-<ul>
-<li><a href="http://www.meetup.com/">Meetup</a></li>
-<li><a href="http://door64.com/">door64</a></li>
-<li><a href="http://southcentralcommunity.com/">South Central Community</a></li>
-<li><a href="http://www.polyglotprogrammers.org/">Polyglot Programmers of Austin</a></li>
-<li><a href="http://adnug.org/">Austin .NET User Group</a></li>
-<li><a href="http://www.agileaustin.org/">Agile Austin</a></li>
-<li><a href="https://groups.google.com/forum/?fromgroups#!forum/atx-code-lunch">ATX Code Lunch</a></li>
-<li><a href="http://www.toastmasters.org/">Toastmasters International</a></li>
-</ul>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-05-21T00:00:00-05:00" pubdate data-updated="true">May 21<span>st</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/podcast/'>Podcast</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/a-bidirectional-heisenbug/">
-		
-			A Bidirectional Heisenbug</a>
-	</h2>
-	<div class="entry-content">
-		<p>I think I may have encountered the world&#8217;s first bidirectional Heisenbug.</p>
-<p>The Heisenberg Uncertainty Principle in physics deals with the problem of observing very small things.  If you want to detect an electron, to &#8220;see&#8221; where it&#8217;s going, you have to basically &#8220;shine a light on it&#8221; by letting it interact with a photon.  At those scales, simply shining a light on something is enough to push it off course!  In short, <em>observing something can change the thing being observed</em>.</p>
-<p>A <a href="http://en.wikipedia.org/wiki/Heisenbug">Heisenbug</a> is a software bug that seems to correct itself the moment you start trying to find its root cause.  This can be particularly frustrating.  You know the bug is really there.  You&#8217;ve seen its effects.  The moment you start stepping through your program to see it in action, though, everything starts working again.  <strong>Although initially frustrating, this strange behavior can actually provide vital clues about a bug&#8217;s root cause.</strong></p>
-<p>I encountered the epitome of a Heisenbug today.</p>
-<p>The application has a data entry grid reminiscent of a spreadsheet.  The bug report stated that when adding a new record to this grid, some of the necessary data would not get saved successfully, and that lack of data would be apparent on one of the other screens.</p>
-<p>Sure enough, I could reproduce the issue consistently and I knew what part of the project to look into first.  I set up some breakpoints in the suspicious part of the code, and <em>unlike</em> a typical Heisenbug, I could see some real clues about what was going wrong.  I made a prediction, that if I made a particular column visible in this grid, then I would be able to see the effects of the problem without having to go to the second screen.  This prediction turned out to be correct: I included the column in the grid, and immediately saw the inconsistency created by my earlier attempts to add records to the grid.</p>
-<p>I continued attempting to trigger the bug, and step through the suspect code, but everything started to look correct.  The data I expected to be missing was right there, clear as day, in my debugger.  Just before frustration got the best of me, though, I asked myself to look back over every step I had taken, in case it would explain the sudden disappearance of the bug.</p>
-<p><strong>Between the failure scenarios and the working scenarios, I had included that extra column in the grid!</strong>  It turns out that the suspect code depended on the presence of certain columns in order to function properly.</p>
-<p>That discovery didn&#8217;t just explain the bug&#8217;s sudden disappearance, it actually provided the main clue as to what was really going wrong, and suggested where I needed to apply the fix.  If the bug hadn&#8217;t disappeared, it probably would have taken <em>longer</em> to actually hunt it down.</p>
-<p>The Heisenbug-ness of this issue was actually bidirectional.  Not only did the bug stop happening when I attempted to look at it, but the official Steps-to-Reproduce The Issue involve deliberately trying to avoid seeing its effects!</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-05-18T00:00:00-05:00" pubdate data-updated="true">May 18<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/javascript-first-letter-mystery/">
-		
-			Javascript First-letter Mystery</a>
-	</h2>
-	<div class="entry-content">
-		<p>I was working on producing something that had to look like this:</p>
-<p><a href="http://www.headspring.com/2012/05/javascript-first-letter-mystery/goal-2" rel="attachment wp-att-5237"><img class="alignnone size-full wp-image-5237" title="goal" src="http://www.headspring.com/wp-content/uploads/2012/05/goal1.png" alt="" width="112" height="35" /></a></p>
-<p>I though I&#8217;d be clever and avoid having to wrap the ! in a span by using the pseudo-element first-letter to grab that initial exclamation point. first-element selects the first letter of the block it used</p>
-<p>on. Sounds perfect, right? Well, when I tried it I got:</p>
-<p><a href="http://www.headspring.com/2012/05/javascript-first-letter-mystery/badimage1" rel="attachment wp-att-5235"><img class="alignnone size-full wp-image-5235" title="badimage1" src="http://www.headspring.com/wp-content/uploads/2012/05/badimage1.png" alt="" width="110" height="43" /></a></p>
-<p>This was not at all what I wanted! It looked not only odd but clearly wrong - first doesn&#8217;t mean first and second! I tried playing with spacing and a few other things, and finally produced the following jsfiddle to simply illustrate the problem:</p>
-<p>&nbsp;</p>
-<p><iframe style="width: 100%; height: 300px;" src="http://jsfiddle.net/27jp6/embedded/result/" frameborder="0" width="320" height="240"></iframe></p>
-<p>With the jsfiddle at hand, I tweeted my confusion:</p>
-<p><a href="http://www.headspring.com/2012/05/javascript-first-letter-mystery/confusedtweet" rel="attachment wp-att-5238"><img class="alignnone size-medium wp-image-5238" title="confusedTweet" src="http://www.headspring.com/wp-content/uploads/2012/05/confusedTweet-300x82.png" alt="" width="300" height="82" /></a></p>
-<p>In moments, I received a dual barrage of twitter responses: half reponding in amazement/surprise, and half with the actual specification of first-letter and the reason for what I was seeing.</p>
-<p>It turns out that, though odd, the behavior I was seesing was reasonably to spec. &#8220;Punctuation (i.e, characters defined in Unicode in the &#8220;open&#8221; (Ps), &#8220;close&#8221; (Pe), &#8220;initial&#8221; (Pi). &#8220;final&#8221; (Pf) and &#8220;other&#8221; (Po) punctuation classes), that precedes or follows the first letter should be included.&#8221;[<a href="#w3c">1</a>] It really is less obvious then I&#8217;d thought: see <a href="https://developer.mozilla.org/En/CSS/::first-letter" target="_blank">https://developer.mozilla.org/En/CSS/::first-letter</a> for a whole discussion of first-letter subtleties: But browsers must be a little confused too: they all act a little bit different in this situation:</p>
-<p>Chrome</p>
-<p><a href="http://www.headspring.com/2012/05/javascript-first-letter-mystery/chrome" rel="attachment wp-att-5245"><img class="alignnone size-full wp-image-5245" title="chrome" src="http://www.headspring.com/wp-content/uploads/2012/05/chrome.png" alt="" width="150" height="53" /></a></p>
-<p>(Note the blue ! and O)</p>
-<hr />
-<p>Firefox</p>
-<p><a href="http://www.headspring.com/2012/05/javascript-first-letter-mystery/firefox" rel="attachment wp-att-5246"><img class="alignnone size-full wp-image-5246" title="firefox" src="http://www.headspring.com/wp-content/uploads/2012/05/firefox.png" alt="" width="148" height="51" /></a></p>
-<p>(Note that neither the ! or O are blue)</p>
-<hr />
-<p>IE something</p>
-<p><a href="http://www.headspring.com/2012/05/javascript-first-letter-mystery/ie9" rel="attachment wp-att-5247"><img class="alignnone size-full wp-image-5247" title="IE9" src="http://www.headspring.com/wp-content/uploads/2012/05/IE9.png" alt="" width="158" height="48" /></a></p>
-<p>(Note that the ! is blue, but the O is not - what I actually wanted!)</p>
-<hr />
-<p>Opera</p>
-<p><a href="http://www.headspring.com/2012/05/javascript-first-letter-mystery/opera-cropped" rel="attachment wp-att-5248"><img class="alignnone size-full wp-image-5248" title="Opera-cropped" src="http://www.headspring.com/wp-content/uploads/2012/05/Opera-cropped.png" alt="" width="150" height="51" /></a></p>
-<p>(Interestingly, Opera matches IE here.)</p>
-<hr />
-<p>In summary, I&#8217;ve learned that css is a little weirder than I had thought, and when they say letter, they really mean letter. Mostly. Sorta.</p>
-<p><a name="w3c"></a>[1] <a href="http://www.w3.org/TR/css3-selectors/#first-letter" target="_blank">http://www.w3.org/TR/css3-selectors/#first-letter</a></p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-05-16T00:00:00-05:00" pubdate data-updated="true">May 16<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/blog/'>Blog</a>
 
 
 </div>

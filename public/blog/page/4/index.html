@@ -7,8 +7,7 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="This article is part of a series exploring how to create installers for Windows software.  Here&#8217;s the complete contents of the series.
-Part 1 &hellip;">
+	<meta name="description" content="Over the past month, we&#8217;ve seen the inception and early development of my ongoing side project, the Fixie test framework. As of last week, it &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -24,19 +23,11 @@ Part 1 &hellip;">
 
 <body>
 	<header id="header" class="inner"><h1><a href="/">Headspring Labs</a></h1>
-<nav id="main-nav"><ul class="main">
-	<li><a href="/blog">Blog</a></li>
-	<li><a href="/blog/archives">Archives</a></li>
-	<li><a href="/open-source">Open Source</a></li>
-	<li><a href="/team">The Team</a></li>
-	<li><a href="/about-us">About Us</a></li>
-</ul>
-</nav>
 <nav id="mobile-nav">
 	<div class="alignleft menu">
 		<a class="button">Menu</a>
 		<div class="container"><ul class="main">
-	<li><a href="/blog">Blog</a></li>
+	<li><a href="/">Blog</a></li>
 	<li><a href="/blog/archives">Archives</a></li>
 	<li><a href="/open-source">Open Source</a></li>
 	<li><a href="/team">The Team</a></li>
@@ -64,9 +55,9 @@ Part 1 &hellip;">
 		
 		<a class="github" href="https://github.com/HeadspringLabs" title="GitHub">GitHub</a>
 		
-    
+	    
 		
-		<a class="coderwall" href="https://coderwall.com/headspring" title="Coderwall">Coderwall</a>
+		<a class="coderwall" href="https://coderwall.com/team/headspring" title="Coderwall">Coderwall</a>
 		
 		
 		
@@ -74,12 +65,20 @@ Part 1 &hellip;">
 		
 		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
 		
-    
+	    
 	</div>
 	<form class="search" action="http://google.com/search" method="get">
 		<input class="alignright" type="text" name="q" results="0">
 		<input type="hidden" name="q" value="site:headspringlabs.com">
 	</form>
+</nav>
+<nav id="main-nav"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+	<li><a href="/open-source">Open Source</a></li>
+	<li><a href="/team">The Team</a></li>
+	<li><a href="/about-us">About Us</a></li>
+</ul>
 </nav>
 
 </header>
@@ -92,140 +91,43 @@ Part 1 &hellip;">
     <article class="post">
 	<h2 class="title">
 		
-		<a href="/blog/creating-windows-installers-with-the-wix-toolset-part-6/">
+		<a href="/blog/leaky-abstractions-rot-code/">
 		
-			Creating Windows Installers With the WiX Toolset Part 6</a>
+			Leaky Abstractions Rot Code</a>
 	</h2>
 	<div class="entry-content">
-		<address>This article is part of a series exploring how to create installers for Windows software.  Here&#8217;s the complete contents of the series.</address>
-<address><a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-01/">Part 1 – What Kinds of Software Projects Benefit From an Installer?</a><br />
-<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-02/">Part 2 – An Overview Of Windows Installer and its Features</a><br />
-<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-03/">Part 3 – Tooling Options for Building Installers</a><br />
-<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-04/">Part 4 – The Windows Installer Runtime Sequence</a><br />
-<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-5/">Part 5 – The Contents of an MSI</a><br />
-<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-6/">Part 6 – The Structure of a WiX File</a><br />
-<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-7/">Part 7 – Generating an MSI Package From Your WiX</a><br />
-<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-8/">Part 8 – Troubleshooting Installer Runtime Problems</a><br />
-<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-summary/">Part 9 - Summary</a><br />
-</address>
-<p><br/></p>
-<h2>Summary</h2>
-<p>This post is a companion to the previous post in Part 5 - it shows and explains the structure of the WiX file that was used to generate the MSI.</p>
-<h2>Tooling and References For Editing WiX Files</h2>
-<p>Since the name of the toolkit is &#8220;Windows Installer in XML&#8221;, you probably won&#8217;t be terribly surprised to find out that the source files you edit are&#8230;wait for it&#8230;XML. This means you can author and edit in your favorite XML editor of choice, whether that&#8217;s Notepad++, some incredibly expensive specialty tool like Altova XML Spy, or Visual Studio. If you use Visual Studio and you&#8217;ve installed WiX on your local machine, you can leverage the included Votive project types to get Intellisense in Visual Studio.</p>
-<p>[caption id=&#8221;attachment_6409&#8221; align=&#8221;alignnone&#8221; width=&#8221;582&#8221;]<a href="http://www.headspring.com/wp-content/uploads/2013/02/votiveIntellisense.png"><img class=" wp-image-6409 " alt="Picture of editing with Visual Studio and Intellisense supplied by Votive" src="http://www.headspring.com/wp-content/uploads/2013/02/votiveIntellisense-970x562.png" width="582" height="337" /></a> Visual Studio Intellisense with Votive[/caption]</p>
-<p>There&#8217;s reference documentation for the schema at <a href=" http://wix.sourceforge.net/manual-wix3/schema_index.htm">SourceForge</a>. The first link is for the WiX schema itself, and there are other schema references for the various extensions that are available.</p>
-<h2>The Complete Hello World</h2>
-<p><div><script src='https://gist.github.com/5014691.js'></script>
+		<p>Over the past month, we&#8217;ve seen the inception and early development of my ongoing side project, <a href="https://github.com/plioi/fixie">the Fixie test framework</a>.  As of last week, it was far enough along to run all of its own tests. Although I&#8217;m pleased with the progress so far, last week&#8217;s success introduced an exceptionally leaky abstraction.  Today, we&#8217;ll see how I patched up the leak.</p>
+<p>A software abstraction, such as an interface or abstract class, &#8220;leaks&#8221; when it fails to hide implementation details. Leaky abstractions are annoying enough when the damage is local to a small area of a project, but <strong>when the leak has a high risk of spreading, it can cause your code to rot.</strong>  An abstraction&#8217;s leak can spread when the calling code takes on too much knowledge of the leaked information, to the point where the calling code becomes a new source of that leaked information.</p>
+<blockquote><p>A calls B, which calls C, which calls your leaky abstraction.  C is forced to deal with information you intended to hide, putting it at high risk of leaking that information back to B.  If B starts dealing with that information, A is at risk, too. The ugliness rots all the way through your system.</p></blockquote>
+<p>Once the information you intended to hide has spread, everything it touches is now brittle.  If you make changes within the abstraction&#8217;s implementation, those details may cause a ripple effect through all the rotting code.  If other people or projects now depend on the leaked information, you may not even have the option of making the desired changes in the first place!</p>
+<h2>Fixie&#8217;s Leaky Abstraction</h2>
+<p>By the end of last week&#8217;s post, I had developed <a href="http://www.headspring.com/patrick/bootstrapping/">a roughly-usable test framework</a>. This version had an abstraction called Convention which is fundamental to the project: I want the end user to be able to tell me what their test fixtures and test cases look like.  I want you to be able to say things like &#8220;My test fixtures are the classes whose names end with &#8216;Tests&#8217;&#8221;, or &#8220;My test fixtures are the classes marked with some [Attribute]&#8221;.  If you don&#8217;t provide such a description, you&#8217;ll get the <a href="https://github.com/plioi/fixie/blob/6a01e382f30c3c598cf7d3d3a3bde450ad684297/src/Fixie/DefaultConvention.cs">default convention</a>:</p>
+<p><div><script src='https://gist.github.com/5307031.js'></script>
 <noscript><pre><code></code></pre></noscript></div>
 </p>
-<h2>Dissecting the Elements</h2>
-<p>Line 3 is pretty straightforward: declare our root Wix element and specify the namespace. No that isn&#8217;t a typo at the end; the namespace really doesn&#8217;t have an x at the end of it. I have no idea why.</p>
-<p>Line 5 declares our Product for the installer (recall Product has a cardinality of 1). Some of the supporting attributes like Manufacturer, Name, and Version will show up in the Add Program and Features list for Windows.</p>
-<p>Line 12 defines the Package (also cardinality of 1), which is the installer itself. Attributes here will show up in the properties of the MSI file.</p>
-<p>Line 19 introduces the concept of Media, which wasn&#8217;t discussed in the MSI examination. Windows Installer has a profuse amount of options for the physical layout of the files to be deployed, including things like spanning multiple DVDs (or floppies - <a href="http://superuser.com/questions/231273/what-are-the-windows-a-and-b-drives-used-for">remember those?</a> The need for this has fallen by the wayside as most software is downloaded from the internet or an internal network these days. In this example, we only have one physical media target, and the EmbedCab attribute will package all the deployables into the MSI directly since we don&#8217;t need disc spanning.</p>
-<p>Line 21 defines our target directory structure. Note it&#8217;s nested. I&#8217;m not going to discuss it exhaustively, but will point out a few interesting things. Line 22 specifies we&#8217;re installing into this machine&#8217;s Program Files directory, and line 23 is the INSTALLDIR, which is our root target directory. More sophisticated installers will allow the user to specify their own directory and replace the value of INSTALLDIR.</p>
-<p>Line 24 defines our one and only component. Recall from the previous post its possible for a component to have more than one deployable in it, but there are advantages to having a component for every file. Components have a unique ID to identify them.</p>
-<p>In this example we&#8217;ve associated our component with a target directory by simply nesting it under the desired directory. This works for simple scenarios, but if you have more than one target directory for your product or if your code generating your component definitions, it might be easier to declare the directory structure and components separately and use the DirectoryRef attribute on the component to make the association.</p>
-<p>Line 25 contains a file that is part of this component. The name attribute is what the file will be called when it is placed on the target file system, and the source attribute specifies where to get the file when compiling the MSI package.</p>
-<p>Line 26 does what you hopefully would guess; it removes the installation folder from the machine when the component &#8216;MainExecutable&#8217; gets uninstalled.</p>
-<p>Line 32 finishes things out by declaring our single feature (although you&#8217;ll recall there could be multiple Features in a Product), and associating our component with it.</p>
-<h2>Tying It All Together</h2>
-<p>So we have:</p>
-<ul>
-<li>File HelloWorld.exe containing our executable</li>
-<li>Component MainExecutable containing the HelloWorld.exe File</li>
-<li>Directory INSTALLDIR (which itself is a subdirectory) associated with the MainExecutable Component</li>
-<li>Feature called Complete containing the MainExecutable Component</li>
-<li>Product that contains the Complete Feature (this is implied and doesn&#8217;t have to be explicitly defined)</li>
-</ul>
-<p>All of this maps neatly to the MSI we took apart in the <a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-05/">last post</a>. In the next installment, we&#8217;ll look at the process for actually turning WiX into an MSI.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-02-28T00:00:00-06:00" pubdate data-updated="true">Feb 28<span>th</span>, 2013</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/blog/'>Blog</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/wix/'>WiX</a>, <a class='category' href='/blog/categories/windows-installer/'>windows installer</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/graphiti/">
-		
-			Graphiti</a>
-	</h2>
-	<div class="entry-content">
-		<p>Back in college, I stumbled across a great tool called <a href="http://www.graphviz.org/">GraphViz</a>.  I used it to generate class diagrams from the source of a PHP application I was working on.  More recently, I&#8217;ve found it useful again for visualizing the <em>runtime</em> relationships between objects.  GraphViz can turn a plaintext description of relationships into a graph image.  Not &#8220;graph&#8221; as in &#8220;charts and graphs&#8221;, but &#8220;graph&#8221; as in &#8220;computer science graph&#8221;.  Nodes and edges:</p>
-<p><a href="http://www.headspring.com/wp-content/uploads/2013/02/simple.png"><img src="http://www.headspring.com/wp-content/uploads/2013/02/simple.png" alt="simple" width="179" height="251" class="aligncenter size-medium wp-image-6425" /></a></p>
-<p>Today, we&#8217;ll see how to easily generate images like this.  Along the way, we&#8217;ll see an interesting use case for anonymous objects.</p>
-<h2>The Dot File Format</h2>
-<p>The image above can be generated from the following text file, using a GraphViz tool called dot.exe.  Note the use of the word &#8216;digraph&#8217;.  A graph is anything made up of nodes and edges; a digraph is a graph where the edges have <em>di</em>rection from a source node to a destination node.</p>
-<p><div><script src='https://gist.github.com/5014220.js'></script>
+<p>The first method says, &#8220;A class is a test fixture when its name ends with &#8216;Tests&#8217; and it has a default constructor.&#8221;  The second method says, &#8220;A method is a test case if it is a public instance void method with zero parameters.&#8221; To its credit, DefaultConvention successfully describes the behavior you&#8217;ll get by default.  However, there&#8217;s something wrong here.</p>
+<p>The lack of symmetry is suspicious.  To tell me what your test <em>fixtures</em> look like, you implement a method that says whether or not a <em>single</em> class is a test fixture.  To tell me what your test <em>cases</em> look like, you implement a method that <em>lists</em> all the methods that look like test cases.</p>
+<p>I originally wanted both methods to take a single candidate and return a bool, meaning the second method would accept one MethodInfo, returning true when that method looks like a test case.  I couldn&#8217;t just do that, because the .NET reflection API wants me to start things off with a BindingFlags value to describe visibility (public/private/static/instance/etc), and <em>then</em> filter those results down.  Contrast this two-step process with the way reflection wants you to search for Types: you can take an Assembly, call GetTypes(), and <em>then</em> filter down on things <em>including</em> visibility.</p>
+<blockquote><p>In the .NET reflection API, searching for types feels very different from searching for methods, even though a lot of the same logic and conditions apply to both.  This same asymmetry is present in the Convention abstraction.  Convention is leaking implementation details about reflection!</p></blockquote>
+<p>With this design, anyone who took advantage of Convention to customize their tests would be forced to understand a lot about the reflection API&#8217;s quirks.  Worse, they&#8217;d have to write some suspiciously-similar boilerplate code each time they wanted to provide an implementation.  DefaultConvention says what the default behavior is, but it isn&#8217;t very clear to the reader.</p>
+<h2>The Fix</h2>
+<p>Let&#8217;s jump to the improved abstraction, and then see how it works.  Here&#8217;s the new version of <a href="https://github.com/plioi/fixie/blob/cb649450e5d42a6eb83faeb58dafc3b9511d92d1/src/Fixie/DefaultConvention.cs">DefaultConvention</a>:</p>
+<p><div><script src='https://gist.github.com/5307051.js'></script>
 <noscript><pre><code></code></pre></noscript></div>
 </p>
-<p>To create the image from the dot file, run the command: <code>dot.exe Simple.dot -Tpng -o Simple.png</code>.</p>
-<p>The dot file format supports a lot of options.  For instance, we can customize the original dot file like so:</p>
-<p><div><script src='https://gist.github.com/5014224.js'></script>
+<p>Much better. It says exactly what test fixtures and test cases look like by default, and suggests how you might specify your own similar rules. There&#8217;s no suspicious asymmetry now: both test fixtures and test cases are discovered using very similar statements.  It&#8217;s declarative, so the end user doesn&#8217;t have to be concerned with <em>how</em> the discovery will be honored; they can focus on simply stating what success looks like.</p>
+<p>The Fixtures property is an instance of <a href="https://github.com/plioi/fixie/blob/cb649450e5d42a6eb83faeb58dafc3b9511d92d1/src/Fixie/ClassFilter.cs">ClassFilter</a>, and the Cases property is an instance of <a href="https://github.com/plioi/fixie/blob/cb649450e5d42a6eb83faeb58dafc3b9511d92d1/src/Fixie/MethodFilter.cs">MethodFilter</a>:</p>
+<p><div><script src='https://gist.github.com/5307060.js'></script>
 <noscript><pre><code></code></pre></noscript></div>
 </p>
-<p>Optional attributes appear in square brackets.  Here, we give one of our edges a label, alter the colors, and change one of the nodes from an ellipse to a box:</p>
-<p><a href="http://www.headspring.com/wp-content/uploads/2013/02/fancy.png"><img src="http://www.headspring.com/wp-content/uploads/2013/02/fancy.png" alt="fancy" width="179" height="275" class="aligncenter size-full wp-image-6424" /></a></p>
-<p>One can imagine generating these dot files programmatically with a StringBuilder.  Doing so would be a little monotonous, especially when the optional attributes like shapes and colors are included.  You have to busy yourself with the dot format&#8217;s quoting rules as well as C#&#8217;s quoting rules.  Even when you succeed, you&#8217;ll be left with some ugly code.  I&#8217;d much rather generate the above two dot files like so:</p>
-<p><div><script src='https://gist.github.com/5014233.js'></script>
+<p><div><script src='https://gist.github.com/5307065.js'></script>
 <noscript><pre><code></code></pre></noscript></div>
 </p>
-<p><div><script src='https://gist.github.com/5014237.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<h2>Implementing the Digraph Class</h2>
-<p>First, it&#8217;ll be handy to define an extension method to apply the dot quoting rules to any .NET value.  The double-quote character is special in dot files and must be preceded with a slash.  Of course, double-quotes and slashes are also meaningful in C# strings, so we have to double-escape these in the substitution:</p>
-<p><div><script src='https://gist.github.com/5014242.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Next, take a look at the way the optional parameters were supplied in the earlier code sample: <code>new { label = 1, color="red" }</code>.  This is an anonymous object.  It creates an instance of a class whose name we never see, with read-only properties named &#8220;label&#8221; and &#8220;color&#8221;.  We pass this to a method that doesn&#8217;t know what type is being passed to it, but that&#8217;s OK because we can use reflection to inspect such an object.  Here&#8217;s a helper that can look at these anonymous objects and turn them into an equivalent dictionary, whose ToString produces the dot syntax for attributes:</p>
-<p><div><script src='https://gist.github.com/5014245.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>I <em>could</em> have instead provided a real named class with all the possible dot properties already defined.  Doing so would be useful as it would give the developer statement completion suggestions, but the <a href="http://www.graphviz.org/doc/info/attrs.html">dot file format is actually quite extensive</a>.  In this case, it&#8217;s a very reasonable tradeoff to use anonymous objects and reflection for these node and edge attributes.  Even with statement completion, you&#8217;d find yourself frequently looking up details in the documentation anyway, so the return on investment would be ridiculous.</p>
-<p>We can represent a single node in the graph like so:</p>
-<p><div><script src='https://gist.github.com/5014249.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>An Edge is defined by the two Nodes it connects:</p>
-<p><div><script src='https://gist.github.com/5014253.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Armed with all of the above classes, we can finally implement the Digraph class with ease:</p>
-<p><div><script src='https://gist.github.com/5014257.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
+<p>Both of these objects work in a similar way, achieving the symmetry I&#8217;d originally intended.  They each accumulate conditions in a list, and only perform that work when the Filter(&#8230;) method is finally called by Fixie&#8217;s main loop.  Since the real work is deferred to that last moment, MethodFilter is able to similarly accumulate information about the awkward BindingFlags, thus hiding the worst of the information leak found in the original version.</p>
+<p>Since each condition-building method returns <code>this</code>, the caller can Chain().Together().Calls().Like().This().  This approach gives me a home to place reflection helper methods like HasDefaultConstructor, further hiding odd implementation details about the reflection API, and if I happen to omit such a convenient helper method, the end user can build extension methods upon this foundation using the Where(&#8230;) method.</p>
 <h2>Criticism</h2>
-<p>Since the scope of this sample program is <em>entirely</em> devoted to generating the dot file format, I don&#8217;t mind the fact that I mixed state (node and edge definitions) with presentation (string formatting in each ToString override).  An earlier implementation put all of the string formatting in the Digraph class, but it was fairly ugly.  If the requirements expanded such that we needed to use the node/edge structure for things in addition to presentation in dot format, I would want to move all string formatting out of the Node, Edge, and Digraph classes, having a dedicated class just for traversing a Digraph to produce a dot file.</p>
+<p>I&#8217;m still leaking too much of the reflection API&#8217;s quirks.  The BindingFlags enum is a complicated mish-mash of unrelated concepts, so only some of its values even make sense for a call to Type.GetMethods(&#8230;).  I should hide the need for the end user to know that, instead exposing a few more helper methods with obvious names for the values that <em>do</em> make sense here.  It&#8217;s not perfect, but it&#8217;s a much better sitation than before, and will be easier to reshape over the coming weeks as I get a better idea of what all Conventions really need to do.</p>
+<p>At this point, my goal was to address the immediate risks presented by the older Convention abstraction.  Now that those risks are mitigated, I&#8217;ll hold off on doing too much design up front for the remainder.  Instead, I&#8217;ll let real use cases for custom Conventions drive the rest of the abstraction&#8217;s design.</p>
 
 		
 		
@@ -245,7 +147,7 @@ Part 1 &hellip;">
   
 
 
-<time datetime="2013-02-27T00:00:00-06:00" pubdate data-updated="true">Feb 27<span>th</span>, 2013</time></div>
+<time datetime="2013-04-04T00:00:00-05:00" pubdate data-updated="true">Apr 4<span>th</span>, 2013</time></div>
 	<div class="tags">
 
 
@@ -261,69 +163,59 @@ Part 1 &hellip;">
     <article class="post">
 	<h2 class="title">
 		
-		<a href="/blog/creating-windows-installers-with-the-wix-toolset-part-5/">
+		<a href="/blog/bootstrapping/">
 		
-			Creating Windows Installers With the WiX Toolset Part 5</a>
+			Bootstrapping</a>
 	</h2>
 	<div class="entry-content">
-		<address>This article is part of a series exploring how to create installers for Windows software.  Here&#8217;s the complete contents of the series.</address>
-<address><a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-01/">Part 1 – What Kinds of Software Projects Benefit From an Installer?</a><br />
-<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-02/">Part 2 – An Overview Of Windows Installer and its Features</a><br />
-<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-03/">Part 3 – Tooling Options for Building Installers</a><br />
-<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-04/">Part 4 – The Windows Installer Runtime Sequence</a><br />
-<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-5/">Part 5 – The Contents of an MSI</a><br />
-<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-6/">Part 6 – The Structure of a WiX File</a><br />
-<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-7/">Part 7 – Generating an MSI Package From Your WiX</a><br />
-<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-8/">Part 8 – Troubleshooting Installer Runtime Problems</a><br />
-<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-summary/">Part 9 - Summary</a><br />
-</address>
-<p><br/></p>
-<h2>Summary</h2>
-<p>This post discusses what an MSI is, We&#8217;ll use a Microsoft SDK tool called Orca to examine what the internal structure looks like.  We&#8217;ll also talk about how the internal structure maps to Windows Installer concepts.  While this post is not about WiX directly, authoring in WiX requires a good understanding of these internal structures and how they interconnect.</p>
-<h2>The Contents of an MSI</h2>
-<p>If you&#8217;ve installed several software applications like Office or Halo on your computer, chances are you&#8217;ve come across a file with type of MSI.  MSI stands for Microsoft Installer, and is the primary package type that Windows Installer consumes to install a product.</p>
-<p>There are other file types used by Windows Installer, but MSI is the only &#8220;required&#8221; type for making an installer.  I&#8217;m not going to discuss the other types, but you can find out more about them <a href="http://msdn.microsoft.com/en-us/library/aa372842.aspx">here</a>.</p>
-<p>For our dissection we&#8217;re going to use an MSI that installs a single file - HelloWorld.exe.  Here&#8217;s the installer:</p>
-<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/msi.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="msi" alt="msi" src="http://www.headspring.com/wp-content/uploads/2013/01/msi_thumb.png" width="244" height="83" border="0" /></a></p>
-<p>The installer has no user interface.  This is what happens when you double click the MSI to install it:</p>
-<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/installing.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="installing" alt="installing" src="http://www.headspring.com/wp-content/uploads/2013/01/installing_thumb.png" width="244" height="94" border="0" /></a></p>
-<p>What happens next is the window changes to say &#8220;Please wait while Windows configures Edgewolf HelloWorld&#8221; with a progess bar, and then performs the installation and closes.  This happens so fast I couldn&#8217;t get a screenshot of it before it disappeared.  After we run the installer, we have a new entry in Programs and Features that looks like this:</p>
-<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/programsAndFeatures.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="programsAndFeatures" alt="programsAndFeatures" src="http://www.headspring.com/wp-content/uploads/2013/01/programsAndFeatures_thumb.png" width="244" height="58" border="0" /></a></p>
-<p>And we can find our installed program here:</p>
-<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/installed.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="installed" alt="installed" src="http://www.headspring.com/wp-content/uploads/2013/01/installed_thumb.png" width="244" height="83" border="0" /></a></p>
-<p>It doesn&#8217;t get much simpler then that, right?</p>
-<h2>MSI Internal Structure</h2>
-<p>It&#8217;s interesting how trends in software development affect technical implementations.  For example, the programming language Java was rising to prominence around the same time the XML file format was being widely touted as THE way to store data for a variety of reasons.  As a result, Java Enterprise Edition (J2EE) relies heavily on XML files, to the point that I&#8217;ve heard jokes that enterprise Java development consists of writing one line of code and editing twenty XML files.</p>
-<p>Windows Installer is no different, and its source of large inspiration is relational databases.  An msi package is, quite literally, a database file with tables and rows in it.  Here&#8217;s a partial schema diagram:</p>
-<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/payloadTables.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="payloadTables" alt="payloadTables" src="http://www.headspring.com/wp-content/uploads/2013/01/payloadTables_thumb.png" width="244" height="111" border="0" /></a></p>
-<p>Since an installer is for a single product, there&#8217;s dedicated table for that.  But a product like Microsoft Office does have multiple features such as Word, Excel, and PowerPoint.  Large features will typically be composed of a collection of subfeatures that can be installed or not installed and still have a working feature.  Examples of subfeatures for Word would be items like spellcheck, or clipart.</p>
-<p>Features and subfeatures are &#8220;above the water&#8221; concepts in the way that they are exposed directly to the person using the installer.  The user sees them and has a chance to choose what features they do or do not want.</p>
-<p>Features are composed of one or more components.  Components are tangible items like files, start menu shortcuts, and registry entries.  Components are &#8220;below the water&#8221; in the sense that they aren&#8217;t meant to be exposed to users.  When you&#8217;re installing Word, you could care less that you&#8217;re getting the files winword.exe, wordcnv.dll, wordcnvpxy.cnv&#8230;.well you get the idea.  Components are linked to a directory where they are installed, and are composed of one or more files.  Because the directory link is at the component level, obviously all of the files in the component need to target the same directory.</p>
-<p>Components are tied to features with a linking Feature Component table.</p>
-<p>In addition to the payload tables we just looked at, an MSI also has sequence tables that instruct Windows Installer what steps to execute and in what order.  There are a number standard actions included in Windows Installer such as calculating the disk space needed to perform the installation.  It&#8217;s also possible to write your own custom actions, I plan on talking about that in a later post.</p>
-<h2>Installing Orca</h2>
-<p>Microsoft provides a free tool called Orca that can be used to examine an MSI file.  It isn&#8217;t part of Windows, but it&#8217;s included with the Windows 7 SDK.  You can get an ISO of the Windows 7 SDK <a href="http://www.microsoft.com/en-us/download/details.aspx?id=8442">here</a> and the Windows 8 SDK is available <a href="http://msdn.microsoft.com/en-us/windows/hardware/hh852363.aspx">here</a>.</p>
-<p>Once you&#8217;ve installed the SDK, you can find an installer for Orca in the Bin directory (something similar to C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin).  Run the installer, and then you&#8217;ll have Orca in your start menu.</p>
-<h2>Examining the Hello World MSI</h2>
-<p>Start Orca.  Click File..Open, and open the MSI you want to load.  Here’s what you’ll see:</p>
-<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/msiTablesInOrca.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="msiTablesInOrca" alt="msiTablesInOrca" src="http://www.headspring.com/wp-content/uploads/2013/01/msiTablesInOrca_thumb.png" width="244" height="179" border="0" /></a></p>
-<p>In addition to tables, the installer stores some nonrelational information in a Summary Stream.  You can view this by clicking &#8220;View..Summary Information&#8221;.  Most of it is product related, but the target architecture (32bit or 64bit) is also stored here.</p>
-<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/summaryStreamInOrca.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="summaryStreamInOrca" alt="summaryStreamInOrca" src="http://www.headspring.com/wp-content/uploads/2013/01/summaryStreamInOrca_thumb.png" width="229" height="244" border="0" /></a></p>
-<p>Looking at the feature table, we see this installer only has one feature - Complete (as in a complete install).</p>
-<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/tableFeature.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="tableFeature" alt="tableFeature" src="http://www.headspring.com/wp-content/uploads/2013/01/tableFeature_thumb.png" width="244" height="53" border="0" /></a></p>
-<p>The FeatureComponent table links one component to our feature, the component called MainExecutable.</p>
-<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/tableFeatureComponent.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="tableFeatureComponent" alt="tableFeatureComponent" src="http://www.headspring.com/wp-content/uploads/2013/01/tableFeatureComponent_thumb.png" width="244" height="75" border="0" /></a></p>
-<p>Heading over to the component table, we see MainExecutable, and it targets the INSTALLDIR for the directory.</p>
-<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/tableComponent.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="tableComponent" alt="tableComponent" src="http://www.headspring.com/wp-content/uploads/2013/01/tableComponent_thumb.png" width="244" height="54" border="0" /></a></p>
-<p>The INSTALLDIR is going into an Edgewolf HelloWorld subdirectory under Program Files.</p>
-<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/tableDirectory.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="tableDirectory" alt="tableDirectory" src="http://www.headspring.com/wp-content/uploads/2013/01/tableDirectory_thumb.png" width="244" height="71" border="0" /></a></p>
-<p>So where&#8217;s the actual exe?  In the File table, and we see its linked to the MainExecutable component.</p>
-<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/tableFile.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="tableFile" alt="tableFile" src="http://www.headspring.com/wp-content/uploads/2013/01/tableFile_thumb.png" width="244" height="54" border="0" /></a></p>
-<p>I didn&#8217;t mention it earlier, but there&#8217;s also a Property table that&#8217;s a catch-all name value pair collection.</p>
-<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/tableProperty.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="tableProperty" alt="tableProperty" src="http://www.headspring.com/wp-content/uploads/2013/01/tableProperty_thumb.png" width="244" height="170" border="0" /></a></p>
-<p>The sequence tables instruct Windows Installer in what steps to take to run the installer.  Recall that there are two install stages (the UI stage and the Execution stage).  There are tables for each, and looking at the pictures below we can see the difference between the two:</p>
-<p><a href="http://www.headspring.com/wp-content/uploads/2013/01/installUiSequence.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="installUiSequence" alt="installUiSequence" src="http://www.headspring.com/wp-content/uploads/2013/01/installUiSequence_thumb.png" width="244" height="115" border="0" /></a><a href="http://www.headspring.com/wp-content/uploads/2013/01/installExecuteSequence.png"><img style="background-image: none; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="installExecuteSequence" alt="installExecuteSequence" src="http://www.headspring.com/wp-content/uploads/2013/01/installExecuteSequence_thumb.png" width="244" height="191" border="0" /></a></p>
-<p>That&#8217;s enough for this post.  Now we have a solid understanding of the basic building blocks in an installer package.  In the next post we&#8217;ll take a look at the WiX that generated this MSI.</p>
+		<p>Last week, I covered <a href="http://www.headspring.com/patrick/socks-then-shoes/">the first several commits to Fixie</a>, resulting in a reliable build script.  This week, we&#8217;ll see how I&#8217;ve &#8220;bootstrapped&#8221; Fixie to the point where it can run all of its own tests.</p>
+<p>Bootstrapping comes from an old saying.  To &#8220;pull oneself up by one&#8217;s bootstraps&#8221;, though literally absurd, is to improve without outside assistance.  For software, bootstrapping involves getting a new system off the ground by first leveraging the less-desirable system you had to start with.</p>
+<p>I&#8217;ve seen this approach take a few forms.  Bootstrapping is the solution to two categories of software problems: The Grand Rewrite, and The Curiously Self-Sufficient System</p>
+<h2>The Grand Rewrite</h2>
+<p>Grand rewrite projects are very tempting.  Perhaps you work on a large project for a long time, and you get to a point where adding new features becomes more and more difficult.  In other cases, your well-designed system simply no longer matches the new needs of your growing business.</p>
+<p>In a perfect world, you could keep what you have and incrementally improve it to meet new demands, but sometimes that simply isn&#8217;t practical.  Your hand may be forced by the need to escape vendor lock-in, or you may find it increasingly difficult to hire people experienced with an aging platform.</p>
+<p>When deciding to go forward with a grand rewrite, recognize that it is an inherently-risky endeavor.  You&#8217;re going to face all the same design tradeoffs and bugs you faced before, plus all the new ones you introduce this time around.  If anyone says they&#8217;ll simply &#8220;get it right this time,&#8221; don&#8217;t listen.  Rather, your team must actively mitigate the inherent risks.</p>
+<p>The worst-case scenario involves building the new system in full, off to the side, before ever going to production.  After eventually reaching &#8220;feature parity plus a few&#8221;, you&#8217;ll just turn off the old system, turn on the new system, and bask in the glory of your dizzyingly-late and overpriced system.  This approach maximizes the risks involved: you could spend a great deal of money chasing a large and moving target before reaping <em>any</em> benefits from it.</p>
+<p><strong>The best-case scenario involves bootstrapping the new system</strong>, leveraging what you have in order to get <em>some</em> of the new system up and running in production as soon as possible.  Maybe you build a little of the new system, altering the legacy system to defer to the new one for a single feature, and then repeat the process, phasing out the old system one piece at a time.  Maybe the legacy system never invokes the new one, but the new one begins its life by implementing the most important new features against the legacy database.  Whatever the specifics, you want to use as much of the legacy investment as possible in order to get new value in production as fast as possible.</p>
+<p>Suddenly, you&#8217;re not the expensive team that&#8217;s been toiling away for years without providing value.  You&#8217;re the team that&#8217;s constantly pushing valuable progress to production.</p>
+<h2>The Curiously Self-Sufficient System</h2>
+<p>The second class of bootstrapping projects is a little more interesting from a developer&#8217;s point of view, in that their implementation can be a little mind-bending: a system appears to be built upon itself.  The best example of this seemingly-impossible state is when a compiler for a language is writting in that language.</p>
+<p>The current version of the C# compiler was implemented in another language, but the <em>next</em> version of the C# compiler is being written in C#.  I don&#8217;t think I&#8217;d call this example bootstrapping, however, since C# has already been established as a full-size language for some time now.  Bootstrapping is more of a technique to get a new language up and running quickly so that it can spend most of its lifetime &#8220;self-hosted&#8221;.</p>
+<p>Many languages&#8217; first implementations are written in a preexisting language like C.  After the first version is working, the second version can be written in the new language, compiled with the first version.  Each new version is compiled with the previous version.</p>
+<blockquote><p>Even Pascal&#8217;s <em>first</em> compiler was written in Pascal.  Through the power of imagination and bravado, the code for the compiler was written on the assumption that a compiler would someday exist for it.  Then, it was translated backwards down to a simpler language that <em>did</em> have a compiler, in order to produce the first working Pascal compiler.  There were, <em>ahem</em>, no unit tests.</p></blockquote>
+<p>To create one of these curiously self-sufficient, bootstrapped systems, <strong>identify some fundamentally important subset of your goal</strong>, the subset that would be just useful enough to use for ongoing development, and implement that using the legacy system.  You may even deliberately limit yourself to use only some of the legacy system&#8217;s features along the way, partly to make it easier to switch over to the new one, and partly to keep yourself honest about sticking to the fundamentally important subset.</p>
+<p>The point here is that some problems lend themselves to being curiously self-sufficient, and when solving such a problem you can keep scope creep in check while simultaneously escaping your project&#8217;s predecessor.</p>
+<h2>Bootstrapping Fixie</h2>
+<p><a href="https://github.com/plioi/fixie">Fixie</a>, my test framework project, is Curiously Self-Sufficient.</p>
+<p>I always want to write code with support from automated tests, even on this project, so I had to start implementing it with some <em>other</em> test framework in place.  Now that I have implemented enough features for it to run its own tests, I can simply use it to test-drive all the remaining features.</p>
+<p>There are a few benefits to wearing the Bootstrapping Hat on this project.</p>
+<p>First, being able to run my tests using both xUnit and Fixie in early development allows me to compare their output, which has been helpful for discovering requirements that were not already on my radar.</p>
+<p>Second, it has given me a very reliable check against scope creep.  I have several big features planned, and I occasionally found myself tempted to include a little too much in this first pass.  When in doubt about including some feature F, I could always ask myself the same question:</p>
+<blockquote><p>Is feature F necessary to run any of the xUnit tests I&#8217;ve had to write so far?  If not, I don&#8217;t need feature F yet.</p></blockquote>
+<p>I limited myself to only use those xUnit features that were absolutely necessary to drive each new feature, so I didn&#8217;t have to worry about chasing a moving target.</p>
+<p>By leveraging the existing system (xUnit) in this way, I&#8217;ve been able to get real value from the new system (Fixie) very quickly.  Fixie can run all of its own test cases, even though those test cases were written using xUnit.  I produce equivalent output when tests pass and when tests fail.  I&#8217;m actively writing new test cases as a Fixie user, not an xUnit user, so I consider it successfully bootstrapped.</p>
+<h2>Fixie&#8217;s Initial Implementation</h2>
+<p>By approaching this task with a bootstrapping mindset, I&#8217;ve successfully gotten a useful-enough test framework up and running in a very short time.  It&#8217;s not fancy enough to write home about, but that wasn&#8217;t the goal in this phase of development.  Let&#8217;s see what this minimal test framework looks like.</p>
+<p>First, <a href="https://github.com/plioi/fixie/blob/6a01e382f30c3c598cf7d3d3a3bde450ad684297/default.ps1">Fixie&#8217;s build script</a> runs all the tests using Fixie and then runs all the tests using xUnit.  In order to compare their output in the case of failing tests, only xUnit failures actually cause the build to fail.  Fixie test failures are output, but don&#8217;t prevent the build script from progressing to the xUnit run.</p>
+<p>The <a href="https://github.com/plioi/fixie/blob/6a01e382f30c3c598cf7d3d3a3bde450ad684297/src/Fixie/DefaultConvention.cs">default convention</a> (and currently the only convention), describes how to tell whether a class is a test fixture, and whether a method is a test case.  A class is a test fixture if its name ends with &#8220;Tests&#8221; and it has a default constructor; a method is a test case if it&#8217;s a public instance void method with zero parameters:</p>
+<p><div><script src='https://gist.github.com/5242692.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>This convention helps to reach out and find all the fixture classes and test case methods in your test assembly, so it can construct Fixture and Case objects describing the work to be performed.  A <a href="https://github.com/plioi/fixie/blob/6a01e382f30c3c598cf7d3d3a3bde450ad684297/src/Fixie/Fixture.cs">Fixture</a> is a named executable thing, a <a href="https://github.com/plioi/fixie/blob/6a01e382f30c3c598cf7d3d3a3bde450ad684297/src/Fixie/Case.cs">Case</a> is a named executable thing, and they both rely on a <a href="https://github.com/plioi/fixie/blob/6a01e382f30c3c598cf7d3d3a3bde450ad684297/src/Fixie/Listener.cs">Listener</a> to report test failures:</p>
+<p><div><script src='https://gist.github.com/5242698.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>For this bootstrapping phase, all fixtures correspond with classes, so the only implementation of Fixture is <a href="https://github.com/plioi/fixie/blob/6a01e382f30c3c598cf7d3d3a3bde450ad684297/src/Fixie/ClassFixture.cs">ClassFixture</a>.  ClassFixture takes one of the Types discovered by the DefaultConvention, and owns the test fixture lifecycle in its Execute method:</p>
+<p><div><script src='https://gist.github.com/5242707.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Note the elaborate try/catch block.  Activator.CreateInstance(fixtureClass) calls your test fixture&#8217;s default constructor via reflection.  If your test fixture constructor throws an exception, we perceive that here as a TargetInvocationException that <em>wraps</em> the original exception.  We don&#8217;t want to report that wrapper to the user, otherwise every single test failure will hide the original with the unhelpful message, &#8220;Exception has been thrown by the target of an invocation.&#8221;  We unpack the wrapped original exception and report <em>that</em> to the listener.</p>
+<p>For this bootstrapping phase, all test cases correspond with methods, so the only implementation of Case is <a href="https://github.com/plioi/fixie/blob/6a01e382f30c3c598cf7d3d3a3bde450ad684297/src/Fixie/MethodCase.cs">MethodCase</a>.  MethodCase takes one of the MethodInfos discovered by the default Convention, and owns the execution of that method with a similar exception handler:</p>
+<p><div><script src='https://gist.github.com/5242711.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>That&#8217;s all the real work.  The remaining classes include <a href="https://github.com/plioi/fixie/blob/6a01e382f30c3c598cf7d3d3a3bde450ad684297/src/Fixie/Suite.cs">Suite</a>, which loops through all the Fixtures and asks them to run themselves, <a href="https://github.com/plioi/fixie/blob/6a01e382f30c3c598cf7d3d3a3bde450ad684297/src/Fixie.Console/ConsoleListener.cs">ConsoleListener</a>, which is a Listener that outputs failures to the console, and <a href="https://github.com/plioi/fixie/blob/6a01e382f30c3c598cf7d3d3a3bde450ad684297/src/Fixie.Console/Program.cs">Program</a>, whose Main method builds up and executes a Suite with a ConsoleListener for a given Assembly.</p>
+<p>By approaching this effort from a bootstrapping point of view, I now have a test framework powerful enough to drive the rest of its own features.  I&#8217;ve kept scope creep in check while laying a reasonable foundation, and even in the early stages I was able to have meaningful code coverage via xUnit.  Now that I&#8217;m about to embark on the more significant features, I already have a meaningful set of test cases to rely on.</p>
 
 		
 		
@@ -343,11 +235,11 @@ Part 1 &hellip;">
   
 
 
-<time datetime="2013-02-26T00:00:00-06:00" pubdate data-updated="true">Feb 26<span>th</span>, 2013</time></div>
+<time datetime="2013-03-26T00:00:00-05:00" pubdate data-updated="true">Mar 26<span>th</span>, 2013</time></div>
 	<div class="tags">
 
 
-	<a class='category' href='/blog/categories/blog/'>Blog</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/wix/'>WiX</a>, <a class='category' href='/blog/categories/windows-installer/'>windows installer</a>
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
 
 
 </div>
@@ -359,24 +251,17 @@ Part 1 &hellip;">
     <article class="post">
 	<h2 class="title">
 		
-		<a href="/blog/headspring-ceo-finalist-for-austin-under-40-awards/">
+		<a href="/blog/headspring-named-a-best-company-to-work-for-in-texas/">
 		
-			Headspring CEO Finalist for Austin Under 40 Awards</a>
+			Headspring Named a Best Company to Work for in Texas</a>
 	</h2>
 	<div class="entry-content">
-		<p style="text-align: left;" align="center"><i>Dustin Wells, Founder &amp; CEO of Headspring, Nominated for Austin Under 40 Awards for Technology and Sciences</i></p>
-<p><b> </b></p>
-<p><b>AUSTIN, Texas – (Feb. 22, 2013) –</b> Dustin Wells, founder and CEO of leading custom software development company Headspring, was honored as a top five finalists for the <a href="http://www.austinunder40.org/" target="_blank">2013 Austin Under 40 Award</a> for excellence in technology and sciences.</p>
-<p>Austin Under 40 Awards, by the Austin’s Young Women’s Alliance and Young Men’s Business Alliance, honors the best and brightest young professionals in Austin. Nominees are recognized for both their professional achievements and considerable contributions to the community.</p>
-<p>“I was thrilled to be nominated,” said Dustin Wells, CEO of Headspring. “Headspring’s growth and success is representative of the hard work of our entire team.”</p>
-<p>Last year, Headspring achieved a 67 percent growth in revenue. With more than 35 employees, the company expects to exceed 60 by the end of the year.  Recently, the company announced its move into the Houston market and plans to launch Headspring Mobile in the spring.</p>
-<p>“Our team is our best asset. We put a lot of focus on the trajectory of their career and that strong and supportive culture is reflected in the results of our work, and our excellent client relationships,” said Wells.</p>
-<p>Headspring is a leader in its industry and has achieved over a 95 percent success rate in an industry where 42 percent is standard. Through rigorous work and seamless communications with clients, the company delivers software solutions with no surprises that are reliable and effective.</p>
+		<p style="text-align: center;"><img class="size-medium wp-image-6259 aligncenter" alt="2009 BCTWFIT" src="http://www.headspring.com/wp-content/uploads/2012/12/2013BCTWFIT-330x300.jpg" width="330" height="300" /></p>
+<p>We are ranked 8<sup>th</sup> in the Small Companies category for the 2013 Best Companies to Work for in Texas list! This list is by the Texas Association of Business and our category includes businesses that have 15-99 total employees. We are very excited about this honor and thank our awesome team for helping us make it happen!</p>
+<p>The Best Companies to Work for in Texas Awards, hosted by Best Companies Inc, SHRM - Texas State Council, <i>Texas Monthly</i> and the Texas Association of Business, is designed to recognize the best employers in the state that make it a priority to create better workplaces for their employees. The list names companies with the best practices among Texas employers and recognizes them for their commitment.</p>
+<p>“The Headspring team is honored to be ranked as one of the best places to work in Texas,” noted Dustin Wells, Founder and CEO of Headspring. “At Headspring, we focus on creating a company culture that supports the growth and well-being of our talented employees. We are proud that the Texas Association of Business recognized our efforts.”</p>
+<p>The best companies were selected based on a survey that was released in the summer of 2012, which included an organizational overview of the company’s policies and procedures and an in-depth employee questionnaire. The entire list of rankings for the 100 Best Companies to Work for in Texas can be found in the April 2013 issue of <i>Texas Monthly</i>.</p>
 <p>&nbsp;</p>
-<p><b>About Headspring:</b></p>
-<p>Headspring delivers custom business applications to help growing companies. The Austin-based company has proudly served Texas businesses since 2001. Headspring is committed to helping companies compete in their markets by delivering custom business applications for growing companies. Headspring provides customers with scalable custom applications to fit business specific needs to enable continued growth. In 2009, the company was named #127 on Inc. 500, the exclusive ranking of the nation’s fastest-growing private companies. For more information, go to <a href="http://www.headspring.com/">www.headspring.com</a> or call (877) 459–2260.</p>
-<p align="center">###</p>
-<p align="center">
 
 		
 		
@@ -396,7 +281,7 @@ Part 1 &hellip;">
   
 
 
-<time datetime="2013-02-25T00:00:00-06:00" pubdate data-updated="true">Feb 25<span>th</span>, 2013</time></div>
+<time datetime="2013-03-21T00:00:00-05:00" pubdate data-updated="true">Mar 21<span>st</span>, 2013</time></div>
 	<div class="tags">
 
 
@@ -412,32 +297,96 @@ Part 1 &hellip;">
     <article class="post">
 	<h2 class="title">
 		
-		<a href="/blog/headspring-competes-at-2013-austin-startup-games/">
+		<a href="/blog/socks-then-shoes/">
 		
-			Headspring Competes at 2013 Austin Startup Games</a>
+			Socks, *then* Shoes</a>
 	</h2>
 	<div class="entry-content">
-		<p>The Austin Startup Games were a flying success this past Saturday, February 16th at the Austin Music Hall. Headspring was proud to participate for the first time!</p>
-<p>The Austin Startup Games is a one-day event in which sixteen Austin companies compete in various activities, including beer pong, ping pong, shuffleboard, foosball, pop-a-shot, darts, Connect 4, trivia and flip cup. The mechanical bull was the surprise event.</p>
-<p><img class="alignnone size-medium wp-image-6417" alt="IMAGE_B2E4A8A6-E1D4-47B2-B540-53AA3B0AE653" src="http://www.headspring.com/wp-content/uploads/2013/02/IMAGE_B2E4A8A6-E1D4-47B2-B540-53AA3B0AE653-400x300.jpg" width="400" height="300" /> <img class="alignnone size-medium wp-image-6418" alt="IMAGE_E7ED9347-5418-44A0-B09F-55DEC43F43B8" src="http://www.headspring.com/wp-content/uploads/2013/02/IMAGE_E7ED9347-5418-44A0-B09F-55DEC43F43B8-400x300.jpg" width="400" height="300" /></p>
-<p>We sported these awesome Headspring shirts. We call it &#8220;From Our Heads&#8221; because it&#8217;s an abstract mash-up of the Headspring culture. It combines what we do and tools we use (bit bucket, technology, code, the cloud, mobile apps) and the things we enjoy (bowling, the Internet, providing great customer service).</p>
-<p><img class="aligncenter size-medium wp-image-6414" alt="BDQfHQVCAAImy5p" src="http://www.headspring.com/wp-content/uploads/2013/02/BDQfHQVCAAImy5p-369x300.jpeg" width="369" height="300" /></p>
-<p>Each company represented a charity of its choice, and Headspring chose The Cancer Connection. (link: http://www.thecancerconnection.org/) The organization provides one-on-one mentoring and oncology and hospital support to patients. The Cancer Connection volunteers provide comfort, support and informational resources to cancer patients and their families.</p>
-<p>There were very intense and close competitions, and at the end of the day, Headspring walked away victoriously with a couple of medals and a proud team.</p>
-<ul>
-<li>Justin P. won Bronze in Connect Four</li>
-<li>Chris M. and Patrick M. won Silver in Beer Pong</li>
-<li>Glenn B. and Kevin H. won Bronze in Foosball</li>
-</ul>
-<p><img class="alignnone size-medium wp-image-6415" alt="20130216_142241" src="http://www.headspring.com/wp-content/uploads/2013/02/20130216_142241-225x300.jpg" width="225" height="300" />  <img class="alignnone size-medium wp-image-6416" alt="732970388" src="http://www.headspring.com/wp-content/uploads/2013/02/732970388-225x300.jpeg" width="225" height="300" /></p>
-<p>Total results:</p>
-<ul>
-<li>533 lbs (about 480 meals) of food was donated to Capital Area Food Bank</li>
-<li>500-600 attendees was expected and actually had 800 attendees show up</li>
-</ul>
-<p>The Austin Startup Games was a great opportunity to bring out our competitive side, represent Headspring among numerous Austin companies, support The Cancer Connection and bring our team together for some fun and bonding time.</p>
-<p><strong>For more photos, <a href="https://www.facebook.com/media/set/?set=a.459745877414576.108919.280556282000204&amp;type=1&amp;l=92e3753744" target="_blank">check out our Facebook page!</a></strong></p>
-<p>&nbsp;</p>
+		<p>A couple weeks back, I announced the <a href="http://www.headspring.com/patrick/insufficiently-round-wheels/">start of development on Fixie</a>, a .NET test framework. Last week, I covered some early <a href="http://www.headspring.com/patrick/strongly-typed-whiteboarding/">proof-of-concept work</a> performed with throw-away code. This week, we&#8217;ll take a close look at the first <a href="http://www.headspring.com/patrick/am-i-not-dead-commit/">several small commits</a> to <a href="https://github.com/plioi/fixie">Fixie on GitHub</a>.</p>
+<p>The commits we cover today are all about preparing the initial solution structure, installing dependencies with NuGet, writing a build script, and applying a simple version numbers scheme.  I strongly recommend performing similar steps when starting up any new project.  You&#8217;ve gotta put on your socks before you can seriously think about putting on your shoes.  <strong>Today&#8217;s work is all about the socks.</strong></p>
+<p>The goal here is to prepare a build script that compiles, runs tests, and applies version numbers to the built assemblies. Any developer should be able to clone the repo and run &#8220;build&#8221; at the command line in order to compile the project and run its tests.  It should be that easy; if it isn&#8217;t, we&#8217;ve failed at putting on <em>socks</em>.</p>
+<p>Although I&#8217;m framing this advice as &#8220;necessary first steps for any project&#8221;, it&#8217;s never too late to get a reliable build in place around your existing project.  Take it in small steps: get a build script that can simply compile the solution, then grow it to apply version numbers to assemblies, then grow it to run unit tests, put it on a Continuous Integration server, expand it to run integration tests&#8230;</p>
+<h2>Initialize .gitignore</h2>
+<p>Here&#8217;s a minimal .gitignore file you can start with.  It tells git to ignore some files that have no business being checked into source control, such as compiled assemblies under the bin/ folders.  Grow it as needed:</p>
+<p><div><script src='https://gist.github.com/5192403.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<h2>Choose an Open Source License</h2>
+<p>I am not a lawyer, so I cannot offer advice as to which open source license is right for you.  I selected the MIT License and included it as a .txt file at the root of my repo.  The fact that I went with this is not a recommendation.  This is your decision, but whatever you choose, include it in your repo and be sure to include the official name of the license at the top of the file so that everyone knows what it is.</p>
+<p><a href="https://github.com/plioi/fixie/commit/af7c43afaf3111c2139e5886abc9b57e983a0962">Commit</a>.</p>
+<h2>Initial Solution Structure</h2>
+<p>As we&#8217;ve already seen, our repo needs to contain things other than source code.  To keep our peas and rice separated on the plate, we&#8217;ll put our actual code files under a src/ folder.  In Visual Studio, I created a new solution containing a Class Library project named Fixie, all under src/.</p>
+<p>It&#8217;s tempting at this point to start adding several projects to the solution.  Surely, I&#8217;ll eventually need this test framework to produce a console-runner EXE, and a DLL to integrate with TestDriven.NET.  Also, I used to set up projects in a solution to enforce internal dependencies: Fixie&#8217;s reflection-helpers code shouldn&#8217;t depend on anything else, so it&#8217;s tempting to put that in its own project with no references to other Fixie.sln projects.  Although tempting, <strong>don&#8217;t start creating projects left and right</strong>.  That would be a symptom of Big Design Up Front, which usually doesn&#8217;t turn out to be very accurate.</p>
+<blockquote><p>Instead, we&#8217;ll create projects at the last responsible moment: when doing so resolves a real <em>deployment</em> pain.  The general rule of thumb I follow when separating things into projects within the solution is to <strong>create projects based on how the system will be deployed</strong>. I&#8217;ll only create a new project when I find myself creating something that must be separately deployable.</p></blockquote>
+<p>The first separately deployable thing we absolutely need right away is Fixie&#8217;s own test project.  End users will need Fixie.dll to write their tests, but they won&#8217;t need Fixie.Tests.dll.  Fixie.Tests.dll will be used by a developer working on Fixie, but end users don&#8217;t need it to be deployed to their machine.  I added a Fixie.Tests project to the solution, also of type Class Library, which references the Fixie framework project.</p>
+<p>At this point, we have the following file structure</p>
+<pre>
+    .gitignore
+    LICENSE.txt
+    README.md
+    /src/Fixie.sln
+    /src/Fixie/Fixie.csproj
+    /src/Fixie/Properties/AssemblyInfo.cs
+    /src/Fixie.Tests/Fixie.Tests.csproj
+    /src/Fixie.Tests/Properties/AssemblyInfo.cs</pre>
+<p><a href="https://github.com/plioi/fixie/commit/c066c8b89ff606a59d26a60ce77d7c890ed53ef6">Commit</a>.</p>
+<h2>Enable NuGet Package Restore</h2>
+<p>It is extremely important that your repo be aware of all of its dependencies, so that a new developer can simply clone from GitHub and <em>go</em>.  If at all possible, they shouldn&#8217;t have to install anything extra.</p>
+<blockquote><p>If your new coworker has trouble getting up and running on their machine, chances are you&#8217;ll have similar difficulties when you deploy to your production machine.  Consider any repo clone to be a mini deployment.  Detect deployment pains early, when they&#8217;re easiest to address.</p></blockquote>
+<p>Before installing any NuGet packages, though, we want to &#8220;Enable NuGet Package Restore&#8221;.  Doing so adds a few files to our solution.  When we later install packages, source control will only contain the master list of the names/versions of the packages we depend on.  The package DLLs themselves are deliberately <em>excluded</em> from source control via .gitignore.  When a new developer clones the repo and builds, NuGet will step in, download any missing dependencies (like NUnit), and <em>then</em> compile.  The combination of NuGet Package Restore and .gitignore gives us a clean repo on GitHub and a smooth experience for new developers.</p>
+<p>In Solution Explorer, right-click the solution and select Enable NuGet Package Restore.  Git will show you that src/Fixie.sln was updated to include the contents of a new folder /src/.nuget containing a few files.  We can leave them alone, as the default settings are just fine.</p>
+<p>Be sure to include the following line in your .gitignore.  This is the folder that will contain downloaded packages.  Since package restore is turned on, this folder can be left out of source control.  It will be rebuilt by NuGet during a build, whenever the folder is missing or incomplete:</p>
+<p><div><script src='https://gist.github.com/5192486.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p><a href="https://github.com/plioi/fixie/commit/2cf6ed22a1008787f33bc7d07d0fc0816393d90f">Commit.</a></p>
+<h2>Install NUnit and NUnit.Runners via NuGet</h2>
+<p>Fixie is a test framework, so it may seem odd to start using NUnit during its development.  However, there&#8217;s a bare minimum of functionality that I need to implement before Fixie can be used to test itself, and in the meantime I don&#8217;t want to fall into the tempting trap of &#8220;coding without a net&#8221;.  In the meantime, I&#8217;ll use NUnit.</p>
+<p>There are two dependencies we want to include via NuGet: NUnit and NUnit.Runners.  In Solution Explorer, right-click the solution and go to &#8220;Manage NuGet Packages for Solution.&#8221;  In this dialog, search for and install the NUnit and NUnit.Runners packages.  When installing NUnit, select the Fixie.Tests project so that it will add a reference to Nunit.Framework.dll for us.</p>
+<p>I also added the Shouldly test assertion library, again referenced by Fixie.Tests, but use whatever assertion style you are comfortable with.</p>
+<p><a href="https://github.com/plioi/fixie/commit/92cb56fd553639da0b2127f4fcefc408cfb40078">Commit</a>.</p>
+<h2>Add a Build Script to Compile and Run Tests</h2>
+<p>Any new developer should be able to clone your repo and run &#8220;build&#8221; at a command line in order to compile the solution and run all the tests.  Here, we&#8217;ll use a third-party PowerShell tool called &#8220;psake&#8221; to simplify writing such a script.</p>
+<blockquote><p>Working with PowerShell can be insanely frustrating.  The language behavior for seemingly-simple tasks is often the exact opposite of anything you would expect when compared to any other language.  I would rather work with COBOL.  In Antarctica.  Without a coat.  And there&#8217;s bees.  Bees everywhere.</p>
+<p>Given that, it&#8217;s good to start out by copying a script you know already works, and tweaking it from there, so feel free to use today&#8217;s scripts as a starting point for your project, too.</p></blockquote>
+<p>Just like we did for NUnit.Runners, right-click the solution and install the package named &#8220;psake&#8221;.</p>
+<p>In Fixie.Tests, I added a single test <strong>that always fails</strong>:</p>
+<p><div><script src='https://gist.github.com/5192516.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>We&#8217;ll know we are done writing our build script if we can run the build, witness the test failing, fix the test, rerun the build, and witness the test passing.  This process will give us confidence that actual errors will be properly reported to us later.</p>
+<p>At the root of the repo, outside the /src folder, add a build script written in PowerShell.  This example just builds the solution and runs the tests:</p>
+<p><div><script src='https://gist.github.com/5192529.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>This script is meant to run with psake, but recall that psake&#8217;s files all live under the /src/packages NuGet folder, <em>which is not in source control</em>.  We&#8217;ve got a bit of a chicken-and-egg problem here: we want NuGet to step in during the compile step in order to download any missing dependencies <em>like psake</em>, but we need psake to exist in the first place to run our build script and kick off that download!</p>
+<p>The solution to that problem is to include a build.cmd batch file, which starts by asking NuGet.exe to install solution-wide dependencies (including psake), and <em>then</em> invoke psake to run our default.ps1 file:</p>
+<p><div><script src='https://gist.github.com/5192545.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>When someone clones the repo and runs &#8220;build&#8221; at the command line, the results in the console should show the dependencies successfully downloaded (if they were missing), the solution compiled successfully, and the single unit test executed but failed.  After changing the test to always pass, rerunning the script should show the whole build-and-test process completes successfully.</p>
+<p>I encourage the habit of running &#8220;build&#8221; at the command line manually prior to any commit.  Speaking of commits,</p>
+<p><a href="https://github.com/plioi/fixie/commit/c45ac7a6c50c1be995303b70a85396c89b8fb768">Commit</a>.</p>
+<h2>Version Your Assemblies with Common AssemblyInfo</h2>
+<p>By default, every Project in a Visual Studio Solution contains a file called AssemblyInfo.cs under a Properties folder.  It&#8217;s easy to forget that this exists and actually needs to be updated periodically.  The values in these files live on in the compiled assemblies.  When releasing our libraries/tools to the public, we should be good citizens by keeping this information up to date, especially the version numbers.  That sounds tiresome and error-prone, so let&#8217;s automate as much as possible.</p>
+<p>Versioning assemblies is actually a complex topic, and lots of high-profile projects do it a little differently from each other, so let&#8217;s err on the safe side while also keeping it simple. If our versioning plans need to grow into something more involved later, we can always change it then.</p>
+<p>Note that .NET version numbers have four parts.  Let&#8217;s reserve the first three as special, to be changed only when a human decides that it&#8217;s time to bump the version to reflect the amount of change that has gone on in the project.  Let&#8217;s reserve the fourth number to be set by our CI server.</p>
+<blockquote><p>A Continuous Integration (CI) server is any tool that monitors our source control for new commits, automatically checking out the latest, running our build script, and reporting on success or failure.  We&#8217;re all human, and we&#8217;re bound to occasionally make changes that don&#8217;t pass the build.  The responsible thing is to let a tool alert us whenever our humanity gets the best of us.</p>
+<p>I&#8217;ll be using TeamCity, which additionally tracks an auto-incrementing integer indicating the build number.  We&#8217;ll use the build number as the fourth part of our assemblies&#8217; version numbers.</p></blockquote>
+<p><strong>VERSION.txt</strong> - Store the human-determined first three numbers in a plain text file right beside our build script.</p>
+<p><div><script src='https://gist.github.com/5192587.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p><strong>CommonAssemblyInfo.cs</strong> - Rather than maintain redundant information in separate AssemblyInfo.cs files, we&#8217;ll put all of the common parts in a single file, and then link each Project in the Solution to that common file.  Our build script will read the contents of VERSION.txt and generate src/CommonAssemblyInfo.cs upon each build.  When we run the build ourselves, we&#8217;ll just assume &#8220;.0&#8221; as the fourth part of the version, since locally-run builds are just for local development purposes.  When our CI server runs the build, we&#8217;ll pull the actual build number out of the air and use that for the fourth part.  Therefore, we&#8217;ll always see &#8220;.0&#8221; in source control&#8217;s CommonAssemblyInfo.cs, but the DLLs produced on the CI server will have a complete version number for sharing with the world.</p>
+<p>I updated the build script to produce a CommonAssemblyInfo.cs file with the build number filled in:</p>
+<p><div><script src='https://gist.github.com/5192606.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>I ran the script and confirmed the contents of CommonAssemblyInfo.cs.  Next, I needed to make both Projects in the Solution actually use this file instead of the defaults.  In both Projects, I removed most of the contents of Properties/AssemblyInfo.cs (leaving only the Project-specific [AssemblyName] attribute), right-clicked the Project to Add \ Existing Item, browsed to CommonAssemblyInfo.cs <em>and clicked the down-arrow within the Add button to select Add As Link</em> so that a single copy of the file would be used by all projects.  Once these links were created, I dragged them into the Properties folders to get them out of the way.  Whenever I add a new project to the solution, I&#8217;ll need to repeat this step.</p>
+<p><a href="https://github.com/plioi/fixie/commit/d861ff8fb6bc5621c7066a855fa96733cbe7eebf">Commit</a>.</p>
+<h2>Footwear Accomplished</h2>
+<p>Phew!  These first steps can be frustrating, and a little boring, but they pay for themselves very quickly.  Now that we have a reliable build script, a simple NuGet-friendly file structure, and a simple versioning scheme, we can finally dive into development.</p>
+<p>Socks fully donned, next week, we&#8217;ll stretch the footwear metaphor a bit further, as we &#8220;bootstrap&#8221; Fixie to the point where it can test itself!</p>
 
 		
 		
@@ -457,254 +406,7 @@ Part 1 &hellip;">
   
 
 
-<time datetime="2013-02-22T00:00:00-06:00" pubdate data-updated="true">Feb 22<span>nd</span>, 2013</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/blog/'>Blog</a>, <a class='category' href='/blog/categories/bonus/'>Bonus!</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/the-debugger-must-be-broken/">
-		
-			The Debugger Must Be Broken!</a>
-	</h2>
-	<div class="entry-content">
-		<p>Recently, a coworker and I ran into one of those bugs that seem to behave so strangely that you start to wonder, &#8220;Is it me, or is the debugger itself buggy?&#8221;  It appeared that the simplest of operations, the assignment operator, was misbehaving.  In the debugger, we seemed to witness a value being properly set to a non-null object and then secretly nulled out as soon as we tried to look at it again.</p>
-<p>Of course, whenever a program&#8217;s behavior is so profoundly counter to all that we know to be true, we have to stop, take a deep breath, and proudly exclaim, &#8220;I am making an incorrect assumption!  This code does not say what I think it says.&#8221;</p>
-<p>I&#8217;ve boiled the problem down to a simpler form than the original code, and changed names to protect the guilty (me).</p>
-<p>We had a collection of DTO instances, of a type we did not have control over (<code>StudentDTO</code>).  In the rest of our system, we wanted to use one of our own classes instead (<code>Student</code>), as <em>our</em> class implemented an interface that was consumed elsewhere (<code>Person</code>):</p>
-<p><div><script src='https://gist.github.com/4982706.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>This first pass was bug-free, and the <code>ToPersons</code> method passed our unit test:</p>
-<p><div><script src='https://gist.github.com/4982711.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Easy.  C# 101 stuff.  Of course it passed.</p>
-<p>Some hours later, I had reason to convert <code>Person</code> from an interface to a concrete class:</p>
-<p><div><script src='https://gist.github.com/4982716.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Suddenly, this and many other tests started failing.  <code>persons[0].Name</code> was null!  We set up a breakpoint on the return statement within <code>ToPersons</code>, and saw that each student being returned did in fact get populated correctly.  <strong>Surely, the debugger must be broken!  We clearly populate an object, and when we next look at it it is unpopulated!  Those punks at Microsoft really grind my gears.</strong></p>
-<p><strong>Ok, Patrick, take a step back.  What assumption is leading me to believe the debugger is wrong?</strong>  I&#8217;m claiming that a clearly-populated property is null the next time I look at it.  Therefore, I should start to doubt whether I am actually inspecting the same property both times.</p>
-<p>In the debugger, we had already seen the <code>Student.Name</code> property set as expected.  We then went to the definition of the Name property that appears in our unit test assertion, which took us to <code>Person.Name</code>.  Here, we also saw a ReSharper warning on each property within <code>Student</code>.  We hadn&#8217;t even <em>changed</em> <code>Student</code>, but that is where the warning appeared: &#8220;The keyword &#8216;new&#8217; is required on &#8216;Name&#8217; because it hides property &#8216;Person.Name&#8217;.&#8221;</p>
-<p>Oh, right.</p>
-<p>This is one of those details you learn about C# early on and then immediately forget, as it so rarely shows up in practice.  Usually, when a subclass defines members with the same name and signature as its parent class, we are in a abstract/override or virtual/override situation, in which you are knowingly and explicitly stating that the subclass provides its own definition of the parent class&#8217;s behavior.  When a subclass instead defines the same members as its parent <em>without</em> overriding, you get <em>two</em> different implementations at runtime.  It&#8217;s basically just a <em>coincidence</em> that they have the same name.</p>
-<p>In this situation, when you look at an instance through a variable declared as the parent type, you see the parent type&#8217;s properties.  When you look at an instance through a variable declared as the subtype, you see the subtype&#8217;s properties.  As we looked at the student variable being returned from the lambda, the debugger showed us the populated <code>Student.Name</code>, and when our test assertion looked at the person returned from the lambda, the test experienced the unpopulated <code>Parent.Name</code>.</p>
-<p>When up is down, black is white, and the debugger stops working, put the apparently impossible behavior into plain English, and cast some healthy doubt on each word.  You&#8217;ve got a faulty assumption in there somewhere.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-02-19T00:00:00-06:00" pubdate data-updated="true">Feb 19<span>th</span>, 2013</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/wcf-ioc-away-the-need-for-named-pipes/">
-		
-			WCF IOC Away the Need for Named Pipes</a>
-	</h2>
-	<div class="entry-content">
-		<p>The NetNamedPipeBinding is the optimized binding for on-machine communication.  For most WCF implementations I have seen WCF is really only there to help facilitate RPC (Remote Procedure Calls).  When WCF is simply a way to segment your service layer into an optionally distributed deployment architecture there may be a much better way.  WCF has additional overhead that seams useless if the code is being executed on the same machine.  IOC (Inversion of Control) using DI (Dependency Injection) provides a relatively simple way to avoid WCF all together.</p>
-<p>Lets take a simple WCF Service Contract for Customers.<br />
-<div><script src='https://gist.github.com/4945825.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>The client creates a proxy and through WCF configuration the proper binding can be used to communicate with the Service.  In order to make the client know where the service is without hardcoding this you would have the following configuration settings.</p>
-<pre class="csharpcode">  &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;system.serviceModel&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;bindings&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;
-      &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;basicHttpBinding&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;
-        &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;binding&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&quot;BasicHttpBinding_ICustomerService&quot;&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;/&amp;gt;&lt;/span&gt;
-      &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;basicHttpBinding&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;bindings&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;
-      &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;endpoint&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;address&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&quot;http://localhost:26859/CustomerService.svc&quot;&lt;/span&gt;
-        &lt;span class=&quot;attr&quot;&gt;binding&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&quot;basicHttpBinding&quot;&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;bindingConfiguration&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&quot;BasicHttpBinding_ICustomerService&quot;&lt;/span&gt;
-        &lt;span class=&quot;attr&quot;&gt;contract&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&quot;OptionalWCF.Contracts.ICustomerService&quot;&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&quot;BasicHttpBinding_IUserProfileService&quot;&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;system.serviceModel&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;</pre>
-<p>Most clients stop there rather than have a explicit setting for NetNamedPipes.  If they decided to “Optimize” they could add the WCF configuration endpoint for NetNamedPipes and modify the Service to expose a NetNamedPipe endpoint.  Now the client can use the NetNamedPipe endpoint and the performance has been improved.  In reality the performance between NetTcp and NetNamedPipe is rather minimal with a slighter advantage over BasicHttp.  The most optimal invocation is in-process so why not just go around WCF all together.  We already have the interface separation that DI can use and either way if we want optimal performance we will be tweaking configuration files for different deployment environments.</p>
-<p>For this blog I choose StructureMap as my DI library.  My client Code only needs to get a handle to the interface.</p>
-<div class="csharpcode">
-<pre class="alt">var customerServices = ObjectFactory.GetInstance&amp;lt;ICustomerService&amp;gt;();</pre>
-</div>
-<p>The client is configured to either use WCF or use the direct reference to the service implementation of the service Contract.</p>
-<pre class="csharpcode">&lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;StructureMap&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;MementoStyle&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&quot;Attribute&quot;&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;rem&quot;&gt;&amp;lt;!-- WCF Service Through Proxy --&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;DefaultInstance&lt;/span&gt;
-      &lt;span class=&quot;attr&quot;&gt;PluginType&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&quot;OptionalWCF.Contracts.ICustomerService, OptionalWCF&quot;&lt;/span&gt;
-      &lt;span class=&quot;attr&quot;&gt;PluggedType&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&quot;OptionalWCF.Client.CustomerServiceProxyWrapper, OptionalWCF.Client&quot;&lt;/span&gt;
-      &lt;span class=&quot;attr&quot;&gt;Scope&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&quot;Singleton&quot;&lt;/span&gt;
-      &lt;span class=&quot;kwrd&quot;&gt;/&amp;gt;&lt;/span&gt;
-
-    &lt;span class=&quot;rem&quot;&gt;&amp;lt;!--Real Service--&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;rem&quot;&gt;&amp;lt;!--&amp;lt;DefaultInstance&lt;/span&gt;
-&lt;span class=&quot;rem&quot;&gt;      PluginType=&quot;OptionalWCF.Contracts.ICustomerService, OptionalWCF&quot;&lt;/span&gt;
-&lt;span class=&quot;rem&quot;&gt;      PluggedType=&quot;OptionalWCF.ServiceImpl.CustomerService, OptionalWCF.ServiceImpl&quot;&lt;/span&gt;
-&lt;span class=&quot;rem&quot;&gt;      Scope=&quot;Singleton&quot;&lt;/span&gt;
-&lt;span class=&quot;rem&quot;&gt;      /&amp;gt;--&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;kwrd&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;StructureMap&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;</pre>
-<p>Now if the client is running on the same machine WCF is discarded.  If the service is moved to another machine with a simple configuration file tweak WCF is used.  The clients code is none the wiser.</p>
-<p>This pattern can be extending to support duplex communication by using .Net events instead of exposing the callback contracts to the clients.  I plan on writing an additional blog to cover this topic.</p>
-<p>The full source to this post can be downloaded here <a href="http://www.headspring.com/wp-content/uploads/2013/02/OptionalWCF.zip">OptionalWCF</a></p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-02-13T00:00:00-06:00" pubdate data-updated="true">Feb 13<span>th</span>, 2013</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/blog/'>Blog</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/named-pipes/'>Named Pipes</a>, <a class='category' href='/blog/categories/wcf/'>WCF</a>, <a class='category' href='/blog/categories/dependency-injection/'>dependency injection</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/from-imperative-to-declarative/">
-		
-			From Imperative to Declarative</a>
-	</h2>
-	<div class="entry-content">
-		<p>Two weeks ago, we took a peek at the <a href="http://www.headspring.com/patrick/whittling-parsley/">low-level pattern recognition classes</a> that make up the core of <a href="https://github.com/plioi/parsley">Parsley</a>.  Last week, we saw how pattern recognition involves 3 pivotal <a href="http://www.headspring.com/patrick/composable-operations/">composable operations</a>: repetition, choice, and sequence.  We saw how Parsley implements basic repetition and choice operations, but sequence was still too hard to address.</p>
-<p>Today, we&#8217;ll finally see how to extract a useful sequence operation into a useful class, finally giving us the last of the necessary composable operations, and freeing us to finish our high-level <a href="http://martinfowler.com/bliki/DomainSpecificLanguage.html">DSL</a>.</p>
-<h2>Manual Sequence Recognition</h2>
-<p>Recall the horrible imperative code necessary to recognize the trivial three-token sequence of [left-parenthesis, letter, right-parenthesis]:</p>
-<p><div><script src='https://gist.github.com/4688927.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>To recognize a 3 token sequence, we need 3 nested if statements and 4 return statements.  To recognize an N token sequence, we need N nested if statements and N+1 returns.  Each if statement tests whether the last call to Parse(&#8230;) succeeded, and each if statement&#8217;s body hands off the remanining unparsed tokens to the next step.  Clearly, this does not scale well.</p>
-<h2>(Ab)using LINQ</h2>
-<p>Note how similar each step is: we always call Parse(&#8230;), then test for success, then pass the remaining unparsed tokens along.  The main thing that changes each time we dig deeper is the particular Parser object in play.  I&#8217;d rather just say &#8220;Require(LeftParen), then Require(Letter), then Require(RightParen), halting at the first point of failure&#8221;.</p>
-<p>Our goal is to extract the &#8220;success check and unparsed token hand-off&#8221; action so that we don&#8217;t have to repeat it ourselves, and we want to do so in a way that lets us chain together any number of parsers representing a sequence of expectations, without having to indent deeper as the chain grows longer.  With no further ado, ParserQuery:</p>
-<p><div><script src='https://gist.github.com/4802811.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p><strong>I apologize for this.</strong>  This was hands-down the most difficult 12 lines of code I have written or will ever write.  The pattern in play here is so difficult, so abstract, that <em>I don&#8217;t even know what to name some of the variables.</em></p>
-<p>This is the <a href="http://blogs.msdn.com/b/wesdyer/archive/2008/01/11/the-marvels-of-monads.aspx">Monad</a> pattern.  It can be performed in any language that has lambda expressions in which the lambda body can refer to variables in the surrounding scope, like C#, Javascript, and Python, but is only ever used in practice when the language <em>also</em> has special syntax for its usages.  In C#, the special syntax which makes this pattern compelling is the <code>from/select</code> LINQ syntax.</p>
-<p>This special syntax lets us &#8220;flatten&#8221; our nested if statements into a series of &#8216;from&#8217; clauses.  When using the complete Parsley DSL, we can rewrite IsParenthesizedLetter without any nesting:</p>
-<p><div><script src='https://gist.github.com/4919965.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>ParserQuery defines some extension methods that are treated specially by the compiler.  Their existence allows us to select from Parser&lt;T&gt; objects instead of the usual ability to select from IEnumerable&lt;T&gt; objects.  Note how instead of having 3 nested if statements, we have 3 from clauses <em>in sequence</em>.</p>
-<p>Note how the query does little more than <em>list</em> the 3 expectations in the order we expect them to appear in the input.  We &#8220;flattened&#8221; the nested if statements into a vertical series of from clauses.</p>
-<p>Note also how this sequence operation is operating on 3 Parser&lt;Token&gt; objects (the right hand side of each from clause) and the type of the whole query is <em>also</em> a Parser&lt;Token&gt;.  Since our sequence operation results in the same type as it acts on, it is highly composable with last week&#8217;s repetition and choice operations.</p>
-<p>Although complicated, there&#8217;s no magic here.  If we ask ReSharper to translate the above select statement into plain old method calls, we see that ParserQuery&#8217;s SelectMany method is being called N-1 times when there are N from clauses:</p>
-<p><div><script src='https://gist.github.com/4942002.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>In other words, our SelectMany method&#8217;s job is to hook a single from clause into the chain of execution.</p>
-<p>C# rewrites a flat query into calls to the SelectMany extension method, which in turn does the success check and the passing along of remaining unparsed tokens, so all the same <em>work</em> is going on here as in the origial imperative code.  Thankfully, we&#8217;re no longer the ones doing that work!</p>
-<p>Rather than trying to make sense of ParserQuery itself, it may be more illuminating to read <a href="https://github.com/plioi/parsley/blob/cb69098da8135f7ac5fb1b0f84071e0e8b94b8a0/src/Parsley.Test/ParserQueryTests.cs">ParserQuery&#8217;s unit tests</a>.</p>
-<h2>So Where Are We?</h2>
-<p>2 weeks back, we started with the low-level imperative classes.  These let us deliberately walk through the input, pattern matching as we go along.  It was annoying, but it worked.  Like assembly language, we wanted to instead work with a high-level alternative, even if the high-level alternative was ultimately doing this imperative stuff behind the scenes.</p>
-<p>1 week back, we identified 3 fundamental operations necessary for a pattern recognition DSL: repetition, choice, and sequence.  We saw how repetition could be implemented as a class, ZeroOrMoreParser.  We saw how choice could be implemented as a class, ChoiceParser.</p>
-<p>This week, we see that sequence can be handled by ParserQuery and the from/select keywords.</p>
-<p><strong>Now, we have all the tools we need to finally create our DSL.</strong></p>
-<h2>Assembling Parsley&#8217;s DSL</h2>
-<p>Parsley deals with defining grammars for languages.  You could define a grammar for a language like JSON, and use that to turn JSON text into .NET objects.  Parsley contains a Grammar class full of useful operations.  To keep things highly-composable, many of these operations both produce Parser&lt;T&gt; objects and operate on other Parser&lt;T&gt; objects.</p>
-<p>First, the Grammar class includes a few helper methods for constructing the classes developed last week:</p>
-<p><div><script src='https://gist.github.com/4911336.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Next, we note that ZeroOrMore is useful, but not really enough in practice.  We may rather require that the input include OneOrMore occurrences of something.  Thankfully, we can <em>compose</em> sequence with ZeroOrMore to build OneOrMore.  OneOrMore things is the same as one thing followed by ZeroOrMore things:</p>
-<p><div><script src='https://gist.github.com/4912909.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Where ZeroOrMore required a whole class full of imperative code, OneOrMore required <em>one 3-line expression</em>.</p>
-<p>It&#8217;s also very common to expect the input to contain a repetition of items <em>separated by</em> some other expected thing.  A JSON array literal contains zero or more items <em>separated by</em> commas.  Here, the third operation, choice, makes an appearance.</p>
-<p><div><script src='https://gist.github.com/4914803.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Finally, a little payoff for all this infrastructure!  Imagine how horrifyingly verbose and error-prone these methods would be, if we had to implement them directly in terms of the low-level imperative style.</p>
-<p>Lastly, there&#8217;s one more built-in operation worth discussing as it directly affects the IsParenthesizedLetter method from the start of this post.  We often need to recognize that something important appears <em>between</em> two other, less important things.  A JSON array is zero or more items <em>between</em> the &#8220;[&#8221; and &#8220;]&#8221; symbols.  We care that the &#8220;[&#8221; and &#8220;]&#8221; are present, but the meaningful data we want to extract from that is the part in the middle:</p>
-<p><div><script src='https://gist.github.com/4916812.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<h2>Revisiting the Original Example</h2>
-<p>Now, in order to recognize a parenthesized letter, all we need is:</p>
-<p><div><script src='https://gist.github.com/4923462.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Here, parenthesizedLetter is an object which can be handed the raw input tokens and can reply with one of two statements: &#8220;The input is not a parenthesized letter and here is why,&#8221; or &#8220;The input is a parenthesized letter and here is that letter.&#8221;  No nested if statements, no explicit progress through the token stream, no manual error checks at every step.</p>
-<p>Most importantly, this says <em>what</em> it does rather than <em>how</em>.  <strong>We&#8217;ve turned our imperative API into a declarative API by repeatedly extracting common and monotonous patterns into highly-composable operations, and by further hiding those helper classes behind a few simply-named helper methods.</strong></p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-02-13T00:00:00-06:00" pubdate data-updated="true">Feb 13<span>th</span>, 2013</time></div>
+<time datetime="2013-03-19T00:00:00-05:00" pubdate data-updated="true">Mar 19<span>th</span>, 2013</time></div>
 	<div class="tags">
 
 
@@ -720,67 +422,37 @@ Part 1 &hellip;">
     <article class="post">
 	<h2 class="title">
 		
-		<a href="/blog/composable-operations/">
+		<a href="/blog/mvc-custom-unobtrusive-validator-attribute-date-range-validation/">
 		
-			Composable Operations</a>
+			MVC Custom Unobtrusive Validator Attribute (Date Range Validation)</a>
 	</h2>
 	<div class="entry-content">
-		<p>Last week, we took a peek at the <a href="http://www.headspring.com/patrick/whittling-parsley/">low-level pattern recognition classes</a> that make up the core of Parsley.  The final example showed how you can walk through some untrustworthy text in small and deliberate steps, looking for expected input along the way.  At each step, the step either succeeds or fails.  On success, the remaining unparsed text is passed along to the next step.</p>
-<p>This process was the epitome of imperative coding: <em>Do this, and then do this, and then do that.</em>  Despite this imperative core, I&#8217;d describe the intended usage of Parsley as declarative: <em>Here&#8217;s what valid input looks like, figure out the details for me.</em></p>
-<p>I said I&#8217;d reveal this week how this shift from low-level imperative coding to high-level declarative coding can be implemented, but I&#8217;ve decided to split it into two posts.  This week, we&#8217;ll see how Parsley builds on the frustrating foundation by baking in a few fundamental and composable imperative operations.  Next week, we&#8217;ll see how that more-useful layer can be extended into a high-level <a href="http://martinfowler.com/bliki/DomainSpecificLanguage.html">Domain Specific Language</a> (DSL).</p>
-<p><strong>A declarative API needs to give your end users a suite of useful and familiar words, in such a way that the words can be easily combined to form larger declarations.</strong>  We&#8217;re going to take some important imperative operations, give them useful names, and package them up in such a way that they will compose well with each other.</p>
-<h2>Pattern Recognition Fundamentals</h2>
-<p>Parsley can recognize patterns not unlike those recognized by regexes.  When working with regexes, we&#8217;re constantly composing three fundamental operations: repetition, choice, and sequence.</p>
-<p>With <strong>repetition</strong>, we say, &#8220;I&#8217;ve got this regex here, and I want it to be repeated.&#8221;  The regex &#8220;A&#8221; recognizes a single letter &#8220;A&#8221;, and we can produce a more interesting regex &#8220;A*&#8221; to recognize zero-or-more As, or &#8220;A+&#8221; to recognize one-or-more As.  A more complex pattern like &#8220;(A+B+)&#8221; can likewise be made more interesting via repetition: &#8220;(A+B+)*&#8221; which recognizes zero-or-more occurrences of As-followed-by-Bs.</p>
-<p>With <strong>choice</strong>, we can combine some small patterns into a larger one by saying, &#8220;Any one of these subpatterns could happen next.&#8221;  The regex &#8220;A|B&#8221; recognizes either an &#8220;A&#8221; or a &#8220;B&#8221;.</p>
-<p>With <strong>sequence</strong>, we can combine some small patterns into a larger one by saying, &#8220;The first pattern, followed by the second, followed by the third.&#8221;  Regexes achieve this by just squishing them together in order: the regex &#8220;ABC&#8221; recognizes an A, followed by a B, followed by a C.  They all have to appear, and in that order.</p>
-<p>These three operations <em>compose</em> very well.  The regex @&#8221;[_a-zA-Z]+[_a-zA-Z0-9]*&#8221; recognizes variable names.  We have repetition: the pattern has one-or-more leading characters and zero-or-more trailing characters.  We have choice: each character is an underscore or a letter or a digit.  We have sequence: to enforce that names don&#8217;t start with a digit, we have a two-part sequence of leading characters <em>followed by</em> trailing characters.  We say these operations &#8220;compose well&#8221; because:</p>
-<ol>
-<li>They can be applied to any pattern.</li>
-<li>Doing so takes very little code.</li>
-<li>Most importantly, <strong>the result is also a pattern to which the operations can be applied again.</strong></li>
-</ol>
-<p>If our API can exhibit these three properties, we can say it is &#8220;highly composable&#8221;, which should go a long way to making the API declarative as well.  Instead of telling the machine what to do, step by step, we&#8217;ll just glue together a bunch of small words into a larger statement.  The small words and the glue operations we perform on them will hide all the imperative details.</p>
-<h2>What Hurt Last Week</h2>
-<p>The big example at the end of the <a href="http://www.headspring.com/patrick/whittling-parsley/">last post</a> just had to tell the user whether or not a string was a single letter surrounded by parentheses.  Despite being a simple pattern, the code involved was quite large and annoying to write.</p>
-<p>Recall the Parser&lt;T&gt; interface:</p>
-<p><div><script src='https://gist.github.com/4727988.js'></script>
+		<p>There are some useful attributes in MVC that help render dynamic unobtrusive validation to the browser.   The more you can accomplish by simply adding an attribute to a property on a view model the less duplication of JavaScript you have to manage.  Out of the “MVC” box validation for date ranges would require custom JavaScript.  If you have multiple pages that all need to validate ranges, either from the current date or from another date property on your view model, how about having an attribute that you can use to handles this?</p>
+<p>In this blog I’m going to cover:</p>
+<ul>
+<li>Creating a Custom MVC Validation Attribute</li>
+<li>Creating a  Client Validation Rule</li>
+<li>Creating and wiring up the unobtrusive JavaScript to do the validation</li>
+</ul>
+<p>First to create a validation Attribute you need to inherit from the <strong>ValidationAttribute</strong>.  To make this validation available on the client you need to implement the <strong>IClientValidatable</strong> interface.  The <strong>ValidationAttribute</strong> is where you define the settable properties that can be used by the View Model.  To handle the validation server side you can override the <strong>IsValid</strong> method to execute your validation logic.  The <strong>IClientValidatable</strong> interface exposes the <strong>GetClientValidationRules</strong> method.  The validation rules are parameters that will be provided to your JavaScript as an array.  The <strong>ModelClientValidationRule </strong>is where you define the Rules/Settings that the <strong>ValidationAttribute</strong> will provide based upon what was supplied when the attribute was applied to a property on a View Model.</p>
+<p>Lets look at some code before we go to far.</p>
+<p><div><script src='https://gist.github.com/5200208.js'></script>
 <noscript><pre><code></code></pre></noscript></div>
 </p>
-<p>A Parser of Things consumes some input tokens with the intent to construct a Thing.  On success, the Parser of Things produces a Thing and a reference to the remaining unconsumed tokens.  On failure, you get an error instead of a Thing.</p>
-<p>To write the Parser of Parenthesized Letters, we first needed to write an implementation of this interface, just so that we could say &#8220;I expect the next token to be of a certain kind, would you kindly try to consume one such token?&#8221;  We then made a convenience method to construct instances of this class, to save on keystrokes later.  Finally, we could write the big, ugly Parser of Parenthesized Letters.</p>
-<p>It hurts to have to write so much for so little gain.  I&#8217;d rather Parsley contain a suite of useful Parser&lt;T&gt; implementations out of the box, so I could just dive in and focus on detecting the pattern I&#8217;m interested in.  This suite of useful Parser&lt;T&gt; implementations ought to include our 3 fundamental/composable pattern-recognition operations: repetition, choice, and sequence.</p>
-<p>First, though, the suite should provide some primitive operations to get started with.  Compared to our regex examples, we need to be able to express things like &#8220;A&#8221; before we can augment them into interesting patterns like &#8220;A*&#8221;.</p>
-<h2>Parsley&#8217;s Default Parsers</h2>
-<p>The default parser implementations are as frustrating to write as the sample from last week, since they are written in terms of the awkward low-level API.  However, they make things easier on the end user, as we&#8217;ll see next week.  They are found under the <a href="https://github.com/plioi/parsley/tree/cb69098da8135f7ac5fb1b0f84071e0e8b94b8a0/src/Parsley/Primitives">Primitives</a> folder.  Four of these are relevant to today&#8217;s discussion:</p>
-<p><strong>TokenByKindParser</strong> - Last week we wrote a parser that takes an expected token <em>kind</em> and demands that the next token in the input be of that kind.  On success, the token is consumed.  For instance, if you are parsing C# you may reach a point where you expect the next token to be an identifier.  You don&#8217;t care what specific identifier it is, only that it is an identifier as opposed to an operator or number.  The real implementation of that class in Parsley is called TokenByKindParser:</p>
-<p><div><script src='https://gist.github.com/4728010.js'></script>
+<p>The <strong>DataComparerAttribute</strong> exposes the properties that will be used when the attribute is applied to a property on a View Model.  Notice that the <strong>ModelClientValidationRangeDateRule</strong> exposes the same properties and maps to the validation attribute.  This type is created in the <strong>GetClientValidationRules</strong> method which creates the <strong>ValidationParameters</strong> that will be passed to the Client JavaScript validation method.  Now we have enough to implement the server side <strong>IsValid</strong> method and the client side JavaScript to handle the unobtrusive validation.</p>
+<p>With the attribute defined the JavaScript can be created.  The client JavaScript function is linked through the <strong>ModelClientValidationRule.ValidationType</strong> string property.  In this validator the <strong>ValidationType</strong> was set to <em>“rangeDate”</em>.  This value is what we will use to add to the JQuery validator.  There are two JQuery validator concepts we need to link to the magic string <em>“rangeDate”</em> .  The <strong>$.validator.unobtrusive.adapters </strong>which is where MVC will supply the View Model rules from the <strong>GetClientValidationRules</strong> method and the <strong>$.validator.addMethod </strong>which is where the actual JavaScript validation function is defined.</p>
+<p><div><script src='https://gist.github.com/5205136.js'></script>
 <noscript><pre><code></code></pre></noscript></div>
 </p>
-<p><strong>TokenByLiteralParser</strong> - Sometimes you have a more specific expectation of what will appear next in the input.  Rather than only caring about what kind of token appears next, you&#8217;ll expect that the token will be a specific known string.  When parsing C#, you may reach a point where you know the next token must be a &#8220;;&#8221; character.  TokenByLiteralParser serves this purpose.  As with TokenByKindParser, we simply inspect the current token and return success or failure, advancing one token on success:</p>
-<p><div><script src='https://gist.github.com/4728017.js'></script>
+<p>Notice the signature of the <strong>$.validator.unobtrusive.adapters </strong>(line 4).  This is where the same array defined in the <strong>ModelClientValidationRangeDateRule.ValidationParameters</strong> lines up to the client code.  MVC will expect the C# and JavaScript to match.  Notice the date format being used to supply the <em>“minDate”</em> and <em>“maxDate”</em>.  Since date formatting can be complicated having the server side format match the client side format helps to make the validation more predictable.</p>
+<p>With the attribute complete now we can apply it to our View Model and see it in action.  This validator is designed to do validation based upon a Max Date and a Min Date.  For Min and Max the choices are either a sibling property on the View Model (MinDateSelector and MaxDateSelector) or an interval from DateTime.Now (MinDateAddDaysFromNow, MaxDateAddDaysFromNow).  The *DateSelector will be used to get the current value from the property on the View Model.  When the server side <strong>IsValid</strong> is executed Reflection is used to get the property value.  When the client side JavaScript is executed JQuery is used to get the value from a HTML element on the browser.</p>
+<p><div><script src='https://gist.github.com/5205378.js'></script>
 <noscript><pre><code></code></pre></noscript></div>
 </p>
-<p><strong>ZeroOrMoreParser</strong> - This class gives us our much-needed repetition operation.  Note that this class is constructed <em>with another Parser&lt;T&gt;</em> to be augmented, just as the regex &#8220;A&#8221; augmented by &#8220;*&#8221; becomes the regex &#8220;A*&#8221;.  The parser works by attempting the given parser against the input.  On success, we repeat from the new position in the input, collecting each intermediate result into a list.  As soon as the item-parser finally fails, we are finished and can return a successful result containing all the items collected along the way.  Note that this is a Parser&lt;IEnumerable&lt;T&gt;&gt;, meaning that after consuming a bunch of tokens, the result you get is a collection of things, where each thing was recognized by the initial input Parser&lt;T&gt;.  That&#8217;s our first hint at composabilty:</p>
-<p><div><script src='https://gist.github.com/4728052.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p><strong>ChoiceParser</strong> - This beast gives us our much-needed choice operation.  When we want the next thing in the input to be one of several possible things, and each of those things is individually recognized by a different Parser class, this combines them into one operation that says &#8220;Any of these things could appear next.&#8221;  The first one to match the input wins:</p>
-<p><div><script src='https://gist.github.com/4728061.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>ZeroOrMoreParser and ChoiceParser make up a part of the composability we are shooting for here.  They take in Parsers as their input and are themselves Parsers.  That means you could feed one into the other: you might have two ZeroOrMoreParser instances, and pass them into a ChoiceParser: I expect zero-or-more As or else I expect zero-or-more Bs.</p>
-<p>There&#8217;s a subtle gotcha within both ZeroOrMoreParser and ChoiceParser.  By default, Parsley distinguishes between a parser that fails <strong>without</strong> advancing in the input and a parser that fails <strong>after</strong> advancing in the input.  If you are parsing C# and you know that the next thing in the input is a choice between a foreach statement or an if statement, but the input is &#8220;if $typo$&#8221;, we don&#8217;t just want to say that the choice failed; we want to say that your if statement is broken.  This is why these two classes care so much about detecting changes in position along the way.</p>
-<h2>What About Sequence?</h2>
-<p>TokenByKindParser and TokenByLiteralParser give us our trivial starting point, like a regex that only recognizes a single letter &#8220;A&#8221;.  ZeroOrMoreParser gives us repetition.  ChoiceParser gives us choice.  We still don&#8217;t have a useful sequence operation to build on.  Our complicated example from last week is still complicated!</p>
-<p>Recall my criticism from last week:</p>
-<blockquote><p>[IsParenthesizedLetter] is nearly as tedious as writing assembly. Each time I wanted to progress a little further, I had to indent again and declare some new local variables. I had to carefully pass along the remaining unparsed tokens at each step, and I had to concern myself with failure at each step.</p>
-<p>To make matters worse, this stuff motivates having lots of returns from a single function, making it extremely hard to break the function apart into smaller parts. <a href="http://www.headspring.com/patrick/detect-reflect-decomplect/">Return statements are &#8220;Extract Method&#8221; fences.</a></p></blockquote>
-<p>With all the code we&#8217;ve seen so far, we&#8217;re stuck with implementing all sequence patterns in this way, producing a convoluted morass of nested if statements.  We don&#8217;t even have the option of Extract Method refactorings to ease the pain.  We&#8217;ve coded ourselves into a corner!</p>
-<p>Fortunately, a little-used design pattern will save the day next week, allowing us to bottle up the subtle code duplication exhibited by last week&#8217;s manual attempt at a sequence operation.  Once we have sequencing down, all of these peices will start to fit together smoothly, and our end user will finally have that suite of useful composable words at their disposal.</p>
-<h2>Recap</h2>
-<p>Last week, we saw how Parsley represents progress through the input, and caught a glimpse of how a desired pattern can be recognized (or not) within that input.  The code to use those classes was verbose, ugly, and apparently refactor-proof.</p>
-<p>To ease the pain, we&#8217;ve seen how a few composable operations could be provided on top of the original core classes, but we&#8217;re still left with the tricky situation of sequencing.  Next week, we&#8217;ll implement sequencing, completing our DSL and insulating the end user from having to work with the ugly core directly.</p>
+<p>In the above usage of the attribute the BirthDate must be from January 1st 2013 through the current Date and Time the validation is executed.</p>
+<h3>Summary</h3>
+<p>Adding custom validation to MVC is useful in reducing duplication of code.  As you can see it’s not all that complicated to do.  The validation methods for server side and client side validation risk having different logic and need to use different mechanisms to get property values.  Reflection and JQuery make this easy enough but there are still gotchas that need to be considered.  When your using JQuery to select a value on a page you need to make sure your selector is unique.  If in our case we have more than one View Model loaded on the page the JQuery Selector could return another html elements value.  I hope this gets you started and can open up some new possibilities for validation.</p>
+<p>To see the full example and source code go to <a title="https://github.com/jdmgomoo/MVC-CustomAttributes" href="https://github.com/jdmgomoo/MVC-CustomAttributes">https://github.com/jdmgomoo/MVC-CustomAttributes</a></p>
 
 		
 		
@@ -800,134 +472,11 @@ Part 1 &hellip;">
   
 
 
-<time datetime="2013-02-07T00:00:00-06:00" pubdate data-updated="true">Feb 7<span>th</span>, 2013</time></div>
+<time datetime="2013-03-19T00:00:00-05:00" pubdate data-updated="true">Mar 19<span>th</span>, 2013</time></div>
 	<div class="tags">
 
 
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/mvc-boot-camp/">
-		
-			MVC Boot Camp</a>
-	</h2>
-	<div class="entry-content">
-		<p><img class="size-full wp-image-5716 alignright" title="ASP.NET MVC4 In Action" alt="ASP.NET MVC4 In Action" src="http://www.headspring.com/wp-content/uploads/2012/06/Palermo-ASPNET4-fc.jpg" width="239" height="300" /></p>
-<p>&nbsp;</p>
-<p>Instead of listening to lectures and doing boring written exercises, participants jump in and work on real code using real examples - applying these techniques on an existing application.</p>
-<p>We&#8217;ve made registration even easier through Eventbrite, but for other registration options call (877) 459 - 2260</p>
-<p><strong>Next Class: TBD - Ask about private training options</strong></p>
-<p><strong>You’ll Come Out of MVC Boot Camp Knowing:</strong></p>
-<ul>
-<li>How to Avoid Common Web Development Pitfalls</li>
-<li>How to Write Maintainable Systems</li>
-<li>25% Discount on a Personal ReSharper License</li>
-</ul>
-<p>Best of all, we have updated our curriculum for the latest version of MVC4 and mobile web development. If you are looking to get started with MVC, convert from an older version or learn how to use MVC in mobile web development projects, we highly recommend this course.</p>
-<p><em> <a title="MVC4 Boot Camp Curriculum" href="http://www.headspring.com/headspring/mvc-boot-camp/" target="_blank">Course curriculum</a> was created by the guys that wrote the book on <strong>MVC</strong>, Jeffrey Palermo and Jimmy Bogard.</em></p>
-<p><strong>Who Benefits Most? Developers With:</strong></p>
-<ul>
-<li>1 Year+ Experience in C#</li>
-<li>A Basic Understanding of Web Development Languages, Including HTML</li>
-<li>A Basic Understanding of the Web Life-Cycle</li>
-</ul>
-<p><em></em>Cost $1,975</p>
-<p>If you have any concerns whether or not this course is a fit, contact us for help at (512) 459 – 2260..</p>
-<p>Training located in Austin, Texas (8:30 a.m. to 5:00 p.m.)</p>
-<p>View a <a title="Contact" href="http://www.headspring.com/contact/">map to our facility</a> and nearby hotels.</p>
-<p>Although it is unlikely, class dates are subject to change. We encourage you to obtain transferable airline/hotel reservations in the event that this should occur.</p>
-<p>By signing up for a Headspring training course, you are accepting the terms and conditions of our <a title="Education Services Agreement" href="http://www.headspring.com/education-services-agreement/" target="_blank">Education Services Agreement</a>.</p>
-<p>&nbsp;</p>
-<p><strong>Agenda</strong></p>
-<p><strong>Day 1</strong></p>
-<p><strong>Session 1.1 – MVC Overview</strong><br />
-<em>Background<br />
-MVC parts</em></p>
-<p><strong>Session 1.2 – Controller basics</strong><br />
-<em>Anatomy of an Action<br />
-Querystring parameters<br />
-Working with forms<br />
-Model binding<br />
-View data</em></p>
-<p><strong>Session 1.3 – View basics</strong><br />
-<em>WebForms view engine<br />
-Razor view engine<br />
-Folder structure<br />
-Execution order<br />
-View data<br />
-Helpers<br />
-URLs</em></p>
-<p><strong>Session 1.4 – Model basics</strong><br />
-<em>Persistence/Domain Model vs. View Model<br />
-Projection<br />
-Repositories</em></p>
-<p>&nbsp;</p>
-<p><strong>Day 2</strong></p>
-<p><strong>Session 2.1 – Routing</strong><br />
-<em>Routing in the MVC pipeline<br />
-Designing URLs<br />
-SEO<br />
-Custom routes</em></p>
-<p><strong>Session 2.2 – Controller in depth</strong><br />
-<em>ActionResults<br />
-ActionFilters<br />
-Customizing the controller</em></p>
-<p><strong>Session 2.3 – Model in depth</strong><br />
-<em>ViewModels<br />
-AutoMapper<br />
-Custom ModelBinders</em></p>
-<p><strong>Session 2.4 – View in depth</strong><br />
-<em>Layouts and Master Pages<br />
-Partials<br />
-Child actions</em></p>
-<p>&nbsp;</p>
-<p><strong>Day 3</strong></p>
-<p><strong>Session 3.1 – Templates and validation</strong><br />
-<em>View/Edit templates<br />
-Validation<br />
-Custom validators</em></p>
-<p><strong>Session 3.2 – AJAX and jQuery</strong><br />
-<em>Intro to jQuery<br />
-Integrating jQuery<br />
-AJAX and MVC</em></p>
-<p><strong>Session 3.3 – Testing ASP.NET MVC</strong><br />
-<em>Unit testing MVC pieces<br />
-UI testing</em></p>
-<p><strong>Session 3.4 – Best Practices in ASP.NET MVC</strong><br />
-<em>Lessons learned from large ASP.NET MVC projects</em></p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-02-05T00:00:00-06:00" pubdate data-updated="true">Feb 5<span>th</span>, 2013</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/events/'>Events</a>
+	<a class='category' href='/blog/categories/blog/'>Blog</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/mvc/'>MVC</a>, <a class='category' href='/blog/categories/unobtrusive/'>Unobtrusive</a>, <a class='category' href='/blog/categories/validation/'>Validation</a>, <a class='category' href='/blog/categories/validationattribute/'>ValidationAttribute</a>
 
 
 </div>

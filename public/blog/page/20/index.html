@@ -7,7 +7,7 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="At a previous job, I worked for a company that used Subversion for all of its projects. This was a welcome change coming from a TFS and Visual &hellip;">
+	<meta name="description" content="This is part 6 of an N-part series on identifying and resolving incidental complexity in your software projects. This post assumes you&#8217;ve &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -23,19 +23,11 @@
 
 <body>
 	<header id="header" class="inner"><h1><a href="/">Headspring Labs</a></h1>
-<nav id="main-nav"><ul class="main">
-	<li><a href="/blog">Blog</a></li>
-	<li><a href="/blog/archives">Archives</a></li>
-	<li><a href="/open-source">Open Source</a></li>
-	<li><a href="/team">The Team</a></li>
-	<li><a href="/about-us">About Us</a></li>
-</ul>
-</nav>
 <nav id="mobile-nav">
 	<div class="alignleft menu">
 		<a class="button">Menu</a>
 		<div class="container"><ul class="main">
-	<li><a href="/blog">Blog</a></li>
+	<li><a href="/">Blog</a></li>
 	<li><a href="/blog/archives">Archives</a></li>
 	<li><a href="/open-source">Open Source</a></li>
 	<li><a href="/team">The Team</a></li>
@@ -63,9 +55,9 @@
 		
 		<a class="github" href="https://github.com/HeadspringLabs" title="GitHub">GitHub</a>
 		
-    
+	    
 		
-		<a class="coderwall" href="https://coderwall.com/headspring" title="Coderwall">Coderwall</a>
+		<a class="coderwall" href="https://coderwall.com/team/headspring" title="Coderwall">Coderwall</a>
 		
 		
 		
@@ -73,12 +65,20 @@
 		
 		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
 		
-    
+	    
 	</div>
 	<form class="search" action="http://google.com/search" method="get">
 		<input class="alignright" type="text" name="q" results="0">
 		<input type="hidden" name="q" value="site:headspringlabs.com">
 	</form>
+</nav>
+<nav id="main-nav"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+	<li><a href="/open-source">Open Source</a></li>
+	<li><a href="/team">The Team</a></li>
+	<li><a href="/about-us">About Us</a></li>
+</ul>
 </nav>
 
 </header>
@@ -91,241 +91,91 @@
     <article class="post">
 	<h2 class="title">
 		
-		<a href="/blog/branching-subversion-vs-git/">
+		<a href="/blog/detect-reflect-decomplect/">
 		
-			Branching: Subversion vs Git</a>
+			Detect, Reflect, Decomplect</a>
 	</h2>
 	<div class="entry-content">
-		<p>At a previous job, I worked for a company that used Subversion for all of its projects.  This was a welcome change coming from a TFS and Visual Source Safe background.</p>
-<p>We did relatively little work with branches.  For the most part, a branch was created only to represent the state we wanted to deploy to production.  In other words, everybody worked against trunk, and when we were happy with what we had we would create a branch with the version number as its name, and we would deploy from there.  If a hotfix was needed, at least we didn&#8217;t have to worry about deploying it along with incomplete features under development; we&#8217;d base the hotfix on the version branch and deploy that.</p>
-<p>On one occasion, someone needed to make a fairly drastic change to the system.  It was a little risky, and would have interfered with the rest of the team if it was performed against trunk, so they made a feature branch for it.  About a month later, I was tasked with merging that back into trunk.</p>
-<p><strong>This was, shall we say, an Interesting Merge.</strong></p>
-<p>Throughout development of the branch, work being performed in the trunk had <em>not</em> been periodically merged into the branch, meaning that there were many, many conflicts without an obvious resolution.  Ultimately things worked out, but it didn&#8217;t seem like a great way to do things.  With my lack of exposure to alternatives, I didn&#8217;t really see the great benefit of frequent branching.</p>
-<h2>Sane Branching</h2>
-<p><strong>The whole concept of branching was intimidating to me because the <em>way</em> we did it caused more pain than it alleviated.</strong></p>
-<p>Things have gotten better since then.  I&#8217;ve been able to experience a sane feature branching strategy with Subversion over the past year, and the pain was far outweighed by the benefits.  Throughout development of a feature branch, you periodically merge from the parent branch so that the effort of merging takes place <em>away</em> from the main line and in small doses.  When it&#8217;s time to merge the feature branch back to the parent, there&#8217;s very little risk involved because you already know that your changes work in concert with your coworkers&#8217; changes.</p>
-<p>It&#8217;s still a little frustrating with Subversion, though.  Branching and switching between branches are big and slow operations because they&#8217;re dealing with point-in-time copies of Big Honking Folders.  It&#8217;s almost a <em>coincidence</em> that Subversion is aware of the history involved.</p>
-<h2>Saner Branching</h2>
-<p>Git has <em>again</em> changed my mind about branching.  <strong>With Subversion, a branch is a whole new commit containing a point-in-time copy of your code.  With git, a branch is a named pointer to a commit you&#8217;ve already made.</strong>  You get a little less noise in your history because you don&#8217;t have to wade through phony commits: some Subversion commits represent real work performed, and some just represent the act of branching, which doesn&#8217;t really <em>tell</em> me something.</p>
-<p>Creating a branch in git is extremely fast.  It doesn&#8217;t take long to write a commit ID to a local file, and that&#8217;s all there is to it.  Git lets all of your branches use the same workspace, and switching from one branch to another is also fast.  I find myself creating branches way more often than before.  It&#8217;s so fast and so simple compared to Subversion that speed/complexity no longer have to come into play when deciding whether or not to create one.  <strong>I&#8217;m about to start working on a new train of thought, so I branch.</strong></p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-17T00:00:00-06:00" pubdate data-updated="true">Feb 17<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/headspring-shows-some-love-at-knowbilitys-austin-air/">
-		
-			Headspring Shows Some Love at Knowbility&#8217;s Austin AIR</a>
-	</h2>
-	<div class="entry-content">
-		<p>Just in time for Valentine’s Day, three Headspring consultants competed in the annual Austin Accessibility Internet Rally (Austin AIR) hosted by <a href="http://www.knowbility.org/">Knowbility.org</a>.  Knowbility&#8217;s website explains the goal of the rally is &#8220;to teach participating web developers and designers about the tools and techniques necessary to make the web accessible to everyone – including people with disabilities.&#8221;  In addition, participating nonprofits benefit by receiving professional help to build a new or replace an existing site.  Judging for the competition lasts a couple weeks, and the winner is announced at an awards ceremony in March.</p>
-<p>Headspring-ers Anne Epstein, Mahendra Mavani and Deran Schilling showed up bright and early Saturday morning  to form their team, calling themselves the Headspring Hurwitzes (a tribute to our reigning Chief Architect, Kevin Hurwitz). They were assigned to Texas TERA with a mission to breathe life into their stale, outdated website.</p>
-<p>Now this is a fine looking group:</p>
-<p style="text-align: center;"><a href="http://www.headspring.com/wp-content/uploads/2012/02/Headspring-Hurwitzes.jpg"><img class="aligncenter" style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border-style: initial; border-color: initial; border-image: initial; border-width: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/02/Headspring-Hurwitzes_thumb.jpg" alt="Headspring Hurwitzes" width="380" height="384" border="0" /></a></p>
-<p>&nbsp;</p>
-<p style="text-align: center;"> <a href="http://www.headspring.com/2012/02/headspring-shows-some-love-at-knowbilitys-austin-air/headspring-hurwitzes-and-texas-tera" rel="attachment wp-att-3594"><img class="size-full wp-image-3594 aligncenter" title="Headspring Hurwitzes and Texas TERA" src="http://www.headspring.com/wp-content/uploads/2012/02/Headspring-Hurwitzes-and-Texas-TERA.jpg" alt="" width="502" height="377" /></a></p>
-<p>&nbsp;</p>
-<p>The team had a lot of fun and told me how happy they were about having the opportunity to participate.  “It was really a privilege to help out such an important and genuinely interesting and cool organization.  It turned out to be a lot of fun too,” said Anne Epstein.</p>
-<p>Deran Schilling, who participated and and won last year’s Houston AIR event told me, “I think the best part was meeting the people that make Texas TERA successful.  They’re an amazing group of people and I was happy that we could help out.  That sounds so canned…but it’s true!”</p>
-<p>Mahendra Mavani commented, &#8220;First or last, who cares about the winner now? We already won when we showed the happy faces of Texas TERA, who can now use their site on laptops, tablets, and smart phones.&#8221;</p>
-<p align="left">Texas TERA representatives were also happy to be a part of the fun, and thanked their team for providing them with a dramatically improved site. They mentioned the biggest benefit is that now content can easily be edited by anyone on the board or staff, using any device, anywhere.</p>
-<p align="left">Here’s a <strong>before</strong> and <strong>after</strong> look at what the Headspring Hurwitzes accomplished in an 8 hour window:</p>
-<p>&nbsp;</p>
-<p style="text-align: center;"><a href="http://www.headspring.com/wp-content/uploads/2012/02/Texas-TERA-website2.png"><img class="aligncenter" style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border-style: initial; border-color: initial; border-image: initial; border-width: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/02/Texas-TERA-website_thumb2.png" alt="Texas TERA website" width="487" height="480" border="0" /></a></p>
-<p style="text-align: center;"><a href="http://www.headspring.com/wp-content/uploads/2012/02/Texas-TERA-new-website2.png"><img class="aligncenter" style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border-style: initial; border-color: initial; border-image: initial; border-width: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/02/Texas-TERA-new-website_thumb2.png" alt="Texas TERA new website" width="452" height="480" border="0" /></a></p>
-<p>&nbsp;</p>
-<p>Pretty cool, right?</p>
-<p>We’ll keep everyone posted as we find out more information, upcoming Austin AIR announcements and awards.  Stay tuned!</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-14T00:00:00-06:00" pubdate data-updated="true">Feb 14<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>, <a class='category' href='/blog/categories/small-talk-and-big-news/'>Small Talk &amp; Big News</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/get-to-know-a-developer-brandon-barry/">
-		
-			Get to Know a Developer: Brandon Barry</a>
-	</h2>
-	<div class="entry-content">
-		<p><a href="http://www.headspring.com/wp-content/uploads/2012/02/IMG_5596_2.jpg"><img style="padding-left: 0px; padding-right: 0px; float: right; padding-top: 0px; border: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/02/IMG_5596_2_thumb.jpg" alt="IMG_5596_2" width="164" height="244" align="right" border="0" /></a>From what our coworkers say, Senior Consultant Brandon Barry can go head to head with Jimmy Bogard about the internals of the .NET framework.  Recently, he wrote a library for .NET that allows for dynamic querying SQL databases using LINQ syntax, but with no configuration. You can find it on <a href="https://github.com/maydaytx/DynamicLinq">Github</a>.</p>
-<p>All in all, he is incredibly knowledgeable Headspring developer, and is known for his affinity for clean, elegant code.  In fact, he prefers refactoring rather than having to work around bad code.  He is also great proponent for balancing the benefit of tests without sacrificing quality.  Here’s what else I learned today:</p>
-<p>&nbsp;</p>
-<p><strong>Are you an expert at anything?</strong></p>
-<p>I’m an expert in .NET.  I’m very strong with all things technical and I usually volunteer for the difficult problems.  I’m also creative (probably because I’m left-handed), which is why software development is my passion.  I’m also an expert rock bassist.</p>
-<p><strong>What led you to software development? What did you learn first?</strong></p>
-<p>When I was in 10th grade, I taught myself to program my TI-86 graphing calculator during math class.  I wrote programs to solve test questions so that I could just enter the inputs, and the program would show all the steps and the answer.   I also wrote a couple of simple text-based games that I let my classmates play.  Once I realized that I liked creating the game more than playing it, I was hooked.</p>
-<p><strong>So what came next?</strong></p>
-<p>When it was time for college I knew I wanted to major in Computer Science.  However, I  couldn’t get into the program right away because of my grades, so I started in Mechanical Engineering.  I’ve always thought that was weird. Isn’t engineering supposed to be harder?  Anyway I transferred as soon as I could into the Computer Science department.  We learned a few languages and a lot of theory, but not a lot about best practices in development.  I acquired my “skill” for development at my first job out of college in Temple at McLane Advanced Technologies.</p>
-<p><strong>Where do you begin when learning something new?</strong></p>
-<p>I take the path of least resistance.  Sometime I follow an example.  I taught myself how to play chords on the guitar by watching my dad and brother play one day.  After they left the room, I was playing along to my first Nirvana song (<em>In Bloom</em>) in no time.  Other times I read a manual.</p>
-<p><strong>How do you gauge “time well spent”?</strong></p>
-<p>I gauge time well spent by how much enjoyment I get.  If you don’t enjoy what you are doing and have a passion for it, it’s really just a waste of time.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-10T00:00:00-06:00" pubdate data-updated="true">Feb 10<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/get-to-know-a-headspringer/'>Get To Know a Headspringer</a>, <a class='category' href='/blog/categories/what-the-tech/'>What the tech?</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/am-i-not-dead-commit/">
-		
-			Am I Not Dead? Commit.</a>
-	</h2>
-	<div class="entry-content">
-		<p>As I mentioned last week, I&#8217;ve <a href="http://www.headspring.com/2012/02/hey-tfs-git-out-of-my-way">started using git</a> recently, specifically a git-to-tfs bridge so that I can avoid as much contact with TFS as humanly possible.</p>
-<p>Most of my recent experience has been with subversion, so I have been <em>unlearning</em> that as much as I have been <em>learning</em> git.  The most apparent difference right away is what it really means to make a &quot;commit&quot;.</p>
-<p>With subversion, even when working in a feature branch, my commits would be immediately shared with my coworkers.  I was basically handing a diff to my coworkers every time I checked something in.   Since anything I committed would be immediately shared, I had an extra concern at commit-time: &#8220;If I commit right now, and someone else gets latest, will I mess things up for them?&#8221;.  Despite wanting to commit as often as possible, I could only allow myself to commit when I had completed <em>the smallest chunk of work that could be shipped if I got hit by a bus</em>.  This seemed like the most reasonable rule of thumb to follow, but even these commits could end up fairly large.</p>
-<p>Subversion is like a video game with sparse save points.  You play for a while, maybe even an hour or two, before reaching a point where you&#8217;re even <em>allowed</em> to save your progress.  You might even get a little lost along the way, and you can&#8217;t just jump back to the last save point without wasting all that time.</p>
-<p>Working with git has felt a lot more like playing the original <a href="http://en.wikipedia.org/wiki/Half-Life_(video_game)">Half-Life</a>.  Maybe it was really difficult, or maybe I was just terrible at it, but I found myself being squashed or blown up every other minute.  Thankfully, instead of having to make your way to a special save point, you could just save your progress at any moment or jump back to any previous save.  <strong>Have I moved 10 feet?  Am I not dead?  Save.</strong></p>
-<p>Now that I can work with a local feature branch, I can think differently about what a commit actually <em>is</em>.  If I commit far more often than I did with subversion, I harm nobody; it&#8217;s all just local anyway.  When I ultimately push up to TFS, it&#8217;ll batch up all my local commits into a single set of changes representing the before/after comparison of all of my work.  Any missteps along the way won&#8217;t show up to my coworkers, yet while <em>doing</em> the work I could always look back to retrace my own train of thought.  <strong>Have I made any forward progress, shippable or not?  Am I not dead? Commit.</strong></p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-10T00:00:00-06:00" pubdate data-updated="true">Feb 10<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/why-should-i-use-html5s-new-elements/">
-		
-			Why Should I Use HTML5&#8217;s New Elements?</a>
-	</h2>
-	<div class="entry-content">
-		<p>A question I’m frequently asked typically goes something like this:</p>
+		<p>This is part 6 of an N-part series on identifying and resolving incidental complexity in your software projects.  This post assumes you&#8217;ve already read the earlier posts:</p>
+<ol>
+<li><a href="http://www.headspring.com/blog/developer-deep-dive/essential-vs-incidental-complexity/">Essential vs Incidental Complexity</a></li>
+<li><a href="http://www.headspring.com/blog/developer-deep-dive/identifying-incidental-complexity/">Identifying Incidental Complexity</a></li>
+<li><a href="http://www.headspring.com/blog/developer-deep-dive/scope-creep/">Scope Creep</a></li>
+<li><a href="http://www.headspring.com/blog/developer-deep-dive/spaghetti-alla-code/">Spaghetti alla Code</a></li>
+<li><a href="http://www.headspring.com/blog/developer-deep-dive/primitive-obsession/">Primitive Obsession</a></li>
+</ol>
+<p>The act of &#8220;complecting&#8221; two things is to intertwine or braid them together in such a way that creates complexity.  Most incidental complexity in our code comes from getting separate concepts twisted up in ways that make things more complex without moving us any closer to our goals.  Sometimes we intertwine concepts so tightly that we don&#8217;t even realize it&#8217;s happened.  In this post, we&#8217;ll see how I finally untied a code knot that has been staring at me for about two years.</p>
+<h2>A Quick Review</h2>
+<p><a href="http://www.headspring.com/blog/developer-deep-dive/identifying-incidental-complexity/">A few weeks ago</a>, we saw some improvements made to the TypeChecker class.  This class traverses a tree representing all the source code input to the compiler.  If the input source code has an if-expression, then the tree will contain a node (an instance of the <code>If</code> class) that describes what the raw source code looked like.  As TypeChecker traverses the tree, it attempts to find an appropriate type for each node.  Since Rook&#8217;s if-expressions behave like C#&#8217;s <code>?:</code> ternary operator, the type of an <code>If</code> is the type of the positive and negative branch expressions.</p>
+<p>In that post, the original implementation for if-expression type checking looked like this:</p>
+<p><div><script src='https://gist.github.com/3151220.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>This implementation used a needlessly-complex return type which motivated extra-complicated <code>return</code> statements.  That return type <em>complected</em> success (a new tree node with a meaningful Type property) with failure (a list of CompilerError messages to propagate up the tree).  Braiding those two ideas led to some verbose sanity checks after each step the method performed, and led to some verbose error-message-propagation in each <code>return</code> statement.</p>
+<p>I improved this situation by untying these ideas.  TypeChecker started tracking a single growing list of error messages encountered so far, so that returned objects in the tree traversal methods didn&#8217;t need to pass error messages back to their caller.  At this point, we started returning <code>null</code> every time the method found an error:</p>
+<p><div><script src='https://gist.github.com/3154330.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<h2>Return Statements are &#8220;Extract Method&#8221; Fences</h2>
+<p>Surely this change was an improvement, but it didn&#8217;t dramatically improve the health of the TypeChecker class.  TypeChecker is a beast.  The TypeCheck methods for several of the tree nodes are suspiciously similar to each other, so I started out by trying to factor out common helper methods.</p>
+<p>I failed immediately every time I tried to do so.</p>
+<p>The problem was that most of these methods followed the following pattern:</p>
+<ol>
+<li>Do one step of the work.</li>
+<li>If that step failed, return early (null).</li>
+<li>Do one step of the work.</li>
+<li>If that step failed, return early (null).</li>
+<li>&#8230;</li>
+</ol>
+<p>Methods will multiple returns are not inherently <em>bad</em>.  I usually limit myself to using multiple returns when a method starts with some initial &#8220;guard&#8221; statements: &#8220;if this call was kind of pointless, return early&#8221;.  Doing so can help to simplify the remainder of the function by clarifying assumptions up front.  Returning multiple times throughout the <em>meat</em> of a method, though, is usually a problem.</p>
 <blockquote><p>
-  &#8220;I hear about all these new HTML tags, but I don’t have any problem with using <code>&lt;div&gt;</code>s like I&#8217;ve always done. Why should I care?&#8221;
+    Each time you leave a <code>return</code> statement in the body of a longish method, you are really installing a fence.  You aren&#8217;t going to be able to successfully apply an &#8220;Extract Method&#8221; refactoring <em>across</em> those fence boundaries (try it!), so your method will always be longish with respect to the number of fences.
 </p></blockquote>
-<p>The questioners are referring to the new elements introduced with HTML5, including <code>&lt;nav&gt;</code> (which encapsulates a part of your page containing navigation elements), <code>&lt;article&gt;</code> (think of a newspaper story, with its heading, byline, callouts, etc.), and <code>&lt;time&gt;</code>, <a href="http://dev.opera.com/articles/view/new-structural-elements-in-html5/">among others</a>. While it&#8217;s true the Web survived for many years without these new elements, there&#8217;s no reason to stand on tradition. The new elements provide a number of benefits to both Web developers and end users, and, best of all, you can start using them right away!</p>
-<ul>
-<li><strong>Content aggregators and search providers can better figure out your content.</strong> News aggregators and search engines are everywhere, and are often an excellent way to disseminate your published content. Why not make it easy on them by explicitly marking what parts of your page they care about and what parts they can ignore?</li>
-<li><strong>Screen readers need all the help they can get.</strong> Many potential visitors require assistive devices to view the Web, but Web sites have been slow to adopt tools to help. HTML5’s new elements help out by letting screen readers know what sections of the page represent real content, and what sections are simply visual fluff.</li>
-<li><strong>The new tags are there, regardless.</strong> Either natively or with easy and clever workarounds, practically all browsers in use today recognize the new elements. Plus, they&#8217;ve been standardized by a number of industry groups. It&#8217;s never been easier to simply start working with them and you can rest easy knowing the new elements are here to stay.</li>
-<li><strong>Your coworkers will thank you.</strong> The new elements are far more descriptive than the <code>&lt;div&gt;</code> standby is, meaning the same content is considerably more understandable to other developers looking at your HTML source. Self-explanatory semantic markup reduces confusion and is often cleaner-looking than its cousins with pervasive use of <code>&lt;div&gt;</code> tags.</li>
-<li><strong>You&#8217;re probably already using them.</strong> These elements were added to the HTML5 specification because Web designers were already using them&#8230;just in a more verbose format. Most Web sites have common sections, like a header, navigation, and footer, yet there was no way to signify this with HTML. Thanks to the new elements, instead of something like this (which used to be all over the Internet):
-<pre>&lt;code&gt;&amp;lt;div id=&#39;footer&#39;&amp;gt;...&amp;lt;/div&amp;gt;
-&lt;/code&gt;</pre>
-<p>&#8230;we now have a much more concise representation of the same concept:</p>
-<pre>&lt;code&gt;&amp;lt;footer&amp;gt;...&amp;lt;/footer&amp;gt;
-&lt;/code&gt;</pre>
-<p>Much better.</p>
-</li>
-</ul>
-<p>Whether you&#8217;re working on a Web site for the newest, hottest start-up or helping maintain a 10-year-old internal Web site, the new HTML5 elements can provide you with a number of benefits. They&#8217;re easy to start using, respected by Web developers and search engines alike, and, soon, you’ll start to wonder how you lived without them.</p>
-<p>Have you encountered other benefits of using the new HTML5 elements? Have a particularly-elegant use case for one? Let us know in the comments!</p>
+<p>These fences have kept the TypeCheck methods too longish for about 2 years.  I tried to find ways around this countless times, always resulting in something even more complex than I started with.</p>
+<h2>Still Complecting Failure with Success</h2>
+<p>Even after the previous improvement to the meaning of returned objects from these methods, I was still complecting success (non-null return) with failure (null return).  Sure, the error-message-collecting code was out of the way now, but I still had to inspect the result of each call to a <code>TypeCheck</code> method.  In the <code>If</code>-expression example above, I couldn&#8217;t trust the returned objects from the three calls to other <code>TypeCheck</code> methods.  I would call it, inspect the result, and then use that to decide whether I should propagate failure by returning null early.</p>
+<p>Then it hit me.  What if we could just keep on going if we ran into trouble during the other <code>TypeCheck</code> calls?  Compiler errors aren&#8217;t exceptions: you don&#8217;t want to just stop looking for errors when you encounter a single problem.  By returning early, I wasn&#8217;t just making the code more complex.  I was actually limiting the amount of useful output I was ultimately reporting to the user.  Imagine how annoying it would be if the C# compiler just discarded every other error message it could have reported to you!</p>
+<h2>Non-null Nulls</h2>
+<p>Just removing the early return statements wouldn&#8217;t be enough, of course.  By continuing the process with nulls in play, I&#8217;d immediately start running into <code>NullReferenceException</code>s.</p>
+<p>Even though the methods weren&#8217;t returning nulls themselves anymore, the <code>Type</code> property on the returned objects could still be null.  Before type checking, every node in the tree had a Type property initialized to null, meaning a type hadn&#8217;t been found for the node yet.  Some of the methods in the type checker had to inspect those Type properties in order to make decisions, and nulls would start to become a problem at runtime.</p>
+<p>To resolve this, I had to apply the Null Object pattern before I could actually remove the early return statements.  With this pattern, you introduce a class that represents the simplest, most-null-like version of a type as possible.  In this case, I needed something that implemented my <code>DataType</code> abstract class while being completely uninteresting on its own.  Instances of this new <a href="https://github.com/plioi/rook/commit/52686db2b801f414c932f92e390f44ab68c7040b"><code>UnknownType</code></a> class could then be liberally sprinkled over the whole tree prior to type checking.  As the new and improved type checker encountered errors, it could safely proceed to find yet more errors knowing full well that in the worst case it would be working with <code>UnknownType</code> instead of nulls.</p>
+<blockquote><p>Using the Null Object pattern, I could safely remove the problematic early-return statements.  The type checker now finds all the errors it can, and our return values no longer complect success with failure.</p></blockquote>
+<p>The many <code>TypeCheck</code> methods are now much shorter, easier to read, and lack the fences that would stand in the way of further refactorings.</p>
+<h2>Before and After the Return Value Decomplection</h2>
+<p><strong>If-Expression Type Checking</strong></p>
+<p><em>Before:</em><br />
+<div><script src='https://gist.github.com/3151220.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p><em>After:</em><br />
+<div><script src='https://gist.github.com/3390149.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p><strong>Class Declaration Type Checking</strong></p>
+<p><em>Before:</em><br />
+<div><script src='https://gist.github.com/3390168.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p><em>After:</em><br />
+<div><script src='https://gist.github.com/3390159.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p><strong>Function Declaration Type Checking</strong></p>
+<p><em>Before:</em><br />
+<div><script src='https://gist.github.com/3390169.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p><em>After:</em><br />
+<div><script src='https://gist.github.com/3390164.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<h2>Detect, Reflect, Decomplect</h2>
+<p>When you find yourself looking at suspiciously-complex code,</p>
+<ol>
+<li><strong>Detect</strong> whether you have two or more ideas all tied up and twisted together.</li>
+<li><strong>Reflect</strong> on what a successful untwisting would look like.  Where will each idea live once they are separated?  Will you lose functionality in the process?  Will you gain some functionality that has been hindered by the complexity?  Will this effort open the door to further cleanup?</li>
+<li><strong>Decomplect</strong> the hell out of that mess and bask in the glory of your cleaner codebase.</li>
+</ol>
 
 		
 		
@@ -345,148 +195,7 @@
   
 
 
-<time datetime="2012-02-08T00:00:00-06:00" pubdate data-updated="true">Feb 8<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/leadership-characteristics-for-a-strong-team/">
-		
-			Leadership Characteristics for a Strong Team</a>
-	</h2>
-	<div class="entry-content">
-		<p><a href="http://www.headspring.com/?attachment_id=3488" rel="attachment wp-att-3488"><img class="alignleft size-full wp-image-3488" title="Leader and his team" src="http://www.headspring.com/wp-content/uploads/2012/02/leadership-characteristics.jpg" alt="" width="347" height="346" /></a>From championship-winning sports teams to multi-million dollar companies, strong, cohesive and successful teams take a great amount of hard work, dedication and focus. While many successful teams and organizations credit the strength of the team effort as the reason for their success, there is no doubt great leaders also have a big impact and are a big part of the foundation for a strong team. Think about how Vince Lombardi’s coaching in the NFL or Walt Disney’s inspiration in the entertainment industry left impacting legacies and provided great guidance to their teams. Without leaders like Lombardi and Disney, the success of the Green Bay Packers and the Disney franchise would be different in the history books. Behind great companies, organizations, and teams are instrumental individuals with key leadership characteristics who can propel the results from good to great.</p>
-<p>Great leaders take on a mission or goal of an organization or as entrepreneurs do, they develop one of their own. They live the mission, which many times comes from their passion of doing what they love. Clear illustrations are athletes who love the game and encourage their teammates by example on the field. Another example is Steve Jobs and his love of improving technology for people. Their passion bleeds into their actions and inevitably shows in the results.</p>
-<p>Great leaders then strategize the best ways to reach their goal and guide their team on the route, which may even involve shifting the route when obstacles arise, new teammates are recruited or unavoidable circumstances come their way. Great leaders not only adapt to change but they excel through it. The risks they take may not always have the best outcomes, but they learn from their experiences to make better choices in the future.</p>
-<p>Although many may argue that great leaders are born, there are clear examples in history and even at Headspring, that great leaders can be made. With changing needs in the environment, such as new problems that need solutions, a leader can be made when he/she encounters circumstances. In those situations, self-made or environment-made, a great leader excels when he/she is able to take his/her focus on the goal and guide the rest of the team to achieve the goal. Great leaders stay engaged with their team and encourage and challenge them along the way. It’s important for leaders to stay focused, accept and adapt to change when necessary and support their team the best they can.</p>
-<p>Do you know any great leaders? What do you admire most about him/her?</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-07T00:00:00-06:00" pubdate data-updated="true">Feb 7<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/client-retention-get-new-keep-existing/">
-		
-			Client Retention: Get New, Keep Existing</a>
-	</h2>
-	<div class="entry-content">
-		<p>Custom software projects are hard. The Standish Group reported in 2009 that only 33% of software projects are successful! Ouch. There are many strategies to ensure successful delivery of custom software projects. One is strongly related to the relationship between the provider and the client and how the parties work together to respond when a problem arises. How this response is handled sets the tone for either a long-term healthy relationship or a one-time customer. A strong, positive response leads to client retention.</p>
-<p>Two and a half years ago, Headspring made a radically unique decision that in retrospect, unlocked our future growth.  We focused all of our efforts on <strong>keeping every single client</strong> that we get. In order to achieve this, it was imperative for us to start by doing the following two things:</p>
-<p>1)      Find a good culture fit between our clients and us. This gives the relationship a head start and helps us be better aligned with the client’s need and goals</p>
-<p>2)      Ensure our client’s needs are mapped directly to our core competencies so we are in a position to add the maximum amount of value possible.</p>
-<p>We called this the “Get New, Keep Existing” strategy.  It sounds simple, but it is alarming how many companies have trouble with this and never realize that this is the key to their future growth.</p>
-<p>Working only with clients to whom you can bring value is important.  It is our sales team’s responsibility to seek other companies that will gain value from our core competencies and that will be a strong culture fit for us and our core values – like honest communication and drive for excellence.  By finding clients who gain value from your core competencies, it will lead to a more transparent exchange.  Bottom line is that we must be a good fit for <strong>each other</strong>.</p>
-<p>Our goal at Headspring is to pioneer the “no surprises” movement in the custom software industry. Strong communication and a win/win attitude will keep both parties from unreasonably high or incorrect expectations.  There is no sense in pushing a product or a service on a client when it doesn’t fit their needs.</p>
-<p>Once the fit is established, and the work has begun, good account management is one strategy that mitigates the risk of a project failing, and increases the chance that the client will return for more services.  It establishes a strong relationship that gives clients a greater level of comfort in sharing candid feedback.  In addition, it provides a strong foundation to solve tough problems that will arise with any custom software project. I have mapped out a few techniques, like the Rule of Three, in my <a href="http://www.headspring.com/2012/02/account-management-taking-off-the-rosecolored-glasses">previous blog</a>.</p>
-<p>Fast-forward to today, and we have seen dramatic growth, attributing a great deal of our progress to the simple “Get New, Keep Existing” approach.</p>
-<p>What if you focused all of your resources and people on getting the right clients, and keeping the ones you have?</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-06T00:00:00-06:00" pubdate data-updated="true">Feb 6<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/hey-tfs-git-out-of-my-way/">
-		
-			Hey TFS, Git Out of My Way!</a>
-	</h2>
-	<div class="entry-content">
-		<p>For about half a year, I&#8217;ve been using git for personal projects.  My use case, though, has been atypical and simplistic: a single user committing locally, treating GitHub as little more than a backup.  It suited my needs to date, and at least it exposed me to a few of the advantages of git over subversion, but I knew I was missing out on a lot of the power available.</p>
-<p>Now I&#8217;m working on a project that uses TFS for source control.  We are <del>mitigating</del> supplementing TFS with <a href="https://github.com/git-tfs/git-tfs">git-tfs</a>, a tool that allows you to work with git locally and then push your finished feature branches up to TFS.  Again, that&#8217;s a little atypical and a little limited compared to a git-only project, but it&#8217;s exposed me to a lot more of the concepts and commands that I have been missing out on.</p>
-<p>TFS is completely ignorant of the fact that I&#8217;m using git.  My local git repository starts out as a copy of the entire history of the TFS trunk, and I&#8217;m free to create local feature branches off of that.  I commit as much as I want to a local feature branch, and then use a git-tfs command that batches all of my local commits up into one TFS commit, complete with the TFS commit dialog.  I can avoid TFS-style merging, instead using git commands and my favorite merge tool to incorporate upstream changes into my local copy.  Jimmy Bogard has already described <a href="http://lostechies.com/jimmybogard/2011/09/20/git-workflows-with-git-tfs/">the git-tfs workflow</a> in detail.</p>
-<p>Before this recent new project, my progress up the git learning curve was pointlessly slow.  Although there are a lot of good tutorials out there, it just wasn&#8217;t sinking in.  <strong>What made all the difference for me was to have an experienced git user sit down with me for about an hour, physically going through the motions of the workflow.</strong>  We started with the TFS clone, created and switched between branches, made some commits, submitted to TFS, and then pulled down upstream changes into our local repositories.  We set up two users to simultaneously modify the same files, and walked through a typical rebase.  All of a sudden, things started to sink in.  It&#8217;s just one of those things you have to <em>do</em> rather than <em>study</em>.</p>
-<p>Along the way, we had the <a href="http://code.google.com/p/gitextensions/">Git Extensions</a> browser open at all times.  We&#8217;d refresh this after executing any interesting command.  It helped a lot to do so, especially when you get to the point where you can predict what the updated screen will look like in advance.  This is an exaggeration, but <strong>git is first and foremost a <a href="http://en.wikipedia.org/wiki/Directed_acyclic_graph">directed acyclic graph</a>-building tool, and only incidentally a source control tool</strong>, so seeing the graph build up with each command really helps you to unlearn the metaphors that your previous source control tool etched into your brain.</p>
-<p>With that basic foundation, it&#8217;s now becoming easier to introduce myself to other commands.  If you want to put an extremely sharp tool in your tool belt, find a buddy, have a repository browser handy, and just dive in.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-03T00:00:00-06:00" pubdate data-updated="true">Feb 3<span>rd</span>, 2012</time></div>
+<time datetime="2012-08-18T00:00:00-05:00" pubdate data-updated="true">Aug 18<span>th</span>, 2012</time></div>
 	<div class="tags">
 
 
@@ -502,27 +211,69 @@
     <article class="post">
 	<h2 class="title">
 		
-		<a href="/blog/get-to-know-a-developer-steve-donie/">
+		<a href="/blog/primitive-obsession/">
 		
-			Get to Know a Developer: Steve Donie</a>
+			Primitive Obsession</a>
 	</h2>
 	<div class="entry-content">
-		<p>&nbsp;</p>
-<p><a href="http://www.headspring.com/wp-content/uploads/2012/02/Steve-Donie.jpg"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border-style: initial; border-color: initial; border-image: initial; border-width: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/02/Steve-Donie_thumb.jpg" alt="Steve Donie" width="164" height="244" align="right" border="0" /></a>When Steve Donie was hired as a Principal Consultant at Headspring in early 2011, he hit the ground running.  His first day on the job, he started as the project lead for EPA Systems, designing a system for tracking greenhouse gasses for a large oil and gas company.  He encompasses the solutions based approach that we covet so much at Headspring and in life.  At home, Steve and his father worked on a massive project digitizing hundreds of family photos from their original slides onto an online portal for their entire family to share.  He is also the webmaster for his local high school’s swim team. And when he is not plugging away on a computer, he can be designing and building furniture, or enjoying the company of his two brilliant daughters.</p>
-<p>Basically, getting to know Steve meant getting to know how diverse his background truly is, and his desire to really involve himself in the world that surrounds him.  Here is some of what we talked about:</p>
-<p><strong>What tools and technologies would you consider yourself an expert in?</strong></p>
-<p>I’ve been doing software development for over 20 years and have worked with a variety of different languages and technologies.  I’ve mostly worked in a Microsoft environment, starting with DOS, through Windows 3.1, through all the various intervening versions of Windows, up to the current Windows 7.  I’ve also done a fair amount of work on the GNU/Linux platform and on Mac OSX. Language-wise, I’ve mainly used C, C++, Java and C#.</p>
-<p><strong>What work or studies have you done with these tools and technologies that make you feel expert in them?</strong></p>
-<p>I’ve mainly worked in industry rather than in consulting.  My first job out of college was developing a screen reader for Windows 95, so I had to learn a lot about accessibility.  I then worked for Microsoft in their Accessibility and Disabilities group.  My next ‘career’ had me working for a company developing sub-surface modeling and simulation software for the oil and gas industry.  I then focused on improving my test-driven design skills and learning C# and .NET on a project handling law firm invoices.  I took another turn through the oil and gas business, honing my leadership, management, and project management skills before coming to Headspring in March 2011.</p>
-<p><strong>What would you say that your team relies on you for?</strong></p>
-<p>Probably my domain expertise.  Windows internals, accessibility for people with disabilities, and a lot of work for the oil and gas industry are all included.  I also have a particular passion for agile software development processes, and automating the software development lifecycle, from builds through deploys.  I have also been told that I am great at explaining things; I try to be the translator between technical and non-technical folks.</p>
-<p><strong>When you were younger, what did you want to be when you grew up?</strong></p>
-<p>My first memory was that I wanted to be an architect. I watched a lot of “Brady Bunch” and thought Mike Brady was pretty cool.  Later on, I decided I wanted to be a fighter pilot, and went to the United States Air Force Academy in pursuit of that goal.  I soon learned that “Maverick” from Top Gun was not how pilots really were, and transferred to the University of Texas to pursue my second love - computers.</p>
-<p><strong>How do you gauge “time well spent”?</strong></p>
-<p>I am very motivated by successful results.  If something that took a lot of time does not turn out how I wanted it to, it’s harder for me to just say “oh well; I learned something.”  However, during a project, I am patient and careful based on the successful results that I am expecting.</p>
-<p><strong>What do you listen to on your way to work?</strong></p>
-<p>I mainly listen to the news on NPR when I drive, and podcasts when I walk my dog.  I listen to a few technical podcasts (This Developer’s life, dotNet Rocks, Software Engineering Radio) and other podcasts (RadioLab, This American Life, Planet Money) when I walk my dog.  When I listen to music I lean towards classic rock (Beatles, Stones, The Who, Grateful Dead), Reggae, and alternative/punk.</p>
-<p>To learn more about Steve, visit his website: <a href="http://donie.us:8080/">http://donie.us:8080/</a></p>
+		<p>This is part 5 of an N-part series on identifying and resolving incidental complexity in your software projects.  This post assumes you&#8217;ve already read the earlier posts:</p>
+<ol>
+<li><a href="http://www.headspring.com/blog/developer-deep-dive/essential-vs-incidental-complexity/">Essential vs Incidental Complexity</a></li>
+<li><a href="http://www.headspring.com/blog/developer-deep-dive/identifying-incidental-complexity/">Identifying Incidental Complexity</a></li>
+<li><a href="http://www.headspring.com/blog/developer-deep-dive/scope-creep/">Scope Creep</a></li>
+<li><a href="http://www.headspring.com/blog/developer-deep-dive/spaghetti-alla-code/">Spaghetti alla Code</a></li>
+</ol>
+<h2>Assumed Disaster, Assumed Success</h2>
+<p>My younger brother will be starting on a PhD in San Diego this fall, and we were recently talking about the drive he&#8217;ll be taking from Austin.  Wearing the Overprotective Sibling Hat, I was asking about his contingency plans should something go wrong: &#8220;If your vehicle breaks down, who are you planning to call for help?&#8221; and the like.  I could tell I was starting to annoy, so I said &#8220;Oh, sorry, that&#8217;s the software guy talking.  Something can always go wrong.&#8221;  In response, he said, &#8220;Well I&#8217;m a mathematician.  Everything is always perfect.&#8221;</p>
+<p>What did I mean by &#8220;Something can always go wrong&#8221;?  Even the smallest decisions a programmer makes can have far-reaching consequences, making a system more complex than it needs to be and opening the door for bugs.  This week, we&#8217;ll see how &#8220;Primitive Obsession&#8221; affected a very small decision in my compiler, and that poor decision spread like a weed.  It caused me to write awkward methods across a class hierarchy, forced me to pass around more objects from one function call to the next when doing so shouldn&#8217;t have been necessary, and opened the door to what would have been <strong>extremely</strong> troublesome bugs.</p>
+<h2>Primitive Obsession</h2>
+<p><a href="http://c2.com/cgi/wiki?PrimitiveObsession">Primitive Obsession</a> is when you focus too much on simple data types like ints, bools, and strings when it would be more helpful and communicative to use classes composed of those simpler types.</p>
+<p>For instance, I once worked on a system that dealt with phone numbers, and for a long time we just passed phone numbers around as strings.  The downside was that most functions receiving these strings had to be paranoid that they were being passed a string that wasn&#8217;t really a phone number, like &#8220;&#8221;, &#8220;Dr. Martin Van Nostrand&#8221;, or &#8220;555-0100&#8221; (which looks like a phone number but is reserved for TV).</p>
+<p>Suspicious of incoming phone number strings, most functions would start by sanity checking the input by calling one of several static validation functions.  It was annoying, bug prone, and inflated the size of the code.</p>
+<p>After introducing a smarter PhoneNumber class, we had less to worry about: validating and parsing a string was the only way to get an instance, so if you were passed one of these you could assume that it was already usable.  Even better, lots of those free-floating static string-twiddling methods now had a new home.</p>
+<h2>Type Variables</h2>
+<p>In my compiler, I over-ephasized the importance of a simple int, and that obsession led to some problems.  Before we get to that, though, we should talk a little about Type Variables.</p>
+<p>When a compiler is type-checking your code, it often has to reason about the type of an expression for which there is not yet enough information.  When type checking an &#8216;if&#8217; condition, we know that the condition&#8217;s type had better be boolean, but at the moment we are inspecting the if statement there might not be enough information about the types of variables appearing in that condition.  Maybe the condition refers to a lambda expression parameter, and we won&#8217;t be able to nail down the type of that parameter until we <em>later</em> discover the <code>Func</code> type of the lambda as a whole.</p>
+<blockquote><p>When the compiler has to start reasoning about types it doesn&#8217;t know about yet, it has to introduce a temporary placeholder: a stand-in for the real type that we will eventually nail down to something concrete.  We (unfortunately) call these Type Variables.</p></blockquote>
+<p>It&#8217;s easy to get type variables confused with generics, because there&#8217;s a definite overlap.  Consider a generic method in C#:</p>
+<p><div><script src='https://gist.github.com/3327067.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>When a compiler makes its first pass through this code, it can store the definition of Echo using a type variable everywhere we see a <code>T</code> to mean &#8220;Echo does stuff with some type but we don&#8217;t know what that type is yet.&#8221;</p>
+<p>An important quality of these <em>generic type variables</em> is that every time we call Echo, we need to nail down the type of <code>T</code> all over again.  A first call to Echo(1) nails down the type variable to int, and a subsequent call to Echo(&#8220;Hello!&#8221;) nails down the type variable to string.</p>
+<p>We can&#8217;t, however, conclude that type variables are synonymous with generic type parameters like <code>T</code> above.  There are lots of reasons a compiler won&#8217;t yet know about a type; these placeholders are not limited to explicitly-declared generic type parameter like Echo&#8217;s <code>T</code>.  Some of these type variables are <em>nongeneric</em>, meaning their behavior is a little different from the Echo example.  With Echo, we got to rediscover the concrete type with each call.  When we&#8217;re not dealing with generics, though, we can only nail things down <em>once</em>.</p>
+<p>This is pretty complicated.</p>
+<p>Fortunately, there are only a few details of this discussion that are necessary to understand the rest of this post:</p>
+<ol>
+<li>A compiler needs to reason about types before it has enough information to know exactly what the type of an expression really is.</li>
+<li>In these cases it generates a temporary placeholder for a type, called a Type Variable.</li>
+<li>Eventually we gather clues to nail down each Type Variable to something specific like bool, string, Customer, …</li>
+<li>Some type variables behave like familiar generics, and some are <em>special</em> with their own behavior.</li>
+</ol>
+<h2>Obsessing Over Integers</h2>
+<p>Very early in development of my type checker, I was guilty of Primitive Obsession.  I needed a TypeVariable class that implemented my DataType interface so they could be used alongside concrete types like Integer, Boolean, and the like.  Similar to a .NET Guid, I needed to simply generate <em>some new unique thing</em> that wouldn&#8217;t be considered equal to the ones generated before.</p>
+<p>I implemented TypeVariable as a trivial wrapper around an int, and made it so that each time you created a new one it would use a unique int that hadn&#8217;t been used yet.  The first time you needed a placeholder for a type, it would be Unknown Type #0, the second would be Unknown Type #1, etc.</p>
+<blockquote><p>I thought I was avoiding Primitive Obsession by wrapping this int in a meaningfully-named class that took part in my domain.  However, my mistake was that I <em>continued to think of these things as glorified ints</em>.</p></blockquote>
+<p>Because I always thought of them as a primitive type, it never occurred to me that I might want to put more information or behavior in that class.  When my code started to care about the distinction between <em>generic</em> and <em>nongeneric</em> type variables hinted at above, <em>I couldn&#8217;t see that that concept belonged in the TypeVariable class</em> and instead I threw that concept around wherever I could to get the system to work.</p>
+<p>The generic/nongeneric distinction wound up in the Scope classes that I&#8217;ve been discussing here the last few weeks.</p>
+<p>Scope is <em>supposed</em> to be a dictionary-like type that stores the declared type of identifiers in scope.  If the code being compiled has a local <code>int x</code> varaible and a global <code>Echo</code> function, this dictionary-like thing would have a key &#8220;x&#8221; with value &#8220;int&#8221; and a key &#8220;Echo&#8221; with value &#8220;Func&lt;T, T&gt;&#8221;.</p>
+<p>That&#8217;s all Scope was supposed to be, but it also took on the responsibility of knowing which TypeVariable instances were generic and which ones weren&#8217;t.  <strong>Wat.</strong></p>
+<p>Here&#8217;s what the troubled version looked like.  Note especially the LambdaScope class, which took on the awkward responsibility of remembering which TypeVariables were <em>special</em>:</p>
+<p><div><script src='https://gist.github.com/3327028.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Holy cow, that is complex!  The different implementations of IsGeneric work together to make up for the fact that we couldn&#8217;t just <em>ask</em> each TypeVariable whether or not it was had generics-behavior, and that all grew from my preoccupation with these things being glorified ints.</p>
+<p>What&#8217;s worse is that these implementations of IsGeneric only give accurate answers when you <em>happen</em> to call them correctly.  Note how GlobalScope always returns true.  If I ever called that implementation for a TypeVariable that really <em>isn&#8217;t</em> generic, I&#8217;d be working with a lie.  The compiler didn&#8217;t <em>happen</em> to rely on any liars yet, but if it ever did I&#8217;d be faced with some incomprehensible bugs.</p>
+<h2>Fixing TypeVariable and Scope</h2>
+<p>One simple change to the TypeVariable abstraction was all I needed to fix this mess.</p>
+<p>The first commit addressed the main problem: <a href="https://github.com/plioi/rook/commit/bc56fe6495d0fe56702ee825673b9ad74b56d977">TypeVariables know whether or not they are generic type variables upon construction. Scope no longer tracks or cares about whether type variables are generic.</a>  In this commit, TypeVariable gained a new IsGeneric property, all of the IsGeneric implementations were removed from Scope classes, and usages got cleaned up.  I even got to remove a unit test that in hindsight <em>asserted the horribly bug-prone behavior mentioned earlier</em>.  I was so confused by my own complexity that I was <em>asserting that it should behave dangerously</em>!</p>
+<p>After this commit, I realized that the LambdaScope class was now completely pointless.  It wrapped an instance of another Scope class and all the methods now just defered to that other instance.  LambdaScope no longer added any new ideas, <a href="https://github.com/plioi/rook/commit/e965b694fe9b7daa41367632be33a570365fa8f8">and could be removed</a>.</p>
+<blockquote><p>In addition to all of this cleanup and simplification, I&#8217;m starting to see how TypeVariable could start to absorb some more misplaced behavior from the still-too-complex TypeChecker class.  The fact that it&#8217;s getting <em>easier</em> to start seeing what else can be improved is a sign that the last few weeks&#8217; worth of refactorings are actually starting to pay off!</p></blockquote>
+<h2>Beware Primitive Obsession</h2>
+<p>As we&#8217;ve seen, Primitive Obsession isn&#8217;t just about focusing on simple types when your own domain objects are better.  Even when I made my ints into TypeVariables, I was still thinking in terms of trivial types.</p>
+<p>When focusing too much on trivial types, we forget to place behaviors or related information in their most appropriate home.  This mistake leads us to place behavior and state <em>just about anywhere it&#8217;ll work</em>, leading to more mistakes.</p>
+<blockquote><p>A tiny bit of obsession with a tiny type can grow through your project like a weed, spreading complexity to everything it touches.</p></blockquote>
+<p>To resolve these problems, try to recognize that your simple types may deserve to be classes of their own.  Once you&#8217;ve given these concepts a useful name in your domain, don&#8217;t stop there!  Make these new types smarter, taking on behavior appropriate to the type so that the rest of your system doesn&#8217;t have to compensate for them.</p>
 
 		
 		
@@ -542,11 +293,11 @@
   
 
 
-<time datetime="2012-02-02T00:00:00-06:00" pubdate data-updated="true">Feb 2<span>nd</span>, 2012</time></div>
+<time datetime="2012-08-11T00:00:00-05:00" pubdate data-updated="true">Aug 11<span>th</span>, 2012</time></div>
 	<div class="tags">
 
 
-	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/get-to-know-a-headspringer/'>Get To Know a Headspringer</a>, <a class='category' href='/blog/categories/principal-consultant-at-headspring/'>Principal Consultant at Headspring</a>, <a class='category' href='/blog/categories/what-the-tech/'>What the tech?</a>, <a class='category' href='/blog/categories/learning-c-number-and-net/'>learning c# and .net</a>, <a class='category' href='/blog/categories/project-lead-for-epa-systems/'>project lead for EPA Systems</a>, <a class='category' href='/blog/categories/solutions-based-approach/'>solutions based approach</a>, <a class='category' href='/blog/categories/system-for-tracking-greenhouse-gasses/'>system for tracking greenhouse gasses</a>, <a class='category' href='/blog/categories/test-driven-design/'>test-driven design</a>
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
 
 
 </div>
@@ -558,26 +309,54 @@
     <article class="post">
 	<h2 class="title">
 		
-		<a href="/blog/account-management-taking-off-the-rosecolored-glasses/">
+		<a href="/blog/spaghetti-alla-code/">
 		
-			Account Management: Taking Off the Rose–Colored Glasses</a>
+			Spaghetti Alla Code</a>
 	</h2>
 	<div class="entry-content">
-		<p>You have probably, at least once, ended an email with this statement:</p>
-<p>“If you have any questions or feedback, please feel free to contact me.”</p>
-<p>How effective has this attempt at quarrying feedback ever been for you? My guess is that this sentiment probably does not move far pass pleasantries. It’s nice. It’s open. But is it really welcoming?</p>
-<p>In account management, honest and timely feedback is of utmost importance. This is the case not only to achieve project goals but also to secure long-lasting relationships. Selling to existing accounts is often characterized as “low–hanging fruit,” but reality speaks much differently. Twenty-four percent of custom software projects are cancelled before completion or never used. I can only imagine how a healthy dose of careful account management in these cases could have changed the failed outcome. Client retention is actually very hard work and depends on the careful attention paid to feedback given to a trustworthy account manager.</p>
-<p>Some clients are powerfully communicative, allowing account managers and consultants to focus on satisfying the scope of the project objectives. With these people, you don’t have to worry about whether you’ll get useful responses to your request for comments. You also don’t have to worry about if you are welcoming enough because you know it’s coming anyway.</p>
-<p>One thing that keeps us from pressing for feedback is what I call “happy ears.” These conversations tend to be brief and end on a good note:</p>
-<p><a href="http://www.headspring.com/wp-content/uploads/2012/01/image15.png"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border-style: initial; border-color: initial; border-image: initial; border-width: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/01/image_thumb2.png" alt="image" width="518" height="266" border="0" /></a></p>
-<p>Two factors play into this scenario: The psychology of the person asking questions and the psychology of the person answering questions. The person answering seeks approval by giving praise and the person asking stops once they receive praise for a job well done. The person asking the questions has his/her happy ears on, and they don’t press for more feedback because that would be more work. The person answering the question then assumes that their feedback would be disregarded or would disrupt a good working relationship with a reliable vendor. This need for approval creates communication walls on both sides.</p>
-<p>So how is it possible to garner feedback from a client that is not an effective communicator? In other words, how do I get constructive feedback from a <em>seemingly</em> <em>satisfied</em> client?</p>
-<p>Some like to start with the Rule of Three: ask the same question three times, in three different ways, and get to the truth. Here’s an example of the supposed conversation:</p>
-<p><a href="http://www.headspring.com/wp-content/uploads/2012/01/image16.png"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/01/image_thumb3.png" alt="image" width="515" height="480" border="0" /></a></p>
-<p>We had to ask three times, but eventually we get to the reality of our situation. Had we not pressed the issue, would we have known about these issues? The results shouldn’t be surprising to the consulting team. Account managers should be able to bring this feedback to the consulting team, and the team should have an action plan already in place to acknowledge these shortcomings. However, having an account manager available to ask the right questions and empathize with the client&#8217;s perception of the project ensures a new level of trust and respect between the client and the organization. This can turn a satisfied client into a return customer.</p>
-<p>My recommendation is to place account managers on every project and stress the importance of their role. Have them hold proactive meetings, even when things are going well. Meet in person, often. Shake hands. Share a meal together. Uncover all assumptions, and get to know your client’s wants and desires on a personal level.</p>
-<p>Some companies have separate departments for account management, but we utilize our sales team because they are the original point of contact.</p>
-<p>Who fills the client satisfaction role in your organization? What can they do to better uncover the hidden opportunities and areas for improvement?</p>
+		<p>This is part 4 of an N-part series on identifying and resolving incidental complexity in your software projects.  This post assumes you&#8217;ve already read the earlier posts:</p>
+<ol>
+<li><a href="http://www.headspring.com/blog/developer-deep-dive/essential-vs-incidental-complexity/">Essential vs Incidental Complexity</a></li>
+<li><a href="http://www.headspring.com/blog/developer-deep-dive/identifying-incidental-complexity/">Identifying Incidental Complexity</a></li>
+<li><a href="http://www.headspring.com/blog/developer-deep-dive/scope-creep/">Scope Creep</a></li>
+</ol>
+<h2>Recipe: Spaghetti alla Code</h2>
+<p>INGREDIENTS</p>
+<ul>
+<li>1 cup &#8216;virtual&#8217; keywords</li>
+<li>3 cups &#8216;override&#8217; keywords</li>
+<li>1 pinch of &#8216;base&#8217; keyword</li>
+<li>1 generous dollop of moxie</li>
+</ul>
+<p>DIRECTIONS</p>
+<ol>
+<li>Combine ingredients in large mixing hierarchy.</li>
+<li>Season to distaste.</li>
+</ol>
+<p>SERVES: no one</p>
+<h2>Composition Over Inheritance</h2>
+<p>Last week, I took a suspiciously-growing class, Scope, and used subclassing to split it into a class hierarchy.  The goal was to start separating some of the concepts that had gotten all mixed up, and to better-communicate how each <em>kind</em> of Scope was to be used.  I ended that post with some vague criticism about disliking the use of &#8216;virtual&#8217;, &#8216;override&#8217;, and &#8216;base&#8217; keywords.  I felt that using subclassing was a useful tool to help separate responsibilities, but the result was more complex than necessary.</p>
+<p>These keywords helped me to avoid copy/pasting code across all the subclasses, and allowed subclasses to customize that behavior where appropriate, so how bad could they be?  It all worked, and I didn&#8217;t have to reach for my copy/paste shortcuts.</p>
+<p><a href="https://github.com/plioi/rook/blob/8155326c6c428cdd2bf63e9e4986796a8a20fac7/src/Rook.Compiling/Scope.cs">The code</a>&#8217;s a little hard to follow, though.  The base class contains some <code>virtual</code> methods with a default implementation.  That implementation is used by GlobalScope and TypeMemberScope because that happens to be the right thing to do for those subclasses.  LocalScope <code>override</code>s them, deliberately using the <code>base</code> implementation in <em>one</em> of those <code>override</code>s and deliberately <em>avoids</em> the <code>base</code> implementation in another.  Why?  To find out, you have to run the code in your head, and in order to do that you have to start looking around at all the implementations of all the methods in the hierarchy.  </p>
+<blockquote><p>With virtual/override/base, you have to understand <em>everything</em> to understand <em>anything</em>.</p></blockquote>
+<p>These three keywords combine to produce the same kind of <a href="http://en.wikipedia.org/wiki/Spaghetti_code">spaghetti code</a> as a <code>goto</code> does.  The compiler knows what you mean, but the reader doesn&#8217;t!</p>
+<p>When possible, I prefer to favor composition over inheritance.  We still want to avoid copy/pasting logic around, but composing simple objects together is another way to accomplish that goal, and the results are easier to read.</p>
+<h2>Applying Composition in the Scope Hierarchy</h2>
+<blockquote><p>In previous weeks, we&#8217;ve improved upon incidental complexity by removing bad abstractions and splitting up abstractions that were getting too complex.  This time, we&#8217;ll improve upon incidental complexity by recognizing that one abstraction was hiding within another.</p></blockquote>
+<p>The code I didn&#8217;t want to copy around appeared largely in the base class of <a href="https://github.com/plioi/rook/blob/8155326c6c428cdd2bf63e9e4986796a8a20fac7/src/Rook.Compiling/Scope.cs">the troubled implementation</a>.  I had a dictionary with a particular key type and value type, representing the types of the identifiers found in a given scope (&#8220;bindings&#8221; in compiler terms), and I wanted access to the dictionary to be strict about uniqueness of keys while not throwing exceptions (programmers mistakenly create duplicate identifiers all the time, so it&#8217;s not an exceptional occurrence).</p>
+<p>This special kind of dictionary deserves to be a first class citizen of my compiler.  Let&#8217;s pull it out into its own class, separate from the class hierarchy but <em>used</em> by the class hierarchy to avoid duplicated logic.</p>
+<p>I extracted the new abstraction, <code>BindingDictionary</code>, from <code>Scope</code>.  The abstract base class became empty, so I converted it to an interface:</p>
+<p><div><script src='https://gist.github.com/3260425.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>(On for-pay projects I follow the IFoo interface naming convention for consistency across the team.  I don&#8217;t on this project because&#8230; because&#8230; because I say so that&#8217;s why.)</p>
+<p>Contrast <a href="https://github.com/plioi/rook/blob/8155326c6c428cdd2bf63e9e4986796a8a20fac7/src/Rook.Compiling/Scope.cs">the previous implementation</a> with <a href="https://github.com/plioi/rook/blob/59cb30404aba89cd8bc94a761e1194e79210afab/src/Rook.Compiling/Scope.cs">the new implementation</a>.  These classes make use of the new <code>BindingDictionary</code> abstraction in order to reuse that logic without inheritance and overrides.  To understand any class, you need only look at that one class.  You don&#8217;t have to run it <em>all</em> in your head to know what it&#8217;s actual behavior is going to be, because <strong>each class is satisfying the <code>Scope</code> contract on its own</strong>.  Also, I got to give more descriptive names to the member variables because the member variables are no longer shared across multiple classes with different meanings.</p>
+<p>Subclassing isn&#8217;t all bad.  I find myself using the Template Method pattern, for instance.  In that case, though, I&#8217;m only overriding methods that are abstract in the base class.  When you start overriding non-abstract methods, though, you start lying to the reader:</p>
+<blockquote><p>&#8220;This virtual method here does <em>this</em>, unless it doesn&#8217;t.  It probably doesn&#8217;t.&#8221;</p></blockquote>
+<h2>Criticism and Next Steps</h2>
+<p>Some of these classes actually got <em>bigger</em>, which can be a code smell, but in this case they are mostly one-liners, and in my mind I exclude one-liners when considering lines-of-code counts.  The world needs more one-liner methods.</p>
+<p>Now that <code>Scope</code> is just an interface, it&#8217;s easier to take a quick glance at it and know that one of the methods on it is standing out like a sore thumb.  Scopes represent which identifiers are visible at some point in the code being compiled, along with their declared types; the <code>TryIncludeUniqueBinding, TryGet, and Contains</code> methods serve that abstraction.  The <code>IsGeneric</code> method doesn&#8217;t serve that concept, but lives in these classes in order to produce the right results.</p>
+<p>Looks like we&#8217;ve got another poor abstraction here: a useful abstraction is missing completely, and needs to be added so that this &#8216;IsGeneric&#8217; decision, <em>whatever the heck that means</em>, can have a good home.  We&#8217;ll see what that&#8217;s all about in my next post.</p>
 
 		
 		
@@ -597,11 +376,119 @@
   
 
 
-<time datetime="2012-02-01T00:00:00-06:00" pubdate data-updated="true">Feb 1<span>st</span>, 2012</time></div>
+<time datetime="2012-08-04T00:00:00-05:00" pubdate data-updated="true">Aug 4<span>th</span>, 2012</time></div>
 	<div class="tags">
 
 
-	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/get-to-know-a-developer-andrew-west/">
+		
+			Get to Know a Developer: Andrew West</a>
+	</h2>
+	<div class="entry-content">
+		<p><a href="http://www.headspring.com/wp-content/uploads/2012/08/andrew-west.png"><img class="alignright size-medium wp-image-5681" title="andrew west" src="http://www.headspring.com/wp-content/uploads/2012/08/andrew-west-300x300.png" alt="" width="300" height="300" /></a>This week&#8217;s developer actually started last week: Andrew West, Senior Consultant.  Andrew has been riding the contract train for all kinds of companies for about 10 years.  He&#8217;s done some server side work for mobile geo-caching apps, developed a bar code app for hazardous waste tracking in the healthcare industry, worked on projects in the financial and academic worlds, and more.  Now, he&#8217;s happy to give Headspring and our clients his full attention, telling me that he intentionally steered away from other offers because he knew he wanted to work here.  Here&#8217;s more of our conversation:</p>
+<p><strong>Are you an expert at anything?</strong></p>
+<p>I have a lot of experience with C#, ASP.NET MVC, and relational databases, but the learning process never ends.  I’m always looking for ways to improve my skills.</p>
+<p><strong>Who is on your list of ideal clients to work for or individuals to work with?</strong></p>
+<p>I’m fascinated by the space industry, so it would be interesting to work with clients in that field.  I’m amazed by things like the Mars Science Laboratory mission.</p>
+<p><strong>What led you to software development?</strong></p>
+<p>When I was 9 or 10 years old my parents gave me a toy computer.  It only had 2 kilobytes of RAM and a 16-character display, but I managed to create simple games with it.  Eventually I learned to program the Apple II, TRS-80, and IBM PC.  By the time I was in high school, I knew I wanted a career in software.</p>
+<p><strong>What did you learn first?</strong></p>
+<p>I started out learning various dialects of BASIC.  A few years later I learned C++ and x86 assembly language.</p>
+<p><strong>Do you like teaching?</strong></p>
+<p>Teaching a room full of people can be intimidating, but it’s still a great experience if you don’t worry too much about being perfect.  I learn a lot when I’m preparing to teach.</p>
+<p><strong>Where do you begin when learning something new?</strong></p>
+<p>I still like to read books in hard copy format.  Reading a technical book from cover to cover gives me a broader understanding of a new technology than reading online code examples or documentation.</p>
+<p>&nbsp;</p>
+<p>I agree, Andy. Hard copy books for life!  To learn more, tweet: <a href="https://twitter.com/andrewtwest">@andrewtwest</a></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-02T00:00:00-05:00" pubdate data-updated="true">Aug 2<span>nd</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/blog/'>Blog</a>, <a class='category' href='/blog/categories/bonus/'>Bonus!</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/get-to-know-a-headspringer/'>Get To Know a Headspringer</a>, <a class='category' href='/blog/categories/what-the-tech/'>What the tech?</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/headspring-chosen-as-exclusive-education-partner-in-north-america-by-ravendb/">
+		
+			Headspring Chosen as Exclusive Education Partner in North America by RavenDB</a>
+	</h2>
+	<div class="entry-content">
+		<p style="text-align: center;"><strong><em><a href="http://www.headspring.com/wp-content/uploads/2012/07/logo-ravendb.png"><img class="alignright size-medium wp-image-5670" title="RavenDB" src="http://www.headspring.com/wp-content/uploads/2012/07/logo-ravendb-300x104.png" alt="RavenDB" width="300" height="104" /></a>First Public Course Scheduled for September at Headspring Headquarters in Austin, Texas</em></strong></p>
+<p>&nbsp;</p>
+<p>Austin, TX – July 30, 2012, Headspring, a custom application development and consulting firm, today announced it was selected as the exclusive training partner for RavenDB, a popular open-source document database.</p>
+<p>The premiere RavenDB training course provided by Headspring is scheduled for September 5-6, 2012 with limited space available. The course will be instructed by Principal Consultant Alonso Robles, with curriculum developed by RavenDB creator and CEO of Hibernating Rhinos, Oren Eini.</p>
+<p>Headspring is a leading educator in the development community and was chosen as the exclusive partner to RavenDB because of its proven experience implementing document database in custom software projects.</p>
+<p>&#8220;We are excited to be working with Headspring in a move that will make it easier and more accessible for customers to adopt RavenDB, and for developers and sys ops to learn just how useful a tool they now have within reach&#8221; says Eini.</p>
+<p>The partnership also signifies Headspring’s ongoing commitment to the adaptation and evangelism of open-source technology.</p>
+<p>“We’ve had a lot of success using RavenDB for our clients,” said Kevin Hurwitz, Chief Architect at Headspring. &#8220;We’re excited about this opportunity and looking forward to educating the new adopters of this great product.”</p>
+<p>To register or learn more about the course, visit: <a href="http://www.headspring.com/events/ravendb-boot-camp/">http://www.headspring.com/events/ravendb-boot-camp/</a></p>
+<p><strong>About RavenDB</strong></p>
+<p>RavenDB is an open source (with a commercial option) second generation document database for the .NET/Windows platform, developed by Hibernating Rhinos, which also developed a set of profilers for Object Relations Mappers for the .NET and Java platforms.</p>
+<p>RavenDB is used by customers for running low end embedded solutionssuch as Point Of Sale systems all the way up to highly scalable, distributed &amp; replicated, systems such as MSNBC.COM, which has moved several keys assets to RavenDB, and plans to move more in the future.</p>
+<p>For more information about RavenDB, visit <a href="http://ravendb.net" target="_blank">http://ravendb.net</a></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-07-30T00:00:00-05:00" pubdate data-updated="true">Jul 30<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/press/'>Press</a>
 
 
 </div>

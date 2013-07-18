@@ -7,7 +7,7 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="In a conversation about large software projects, the word &#8220;architecture&#8221; is bound to come up sooner or later. Most programmers have a &hellip;">
+	<meta name="description" content="This past summer, the Headspring staff took a trip to K1 Speed for a quarterly meeting. When we weren&#8217;t &#8220;testing the safety equipment&# &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -23,19 +23,11 @@
 
 <body>
 	<header id="header" class="inner"><h1><a href="/">Headspring Labs</a></h1>
-<nav id="main-nav"><ul class="main">
-	<li><a href="/blog">Blog</a></li>
-	<li><a href="/blog/archives">Archives</a></li>
-	<li><a href="/open-source">Open Source</a></li>
-	<li><a href="/team">The Team</a></li>
-	<li><a href="/about-us">About Us</a></li>
-</ul>
-</nav>
 <nav id="mobile-nav">
 	<div class="alignleft menu">
 		<a class="button">Menu</a>
 		<div class="container"><ul class="main">
-	<li><a href="/blog">Blog</a></li>
+	<li><a href="/">Blog</a></li>
 	<li><a href="/blog/archives">Archives</a></li>
 	<li><a href="/open-source">Open Source</a></li>
 	<li><a href="/team">The Team</a></li>
@@ -63,9 +55,9 @@
 		
 		<a class="github" href="https://github.com/HeadspringLabs" title="GitHub">GitHub</a>
 		
-    
+	    
 		
-		<a class="coderwall" href="https://coderwall.com/headspring" title="Coderwall">Coderwall</a>
+		<a class="coderwall" href="https://coderwall.com/team/headspring" title="Coderwall">Coderwall</a>
 		
 		
 		
@@ -73,12 +65,20 @@
 		
 		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
 		
-    
+	    
 	</div>
 	<form class="search" action="http://google.com/search" method="get">
 		<input class="alignright" type="text" name="q" results="0">
 		<input type="hidden" name="q" value="site:headspringlabs.com">
 	</form>
+</nav>
+<nav id="main-nav"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+	<li><a href="/open-source">Open Source</a></li>
+	<li><a href="/team">The Team</a></li>
+	<li><a href="/about-us">About Us</a></li>
+</ul>
 </nav>
 
 </header>
@@ -91,32 +91,19 @@
     <article class="post">
 	<h2 class="title">
 		
-		<a href="/blog/architecture-resists-change/">
+		<a href="/blog/mentorship-and-pie-potential/">
 		
-			Architecture Resists Change</a>
+			Mentorship and Pie Potential</a>
 	</h2>
 	<div class="entry-content">
-		<p>In a conversation about large software projects, the word &#8220;architecture&#8221; is bound to come up sooner or later.  Most programmers have a gut feeling for what this really means with regard to software, but if you asked 10 programmers to define it, you&#8217;d get 10 different answers.</p>
-<p>In <a href="http://martinfowler.com/ieeeSoftware/whoNeedsArchitect.pdf">Who Needs an Architect?</a>, Martin Fowler covers a few definitions which he ultimately boils down to one simple concept: <strong>architecture is the decisions that are hard to change.</strong></p>
-<p>Depending on the tone you use when reading that definition, it&#8217;s almost a <em>pejorative</em>.  Joel Spolsky even warned us of <a href="http://www.joelonsoftware.com/articles/fog0000000018.html">Architecture Astronauts</a>, people who effectively over-engineer and abstract things to the point that they&#8217;re no longer solving real problems.</p>
-<p>Yes, <strong>an</strong> architecture can be bad.  If the decisions that are hard to change form obstacles between you and the true goal of your project, you&#8217;ve got a bad architecture.  On the other hand, some decisions that are hard to change may be a driving force for your success.  It&#8217;s just important to be aware of which decisions form your architecture as you make them.</p>
-<h2>Example: The Onion Architecture</h2>
-<p>With the <a href="http://www.headspring.com/2012/03/onion-architecture-part-4-after-four-years">Onion Architecture</a>, the hard-to-change decision is to define realtively-unstable infrastructure on the outside, depending on a core application that is ignorant of infrastructure details like persistence.</p>
-<p>This decision is hard to change, but it is justified.  As Jeffrey Palermo said during a presentation on the O.A., an assembly is only as stable as its least-stable dependency.  Therefore, for an application to stand the test of time, we need to maximize the stable portion and minimize our dependency on things that are too likely to change.  If your app integrates with Twitter today, it likely won&#8217;t in 5 years after Twitter goes the way of the blue Dodo bird, so you are better off defining your Twitter integration outside of the core assembly, dependent on the core assembly rather than the other way around.</p>
-<h2>Example: Parsley</h2>
-<p>A few months back I described a hobby project to illustrate <a href="http://www.headspring.com/2011/11/recognizing-covariance-issues-in-your-code">covariance issues</a>.  This project lets you parse text by describing what a valid input looks like (similar to regular expressions).  There were two key decisions that would be impossible to change without starting from scratch:</p>
-<blockquote>
-<p>First, the user would describe what a valid input looks like by gluing together tiny <a href="http://domaindrivendesign.org/node/127">side-effect-free</a> functions.<br />
-  Second, I would use read-only data structures to represent progress through the input.</p>
-</blockquote>
-<p>These two decisions are made frequently when using functional languages, but not so much in C# projects.  Despite being unusual, I found these decisions to be extremely helpful for this kind of problem, regardless of the language used to implement it.</p>
-<p>The samples contain a <a href="https://github.com/plioi/parsley/blob/0b0b1cdddab040c1513344f3b768a8c348bed138/src/Parsley.Test/IntegrationTests/Json/JsonGrammar.cs">JSON parser</a>, which amounts to describing what valid JSON looks like.  The bulk of the description is summed up in a few lines:</p>
-<p><div><script src='https://gist.github.com/2495421.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Because of the two architectural decisions, all the details about tracking progress, success, and failure can be completely hidden.  The user can solve the task at hand by describing the task at hand, and the architectural decisions enable that ability.</p>
-<h2>Making Your Own Decisions</h2>
-<p>As you make a decision that affects your project&#8217;s structure, ask yourself, &#8220;Is this a part of our architecture?  Is it going to be hard to change later if we go forward with it?  If so, does it <em>earn the right</em> to be included anyway?&#8221;  If not, try to restructure it so that it <em>is</em> easy to change, or consider chucking it entirely.</p>
+		<p>This past summer, the Headspring staff took a trip to <a href="http://www.k1speed.com/austin-location.html">K1 Speed</a> for a quarterly meeting.  When we weren&#8217;t &#8220;testing the safety equipment&#8221; around the track, we were talking about our performance for the quarter as well as plans for the future.  We were asked to imagine a much larger Headspring 1-2 years out, and describe what it would take to get there.</p>
+<p>I shared a hard truth, suggesting we start considering more recent grads in our hiring process.  This may seem counter-intuitive.  Hiring talented folks for software development is extremely tough, and real-world experience matters a lot when evaluating candidates, right?  On the flip side, though, most experienced software developers have a long list of horror stories from past jobs: office politics, bureaucracy, teams spread too thin, death marches, and the like.  Wouldn&#8217;t it be great, for both you and the new hire, if they got to skip all that luck-of-the-draw stuff and instead got <em>all</em> of their real-world experience at a healthy company right from the start?</p>
+<p>From a candidate&#8217;s point of view, they could enter the workforce surrounded by experienced people who have already faced and rejected all those problems.  They could learn from everyone&#8217;s example far more quickly than they would otherwise on their own, and they wouldn&#8217;t run the risk of being set <em>back</em> by the examples of struggling teams.</p>
+<p>In reaction to my suggestion, I was asked to take on a mentorship role with a current student, with the goal of preparing him for an internship here at Headspring.</p>
+<p>That&#8217;s the way things work here: if you make a suggestion to improve things, don&#8217;t be surprised if <em>you</em> get to make it a reality.  In light of this policy, next time I think I should share another hard truth with the team: <strong>we need to be eating more cakes and delicious pies</strong>.</p>
+<p>We&#8217;ve only been meeting for a few weeks, but it&#8217;s already a rewarding experience for both of us.  Once per week and for about an hour, Dan and I meet to bring him up the C# / MVC learning curve.  When we first met at a <a href="http://www.polyglotprogrammers.org/">Polyglot</a> meeting, Dan had some experience with C++ and Lua, but hadn&#8217;t worked with C# yet.  Our initial meetings have focused on the nuts and bolts of C# itself, but even early on we got to cover other topics such as automated testing, readability concerns, the DRY principle, etc.</p>
+<p>On the selfish side of the equation, this experience helps me to improve my own skills.  Having to explain things that I take for granted forces me to challenge my own assumptions, and improves my ability to discuss complex technical subjects with clients.  On more than one occasion, Dan&#8217;s questions have left me initially thinking to myself, &#8221;<em>Why</em> exactly, do I feel so strongly about this opinion?&#8221;</p>
+<p>I would have appreciated having a mentor at that age, but filling the opposite role is looking to be a pretty sweet deal.  Not as sweet as my cake/pie suggestion, but sweet nonetheless.</p>
 
 		
 		
@@ -136,7 +123,7 @@
   
 
 
-<time datetime="2012-04-27T00:00:00-05:00" pubdate data-updated="true">Apr 27<span>th</span>, 2012</time></div>
+<time datetime="2012-10-31T00:00:00-05:00" pubdate data-updated="true">Oct 31<span>st</span>, 2012</time></div>
 	<div class="tags">
 
 
@@ -152,18 +139,28 @@
     <article class="post">
 	<h2 class="title">
 		
-		<a href="/blog/mvp-vs-mvc-seeking-better-testability/">
+		<a href="/blog/windows-8-for-business-breakfast-with-jeffrey-palermo/">
 		
-			MVP vs MVC: Seeking Better Testability</a>
+			Windows 8 for Business: Breakfast With Jeffrey Palermo</a>
 	</h2>
 	<div class="entry-content">
-		<p>There&#8217;s something nice about returning to an old design pattern. Comparing it with the pattern you&#8217;re currently using gives you new insights about both.</p>
-<p>When I was writing ASP.NET WebForms apps, my team organized the UI layer with an <a href="http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93presenter">MVP (Model View Presenter)</a> pattern, preferring the Passive View variant. This allowed us to write Views that were small and lean, pulling as much logic as possible out of that untestable wasteland of UI markup and code-behind. More recently, I&#8217;ve been developing ASP.NET MVC applications (using the <a href="http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller">MVC (Model View Controller)</a> pattern, naturally), and I like how my Views can be straightforward HTML with a few fill-in-the-blank spots for the data I want to display; much simpler to understand than the old WebForms server controls. But my most recent project, I wrote in <a href="http://windowsclient.net/wpf/">WPF (Windows Presentation Foundation)</a> due to some specific needs of the client, and I had to re-open the UI design pattern question. I decided on MVP, and this gave me a great opportunity to contrast the two patterns.</p>
-<p>My goal in choosing <em>any</em> pattern is readable, understandable code. Even if I&#8217;m the only developer on the project, reading my own code, if six months have elapsed, it might as well have been written by someone else. Patterns inherently give structure, but more importantly, they are recognizable. Reading the code, you can spot it: &#8220;Oh! This is an MVP app. Okay, I&#8217;ll look for a Presenter class to be managing the interactions with the View. &#8230;There it is!&#8221; Future maintainers and enhancers (including your Future Self) will appreciate your consistency; patterns help you write &#8220;No Surprises&#8221; software. Both MVP and MVC meet this criterion; they are recognizable patterns, each with a distinctive fingerprint.</p>
-<p>My secondary pattern-choosing criterion is testability: How well does this pattern let me cover every interesting part of my app with unit tests? While I see the value in integration tests and full-system tests, I&#8217;m strongly prejudiced against them. Integration tests are finicky, and full-system tests are slow. I&#8217;m unapologetically feisty about my unit tests. The better pattern is the one that not only makes it easy to test, but makes it <em>hard</em> to write untestable code. In other words, prefer the pattern that leads your team to fall into the &#8221;<a href="http://blogs.msdn.com/b/brada/archive/2003/10/02/50420.aspx">pit of success</a>.&#8221; MVC beats MVP on this point. Let me explain.</p>
-<p>Consider a continuum, from Untestable Scary Code to Clean, Verified Code. WebForms without the rigor of an MVP pattern, with heavy reliance on the code-behind, is far on the left of that continuum. A lot of business logic and application flow control can be hidden in the least testable layer. When you apply MVP to your WebForms app, the pattern guides you to write very slim code-behind files, with methods that are usually one line long, immediately deferring to the Presenter. This is closer to the middle of the continuum, where you can test your Presenters, provided you trust your Views to remain humble and hand over control promptly. MVC, as implemented by the ASP.NET MVC framework, gives you <strong>no code-behind files</strong>. There&#8217;s no temptation to put logic into the View because there&#8217;s hardly anywhere to put it. Control logic naturally fits in the Controller, which is a plain class you can instantiate and exercise in a unit test. The easiest path produces the cleanest result. Nice.</p>
-<p>Why did I use MVP at all? It&#8217;s necessary in a framework that brings the View into existence first. Both WebForms and WPF start a conversation with the user by locating and instantiating a View. The View then constructs its Presenter and injects itself into it. MVC implementations start by instantiating a Controller. Unlike MVP Views, which have to talk to their Presenters, MVC Views can remain ignorant of their Controllers, and this allows them to stay logic-free and focused on rendering the UI. When using MVP, it takes vigilance to make sure your Views never do anything interesting, anything you&#8217;ll later wish you had covered with a unit test. And anything that takes vigilance is likely to drift over time.</p>
-<p>It was fun to revisit my &#8220;old&#8221; way of structuring applications, because it made me think critically about the relative merits of MVP versus MVC. I had an instinctive feeling for which one I preferred, and comparing them helped me see explicitly that MVC increases my confidence in the correctness of my team&#8217;s code.</p>
+		<p>Join Headspring President &amp; COO Jeffrey Palermo for a Windows 8 Small Business Workshop to learn how the new operating system can help your business succeed. Jeffrey will teach you how to navigate all the new features and demonstrate ways to make your business more productive.</p>
+<p>Learn to:<br />
+• Stay connected to your team and clients<br />
+• Access documents from anywhere<br />
+• Protect your business<br />
+• Take control of your business</p>
+<p>Event details:<br />
+Tuesday, December 18, 2012<br />
+8:00 a.m. – 9:30 a.m.<br />
+(Breakfast, networking and workshop)</p>
+<p>Location:<br />
+Microsoft Store<br />
+3309 Esperanza Crossing<br />
+Ste. 104<br />
+Austin, Texas 78758</p>
+<p>Registration:<br />
+Space is limited. To register, please <a href="https://msevents.microsoft.com/CUI/EventDetail.aspx?EventID=1032537757&amp;Culture=en-US&amp;community=1" target="_blank">RSVP</a>.</p>
 
 		
 		
@@ -183,11 +180,11 @@
   
 
 
-<time datetime="2012-04-25T00:00:00-05:00" pubdate data-updated="true">Apr 25<span>th</span>, 2012</time></div>
+<time datetime="2012-10-28T00:00:00-05:00" pubdate data-updated="true">Oct 28<span>th</span>, 2012</time></div>
 	<div class="tags">
 
 
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/mvc/'>MVC</a>, <a class='category' href='/blog/categories/design-patterns/'>design patterns</a>, <a class='category' href='/blog/categories/mvp/'>mvp</a>
+	<a class='category' href='/blog/categories/events/'>Events</a>
 
 
 </div>
@@ -199,17 +196,19 @@
     <article class="post">
 	<h2 class="title">
 		
-		<a href="/blog/q1-2012-company-offsite-hula-hut-and-a-boat-ride/">
+		<a href="/blog/jack-welch-mba-course-business-communication-and-ethics/">
 		
-			Q1 2012 Company Offsite: Hula Hut and a Boat Ride</a>
+			Jack Welch MBA Course: Business Communication and Ethics</a>
 	</h2>
 	<div class="entry-content">
-		<p>Last Friday the whole Headspring gang got together for one of our quarterly company excursions.  This afternoon began on the beautifully serene dock at Hula Hut, where we chowed down on a delicious fajitas bar.  After lunch, we went over new policies, promotions and awards,  and Jeffrey led open discussion on how to identify and improve our strengths as a company.  Then we moved on to our Riverboat cruise, to relax, share a few beers and enjoy the breezy weather.</p>
-<p>For your viewing pleasure:</p>
-<p><a href="http://www.headspring.com/2012/04/q1-2012-company-offsite-hula-hut-and-a-boat-ride/offsite-4-20" rel="attachment wp-att-4982"><img class="alignnone size-full wp-image-4982" title="Offsite 4-20" src="http://www.headspring.com/wp-content/uploads/2012/04/Offsite-4-20.jpg" alt="" width="528" height="352" /></a></p>
-<p style="text-align: center;"><a href="http://www.headspring.com/2012/04/q1-2012-company-offsite-hula-hut-and-a-boat-ride/offsite3-4-20" rel="attachment wp-att-4985"><img class="size-full wp-image-4985 aligncenter" title="offsite3 4-20" src="http://www.headspring.com/wp-content/uploads/2012/04/offsite3-4-20.jpg" alt="" width="298" height="448" /></a></p>
-<p style="text-align: center;"><a href="http://www.headspring.com/2012/04/q1-2012-company-offsite-hula-hut-and-a-boat-ride/offsite9-4-20" rel="attachment wp-att-4988"><img class="size-full wp-image-4988 aligncenter" title="offsite9 4-20" src="http://www.headspring.com/wp-content/uploads/2012/04/offsite9-4-20.jpg" alt="" width="298" height="448" /></a></p>
-<p style="text-align: center;"><a href="http://www.headspring.com/2012/04/q1-2012-company-offsite-hula-hut-and-a-boat-ride/offsite5-4-20" rel="attachment wp-att-4989"><img class="alignnone size-full wp-image-4989" title="offsite5 4-20" src="http://www.headspring.com/wp-content/uploads/2012/04/offsite5-4-20.jpg" alt="" width="448" height="298" /></a></p>
+		<p>Earlier, <a href="http://www.headspring.com/jeffrey/jack-welch-mbaa-new-graduate/">I wrote</a> about my experience at the <a href="https://twitter.com/jack_welch"><a href="http://www.jwmi.com">Jack Welch Management Institute</a>.</a>&nbsp; One of the courses in the program is Business Communications and Ethics.&nbsp; In hindsight, it was very appropriate that this course be the very first course in the program.&nbsp; After an overview of communications and ethics, the course pressed two things very hard.</p>
+<h2>Candor and differentiation</h2>
+<p>Mr. Welch <a href="http://www.jwmi.com/content/business-communication-and-ethics-candor">contends</a> that “the biggest dirty little secret in business” is the absence of candor (Winning).&nbsp; The course teaches that so many problems rise out of the fear of honest communication.&nbsp; We are reminded that children are naturally candid and have no filter in what they say.&nbsp; It is through cultural conditioning that we learn to hold in what we are really thinking.&nbsp; In some organizations, the culture discourages real candor.&nbsp; Instead, saving face is valued more.</p>
+<p>A key example of candor taught in this course relates to performance appraisals.&nbsp; Jack is famous for teaching a 20/70/10 differentiation method where management communicates to employees where they stand.&nbsp; This is most important for the bottom 10%.&nbsp; He contends that it is unfair to the employee to keep that honest feedback from those employees, who may spend more years at the company not understanding why they are not progressing in their careers.&nbsp; Instead, Jack contends that being candid with these employees, and helping them leave, is much more fair to them.&nbsp; The central idea in this is the belief that everyone is a star at the right company and the faster they realize the current company isn’t tapping their unique strengths, the sooner they can find the company and role that helps them shine.&nbsp; </p>
+<p>This method of candid performance communication drives a lot of controversy, but usually not from the top 20%.&nbsp; After this course, we slowly implemented this method at <a href="http://www.headspring.com/">Headspring</a>, and I have to attest that it works.&nbsp; We do quarterly performance reviews, and we differentiate.&nbsp; Through some conference call questions with Mr. Welch during the program, students were able to ask him questions, and he clarified his method for smaller companies where the law of large numbers doesn’t yield a good 20/70/10 distribution.&nbsp; He said that the benefit is there as long as there is real differentiation.&nbsp; He coaches that management must be honest with itself and realize that not all employees are the same.&nbsp; </p>
+<h2>Ethics and managing a crisis</h2>
+<p>After some academic reading on case studies involving corporate ethics, we were able to discuss a timely scandal.&nbsp; That was the scandal of BP and the communication method used after the oil spill in the Gulf of Mexico.&nbsp; Tony Hayward, the CEO of BP at the time, failed to get out ahead of the crisis.&nbsp; When a crisis happens, the curriculum teaches that leaders need to get out ahead of crisis communication and be the source of new information.&nbsp; Tony Hayward failed to do this.&nbsp; Because of it, news media filled the role of finding and communicating new pieces of information.&nbsp; When the news is coming from reporters, the revelations allude to a cover-up, where there is one or not.&nbsp; As a leader, claiming the role of briefer positions one as transparent.&nbsp; Regardless of mistakes made in a crisis, a worse mistake is not owning and leading crisis resolution.</p>
+<p>You can read one of the <a href="http://www.jwmi.com/content/business-communication-and-ethics-candor">lectures of this course here</a>.</p>
 
 		
 		
@@ -229,11 +228,11 @@
   
 
 
-<time datetime="2012-04-24T00:00:00-05:00" pubdate data-updated="true">Apr 24<span>th</span>, 2012</time></div>
+<time datetime="2012-10-26T00:00:00-05:00" pubdate data-updated="true">Oct 26<span>th</span>, 2012</time></div>
 	<div class="tags">
 
 
-	<a class='category' href='/blog/categories/small-talk-and-big-news/'>Small Talk &amp; Big News</a>
+	<a class='category' href='/blog/categories/bottom-ten-percent/'>bottom ten percent</a>, <a class='category' href='/blog/categories/business-communications/'>business communications</a>, <a class='category' href='/blog/categories/candor/'>candor</a>, <a class='category' href='/blog/categories/differentiation/'>differentiation</a>, <a class='category' href='/blog/categories/ethics/'>ethics</a>, <a class='category' href='/blog/categories/jack-welch-mba/'>jack welch mba</a>, <a class='category' href='/blog/categories/jwmi/'>jwmi</a>, <a class='category' href='/blog/categories/mba/'>mba</a>
 
 
 </div>
@@ -245,351 +244,19 @@
     <article class="post">
 	<h2 class="title">
 		
-		<a href="/blog/increasing-development-enjoyment-with-ravendb/">
+		<a href="/blog/headspring-out-on-the-town/">
 		
-			Increasing Development Enjoyment With RavenDB</a>
+			Headspring Out on the Town</a>
 	</h2>
 	<div class="entry-content">
-		<p>We have a lot of different options for data storage and retrieval available today. These options include the traditional relational database, document databases, key value stores, and even flat files. Every option has its benefits over the others, making some options better for some things and other options better for other things. Once the data storage and retrieval option is selected, we then typically have to select a product. Within a solution space, most products offer some distinction from their competitors. Such distinctions make certain products popular choices for a particular technology stack. For example, MySQL is a common choice for the LAMP stack, as is Microsoft SQL Server for the .NET stack.</p>
-<p>Why is this so? There are several reasons for this, and their importance varies between administrators, developers, managers, and even executives.</p>
-<p>From a developer&#8217;s point of view, it comes down to whether or not the product in the solution space makes the work more enjoyable.</p>
-<p>As a .NET developer, <a href="http://ravendb.net">RavenDB</a> is a ton of fun to work with. Here is what it offers me:</p>
-<ol>
-<li>RavenDB is available as a <a href="http://nuget.org">NuGet</a> package, which means I don’t even have to leave Visual Studio to start working with it.</li>
-<li>The .NET client is very well designed and supports the IQueryable interface and LINQ very well.  This makes storing, deleting, and loading data easy. It also makes querying data easy and extremely powerful.</li>
-<li>Facilities to quickly define indexes and even MapReduce queries in code with minimal effort are supported.</li>
-<li>The amount of time I spend on the data model is greatly reduced, since mapping .NET objects to JSON documents is easy.</li>
-<li>I don’t have to use an object relational mapper (ORM).</li>
-<li>An HTTP API is available as an integration option.</li>
-<li>I can completely embed RavenDB in my application.</li>
-</ol>
-<p>The net result is I can spend most of my time focused on my application and its problem space. Reasons 4 and 5 are also true for other document databases, but reasons 1, 2, and 3 really distinguish RavenDB in the .NET space.</p>
-<p>Let’s look at an example. Take for instance reason #4 and assume we were tasked with creating a domain model for a shopping cart and the persistence logic for it.  The very first thing we would do is create the domain model. After some conversations and collaboration with a stakeholder, we come up with the following initial domain model along with the unit tests which validate the correct behavior of the model:</p>
-<p><div><script src='https://gist.github.com/2399488.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>At this point we are ready to start working on persisting the shopping cart object to a database. If we are using Microsoft SQL Server, we would now have to create some tables in SQL or perhaps use a code-first approach with our ORM of choice. We may need to create a map for our ORM and probably a repository class to facilitate the storage and retrieval of our domain object to and from the database. If we are using RavenDB, we are pretty much done. Regardless of the data storage solution selected, we can usually count on some tweaks and enhancements during the demo and develop iterations with the stakeholder. But when RavenDB is used, those changes are going to happen here in the domain model. Contrast this with a traditional relational database, which may require changes to the domain model, ORM maps, repositories, and SQL tables.</p>
-<p>I can’t get over how easy the .NET client is to use and how powerful RavenDB can be. If you are interested in trying RavenDB out, check out my <a href="http://www.headspring.com/2012/03/getting-started-with-ravendb">Getting Started with RavenDB</a> post for a quick introduction.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-04-23T00:00:00-05:00" pubdate data-updated="true">Apr 23<span>rd</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/productivity/'>productivity</a>, <a class='category' href='/blog/categories/ravendb/'>ravendb</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/from-webforms-to-mvc/">
-		
-			From WebForms to MVC</a>
-	</h2>
-	<div class="entry-content">
-		<p>Most of my first job out of college was spent doing desktop development, some of which was in VB6.  I didn&#8217;t love it, but it was easy to learn.  When <em>this</em> button is clicked, <em>that</em> function runs in response to it.  Easy.</p>
-<p>The controls-and-event-handlers model combined with the language also made it exceptionally easy to create a tangled pile of misplaced responsibilities, but I think you&#8217;ve got to experience that kind of pain before you can see that alternatives even <em>exist</em>.  Once you&#8217;ve felt the pain, you can better-evaluate which guidance is actually going to be helpful.
-</p>
-<h2>WebForms Was Designed for Desktop Developers</h2>
-<p>Right around that time, .NET was released.  ASP.NET WebForms shared little with classic ASP.  The primary goal was to let desktop VB developers make a smooth transition to both .NET and web development at the same time.  With that goal in mind, WebForms provided a similar controls-and-event-handlers model.  Making a web app felt like making a desktop app.</p>
-<p>In order to support that approach, WebForms had to make the stateless world of HTTP <em>feel</em> stateful.  View State, the Page Life Cycle, and event handlers allowed the developer to go through the familiar motions of dropping controls onto a designer and wiring up methods to control events, <em>all while ignoring everything that was actually happening</em>.</p>
-<p>Abstractions leak, though, and this was a <em>huge</em> abstraction.  It helped me get over the initial hurdle to get a web app up and running, but I found the code I wrote was suspiciously like the desktop VB6 mess I&#8217;d wanted to grow beyond.  I was frequently surprised by the effects of the Page Life Cycle, and every time that happened I had to learn a little bit more about how the abstraction worked under the hood:</p>
-<blockquote><p>
-  &#8220;Oh! There&#8217;s a Big Honking &lt;form&gt; Tag for the whole page, and it contains an Enormous Encoded &lt;input&gt; Tag containing the current state of all the controls, so whenever I need to hit a button click handler I&#8217;m really submitting a normal HTML form and then…&#8221;
-</p></blockquote>
-<p>Ugh. Eventually, you just have to know what HTML and HTTP are, even when using WebForms, so the abstraction was no longer helping.</p>
-<h2>Many Page Life Cycles Later&#8230;</h2>
-<p>While working for a previous employer, ASP.NET MVC came out.  We wanted to try out the new approach, and the timing coincided with a new project that was starting up.  However, there wasn&#8217;t much guidance available yet on how to do it <em>well</em>.  We were challenged at first by the lack of View State, and in order to keep our old &#8220;stateful stateless web&#8221; habit going we ended up storing a <em>lot</em> of things into the user&#8217;s session object.  We also kept treating controller actions like they were event handlers, leading to some awkward-looking URLs.  Distracted by these initial pains, our controllers started absorbing responsibilities like a sponge.  Actually, our <em>controller</em> started absorbing responsibilities - there was only controller in the whole app!</p>
-<p>I was writing a lot of controller actions like this:</p>
-<p><div><script src='https://gist.github.com/2410072.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>What I saw was the same thing I saw in WebForms development.  The Controller was the new Code Behind, and I was underwhelmed.  WebForms&#8217;s Page Life Cycle and View State hurt, but the real daily pains came from working with classes that were growing out of control, and I was seeing the same thing with my MVC code.  It seemed like the abstractions were lighter-weight, and it felt right to work with HTML more directly, but I was definitely missing some guidance.</p>
-<h2>Turning the Corner</h2>
-<p>Several coworkers got to take an <a href="http://www.headspring.com/services/developer-training/mvc-bootcamp">MVC Boot Camp</a> course here at Headspring, and I got to learn by osmosis from them upon their return.  At last, I had a good picture in my head of what it looks like when you&#8217;ve succeeded with these tools.  Our controllers started to get much more lean:</p>
-<p><div><script src='https://gist.github.com/2416902.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>I started to see how the <a href="http://jeffreypalermo.com/blog/the-onion-architecture-part-1/">Onion Architecture</a>, dependency injection, model binders, AutoMapper, and the like help you to keep your controllers small.  MVC wasn&#8217;t a silver bullet; its primary benefit compared to WebForms was that you could make it <em>get out of the way</em> so you could actually start laying down a solid architecture.</p>
-<p>ASP.NET MVC has been around for a few years now.  Community contributions like <a href="http://mvccontrib.codeplex.com/">MvcContrib</a> helped to motivate change in subsequent releases, and now ASP.NET MVC is legitimately open-sourced.  Better-yet, guidance on how to do this well has had years to mature.</p>
-<p>MVC is a sharper tool than WebForms.  It acknowledges the reality of web technologies like HTML and HTTP, while providing some reasonably-sized abstractions on top of that, such as routing and model binding.  Having a better tool in your toolbelt isn&#8217;t enough, though.  You have to see what it looks like when used correctly.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-04-20T00:00:00-05:00" pubdate data-updated="true">Apr 20<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/get-to-know-a-developer-cedric-yao/">
-		
-			Get to Know a Developer: Cedric Yao</a>
-	</h2>
-	<div class="entry-content">
-		<p><a href="http://www.headspring.com/2012/04/get-to-know-a-developer-cedric-yao/cedric" rel="attachment wp-att-4884"><img class="alignright size-medium wp-image-4884" title="Cedric" src="http://www.headspring.com/wp-content/uploads/2012/04/Cedric-199x300.jpg" alt="" width="199" height="300" /></a>Headspring’s latest new hire is Cedric Yao, Senior Consultant.  We’re really excited to have him on board, and I am super excited to get a fresh addition into this series.</p>
-<p>Cedric has been in Austin for a few years, and just welcomed his first born son into the family 5 weeks ago!  We talked about Austin, why working here is so much fun, and what we really love about technology.  As it turns out we share a lot of the same interests in bringing together communities through technology.  His experiences are going to be a real help to me with planning and preparation for Headspring’s Central Texas <a href="http://ctxgivecamp.org/">Give Camp</a> in September.</p>
-<p>Here’s how the rest of our conversation went:</p>
-<p><strong>Are you an expert at anything?</strong></p>
-<p>I’m really great at creating tangible systems for internal processes.  This can be really useful to organizations when it comes time to, say, track metrics.  At my last job, I developed an authentication system for web applications, and integrated some ERP systems for order automation.  I think I’m good at this because I tend to approach problem solving visually, with a creative mindset, before getting analytical.</p>
-<p><strong>Who is on your list of ideal clients to work for or individuals to work with?</strong></p>
-<p>Coming to Headspring to work with Jimmy and Jeffrey is definitely up there on my list.  I would also really like to work on a project with Apple one day.  I really appreciate their design methodology</p>
-<p><strong>What led you to software development?</strong></p>
-<p>When I was in 5<sup>th</sup> grade my teacher had a puzzle closet.  If we solved the puzzles, we would get free days and homework excuses.  I got really good at solving the puzzles and I pretty much never had to do homework.  I think that was the early start of my interest in engineering, and software development stemmed from it as a natural extension of problem solving.  By high school, I found myself using or creating software all the time.</p>
-<p><strong>Do you like teaching?</strong></p>
-<p>Yes! Teaching is the best way to study.  It requires me to understand all the levels of details that go into something.  In my opinion, you don’t fully cement an idea until you teach it.</p>
-<p><strong>Where do begin when learning something new?</strong></p>
-<p>I study Brazilian Jiu Jitsu, and one of the concepts I’ve realized is that you have to be able to throw yourself into a challenge.  When thrown into a challenge, we immediately begin to imitate the opponent.  After that, we go through a series of experiments until skills become instinctual.  Anything I’m learning I can approach the same way.  Imitate first, experiment and learn.</p>
-<p><strong>How do you gauge “time well spent”?</strong></p>
-<p>If I learn or gain mastery, it’s definitely time well spent.  Sometimes that’s not always so easy to see, especially if my results don’t match my expectations.  But if I can learn through my mistakes, then it’s worth it to me.</p>
+		<p>We often think of bonding and rapport as something done with clients, but it’s just as valuable with your colleagues.  At Headspring, we believe it’s important to celebrate our successes and reenergize by bonding as a team.  We do this daily through teamwork, but every once in a while we simply need to have some fun together.  For our Q3 get together, we teamed up with City Sleuth, an expert city scavenger hunt company, to enjoy an afternoon of solving riddles and scavenging around downtown.  We sure got to know Austin really well!  In the end, we honored team members with awards, ate a great lunch, and created memories outside of the office environment.</p>
+<p><img class="alignleft size-large wp-image-5827" title="Team Meeting" src="http://www.headspring.com/wp-content/uploads/2012/10/Jeffrey-Palermo-speaking-1024x680.jpg" alt="" width="640" height="425" /></p>
 <p>&nbsp;</p>
-<p>Hiring great developers is something this company has become really good at.  If you need help on the subject, read our <a href="http://www.headspring.com/resources/whitepapers/">How Headspring Hires Developers whitepaper</a> on what has worked for us.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-04-19T00:00:00-05:00" pubdate data-updated="true">Apr 19<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/get-to-know-a-headspringer/'>Get To Know a Headspringer</a>, <a class='category' href='/blog/categories/what-the-tech/'>What the tech?</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/demystifying-ravendb-queries-and-dynamic-indexes/">
-		
-			Demystifying RavenDB Queries and Dynamic Indexes</a>
-	</h2>
-	<div class="entry-content">
-		<p>Not long a go, I wrote a detailed blog post on <a href="http://www.headspring.com/2012/03/getting-started-with-ravendb">getting started with RavenDB</a> and described the process of performing the most basic CRUD (create, retrieve, update, and delete) operations. The operations covered in the post are great for working with single data entities. One thing I didn’t discuss was how to retrieve a set of data entities and that is exactly what I want to dive into here.</p>
-<p>Retrieving data from RavenDB is dead simple and the .NET client offers excellent support for LINQ based queries. Let’s start by reviewing the IDocumentSession interface:</p>
-<p><div><script src='https://gist.github.com/2153059.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>The query method in the interface is the gateway to retrieving sets of data and offers three signatures which give us immense flexibility with our queries.</p>
-<p>Let’s explore the Query&lt;T&gt;() method! Beginning with the example context…</p>
-<p>Imagine we have a database of orders. Each order has some customer and payment information and a list of line items. Each line item consists of a product and a quantity. Our very simplified domain model might  resemble something like this:</p>
-<p><div><script src='https://gist.github.com/2423417.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Let’s also assume we have a RavenDB instance with some orders in it. Using the management studio we take a peek at the orders collection and see 324 orders sitting in it!</p>
-<p><a href="http://www.headspring.com/wp-content/uploads/2012/04/image.png"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border-width: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/04/image_thumb.png" alt="image" width="480" height="310" border="0" /></a></p>
-<h3>The Simplest and Most Dangerous Query</h3>
-<p>What can we do this with this? A whole lot. The simplest thing we can do is ask Raven to give us all the orders in the collection. The query would look something like this:</p>
-<p><div><script src='https://gist.github.com/2423510.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Or you could use lambda expressions if you prefer:</p>
-<p><div><script src='https://gist.github.com/2423571.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Both of the code snippets generate the same query and return the same result set. You end up with an array containing 128 Order instances. Wait a minute…. Didn’t we have 324 orders in the database? Where are the rest? Raven limits unbounded queries to 128 result by default. This is a really neat safety measure that keeps you from doing something silly like asking for all objects in an huge dataset. Imagine issuing a similar query against Amazon’s order database… Yeah, that probably wouldn’t be good. Of course you can override this behavior specifying it using the <em>Take&lt;TSource&gt;</em> method. So if you really mean give me everything, then you need to say it explicitly.</p>
-<h3>Under the Hood of the .NET Client</h3>
-<p>A lot of other interesting things happen when a query is prepared and executed in the code snippets. Let’s take a look under the hood of the Raven client and see what is going on.</p>
-<p>The <em>session.Query&lt;Order&gt;()</em> method call is the first point of interest. The document session instance will begin by picking a dynamic index to use for the query. In this case, it selects a dynamic index named “dynamic/Orders”. It will then build a <em>RavenQueryStatistics</em> instance and a <em>RavenQueryProvider&lt;Order&gt;</em> instance and use them to build and return a <em>RavenQueryInspector&lt;Order&gt;</em> instance. The inspector object implements the <em>IRavenQueryable&lt;T&gt;</em> interface. At this point, the facilities for generating the query. There is a subtle difference between the LINQ expression and the lambda expression here. With the lambda expression, the <em>RavenQueryInspector&lt;Order&gt;</em> instance is immediately assigned to the <em>results</em> variable. The LINQ statement on the other hand then invokes the  <em>Select</em> LINQ extension method as a result of the LINQ syntax. This subtle difference forces the <em>RavenQueryProvider&lt;Orders&gt; </em>contained in the inspector object execute a few additional instructions that result in a second (yet identical) inspector instance that is assigned to the <em>results</em> variable.</p>
-<p>Notice that no query has actually been issued to the RavenDB server yet. That happens in the <em>results.ToArray()</em> method call. This method will make the <em>RavenQueryInspector&lt;Order&gt;</em> instance enumerate itself. When this happens, the inspector asks the underlying <em>RavenQueryProvider&lt;Order&gt;</em> instance to execute the select expression.  The provider will then get a processor object to help execute the expression. The processor first translates the expression into a Lucene query and issues the query command against RavenDB server. The details of the query command execution can vary quite a bit based on your configuration and is beyond the scope of this post. Take it on trust, the client knows what it’s doing. Now the client waits for the result from the server and begins processing it as soon as it receives it. The result contains some additional data including the time to execute, number or results returned, the number of results matched, and the actual index used. These results are available to you via the <em>Statistics</em> method declared in the <em>IRavenQueryable&lt;T&gt;</em> interface. After processing the result, the execution continues back up the call stack where the inspector instance finally returns the enumerator that becomes the final array of Order instances that is assigned to the <em>orders</em> variable.</p>
-<h3>Enter the Dynamic Index</h3>
-<p>Interestingly enough, the simplest query uses the “Raven/DocumentsByEntityName” index which is the default static index RavenDB creates to access all of the documents stored within it. You can see this index by clicking on the “Indexes” tab in the management studio.</p>
-<p><a href="http://www.headspring.com/wp-content/uploads/2012/04/image1.png"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border-width: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/04/image_thumb1.png" alt="image" width="480" height="310" border="0" /></a></p>
-<p>By the way, its not a good idea to delete this index. The server will complain quite a bit if this happens. But if you do, don’t worry Raven is self healing. Just shut restart the server process and Raven will add the missing index and stop complaining.</p>
-<p>You may have noticed that I haven’t talked one bit about how the server processes the request and I have done that on purpose. There is a lot to be said about what happens on the server side. For now, lets build another more useful query and see what happens.</p>
-<p>Hypothetically speaking, let’s say that we need to find all the orders placed by one of our customers named “Jane Doe”. A query for that may look like:</p>
-<p><div><script src='https://gist.github.com/2424678.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>When executed the client will send “dynamic/Orders” index to the server. If you inspect the results you will see that the actual index used is the “Temp/Orders/ByName” index. Why is this? The server noticed that the default index was not sufficient to efficiently find the records queried. The server then creates a temporary index and returns the result set containing 108 orders for a total operation time of 321ms. Not bad. If I execute the query again, it returns in under 1ms. I can live with that. Here is the really cool part, RavenDB cleans up after itself. If RavenDB doesn’t receive any more queries like this for some time, it will simply delete the temporary index. You can see the temporary indexes in the management studio.</p>
-<p><a href="http://www.headspring.com/wp-content/uploads/2012/04/image2.png"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border-width: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/04/image_thumb2.png" alt="image" width="480" height="310" border="0" /></a></p>
-<h3>More Query Fu</h3>
-<p>Now let’s say that we reviewed the results and learned that what we really wanted was all the orders placed by either Jane Doe or her husband, John Doe. We can fix our query to look like this:</p>
-<p><div><script src='https://gist.github.com/2424749.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>This query will also be sent with the “dynamic/Orders” index (the rest of the examples in this blog post will use the same dynamic index) and the server will reuse the “Temp/Orders/ByName” index. In fact, any additional queries that only make use of the name property will use this index.</p>
-<p>Let’s say that we really meant all orders placed by any member of the Doe family. We may then use this variation of the query:</p>
-<p><div><script src='https://gist.github.com/2424767.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>We can also use the <em>StartsWith() </em>and <em>Contains()</em> methods with strings. With numeric fields we can use all the typical operators such as equals (=), not equals (!=), greater than (&gt;), greater than or equal to (&gt;=), less than (&lt;), and less than or equal to (&lt;=). By the way, we can also make use of some calculated values and we can combine them with others. For example, may we want to find all the orders placed by Jane Doe that had single line item.</p>
-<p><div><script src='https://gist.github.com/2424816.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<h3>Even More Query Fu</h3>
-<p>There are a couple of other useful operations for filtering results. They are the <em>In</em> and <em>Any</em> operations. Let’s see them in action!</p>
-<p>Say, we need to find all the orders containing a line item requested in bulk quantity. Assume that by bulk quantity we mean at least two dozen or more of a line item. The query will look something like this:</p>
-<p><div><script src='https://gist.github.com/2483951.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Now, imagine we really wanted was the orders containing products valued over $100.00 in bulk quantity. Then the query would look like this:</p>
-<p><div><script src='https://gist.github.com/2484054.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Remember when we wanted find all of the orders from just Jane and John Doe. We can rewrite that query and leverage the <em>In </em>operator. This example maybe trivial, but imaging you had a larger list of names to compare against. This operator can make the query very readable.</p>
-<p><div><script src='https://gist.github.com/2484118.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Just like we did with the string and numeric comparisons, we can also combine these operators and nest them to give us some pretty advanced queries. For example, assume we needed to find all orders with bulk quantity line items of our “Better Thingy” or “Thingy” products:</p>
-<p><div><script src='https://gist.github.com/2484165.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Combine these operators with the other string and numeric comparisons and you are equipped to write some serious queries!</p>
-<h3>Know Your Limits</h3>
-<p>Just because you can write it doesn’t mean you can query it. While the query processor is very good, there are some things it can’t do. Here are a few limitations:</p>
-<ul>
-<li>The <strong>let</strong> keyword is not currently supported.</li>
-<li>The only LINQ aggregate operations currently supported are <em>Distinct</em> and <em>Count</em></li>
-</ul>
-<p>You will see these limitations arise when the query processor object we talked about earlier fails to generate (or translate) an expression to a document query at runtime. So make sure you write tests around your queries. Also you should know there are solutions and workarounds to get beyond the limitations such as using MapReduce index or N+1 queries.</p>
-<h3>From Temporary To Permanent</h3>
-<p>One last note about the temporary indexes… When a temporary index gets significant usage, Raven may decide to promote them permanently. When this happens their name changes from “Temp/Foo/Bar” to “Auto/Foo/Bar” and are really easy to spot in the management studio.</p>
-<p><a href="http://www.headspring.com/wp-content/uploads/2012/04/image3.png"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border-width: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/04/image_thumb3.png" alt="image" width="480" height="392" border="0" /></a></p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-04-19T00:00:00-05:00" pubdate data-updated="true">Apr 19<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/ravendb/'>ravendb</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/overcoming-perfectionism/">
-		
-			Overcoming Perfectionism</a>
-	</h2>
-	<div class="entry-content">
-		<h2></h2>
-<blockquote><p><em>Perfectionist (my rough definition):  Someone who wants to always do things without errors or mistakes, without considering the costs incurred or likelihood of attainment.</em></p></blockquote>
-<h2>Summary</h2>
-<p>In this article I share my personal struggles with unproductive perfectionism in my work.  I point out how much “true perfection” really costs, and that it often isn’t even possible.  I discuss why overcoming perfectionism is important, and share some strategies I’ve found useful for balancing passion and perfectionism.</p>
-<h2>Introduction</h2>
-<p>Hi, my name is Nolan and I’m a recovering perfectionist.  I love software development and I’m very passionate about what I do.  The problem is, sometimes I care too much and passion turns into perfectionism.</p>
-<p>I started thinking about this after my first post.  I was checking it to see if there were any comments I needed to respond to.  I’d written the article over a week before it was published, so I casually glanced over it.  While reading I suddenly realized I’d completely left a word out of a sentence.  I was mortified.  I’d proofread it at least three times and had gotten someone else to look over it.  How could this have happened?  My first blog post and I’d failed to do it “right”.</p>
-<p>It wasn’t a big error.  <em>Fun contest: I’ll send some Headspring swag to the first commenter that finds the word omission in </em><a href="http://www.headspring.com/2012/03/making-conditional-validation-logic-readable" target="_blank"><em>that post</em></a>.  But it felt big, and I felt it reflected badly on me.  “How can I write posts that help others when I communicate so poorly?” I wondered.</p>
-<p>Last night I got an email from an old colleague that I haven’t talked with for almost two years.  He wrote “…I saw your post.  Really enjoyed reading it.  Nice job!”</p>
-<p>Isn’t this ironic?  Here I was despondent about my ability to write in an understandable fashion, when in reality people are finding the article useful despite the error.  It was so encouraging to get that email.</p>
-<h2>Self Reflection</h2>
-<p>I’ve spent some time looking back over my career, and I can see some examples of times when I’ve let perfectionism run a little too wild:</p>
-<ul>
-<li>Striving for very high code coverage with automated tests, regardless of the cost of writing and maintaining those tests compared to the risks of the covered code becoming broken.</li>
-<li>Defensive coding to a superfluous level.  For example, having a public class method perform input validation before calling a private method, and then having the private method perform the same validation.</li>
-<li>Crafting a long email with all the relevant details and background when it would have been quicker to just go talk to the individual in person.</li>
-</ul>
+<p><img class="alignleft size-large wp-image-5828" title="Headspring Value Award" src="http://www.headspring.com/wp-content/uploads/2012/10/Anne-Epstein-receives-Headspring-Value-Award-1024x680.jpg" alt="" width="640" height="425" /></p>
 <p>&nbsp;</p>
-<p>Take a few minutes and reflect back on your life about something you are passionate about – software, cooking, or perhaps golf.  Try to look in a detached, unemotional manner – do you ever strive for an unreasonably high standard?</p>
-<h2>Is Perfection Even Possible?</h2>
-<p>If there’s any organization that has to “get it right”, it’s the National Aeronautics and Space Administration (NASA).  They design space vehicles controlled by software responsible for safely flying humans into and back from space.  Vehicle failure doesn’t mean walking home, it means not coming home.  While NASA has had fatal accidents, <a href="http://www.nasa.gov/mission_pages/shuttle/flyout/flyfeature_shuttlecomputers.html" target="_blank">none of them were caused by software.</a></p>
-<p>So how did NASA ensure that a system where each software change that goes through 15 months of testing is perfect?  They assumed it might not be perfect and paid a different company to create a <a href="http://spaceflight.nasa.gov/shuttle/reference/shutref/orbiter/avionics/dps/bfs.html" target="_blank">backup flight control</a> with a completely different implementation.</p>
-<h2>Why Overcoming Perfectionism Is Important</h2>
-<p>There are at least two reasons why it’s important to overcome perfectionist tendencies:  cost, and your personal well-being.</p>
-<p>“More perfect” means more costly with no substantial benefit.  You wouldn’t buy a $500 toothpick because it was made from teak wood and hand carved and sanded into the perfect shape, would you?  Likewise you need to be aware of the cost of what you’re doing for your company or client and if they’re getting value out of the effort your expending.</p>
-<p>Secondly, perfectionism is dangerous to your mental health.  It&#8217;s good to care, but it&#8217;s bad to care so much you feel inadequate.  Overcoming perfectionism doesn&#8217;t mean you stop caring, it means adjusting to a healthier perspective.  The danger in not overcoming the agony of not reaching perfection is slipping into cynicism about the glass &#8220;always being half empty&#8221; and a general sense of depression about not reaching your goals.</p>
-<h2>Strategies For Overcoming Perfectionism</h2>
-<p>These are a few strategies I’ve found helpful in dealing with perfectionist tendencies. If you have some others, please add a comment to share it.</p>
-<p>Seek a crystal clear understanding of the context for the work you’re doing.  How will this be used, and how much &#8220;quality&#8221; do we need?  Test cases help.  Recognize that dealing with edge cases can add significant work, figure out the cost and make sure it&#8217;s worth the effort.</p>
-<p>If at all possible, don’t work alone.  Use others as a sounding board to make sure you haven’t gone overboard in a design or implementation.  You’ll get positive feedback from someone else, and seeing others struggle at times and assisting them helps you realize we’re all human and keeps you from expecting too much from yourself.</p>
-<p>Don’t try to plan everything up front.  Have a rough idea of what you need and start top down and adjust as needed.  If you try to plan every last detail before you start, you’ll never start.</p>
-<p>When you make a mistake, don’t dwell on it.  Give yourself credit for how hard and demanding software development really is.  Natural language can be understood even when misteaks are maid, but in programs ONE LITTLE CHARACTER makes something right or wrong.</p>
-<p>Celebrate your accomplishments! It’s important to analyze your mistakes and learn from them, but it’s just as important to reflect and revel in your successes.</p>
-<h2>Wrap Up</h2>
-<p>Randy Pausch was a computer science professor at Carnegie Mellon University.  When he found out he had terminal cancer, he gave an incredibly uplifting speech reflecting on what’s really important in life.  The speech was expanded into a book titled “The Last Lecture”.  One observation Randy made that really grabbed my attention was this:  <strong>“Engineering isn&#8217;t about perfect solutions; it&#8217;s about doing the best you can with limited resources”</strong>.  Randy faced the ultimate &#8220;it can&#8217;t be perfect&#8221; scenario by not being able to live the average lifespan most of us assume we&#8217;ll get.  He courageously dealt with it the best he could, and is an inspiration to the rest of us.</p>
-<p>Your work doesn’t have to be perfect – rarely CAN it be perfect, and recognizing this doesn’t mean giving up on your passion for doing things well.  Getting over perfectionism enables you to do more things and be a happier person.</p>
+<p><img class="alignleft size-large wp-image-5829" title="Scavenger Hunt" src="http://www.headspring.com/wp-content/uploads/2012/10/Team-Pics-2-1024x767.jpg" alt="" width="640" height="479" /></p>
+<p>&nbsp;</p>
+<p>Let us know if you have fun ways to connect with your colleagues.  We are always looking for new ideas!</p>
 
 		
 		
@@ -609,7 +276,7 @@
   
 
 
-<time datetime="2012-04-16T00:00:00-05:00" pubdate data-updated="true">Apr 16<span>th</span>, 2012</time></div>
+<time datetime="2012-10-26T00:00:00-05:00" pubdate data-updated="true">Oct 26<span>th</span>, 2012</time></div>
 	<div class="tags">
 
 
@@ -625,28 +292,37 @@
     <article class="post">
 	<h2 class="title">
 		
-		<a href="/blog/nuget-package-restore/">
+		<a href="/blog/avoid-mutation-by-default/">
 		
-			NuGet Package Restore</a>
+			Avoid Mutation by Default</a>
 	</h2>
 	<div class="entry-content">
-		<p>Text is easy.</p>
-<p>Source control tools slice and dice text all day.  It&#8217;s easy to compare, easy to merge, and easy to compress.  Even in a busy project, large portions of your code don&#8217;t really change all that often.  Git, for instance, can pretend to store every commit as a point-in-time copy of your whole source tree by <a href="http://progit.org/book/ch1-3.html">sharing large unchanged blobs</a> of text with other commits.</p>
-<p>Text is easy.  Binary is tough.</p>
-<h2>Do you pass the &#8220;New Hire Day 1&#8221; test?</h2>
-<p>We often store binaries in our source control tools, and with good reason.  We want to make it easy to spin up a new development environment.  When you hire a new developer, they should be able to pull down your project from source control <em>and just go</em>.  Dependencies such as libraries, build tools, and the like should be versioned with the project.</p>
-<p>The alternative experience can be painful.  You show up for your first day at a new job, pull down the project, and try to run it… <strong>THUD</strong>.  It won&#8217;t even build.  You try to install the right third-party libraries and tools after diagnosing each build error, and hopefully you&#8217;re using the same version as everyone else.  Maybe the Dependency Gods smile upon you, and you&#8217;ll be up and running before the end of the day.</p>
-<p>It&#8217;s easy to avoid these problems by including your dependencies, both libraries and tools, in source control, but can we do better?</p>
-<h2>Binary is Tough</h2>
-<p>You can store binaries in source control, but binaries are tough.  Even small changes in functionality can result in dramatically different file contents, so it&#8217;s impractical to diff/merge them.  Changes in a binary file over time have to be stored without the sneaky compression tricks used for text files.</p>
-<p>NuGet makes it easy to install libraries into your projects, but this means dumping a whole lot of DLLs into source control.  <strong>Your repo might start to grow impractically large.</strong></p>
-<h2>Package Restore</h2>
-<p>Fortunately, though, we can have the best of both worlds.  We can provide our team with a reliable and easy way to set up new development environments, and benefit from NuGet&#8217;s version/dependency smarts, without having to actually store NuGet package binaries in source control.</p>
-<p>First, <a href="http://docs.nuget.org/docs/start-here/installing-nuget">install NuGet</a> if you haven&#8217;t already.</p>
-<p>Next, go to Solution Explorer, right click on the Solution itself, and select &#8220;Enable Nuget Package Restore&#8221;.  This adds some files to a special .nuget folder, and adjusts the projects of your solution to use that folder at build time.</p>
-<p>Lastly, note that NuGet has been placing downloaded packages under a <code>packages/</code> folder near your *.sln.  You can wipe this out.  When using git, I also add this folder to my <code>.gitignore</code> so that its contents no longer get saved to the repository.</p>
-<p>Read that last step again.  <strong>We deliberately deleted away all the versioned packages that NuGet has been maintaining for us!</strong></p>
-<p>When enabling Package Restore in your solution, you changed the way that your solution builds.  When you try to build again, NuGet will notice that your projects reference specific packages that are no longer found under <code>packages/</code>.  Fortunately, your solution still contains <code>packages.config</code> files which list dependencies along with their version numbers.  Armed with these config files, NuGet will pull down the missing files into <code>packages/</code> for you right before your project gets compiled.  Upon the next build, it will just use the files already in <code>packages/</code>.</p>
+		<p>Several weeks back, I was <a href="http://www.headspring.com/patrick/low-ceremony-xunit/">customizing xUnit</a> to cut down on ceremony in my tests.  When I ran into some trouble, I started looking through the source code for xUnit, and saw something a little surprising: tests within a test class are executed in a random order.  Sure, tests need to be isolated so that test execution order doesn&#8217;t affect their success or failure, but randomizing within the test runner seemed like overkill.</p>
+<p>If it ever caught an issue, it still wouldn&#8217;t tell me where the problem was, right?  It seemed like it would be better to execute in a deterministic order so that when I <em>do</em> get myself into trouble, it will be reproducible trouble.  Today, though, I was grateful for this behavior.  If you&#8217;re running tests frequently during development, the very fact that your newly-coded tests start failing at random <strong>is</strong> informative: <em>&#8220;What test is wrong?  The one that I just wrote.&#8221;</em></p>
+<h2>A Trivial Yet Broken Class</h2>
+<p>I was working on a routine whose job was to produce a date range after taking into account several business rules.  If none of the rules applied, we wanted to return the range [DateTime.MinValue, DateTime.MaxValue] to indicate &#8220;all the dates we could ever possibly care about&#8221;.  Each business rule could possibly shorten this range, affecting the start, the end, or both.  The overall result was, basically, the range where several other ranges overlapped.  I started by creating a helper class, DateRange, as a glorified pair of DateTimes:</p>
+<p><div><script src='https://gist.github.com/3949963.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>To make it clear to the reader that we were starting with &#8220;all the dates we could ever possibly care about&#8221; and subsequently narrowing that down to the overlapping range, I added a static field:</p>
+<p><div><script src='https://gist.github.com/3949966.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>This field allowed the main algorithm to look something like this:</p>
+<p><div><script src='https://gist.github.com/3950102.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Do you see the bug?  <strong>The terrible, horrible, no good, very bad bug?</strong>  xUnit did.</p>
+<p>The 3 rules I was applying were involved yet test-friendly, so it was easy to implement several tests to make sure my bases were covered.  All was well, until I got to the seventh test.  It failed with an impossible result.  The dates in the resulting range didn&#8217;t even show up anywhere in my test setup.  Mystified, I ran that test in the debugger.  It passed!  I ran the whole test class a few times, and this one test would pass or fail at random.  This was extremely odd, as the code under test seemed to be clearly deterministic.</p>
+<h2>Excessive Mutation</h2>
+<p>Realizing that xUnit was running my tests in a different order each time helped me to see my mistake.  This implementation of DateRange is mutable, and AllOfTime is static and therefore shared.  AllOfTime is a shared mutable thing whose name suggests an immutable thing.  AllOfTime is lying.</p>
+<p>I had broken my own rule: I make classes immutable by default, making them mutable as soon as being dogmatic starts to hurt.  Instead, I had made this mutable from the start and immediately tripped on my own intellectual shoelaces.  Marking the properties as read-only forced me to rephrase the main logic, but that actually resulted in simplifying everything and ensured that AllOfTime is in fact <em>all</em> of it:</p>
+<p><div><script src='https://gist.github.com/3949968.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>DateRange deserves to be a value just like DateTimes deserve to be values.  You can&#8217;t <em>change</em> 10/24/2012 any more than you can change the number 5. 5 will always be 5, 10/24/2012 will always be 10/24/2012, and the range [10/24/2012, 10/31/2012] will always be the range [10/24/2012, 10/31/2012].</p>
+<p>As a general rule, I avoid mutation.  If I did that everywhere, though, my code would likely become too hard to follow.  As soon as keeping things immutable becomes a larger pain than the pain it solves, I back off and allow mutable state to come into the picture.  Even then, I try to limit the &#8220;footprint&#8221; of that state change.</p>
+<p>Unnecessary mutation makes it too easy to make trivial mistakes.</p>
 
 		
 		
@@ -666,93 +342,11 @@
   
 
 
-<time datetime="2012-04-13T00:00:00-05:00" pubdate data-updated="true">Apr 13<span>th</span>, 2012</time></div>
+<time datetime="2012-10-25T00:00:00-05:00" pubdate data-updated="true">Oct 25<span>th</span>, 2012</time></div>
 	<div class="tags">
 
 
 	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/metrics-reports-kpis-and-the-stuff-developers-must-provide-to-executives/">
-		
-			Metrics, Reports, KPIs, and the Stuff Developers Must Provide to Executives</a>
-	</h2>
-	<div class="entry-content">
-		<p>In September of 2007, I joined <a href="http://www.headspring.com/">Headspring</a> as the CTO.  Now I serve as President and Chief Operating Officer.  When I joined, there were 4 other employees including the original founder serving as CEO.  He founded the company in 2001.  It has always been professional services, but the strategy has changed a few times over the years.  I started my career as a developer in the mid nineties, and now I’m an executive with lots of great developers that I support.  Like most, our company runs on metrics.  As a manager, I understand their worth.  Earlier in my career, I had no idea.</p>
-<p>Every day, I glance at our <strong>operational dashboard</strong>.  While I won’t share full screen-shots yet, I want to share some of the graphs I use every day to ensure the company is doing well.  Consider this graph.</p>
-<p><a href="http://www.headspring.com/wp-content/uploads/2012/04/CropperCapture22.png"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/04/CropperCapture22_thumb.png" alt="Time allocation BI chart" width="540" height="294" border="0" /></a></p>
-<p>&nbsp;</p>
-<p><strong>“BD” stands for “big dial”.</strong>  We have 3 big dials we glance at every day.  If we don’t like what we see, we have some “smaller dials” we can look at.  We use the analogy of a plane cockpit. There are a few things pilots always glance at, and then there are smaller, more detailed ones that are consulted as the need arises.</p>
-<p>This graph shows us our utilization breakdown in the categories that are relevant.  Here are the categories:</p>
-<ul>
-<li><strong>Personal Time</strong>: holidays, vacations, dentist appts, etc.</li>
-<li><strong>Assigned Time</strong>: Department meetings, 1x1’s, stand-up meetings, etc</li>
-<li><strong>Bench Time</strong>: Time without available project work (doesn’t show because it’s zero)</li>
-<li><strong>Other Time</strong>: Unplanned unproductive time, such as having a flat tire on the way to work</li>
-<li><strong>Sales Time</strong>: Mostly used by the sales department: work to acquire a client</li>
-<li><strong>Billed Time</strong>: self-explanatory</li>
-<li><strong>Unbilled Time</strong>: Working for a client, but not charging</li>
-<li><strong>CI Time</strong>: Continuous Improvement time:  We expect that our people are working to improve.</li>
-<li><strong>Client Time:</strong>  sum of billed and unbilled time.</li>
-</ul>
-<p>You will notice the big dip during the week of 4/7.  We had our Q1 <strong>quarterly off-site</strong> during that week.  We spent 12% of that week to use as a fun off-site where the entire company toured Inner Space Cavern hundreds of feet under Georgetown.  It shows up on the dashboard because it affects the performance of the company.  As an executive team, we decided it was a good investment in the future productivity of our staff.</p>
-<p>You might have also noticed that 4/7 was a Thursday in 2011.  How can it be the week of 4/7?  We use the concept of <strong>“moving weeks”</strong> instead of calendar weeks.  We used to use calendar weeks, but the last data point of the graph was always skewed because it didn’t represent a full data point until people logged their time for Friday.  By taking data from a moving week, when I look at the data on Thursday, it pulls data from the previous Thursday through this Wednesday (yesterday).  That way, every point on the graph represents exactly the same size of a data point.  We do the same for months, quarters and years.</p>
-<p><strong>There is a big problem with pull metrics by calendar month (for 2011)</strong>:</p>
-<ul>
-<li>January has <strong>21</strong> business days</li>
-<li>February has <strong>20</strong> business days</li>
-<li>March has <strong>23</strong> business days</li>
-<li>April has <strong>21</strong> business days</li>
-<li>May has <strong>22</strong> business days</li>
-</ul>
-<p>You can see how using calendar months can <strong>wreak havoc</strong> on the comparability of month metrics.  We expect larger months to pose better numbers than the smaller months.  On the financial side, we have to accrue the payroll appropriately as well in order to keep net income from becoming skewed.</p>
-<p>To deal with this, we use the concept of a <strong>moving month</strong>.  There are 13 moving months in a year.  Each moving month is a 28-day time period from yesterday to 28 days before yesterday.  In this way, every data point will be exactly the same size as the other.  There are also 4, 13-week moving quarters in a year.  The following graph is our 2nd big dial shown by moving month.</p>
-<p><img src="http://jeffreypalermo.com/files/media/image/Windows-Live-Writer/d066af3fb6f3_8D6C/CropperCapture%5B28%5D_thumb_1.png" alt="CropperCapture[28]" /></p>
-<p>Before moving to moving months, the calendar month line was consistently <strong>misrepresented</strong> by the larger months.  Where the line moves, we need to know why.  We made the switch so that every curve of the line was meaningful.  We didn’t want our data communicating falsehoods or April-fools jokes.  You think I’m kidding, but April always looks bad coming straight out of March, which boasts 2 more full business days.  In professional services, a business day accounts for a <strong>significant amount of revenue</strong>.</p>
-<p>Using Big Dial 1 and Big Dial 2, we can keep the ship on the right course.  As long as our staff is billing a consistently high percentage: we shoot for 78-79%, and our hourly margins are high enough to account for our unbillable staff (sales, marketing, corporate) and our fixed costs (facilities, supplies, etc.), our company will remain healthy.</p>
-<p><strong>These dials are tactical, not strategic</strong>.  The next dial is strategic.</p>
-<p><img src="http://jeffreypalermo.com/files/media/image/Windows-Live-Writer/d066af3fb6f3_8D6C/CropperCapture%5B31%5D_thumb.png" alt="CropperCapture[31]" /></p>
-<p>This gives us a view into the <strong>structure</strong> of our company.  <strong>We have hired at least 7 new employees since November, 2011</strong>.  With that, it’s important to keep tabs on how we are changing the structure of our company.  When we hired <a href="http://lostechies.com/chrismissal/">Chris Missal</a> for the operations department, we expanded billable staff.  When we hired <a href="http://www.headspring.com/author/mchauvin">Mary Chauvin</a> for marketing, we increased non-billable staff.  Keeping the right balance is important.</p>
-<p>You can see that our % of Operations staff to the rest has dipped a little bit over the last 7 months.  We have done that while growing, and we are re-leveling the organization now.  To level out the organization, we need to <strong>add about five more people</strong> to the Operations department.  This graph, while very high level, gives critical insight into how the other two graphs affect our income statement.</p>
-<p>Using these three charts together, I have a very good sense of what I need to do to improve the financial performance of the company.  Right now:</p>
-<ol>
-<li>I need to hire 5 more great .Net developers</li>
-<li>I need to keep Client Time at the level of Operations % plus Contractor % (since both types bill)</li>
-</ol>
-<p>I hope that this helps some developers understand how different types of reports can give answers and perspective to managers.  If a picture is worth a thousand words, shouldn’t more of our reports be pictures?</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-04-12T00:00:00-05:00" pubdate data-updated="true">Apr 12<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>, <a class='category' href='/blog/categories/business-intelligence/'>business intelligence</a>, <a class='category' href='/blog/categories/dashboard/'>dashboard</a>, <a class='category' href='/blog/categories/management/'>management</a>
 
 
 </div>

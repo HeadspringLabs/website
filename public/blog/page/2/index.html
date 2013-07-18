@@ -7,7 +7,7 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="Software development processes tend to be too prescriptive, leading to waste. For instance, most Agile training prescribes fixed-sized iterations &hellip;">
+	<meta name="description" content="Last week, we saw how to define an NUnit-imitating convention with the Fixie test framework: when the custom Convention class was present in our &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -23,19 +23,11 @@
 
 <body>
 	<header id="header" class="inner"><h1><a href="/">Headspring Labs</a></h1>
-<nav id="main-nav"><ul class="main">
-	<li><a href="/blog">Blog</a></li>
-	<li><a href="/blog/archives">Archives</a></li>
-	<li><a href="/open-source">Open Source</a></li>
-	<li><a href="/team">The Team</a></li>
-	<li><a href="/about-us">About Us</a></li>
-</ul>
-</nav>
 <nav id="mobile-nav">
 	<div class="alignleft menu">
 		<a class="button">Menu</a>
 		<div class="container"><ul class="main">
-	<li><a href="/blog">Blog</a></li>
+	<li><a href="/">Blog</a></li>
 	<li><a href="/blog/archives">Archives</a></li>
 	<li><a href="/open-source">Open Source</a></li>
 	<li><a href="/team">The Team</a></li>
@@ -63,9 +55,9 @@
 		
 		<a class="github" href="https://github.com/HeadspringLabs" title="GitHub">GitHub</a>
 		
-    
+	    
 		
-		<a class="coderwall" href="https://coderwall.com/headspring" title="Coderwall">Coderwall</a>
+		<a class="coderwall" href="https://coderwall.com/team/headspring" title="Coderwall">Coderwall</a>
 		
 		
 		
@@ -73,12 +65,20 @@
 		
 		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
 		
-    
+	    
 	</div>
 	<form class="search" action="http://google.com/search" method="get">
 		<input class="alignright" type="text" name="q" results="0">
 		<input type="hidden" name="q" value="site:headspringlabs.com">
 	</form>
+</nav>
+<nav id="main-nav"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+	<li><a href="/open-source">Open Source</a></li>
+	<li><a href="/team">The Team</a></li>
+	<li><a href="/about-us">About Us</a></li>
+</ul>
 </nav>
 
 </header>
@@ -91,31 +91,44 @@
     <article class="post">
 	<h2 class="title">
 		
-		<a href="/blog/the-boiling-backlog/">
+		<a href="/blog/the-sincerest-form-of-flattery/">
 		
-			The Boiling Backlog</a>
+			The Sincerest Form of Flattery</a>
 	</h2>
 	<div class="entry-content">
-		<p>Software development processes tend to be too prescriptive, leading to waste. For instance, most Agile training prescribes fixed-sized iterations ending with a retrospective meeting. Blindly following this structure may waste time: either you hold an expensive meeting when there isn&#8217;t enough to discuss, or you motivate the team to hold back ideas for improvement until the next meeting. By taking retrospectives out of the process, you may instead enable the team to make improvements constantly.</p>
-<p>The only prescriptive advice I can give is to <strong>ruthlessly remove waste from your process</strong>. What remains ought to communicate useful information to the team and its stakeholders. Anything more than that is just software development <em>theater</em>. Approach your development process the same way you approach a bit of ugly code: refactor away anything redundant or overly-complex.</p>
-<p>Each project&#8217;s process is going to vary in response to the project&#8217;s constraints. The process I&#8217;ve been using on <a href="https://github.com/plioi/fixie">my side project</a> is especially low-tech. It is only ideal for this particular project. If I blindly applied it to some other project, I&#8217;d be falling into the same trap as everyone who ever sold a prescriptive Agile ScrumMaster certificate. On this project, my constraints are:</p>
-<ol>
-<li>The team is very small (1 person).</li>
-<li>The overall vision is well known. Even with little planning, I know where I&#8217;m heading.</li>
-<li>The high risk requirements were vetted early on with a <a href="http://www.headspring.com/patrick/strongly-typed-whiteboarding/">proof of concept</a>.</li>
-</ol>
-<p>Fitting these constraints, the <a href="http://c2.com/cgi/wiki?EinsteinPrinciple">&#8220;simple as possible, but no simpler&#8221;</a> process that has served me well the last 2 months is a specific variation on Kanban. My Kanban board has four swim lanes: Backlog, Doing, Publish, and Done:</p>
-<p><a href="http://www.headspring.com/wp-content/uploads/2013/05/kanban.png"><img src="http://www.headspring.com/wp-content/uploads/2013/05/kanban.png" alt="Fixie&#039;s Kanban has four lanes: Backlog, Doing, Publish, and Done" width="363" height="271" class="aligncenter size-full wp-image-6525" /></a></p>
-<p>Since this is a one-person project, tools like JIRA, PivotalTracker, or Trello are overkill. Sticky notes will always be faster to work with than issue tracking software, as long as all (1) team members have access to the board. I often dramatically reorder the backlog in a few seconds to match my current plans, which would be tedious with a mouse.</p>
-<p>Most of the notes are simply the name of a feature. I don&#8217;t bother forcing them into the Agile template &#8220;As a &lt;type of user&gt;, I want &lt;some goal&gt; so that &lt;some benefit&gt;.&#8221; If I did, a note for feature X would always expand into &#8220;As a Patrick, I want X so that I can have X.&#8221; I wouldn&#8217;t gain any new insight or communication from that exercise.</p>
-<p>I limit the Doing lane to have one task at a time, because anything else would be a lie. I can only do one thing at a time.</p>
-<p>Some tasks deserve special treatment. Documenting my progress here is as important as making progress in the first place, so I gave the blog writing tasks their own Publish lane. Like Doing, this only ever has one incomplete task.  Unlike Doing, Publish tasks can stack up. If I&#8217;ve written ahead 2 or 3 articles, they pile up here as a reminder of the order I wish to publish them.</p>
-<p>I&#8217;ve been picturing the Backlog lane as a pot of boiling water. At the start of the project, I had identified 3 &#8220;Epic&#8221; features encompassing the whole project. The first of these Epics started to split apart into a few concrete tasks and a few medium-sized wish list tasks. At any time, I could pull one small, concrete task over to Doing. As I discover more about what I need, vague tasks split into smaller concrete tasks and &#8220;bubble up&#8221; to the top of the lane. The more I learn about a task, the higher it floats up the Backlog. Now that I have reached the end of the first Epic, the second one is naturally splitting into several medium tasks and a few specific tasks have made their way to the surface.</p>
-<blockquote><p>The boiling/bubbling action in the Backlog has helped in two unexpected ways. First, I&#8217;m never at a loss for what to do next because there is always at least one manageable task to claim from the top. Second, because only so many tasks can fit in the lane, the board naturally resists my attempts to plan too much in advance.</p></blockquote>
-<p>I&#8217;ve deliberately let the Done lane become overstuffed with completed tasks. I didn&#8217;t empty it out until the first of the 3 Epics was complete. There&#8217;s some kind of psychological trick about seeing your successes pile up. If I just discarded them as soon as they were done, I&#8217;d probably feel less motivated.</p>
-<p>I don&#8217;t have iterations, as they seem to artificially slow things down. I&#8217;d rather be in a constant state of pulling the next task.</p>
-<p>A process this small won&#8217;t work for everyone, but should serve as an example of just how low-tech and simple you can get. It gives me the information I need while putting zero obstacles in my path. I get to focus on one thing at a time, and I let the board tell me when it&#8217;s time to plan ahead.</p>
-<p>What does your current process look like? How is it serving your project&#8217;s constraints, and what obstacles is it putting in your way?</p>
+		<p>Last week, we saw how to define <a href="http://www.headspring.com/fixies-life-bicycle/">an NUnit-imitating convention</a> with the Fixie test framework: when the custom Convention class was present in our test project, the default rules for finding and running tests were replaced, allowing us to write test classes with a familiar NUnit class lifecycle.</p>
+<p>This week, we&#8217;ll see how to customize Fixie to imitate the xUnit lifecycle.</p>
+<blockquote><p>Today’s code samples work against <a href="http://nuget.org/packages/Fixie/0.0.1.56">Fixie 0.0.1.56</a>. The customization API is in its infancy, and is likely to change in the coming weeks.</p></blockquote>
+<h2>Review: The NUnit Lifecycle</h2>
+<p>With NUnit, one instance of your [TestFixture] class is constructed, and that instance is shared across all of that class&#8217;s [Test] methods.  Test discovery is based on the presence of these attributes.  You can identify methods as [SetUp] and [TearDown] in order to run common code before and after each individual test.  You can also identify methods as [TestFixtureSetUp] and [TestFixtureTearDown], in order to perform class-wide initialization and cleanup steps at the start and end of the class&#8217;s lifespan.  You can use fields in the class to hold state that lives across all of the tests.  At the end, if the class is IDisposable, the Dispose() method is called once.</p>
+<h2>The xUnit Lifecycle</h2>
+<p>xUnit is based on NUnit, but they both have different rules about what a test is, and how to run a test once it is found.  xUnit test methods are marked with a [Fact] attribute, and test classes don&#8217;t need any attribute since it is implied by the presence of [Fact]s.  More importantly, xUnit test classes are constructed again and again, once for each [Fact].</p>
+<p>Frequent reconstruction of the test class has a few consequences from the point of view of NUnit users.  </p>
+<p>The first consequence affects how to go about implementing basic setup and teardown logic.  Construction, fixture-level setup, and test-level setup suddenly collapse into one concept, so all of your setup is simply placed in the constructor.  Disposal, fixture-level teardown, and test-level teardown likewise collapse into one concept, so all of your teardown logic goes in the Dispose() method.</p>
+<p>The second consequence of this frequent reconstruction is that test class fields are forgotten from one test to the next, which raises the obvious question, what if I <em>just plain want</em> some state to live across all the tests?  I may have an integration test, for instance, with database setup steps that are costly in time.  I don&#8217;t want to be forced to redo that setup for each test simply to satisfy the strong opinions of a test framework!</p>
+<p>Thankfully, xUnit gives us an escape hatch in the form of IUseFixture&lt;T&gt;.  Your test class can implement this interface for some type T, and xUnit will in turn construct one shared instance of that T.  After reconstructing the test class and before running the next [Fact] method, xUnit injects that T into your test class instance.  When all the [Facts] are done, xUnit will likewise dispose of the T, giving you something like NUnit&#8217;s [TestFixtureTearDown].</p>
+<p>That&#8217;s a mouthful.  Let&#8217;s see a sample xUnit test fixture exercising the whole test lifecycle:</p>
+<p><div><script src='https://gist.github.com/5710920.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<h2>Customizing Fixie to Mimic xUnit</h2>
+<p>In order to mimic xUnit, we first have to tell Fixie how to find [Fact] methods.  Then, we&#8217;ll need to tell it to find all of the IUseFixture&lt;T&gt; declarations to construct the shared instances of whatever type was provided as the &#8220;T&#8221;.  After that prep work, we can start the actual test lifecycle: for each [Fact] method, we want to construct an instance of the test class, inject the T objects into that instance, call the [Fact], and call Dispose().  After performing that cycle for each [Fact], we need to clean up the shared instances of the Ts.</p>
+<p>Here&#8217;s the Fixie Convention class which accomplishes this lifecycle.  The details have been omitted to focus on the Convention API, but the <a href="https://github.com/plioi/fixie/blob/7fa012d1c63016b7b2e6061fa91cca90fbbc3326/src/Fixie.Samples/xUnitStyle/CustomConvention.cs">xUnit-style CustomConvention class</a> can be found on GitHub under the Samples namespace:</p>
+<p><div><script src='https://gist.github.com/5710922.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>The FixtureExecution section says what should be done with each test fixture class as a whole: we want one instance per test case, we want the whole process to be preceded by a call to PrepareFixtureData, and we want the whole process to be concluded by a call to DisposeFixtureData.</p>
+<p>The InstanceExecution section says what should be done immediately after construction and immediately before disposal of the test class.  Test runs should be preceded by a call to InjectFixtureData so that the shared &#8220;T&#8221; objects can be available to the test.</p>
+<blockquote><p>Note how awkward it is to say that InstanceExecution has a SetUp action but no relevant TearDown action.  On TearDown, we &#8220;do nothing&#8221; by returning an empty list of errors.  That&#8217;s clearly a wart on this API; one I intend to improve upon soon.</p></blockquote>
+<p>The convention class itself has some state, a dictionary which holds onto the shared T objects.  PrepareFixtureData populates the dictionary by finding IUseFixture&lt;T&gt; declarations.  InjectFixtureData reads from that dictionary in order to call the test class&#8217;s SetFixture(&#8230;) methods.  DisposeFixtureData disposes and removes items from the dictionary.</p>
+<p>When we run our sample test class in the presence of this custom convention class, we get the desired output:</p>
+<p><div><script src='https://gist.github.com/5710924.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<h2>Mimicry as Motivation<br />
+<h2>
+<p>Fixie&#8217;s customization features are intended to set it apart from other test frameworks, so why spend all this time using it only to mimic those other frameworks?  By using two familiar yet dramatically different test lifecycles as a target, I&#8217;ve been able to discover and expose the &#8220;hooks&#8221; they both have in common.  I&#8217;ve discovered that I needed to be able to switch between two modes of construction: one instance per test class vs. one instance per test case method.  I&#8217;ve also discovered that I needed <em>three</em> levels of setup/teardown hooks, where I was originally guessing that two would be enough: 1) the start and end of each test <em>method</em>, 2) the start and end of each test class <em>instance</em>, and 3) the start and end of each test <em>class</em>.</p>
+<p>I selected NUnit and xUnit mimicry deliberately as a first goal along the development of Fixie&#8217;s customization API.  If I couldn&#8217;t do what these frameworks do, there&#8217;d be no point.  Now that I&#8217;ve been able to mimic them, I can start to use the customization API to do new, more interesting things.  Next week, we&#8217;ll try to come up with a convention that is similar to NUnit, but addresses some complexity issues I dislike facing in my NUnit tests.</p>
 
 		
 		
@@ -135,7 +148,7 @@
   
 
 
-<time datetime="2013-05-01T00:00:00-05:00" pubdate data-updated="true">May 1<span>st</span>, 2013</time></div>
+<time datetime="2013-06-05T00:00:00-05:00" pubdate data-updated="true">Jun 5<span>th</span>, 2013</time></div>
 	<div class="tags">
 
 
@@ -151,52 +164,344 @@
     <article class="post">
 	<h2 class="title">
 		
-		<a href="/blog/cutting-scope/">
+		<a href="/blog/fixies-life-bicycle/">
 		
-			Cutting Scope</a>
+			Fixie&#8217;s Life Bicycle</a>
 	</h2>
 	<div class="entry-content">
-		<p>Over the last week, I&#8217;ve implemented support for <code>async</code>/<code>await</code> in the <a href="https://github.com/plioi/fixie">Fixie test framework</a>. Thanks to a suggestion from <a href="https://twitter.com/pedroreys">Pedro Reys</a>, I found that this project was susceptible to a serious bug, one that NUnit and xUnit both encountered and addressed back when the <code>async</code>/<code>await</code> keywords were introduced in C# 5.</p>
-<p>While developing the fix, I relearned an important lesson: cutting scope is not a sign of defeat. Sometimes less really is more.</p>
-<h2>The Bug</h2>
-<p>With the bug in place, a test framework can report that a test has passed even when it should fail. Consider the following test fixture:</p>
-<p><div><script src='https://gist.github.com/5448833.js'></script>
+		<p>Last week, we saw how the <a href="https://github.com/plioi/fixie">Fixie test framework</a> gives you control over <a href="http://www.headspring.com/patrick/test-discovery/">test discovery</a>. This week, we&#8217;ll see my first (admittedly rough) attempt at similarly giving you control over test <em>execution</em>. Let&#8217;s start with a quick review of last week&#8217;s test discovery feature, and then extend the example to demonstrate Fixie&#8217;s treatment of test execution.</p>
+<h2>Test Discovery (Again)</h2>
+<p>By default, Fixie uses a reasonable rule of thumb to determine which of your classes are test classes, and which of your methods are test methods. The default rules are implemented like so:</p>
+<p><div><script src='https://gist.github.com/5675320.js'></script>
 <noscript><pre><code></code></pre></noscript></div>
 </p>
-<p>The developer of these tests should expect TestAwaitThenPass to be the only passing test. The other four tests should all fail with one exception or another. Unfortunately, <em>Fixie would claim that all 5 of these tests pass</em>. To make matters even more confusing, despite &#8220;passing&#8221;, TestAsyncVoid&#8217;s DivideByZeroException would still be output to the user.</p>
-<p>When you call most async methods, the method call will not actually do the work. Rather, the method will quickly return a <code>Task</code> that <em>knows how</em> to do that work. To provoke the <code>Task</code> to execute, you must call its Wait() method. I was failing to call Wait(), so I would happily report success for a test that was never actually executed in full!</p>
-<p>In the case of an <code>async void</code> method, calling the method <em>does</em> cause the work to take place, but the exception does not surface in the normal fashion. The test framework&#8217;s own try/catch blocks won&#8217;t catch it, and it will bubble all the way up before appearing in the output as an unhandled exception.</p>
-<h2>The Initial Requirements</h2>
-<p>Once I could reproduce the problem, I came up with the first version of my new requirements. Since <code>async</code> methods must be declared to return <code>void</code>, <code>Task</code>, or <code>Task&lt;T&gt;</code>, and since all of these pose the same risk of the test passing when it shouldn&#8217;t,</p>
+<p>Test classes are those whose name ends with &#8220;Tests&#8221;.  Test case methods are those with zero parameters, declared to be either <code>void</code> or <code>async Task</code>.  In other words, if it looks like a test, it&#8217;s a test.</p>
+<p>When you wish to stray from these defaults, though, you can provide your own <em>convention</em> class: tell Fixie what your test classes and test methods <em>look like</em>, and it will gladly use your rule of thumb instead of the default. Last week, we introduced NUnit-style attributes and provided our own custom convention describing the treatment of those attributes:</p>
+<p><div><script src='https://gist.github.com/5675323.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>By stating that test fixtures are marked with [TestFixture] and test cases are marked with [Test], Fixie starts to use NUnit-style test discovery behavior.</p>
+<h2>Test Discovery is Only Half the Battle</h2>
+<p>Implicit in the default convention is the notion that you will get a new instance of the test class <em>for each test method</em>. That rule matches xUnit, but differs from NUnit, in which you get one instance of the test class <em>shared</em> across all the test methods in that class. Using our custom convention, we&#8217;re not quite behaving like NUnit.  If you wanted to do NUnit-style [TestFixtureSetUp] and [TestFixtureTearDown], you&#8217;d be surprised! Using the above custom convention, consider the following test fixture and its output under Fixie:</p>
+<p><div><script src='https://gist.github.com/5675325.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p><div><script src='https://gist.github.com/5675329.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>That&#8217;s not at all like NUnit! Thankfully, our custom convention was honored so that only FirstTest() and SecondTest() are considered to be tests. Unlike NUnit, though, Fixie has completely neglected the per-test [SetUp]/[TearDown] and per-class [TestFixtureSetUp]/[TestFixtureTearDown].  On top of that, it has constructed a fresh instance of the class twice instead of once.</p>
+<p><strong>Our custom convention is allowing us to stray from the defaults for test <em>discovery</em>, but so far we&#8217;re still using Fixie&#8217;s default test <em>execution</em> rules.</strong></p>
+<h2>Customizing Test Execution</h2>
+<blockquote><p>The functionality covered in this section is in its infancy and is likely to change in the short term, but serves to demonstrate the kind of customization I am shooting for.</p></blockquote>
+<p>Fixie&#8217;s Samples project contains a more useful <a href="https://github.com/plioi/fixie/blob/cd85b7ddae14dbe7deb82d2070a314fd8d710819/src/Fixie.Samples/NUnitStyle/CustomConvention.cs">NUnit look-alike convention</a>:</p>
+<p><div><script src='https://gist.github.com/5675332.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Here, we see three new sections. First, we say that for each test fixture, create an instance per fixture class instead of creating an instance per test case. Second, for each test class instance, wrap the built-in behavior with calls to the [TestFixtureSetUp] and [TestFixtureTearDown] methods. Lastly, for each test case method, wrap the built-in behavior with calls to the [SetUp] and [TearDown] methods.</p>
+<p>Armed with this new convention, running the sample test class confirms that we&#8217;re now following the NUnit test fixture lifecycle:</p>
+<p><div><script src='https://gist.github.com/5675335.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>The FixtureExecutionBehavior you select in your convention is the key driving force affecting how your test classes will be executed. There are two built-in behaviors: <a href="https://github.com/plioi/fixie/blob/cd85b7ddae14dbe7deb82d2070a314fd8d710819/src/Fixie/Behaviors/CreateInstancePerCase.cs">CreateInstancePerCase</a>, and <a href="https://github.com/plioi/fixie/blob/cd85b7ddae14dbe7deb82d2070a314fd8d710819/src/Fixie/Behaviors/CreateInstancePerFixture.cs">CreateInstancePerFixture</a>.</p>
+<p>These two classes give Fixie a two-mode test lifecycle. A life-<em>bi</em>cycle if you will, <a href="http://en.wikipedia.org/wiki/Fixed-gear_bicycle">finally justifying the name beyond any doubt</a>.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-30T00:00:00-05:00" pubdate data-updated="true">May 30<span>th</span>, 2013</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/test-discovery/">
+		
+			Test Discovery</a>
+	</h2>
+	<div class="entry-content">
+		<p>Over the last few weeks, I&#8217;ve implemented some customization features in <a href="https://github.com/plioi/fixie">the Fixie test framework</a>. The first of these features is now available. Today, we&#8217;ll see this feature in action. <strong>We&#8217;re going to tell Fixie what our tests <em>look like</em>, and Fixie will then find them and run them.</strong></p>
+<blockquote><p>Today&#8217;s code samples work against <a href="http://nuget.org/packages/Fixie/0.0.1.49">Fixie 0.0.1.49</a>. The customization API is in its infancy, and is likely to change as I address more involved features in the coming weeks.</p></blockquote>
+<h2>The Default Convention</h2>
+<p>If you&#8217;ve used NUnit before, you know that you have to mark your test classes with [TestFixture] and your test methods with [Test] in order for NUnit to know that those are your tests.  NUnit uses the presence of those attributes to &#8220;discover&#8221; your tests before it can run them. NUnit is therefore opinionated about test discovery.</p>
+<p>If you&#8217;ve used xUnit before, you know that you have to mark your test methods with [Fact] in order for xUnit to know that those are your tests. xUnit uses the presence of that attribute to &#8220;discover&#8221; your tests before it can run them. xUnit is therefore opinionated about test discovery.  (We&#8217;ve seen that <a href="http://www.headspring.com/patrick/low-ceremony-xunit/">xUnit is a little more flexible in this regard</a>, but it&#8217;s still pretty opinionated about what a test is.)</p>
+<p><strong>Fixie is not opinionated about test discovery.</strong> It has a simple default, but allows you replace that default with your own conventions. By default, Fixie will look for test classes by a naming convention: if a class in your test project has a name ending with &#8220;Tests&#8221;, then it is a test class. After finding these classes, it will then look for test methods as any public instance void-or-async method with zero parameters. In other words, if it looks like a test, walks like a test, and quacks like a test, Fixie will assume it&#8217;s a <del>duck</del> test by default.</p>
+<p>In my implementation, these rules are defined by <a href="https://github.com/plioi/fixie/blob/075d41822e6bee18624bd8329343d68e31d58c54/src/Fixie/Conventions/DefaultConvention.cs">DefaultConvention</a>:</p>
+<p><div><script src='https://gist.github.com/5624801.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Let&#8217;s see this convention in action. This demo assumes you have <a href="http://testdriven.net/">TestDriven.NET</a> installed. I have set up CTRL-T to run whatever test method or test class my cursor is sitting on.</p>
+<p>Create a new Solution in Visual Studio (I called mine &#8220;DiscoveryConventions&#8221;), and install <a href="http://nuget.org/packages/Fixie/0.0.1.49">Fixie 0.0.1.49</a> in the Package Manager Console:</p>
+<p><div><script src='https://gist.github.com/5624804.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Fixie deliberately has no assertion statements of its own, so install <a href="http://nuget.org/packages/Should">Should</a> too:</p>
+<p><div><script src='https://gist.github.com/5624806.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Add a Calculator class. We&#8217;re going to write some tests for this in a moment:</p>
+<p><div><script src='https://gist.github.com/5624810.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Add a test class using the default convention:</p>
+<p><div><script src='https://gist.github.com/5624813.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Place your cursor in either test method and hit your TestDriven.NET shortcut (for me, that&#8217;s CRTL-T). You&#8217;ll see TestDriven.NET ran that test with output like so:</p>
+<p><div><script src='https://gist.github.com/5624820.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Place your cursor <em>between</em> the ShouldAdd and ShouldSubtract methods and run TestDriven.NET again. You&#8217;ll see it ran all the tests in the class with output like so:</p>
+<p><div><script src='https://gist.github.com/5624822.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>So far, so boring.  This is a similar experience to using NUnit and xUnit. The only thing I&#8217;ve saved you is a few keystrokes for the attributes.</p>
+<h2>Custom Conventions</h2>
+<p>What if you don&#8217;t like the default convention?  What if you have a different naming convention for your test classes and test methods?  What if you like the way attributes jump out at you? Thankfully, you can set aside the default convention and substitute your own. If you place your own implementation of Convention in your test assembly, Fixie will discover and use that one <em>instead</em> of DefaultConvention.</p>
+<blockquote><p>Let&#8217;s try this customization out by first making it work more like NUnit, and then making it work more like xUnit. Lastly, we&#8217;ll see how Fixie accomplishes this behavior.</p></blockquote>
+<h2>Immitating NUnit</h2>
+<p>Rename CalculatorTests to CalculatorTestFixture. Since the class no longer ends with &#8220;Tests&#8221;, it no longer matches the default convention. If you try to run the tests again, TestDriven.NET <em>will</em> run it, but it will say &#8220;(Ad hoc)&#8221; instead of &#8220;(Fixie 0.0.1.49)&#8221;, which means that TestDriven.NET has no idea that this class is a test class anymore, and it just called the method as best as it could. That&#8217;s nice, but it won&#8217;t be enough when we get into things like test classes that have SetUps and TearDowns in the weeks ahead, so today we need to ensure that even when we stray from the default convention, TestDriven.NET should still be able to know that it&#8217;s looking at a Fixie test class!</p>
+<p>Let&#8217;s define some NUnit-style attributes:</p>
+<p><div><script src='https://gist.github.com/5624826.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Apply these to CalculatorTestFixture as you would with NUnit tests:</p>
+<p><div><script src='https://gist.github.com/5624830.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Trying to run these tests, we see that TestDriven.NET is <em>still</em> using the lame &#8220;(Ad hoc)&#8221; test runner.  TestDriven.NET is still unaware that it is looking at a test class! <strong>Teach it to care about these attributes by adding a new Convention subclass to the project:</strong></p>
+<p><div><script src='https://gist.github.com/5624832.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Here, we are saying that our test fixture classes are those which have [TestFixture] attributes, and our test case methods are those which have [Test] attributes. Running our tests again, we see that TestDriven.NET is finally aware that CalculatorTestFixture is a Fixie test class, so it was able to use Fixie again to actually run the tests:</p>
+<p><div><script src='https://gist.github.com/5624835.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p><strong>We have changed the way that Fixie discovers our tests by telling it what our tests look like.</strong></p>
+<h2>Immitating xUnit</h2>
+<p>xUnit works a little differently from NUnit. You don&#8217;t have to put an attribute on the test class, but you do have to put a [Fact] on each test method. Any class that happens to have a [Fact] method is assumed to be a test class.</p>
+<p>Delete the NUnit-style TestFixtureAttribute and TestAttribute classes, and replace them with a [Fact] attribute:</p>
+<p><div><script src='https://gist.github.com/5624837.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Update CalculatorTestFixture to use xUnit-style test decoration:</p>
+<p><div><script src='https://gist.github.com/5624838.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Update the CustomConvention to use xUnit-style rules:</p>
+<p><div><script src='https://gist.github.com/5624842.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Here, we are saying that our test fixture classes are those which have any methods that have [Fact] attributes, and our test case methods are those which have [Fact] attributes. Running our tests again, we see that TestDriven.NET is again aware that CalculatorTestFixture is a Fixie test class, so it was able to use Fixie again to actually run the tests:</p>
+<p><div><script src='https://gist.github.com/5624843.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p><strong>We again changed the way that Fixie discovers our tests by telling it what our tests look like.</strong></p>
+<h2>Neat Trick. What&#8217;s the Point?</h2>
+<p>NUnit, xUnit, and other test frameworks are very opinionated about two major concepts: how to discover your test classes/methods, and how to go about executing them. Today, we see that Fixie can at least give you an extra degree of freedom around test discovery. You&#8217;re free to use whatever logic you want to decide whether a class is a test class, and whether a method is a test method. (We&#8217;ll see how Fixie addresses the second part, test <em>execution</em>, in the coming weeks.)</p>
+<p>Even if all this accomplished was fewer keystrokes, or an easier path to migrate from another framework <em>to</em> Fixie, I&#8217;d consider it a net gain. However, I&#8217;m already benefiting from the flexibility in more ways. When using Fixie to test Fixie, I use the default convention with a twist: when I need to prove that Fixie will do the right thing in the event of a test <em>failure</em>, I want to ask some <em>other</em> &#8220;phony&#8221; test class to run. If the phony test class fails in the way I expect, my real tests pass. Only the real tests need to pass for my build to succeed. The phony tests are identified with the <a href="https://github.com/plioi/fixie/blob/075d41822e6bee18624bd8329343d68e31d58c54/src/Fixie/Conventions/SelfTestConvention.cs">SelfTestConvention</a>:</p>
+<p><div><script src='https://gist.github.com/5624845.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>I create phony test classes as nested, private classes with names ending in &#8220;Fixture&#8221;. The wrapper classes follow the DefaultConvention and must pass, while the must-pass tests do their work by asking the SelfTestConvention to run a phony test class. Without these conventions, it would be too hard for me to test that I can properly handle <em>failing</em> tests.</p>
+<h2>How Does it Work?</h2>
+<p>We&#8217;ve seen that Fixie somehow knows how to look for Convention classes. After finding them, it must be able to use them in some way, so Fixie must somehow construct instances of your Conventions, too. The answer is <a href="http://msdn.microsoft.com/en-us/library/ms173183(v=vs.110).aspx">reflection</a>: code that searches and uses other assemblies at runtime.</p>
+<p>When I ask Fixie to run all the tests in the test assembly, it needs to reach out and find all the Convention classes and then construct them for use. Where it <em>used</em> to just construct a <code>new DefaultConvention()</code> every time, my Runner class <em>now</em> does the following:</p>
+<p><div><script src='https://gist.github.com/5624849.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Here, we search the test assembly for types that are subclasses of Convention, and create an instance of each.  If we didn&#8217;t find any, we&#8217;ll assume the DefaultConvention.</p>
+<p>By reaching out into your code with reflection, Fixie enables you to tell it what your test classes and test methods look like.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-22T00:00:00-05:00" pubdate data-updated="true">May 22<span>nd</span>, 2013</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/enabling-change/">
+		
+			Enabling Change</a>
+	</h2>
+	<div class="entry-content">
+		<p>Unit testing is meant to enable change by giving you confidence about the current state of your project. However, one of the criticisms of unit testing is that fine-grained tests (such as having one or more tests per method), locks you into implementation details.  With fine-grained tests in place, you&#8217;re not free to move responsibilities between methods and between classes.</p>
+<p>How are we to resolve this apparent contradiction?</p>
+<p>I do lean towards fine-grained tests, especially in the early days of a project. At that point, small implementation details are <em>all you&#8217;ve got</em>. As a project grows and evolves, that early &#8220;scaffolding&#8221; of fine-grained tests may start to become an obstacle rather a change-enabler. <strong>Test frameworks are tools meant to give us the freedom to change, but we must deliberately wield them to enable that change.</strong> When your fine-grained tests start to discourage change, introduce new tests at a higher level, focusing on the behavior of your system rather than focusing on individual method details. Once the higher-level tests provide meaningful coverage on their own, the early scaffolding tests can be removed.</p>
+<blockquote><p>Be willing to use your test framework to enable change, even when that change is within your test code. As your project evolves, so does your testing strategy.</p></blockquote>
+<h2>Fixie&#8217;s Early Test Strategy</h2>
+<p>While <a href="http://www.headspring.com/patrick/bootstrapping/">bootstrapping</a> the basic functionality of the <a href="https://github.com/plioi/fixie">Fixie test framework</a>, I deliberately tested everything at a fine-grained level. One of the first things I implemented was the logic around executing a single test case. For a given test method, I needed to prove that I could invoke the method via reflection and properly handle some subtle exception catching details. The tests for this were fine-grained: I had several tests for a single pivotal method. I needed confidence over this important block of code because everything that followed would build upon it.</p>
+<p>Fast-forward 2 months, and I have built up a lot more infrastructure.  Fixie&#8217;s starting to resemble something useful, and I&#8217;m beginning to take serious steps towards the customization features that motivated the whole project. These features will have a big impact on what exactly happens when a test case runs. I&#8217;ve done some design work on how test case execution needs to work going forward, but <em>that early test-method-runner and exception-handler code was no longer in a good place</em>. I needed to start shuffling implementation details between a few classes, in order for the details to find their proper home and enable further work, but the important tests of that behavior were too fine-grained.</p>
+<p>I needed to move code, but that code was set in concrete!</p>
+<h2>Fixie&#8217;s Revised Test Strategy</h2>
+<p>Rather than declare that unit testing is bad, I instead needed to admit that my tests needed to change just as much as the code <em>under</em> test needed to change. I needed to revise my testing approach in light of new information, to enable further development.</p>
+<p>Fortunately, I was already close to the solution. As I started implementing more involved features like support for async/await test cases and IDisposable test fixtures, I developed a pattern of wrapping fake test fixtures within a real test fixture. The outer real fixture&#8217;s tests must pass for my build to pass, but the inner fake fixtures are allowed to have failing tests. The outer real tests ask the test runner to run the inner fake test fixtures, capturing their results. The benefit to this approach is that I can confirm how Fixie will handle real test failures in the wild.</p>
+<p>Consider the tests for Fixie&#8217;s treatment of IDisposable test fixture classes (details omitted to emphasize the pattern):</p>
+<p><div><script src='https://gist.github.com/5581509.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>This pattern appeared a few times:</p>
 <ol>
-<li>an <code>async Task</code> test method must be waited upon before deciding whether it passes or fails.</li>
-<li>an <code>asyc Task&lt;T&gt;</code> test method must be waited upon before deciding whether it passes or fails.</li>
-<li>an <code>async void</code> test method must be waited upon before deciding whether it passes or fails.</li>
+<li><a href="https://github.com/plioi/fixie/blob/754af5e9c14bcb9ad55ce70d7f69ebdb84c26c35/src/Fixie.Tests/ClassFixtures/DisposalTests.cs">DisposalTests.cs</a> as described above.</li>
+<li><a href="https://github.com/plioi/fixie/blob/754af5e9c14bcb9ad55ce70d7f69ebdb84c26c35/src/Fixie.Tests/ClassFixtures/ConstructionTests.cs">ConstructionTests.cs</a> demonstrates the behavior of test classes that have constructors.</li>
+<li><a href="https://github.com/plioi/fixie/blob/754af5e9c14bcb9ad55ce70d7f69ebdb84c26c35/src/Fixie.Tests/ClassFixtures/AsyncCaseTests.cs">AsyncCaseTests.cs</a> demonstrates the behavior of test classes when the individual test case methods use async/await.</li>
 </ol>
+<p>Even though the specific code paths under tests are not <em>super close</em> to the code that tests them, all the relevant paths are being exercised. I&#8217;m getting meaningful code coverage but at a not-so-fine-grained level.</p>
+<p>I translated the original fine-grained tests to this new approach, giving me <a href="https://github.com/plioi/fixie/blob/754af5e9c14bcb9ad55ce70d7f69ebdb84c26c35/src/Fixie.Tests/ClassFixtures/CaseTests.cs">CaseTests.cs</a>.  Now, <em>all</em> test execution is exercised at the same high level. Rather than asserting on the behavior of running a single test method, I assert on the behavior of running a whole test class. I needed to admit that there&#8217;s more to running a test case than just calling the test method itself.</p>
+<blockquote><p>I don&#8217;t think it&#8217;s a coincidence that the level at which I&#8217;m testing resembles the level at which end users would reason about a test framework. Fixie&#8217;s test suite is not quite executable documentation, but it certainly suggests what ought to appear in the documentation.</p></blockquote>
+<p>I dropped the original fine-grained tests now that they are redundant. With my obstacle removed, I am free to make some important changes to the organization of Fixie&#8217;s test-executing code, the results of which we&#8217;ll see here in the coming weeks.</p>
+<h2>Be An Enabler</h2>
+<p>The new approach exercises all the same code as before, but because it is not directly calling into low-level implementation details, I am now free to shuffle those details around without breaking anything. I&#8217;ve found the level of test granularity that is appropriate for this system. When your tests start to discourage change, consider moving up a level to test the larger behaviors of your system, and then drop the fine-grained tests once they are no longer telling you anything useful.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-15T00:00:00-05:00" pubdate data-updated="true">May 15<span>th</span>, 2013</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/just-is-a-four-letter-word/">
+		
+			&#8220;Just&#8221; Is a Four Letter Word</a>
+	</h2>
+	<div class="entry-content">
+		<p>I&#8217;m often guilty of this myself, but I cringe whenever I hear a software developer say that in order to implement a feature, they &#8220;Just&#8221; have to do x, y, and z.  The reality is that even on healthy projects, you will face at least a little more complexity than could be anticipated in advance.  This complexity makes time-based estimates risky, especially on seemingly-small features.  This week, I was particularly guilty of declaring to myself that a feature would take &#8220;Just a few lines of code&#8221;.</p>
+<h2>The Feature</h2>
+<p>Working on the <a href="https://github.com/plioi/fixie">Fixie test framework</a> this week, I pulled the next task from my backlog.  It read:</p>
+<blockquote><p>Honor Dispose() when present.</p></blockquote>
+<p>When a test fixture class happens to implement IDisposable, the test framework should treat Dispose() as special.  After constructing your fixture and calling its test methods, and before it discards the fixture instance, it should be sure to call Dispose().  For example, the xUnit test framework uses Dispose() in the same way that NUnit uses [TearDown] methods.  In both of those frameworks, you have a chance to perform cleanup after tests execute, and I wanted Fixie to support Dispose() too.</p>
+<h2>Initial Analysis</h2>
+<p>To get a better idea of what I would have to do, I took a look at the way C# <code>using</code> blocks work.  When you write a block like this:</p>
+<p><div><script src='https://gist.github.com/5521208.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>&#8230;the compiler will rewrite it before actually compiling anything:</p>
+<p><div><script src='https://gist.github.com/5521212.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>To satisfy the requirement, &#8220;Honor Dipose() when present,&#8221; I <em><strong>just</strong></em> had to wrap my test-running code in a similar try/finally block.  Easy as pie.  It should take about 4 minutes, mostly just to write its acceptance test.</p>
+<p>&#8220;<em><strong>Just</strong></em> 4 minutes&#8221; quickly turned into 4 hours.</p>
 <h2>The Easy Part</h2>
-<p>We want to do the extra work for methods declared with the <code>async</code> keyword, and fortunately we can detect that keyword using reflection. When you use this keyword, the compiled method gains an attribute available to us at runtime:</p>
-<p><div><script src='https://gist.github.com/5448836.js'></script>
+<p>The <a href="https://github.com/plioi/fixie/commit/16f079b08131026e75d5ae5075dfbf5ec7e1df1b">primary commit for this feature</a> is exactly what I expected.  My acceptance test for this feature involved a sample fixture that implemented IDisposable along with two tests, one that passes and one that fails.  My real test fixture would run that sample test fixture, inspecting the results.  This pattern of having a real fixture wrap a private sample fixture allows me to have sample fixtures with failing tests. Only failures in the outer real fixture cause my build to fail:</p>
+<p><div><script src='https://gist.github.com/5521216.js'></script>
 <noscript><pre><code></code></pre></noscript></div>
 </p>
-<p>Before the fix, a test method would be executed via reflection like so:</p>
-<p><div><script src='https://gist.github.com/5448839.js'></script>
+<p>The primary commit&#8217;s fix involved wrapping test execution in a <code>try/finally</code>:</p>
+<p><div><script src='https://gist.github.com/5521221.js'></script>
 <noscript><pre><code></code></pre></noscript></div>
 </p>
-<p>We can fix the execution of <code>async Task</code> and <code>asyc Task&lt;T&gt;</code> by waiting for the returned <code>Task</code> to complete:</p>
-<p><div><script src='https://gist.github.com/5448843.js'></script>
+<h2>The First Four Monkey Wrenches</h2>
+<p>That wasn&#8217;t actually the first commit for this feature.  I tried that all first, but the outer test fixture would fail.  Within the sample fixture, Dispose() was being called at the end of test execution, as expected, but Dispose() was <em>also</em> being called as a test method too!  Output suggested that my 2-test fixture had 3 tests, and Dispose() was being called 4 times.  Yeesh.</p>
+<p>To resolve that issue, I <em><strong>just</strong></em> had to omit Dispose() from being treated as a test method.  I introduced a helper method to test whether a given method is Dispose().</p>
+<p><div><script src='https://gist.github.com/5521227.js'></script>
 <noscript><pre><code></code></pre></noscript></div>
 </p>
-<p>When a regular test fails, <code>method.Invoke(...)</code> throws. When an <code>async</code> test fails, <code>task.Wait()</code> throws.</p>
-<h2>Unforeseen Complexity</h2>
-<p>The third requirement is problematic. If a test method is declared <code>async void</code>, <code>method.Invoke(...)</code> returns null, so we&#8217;ll never see the <code>Task</code> object and will never be able to call <code>task.Wait()</code>.  It turns out there is an extremely complex workaround, implemented in NUnit, which takes advantage of implementation details surrounding <code>async</code>/<code>await</code> execution.  After researching the technique, I lacked confidence that I would use it correctly.</p>
-<h2>The Actual Requirement</h2>
-<p>I started to question the train of thought which led to the original 3 requirements.  All async methods have to be declared as returning <code>void</code>, <code>Task</code>, or <code>Task&lt;T&gt;</code>, otherwise they won&#8217;t compile, and <strong>I was naively assuming that all three of these variations were good test declarations.</strong></p>
-<p>It turns out that declaring methods <code>async void</code> is frowned upon for exactly the same reason they were giving me trouble: it is crazy weird and difficult to correctly wait on a <code>Task</code> when the <code>Task</code> itself is inaccessible to you! <code>async void</code> declarations say, &#8220;I want to fire and forget&#8221;, but a test author does <em>not</em> want the test framework to forget what&#8217;s going on! The only reason <code>async void</code> even <em>exists</em> is for a specific edge case: <a href="http://stackoverflow.com/questions/8043296/whats-the-difference-between-returning-void-and-returning-a-task">async event handlers have no choice but to be declared void</a>.</p>
-<blockquote><p>The <em>actual</em> requirement I needed to meet was to <strong>provide accurate pass/fail reporting</strong>: a test passes if and only if the test framework executes it in full without throwing exceptions.</p></blockquote>
-<p>In the case of <code>async void</code>, I satisfy <em>this</em> requirement by <em>slapping the test author&#8217;s hand</em>. I fail such a test method immediately, without bothering to execute it. The failure message explains that &#8220;void&#8221; should be replaced with &#8220;Task&#8221;. Requiring that the test author replace 4 characters with 4 characters, rather than encourage a bad habit of writing <code>async void</code> methods, is actually <em>better</em> than supporting all variations of <code>async</code> methods.</p>
-<h2>Less is More</h2>
-<p>Requirements are human decisions based on incomplete information. With enough information, you may better-serve the needs of your system and its users by <em>not</em> doing something.</p>
-<p>In this case, supporting all 3 kinds of asynchronous methods would have introduced a great deal of complexity and risk, and I have absolutely no interest in introducing complexity or risk into something as fundamental as a test framework. By treating <code>async void</code> methods as &#8220;real&#8221; test cases that always fail, I satisfy the requirement of providing accurate pass/fail reporting. By cutting scope, I&#8217;m providing a better solution.</p>
+<p>Oops. Not every method with that name is the Dispose() method.  I really had to look for the right method <em>signature</em>:</p>
+<p><div><script src='https://gist.github.com/5521229.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Oops. Not every method with that signature is really IDisposable.Dispose():</p>
+<p><div><script src='https://gist.github.com/5521231.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Oops.  DeclaredType isn&#8217;t always the right type to inspect for IDisposable.  Consider this situation:</p>
+<p><div><script src='https://gist.github.com/5521235.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>In this case, the DeclaredType for the Dispose() method is HasDisposeButNotIDisposable, which doesn&#8217;t implement IDisposable.  When Fixie tried to run tests in a class like DisposableTestFixture, it <em>still</em> treated Dispose() as a test case.  I had to replace DeclaredType with ReflectedType:</p>
+<p><div><script src='https://gist.github.com/5521240.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Finally, I could <a href="https://github.com/plioi/fixie/commit/3f9dc52a3e4570c7baa197773ae8a1983abc50f8">use that helper method to exclude IDisposable.Dispose()</a> from being treated as a test case.  Running the sample fixture produced one pass and one expected failure, and Dispose was called the right number of times.</p>
+<p>All done.</p>
+<h2>The Plot Thickens</h2>
+<p>Wait.  What if someone&#8217;s test fixture has a Dispose() that throws exceptions?  Just like an NUnit [TearDown], we want exceptions here to cause the corresponding tests to fail, and we want the disposal exception to be included in the output.  I <em><strong>just</strong></em> have to wrap the disposal in a try/catch and emit a failure when Dispose() throws, like I already do when a test method throws:</p>
+<p><div><script src='https://gist.github.com/5521243.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>When a test method passes but Dispose() throws, this code does the right thing by treating the test as a failure and presenting the exception to the user.  When a test method <em>fails</em> and Dipose() throws, it would incorrectly report 2 test failures (one reported by the test method execution, and one reported by this catch block).  Instead, I want to treat it as one test failure, while reporting both exceptions to the user as the <em>reasons</em> the single test failed.</p>
+<p>To address that detail, I had to dramatically restructure the test execution code so that it would accumulate potentially-many exceptions throughout the test lifecycle.  Only at the end of the lifecycle would it decide whether the test passed or failed.  If any exceptions had been accumulated, the test would fail and the reasons would list all the exceptions.</p>
+<blockquote><p>I&#8217;m glad I ran into this problem now, because it will surely come up again when I address other test lifecycle methods, corresponding with NUnit concepts like [TestFixtureSetUp], [TestFixtureTearDown], [SetUp], and [TearDown]. The new code makes it easy to have multiple steps in the test lifecycle, all possibly contributing reasons for the test to fail.</p></blockquote>
+<h2>4 Hours Later</h2>
+<p>Finally, the original feature, &#8220;Honor Dipose() when present,&#8221; was implemented, and it <em><strong>just</strong></em> took 4 hours.  The next time you catch yourself saying &#8220;Just&#8221;, take a moment to think critically about what all you&#8217;ve hidden behind that word.  Any given feature may be easy to describe to a user, and the most likely use case may very well be easy to implement, but the devil&#8217;s in the details.</p>
 
 		
 		
@@ -216,619 +521,11 @@
   
 
 
-<time datetime="2013-04-24T00:00:00-05:00" pubdate data-updated="true">Apr 24<span>th</span>, 2013</time></div>
+<time datetime="2013-05-05T00:00:00-05:00" pubdate data-updated="true">May 5<span>th</span>, 2013</time></div>
 	<div class="tags">
 
 
 	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/isolating-execution/">
-		
-			Isolating Execution</a>
-	</h2>
-	<div class="entry-content">
-		<p>In last week&#8217;s post, <a href="http://www.headspring.com/patrick/dogfooding/">Dogfooding</a>, I uncovered a bug in the <a href="https://github.com/plioi/fixie">Fixie test framework</a> by trying to use it on two of my other side projects.  At the end of that post, I claimed that the bug had something to do with &#8220;AppDomains&#8221; and stated that it would be fixed once I met the following requirement:</p>
-<blockquote>
-<p>A test framework should fool your test DLL into thinking it is an EXE running in the build output folder, when in fact the running EXE is the console runner off in some other folder.</p>
-</blockquote>
-<p>Today, we&#8217;ll cover the bug&#8217;s diagnosis and resolution.</p>
-<h2>Initial Clues</h2>
-<p>I originally developed <a href="https://github.com/plioi/rook">Rook</a> with the xUnit test framework.  I installed Fixie beside xUnit to see if they produced the same results.  The results were surprising:</p>
-<ol>
-<li>xUnit under TestDriven.NET ran all the tests, as it always has.</li>
-<li>xUnit&#8217;s console EXE ran all the tests, as it always has.</li>
-<li>Fixie under TestDriven.NET ran all the tests.</li>
-<li>Fixie&#8217;s console EXE failed on all the <em>integration</em> tests.</li>
-</ol>
-<p>This odd mix gave me some useful information.</p>
-<p>First, xUnit and TestDriven.NET must be doing extra work prior to executing the tests, but Fixie&#8217;s console EXE was neglecting that work.</p>
-<p>Second, in the failure scenario, all the unit tests worked while all the integration tests failed.  The unit tests were relatively simple: chop up strings, walk through collections, assert on the collection contents.  The integration tests, on the other hand, needed to touch the file system too.</p>
-<p>I concluded that Fixie&#8217;s console EXE was most likely neglecting some kind of setup step related to the file system, but I needed more information.</p>
-<h2>Diagnosing the Bug</h2>
-<p>Rook&#8217;s integration tests take plain text files as input and generate new assemblies (DLLs) as output.  When the tests failed, the generated assemblies were trying to locate some types defined in the Rook.Core.dll library, which sits right beside the tests&#8217; own DLL.  <strong>When the tests failed, they failed because they could not find Rook.Core.dll, even though it was sitting right there in plain sight.</strong></p>
-<p>I added some debugging output to the tests, right before the point of failure, in order to see where .NET was trying to look for assemblies like Rook.Core.  I output the value of <code>AppDomain.CurrentDomain.BaseDirectory</code>, the first place .NET looks for DLLs.  The results revealed the issue:</p>
-<ol>
-<li>Under TestDriven.NET, the BaseDirectory was src/Rook.Test/bin/Debug, which I expected.</li>
-<li>Under the console EXE, the BaseDirectory was src/packages/Fixie.0.0.1.24/lib/net45, <strong>which is where the console EXE lives.</strong></li>
-</ol>
-<p>Aha! When you run a .NET EXE, the BaseDirectory is the same as the EXE&#8217;s directory, so that the EXE can find all the DLLs that live right beside it.  This default is convenient 99.9% of the time, because the EXE is <em>king</em> 99.9% of the time.  A test runner EXE, however, should allow your test assembly to be king.  If a test tries to use the &#8220;current directory&#8221;, it should use the test assembly&#8217;s directory.  If a test tries to load a DLL from the &#8220;base directory&#8221;, it should use the test assembly&#8217;s directory.  When Fixie.Console.exe ran tests within Rook.Test.dll, and those tests generated assemblies that depended on Rook.Core.dll, <em>Fixie was looking for that in the wrong folder</em>.  I was asking .NET to perform magic:</p>
-<blockquote>
-<p><strong>Me:</strong> Would you kindly locate a DLL for me? <br />
-<strong>.NET:</strong> Sure, I&#8217;ll look where I always look. <br />
-<strong>Me:</strong> Oh, no, you should look in a folder that I consider to be special. <br />
-<strong>.NET:</strong> Where&#8217;s that? <br />
-<strong>Me:</strong> It&#8217;s a secret. <br />
-<strong>.NET:</strong> Get off my lawn.</p>
-</blockquote>
-<h2>The Solution: Multiple AppDomains</h2>
-<p>We usually don&#8217;t hear much about AppDomains because most of the time they are 1-1 with our EXE&#8217;s process. Most of the things we think of as &#8220;the process&#8221; are really &#8220;the single AppDomain living inside the process&#8221;.  The basic idea is that an AppDomain is a list of assemblies that have been loaded and that can call each other.  AppDomains also have some state such as the BaseDirectory, which answers the question, &#8220;What folder should I look in to find DLLs?&#8221;</p>
-<p>Since the default BaseDirectory was wrong for my purposes, I needed to spin up a second AppDomain within the process, with BaseDirectory set correctly.  Then, I needed to make sure that Fixie did all of its work within <em>that</em> AppDomain instead of the default AppDomain.</p>
-<p>Communicating between AppDomains is tricky because they are very much like separate processes.  They don&#8217;t share access to objects in memory, so you have to throw serializable objects across the chasm.  In order to make this &#8220;long distance&#8221; communication <em>feel</em> like a regular method call, you can use a subclass of <code>MarshalByRefObject</code> to act as an intermediary.</p>
-<blockquote>
-<p>In AppDomain 1, we ask AppDomain 2 to create an instance of our intermediary class.  This request creates a <em>real</em> instance over in AppDomain 2.  Back in AppDomain 1, we get a <em>proxy</em>.  If you call a method on the proxy in AppDomain 1, the arguments get serialized and thrown over the chasm to the real object in AppDomain 2.  When the work is performed and the real object returns a result, that result is serialized and thrown back over the chasm to AppDomain 1.  It feels like a regular method call.</p>
-</blockquote>
-<p>I created the <code>ExecutionEnvironment</code> to wrap all of the AppDomain interaction:</p>
-<p><div><script src='https://gist.github.com/5409040.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Upon construction, this class creates the second AppDomain, treating the given folder path as the BaseDirectory.  You call <code>Create&lt;T&gt;(...)</code> in order to create an object in the new AppDomain.  You get back a proxy which knows how to cross the chasm between AppDomains.  <code>Dispose()</code> frees up the resources used by the secondary AppDomain and returns the current directory back to its original value.  Fixie&#8217;s <code>Main</code> method uses this class like so:</p>
-<p><div><script src='https://gist.github.com/5409049.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p><code>ConsoleRunner</code> is our <code>MarshalByRefObject</code>, which effectively lives on both sides of the AppDomain chasm:</p>
-<p><div><script src='https://gist.github.com/5409051.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>I wanted to minimize the amount of code that cared about AppDomains, so the <code>MarshalByRefObject</code> subclass is very small.  It receives the <code>assemblyPath</code> (the serializable object that got thrown across the chasm), and defers to <code>Runner</code> as quickly as possible.  <code>Runner</code> does the real work, and is used by both the console EXE and TestDriven.NET.  <code>Runner</code> has no idea that AppDomains are involved at all.  Only <code>ConsoleRunner</code> cares about that detail.</p>
-<h2>Isolating Test Execution</h2>
-<p>I came to this solution by studying the similar steps taken by NUnit, xUnit, and Machine.Specifications.  All these test frameworks need to let the developer pretend that their unit test assembly is their main EXE, and they all do it by isolating test execution in a specially-configured AppDomain.  AppDomains are like processes-within-the-process, and <code>MarshalByRefObject</code> classes help to make inter-AppDomain communication feel like regular method calls.</p>
-<p>It takes a lot of work to set up AppDomains, communicate with them, and clean up afterwards.  If you need to run code in isolation, <code>ExecutionEnvironment</code> is a useful starting point.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-04-18T00:00:00-05:00" pubdate data-updated="true">Apr 18<span>th</span>, 2013</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/disabling-language-changes-in-visual-studio/">
-		
-			Disabling Language Changes in Visual Studio</a>
-	</h2>
-	<div class="entry-content">
-		<p>On a recent project I used a workstation given to me by the client. It was typical &#8220;big enterprise&#8221; setup with support for multiple languages. I discovered there&#8217;s a keyboard shortcut &#8220;Ctrl+Space&#8221; for changing your language that I would keep accidentally activating in Visual Studio. This post explains how to disable that.</p>
-<ul>
-<li>Go to the control panel.</li>
-<li>Choose &#8220;Region and Language&#8221;.</li>
-<li>Click the &#8220;Keyboard and Layout&#8221; tab.</li>
-<li>Click on &#8220;Change Keyboards&#8221;.</li>
-<li>Click on &#8220;Advanced Key Settings&#8221;.</li>
-<li>Look over the list of sequences, ensure they are all set to &#8220;none&#8221; for keyboard activation.</li>
-</ul>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-04-12T00:00:00-05:00" pubdate data-updated="true">Apr 12<span>th</span>, 2013</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/visual-studio/'>Visual Studio</a>, <a class='category' href='/blog/categories/keyboard-shortcuts/'>keyboard shortcuts</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/dogfooding/">
-		
-			Dogfooding</a>
-	</h2>
-	<div class="entry-content">
-		<p>As soon as your software project has a useful feature or two, it&#8217;s time to start <a href="http://en.wikipedia.org/wiki/Eating_your_own_dog_food">eating your own dogfood</a>. The usual advice is to use your own software in order to get early feedback, but there&#8217;s another major benefit to dogfooding that usually goes unmentioned:</p>
-<blockquote><p>To dogfood your software, you have to treat its <em>deployment</em> as a first-class feature.</p></blockquote>
-<p>Deployment is not some secondary activity to be figured out later. Just like we should use our products early and often to make them better, we should use our deployment processes early and often to make <em>them</em> better.</p>
-<h2>Dogfooding Fixie</h2>
-<p>Now that my test framework is powerful enough to <a href="http://www.headspring.com/patrick/bootstrapping/">run all of its own tests</a>, has a <a href="https://github.com/plioi/fixie/blob/9a124ba6c460cf93c1507be68622245033f30454/src/Fixie.Console/Program.cs">command line test runner</a>, and <a href="https://github.com/plioi/fixie/blob/9a124ba6c460cf93c1507be68622245033f30454/src/Fixie.TestDriven/Runner.cs">integrates with TestDriven.NET</a>, it&#8217;s time to start dogfooding it.</p>
-<p>Deploying a test framework involves making it available for use in other projects. For this project, that means publishing a <a href="http://nuget.org/packages/Fixie">Fixie NuGet package</a> to the NuGet Gallery. When another developer installs the package, they should gain three things: an assembly reference added to their test project, the console test runner EXE, and TestDriven.NET support.</p>
-<p>Since dogfooding a project demands treating its deployment as a first-class feature, I needed to automate as much of the NuGet work as possible. I have set up a one-click deployment process for Fixie, and have tried it out for real by installing it into two other open source projects.</p>
-<h2>Creating and Publishing the NuGet Package</h2>
-<p>First, I added a nuspec file which describes the package contents.  I named it <a href="https://github.com/plioi/fixie/blob/a4a358e45e5c1ef2aa6074f12d1075066d4e28ca/src/Fixie/Fixie.nuspec">Fixie.nuspec</a> and placed this beside the Fixie.csproj file. Recall that the <a href="http://www.headspring.com/patrick/socks-then-shoes/">AssemblyInfo values in this project are set by the build script</a>.  By naming the nuspec file after the csproj file, NuGet.exe will know to use those same values as replacements for the $tokens$ in the nuspec:</p>
-<p><div><script src='https://gist.github.com/5359835.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Fixie.dll will be included in the package automatically, since that is the output of compiling Fixie.csproj.  The <code>&lt;files&gt;</code> section lists additional files I needed to include in the package: the console runner, its config, and 3 files needed to integrate with TestDriven.NET.  Since we&#8217;re including some files we don&#8217;t always want to add as project references during installation, I explicitly list Fixie.dll as the only reference.</p>
-<p>Dropping this nuspec file into the project isn&#8217;t enough.  I also added a &#8216;Package&#8217; task to the <a href="https://github.com/plioi/fixie/blob/a4a358e45e5c1ef2aa6074f12d1075066d4e28ca/default.ps1">build script</a>, which runs NuGet.exe against the nuspec file and produces the deployable package.  This task is the one executed by TeamCity upon each commit to GitHub:</p>
-<p><div><script src='https://gist.github.com/5359834.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>TeamCity creates the NuGet package files with each build, but I don&#8217;t really want to publish a package to the world upon each commit. I&#8217;d rather just publish when I know I&#8217;ve made enough changes to warrant a new deployment.  I found some good advice on how to <a href="http://blog.jonnyzzz.name/2011/09/selective-publishing-of-nuget-packages.html">selectively publish NuGet packages with TeamCity</a>.  In short, my main TeamCity build configuration compiles, runs tests, and creates NuGet package files automatically upon each commit to GitHub, while  a secondary TeamCity build handles publishing the latest successful package to the world.  The secondary TeamCity build only runs when I decide to run it, giving me one-click deployment.</p>
-<h2>Inevitable Explosions</h2>
-<p>Applying this NuGet package to the first target project, <a href="https://github.com/plioi/parsley">Parsley</a>, was a complete success.  That&#8217;s unfortunate, because it is boring.  It gave me no new information to drive Fixie&#8217;s development.  Parsley&#8217;s tests spend all of their time twiddling and comparing strings. Not much can go wrong here that would depend on the details of the host test framework.</p>
-<p>Applying this NuGet package to the second target project, <a href="https://github.com/plioi/rook">Rook</a>, has <em>fortunately</em> proven very difficult, yielding far more interesting results.</p>
-<p>First, Rook&#8217;s integration tests need to read text files from a folder found beside the tests&#8217; own DLL, meaning the tests depend on a test framework&#8217;s own notion of where the current directory is.  The fix here was easy: <a href="https://github.com/plioi/fixie/commit/9a124ba6c460cf93c1507be68622245033f30454">Fixie&#8217;s console runner changes the current directory to the test assembly location during execution, and then reverts to the previous directory</a>.</p>
-<p>Second, this project&#8217;s integration tests actually produce some additional DLLs at runtime and call into them, and those DLLs may depend on <em>other</em> DLLs that live beside the tests&#8217; DLL.  These dependencies are not being found.  That may sound like the same problem: .NET wants to look in the wrong directory for some DLLs.  Unfortunately we&#8217;re not talking about the operating system&#8217;s concept of a current directory.  Instead, we&#8217;re talking about the .NET concept of an AppDomain and its &#8220;base directory&#8221;, and <em>that</em> topic is a can of worms for another day.</p>
-<p>Dogfooding Fixie on two real projects has given me valuable feedback.  I ran into two similar issues and have realized one major requirement that has not been on my radar so far:</p>
-<blockquote><p>A test framework should fool your test DLL into thinking <em>it</em> is an EXE running in the build output folder, when in fact the running EXE is the console runner off in some other folder.</p></blockquote>
-<p>With this week&#8217;s current directory fix and the upcoming fix regarding AppDomains, <em>whatever the heck those are</em>, I&#8217;ll be able to satisfy this new requirement.  Stay tuned!</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-04-11T00:00:00-05:00" pubdate data-updated="true">Apr 11<span>th</span>, 2013</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/leaky-abstractions-rot-code/">
-		
-			Leaky Abstractions Rot Code</a>
-	</h2>
-	<div class="entry-content">
-		<p>Over the past month, we&#8217;ve seen the inception and early development of my ongoing side project, <a href="https://github.com/plioi/fixie">the Fixie test framework</a>.  As of last week, it was far enough along to run all of its own tests. Although I&#8217;m pleased with the progress so far, last week&#8217;s success introduced an exceptionally leaky abstraction.  Today, we&#8217;ll see how I patched up the leak.</p>
-<p>A software abstraction, such as an interface or abstract class, &#8220;leaks&#8221; when it fails to hide implementation details. Leaky abstractions are annoying enough when the damage is local to a small area of a project, but <strong>when the leak has a high risk of spreading, it can cause your code to rot.</strong>  An abstraction&#8217;s leak can spread when the calling code takes on too much knowledge of the leaked information, to the point where the calling code becomes a new source of that leaked information.</p>
-<blockquote><p>A calls B, which calls C, which calls your leaky abstraction.  C is forced to deal with information you intended to hide, putting it at high risk of leaking that information back to B.  If B starts dealing with that information, A is at risk, too. The ugliness rots all the way through your system.</p></blockquote>
-<p>Once the information you intended to hide has spread, everything it touches is now brittle.  If you make changes within the abstraction&#8217;s implementation, those details may cause a ripple effect through all the rotting code.  If other people or projects now depend on the leaked information, you may not even have the option of making the desired changes in the first place!</p>
-<h2>Fixie&#8217;s Leaky Abstraction</h2>
-<p>By the end of last week&#8217;s post, I had developed <a href="http://www.headspring.com/patrick/bootstrapping/">a roughly-usable test framework</a>. This version had an abstraction called Convention which is fundamental to the project: I want the end user to be able to tell me what their test fixtures and test cases look like.  I want you to be able to say things like &#8220;My test fixtures are the classes whose names end with &#8216;Tests&#8217;&#8221;, or &#8220;My test fixtures are the classes marked with some [Attribute]&#8221;.  If you don&#8217;t provide such a description, you&#8217;ll get the <a href="https://github.com/plioi/fixie/blob/6a01e382f30c3c598cf7d3d3a3bde450ad684297/src/Fixie/DefaultConvention.cs">default convention</a>:</p>
-<p><div><script src='https://gist.github.com/5307031.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>The first method says, &#8220;A class is a test fixture when its name ends with &#8216;Tests&#8217; and it has a default constructor.&#8221;  The second method says, &#8220;A method is a test case if it is a public instance void method with zero parameters.&#8221; To its credit, DefaultConvention successfully describes the behavior you&#8217;ll get by default.  However, there&#8217;s something wrong here.</p>
-<p>The lack of symmetry is suspicious.  To tell me what your test <em>fixtures</em> look like, you implement a method that says whether or not a <em>single</em> class is a test fixture.  To tell me what your test <em>cases</em> look like, you implement a method that <em>lists</em> all the methods that look like test cases.</p>
-<p>I originally wanted both methods to take a single candidate and return a bool, meaning the second method would accept one MethodInfo, returning true when that method looks like a test case.  I couldn&#8217;t just do that, because the .NET reflection API wants me to start things off with a BindingFlags value to describe visibility (public/private/static/instance/etc), and <em>then</em> filter those results down.  Contrast this two-step process with the way reflection wants you to search for Types: you can take an Assembly, call GetTypes(), and <em>then</em> filter down on things <em>including</em> visibility.</p>
-<blockquote><p>In the .NET reflection API, searching for types feels very different from searching for methods, even though a lot of the same logic and conditions apply to both.  This same asymmetry is present in the Convention abstraction.  Convention is leaking implementation details about reflection!</p></blockquote>
-<p>With this design, anyone who took advantage of Convention to customize their tests would be forced to understand a lot about the reflection API&#8217;s quirks.  Worse, they&#8217;d have to write some suspiciously-similar boilerplate code each time they wanted to provide an implementation.  DefaultConvention says what the default behavior is, but it isn&#8217;t very clear to the reader.</p>
-<h2>The Fix</h2>
-<p>Let&#8217;s jump to the improved abstraction, and then see how it works.  Here&#8217;s the new version of <a href="https://github.com/plioi/fixie/blob/cb649450e5d42a6eb83faeb58dafc3b9511d92d1/src/Fixie/DefaultConvention.cs">DefaultConvention</a>:</p>
-<p><div><script src='https://gist.github.com/5307051.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Much better. It says exactly what test fixtures and test cases look like by default, and suggests how you might specify your own similar rules. There&#8217;s no suspicious asymmetry now: both test fixtures and test cases are discovered using very similar statements.  It&#8217;s declarative, so the end user doesn&#8217;t have to be concerned with <em>how</em> the discovery will be honored; they can focus on simply stating what success looks like.</p>
-<p>The Fixtures property is an instance of <a href="https://github.com/plioi/fixie/blob/cb649450e5d42a6eb83faeb58dafc3b9511d92d1/src/Fixie/ClassFilter.cs">ClassFilter</a>, and the Cases property is an instance of <a href="https://github.com/plioi/fixie/blob/cb649450e5d42a6eb83faeb58dafc3b9511d92d1/src/Fixie/MethodFilter.cs">MethodFilter</a>:</p>
-<p><div><script src='https://gist.github.com/5307060.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p><div><script src='https://gist.github.com/5307065.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Both of these objects work in a similar way, achieving the symmetry I&#8217;d originally intended.  They each accumulate conditions in a list, and only perform that work when the Filter(&#8230;) method is finally called by Fixie&#8217;s main loop.  Since the real work is deferred to that last moment, MethodFilter is able to similarly accumulate information about the awkward BindingFlags, thus hiding the worst of the information leak found in the original version.</p>
-<p>Since each condition-building method returns <code>this</code>, the caller can Chain().Together().Calls().Like().This().  This approach gives me a home to place reflection helper methods like HasDefaultConstructor, further hiding odd implementation details about the reflection API, and if I happen to omit such a convenient helper method, the end user can build extension methods upon this foundation using the Where(&#8230;) method.</p>
-<h2>Criticism</h2>
-<p>I&#8217;m still leaking too much of the reflection API&#8217;s quirks.  The BindingFlags enum is a complicated mish-mash of unrelated concepts, so only some of its values even make sense for a call to Type.GetMethods(&#8230;).  I should hide the need for the end user to know that, instead exposing a few more helper methods with obvious names for the values that <em>do</em> make sense here.  It&#8217;s not perfect, but it&#8217;s a much better sitation than before, and will be easier to reshape over the coming weeks as I get a better idea of what all Conventions really need to do.</p>
-<p>At this point, my goal was to address the immediate risks presented by the older Convention abstraction.  Now that those risks are mitigated, I&#8217;ll hold off on doing too much design up front for the remainder.  Instead, I&#8217;ll let real use cases for custom Conventions drive the rest of the abstraction&#8217;s design.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-04-04T00:00:00-05:00" pubdate data-updated="true">Apr 4<span>th</span>, 2013</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/bootstrapping/">
-		
-			Bootstrapping</a>
-	</h2>
-	<div class="entry-content">
-		<p>Last week, I covered <a href="http://www.headspring.com/patrick/socks-then-shoes/">the first several commits to Fixie</a>, resulting in a reliable build script.  This week, we&#8217;ll see how I&#8217;ve &#8220;bootstrapped&#8221; Fixie to the point where it can run all of its own tests.</p>
-<p>Bootstrapping comes from an old saying.  To &#8220;pull oneself up by one&#8217;s bootstraps&#8221;, though literally absurd, is to improve without outside assistance.  For software, bootstrapping involves getting a new system off the ground by first leveraging the less-desirable system you had to start with.</p>
-<p>I&#8217;ve seen this approach take a few forms.  Bootstrapping is the solution to two categories of software problems: The Grand Rewrite, and The Curiously Self-Sufficient System</p>
-<h2>The Grand Rewrite</h2>
-<p>Grand rewrite projects are very tempting.  Perhaps you work on a large project for a long time, and you get to a point where adding new features becomes more and more difficult.  In other cases, your well-designed system simply no longer matches the new needs of your growing business.</p>
-<p>In a perfect world, you could keep what you have and incrementally improve it to meet new demands, but sometimes that simply isn&#8217;t practical.  Your hand may be forced by the need to escape vendor lock-in, or you may find it increasingly difficult to hire people experienced with an aging platform.</p>
-<p>When deciding to go forward with a grand rewrite, recognize that it is an inherently-risky endeavor.  You&#8217;re going to face all the same design tradeoffs and bugs you faced before, plus all the new ones you introduce this time around.  If anyone says they&#8217;ll simply &#8220;get it right this time,&#8221; don&#8217;t listen.  Rather, your team must actively mitigate the inherent risks.</p>
-<p>The worst-case scenario involves building the new system in full, off to the side, before ever going to production.  After eventually reaching &#8220;feature parity plus a few&#8221;, you&#8217;ll just turn off the old system, turn on the new system, and bask in the glory of your dizzyingly-late and overpriced system.  This approach maximizes the risks involved: you could spend a great deal of money chasing a large and moving target before reaping <em>any</em> benefits from it.</p>
-<p><strong>The best-case scenario involves bootstrapping the new system</strong>, leveraging what you have in order to get <em>some</em> of the new system up and running in production as soon as possible.  Maybe you build a little of the new system, altering the legacy system to defer to the new one for a single feature, and then repeat the process, phasing out the old system one piece at a time.  Maybe the legacy system never invokes the new one, but the new one begins its life by implementing the most important new features against the legacy database.  Whatever the specifics, you want to use as much of the legacy investment as possible in order to get new value in production as fast as possible.</p>
-<p>Suddenly, you&#8217;re not the expensive team that&#8217;s been toiling away for years without providing value.  You&#8217;re the team that&#8217;s constantly pushing valuable progress to production.</p>
-<h2>The Curiously Self-Sufficient System</h2>
-<p>The second class of bootstrapping projects is a little more interesting from a developer&#8217;s point of view, in that their implementation can be a little mind-bending: a system appears to be built upon itself.  The best example of this seemingly-impossible state is when a compiler for a language is writting in that language.</p>
-<p>The current version of the C# compiler was implemented in another language, but the <em>next</em> version of the C# compiler is being written in C#.  I don&#8217;t think I&#8217;d call this example bootstrapping, however, since C# has already been established as a full-size language for some time now.  Bootstrapping is more of a technique to get a new language up and running quickly so that it can spend most of its lifetime &#8220;self-hosted&#8221;.</p>
-<p>Many languages&#8217; first implementations are written in a preexisting language like C.  After the first version is working, the second version can be written in the new language, compiled with the first version.  Each new version is compiled with the previous version.</p>
-<blockquote><p>Even Pascal&#8217;s <em>first</em> compiler was written in Pascal.  Through the power of imagination and bravado, the code for the compiler was written on the assumption that a compiler would someday exist for it.  Then, it was translated backwards down to a simpler language that <em>did</em> have a compiler, in order to produce the first working Pascal compiler.  There were, <em>ahem</em>, no unit tests.</p></blockquote>
-<p>To create one of these curiously self-sufficient, bootstrapped systems, <strong>identify some fundamentally important subset of your goal</strong>, the subset that would be just useful enough to use for ongoing development, and implement that using the legacy system.  You may even deliberately limit yourself to use only some of the legacy system&#8217;s features along the way, partly to make it easier to switch over to the new one, and partly to keep yourself honest about sticking to the fundamentally important subset.</p>
-<p>The point here is that some problems lend themselves to being curiously self-sufficient, and when solving such a problem you can keep scope creep in check while simultaneously escaping your project&#8217;s predecessor.</p>
-<h2>Bootstrapping Fixie</h2>
-<p><a href="https://github.com/plioi/fixie">Fixie</a>, my test framework project, is Curiously Self-Sufficient.</p>
-<p>I always want to write code with support from automated tests, even on this project, so I had to start implementing it with some <em>other</em> test framework in place.  Now that I have implemented enough features for it to run its own tests, I can simply use it to test-drive all the remaining features.</p>
-<p>There are a few benefits to wearing the Bootstrapping Hat on this project.</p>
-<p>First, being able to run my tests using both xUnit and Fixie in early development allows me to compare their output, which has been helpful for discovering requirements that were not already on my radar.</p>
-<p>Second, it has given me a very reliable check against scope creep.  I have several big features planned, and I occasionally found myself tempted to include a little too much in this first pass.  When in doubt about including some feature F, I could always ask myself the same question:</p>
-<blockquote><p>Is feature F necessary to run any of the xUnit tests I&#8217;ve had to write so far?  If not, I don&#8217;t need feature F yet.</p></blockquote>
-<p>I limited myself to only use those xUnit features that were absolutely necessary to drive each new feature, so I didn&#8217;t have to worry about chasing a moving target.</p>
-<p>By leveraging the existing system (xUnit) in this way, I&#8217;ve been able to get real value from the new system (Fixie) very quickly.  Fixie can run all of its own test cases, even though those test cases were written using xUnit.  I produce equivalent output when tests pass and when tests fail.  I&#8217;m actively writing new test cases as a Fixie user, not an xUnit user, so I consider it successfully bootstrapped.</p>
-<h2>Fixie&#8217;s Initial Implementation</h2>
-<p>By approaching this task with a bootstrapping mindset, I&#8217;ve successfully gotten a useful-enough test framework up and running in a very short time.  It&#8217;s not fancy enough to write home about, but that wasn&#8217;t the goal in this phase of development.  Let&#8217;s see what this minimal test framework looks like.</p>
-<p>First, <a href="https://github.com/plioi/fixie/blob/6a01e382f30c3c598cf7d3d3a3bde450ad684297/default.ps1">Fixie&#8217;s build script</a> runs all the tests using Fixie and then runs all the tests using xUnit.  In order to compare their output in the case of failing tests, only xUnit failures actually cause the build to fail.  Fixie test failures are output, but don&#8217;t prevent the build script from progressing to the xUnit run.</p>
-<p>The <a href="https://github.com/plioi/fixie/blob/6a01e382f30c3c598cf7d3d3a3bde450ad684297/src/Fixie/DefaultConvention.cs">default convention</a> (and currently the only convention), describes how to tell whether a class is a test fixture, and whether a method is a test case.  A class is a test fixture if its name ends with &#8220;Tests&#8221; and it has a default constructor; a method is a test case if it&#8217;s a public instance void method with zero parameters:</p>
-<p><div><script src='https://gist.github.com/5242692.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>This convention helps to reach out and find all the fixture classes and test case methods in your test assembly, so it can construct Fixture and Case objects describing the work to be performed.  A <a href="https://github.com/plioi/fixie/blob/6a01e382f30c3c598cf7d3d3a3bde450ad684297/src/Fixie/Fixture.cs">Fixture</a> is a named executable thing, a <a href="https://github.com/plioi/fixie/blob/6a01e382f30c3c598cf7d3d3a3bde450ad684297/src/Fixie/Case.cs">Case</a> is a named executable thing, and they both rely on a <a href="https://github.com/plioi/fixie/blob/6a01e382f30c3c598cf7d3d3a3bde450ad684297/src/Fixie/Listener.cs">Listener</a> to report test failures:</p>
-<p><div><script src='https://gist.github.com/5242698.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>For this bootstrapping phase, all fixtures correspond with classes, so the only implementation of Fixture is <a href="https://github.com/plioi/fixie/blob/6a01e382f30c3c598cf7d3d3a3bde450ad684297/src/Fixie/ClassFixture.cs">ClassFixture</a>.  ClassFixture takes one of the Types discovered by the DefaultConvention, and owns the test fixture lifecycle in its Execute method:</p>
-<p><div><script src='https://gist.github.com/5242707.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Note the elaborate try/catch block.  Activator.CreateInstance(fixtureClass) calls your test fixture&#8217;s default constructor via reflection.  If your test fixture constructor throws an exception, we perceive that here as a TargetInvocationException that <em>wraps</em> the original exception.  We don&#8217;t want to report that wrapper to the user, otherwise every single test failure will hide the original with the unhelpful message, &#8220;Exception has been thrown by the target of an invocation.&#8221;  We unpack the wrapped original exception and report <em>that</em> to the listener.</p>
-<p>For this bootstrapping phase, all test cases correspond with methods, so the only implementation of Case is <a href="https://github.com/plioi/fixie/blob/6a01e382f30c3c598cf7d3d3a3bde450ad684297/src/Fixie/MethodCase.cs">MethodCase</a>.  MethodCase takes one of the MethodInfos discovered by the default Convention, and owns the execution of that method with a similar exception handler:</p>
-<p><div><script src='https://gist.github.com/5242711.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>That&#8217;s all the real work.  The remaining classes include <a href="https://github.com/plioi/fixie/blob/6a01e382f30c3c598cf7d3d3a3bde450ad684297/src/Fixie/Suite.cs">Suite</a>, which loops through all the Fixtures and asks them to run themselves, <a href="https://github.com/plioi/fixie/blob/6a01e382f30c3c598cf7d3d3a3bde450ad684297/src/Fixie.Console/ConsoleListener.cs">ConsoleListener</a>, which is a Listener that outputs failures to the console, and <a href="https://github.com/plioi/fixie/blob/6a01e382f30c3c598cf7d3d3a3bde450ad684297/src/Fixie.Console/Program.cs">Program</a>, whose Main method builds up and executes a Suite with a ConsoleListener for a given Assembly.</p>
-<p>By approaching this effort from a bootstrapping point of view, I now have a test framework powerful enough to drive the rest of its own features.  I&#8217;ve kept scope creep in check while laying a reasonable foundation, and even in the early stages I was able to have meaningful code coverage via xUnit.  Now that I&#8217;m about to embark on the more significant features, I already have a meaningful set of test cases to rely on.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-03-26T00:00:00-05:00" pubdate data-updated="true">Mar 26<span>th</span>, 2013</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/headspring-named-a-best-company-to-work-for-in-texas/">
-		
-			Headspring Named a Best Company to Work for in Texas</a>
-	</h2>
-	<div class="entry-content">
-		<p style="text-align: center;"><img class="size-medium wp-image-6259 aligncenter" alt="2009 BCTWFIT" src="http://www.headspring.com/wp-content/uploads/2012/12/2013BCTWFIT-330x300.jpg" width="330" height="300" /></p>
-<p>We are ranked 8<sup>th</sup> in the Small Companies category for the 2013 Best Companies to Work for in Texas list! This list is by the Texas Association of Business and our category includes businesses that have 15-99 total employees. We are very excited about this honor and thank our awesome team for helping us make it happen!</p>
-<p>The Best Companies to Work for in Texas Awards, hosted by Best Companies Inc, SHRM - Texas State Council, <i>Texas Monthly</i> and the Texas Association of Business, is designed to recognize the best employers in the state that make it a priority to create better workplaces for their employees. The list names companies with the best practices among Texas employers and recognizes them for their commitment.</p>
-<p>“The Headspring team is honored to be ranked as one of the best places to work in Texas,” noted Dustin Wells, Founder and CEO of Headspring. “At Headspring, we focus on creating a company culture that supports the growth and well-being of our talented employees. We are proud that the Texas Association of Business recognized our efforts.”</p>
-<p>The best companies were selected based on a survey that was released in the summer of 2012, which included an organizational overview of the company’s policies and procedures and an in-depth employee questionnaire. The entire list of rankings for the 100 Best Companies to Work for in Texas can be found in the April 2013 issue of <i>Texas Monthly</i>.</p>
-<p>&nbsp;</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-03-21T00:00:00-05:00" pubdate data-updated="true">Mar 21<span>st</span>, 2013</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/press/'>Press</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/socks-then-shoes/">
-		
-			Socks, *then* Shoes</a>
-	</h2>
-	<div class="entry-content">
-		<p>A couple weeks back, I announced the <a href="http://www.headspring.com/patrick/insufficiently-round-wheels/">start of development on Fixie</a>, a .NET test framework. Last week, I covered some early <a href="http://www.headspring.com/patrick/strongly-typed-whiteboarding/">proof-of-concept work</a> performed with throw-away code. This week, we&#8217;ll take a close look at the first <a href="http://www.headspring.com/patrick/am-i-not-dead-commit/">several small commits</a> to <a href="https://github.com/plioi/fixie">Fixie on GitHub</a>.</p>
-<p>The commits we cover today are all about preparing the initial solution structure, installing dependencies with NuGet, writing a build script, and applying a simple version numbers scheme.  I strongly recommend performing similar steps when starting up any new project.  You&#8217;ve gotta put on your socks before you can seriously think about putting on your shoes.  <strong>Today&#8217;s work is all about the socks.</strong></p>
-<p>The goal here is to prepare a build script that compiles, runs tests, and applies version numbers to the built assemblies. Any developer should be able to clone the repo and run &#8220;build&#8221; at the command line in order to compile the project and run its tests.  It should be that easy; if it isn&#8217;t, we&#8217;ve failed at putting on <em>socks</em>.</p>
-<p>Although I&#8217;m framing this advice as &#8220;necessary first steps for any project&#8221;, it&#8217;s never too late to get a reliable build in place around your existing project.  Take it in small steps: get a build script that can simply compile the solution, then grow it to apply version numbers to assemblies, then grow it to run unit tests, put it on a Continuous Integration server, expand it to run integration tests&#8230;</p>
-<h2>Initialize .gitignore</h2>
-<p>Here&#8217;s a minimal .gitignore file you can start with.  It tells git to ignore some files that have no business being checked into source control, such as compiled assemblies under the bin/ folders.  Grow it as needed:</p>
-<p><div><script src='https://gist.github.com/5192403.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<h2>Choose an Open Source License</h2>
-<p>I am not a lawyer, so I cannot offer advice as to which open source license is right for you.  I selected the MIT License and included it as a .txt file at the root of my repo.  The fact that I went with this is not a recommendation.  This is your decision, but whatever you choose, include it in your repo and be sure to include the official name of the license at the top of the file so that everyone knows what it is.</p>
-<p><a href="https://github.com/plioi/fixie/commit/af7c43afaf3111c2139e5886abc9b57e983a0962">Commit</a>.</p>
-<h2>Initial Solution Structure</h2>
-<p>As we&#8217;ve already seen, our repo needs to contain things other than source code.  To keep our peas and rice separated on the plate, we&#8217;ll put our actual code files under a src/ folder.  In Visual Studio, I created a new solution containing a Class Library project named Fixie, all under src/.</p>
-<p>It&#8217;s tempting at this point to start adding several projects to the solution.  Surely, I&#8217;ll eventually need this test framework to produce a console-runner EXE, and a DLL to integrate with TestDriven.NET.  Also, I used to set up projects in a solution to enforce internal dependencies: Fixie&#8217;s reflection-helpers code shouldn&#8217;t depend on anything else, so it&#8217;s tempting to put that in its own project with no references to other Fixie.sln projects.  Although tempting, <strong>don&#8217;t start creating projects left and right</strong>.  That would be a symptom of Big Design Up Front, which usually doesn&#8217;t turn out to be very accurate.</p>
-<blockquote><p>Instead, we&#8217;ll create projects at the last responsible moment: when doing so resolves a real <em>deployment</em> pain.  The general rule of thumb I follow when separating things into projects within the solution is to <strong>create projects based on how the system will be deployed</strong>. I&#8217;ll only create a new project when I find myself creating something that must be separately deployable.</p></blockquote>
-<p>The first separately deployable thing we absolutely need right away is Fixie&#8217;s own test project.  End users will need Fixie.dll to write their tests, but they won&#8217;t need Fixie.Tests.dll.  Fixie.Tests.dll will be used by a developer working on Fixie, but end users don&#8217;t need it to be deployed to their machine.  I added a Fixie.Tests project to the solution, also of type Class Library, which references the Fixie framework project.</p>
-<p>At this point, we have the following file structure</p>
-<pre>
-    .gitignore
-    LICENSE.txt
-    README.md
-    /src/Fixie.sln
-    /src/Fixie/Fixie.csproj
-    /src/Fixie/Properties/AssemblyInfo.cs
-    /src/Fixie.Tests/Fixie.Tests.csproj
-    /src/Fixie.Tests/Properties/AssemblyInfo.cs</pre>
-<p><a href="https://github.com/plioi/fixie/commit/c066c8b89ff606a59d26a60ce77d7c890ed53ef6">Commit</a>.</p>
-<h2>Enable NuGet Package Restore</h2>
-<p>It is extremely important that your repo be aware of all of its dependencies, so that a new developer can simply clone from GitHub and <em>go</em>.  If at all possible, they shouldn&#8217;t have to install anything extra.</p>
-<blockquote><p>If your new coworker has trouble getting up and running on their machine, chances are you&#8217;ll have similar difficulties when you deploy to your production machine.  Consider any repo clone to be a mini deployment.  Detect deployment pains early, when they&#8217;re easiest to address.</p></blockquote>
-<p>Before installing any NuGet packages, though, we want to &#8220;Enable NuGet Package Restore&#8221;.  Doing so adds a few files to our solution.  When we later install packages, source control will only contain the master list of the names/versions of the packages we depend on.  The package DLLs themselves are deliberately <em>excluded</em> from source control via .gitignore.  When a new developer clones the repo and builds, NuGet will step in, download any missing dependencies (like NUnit), and <em>then</em> compile.  The combination of NuGet Package Restore and .gitignore gives us a clean repo on GitHub and a smooth experience for new developers.</p>
-<p>In Solution Explorer, right-click the solution and select Enable NuGet Package Restore.  Git will show you that src/Fixie.sln was updated to include the contents of a new folder /src/.nuget containing a few files.  We can leave them alone, as the default settings are just fine.</p>
-<p>Be sure to include the following line in your .gitignore.  This is the folder that will contain downloaded packages.  Since package restore is turned on, this folder can be left out of source control.  It will be rebuilt by NuGet during a build, whenever the folder is missing or incomplete:</p>
-<p><div><script src='https://gist.github.com/5192486.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p><a href="https://github.com/plioi/fixie/commit/2cf6ed22a1008787f33bc7d07d0fc0816393d90f">Commit.</a></p>
-<h2>Install NUnit and NUnit.Runners via NuGet</h2>
-<p>Fixie is a test framework, so it may seem odd to start using NUnit during its development.  However, there&#8217;s a bare minimum of functionality that I need to implement before Fixie can be used to test itself, and in the meantime I don&#8217;t want to fall into the tempting trap of &#8220;coding without a net&#8221;.  In the meantime, I&#8217;ll use NUnit.</p>
-<p>There are two dependencies we want to include via NuGet: NUnit and NUnit.Runners.  In Solution Explorer, right-click the solution and go to &#8220;Manage NuGet Packages for Solution.&#8221;  In this dialog, search for and install the NUnit and NUnit.Runners packages.  When installing NUnit, select the Fixie.Tests project so that it will add a reference to Nunit.Framework.dll for us.</p>
-<p>I also added the Shouldly test assertion library, again referenced by Fixie.Tests, but use whatever assertion style you are comfortable with.</p>
-<p><a href="https://github.com/plioi/fixie/commit/92cb56fd553639da0b2127f4fcefc408cfb40078">Commit</a>.</p>
-<h2>Add a Build Script to Compile and Run Tests</h2>
-<p>Any new developer should be able to clone your repo and run &#8220;build&#8221; at a command line in order to compile the solution and run all the tests.  Here, we&#8217;ll use a third-party PowerShell tool called &#8220;psake&#8221; to simplify writing such a script.</p>
-<blockquote><p>Working with PowerShell can be insanely frustrating.  The language behavior for seemingly-simple tasks is often the exact opposite of anything you would expect when compared to any other language.  I would rather work with COBOL.  In Antarctica.  Without a coat.  And there&#8217;s bees.  Bees everywhere.</p>
-<p>Given that, it&#8217;s good to start out by copying a script you know already works, and tweaking it from there, so feel free to use today&#8217;s scripts as a starting point for your project, too.</p></blockquote>
-<p>Just like we did for NUnit.Runners, right-click the solution and install the package named &#8220;psake&#8221;.</p>
-<p>In Fixie.Tests, I added a single test <strong>that always fails</strong>:</p>
-<p><div><script src='https://gist.github.com/5192516.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>We&#8217;ll know we are done writing our build script if we can run the build, witness the test failing, fix the test, rerun the build, and witness the test passing.  This process will give us confidence that actual errors will be properly reported to us later.</p>
-<p>At the root of the repo, outside the /src folder, add a build script written in PowerShell.  This example just builds the solution and runs the tests:</p>
-<p><div><script src='https://gist.github.com/5192529.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>This script is meant to run with psake, but recall that psake&#8217;s files all live under the /src/packages NuGet folder, <em>which is not in source control</em>.  We&#8217;ve got a bit of a chicken-and-egg problem here: we want NuGet to step in during the compile step in order to download any missing dependencies <em>like psake</em>, but we need psake to exist in the first place to run our build script and kick off that download!</p>
-<p>The solution to that problem is to include a build.cmd batch file, which starts by asking NuGet.exe to install solution-wide dependencies (including psake), and <em>then</em> invoke psake to run our default.ps1 file:</p>
-<p><div><script src='https://gist.github.com/5192545.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>When someone clones the repo and runs &#8220;build&#8221; at the command line, the results in the console should show the dependencies successfully downloaded (if they were missing), the solution compiled successfully, and the single unit test executed but failed.  After changing the test to always pass, rerunning the script should show the whole build-and-test process completes successfully.</p>
-<p>I encourage the habit of running &#8220;build&#8221; at the command line manually prior to any commit.  Speaking of commits,</p>
-<p><a href="https://github.com/plioi/fixie/commit/c45ac7a6c50c1be995303b70a85396c89b8fb768">Commit</a>.</p>
-<h2>Version Your Assemblies with Common AssemblyInfo</h2>
-<p>By default, every Project in a Visual Studio Solution contains a file called AssemblyInfo.cs under a Properties folder.  It&#8217;s easy to forget that this exists and actually needs to be updated periodically.  The values in these files live on in the compiled assemblies.  When releasing our libraries/tools to the public, we should be good citizens by keeping this information up to date, especially the version numbers.  That sounds tiresome and error-prone, so let&#8217;s automate as much as possible.</p>
-<p>Versioning assemblies is actually a complex topic, and lots of high-profile projects do it a little differently from each other, so let&#8217;s err on the safe side while also keeping it simple. If our versioning plans need to grow into something more involved later, we can always change it then.</p>
-<p>Note that .NET version numbers have four parts.  Let&#8217;s reserve the first three as special, to be changed only when a human decides that it&#8217;s time to bump the version to reflect the amount of change that has gone on in the project.  Let&#8217;s reserve the fourth number to be set by our CI server.</p>
-<blockquote><p>A Continuous Integration (CI) server is any tool that monitors our source control for new commits, automatically checking out the latest, running our build script, and reporting on success or failure.  We&#8217;re all human, and we&#8217;re bound to occasionally make changes that don&#8217;t pass the build.  The responsible thing is to let a tool alert us whenever our humanity gets the best of us.</p>
-<p>I&#8217;ll be using TeamCity, which additionally tracks an auto-incrementing integer indicating the build number.  We&#8217;ll use the build number as the fourth part of our assemblies&#8217; version numbers.</p></blockquote>
-<p><strong>VERSION.txt</strong> - Store the human-determined first three numbers in a plain text file right beside our build script.</p>
-<p><div><script src='https://gist.github.com/5192587.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p><strong>CommonAssemblyInfo.cs</strong> - Rather than maintain redundant information in separate AssemblyInfo.cs files, we&#8217;ll put all of the common parts in a single file, and then link each Project in the Solution to that common file.  Our build script will read the contents of VERSION.txt and generate src/CommonAssemblyInfo.cs upon each build.  When we run the build ourselves, we&#8217;ll just assume &#8220;.0&#8221; as the fourth part of the version, since locally-run builds are just for local development purposes.  When our CI server runs the build, we&#8217;ll pull the actual build number out of the air and use that for the fourth part.  Therefore, we&#8217;ll always see &#8220;.0&#8221; in source control&#8217;s CommonAssemblyInfo.cs, but the DLLs produced on the CI server will have a complete version number for sharing with the world.</p>
-<p>I updated the build script to produce a CommonAssemblyInfo.cs file with the build number filled in:</p>
-<p><div><script src='https://gist.github.com/5192606.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>I ran the script and confirmed the contents of CommonAssemblyInfo.cs.  Next, I needed to make both Projects in the Solution actually use this file instead of the defaults.  In both Projects, I removed most of the contents of Properties/AssemblyInfo.cs (leaving only the Project-specific [AssemblyName] attribute), right-clicked the Project to Add \ Existing Item, browsed to CommonAssemblyInfo.cs <em>and clicked the down-arrow within the Add button to select Add As Link</em> so that a single copy of the file would be used by all projects.  Once these links were created, I dragged them into the Properties folders to get them out of the way.  Whenever I add a new project to the solution, I&#8217;ll need to repeat this step.</p>
-<p><a href="https://github.com/plioi/fixie/commit/d861ff8fb6bc5621c7066a855fa96733cbe7eebf">Commit</a>.</p>
-<h2>Footwear Accomplished</h2>
-<p>Phew!  These first steps can be frustrating, and a little boring, but they pay for themselves very quickly.  Now that we have a reliable build script, a simple NuGet-friendly file structure, and a simple versioning scheme, we can finally dive into development.</p>
-<p>Socks fully donned, next week, we&#8217;ll stretch the footwear metaphor a bit further, as we &#8220;bootstrap&#8221; Fixie to the point where it can test itself!</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-03-19T00:00:00-05:00" pubdate data-updated="true">Mar 19<span>th</span>, 2013</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/mvc-custom-unobtrusive-validator-attribute-date-range-validation/">
-		
-			MVC Custom Unobtrusive Validator Attribute (Date Range Validation)</a>
-	</h2>
-	<div class="entry-content">
-		<p>There are some useful attributes in MVC that help render dynamic unobtrusive validation to the browser.   The more you can accomplish by simply adding an attribute to a property on a view model the less duplication of JavaScript you have to manage.  Out of the “MVC” box validation for date ranges would require custom JavaScript.  If you have multiple pages that all need to validate ranges, either from the current date or from another date property on your view model, how about having an attribute that you can use to handles this?</p>
-<p>In this blog I’m going to cover:</p>
-<ul>
-<li>Creating a Custom MVC Validation Attribute</li>
-<li>Creating a  Client Validation Rule</li>
-<li>Creating and wiring up the unobtrusive JavaScript to do the validation</li>
-</ul>
-<p>First to create a validation Attribute you need to inherit from the <strong>ValidationAttribute</strong>.  To make this validation available on the client you need to implement the <strong>IClientValidatable</strong> interface.  The <strong>ValidationAttribute</strong> is where you define the settable properties that can be used by the View Model.  To handle the validation server side you can override the <strong>IsValid</strong> method to execute your validation logic.  The <strong>IClientValidatable</strong> interface exposes the <strong>GetClientValidationRules</strong> method.  The validation rules are parameters that will be provided to your JavaScript as an array.  The <strong>ModelClientValidationRule </strong>is where you define the Rules/Settings that the <strong>ValidationAttribute</strong> will provide based upon what was supplied when the attribute was applied to a property on a View Model.</p>
-<p>Lets look at some code before we go to far.</p>
-<p><div><script src='https://gist.github.com/5200208.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>The <strong>DataComparerAttribute</strong> exposes the properties that will be used when the attribute is applied to a property on a View Model.  Notice that the <strong>ModelClientValidationRangeDateRule</strong> exposes the same properties and maps to the validation attribute.  This type is created in the <strong>GetClientValidationRules</strong> method which creates the <strong>ValidationParameters</strong> that will be passed to the Client JavaScript validation method.  Now we have enough to implement the server side <strong>IsValid</strong> method and the client side JavaScript to handle the unobtrusive validation.</p>
-<p>With the attribute defined the JavaScript can be created.  The client JavaScript function is linked through the <strong>ModelClientValidationRule.ValidationType</strong> string property.  In this validator the <strong>ValidationType</strong> was set to <em>“rangeDate”</em>.  This value is what we will use to add to the JQuery validator.  There are two JQuery validator concepts we need to link to the magic string <em>“rangeDate”</em> .  The <strong>$.validator.unobtrusive.adapters </strong>which is where MVC will supply the View Model rules from the <strong>GetClientValidationRules</strong> method and the <strong>$.validator.addMethod </strong>which is where the actual JavaScript validation function is defined.</p>
-<p><div><script src='https://gist.github.com/5205136.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Notice the signature of the <strong>$.validator.unobtrusive.adapters </strong>(line 4).  This is where the same array defined in the <strong>ModelClientValidationRangeDateRule.ValidationParameters</strong> lines up to the client code.  MVC will expect the C# and JavaScript to match.  Notice the date format being used to supply the <em>“minDate”</em> and <em>“maxDate”</em>.  Since date formatting can be complicated having the server side format match the client side format helps to make the validation more predictable.</p>
-<p>With the attribute complete now we can apply it to our View Model and see it in action.  This validator is designed to do validation based upon a Max Date and a Min Date.  For Min and Max the choices are either a sibling property on the View Model (MinDateSelector and MaxDateSelector) or an interval from DateTime.Now (MinDateAddDaysFromNow, MaxDateAddDaysFromNow).  The *DateSelector will be used to get the current value from the property on the View Model.  When the server side <strong>IsValid</strong> is executed Reflection is used to get the property value.  When the client side JavaScript is executed JQuery is used to get the value from a HTML element on the browser.</p>
-<p><div><script src='https://gist.github.com/5205378.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>In the above usage of the attribute the BirthDate must be from January 1st 2013 through the current Date and Time the validation is executed.</p>
-<h3>Summary</h3>
-<p>Adding custom validation to MVC is useful in reducing duplication of code.  As you can see it’s not all that complicated to do.  The validation methods for server side and client side validation risk having different logic and need to use different mechanisms to get property values.  Reflection and JQuery make this easy enough but there are still gotchas that need to be considered.  When your using JQuery to select a value on a page you need to make sure your selector is unique.  If in our case we have more than one View Model loaded on the page the JQuery Selector could return another html elements value.  I hope this gets you started and can open up some new possibilities for validation.</p>
-<p>To see the full example and source code go to <a title="https://github.com/jdmgomoo/MVC-CustomAttributes" href="https://github.com/jdmgomoo/MVC-CustomAttributes">https://github.com/jdmgomoo/MVC-CustomAttributes</a></p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-03-19T00:00:00-05:00" pubdate data-updated="true">Mar 19<span>th</span>, 2013</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/blog/'>Blog</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/mvc/'>MVC</a>, <a class='category' href='/blog/categories/unobtrusive/'>Unobtrusive</a>, <a class='category' href='/blog/categories/validation/'>Validation</a>, <a class='category' href='/blog/categories/validationattribute/'>ValidationAttribute</a>
 
 
 </div>

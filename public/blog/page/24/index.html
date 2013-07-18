@@ -7,7 +7,8 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="Earlier this year, I bought a car—my first new car. Although it fills me with sanctimonious hybrid glee (it really does), it&#8217;s making me &hellip;">
+	<meta name="description" content="Learn to code like a Headspringer: Acquire a tool belt of powerful development skills and techniques. 
+Students of this course will discover which &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -23,19 +24,11 @@
 
 <body>
 	<header id="header" class="inner"><h1><a href="/">Headspring Labs</a></h1>
-<nav id="main-nav"><ul class="main">
-	<li><a href="/blog">Blog</a></li>
-	<li><a href="/blog/archives">Archives</a></li>
-	<li><a href="/open-source">Open Source</a></li>
-	<li><a href="/team">The Team</a></li>
-	<li><a href="/about-us">About Us</a></li>
-</ul>
-</nav>
 <nav id="mobile-nav">
 	<div class="alignleft menu">
 		<a class="button">Menu</a>
 		<div class="container"><ul class="main">
-	<li><a href="/blog">Blog</a></li>
+	<li><a href="/">Blog</a></li>
 	<li><a href="/blog/archives">Archives</a></li>
 	<li><a href="/open-source">Open Source</a></li>
 	<li><a href="/team">The Team</a></li>
@@ -63,9 +56,9 @@
 		
 		<a class="github" href="https://github.com/HeadspringLabs" title="GitHub">GitHub</a>
 		
-    
+	    
 		
-		<a class="coderwall" href="https://coderwall.com/headspring" title="Coderwall">Coderwall</a>
+		<a class="coderwall" href="https://coderwall.com/team/headspring" title="Coderwall">Coderwall</a>
 		
 		
 		
@@ -73,12 +66,20 @@
 		
 		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
 		
-    
+	    
 	</div>
 	<form class="search" action="http://google.com/search" method="get">
 		<input class="alignright" type="text" name="q" results="0">
 		<input type="hidden" name="q" value="site:headspringlabs.com">
 	</form>
+</nav>
+<nav id="main-nav"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+	<li><a href="/open-source">Open Source</a></li>
+	<li><a href="/team">The Team</a></li>
+	<li><a href="/about-us">About Us</a></li>
+</ul>
 </nav>
 
 </header>
@@ -91,166 +92,70 @@
     <article class="post">
 	<h2 class="title">
 		
-		<a href="/blog/continuous-integration-early-indicators-mean-inexpensive-fixes/">
+		<a href="/blog/headspring-developer-boot-cam/">
 		
-			Continuous Integration: Early Indicators Mean Inexpensive Fixes</a>
+			Headspring Developer Boot Camp</a>
 	</h2>
 	<div class="entry-content">
-		<p>Earlier this year, I bought a car—my first <em>new</em> car. Although it fills me with sanctimonious hybrid glee (it really does), it&#8217;s making me neurotic with instrument panel indicator lights. The low-tire-pressure indicator after the weather turned cold. The insistent exclamation point from the airbag computer in my seat. The glaring amber beacon from the Integrated Motor Assist battery. I&#8217;ve never had so many things go wrong with a car!</p>
-<p>Or have I?</p>
-<p>Incorporating automated tests into your Continuous Integration build process can feel similar. You&#8217;re suddenly presented with all these errors. Your product seems to be broken all the time. You liked it better when things were quiet and you didn&#8217;t know how bad it was.</p>
-<p>There are two reasons I&#8217;m getting so many warnings from my car: It has more systems, more features, more <em>computers</em> than any car I&#8217;ve owned before; and it has more health sensors and warning lights. It&#8217;s better at knowing when it&#8217;s a little unhappy, and better at letting me know. I take care of these little maintenance tasks, and all is well. It never reaches the big, blow-up, throw-a-rod, leave-you-stranded, heartache-on-the-interstate meltdown that results from years of indifferent neglect.</p>
-<p>Continuously run unit tests are an army of little health sensors. CI feels painful at first, but it pays off quickly. When the system under test wavers, even minutely, the tests catch it promptly and summon your attention while it is still a small, containable, inexpensive problem. (Provided they&#8217;re running frequently. Once a day is pretty infrequent. Strive to make them fast enough that you&#8217;re willing to run them every time you commit to source control.) Continuous Integration tests keep your problems on the scale of oil changes and tire pressure, instead of engine blocks and radiators.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-12-02T00:00:00-06:00" pubdate data-updated="true">Dec 2<span>nd</span>, 2011</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/continuous-integration/'>continuous integration</a>, <a class='category' href='/blog/categories/unit-testing/'>unit testing</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/strategic-planning-writers-block/">
-		
-			Strategic Planning: Writer&#8217;s Block</a>
-	</h2>
-	<div class="entry-content">
-		<p>The end of the year is traditionally an optimal time for strategic planning.  Although, planning can often feel like the most daunting task to be sandwiched between holiday vacations and family feasts.  There are so many excuses for putting it aside and focusing on tasks with more immediate impact.  Furthermore, there is no plan yet to execute, so writing one involves sharpening knives and awakening your Mojo.  Good ideas have a funny way of hiding themselves behind a blank page.  When faced with this internal attitude, first remember the golden rule of planning:  you are not guaranteed success with a plan, but without one, you are sure to fail.  It&#8217;s best to get started sooner than later. Once you have brainstormed ideas, strategic planning is just a matter of outlining your format and explaining your thoughts.</p>
-<p>With that said, I have put together a &#8220;Do&#8217;s and Don&#8217;ts&#8221; survival kit for writer&#8217;s block:</p>
-<p><strong>DO</strong> Get some fresh air.  It&#8217;s no surprise the physical activity recharges the brain, so take a walk around your block or building.  It only takes five minutes, and is likely to revive your sanity.  Alternatively, take your laptop outside with you and work in the elements.  You&#8217;ll be away from office chatter, interruptions, and the same stagnant setting that got you down in the first place.</p>
-<p><strong>DON&#8217;T</strong> Go to a coffee shop with your laptop.  Coffee shops are typically cited as great work spaces because they offer unlimited caffeine, WIFI, and a community fostering environment.  However, isolation is important when writing a plan.  Planning requires you to focus on harnessing your thoughts, and becoming overly distracted may be harmful to the critical transition from idea to strategy.  Instead, visit a coffee shop when you are brainstorming.  Bring a paper and pen, and jot down notes of whatever comes to you.  Maybe you&#8217;ll hear a conversation or observe some group behavior that will give you a good idea.</p>
-<p><strong>DO </strong>Implement a writing schedule.  Allocate your time so that you can prevent total exhaustion. There should be specific times in your day, maybe two hours, designated solely for writing your plan.  When the time is up, put your pen down and move on to the next task.  It may be helpful to have the subsequent task already specified, so as to alleviate the transition.</p>
-<p><strong>DON&#8217;T </strong> Be to hard on yourself.  Remember that you are only preparing the first draft; you&#8217;re not married to it.  Even if you finish thinking it&#8217;s perfect, rest assured, someone is going to want to make some changes.  So don&#8217;t take it too personally.  It is much easier to rework the plan once you have it written out.</p>
-<p>Strategic planning is important, but you can&#8217;t hang a blank canvas.  The first step is choosing to do it.  How is your company preparing for the new year?</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-12-01T00:00:00-06:00" pubdate data-updated="true">Dec 1<span>st</span>, 2011</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/get-to-know-a-developer-tim-thomas/">
-		
-			Get to Know a Developer: Tim Thomas</a>
-	</h2>
-	<div class="entry-content">
-		<p>Tim Thomas is our un-official front-end expert at Headspring.  A gamer by any other name, Tim’s history of hobbies and interests have driven him to a full-fledge devotion for design and automation.</p>
-<p>His preferred tools are Adobe Illustrator, Photoshop and Microsoft Visual Studio. To code, he uses HTML5, CSS3, Less, JavaScript, JQuery, ASP.NET MVC, and XNA Game Studio.  Tim has worked with and trained others on these technologies for years, written many blog posts, given presentations, and has used these technologies on many of his personal open source projects.</p>
-<p>He’s useful too!  Look at the fine work he did for our new business cards:</p>
-<p><a href="http://www.headspring.com/2011/11/get-to-know-a-developer-tim-thomas/business-cards" rel="attachment wp-att-2307"><img class="alignnone size-medium wp-image-2307" title="business cards" src="http://www.headspring.com/wp-content/uploads/2011/11/business-cards-300x224.jpg" alt="" width="300" height="224" /></a></p>
-<p>I asked him what he is especially interested in right now. He told me CSS3 “for the flexibility and freedom it affords Web Designers” and Web GL because “I see the next big wave of Web visualization being of the three-dimensional variety.”</p>
-<p>Tim’s favorite book is <em>Universal Principles of Design</em> by William Lidwell, Kristina Holden, and Jill Butler. He’s constantly engaging his creative mind, as made evident by his expressed desire to “reconstruct the Headspring offices entirely out of Legos.”  He believes it’s important to connect with broader concepts in design and challenge himself. In fact, when asked what he would need if he were stranded on a deserted island, he told me a set of black <a href="http://www.getbuckyballs.com/">Buckyballs </a>would be essential.</p>
-<p>Tim has a desire to share his passion for design with the community.  He is a founder and leader of the Central Texas XNA User Group (CTXNA). This organization holds monthly meetings to discuss game development with Microsoft technologies.  He also regularly attends and presents for the Austin .NET User Group (ADNUG) and Central Texas .NET User Group (CTXNDUG).  Maintaining a community presence also helps Tim stay updated with what’s new.</p>
-<p>It’s no surprise that, when I asked him of an ability he wished he had, he quickly responded “Teleportation!” I could see how this would be incredibly useful in keeping up with his community commitments.  He explained that really he would just like to enjoy traveling more; he feels that this ability could allow him to spend less time in transit, and more time actually enjoying destinations. I asked him if had any particular destinations in mind, and he told me the Pacific Northwest. “After I travel there, I find myself enriched, centered, and more often than not, highly caffeinated.”</p>
-<p>With that said, “Cheers!” to Tim and his wife, as they welcome their first child, a baby girl, at the end of this month.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-11-25T00:00:00-06:00" pubdate data-updated="true">Nov 25<span>th</span>, 2011</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>, <a class='category' href='/blog/categories/what-the-tech/'>What the tech?</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/guard-rail-programming/">
-		
-			Guard Rail Programming</a>
-	</h2>
-	<div class="entry-content">
-		<p>Rich Hickey, creator of the Clojure programming language, recently gave a talk titled <a href="http://www.infoq.com/presentations/Simple-Made-Easy">Simple Made Easy</a>. About 15 minutes in, Hickey expresses some strong opinions on Test-Driven Development that initially struck me as blasphemy: <em>&#8220;I think we&#8217;re in this world I&#8217;d like to call <strong>Guard Rail Programming</strong>&#8230; &#8216;I can make change because I have tests!&#8217; Who <em>does</em> that? Who drives their car around, banging against the guard rails? Do the guard rails help you get to where you want to go?&#8221;</em></p>
-<p>Yikes. I&#8217;m kind of partial to tests. I get nervous working with a codebase that doesn&#8217;t have some decent test coverage. I cringe at the thought of whole teams committing untested code all day. Coding without tests is coding without a net, and represents a great deal of expensive risk. If I had a nickel for every time a failing test saved me from introducing errors, I would have all the nickels.</p>
-<p>At first, I mistook Hickey&#8217;s point to be one of outright rejection of automated tests, but of course the reality is more interesting than that. What Hickey is really (ahem) <em>railing</em> against is the notion that the act of writing tests first will somehow do my <em>thinking</em> for me, guiding me to a solution without having to reason about my problem along the way. Sometimes forward progress isn&#8217;t just about keeping your keyboard active while you guess-and-check your way to a solution. It&#8217;s test-driven development, not test-adjacent crank-turning (I must admit, though, <strong>TACT</strong> is a pretty sweet acronym).</p>
-<p>Tests <em>are</em> an invaluable tool, so wield them deliberately. Use them to:</p>
+		<p><strong>Learn to code like a Headspringer: Acquire a tool belt of powerful development skills and techniques. </strong></p>
+<p>Students of this course will discover which practices cause projects to fail and which practices help projects succeed. Participants will tackle real world issues faced while developing any .NET project. From setting up a new project and defining the architecture, to implementing functionality in a loosely-coupled and testable manner, students will emerge from training with a solid understanding of <strong>Agile </strong>software development, object-oriented programming, and with new focus and tools to immediately bring value back to their companies.</p>
+<p><a href="http://www.eventbrite.com/event/4433649164?ref=ebtnebregn" target="_blank"><img src="http://www.eventbrite.com/custombutton?eid=4433649164" alt="Eventbrite - Headspring Developer Boot Camp" /></a></p>
+<p>Leave the course with working code, built with the techniques and practices taught! <strong>Plus, students will receive 25% off a ReSharper license.</strong></p>
+<p><strong>Cost $1,975.00. Enroll automatically through Eventbrite,  or call (512) 459 - 2260 to speak with a sales representative. </strong></p>
+<div>
+<h3>1. Topics Covered</h3>
+<div>
+<p><strong>Real-World Issues Tackled</strong></p>
 <ul>
-<li>verify the current state of the system</li>
-<li>confirm expectations</li>
-<li>motivate breaking a problem into smaller pieces</li>
-<li>exercise your API to detect pain points</li>
-<li>prevent regression</li>
-<li>&#8230;</li>
+<li>Domain Driven-Design</li>
+<li>Test-Driven Development</li>
+<li>Source Control Management</li>
+<li>Build automation and continuous Integration</li>
+<li>Database Migrations</li>
+<li>Team dynamics</li>
+<li>Automated deployments</li>
+<li>Onion architecture</li>
+<li>Inversion of Control</li>
+<li>Interfaced-based programming</li>
+<li>Separation of Concerns</li>
+<li>Design patterns</li>
+<li>Object-relational mapping</li>
+<li>Pair programming</li>
+<li>Refactoring</li>
+<li>Automated unit and Integration testing</li>
 </ul>
-<p>&nbsp;</p>
-<p>Rather than thinking of tests as guard rails, think of them as support beams in a mining operation. You dig a little, you put up supports, and you dig a little more. You know what direction you are heading. The supports are a necessary component of the operation, but they are neither the gold nor the pickaxe.</p>
+</div>
+<h3>2. Tools to be Mastered</h3>
+<p><strong>This series shows students how to get more from the real-world tools that we use every day:</strong></p>
+<ul>
+<li>Visual Studio 2010</li>
+<li>Resharper</li>
+<li>SQL Profiler</li>
+<li>Distributed Source Control with Mercurial</li>
+<li>ASP.NET MVC 3</li>
+<li>StructureMap</li>
+<li>NUnit</li>
+<li>Rhino Mocks</li>
+<li>AutoMapper</li>
+<li>NHibernate and Entity Framework</li>
+<li>Psake</li>
+<li>Pstrami</li>
+<li>Tarantino</li>
+</ul>
+<h3>3. Who Benefits Most</h3>
+</div>
+<p><strong>Developers with:</strong></p>
+<ul>
+<li>1+ years of experience in C#, 2+ years developing software</li>
+<li>Understanding of basic web development languages including HTML</li>
+<li>Understanding of the basics of .NET</li>
+<li>Desire to Avoid Common Web Development Pitfalls</li>
+<li>Desire to Write Maintainable System</li>
+</ul>
+<p><em>If you have any concerns whether or not this course is a fit, contact us for help.</em></p>
+<p>Training located in Austin, Texas at the <a href="http://www.headspring.com/contact/" target="_blank">Headspring office</a> (8:30 a.m. to 5:00 p.m.)</p>
+<p>Although it is unlikely, class dates are subject to change. We encourage you to obtain transferable airline/hotel reservations in the event that this should occur.</p>
+<p>By signing up for a Headspring training course, you are accepting the terms and conditions of our<a title="Education Services Agreement" href="http://headspring.wpengine.com/education-services-agreement/" target="_blank">Education Services Agreement</a>.</p>
 
 		
 		
@@ -270,7 +175,115 @@
   
 
 
-<time datetime="2011-11-23T00:00:00-06:00" pubdate data-updated="true">Nov 23<span>rd</span>, 2011</time></div>
+<time datetime="2012-06-15T00:00:00-05:00" pubdate data-updated="true">Jun 15<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/events/'>Events</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/power-to-the-pinkies/">
+		
+			Power to the Pinkies</a>
+	</h2>
+	<div class="entry-content">
+		<p><em>By Casey Gum</em></p>
+<p>As you may have gathered from <a title="Why try vi" href="http://www.headspring.com/2012/06/why-try-vi-part-1">my last post</a>, I am a big fan of vi/vim.  However, one thing that has always annoyed me about vi is that to get back into normal mode, you have to hit the escape key.  It is probably one of the most difficult keys to hit on the whole keyboard and many laptop keyboard layouts have made it about the size of peanut.</p>
+<p>People who have been doing command-line linux for a long time don’t have a problem with this since environmental adaptation has elongated their left pinkies [citation needed].  People who use Windows and OSX, on the other hand, need help.</p>
+<p>So, the natural thing to do is to commandeer the enormous and conveniently located Caps Lock key and make it act like the escape key.  (<strong>Note:  </strong>If you need to type OMG LOL ROFL, you can just hold down the shift key and type – you don’t actually need to use Caps Lock – just saying…)</p>
+<p><a href="http://www.headspring.com/2012/06/power-to-the-pinkies/esc-hands-2" rel="attachment wp-att-5472"><img class="aligncenter size-full wp-image-5472" src="http://www.headspring.com/wp-content/uploads/2012/06/esc-hands1.jpg" alt="" width="500" height="257" /><br />
+</a></p>
+<p>Here&#8217;s how you do it&#8230; </p>
+<p><span style="text-decoration: underline"><span style="color: #000000"><strong>In Windows:</strong></span></span></p>
+<p><strong>Note: </strong>If you are running Windows in Parallels on a Mac, this won’t work – go to the section on how to do it in OSX.</p>
+<p>Take the block of text below and copy it into notepad.  Then, save the file as EscapeKeyRemap.reg and double-click it to run it.  (You can also <strong>Start &gt; Run &gt; regedit</strong> and then choose <strong>File &gt; Import</strong> and import the file.)  As you can easily see,  it sets the &#8220;Scancode Map&#8221; key to a bunch of random numbers.  This causes the Caps Lock key to behave like an escape key, which is all that really matters.</p>
+<div style="font-size: 10px;padding: 10px;border: solid 1px gray;background-color: silver">
+<p>Windows Registry Editor Version 5.00</p>
+<p>[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Keyboard Layout]<br />
+&#8220;Scancode Map&#8221;=hex:00,00,00,00,00,00,00,00,02,00,00,00,01,00,3a,00,00,00,00,00</p>
+</div>
+<p><strong>EDIT</strong>: The previous registry key entry was wrong - I fixed it.</p>
+<p>After you have modified the registry, you will need to reboot the system.  Once you are done rebooting, you will be good to go.</p>
+<p><span style="text-decoration: underline"><strong>In OSX:</strong></span></p>
+<p>In OSX, you will need to install <strong>PCKeyboardHack</strong>.  You can download it from here: <a href="http://download.cnet.com/PCKeyboardHack/3000-2110_4-75363152.html">http://download.cnet.com/PCKeyboardHack/3000-2110_4-75363152.html</a>.</p>
+<p>After you download and run the disk image (.dmg file) you will see an icon on your desktop called <strong>PCKeyboardHack-7.4.0</strong>.  Double-click it and it will open a new window with a file in it called <strong>PCKeyboardHack.reg</strong>.  Double-click that to install it using all the default options.  After it is done installing, you will need to reboot.</p>
+<p><a href="http://www.headspring.com/2012/06/power-to-the-pinkies/screen-shot-2012-06-12-at-8-42-03-pm" rel="attachment wp-att-5475"><img class="aligncenter size-medium wp-image-5475" src="http://www.headspring.com/wp-content/uploads/2012/06/Screen-Shot-2012-06-12-at-8.42.03-PM-300x187.png" alt="" width="300" height="187" /></a></p>
+<p>After rebooting, go to your system preferences and double-click the <strong>PCKeyboardHack</strong> icon.</p>
+<p><a href="http://www.headspring.com/2012/06/power-to-the-pinkies/screen-shot-2012-06-12-at-8-40-29-pm" rel="attachment wp-att-5476"><img class="aligncenter size-medium wp-image-5476" src="http://www.headspring.com/wp-content/uploads/2012/06/Screen-Shot-2012-06-12-at-8.40.29-PM-300x251.png" alt="" width="300" height="251" /></a></p>
+<p>This will bring up a dialog that allows you to remap your Caps Lock key.  Check the Change Caps Lock box and enter the keycode <strong>53</strong>.</p>
+<p><a href="http://www.headspring.com/2012/06/power-to-the-pinkies/screen-shot-2012-06-12-at-8-42-59-pm" rel="attachment wp-att-5477"><img class="aligncenter size-medium wp-image-5477" src="http://www.headspring.com/wp-content/uploads/2012/06/Screen-Shot-2012-06-12-at-8.42.59-PM-300x294.png" alt="" width="300" height="294" /></a></p>
+<p>Close the dialog and you’ll be good to go.  This will carry over to Windows running under Parallels as well.</p>
+<p>Happy Vimming!</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-06-13T00:00:00-05:00" pubdate data-updated="true">Jun 13<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/capslock/'>capslock</a>, <a class='category' href='/blog/categories/escape/'>escape</a>, <a class='category' href='/blog/categories/keyboard/'>keyboard</a>, <a class='category' href='/blog/categories/vi/'>vi</a>, <a class='category' href='/blog/categories/vim/'>vim</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/austin-code-camp-presentation/">
+		
+			Austin Code Camp Presentation</a>
+	</h2>
+	<div class="entry-content">
+		<p>My presentation for the Austin Code Camp is now up on GitHub: <a href="https://github.com/plioi/presentations/tree/master/BuildingALanguage">Building a Language</a>.  The sample project used in all the examples can be found <a href="https://github.com/plioi/rook">here</a>.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-06-11T00:00:00-05:00" pubdate data-updated="true">Jun 11<span>th</span>, 2012</time></div>
 	<div class="tags">
 
 
@@ -286,23 +299,64 @@
     <article class="post">
 	<h2 class="title">
 		
-		<a href="/blog/failure-leads-to-success/">
+		<a href="/blog/html5-boot-camp/">
 		
-			Failure Leads to Success</a>
+			HTML5 Boot Camp</a>
 	</h2>
 	<div class="entry-content">
-		<p>Anyone who has ever achieved success has also experienced failure. However, in the moment, we tend to see failure as a bad thing for several reasons, mostly because it is an unpleasant experience. Putting your heart and soul into reaching a goal or a desired result and falling short makes us feel inadequate. Although many may give up in the face of failure, it is those who remain persistent and determined who ultimately become successful in their mission. Throughout time, the most successful people weren’t the ones who just fell into success but those who experienced failure and worked through the mistakes and criticism to achieve success.</p>
-<p>Let’s look at some examples:</p>
+		<p>Headspring’s hands-on boot camps give participants the chance to take what they are learning and apply it in an existing application. Students will walk away from this course with working examples of how to get the most out of HTML5.</p>
+<p><a href="http://headspring.wpengine.com/wp-content/uploads/2012/06/HTML5_Logo_256.png"><img class="alignright size-full wp-image-5550" title="HTML5_Logo_256" src="http://headspring.wpengine.com/wp-content/uploads/2012/06/HTML5_Logo_256.png" alt="" width="256" height="256" /></a></p>
+<p><strong>Why Learn HTML5</strong></p>
+<p>More and more, the development of business applications is shifting away from server-side due to the superior user experience and ease of coding that front-end development produces. Not only are managers expecting the use of these new technologies, but end users also want the same experience they get from using personal tools and software with those they interact with at work.</p>
+<p><strong>Cost $1,975.00. Enroll at (512) 459 - 2260.</strong></p>
+<p><strong>Topics Covered Include:</strong></p>
 <ul>
-<li>In 1944, young modeling hopeful Norma Jean Baker was told by the director of Blue Book Modeling Agency she should get secretarial work or get married. Norma Jean Baker later became a world-known pop cultural icon, Marilyn Monroe.</li>
-<li>In 1954, an unknown performer was fired by the manager of the Grand Ole Opry who advised him to go back to driving a truck. This singer became the most popular singer in American history and left a legend as the “King of Rock and Roll,” but most know him as Elvis Presley.</li>
-<li>In 1962, Decca Recording Company turned down a record deal with a band of four British musicians citing they were left unimpressed and disliked their sound. This group later became the international phenomenon known as The Beatles.</li>
+<li>HTML5</li>
+<li>CSS3</li>
+<li>JavaScript</li>
+<li>JQuery</li>
+<li>Coffee Script</li>
+<li>and More</li>
 </ul>
-<p>&nbsp;</p>
-<p>So what changed for these people? What led them from failure to success? It wasn’t luck; it was acquired knowledge. They were, at the very least, able to eliminate one course of action in order to develop a new plan.</p>
-<p>The greatest opportunity success through experiencing failure offers is knowledge. Most of us probably don’t remember learning to walk, but surely our parents do, and they can vouch that we didn’t get it right the first time we tried. Did we give up and continue to crawl? No. We tried again until we got it right. But not only did we try again, we practiced walking so much we were eventually able to run. We weren’t born knowing everything, but we were born with the ability to learn and grow. So, similarly when faced with challenges in our professional and personal life, if at first you don’t succeed, try again and continue to practice your skills so they become second nature to you.</p>
-<p>So, success means gaining knowledge from a good, hard failure.  Open yourself to new situations by being vulnerable and exposed to criticism. Understand what it is that holds you back from success, embrace it as motivation and envision yourself in an ideal situation. Essentially, change what failure means to you and harness it as confidence to create further success.</p>
-<p><em>All you need is ignorance and confidence and the success is sure.</em>  -<a href="http://www.brainyquote.com/quotes/quotes/m/marktwain109620.html">Mark Twain</a></p>
+<p><strong>Who Benefits Most? Developers with:</strong></p>
+<ul>
+<li>A Basic Understanding of Microsoft Web Technologies</li>
+<li>A Basic Understanding of Web Development Languages</li>
+<li>A Basic Understanding of the Web Life-Cycle</li>
+</ul>
+<div>
+<hr />
+<p><em>If you have any concerns whether or not this course is a fit, contact us for help.</em></p>
+</div>
+<p>Training located in Austin, Texas (8:30 a.m. to 5:00 p.m.)</p>
+<p>Although it is unlikely, class dates are subject to change. We encourage you to obtain transferable airline/hotel reservations in the event that this should occur.</p>
+<p>By signing up for a Headspring training course, you are accepting the terms and conditions of our <a title="Education Services Agreement" href="http://headspring.wpengine.com/education-services-agreement/" target="_blank">Education Services Agreement</a>.</p>
+<p>View the detailed course curriculum below for more information.</p>
+<hr />
+<p><strong>Course Curriculum</strong></p>
+<p><strong>Day 1</strong></p>
+<p><strong>Session 1.1 – </strong>Introduction to HTML and CSS<br />
+<strong></strong></p>
+<p><strong>Session 1.2 – </strong>Getting Started with JavaScript</p>
+<p><strong>Session 1.3 – </strong>Crafting Semantic HTML<br />
+<strong></strong></p>
+<p><strong>Session 1.4 – </strong>HTML5′s New Features</p>
+<p><em><br />
+</em></p>
+<p><strong>Day 2</strong></p>
+<p><strong>Session 2.1 – </strong>jQuery and Other DOM Tools<br />
+<strong></strong></p>
+<p><strong>Session 2.2 – </strong>Application Frameworks</p>
+<p><strong>Session 2.3 – </strong>Writing Maintainable CSS</p>
+<p><strong>Session 2.4 – </strong>Less, SASS, and CoffeeScript</p>
+<p><em><br />
+</em></p>
+<p><strong>Day 3</strong></p>
+<p><strong>Session 3.1 – </strong>Interacting with the Server<br />
+<strong></strong></p>
+<p><strong>Session 3.2 – </strong>Fitting the Pieces Together</p>
+<p><strong>Session 3.3 – </strong>The Future of Web Development</p>
+<p><strong>Session 3.4 – </strong>Course Retrospective</p>
 
 		
 		
@@ -322,11 +376,11 @@
   
 
 
-<time datetime="2011-11-23T00:00:00-06:00" pubdate data-updated="true">Nov 23<span>rd</span>, 2011</time></div>
+<time datetime="2012-06-10T00:00:00-05:00" pubdate data-updated="true">Jun 10<span>th</span>, 2012</time></div>
 	<div class="tags">
 
 
-	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>, <a class='category' href='/blog/categories/business-intelligence/'>business intelligence</a>, <a class='category' href='/blog/categories/continuous-improvement/'>continuous improvement</a>
+	<a class='category' href='/blog/categories/events/'>Events</a>
 
 
 </div>
@@ -338,18 +392,55 @@
     <article class="post">
 	<h2 class="title">
 		
-		<a href="/blog/best-kept-secret-ms-words-selection-pane-saves-time-reduces-frustration/">
+		<a href="/blog/overloading-on-return-types/">
 		
-			Best-Kept Secret: MS Word&#8217;s Selection Pane Saves Time, Reduces Frustration</a>
+			Overloading on Return Types</a>
 	</h2>
 	<div class="entry-content">
-		<p>It&#8217;s probably because I never learned to play first-person shooters, but I have a devil of a time in Word selecting the element I want out of a page full of drawing shapes. Trying to select a text box, I click on what I think is that one-pixel box border, and end up selecting the canvas behind it, or a nearby rectangle, or nothing at all. Have you experienced this frustration? I&#8217;ve even resorted to &#8220;Send to Back&#8221; to get something out of my way so that I can select the thing I want.</p>
-<p>I stumbled onto the solution. To explain it, I have made a <a href="http://www.youtube.com/watch?v=1puMOp7d-kk">video demo of MS Word&#8217;s Selection Pane</a> feature.</p>
-<p>http://www.youtube.com/watch?v=1puMOp7d-kk</p>
-<p>On the ribbon bar, select the Page Layout tab. Look within the Arrange group, towards the right, and click the Selection Pane button. That opens the Pane, which lists all drawing objects that are on the current page.</p>
-<p>From the Selection Pane, you can easily click the name of the item you want, and that will select it. From there, you can change formatting options or adjust its position with your keyboard.</p>
-<p>It brings some extra features, too. Click the eye image next to an item to hide and show it, similar to Photoshop. Drag items to reorder them, which changes their z-index, bringing items in front of others.</p>
-<p>I was so delighted when I found that button. It changed my day from one of grumbling at my mouse to calling my coworkers over to show &#8216;em. Enjoy!</p>
+		<p>When you define two methods with the same name in C#, they have to take in different argument types in order for them to be distinguished from each other.  Sometimes, I find myself wishing that you could also overload a method name when the inputs are the same, but return types differ.</p>
+<p>Technically, you can&#8217;t do that in C#, but you can fake it.</p>
+<h2>What would that even <em>mean</em>?</h2>
+<p>Let&#8217;s imagine a hypothetical C# in which you were allowed to overload on return types.  Consider the following class:</p>
+<p><div><script src='https://gist.github.com/2891704.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>In the call to <code>foo.GetValue()</code>, we cannot tell which method should be called.  However, what if we tried to call it with some more context?</p>
+<p><div><script src='https://gist.github.com/2891706.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>When we have some local type information available, we really could make an unambiguous decision about which overload to call.  When initializing <code>i</code>, the only overload that could work is the one returning an <code>int</code>.  When initializing <code>b</code>, the only overload that could work is the one returning a <code>bool</code>.</p>
+<p>We could conceivably find the right overload to call <em>based on how the return value is used</em>.  That seems odd at first, but there&#8217;s nothing really Earth-shattering about it.  Even in today&#8217;s real C#, overloads are picked based on what call-site types we happen to be using, and this would simply be yet another bit of call-site type information at our disposal.  Also, today&#8217;s real C# figures out the type of a lambda expression based on how it&#8217;s <em>used</em> as well, so there&#8217;s a precedent for being able to use usage-site context.</p>
+<h2>Using &#8216;out&#8217; Parameters</h2>
+<p>Let&#8217;s rewrite the original invalid class, using &#8216;out&#8217; parameters instead of return types:</p>
+<p><div><script src='https://gist.github.com/2891722.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>This is completely valid.  <strong>When picking the right overload to call, the compiler considers &#8216;out&#8217; parameters as if they were inputs.</strong></p>
+<blockquote><p>
+  There is no substantive difference between a method that returns some type <code>T</code>, and a <code>void</code> method with an &#8216;out&#8217; parameter of type <code>T</code>.  The difference is only skin deep.
+</p></blockquote>
+<h2>A Concrete Example</h2>
+<p>I&#8217;ve encountered this in the real world on a few projects, dealing with the unfortunate interface <code>IDataReader</code>.  This is the interface used to process low-level ADO.NET result sets one row at a time.  Nowadays, most of us access databases with higher-level tools like NHibernate or PetaPoco, but this interface serves as a good example because:</p>
+<blockquote>
+<p>1) It was written before .NET gained generics, so it has some awkwardly-named methods we&#8217;d like to work around.<br />
+  2) Using it leads you to write hard-to-read, monotonous code.</p>
+</blockquote>
+<p>Both of these issues will be resolved with the &#8216;out&#8217; keyword.</p>
+<p>This interface exposes many methods that take in an <code>int</code> and return a value.  The input <code>int</code> indicates which column of the result set you are interested in, and the method <em>name</em> says what type you hope to find in that column.  <code>reader.GetInt32(2)</code> gives you the <code>int</code> found in the third column, <code>reader.GetDataTime(3)</code> gives you the <code>DateTime</code> found in the fourth column, etc.  To further complicate matters, you shouldn&#8217;t call these methods when the result set contains the special <code>DBNull</code> value.  When using this interface, you end up writing ugly things like this:</p>
+<p><div><script src='https://gist.github.com/2891743.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Note that every time you want call one of these Get* methods, you answer two questions:</p>
+<blockquote>
+<p>1) What type do I expect to find at the given position?<br />
+  2) Are null values possible at the given position?</p>
+</blockquote>
+<p>Note also that in each line, both of these questions are answered by the declared type of the left-hand-side.  Why should we have to repeat those answers on the right-hand-side?  Armed with some extension methods and the &#8216;out&#8217; keyword, things get much less repetative:</p>
+<p><div><script src='https://gist.github.com/2891749.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>When you&#8217;re reading in 10 or so columns, the brevity adds up.  When writing a method that needs to read in a record from an <code>IDataReader</code>, you are <em>thinking</em> &#8220;I expect to get back values with these names, at these positions, with these types&#8221;.  You are <em>not</em> thinking &#8220;I expect to pull a Guid out of the first position so I&#8217;ll GetGuid, and I expect to pull an int out of the second position so I&#8217;ll GetInt32 but watch out for DBNull, and&#8230;&#8221;.  By &#8220;overloading on the return type&#8221;, we get to say what we mean <em>and nothing else</em>.</p>
+<p>I rarely use &#8216;out&#8217; parameters, but it&#8217;s nice to know they actually have a purpose every now and again, when the need presents itself.</p>
 
 		
 		
@@ -369,234 +460,11 @@
   
 
 
-<time datetime="2011-11-22T00:00:00-06:00" pubdate data-updated="true">Nov 22<span>nd</span>, 2011</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/microsoft/'>Microsoft</a>, <a class='category' href='/blog/categories/what-the-tech/'>What the tech?</a>, <a class='category' href='/blog/categories/word/'>Word</a>, <a class='category' href='/blog/categories/efficiency/'>efficiency</a>, <a class='category' href='/blog/categories/tips/'>tips</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/can-you-spare-some-change/">
-		
-			Can You Spare Some Change?</a>
-	</h2>
-	<div class="entry-content">
-		<p><a href="http://www.headspring.com/2011/11/can-you-spare-some-change/credit-card-reader-for-android-smartphone" rel="attachment wp-att-2258"><img class="size-thumbnail wp-image-2258 alignleft" src="http://www.headspring.com/wp-content/uploads/2011/11/Credit-Card-Reader-for-Android-Smartphone-150x150.jpg" alt="" width="150" height="150" /></a></p>
-<p>&nbsp;</p>
-<p>We’ve all been there… You are walking into the grocery store around the holidays and by the entrance are the familiar red kettle and the ringing bell. You would like to donate, <em>or maybe you wouldn’t</em>, but its 2011, who carries cash anymore?  Fact of the matter is, its 2011, debit and credit cards are the norm… Thus enter the “Square.”</p>
-<p>&nbsp;</p>
-<p>You haven’t seen this yet? Chances are that if you haven’t, you will be just as puzzled as me as to why this wasn’t created years ago. The “Square” is a peripheral device that connects to your smart phone via the headphone jack, and is designed to take payments from virtually anywhere. Pretty cool, huh? We will see…</p>
-<p>I notice two fatal flaws with this technology that may cause a ruckus:</p>
-<ul>
-<li>I mentioned the red kettle and bell earlier, the approach this year is to allow Red Cross volunteers to take donations with this new technology. Predictions are that this new trend will grow for not just philanthropic organizations, but Girl Scout troops selling cookies, fundraisers, and of course small to big business. Will the ease of these debit/credit card transactions be a blessing or a curse? No longer can the excuse, “I don’t carry cash,” be used to avoid signing up for the magazine subscription that knocks on the front door. “I only carry credit cards,” can’t be a cop out for those that just don’t wish to buy or donate. I don’t believe that everyone who uses this line are dishonest - lying to avoid an unplanned transaction. But will this accessibility make it harder to opt out, ultimately taking away the ability to choose?</li>
-</ul>
-<ul>
-<li>I really don’t have to go into much depth on the second flaw - security.  Would the use of the “Square,” be like leaving your front door open?  I don’t like to be cynical, but it’s a reality that needs to be addressed. How safe is the information transmitted from a stranger’s smart phone to the credit card vendor? Also, smart phones are connected to the world through wireless signals (the easiest signal to hack into). We should be cautious about trusting this technology the same way we trust Amazon to have our credit card information on file for future purchases.</li>
-</ul>
-<p>&nbsp;</p>
-<p>So is this a good thing or a bad thing? I do know one thing for sure, my wife won’t be happy when I come home with a $100 charge on the credit card and 20 boxes of thin mints.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-11-18T00:00:00-06:00" pubdate data-updated="true">Nov 18<span>th</span>, 2011</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>, <a class='category' href='/blog/categories/small-talk-and-big-news/'>Small Talk &amp; Big News</a>, <a class='category' href='/blog/categories/what-the-tech/'>What the tech?</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/building-rich-enums/">
-		
-			Building Rich Enums</a>
-	</h2>
-	<div class="entry-content">
-		<p>Headspring has recently updated its open-source <a href="https://bitbucket.org/headspringlabs/enumeration">Enumeration</a> class. We recommend this as an alternative to using plain old .NET enums in your domain models. Most of the time, you use a .NET enum in order to define a finite set of named values. <code>Enumeration</code> serves that purpose too.</p>
-<p>What&#8217;s so bad about enums? They provide a very thin abstraction over integers, and that abstraction is both leaky and insufficient when building a rich domain model.</p>
-<h2>The .NET enum abstraction leaks</h2>
-<p>When you define an enum, you are really defining several integer constants.</p>
-<p><div><script src='https://gist.github.com/1375478.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Whether you declare the integers or not, each enum value is really an integer. Unfortunately, this means that unintended values are allowed:</p>
-<p><div><script src='https://gist.github.com/1375483.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>This is .NET&#8217;s way of reminding you of its own implementation details. -1 has nothing to do with the roles in my system. Enums fail to limit values to those I consider meaningful, so why am I using them as domain objects?</p>
-<h2>The .NET enum abstraction is insufficient</h2>
-<p>You can think of an enum definition as shorthand for a class. That class effectively inherits from int, exposing public static getters that return each defined constant, including convenience methods for converting to and from strings.</p>
-<p>What if the shorthand just isn&#8217;t enough to describe the class we really wanted to write? What if your type deserves some additional methods, or you need to associate additional metadata with each value? You could resort to attaching metadata via attributes, and provide some extension methods to reflect on them, but that&#8217;s a long way to go to avoid admitting that we <em>really</em> just wanted to constrain our domain objects to a fixed set of values. It&#8217;s nice to use ints as the &#8216;unique identifier&#8217; for each value in the set, but we don&#8217;t need that int to be the <em>whole</em> story.</p>
-<h2>Using Headspring&#8217;s Enumeration Class</h2>
-<p>Using <code>Enumeration</code>, we could define a more useful set like so:</p>
-<p><div><script src='https://gist.github.com/1375494.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Here we see a fixed set of objects, with the convenient int and string representations we&#8217;re used to having with enums. <code>Role.FromInt32(int)</code> allows you to load the value associated with a given int, such as when reading from a database, but only the fixed set of integers will be allowed. Each value can have arbitrary properties, and the enumeration can contain additional methods.</p>
-<h2>Enumeration&#8217;s Generic Type Constraint</h2>
-<p><code>Enumeration</code> contains an interesting generic constraint. Several of the methods on the base class need to deal with the type of the individual values, so <code>Role</code> is declared to implement <code>Enumeration&lt;Role&gt;</code>. You can think of the <code>Role</code> class as &#8220;passing&#8221; its own definition up to the base class so <code>Enumeration</code> can make use of it. Similarly, <code>Enumeration</code> needs to be declared in such a way that it can know what&#8217;s being &#8220;passed up&#8221; to it:</p>
-<p><div><script src='https://gist.github.com/1375498.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>In other words, <code>Enumeration</code> will be working with any type that is itself declared as an <code>Enumeration</code>. This constraint basically mimics the &#8220;shape&#8221; of the first line of the <code>Role</code> type. Likewise, it <strong>demands</strong> that any child class be declared with a line of that shape.</p>
-<p>At first, it may seem like <code>class Role : Enumeration&lt;Role&gt;</code> should result in a compiler error. It looks like we&#8217;re trying to <em>use</em> a type before we&#8217;re even finished <em>defining</em> it. The truth is, the compiler need only compare the &#8220;shape&#8221; of the two classes&#8217; declarations in order to convince itself that the required pattern is being respected, and <em>then</em> it can go on with the business of verifying the <em>content</em> of each class.</p>
-<h2>Conclusion</h2>
-<p>.NET enums are still useful, such as when you need to <a href="http://msdn.microsoft.com/en-us/library/system.flagsattribute.aspx">pack several bit flags into a single integer</a>, but when using them to define finite sets of objects in your domain model, their brevity and ubiquity may tempt you away from writing rich domain objects. When you reach for the handy dandy <code>enum</code> keyword, consider whether <code>Enumeration</code> is a better fit.</p>
-<p><a href="http://www.headspring.com/feed" target="_blank">Subscribe to our blog feed</a> for the freshest content.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-11-18T00:00:00-06:00" pubdate data-updated="true">Nov 18<span>th</span>, 2011</time></div>
+<time datetime="2012-06-07T00:00:00-05:00" pubdate data-updated="true">Jun 7<span>th</span>, 2012</time></div>
 	<div class="tags">
 
 
 	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/a-worthy-opponent/">
-		
-			A Worthy Opponent</a>
-	</h2>
-	<div class="entry-content">
-		<p><a href="http://www.headspring.com/2011/11/a-worthy-opponent/istock_000000673539small" rel="attachment wp-att-2240"><img class="size-medium wp-image-2240 alignleft" title="Bucking Bull" src="http://www.headspring.com/wp-content/uploads/2011/11/iStock_000000673539Small-300x207.jpg" alt="" width="300" height="207" /></a></p>
-<p>Imagine that running a business is like riding a bull in a rodeo. The straps are wrapped tight around your hands. You grin, nod, and hold on for as long as you can.  The bull bucks furiously, and if it’s ornery enough, you’ll be thrown off just as soon as you mount.  If you get the choice, maybe you would like a tamer bull, not quite as mad, so you can stay on longer.  After all, the bull is your opponent, the battle is your business, and you want to win.</p>
-<p>Let’s explore three reasons why you really want the mad bull:</p>
-<ol>
-<li>Achieving a harder challenge yields greater reward. The trick to this metaphor is that in a rodeo, your score is calculated both by how long you are able to stay on the bull and by your selected bull’s temperament.  A mean bull will buck you off early, but he is worth more points for the challenge.  What is the risk worth to you?  Take a gamble, and you may surprise yourself.</li>
-<li>If you know your opponent will be tough, you’re more likely to prepare.  Preparing for an angry bull won’t just allow you to stay on the bull longer; it makes you a better bull rider.  Your training doesn’t disappear when the ride is over. You come out stronger and with more knowledge about how the bull moves.</li>
-<li>A healthy match spurs the opportunity for both participants to innovate.  If you have ever interviewed someone, you have probably asked them “How did you face a tough situation?”  The answer you want to hear is something honest and creative.  You need to know how this person will innovate in a challenging situation, because innovation is valuable.  Discover for yourself a new technique for staying on a mad bull longer.  Change the game!</li>
-</ol>
-<p>&nbsp;</p>
-<p>You can stay on the tamer bull for a really long time, and maybe you’ll earn enough points to win.  Maybe you’ll walk away with some money, a nice belt buckle, or a pat on the back. But no one will be surprised, no one will ask you how you did it, and no one will consider you “the one to beat”.</p>
-<p>The moral of the metaphor is, don’t back down from a good fight.  Be as brave as your inner bull rider. Find an opponent that is worthy of you.</p>
-<p>So which bull do you want?</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-11-18T00:00:00-06:00" pubdate data-updated="true">Nov 18<span>th</span>, 2011</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/what-did-the-interrupting-cow-say/">
-		
-			What Did the Interrupting Cow Say?</a>
-	</h2>
-	<div class="entry-content">
-		<p>Moo!</p>
-<p>Everyone hates to be interrupted – even people who do it themselves.  It’s rude and can leave a bad impression on any person.  It’s worse than bad breath!  Interrupters are often labeled by their victims as selfish, careless, mean, know-it-alls.   Confronting the problem can be awkward, at best, and can sometimes lead to an even more hostile situation.</p>
-<p>I have heard this phrase associated with interrupters, “Hate the attitude, not the person.”  However, that’s only half of it. The word attitude has a bad connotation, and it indicates an incorrect assumption about interrupters.  The truth is those who interrupt are well intentioned people.  Often times, all they want to do is help.  It’s not likely that this person is thinking anything about you personally in the moment they are interrupting you.  It’s still rude and impolite, but it’s not necessarily mean.  Therefore it is very important to remember first not to take it personally when you are interrupted.  A little understanding goes a long way.</p>
-<p>Think of the other ways in which you experience interruptions, and you may feel more comfortable with managing the nuisance.  Your thoughts are constantly being interrupted by ringing phones and email notifications.  Conversely, sometimes our pesky thoughts can interrupt daily tasks.  Have you ever put a book or an email aside because you had a nagging thought about where you placed your phone? We respect these instinctual interruptions because they have a good purpose.  Verbal interruptions are easier to get upset about, but can also serve a good purpose.</p>
-<p>People who verbally interrupt are everywhere, and we all have to work with them.  In fact, it can be a good thing.  Many successful business people are hailed for their quick-thinking skills. Their processes are not linear, and that is an indicative characteristic of creativity.  An interrupter has the ability to think and express themself differently, which should be recognized as a benefit when those features are utilized in the appropriate environment.  Instead of ignoring or resisting these people’s thoughts or ideas, try using them.  If a chronic interrupter breaks the pattern of a brainstorming exercise, try thanking them.  Say something like “Thank you. Would you mind holding on to or writing down your thought, so we can discuss it?” By keeping things positive, you will have the opportunity to cultivate the interrupters thought and get the conversation back on track without creating tension.</p>
-<p>What are some other ways that your office copes with interruption?</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-11-16T00:00:00-06:00" pubdate data-updated="true">Nov 16<span>th</span>, 2011</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>
 
 
 </div>

@@ -1,0 +1,388 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Headspring Labs</title>
+	<meta name="author" content="Headspring Labs">
+
+	
+	<meta name="description" content="At a previous job, I worked for a company that used Subversion for all of its projects. This was a welcome change coming from a TFS and Visual &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script async="true" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">Headspring Labs</a></h1>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+	<li><a href="/open-source">Open Source</a></li>
+	<li><a href="/team">The Team</a></li>
+	<li><a href="/about-us">About Us</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:headspringlabs.com">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/HeadspringLabs" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/HeadspringLabs" title="GitHub">GitHub</a>
+		
+	    
+		
+		<a class="coderwall" href="https://coderwall.com/team/headspring" title="Coderwall">Coderwall</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	    
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:headspringlabs.com">
+	</form>
+</nav>
+<nav id="main-nav"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+	<li><a href="/open-source">Open Source</a></li>
+	<li><a href="/team">The Team</a></li>
+	<li><a href="/about-us">About Us</a></li>
+</ul>
+</nav>
+
+</header>
+	
+		
+	
+	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/branching-subversion-vs-git/">
+		
+			Branching: Subversion vs Git</a>
+	</h2>
+	<div class="entry-content">
+		<p>At a previous job, I worked for a company that used Subversion for all of its projects.  This was a welcome change coming from a TFS and Visual Source Safe background.</p>
+<p>We did relatively little work with branches.  For the most part, a branch was created only to represent the state we wanted to deploy to production.  In other words, everybody worked against trunk, and when we were happy with what we had we would create a branch with the version number as its name, and we would deploy from there.  If a hotfix was needed, at least we didn&#8217;t have to worry about deploying it along with incomplete features under development; we&#8217;d base the hotfix on the version branch and deploy that.</p>
+<p>On one occasion, someone needed to make a fairly drastic change to the system.  It was a little risky, and would have interfered with the rest of the team if it was performed against trunk, so they made a feature branch for it.  About a month later, I was tasked with merging that back into trunk.</p>
+<p><strong>This was, shall we say, an Interesting Merge.</strong></p>
+<p>Throughout development of the branch, work being performed in the trunk had <em>not</em> been periodically merged into the branch, meaning that there were many, many conflicts without an obvious resolution.  Ultimately things worked out, but it didn&#8217;t seem like a great way to do things.  With my lack of exposure to alternatives, I didn&#8217;t really see the great benefit of frequent branching.</p>
+<h2>Sane Branching</h2>
+<p><strong>The whole concept of branching was intimidating to me because the <em>way</em> we did it caused more pain than it alleviated.</strong></p>
+<p>Things have gotten better since then.  I&#8217;ve been able to experience a sane feature branching strategy with Subversion over the past year, and the pain was far outweighed by the benefits.  Throughout development of a feature branch, you periodically merge from the parent branch so that the effort of merging takes place <em>away</em> from the main line and in small doses.  When it&#8217;s time to merge the feature branch back to the parent, there&#8217;s very little risk involved because you already know that your changes work in concert with your coworkers&#8217; changes.</p>
+<p>It&#8217;s still a little frustrating with Subversion, though.  Branching and switching between branches are big and slow operations because they&#8217;re dealing with point-in-time copies of Big Honking Folders.  It&#8217;s almost a <em>coincidence</em> that Subversion is aware of the history involved.</p>
+<h2>Saner Branching</h2>
+<p>Git has <em>again</em> changed my mind about branching.  <strong>With Subversion, a branch is a whole new commit containing a point-in-time copy of your code.  With git, a branch is a named pointer to a commit you&#8217;ve already made.</strong>  You get a little less noise in your history because you don&#8217;t have to wade through phony commits: some Subversion commits represent real work performed, and some just represent the act of branching, which doesn&#8217;t really <em>tell</em> me something.</p>
+<p>Creating a branch in git is extremely fast.  It doesn&#8217;t take long to write a commit ID to a local file, and that&#8217;s all there is to it.  Git lets all of your branches use the same workspace, and switching from one branch to another is also fast.  I find myself creating branches way more often than before.  It&#8217;s so fast and so simple compared to Subversion that speed/complexity no longer have to come into play when deciding whether or not to create one.  <strong>I&#8217;m about to start working on a new train of thought, so I branch.</strong></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-17T00:00:00-06:00" pubdate data-updated="true">Feb 17<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/headspring-shows-some-love-at-knowbilitys-austin-air/">
+		
+			Headspring Shows Some Love at Knowbility&#8217;s Austin AIR</a>
+	</h2>
+	<div class="entry-content">
+		<p>Just in time for Valentine’s Day, three Headspring consultants competed in the annual Austin Accessibility Internet Rally (Austin AIR) hosted by <a href="http://www.knowbility.org/">Knowbility.org</a>.  Knowbility&#8217;s website explains the goal of the rally is &#8220;to teach participating web developers and designers about the tools and techniques necessary to make the web accessible to everyone – including people with disabilities.&#8221;  In addition, participating nonprofits benefit by receiving professional help to build a new or replace an existing site.  Judging for the competition lasts a couple weeks, and the winner is announced at an awards ceremony in March.</p>
+<p>Headspring-ers Anne Epstein, Mahendra Mavani and Deran Schilling showed up bright and early Saturday morning  to form their team, calling themselves the Headspring Hurwitzes (a tribute to our reigning Chief Architect, Kevin Hurwitz). They were assigned to Texas TERA with a mission to breathe life into their stale, outdated website.</p>
+<p>Now this is a fine looking group:</p>
+<p style="text-align: center;"><a href="http://www.headspring.com/wp-content/uploads/2012/02/Headspring-Hurwitzes.jpg"><img class="aligncenter" style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border-style: initial; border-color: initial; border-image: initial; border-width: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/02/Headspring-Hurwitzes_thumb.jpg" alt="Headspring Hurwitzes" width="380" height="384" border="0" /></a></p>
+<p>&nbsp;</p>
+<p style="text-align: center;"> <a href="http://www.headspring.com/2012/02/headspring-shows-some-love-at-knowbilitys-austin-air/headspring-hurwitzes-and-texas-tera" rel="attachment wp-att-3594"><img class="size-full wp-image-3594 aligncenter" title="Headspring Hurwitzes and Texas TERA" src="http://www.headspring.com/wp-content/uploads/2012/02/Headspring-Hurwitzes-and-Texas-TERA.jpg" alt="" width="502" height="377" /></a></p>
+<p>&nbsp;</p>
+<p>The team had a lot of fun and told me how happy they were about having the opportunity to participate.  “It was really a privilege to help out such an important and genuinely interesting and cool organization.  It turned out to be a lot of fun too,” said Anne Epstein.</p>
+<p>Deran Schilling, who participated and and won last year’s Houston AIR event told me, “I think the best part was meeting the people that make Texas TERA successful.  They’re an amazing group of people and I was happy that we could help out.  That sounds so canned…but it’s true!”</p>
+<p>Mahendra Mavani commented, &#8220;First or last, who cares about the winner now? We already won when we showed the happy faces of Texas TERA, who can now use their site on laptops, tablets, and smart phones.&#8221;</p>
+<p align="left">Texas TERA representatives were also happy to be a part of the fun, and thanked their team for providing them with a dramatically improved site. They mentioned the biggest benefit is that now content can easily be edited by anyone on the board or staff, using any device, anywhere.</p>
+<p align="left">Here’s a <strong>before</strong> and <strong>after</strong> look at what the Headspring Hurwitzes accomplished in an 8 hour window:</p>
+<p>&nbsp;</p>
+<p style="text-align: center;"><a href="http://www.headspring.com/wp-content/uploads/2012/02/Texas-TERA-website2.png"><img class="aligncenter" style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border-style: initial; border-color: initial; border-image: initial; border-width: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/02/Texas-TERA-website_thumb2.png" alt="Texas TERA website" width="487" height="480" border="0" /></a></p>
+<p style="text-align: center;"><a href="http://www.headspring.com/wp-content/uploads/2012/02/Texas-TERA-new-website2.png"><img class="aligncenter" style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border-style: initial; border-color: initial; border-image: initial; border-width: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/02/Texas-TERA-new-website_thumb2.png" alt="Texas TERA new website" width="452" height="480" border="0" /></a></p>
+<p>&nbsp;</p>
+<p>Pretty cool, right?</p>
+<p>We’ll keep everyone posted as we find out more information, upcoming Austin AIR announcements and awards.  Stay tuned!</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-14T00:00:00-06:00" pubdate data-updated="true">Feb 14<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>, <a class='category' href='/blog/categories/small-talk-and-big-news/'>Small Talk &amp; Big News</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/get-to-know-a-developer-brandon-barry/">
+		
+			Get to Know a Developer: Brandon Barry</a>
+	</h2>
+	<div class="entry-content">
+		<p><a href="http://www.headspring.com/wp-content/uploads/2012/02/IMG_5596_2.jpg"><img style="padding-left: 0px; padding-right: 0px; float: right; padding-top: 0px; border: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/02/IMG_5596_2_thumb.jpg" alt="IMG_5596_2" width="164" height="244" align="right" border="0" /></a>From what our coworkers say, Senior Consultant Brandon Barry can go head to head with Jimmy Bogard about the internals of the .NET framework.  Recently, he wrote a library for .NET that allows for dynamic querying SQL databases using LINQ syntax, but with no configuration. You can find it on <a href="https://github.com/maydaytx/DynamicLinq">Github</a>.</p>
+<p>All in all, he is incredibly knowledgeable Headspring developer, and is known for his affinity for clean, elegant code.  In fact, he prefers refactoring rather than having to work around bad code.  He is also great proponent for balancing the benefit of tests without sacrificing quality.  Here’s what else I learned today:</p>
+<p>&nbsp;</p>
+<p><strong>Are you an expert at anything?</strong></p>
+<p>I’m an expert in .NET.  I’m very strong with all things technical and I usually volunteer for the difficult problems.  I’m also creative (probably because I’m left-handed), which is why software development is my passion.  I’m also an expert rock bassist.</p>
+<p><strong>What led you to software development? What did you learn first?</strong></p>
+<p>When I was in 10th grade, I taught myself to program my TI-86 graphing calculator during math class.  I wrote programs to solve test questions so that I could just enter the inputs, and the program would show all the steps and the answer.   I also wrote a couple of simple text-based games that I let my classmates play.  Once I realized that I liked creating the game more than playing it, I was hooked.</p>
+<p><strong>So what came next?</strong></p>
+<p>When it was time for college I knew I wanted to major in Computer Science.  However, I  couldn’t get into the program right away because of my grades, so I started in Mechanical Engineering.  I’ve always thought that was weird. Isn’t engineering supposed to be harder?  Anyway I transferred as soon as I could into the Computer Science department.  We learned a few languages and a lot of theory, but not a lot about best practices in development.  I acquired my “skill” for development at my first job out of college in Temple at McLane Advanced Technologies.</p>
+<p><strong>Where do you begin when learning something new?</strong></p>
+<p>I take the path of least resistance.  Sometime I follow an example.  I taught myself how to play chords on the guitar by watching my dad and brother play one day.  After they left the room, I was playing along to my first Nirvana song (<em>In Bloom</em>) in no time.  Other times I read a manual.</p>
+<p><strong>How do you gauge “time well spent”?</strong></p>
+<p>I gauge time well spent by how much enjoyment I get.  If you don’t enjoy what you are doing and have a passion for it, it’s really just a waste of time.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-10T00:00:00-06:00" pubdate data-updated="true">Feb 10<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/get-to-know-a-headspringer/'>Get To Know a Headspringer</a>, <a class='category' href='/blog/categories/what-the-tech/'>What the tech?</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/am-i-not-dead-commit/">
+		
+			Am I Not Dead? Commit.</a>
+	</h2>
+	<div class="entry-content">
+		<p>As I mentioned last week, I&#8217;ve <a href="http://www.headspring.com/2012/02/hey-tfs-git-out-of-my-way">started using git</a> recently, specifically a git-to-tfs bridge so that I can avoid as much contact with TFS as humanly possible.</p>
+<p>Most of my recent experience has been with subversion, so I have been <em>unlearning</em> that as much as I have been <em>learning</em> git.  The most apparent difference right away is what it really means to make a &quot;commit&quot;.</p>
+<p>With subversion, even when working in a feature branch, my commits would be immediately shared with my coworkers.  I was basically handing a diff to my coworkers every time I checked something in.   Since anything I committed would be immediately shared, I had an extra concern at commit-time: &#8220;If I commit right now, and someone else gets latest, will I mess things up for them?&#8221;.  Despite wanting to commit as often as possible, I could only allow myself to commit when I had completed <em>the smallest chunk of work that could be shipped if I got hit by a bus</em>.  This seemed like the most reasonable rule of thumb to follow, but even these commits could end up fairly large.</p>
+<p>Subversion is like a video game with sparse save points.  You play for a while, maybe even an hour or two, before reaching a point where you&#8217;re even <em>allowed</em> to save your progress.  You might even get a little lost along the way, and you can&#8217;t just jump back to the last save point without wasting all that time.</p>
+<p>Working with git has felt a lot more like playing the original <a href="http://en.wikipedia.org/wiki/Half-Life_(video_game)">Half-Life</a>.  Maybe it was really difficult, or maybe I was just terrible at it, but I found myself being squashed or blown up every other minute.  Thankfully, instead of having to make your way to a special save point, you could just save your progress at any moment or jump back to any previous save.  <strong>Have I moved 10 feet?  Am I not dead?  Save.</strong></p>
+<p>Now that I can work with a local feature branch, I can think differently about what a commit actually <em>is</em>.  If I commit far more often than I did with subversion, I harm nobody; it&#8217;s all just local anyway.  When I ultimately push up to TFS, it&#8217;ll batch up all my local commits into a single set of changes representing the before/after comparison of all of my work.  Any missteps along the way won&#8217;t show up to my coworkers, yet while <em>doing</em> the work I could always look back to retrace my own train of thought.  <strong>Have I made any forward progress, shippable or not?  Am I not dead? Commit.</strong></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-10T00:00:00-06:00" pubdate data-updated="true">Feb 10<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/why-should-i-use-html5s-new-elements/">
+		
+			Why Should I Use HTML5&#8217;s New Elements?</a>
+	</h2>
+	<div class="entry-content">
+		<p>A question I’m frequently asked typically goes something like this:</p>
+<blockquote><p>
+  &#8220;I hear about all these new HTML tags, but I don’t have any problem with using <code>&lt;div&gt;</code>s like I&#8217;ve always done. Why should I care?&#8221;
+</p></blockquote>
+<p>The questioners are referring to the new elements introduced with HTML5, including <code>&lt;nav&gt;</code> (which encapsulates a part of your page containing navigation elements), <code>&lt;article&gt;</code> (think of a newspaper story, with its heading, byline, callouts, etc.), and <code>&lt;time&gt;</code>, <a href="http://dev.opera.com/articles/view/new-structural-elements-in-html5/">among others</a>. While it&#8217;s true the Web survived for many years without these new elements, there&#8217;s no reason to stand on tradition. The new elements provide a number of benefits to both Web developers and end users, and, best of all, you can start using them right away!</p>
+<ul>
+<li><strong>Content aggregators and search providers can better figure out your content.</strong> News aggregators and search engines are everywhere, and are often an excellent way to disseminate your published content. Why not make it easy on them by explicitly marking what parts of your page they care about and what parts they can ignore?</li>
+<li><strong>Screen readers need all the help they can get.</strong> Many potential visitors require assistive devices to view the Web, but Web sites have been slow to adopt tools to help. HTML5’s new elements help out by letting screen readers know what sections of the page represent real content, and what sections are simply visual fluff.</li>
+<li><strong>The new tags are there, regardless.</strong> Either natively or with easy and clever workarounds, practically all browsers in use today recognize the new elements. Plus, they&#8217;ve been standardized by a number of industry groups. It&#8217;s never been easier to simply start working with them and you can rest easy knowing the new elements are here to stay.</li>
+<li><strong>Your coworkers will thank you.</strong> The new elements are far more descriptive than the <code>&lt;div&gt;</code> standby is, meaning the same content is considerably more understandable to other developers looking at your HTML source. Self-explanatory semantic markup reduces confusion and is often cleaner-looking than its cousins with pervasive use of <code>&lt;div&gt;</code> tags.</li>
+<li><strong>You&#8217;re probably already using them.</strong> These elements were added to the HTML5 specification because Web designers were already using them&#8230;just in a more verbose format. Most Web sites have common sections, like a header, navigation, and footer, yet there was no way to signify this with HTML. Thanks to the new elements, instead of something like this (which used to be all over the Internet):
+<pre>&lt;code&gt;&amp;lt;div id=&#39;footer&#39;&amp;gt;...&amp;lt;/div&amp;gt;
+&lt;/code&gt;</pre>
+<p>&#8230;we now have a much more concise representation of the same concept:</p>
+<pre>&lt;code&gt;&amp;lt;footer&amp;gt;...&amp;lt;/footer&amp;gt;
+&lt;/code&gt;</pre>
+<p>Much better.</p>
+</li>
+</ul>
+<p>Whether you&#8217;re working on a Web site for the newest, hottest start-up or helping maintain a 10-year-old internal Web site, the new HTML5 elements can provide you with a number of benefits. They&#8217;re easy to start using, respected by Web developers and search engines alike, and, soon, you’ll start to wonder how you lived without them.</p>
+<p>Have you encountered other benefits of using the new HTML5 elements? Have a particularly-elegant use case for one? Let us know in the comments!</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-08T00:00:00-06:00" pubdate data-updated="true">Feb 8<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
+
+
+</div>
+	
+</div>
+</article>
+
+<nav id="pagenavi">
+    
+        <a href="/blog/page/38/" class="prev">Prev</a>
+    
+    
+        <a href="/blog/page/40/" class="next">Next</a>
+    
+    <div class="center"><a href="/blog/archives">Blog Archives</a></div>
+</nav></div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Headspring Labs
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+
+
+
+
+</body>
+</html>

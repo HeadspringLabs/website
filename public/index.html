@@ -23,19 +23,11 @@
 
 <body>
 	<header id="header" class="inner"><h1><a href="/">Headspring Labs</a></h1>
-<nav id="main-nav"><ul class="main">
-	<li><a href="/blog">Blog</a></li>
-	<li><a href="/blog/archives">Archives</a></li>
-	<li><a href="/open-source">Open Source</a></li>
-	<li><a href="/team">The Team</a></li>
-	<li><a href="/about-us">About Us</a></li>
-</ul>
-</nav>
 <nav id="mobile-nav">
 	<div class="alignleft menu">
 		<a class="button">Menu</a>
 		<div class="container"><ul class="main">
-	<li><a href="/blog">Blog</a></li>
+	<li><a href="/">Blog</a></li>
 	<li><a href="/blog/archives">Archives</a></li>
 	<li><a href="/open-source">Open Source</a></li>
 	<li><a href="/team">The Team</a></li>
@@ -63,9 +55,9 @@
 		
 		<a class="github" href="https://github.com/HeadspringLabs" title="GitHub">GitHub</a>
 		
-    
+	    
 		
-		<a class="coderwall" href="https://coderwall.com/headspring" title="Coderwall">Coderwall</a>
+		<a class="coderwall" href="https://coderwall.com/team/headspring" title="Coderwall">Coderwall</a>
 		
 		
 		
@@ -73,12 +65,20 @@
 		
 		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
 		
-    
+	    
 	</div>
 	<form class="search" action="http://google.com/search" method="get">
 		<input class="alignright" type="text" name="q" results="0">
 		<input type="hidden" name="q" value="site:headspringlabs.com">
 	</form>
+</nav>
+<nav id="main-nav"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+	<li><a href="/open-source">Open Source</a></li>
+	<li><a href="/team">The Team</a></li>
+	<li><a href="/about-us">About Us</a></li>
+</ul>
 </nav>
 
 </header>
@@ -97,34 +97,9 @@
 	</h2>
 	<div class="entry-content">
 		<p>Last week, we saw an example of <a href="http://www.headspring.com/dynamic-test-discovery/">Dynamic Test Discovery</a> in Fixie, in which the test runner can be made to run a different set of tests each time, depending on context. A Fixie convention could make decisions based on how the test run was initiated. This week, I&#8217;ll demonstrate a similar feature which takes advantage of yet more context.  For this example, our convention will get to make decisions based on the command line arguments used to kick off the test run.</p>
-<blockquote><p>Today&#8217;s code sample works against <a href="http://nuget.org/packages/Fixie/0.0.1.70">Fixie 0.0.1.70</a>. The customization API is in its infancy, and is likely to change in the coming weeks.</p></blockquote>
-<p>Before this build, Fixie.Console.exe treated <em>all</em> of its arguments as paths to test assembly files. As of Fixie 0.0.1.70, you can also specify arbitrary key/value pairs on the command line:</p>
-<p><div><script src='https://gist.github.com/5981304.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>The console runner converts the named arguments into an ILookup&lt;string, string&gt;.  ILookup objects are similar to a dictionary, except that each key can hold any number of values instead of just one.</p>
-<p>Let&#8217;s take advantage of this ILookup collection in order to implement NUnit-like categories. Consider a test class with several tests, some of which have been categorized with attributes:</p>
-<p><div><script src='https://gist.github.com/5972309.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Fixie has no idea what these category attributes mean, and it has no idea what any of the command line key/value pairs mean. Fixie&#8217;s responsibility in the matter is simply to pass the ILookup along so that your custom conventions can make use of them however you see fit. Along with test classes like CategorizedTests, my test assembly contains my own category attributes:</p>
-<p><div><script src='https://gist.github.com/5972294.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Beside these category types, we define a custom convention to take advantage of them:</p>
-<p><div><script src='https://gist.github.com/5972318.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>As we saw last week, our convention class can optionally accept a RunContext in its constructor. Now, this RunContext includes the ILookup of command line arguments. This convention says that a method in a test class should be treated as a runnable test case when a) no categories have been requested or b) categories have been requested and the method in question has at least one matching category attribute.</p>
-<p>Let&#8217;s run our tests a few times, with different command line arguments:</p>
-<p><div><script src='https://gist.github.com/5972353.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<blockquote><p>Oh, dear. When creating this demo project, I discovered a bug with the way the assembly path arguments are treated. If you use relative file paths, Fixie will fail to find them, and will produce a completely useless error message. It incorrectly alters the current directory <em>before</em> resolving the paths. That&#8217;s easy to fix, but if you try this demo out yourself against this build, be sure to use an absolute path like the example above. Yay for dogfooding!</p></blockquote>
-<p>Ushering arbitrary key/value pairs from the command line to your custom conventions is a very <em>small</em> feature, but one that opens up an important door for open-ended customization.</p>
 
 		
-		
+		<a href="/blog/by-your-command-line/" class="more-link">Read on &rarr;</a>
 	</div>
 
 
@@ -416,452 +391,6 @@
 
 
 <time datetime="2013-06-12T00:00:00-05:00" pubdate data-updated="true">Jun 12<span>th</span>, 2013</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/the-sincerest-form-of-flattery/">
-		
-			The Sincerest Form of Flattery</a>
-	</h2>
-	<div class="entry-content">
-		<p>Last week, we saw how to define <a href="http://www.headspring.com/fixies-life-bicycle/">an NUnit-imitating convention</a> with the Fixie test framework: when the custom Convention class was present in our test project, the default rules for finding and running tests were replaced, allowing us to write test classes with a familiar NUnit class lifecycle.</p>
-<p>This week, we&#8217;ll see how to customize Fixie to imitate the xUnit lifecycle.</p>
-<blockquote><p>Today’s code samples work against <a href="http://nuget.org/packages/Fixie/0.0.1.56">Fixie 0.0.1.56</a>. The customization API is in its infancy, and is likely to change in the coming weeks.</p></blockquote>
-<h2>Review: The NUnit Lifecycle</h2>
-<p>With NUnit, one instance of your [TestFixture] class is constructed, and that instance is shared across all of that class&#8217;s [Test] methods.  Test discovery is based on the presence of these attributes.  You can identify methods as [SetUp] and [TearDown] in order to run common code before and after each individual test.  You can also identify methods as [TestFixtureSetUp] and [TestFixtureTearDown], in order to perform class-wide initialization and cleanup steps at the start and end of the class&#8217;s lifespan.  You can use fields in the class to hold state that lives across all of the tests.  At the end, if the class is IDisposable, the Dispose() method is called once.</p>
-<h2>The xUnit Lifecycle</h2>
-<p>xUnit is based on NUnit, but they both have different rules about what a test is, and how to run a test once it is found.  xUnit test methods are marked with a [Fact] attribute, and test classes don&#8217;t need any attribute since it is implied by the presence of [Fact]s.  More importantly, xUnit test classes are constructed again and again, once for each [Fact].</p>
-<p>Frequent reconstruction of the test class has a few consequences from the point of view of NUnit users.  </p>
-<p>The first consequence affects how to go about implementing basic setup and teardown logic.  Construction, fixture-level setup, and test-level setup suddenly collapse into one concept, so all of your setup is simply placed in the constructor.  Disposal, fixture-level teardown, and test-level teardown likewise collapse into one concept, so all of your teardown logic goes in the Dispose() method.</p>
-<p>The second consequence of this frequent reconstruction is that test class fields are forgotten from one test to the next, which raises the obvious question, what if I <em>just plain want</em> some state to live across all the tests?  I may have an integration test, for instance, with database setup steps that are costly in time.  I don&#8217;t want to be forced to redo that setup for each test simply to satisfy the strong opinions of a test framework!</p>
-<p>Thankfully, xUnit gives us an escape hatch in the form of IUseFixture&lt;T&gt;.  Your test class can implement this interface for some type T, and xUnit will in turn construct one shared instance of that T.  After reconstructing the test class and before running the next [Fact] method, xUnit injects that T into your test class instance.  When all the [Facts] are done, xUnit will likewise dispose of the T, giving you something like NUnit&#8217;s [TestFixtureTearDown].</p>
-<p>That&#8217;s a mouthful.  Let&#8217;s see a sample xUnit test fixture exercising the whole test lifecycle:</p>
-<p><div><script src='https://gist.github.com/5710920.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<h2>Customizing Fixie to Mimic xUnit</h2>
-<p>In order to mimic xUnit, we first have to tell Fixie how to find [Fact] methods.  Then, we&#8217;ll need to tell it to find all of the IUseFixture&lt;T&gt; declarations to construct the shared instances of whatever type was provided as the &#8220;T&#8221;.  After that prep work, we can start the actual test lifecycle: for each [Fact] method, we want to construct an instance of the test class, inject the T objects into that instance, call the [Fact], and call Dispose().  After performing that cycle for each [Fact], we need to clean up the shared instances of the Ts.</p>
-<p>Here&#8217;s the Fixie Convention class which accomplishes this lifecycle.  The details have been omitted to focus on the Convention API, but the <a href="https://github.com/plioi/fixie/blob/7fa012d1c63016b7b2e6061fa91cca90fbbc3326/src/Fixie.Samples/xUnitStyle/CustomConvention.cs">xUnit-style CustomConvention class</a> can be found on GitHub under the Samples namespace:</p>
-<p><div><script src='https://gist.github.com/5710922.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>The FixtureExecution section says what should be done with each test fixture class as a whole: we want one instance per test case, we want the whole process to be preceded by a call to PrepareFixtureData, and we want the whole process to be concluded by a call to DisposeFixtureData.</p>
-<p>The InstanceExecution section says what should be done immediately after construction and immediately before disposal of the test class.  Test runs should be preceded by a call to InjectFixtureData so that the shared &#8220;T&#8221; objects can be available to the test.</p>
-<blockquote><p>Note how awkward it is to say that InstanceExecution has a SetUp action but no relevant TearDown action.  On TearDown, we &#8220;do nothing&#8221; by returning an empty list of errors.  That&#8217;s clearly a wart on this API; one I intend to improve upon soon.</p></blockquote>
-<p>The convention class itself has some state, a dictionary which holds onto the shared T objects.  PrepareFixtureData populates the dictionary by finding IUseFixture&lt;T&gt; declarations.  InjectFixtureData reads from that dictionary in order to call the test class&#8217;s SetFixture(&#8230;) methods.  DisposeFixtureData disposes and removes items from the dictionary.</p>
-<p>When we run our sample test class in the presence of this custom convention class, we get the desired output:</p>
-<p><div><script src='https://gist.github.com/5710924.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<h2>Mimicry as Motivation<br />
-<h2>
-<p>Fixie&#8217;s customization features are intended to set it apart from other test frameworks, so why spend all this time using it only to mimic those other frameworks?  By using two familiar yet dramatically different test lifecycles as a target, I&#8217;ve been able to discover and expose the &#8220;hooks&#8221; they both have in common.  I&#8217;ve discovered that I needed to be able to switch between two modes of construction: one instance per test class vs. one instance per test case method.  I&#8217;ve also discovered that I needed <em>three</em> levels of setup/teardown hooks, where I was originally guessing that two would be enough: 1) the start and end of each test <em>method</em>, 2) the start and end of each test class <em>instance</em>, and 3) the start and end of each test <em>class</em>.</p>
-<p>I selected NUnit and xUnit mimicry deliberately as a first goal along the development of Fixie&#8217;s customization API.  If I couldn&#8217;t do what these frameworks do, there&#8217;d be no point.  Now that I&#8217;ve been able to mimic them, I can start to use the customization API to do new, more interesting things.  Next week, we&#8217;ll try to come up with a convention that is similar to NUnit, but addresses some complexity issues I dislike facing in my NUnit tests.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-06-05T00:00:00-05:00" pubdate data-updated="true">Jun 5<span>th</span>, 2013</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/fixies-life-bicycle/">
-		
-			Fixie&#8217;s Life Bicycle</a>
-	</h2>
-	<div class="entry-content">
-		<p>Last week, we saw how the <a href="https://github.com/plioi/fixie">Fixie test framework</a> gives you control over <a href="http://www.headspring.com/patrick/test-discovery/">test discovery</a>. This week, we&#8217;ll see my first (admittedly rough) attempt at similarly giving you control over test <em>execution</em>. Let&#8217;s start with a quick review of last week&#8217;s test discovery feature, and then extend the example to demonstrate Fixie&#8217;s treatment of test execution.</p>
-<h2>Test Discovery (Again)</h2>
-<p>By default, Fixie uses a reasonable rule of thumb to determine which of your classes are test classes, and which of your methods are test methods. The default rules are implemented like so:</p>
-<p><div><script src='https://gist.github.com/5675320.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Test classes are those whose name ends with &#8220;Tests&#8221;.  Test case methods are those with zero parameters, declared to be either <code>void</code> or <code>async Task</code>.  In other words, if it looks like a test, it&#8217;s a test.</p>
-<p>When you wish to stray from these defaults, though, you can provide your own <em>convention</em> class: tell Fixie what your test classes and test methods <em>look like</em>, and it will gladly use your rule of thumb instead of the default. Last week, we introduced NUnit-style attributes and provided our own custom convention describing the treatment of those attributes:</p>
-<p><div><script src='https://gist.github.com/5675323.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>By stating that test fixtures are marked with [TestFixture] and test cases are marked with [Test], Fixie starts to use NUnit-style test discovery behavior.</p>
-<h2>Test Discovery is Only Half the Battle</h2>
-<p>Implicit in the default convention is the notion that you will get a new instance of the test class <em>for each test method</em>. That rule matches xUnit, but differs from NUnit, in which you get one instance of the test class <em>shared</em> across all the test methods in that class. Using our custom convention, we&#8217;re not quite behaving like NUnit.  If you wanted to do NUnit-style [TestFixtureSetUp] and [TestFixtureTearDown], you&#8217;d be surprised! Using the above custom convention, consider the following test fixture and its output under Fixie:</p>
-<p><div><script src='https://gist.github.com/5675325.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p><div><script src='https://gist.github.com/5675329.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>That&#8217;s not at all like NUnit! Thankfully, our custom convention was honored so that only FirstTest() and SecondTest() are considered to be tests. Unlike NUnit, though, Fixie has completely neglected the per-test [SetUp]/[TearDown] and per-class [TestFixtureSetUp]/[TestFixtureTearDown].  On top of that, it has constructed a fresh instance of the class twice instead of once.</p>
-<p><strong>Our custom convention is allowing us to stray from the defaults for test <em>discovery</em>, but so far we&#8217;re still using Fixie&#8217;s default test <em>execution</em> rules.</strong></p>
-<h2>Customizing Test Execution</h2>
-<blockquote><p>The functionality covered in this section is in its infancy and is likely to change in the short term, but serves to demonstrate the kind of customization I am shooting for.</p></blockquote>
-<p>Fixie&#8217;s Samples project contains a more useful <a href="https://github.com/plioi/fixie/blob/cd85b7ddae14dbe7deb82d2070a314fd8d710819/src/Fixie.Samples/NUnitStyle/CustomConvention.cs">NUnit look-alike convention</a>:</p>
-<p><div><script src='https://gist.github.com/5675332.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Here, we see three new sections. First, we say that for each test fixture, create an instance per fixture class instead of creating an instance per test case. Second, for each test class instance, wrap the built-in behavior with calls to the [TestFixtureSetUp] and [TestFixtureTearDown] methods. Lastly, for each test case method, wrap the built-in behavior with calls to the [SetUp] and [TearDown] methods.</p>
-<p>Armed with this new convention, running the sample test class confirms that we&#8217;re now following the NUnit test fixture lifecycle:</p>
-<p><div><script src='https://gist.github.com/5675335.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>The FixtureExecutionBehavior you select in your convention is the key driving force affecting how your test classes will be executed. There are two built-in behaviors: <a href="https://github.com/plioi/fixie/blob/cd85b7ddae14dbe7deb82d2070a314fd8d710819/src/Fixie/Behaviors/CreateInstancePerCase.cs">CreateInstancePerCase</a>, and <a href="https://github.com/plioi/fixie/blob/cd85b7ddae14dbe7deb82d2070a314fd8d710819/src/Fixie/Behaviors/CreateInstancePerFixture.cs">CreateInstancePerFixture</a>.</p>
-<p>These two classes give Fixie a two-mode test lifecycle. A life-<em>bi</em>cycle if you will, <a href="http://en.wikipedia.org/wiki/Fixed-gear_bicycle">finally justifying the name beyond any doubt</a>.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-30T00:00:00-05:00" pubdate data-updated="true">May 30<span>th</span>, 2013</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/test-discovery/">
-		
-			Test Discovery</a>
-	</h2>
-	<div class="entry-content">
-		<p>Over the last few weeks, I&#8217;ve implemented some customization features in <a href="https://github.com/plioi/fixie">the Fixie test framework</a>. The first of these features is now available. Today, we&#8217;ll see this feature in action. <strong>We&#8217;re going to tell Fixie what our tests <em>look like</em>, and Fixie will then find them and run them.</strong></p>
-<blockquote><p>Today&#8217;s code samples work against <a href="http://nuget.org/packages/Fixie/0.0.1.49">Fixie 0.0.1.49</a>. The customization API is in its infancy, and is likely to change as I address more involved features in the coming weeks.</p></blockquote>
-<h2>The Default Convention</h2>
-<p>If you&#8217;ve used NUnit before, you know that you have to mark your test classes with [TestFixture] and your test methods with [Test] in order for NUnit to know that those are your tests.  NUnit uses the presence of those attributes to &#8220;discover&#8221; your tests before it can run them. NUnit is therefore opinionated about test discovery.</p>
-<p>If you&#8217;ve used xUnit before, you know that you have to mark your test methods with [Fact] in order for xUnit to know that those are your tests. xUnit uses the presence of that attribute to &#8220;discover&#8221; your tests before it can run them. xUnit is therefore opinionated about test discovery.  (We&#8217;ve seen that <a href="http://www.headspring.com/patrick/low-ceremony-xunit/">xUnit is a little more flexible in this regard</a>, but it&#8217;s still pretty opinionated about what a test is.)</p>
-<p><strong>Fixie is not opinionated about test discovery.</strong> It has a simple default, but allows you replace that default with your own conventions. By default, Fixie will look for test classes by a naming convention: if a class in your test project has a name ending with &#8220;Tests&#8221;, then it is a test class. After finding these classes, it will then look for test methods as any public instance void-or-async method with zero parameters. In other words, if it looks like a test, walks like a test, and quacks like a test, Fixie will assume it&#8217;s a <del>duck</del> test by default.</p>
-<p>In my implementation, these rules are defined by <a href="https://github.com/plioi/fixie/blob/075d41822e6bee18624bd8329343d68e31d58c54/src/Fixie/Conventions/DefaultConvention.cs">DefaultConvention</a>:</p>
-<p><div><script src='https://gist.github.com/5624801.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Let&#8217;s see this convention in action. This demo assumes you have <a href="http://testdriven.net/">TestDriven.NET</a> installed. I have set up CTRL-T to run whatever test method or test class my cursor is sitting on.</p>
-<p>Create a new Solution in Visual Studio (I called mine &#8220;DiscoveryConventions&#8221;), and install <a href="http://nuget.org/packages/Fixie/0.0.1.49">Fixie 0.0.1.49</a> in the Package Manager Console:</p>
-<p><div><script src='https://gist.github.com/5624804.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Fixie deliberately has no assertion statements of its own, so install <a href="http://nuget.org/packages/Should">Should</a> too:</p>
-<p><div><script src='https://gist.github.com/5624806.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Add a Calculator class. We&#8217;re going to write some tests for this in a moment:</p>
-<p><div><script src='https://gist.github.com/5624810.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Add a test class using the default convention:</p>
-<p><div><script src='https://gist.github.com/5624813.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Place your cursor in either test method and hit your TestDriven.NET shortcut (for me, that&#8217;s CRTL-T). You&#8217;ll see TestDriven.NET ran that test with output like so:</p>
-<p><div><script src='https://gist.github.com/5624820.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Place your cursor <em>between</em> the ShouldAdd and ShouldSubtract methods and run TestDriven.NET again. You&#8217;ll see it ran all the tests in the class with output like so:</p>
-<p><div><script src='https://gist.github.com/5624822.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>So far, so boring.  This is a similar experience to using NUnit and xUnit. The only thing I&#8217;ve saved you is a few keystrokes for the attributes.</p>
-<h2>Custom Conventions</h2>
-<p>What if you don&#8217;t like the default convention?  What if you have a different naming convention for your test classes and test methods?  What if you like the way attributes jump out at you? Thankfully, you can set aside the default convention and substitute your own. If you place your own implementation of Convention in your test assembly, Fixie will discover and use that one <em>instead</em> of DefaultConvention.</p>
-<blockquote><p>Let&#8217;s try this customization out by first making it work more like NUnit, and then making it work more like xUnit. Lastly, we&#8217;ll see how Fixie accomplishes this behavior.</p></blockquote>
-<h2>Immitating NUnit</h2>
-<p>Rename CalculatorTests to CalculatorTestFixture. Since the class no longer ends with &#8220;Tests&#8221;, it no longer matches the default convention. If you try to run the tests again, TestDriven.NET <em>will</em> run it, but it will say &#8220;(Ad hoc)&#8221; instead of &#8220;(Fixie 0.0.1.49)&#8221;, which means that TestDriven.NET has no idea that this class is a test class anymore, and it just called the method as best as it could. That&#8217;s nice, but it won&#8217;t be enough when we get into things like test classes that have SetUps and TearDowns in the weeks ahead, so today we need to ensure that even when we stray from the default convention, TestDriven.NET should still be able to know that it&#8217;s looking at a Fixie test class!</p>
-<p>Let&#8217;s define some NUnit-style attributes:</p>
-<p><div><script src='https://gist.github.com/5624826.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Apply these to CalculatorTestFixture as you would with NUnit tests:</p>
-<p><div><script src='https://gist.github.com/5624830.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Trying to run these tests, we see that TestDriven.NET is <em>still</em> using the lame &#8220;(Ad hoc)&#8221; test runner.  TestDriven.NET is still unaware that it is looking at a test class! <strong>Teach it to care about these attributes by adding a new Convention subclass to the project:</strong></p>
-<p><div><script src='https://gist.github.com/5624832.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Here, we are saying that our test fixture classes are those which have [TestFixture] attributes, and our test case methods are those which have [Test] attributes. Running our tests again, we see that TestDriven.NET is finally aware that CalculatorTestFixture is a Fixie test class, so it was able to use Fixie again to actually run the tests:</p>
-<p><div><script src='https://gist.github.com/5624835.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p><strong>We have changed the way that Fixie discovers our tests by telling it what our tests look like.</strong></p>
-<h2>Immitating xUnit</h2>
-<p>xUnit works a little differently from NUnit. You don&#8217;t have to put an attribute on the test class, but you do have to put a [Fact] on each test method. Any class that happens to have a [Fact] method is assumed to be a test class.</p>
-<p>Delete the NUnit-style TestFixtureAttribute and TestAttribute classes, and replace them with a [Fact] attribute:</p>
-<p><div><script src='https://gist.github.com/5624837.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Update CalculatorTestFixture to use xUnit-style test decoration:</p>
-<p><div><script src='https://gist.github.com/5624838.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Update the CustomConvention to use xUnit-style rules:</p>
-<p><div><script src='https://gist.github.com/5624842.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Here, we are saying that our test fixture classes are those which have any methods that have [Fact] attributes, and our test case methods are those which have [Fact] attributes. Running our tests again, we see that TestDriven.NET is again aware that CalculatorTestFixture is a Fixie test class, so it was able to use Fixie again to actually run the tests:</p>
-<p><div><script src='https://gist.github.com/5624843.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p><strong>We again changed the way that Fixie discovers our tests by telling it what our tests look like.</strong></p>
-<h2>Neat Trick. What&#8217;s the Point?</h2>
-<p>NUnit, xUnit, and other test frameworks are very opinionated about two major concepts: how to discover your test classes/methods, and how to go about executing them. Today, we see that Fixie can at least give you an extra degree of freedom around test discovery. You&#8217;re free to use whatever logic you want to decide whether a class is a test class, and whether a method is a test method. (We&#8217;ll see how Fixie addresses the second part, test <em>execution</em>, in the coming weeks.)</p>
-<p>Even if all this accomplished was fewer keystrokes, or an easier path to migrate from another framework <em>to</em> Fixie, I&#8217;d consider it a net gain. However, I&#8217;m already benefiting from the flexibility in more ways. When using Fixie to test Fixie, I use the default convention with a twist: when I need to prove that Fixie will do the right thing in the event of a test <em>failure</em>, I want to ask some <em>other</em> &#8220;phony&#8221; test class to run. If the phony test class fails in the way I expect, my real tests pass. Only the real tests need to pass for my build to succeed. The phony tests are identified with the <a href="https://github.com/plioi/fixie/blob/075d41822e6bee18624bd8329343d68e31d58c54/src/Fixie/Conventions/SelfTestConvention.cs">SelfTestConvention</a>:</p>
-<p><div><script src='https://gist.github.com/5624845.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>I create phony test classes as nested, private classes with names ending in &#8220;Fixture&#8221;. The wrapper classes follow the DefaultConvention and must pass, while the must-pass tests do their work by asking the SelfTestConvention to run a phony test class. Without these conventions, it would be too hard for me to test that I can properly handle <em>failing</em> tests.</p>
-<h2>How Does it Work?</h2>
-<p>We&#8217;ve seen that Fixie somehow knows how to look for Convention classes. After finding them, it must be able to use them in some way, so Fixie must somehow construct instances of your Conventions, too. The answer is <a href="http://msdn.microsoft.com/en-us/library/ms173183(v=vs.110).aspx">reflection</a>: code that searches and uses other assemblies at runtime.</p>
-<p>When I ask Fixie to run all the tests in the test assembly, it needs to reach out and find all the Convention classes and then construct them for use. Where it <em>used</em> to just construct a <code>new DefaultConvention()</code> every time, my Runner class <em>now</em> does the following:</p>
-<p><div><script src='https://gist.github.com/5624849.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Here, we search the test assembly for types that are subclasses of Convention, and create an instance of each.  If we didn&#8217;t find any, we&#8217;ll assume the DefaultConvention.</p>
-<p>By reaching out into your code with reflection, Fixie enables you to tell it what your test classes and test methods look like.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-22T00:00:00-05:00" pubdate data-updated="true">May 22<span>nd</span>, 2013</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/enabling-change/">
-		
-			Enabling Change</a>
-	</h2>
-	<div class="entry-content">
-		<p>Unit testing is meant to enable change by giving you confidence about the current state of your project. However, one of the criticisms of unit testing is that fine-grained tests (such as having one or more tests per method), locks you into implementation details.  With fine-grained tests in place, you&#8217;re not free to move responsibilities between methods and between classes.</p>
-<p>How are we to resolve this apparent contradiction?</p>
-<p>I do lean towards fine-grained tests, especially in the early days of a project. At that point, small implementation details are <em>all you&#8217;ve got</em>. As a project grows and evolves, that early &#8220;scaffolding&#8221; of fine-grained tests may start to become an obstacle rather a change-enabler. <strong>Test frameworks are tools meant to give us the freedom to change, but we must deliberately wield them to enable that change.</strong> When your fine-grained tests start to discourage change, introduce new tests at a higher level, focusing on the behavior of your system rather than focusing on individual method details. Once the higher-level tests provide meaningful coverage on their own, the early scaffolding tests can be removed.</p>
-<blockquote><p>Be willing to use your test framework to enable change, even when that change is within your test code. As your project evolves, so does your testing strategy.</p></blockquote>
-<h2>Fixie&#8217;s Early Test Strategy</h2>
-<p>While <a href="http://www.headspring.com/patrick/bootstrapping/">bootstrapping</a> the basic functionality of the <a href="https://github.com/plioi/fixie">Fixie test framework</a>, I deliberately tested everything at a fine-grained level. One of the first things I implemented was the logic around executing a single test case. For a given test method, I needed to prove that I could invoke the method via reflection and properly handle some subtle exception catching details. The tests for this were fine-grained: I had several tests for a single pivotal method. I needed confidence over this important block of code because everything that followed would build upon it.</p>
-<p>Fast-forward 2 months, and I have built up a lot more infrastructure.  Fixie&#8217;s starting to resemble something useful, and I&#8217;m beginning to take serious steps towards the customization features that motivated the whole project. These features will have a big impact on what exactly happens when a test case runs. I&#8217;ve done some design work on how test case execution needs to work going forward, but <em>that early test-method-runner and exception-handler code was no longer in a good place</em>. I needed to start shuffling implementation details between a few classes, in order for the details to find their proper home and enable further work, but the important tests of that behavior were too fine-grained.</p>
-<p>I needed to move code, but that code was set in concrete!</p>
-<h2>Fixie&#8217;s Revised Test Strategy</h2>
-<p>Rather than declare that unit testing is bad, I instead needed to admit that my tests needed to change just as much as the code <em>under</em> test needed to change. I needed to revise my testing approach in light of new information, to enable further development.</p>
-<p>Fortunately, I was already close to the solution. As I started implementing more involved features like support for async/await test cases and IDisposable test fixtures, I developed a pattern of wrapping fake test fixtures within a real test fixture. The outer real fixture&#8217;s tests must pass for my build to pass, but the inner fake fixtures are allowed to have failing tests. The outer real tests ask the test runner to run the inner fake test fixtures, capturing their results. The benefit to this approach is that I can confirm how Fixie will handle real test failures in the wild.</p>
-<p>Consider the tests for Fixie&#8217;s treatment of IDisposable test fixture classes (details omitted to emphasize the pattern):</p>
-<p><div><script src='https://gist.github.com/5581509.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>This pattern appeared a few times:</p>
-<ol>
-<li><a href="https://github.com/plioi/fixie/blob/754af5e9c14bcb9ad55ce70d7f69ebdb84c26c35/src/Fixie.Tests/ClassFixtures/DisposalTests.cs">DisposalTests.cs</a> as described above.</li>
-<li><a href="https://github.com/plioi/fixie/blob/754af5e9c14bcb9ad55ce70d7f69ebdb84c26c35/src/Fixie.Tests/ClassFixtures/ConstructionTests.cs">ConstructionTests.cs</a> demonstrates the behavior of test classes that have constructors.</li>
-<li><a href="https://github.com/plioi/fixie/blob/754af5e9c14bcb9ad55ce70d7f69ebdb84c26c35/src/Fixie.Tests/ClassFixtures/AsyncCaseTests.cs">AsyncCaseTests.cs</a> demonstrates the behavior of test classes when the individual test case methods use async/await.</li>
-</ol>
-<p>Even though the specific code paths under tests are not <em>super close</em> to the code that tests them, all the relevant paths are being exercised. I&#8217;m getting meaningful code coverage but at a not-so-fine-grained level.</p>
-<p>I translated the original fine-grained tests to this new approach, giving me <a href="https://github.com/plioi/fixie/blob/754af5e9c14bcb9ad55ce70d7f69ebdb84c26c35/src/Fixie.Tests/ClassFixtures/CaseTests.cs">CaseTests.cs</a>.  Now, <em>all</em> test execution is exercised at the same high level. Rather than asserting on the behavior of running a single test method, I assert on the behavior of running a whole test class. I needed to admit that there&#8217;s more to running a test case than just calling the test method itself.</p>
-<blockquote><p>I don&#8217;t think it&#8217;s a coincidence that the level at which I&#8217;m testing resembles the level at which end users would reason about a test framework. Fixie&#8217;s test suite is not quite executable documentation, but it certainly suggests what ought to appear in the documentation.</p></blockquote>
-<p>I dropped the original fine-grained tests now that they are redundant. With my obstacle removed, I am free to make some important changes to the organization of Fixie&#8217;s test-executing code, the results of which we&#8217;ll see here in the coming weeks.</p>
-<h2>Be An Enabler</h2>
-<p>The new approach exercises all the same code as before, but because it is not directly calling into low-level implementation details, I am now free to shuffle those details around without breaking anything. I&#8217;ve found the level of test granularity that is appropriate for this system. When your tests start to discourage change, consider moving up a level to test the larger behaviors of your system, and then drop the fine-grained tests once they are no longer telling you anything useful.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-15T00:00:00-05:00" pubdate data-updated="true">May 15<span>th</span>, 2013</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/just-is-a-four-letter-word/">
-		
-			&#8220;Just&#8221; Is a Four Letter Word</a>
-	</h2>
-	<div class="entry-content">
-		<p>I&#8217;m often guilty of this myself, but I cringe whenever I hear a software developer say that in order to implement a feature, they &#8220;Just&#8221; have to do x, y, and z.  The reality is that even on healthy projects, you will face at least a little more complexity than could be anticipated in advance.  This complexity makes time-based estimates risky, especially on seemingly-small features.  This week, I was particularly guilty of declaring to myself that a feature would take &#8220;Just a few lines of code&#8221;.</p>
-<h2>The Feature</h2>
-<p>Working on the <a href="https://github.com/plioi/fixie">Fixie test framework</a> this week, I pulled the next task from my backlog.  It read:</p>
-<blockquote><p>Honor Dispose() when present.</p></blockquote>
-<p>When a test fixture class happens to implement IDisposable, the test framework should treat Dispose() as special.  After constructing your fixture and calling its test methods, and before it discards the fixture instance, it should be sure to call Dispose().  For example, the xUnit test framework uses Dispose() in the same way that NUnit uses [TearDown] methods.  In both of those frameworks, you have a chance to perform cleanup after tests execute, and I wanted Fixie to support Dispose() too.</p>
-<h2>Initial Analysis</h2>
-<p>To get a better idea of what I would have to do, I took a look at the way C# <code>using</code> blocks work.  When you write a block like this:</p>
-<p><div><script src='https://gist.github.com/5521208.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>&#8230;the compiler will rewrite it before actually compiling anything:</p>
-<p><div><script src='https://gist.github.com/5521212.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>To satisfy the requirement, &#8220;Honor Dipose() when present,&#8221; I <em><strong>just</strong></em> had to wrap my test-running code in a similar try/finally block.  Easy as pie.  It should take about 4 minutes, mostly just to write its acceptance test.</p>
-<p>&#8220;<em><strong>Just</strong></em> 4 minutes&#8221; quickly turned into 4 hours.</p>
-<h2>The Easy Part</h2>
-<p>The <a href="https://github.com/plioi/fixie/commit/16f079b08131026e75d5ae5075dfbf5ec7e1df1b">primary commit for this feature</a> is exactly what I expected.  My acceptance test for this feature involved a sample fixture that implemented IDisposable along with two tests, one that passes and one that fails.  My real test fixture would run that sample test fixture, inspecting the results.  This pattern of having a real fixture wrap a private sample fixture allows me to have sample fixtures with failing tests. Only failures in the outer real fixture cause my build to fail:</p>
-<p><div><script src='https://gist.github.com/5521216.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>The primary commit&#8217;s fix involved wrapping test execution in a <code>try/finally</code>:</p>
-<p><div><script src='https://gist.github.com/5521221.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<h2>The First Four Monkey Wrenches</h2>
-<p>That wasn&#8217;t actually the first commit for this feature.  I tried that all first, but the outer test fixture would fail.  Within the sample fixture, Dispose() was being called at the end of test execution, as expected, but Dispose() was <em>also</em> being called as a test method too!  Output suggested that my 2-test fixture had 3 tests, and Dispose() was being called 4 times.  Yeesh.</p>
-<p>To resolve that issue, I <em><strong>just</strong></em> had to omit Dispose() from being treated as a test method.  I introduced a helper method to test whether a given method is Dispose().</p>
-<p><div><script src='https://gist.github.com/5521227.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Oops. Not every method with that name is the Dispose() method.  I really had to look for the right method <em>signature</em>:</p>
-<p><div><script src='https://gist.github.com/5521229.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Oops. Not every method with that signature is really IDisposable.Dispose():</p>
-<p><div><script src='https://gist.github.com/5521231.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Oops.  DeclaredType isn&#8217;t always the right type to inspect for IDisposable.  Consider this situation:</p>
-<p><div><script src='https://gist.github.com/5521235.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>In this case, the DeclaredType for the Dispose() method is HasDisposeButNotIDisposable, which doesn&#8217;t implement IDisposable.  When Fixie tried to run tests in a class like DisposableTestFixture, it <em>still</em> treated Dispose() as a test case.  I had to replace DeclaredType with ReflectedType:</p>
-<p><div><script src='https://gist.github.com/5521240.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Finally, I could <a href="https://github.com/plioi/fixie/commit/3f9dc52a3e4570c7baa197773ae8a1983abc50f8">use that helper method to exclude IDisposable.Dispose()</a> from being treated as a test case.  Running the sample fixture produced one pass and one expected failure, and Dispose was called the right number of times.</p>
-<p>All done.</p>
-<h2>The Plot Thickens</h2>
-<p>Wait.  What if someone&#8217;s test fixture has a Dispose() that throws exceptions?  Just like an NUnit [TearDown], we want exceptions here to cause the corresponding tests to fail, and we want the disposal exception to be included in the output.  I <em><strong>just</strong></em> have to wrap the disposal in a try/catch and emit a failure when Dispose() throws, like I already do when a test method throws:</p>
-<p><div><script src='https://gist.github.com/5521243.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>When a test method passes but Dispose() throws, this code does the right thing by treating the test as a failure and presenting the exception to the user.  When a test method <em>fails</em> and Dipose() throws, it would incorrectly report 2 test failures (one reported by the test method execution, and one reported by this catch block).  Instead, I want to treat it as one test failure, while reporting both exceptions to the user as the <em>reasons</em> the single test failed.</p>
-<p>To address that detail, I had to dramatically restructure the test execution code so that it would accumulate potentially-many exceptions throughout the test lifecycle.  Only at the end of the lifecycle would it decide whether the test passed or failed.  If any exceptions had been accumulated, the test would fail and the reasons would list all the exceptions.</p>
-<blockquote><p>I&#8217;m glad I ran into this problem now, because it will surely come up again when I address other test lifecycle methods, corresponding with NUnit concepts like [TestFixtureSetUp], [TestFixtureTearDown], [SetUp], and [TearDown]. The new code makes it easy to have multiple steps in the test lifecycle, all possibly contributing reasons for the test to fail.</p></blockquote>
-<h2>4 Hours Later</h2>
-<p>Finally, the original feature, &#8220;Honor Dipose() when present,&#8221; was implemented, and it <em><strong>just</strong></em> took 4 hours.  The next time you catch yourself saying &#8220;Just&#8221;, take a moment to think critically about what all you&#8217;ve hidden behind that word.  Any given feature may be easy to describe to a user, and the most likely use case may very well be easy to implement, but the devil&#8217;s in the details.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-05T00:00:00-05:00" pubdate data-updated="true">May 5<span>th</span>, 2013</time></div>
 	<div class="tags">
 
 

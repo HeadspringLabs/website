@@ -7,7 +7,7 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="This past summer, the Headspring staff took a trip to K1 Speed for a quarterly meeting. When we weren&#8217;t &#8220;testing the safety equipment&# &hellip;">
+	<meta name="description" content="Recently, a coworker and I ran into one of those bugs that seem to behave so strangely that you start to wonder, &#8220;Is it me, or is the debugger &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -23,19 +23,11 @@
 
 <body>
 	<header id="header" class="inner"><h1><a href="/">Headspring Labs</a></h1>
-<nav id="main-nav"><ul class="main">
-	<li><a href="/blog">Blog</a></li>
-	<li><a href="/blog/archives">Archives</a></li>
-	<li><a href="/open-source">Open Source</a></li>
-	<li><a href="/team">The Team</a></li>
-	<li><a href="/about-us">About Us</a></li>
-</ul>
-</nav>
 <nav id="mobile-nav">
 	<div class="alignleft menu">
 		<a class="button">Menu</a>
 		<div class="container"><ul class="main">
-	<li><a href="/blog">Blog</a></li>
+	<li><a href="/">Blog</a></li>
 	<li><a href="/blog/archives">Archives</a></li>
 	<li><a href="/open-source">Open Source</a></li>
 	<li><a href="/team">The Team</a></li>
@@ -63,9 +55,9 @@
 		
 		<a class="github" href="https://github.com/HeadspringLabs" title="GitHub">GitHub</a>
 		
-    
+	    
 		
-		<a class="coderwall" href="https://coderwall.com/headspring" title="Coderwall">Coderwall</a>
+		<a class="coderwall" href="https://coderwall.com/team/headspring" title="Coderwall">Coderwall</a>
 		
 		
 		
@@ -73,12 +65,20 @@
 		
 		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
 		
-    
+	    
 	</div>
 	<form class="search" action="http://google.com/search" method="get">
 		<input class="alignright" type="text" name="q" results="0">
 		<input type="hidden" name="q" value="site:headspringlabs.com">
 	</form>
+</nav>
+<nav id="main-nav"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+	<li><a href="/open-source">Open Source</a></li>
+	<li><a href="/team">The Team</a></li>
+	<li><a href="/about-us">About Us</a></li>
+</ul>
 </nav>
 
 </header>
@@ -91,19 +91,34 @@
     <article class="post">
 	<h2 class="title">
 		
-		<a href="/blog/mentorship-and-pie-potential/">
+		<a href="/blog/the-debugger-must-be-broken/">
 		
-			Mentorship and Pie Potential</a>
+			The Debugger Must Be Broken!</a>
 	</h2>
 	<div class="entry-content">
-		<p>This past summer, the Headspring staff took a trip to <a href="http://www.k1speed.com/austin-location.html">K1 Speed</a> for a quarterly meeting.  When we weren&#8217;t &#8220;testing the safety equipment&#8221; around the track, we were talking about our performance for the quarter as well as plans for the future.  We were asked to imagine a much larger Headspring 1-2 years out, and describe what it would take to get there.</p>
-<p>I shared a hard truth, suggesting we start considering more recent grads in our hiring process.  This may seem counter-intuitive.  Hiring talented folks for software development is extremely tough, and real-world experience matters a lot when evaluating candidates, right?  On the flip side, though, most experienced software developers have a long list of horror stories from past jobs: office politics, bureaucracy, teams spread too thin, death marches, and the like.  Wouldn&#8217;t it be great, for both you and the new hire, if they got to skip all that luck-of-the-draw stuff and instead got <em>all</em> of their real-world experience at a healthy company right from the start?</p>
-<p>From a candidate&#8217;s point of view, they could enter the workforce surrounded by experienced people who have already faced and rejected all those problems.  They could learn from everyone&#8217;s example far more quickly than they would otherwise on their own, and they wouldn&#8217;t run the risk of being set <em>back</em> by the examples of struggling teams.</p>
-<p>In reaction to my suggestion, I was asked to take on a mentorship role with a current student, with the goal of preparing him for an internship here at Headspring.</p>
-<p>That&#8217;s the way things work here: if you make a suggestion to improve things, don&#8217;t be surprised if <em>you</em> get to make it a reality.  In light of this policy, next time I think I should share another hard truth with the team: <strong>we need to be eating more cakes and delicious pies</strong>.</p>
-<p>We&#8217;ve only been meeting for a few weeks, but it&#8217;s already a rewarding experience for both of us.  Once per week and for about an hour, Dan and I meet to bring him up the C# / MVC learning curve.  When we first met at a <a href="http://www.polyglotprogrammers.org/">Polyglot</a> meeting, Dan had some experience with C++ and Lua, but hadn&#8217;t worked with C# yet.  Our initial meetings have focused on the nuts and bolts of C# itself, but even early on we got to cover other topics such as automated testing, readability concerns, the DRY principle, etc.</p>
-<p>On the selfish side of the equation, this experience helps me to improve my own skills.  Having to explain things that I take for granted forces me to challenge my own assumptions, and improves my ability to discuss complex technical subjects with clients.  On more than one occasion, Dan&#8217;s questions have left me initially thinking to myself, &#8221;<em>Why</em> exactly, do I feel so strongly about this opinion?&#8221;</p>
-<p>I would have appreciated having a mentor at that age, but filling the opposite role is looking to be a pretty sweet deal.  Not as sweet as my cake/pie suggestion, but sweet nonetheless.</p>
+		<p>Recently, a coworker and I ran into one of those bugs that seem to behave so strangely that you start to wonder, &#8220;Is it me, or is the debugger itself buggy?&#8221;  It appeared that the simplest of operations, the assignment operator, was misbehaving.  In the debugger, we seemed to witness a value being properly set to a non-null object and then secretly nulled out as soon as we tried to look at it again.</p>
+<p>Of course, whenever a program&#8217;s behavior is so profoundly counter to all that we know to be true, we have to stop, take a deep breath, and proudly exclaim, &#8220;I am making an incorrect assumption!  This code does not say what I think it says.&#8221;</p>
+<p>I&#8217;ve boiled the problem down to a simpler form than the original code, and changed names to protect the guilty (me).</p>
+<p>We had a collection of DTO instances, of a type we did not have control over (<code>StudentDTO</code>).  In the rest of our system, we wanted to use one of our own classes instead (<code>Student</code>), as <em>our</em> class implemented an interface that was consumed elsewhere (<code>Person</code>):</p>
+<p><div><script src='https://gist.github.com/4982706.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>This first pass was bug-free, and the <code>ToPersons</code> method passed our unit test:</p>
+<p><div><script src='https://gist.github.com/4982711.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Easy.  C# 101 stuff.  Of course it passed.</p>
+<p>Some hours later, I had reason to convert <code>Person</code> from an interface to a concrete class:</p>
+<p><div><script src='https://gist.github.com/4982716.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Suddenly, this and many other tests started failing.  <code>persons[0].Name</code> was null!  We set up a breakpoint on the return statement within <code>ToPersons</code>, and saw that each student being returned did in fact get populated correctly.  <strong>Surely, the debugger must be broken!  We clearly populate an object, and when we next look at it it is unpopulated!  Those punks at Microsoft really grind my gears.</strong></p>
+<p><strong>Ok, Patrick, take a step back.  What assumption is leading me to believe the debugger is wrong?</strong>  I&#8217;m claiming that a clearly-populated property is null the next time I look at it.  Therefore, I should start to doubt whether I am actually inspecting the same property both times.</p>
+<p>In the debugger, we had already seen the <code>Student.Name</code> property set as expected.  We then went to the definition of the Name property that appears in our unit test assertion, which took us to <code>Person.Name</code>.  Here, we also saw a ReSharper warning on each property within <code>Student</code>.  We hadn&#8217;t even <em>changed</em> <code>Student</code>, but that is where the warning appeared: &#8220;The keyword &#8216;new&#8217; is required on &#8216;Name&#8217; because it hides property &#8216;Person.Name&#8217;.&#8221;</p>
+<p>Oh, right.</p>
+<p>This is one of those details you learn about C# early on and then immediately forget, as it so rarely shows up in practice.  Usually, when a subclass defines members with the same name and signature as its parent class, we are in a abstract/override or virtual/override situation, in which you are knowingly and explicitly stating that the subclass provides its own definition of the parent class&#8217;s behavior.  When a subclass instead defines the same members as its parent <em>without</em> overriding, you get <em>two</em> different implementations at runtime.  It&#8217;s basically just a <em>coincidence</em> that they have the same name.</p>
+<p>In this situation, when you look at an instance through a variable declared as the parent type, you see the parent type&#8217;s properties.  When you look at an instance through a variable declared as the subtype, you see the subtype&#8217;s properties.  As we looked at the student variable being returned from the lambda, the debugger showed us the populated <code>Student.Name</code>, and when our test assertion looked at the person returned from the lambda, the test experienced the unpopulated <code>Parent.Name</code>.</p>
+<p>When up is down, black is white, and the debugger stops working, put the apparently impossible behavior into plain English, and cast some healthy doubt on each word.  You&#8217;ve got a faulty assumption in there somewhere.</p>
 
 		
 		
@@ -123,7 +138,7 @@
   
 
 
-<time datetime="2012-10-31T00:00:00-05:00" pubdate data-updated="true">Oct 31<span>st</span>, 2012</time></div>
+<time datetime="2013-02-19T00:00:00-06:00" pubdate data-updated="true">Feb 19<span>th</span>, 2013</time></div>
 	<div class="tags">
 
 
@@ -139,28 +154,53 @@
     <article class="post">
 	<h2 class="title">
 		
-		<a href="/blog/windows-8-for-business-breakfast-with-jeffrey-palermo/">
+		<a href="/blog/wcf-ioc-away-the-need-for-named-pipes/">
 		
-			Windows 8 for Business: Breakfast With Jeffrey Palermo</a>
+			WCF IOC Away the Need for Named Pipes</a>
 	</h2>
 	<div class="entry-content">
-		<p>Join Headspring President &amp; COO Jeffrey Palermo for a Windows 8 Small Business Workshop to learn how the new operating system can help your business succeed. Jeffrey will teach you how to navigate all the new features and demonstrate ways to make your business more productive.</p>
-<p>Learn to:<br />
-• Stay connected to your team and clients<br />
-• Access documents from anywhere<br />
-• Protect your business<br />
-• Take control of your business</p>
-<p>Event details:<br />
-Tuesday, December 18, 2012<br />
-8:00 a.m. – 9:30 a.m.<br />
-(Breakfast, networking and workshop)</p>
-<p>Location:<br />
-Microsoft Store<br />
-3309 Esperanza Crossing<br />
-Ste. 104<br />
-Austin, Texas 78758</p>
-<p>Registration:<br />
-Space is limited. To register, please <a href="https://msevents.microsoft.com/CUI/EventDetail.aspx?EventID=1032537757&amp;Culture=en-US&amp;community=1" target="_blank">RSVP</a>.</p>
+		<p>The NetNamedPipeBinding is the optimized binding for on-machine communication.  For most WCF implementations I have seen WCF is really only there to help facilitate RPC (Remote Procedure Calls).  When WCF is simply a way to segment your service layer into an optionally distributed deployment architecture there may be a much better way.  WCF has additional overhead that seams useless if the code is being executed on the same machine.  IOC (Inversion of Control) using DI (Dependency Injection) provides a relatively simple way to avoid WCF all together.</p>
+<p>Lets take a simple WCF Service Contract for Customers.<br />
+<div><script src='https://gist.github.com/4945825.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>The client creates a proxy and through WCF configuration the proper binding can be used to communicate with the Service.  In order to make the client know where the service is without hardcoding this you would have the following configuration settings.</p>
+<pre class="csharpcode">  &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;system.serviceModel&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;bindings&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;basicHttpBinding&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;binding&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&quot;BasicHttpBinding_ICustomerService&quot;&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;/&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;basicHttpBinding&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;bindings&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;endpoint&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;address&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&quot;http://localhost:26859/CustomerService.svc&quot;&lt;/span&gt;
+        &lt;span class=&quot;attr&quot;&gt;binding&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&quot;basicHttpBinding&quot;&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;bindingConfiguration&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&quot;BasicHttpBinding_ICustomerService&quot;&lt;/span&gt;
+        &lt;span class=&quot;attr&quot;&gt;contract&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&quot;OptionalWCF.Contracts.ICustomerService&quot;&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&quot;BasicHttpBinding_IUserProfileService&quot;&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;system.serviceModel&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;</pre>
+<p>Most clients stop there rather than have a explicit setting for NetNamedPipes.  If they decided to “Optimize” they could add the WCF configuration endpoint for NetNamedPipes and modify the Service to expose a NetNamedPipe endpoint.  Now the client can use the NetNamedPipe endpoint and the performance has been improved.  In reality the performance between NetTcp and NetNamedPipe is rather minimal with a slighter advantage over BasicHttp.  The most optimal invocation is in-process so why not just go around WCF all together.  We already have the interface separation that DI can use and either way if we want optimal performance we will be tweaking configuration files for different deployment environments.</p>
+<p>For this blog I choose StructureMap as my DI library.  My client Code only needs to get a handle to the interface.</p>
+<div class="csharpcode">
+<pre class="alt">var customerServices = ObjectFactory.GetInstance&amp;lt;ICustomerService&amp;gt;();</pre>
+</div>
+<p>The client is configured to either use WCF or use the direct reference to the service implementation of the service Contract.</p>
+<pre class="csharpcode">&lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;StructureMap&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;MementoStyle&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&quot;Attribute&quot;&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;rem&quot;&gt;&amp;lt;!-- WCF Service Through Proxy --&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;DefaultInstance&lt;/span&gt;
+      &lt;span class=&quot;attr&quot;&gt;PluginType&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&quot;OptionalWCF.Contracts.ICustomerService, OptionalWCF&quot;&lt;/span&gt;
+      &lt;span class=&quot;attr&quot;&gt;PluggedType&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&quot;OptionalWCF.Client.CustomerServiceProxyWrapper, OptionalWCF.Client&quot;&lt;/span&gt;
+      &lt;span class=&quot;attr&quot;&gt;Scope&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&quot;Singleton&quot;&lt;/span&gt;
+      &lt;span class=&quot;kwrd&quot;&gt;/&amp;gt;&lt;/span&gt;
+
+    &lt;span class=&quot;rem&quot;&gt;&amp;lt;!--Real Service--&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;rem&quot;&gt;&amp;lt;!--&amp;lt;DefaultInstance&lt;/span&gt;
+&lt;span class=&quot;rem&quot;&gt;      PluginType=&quot;OptionalWCF.Contracts.ICustomerService, OptionalWCF&quot;&lt;/span&gt;
+&lt;span class=&quot;rem&quot;&gt;      PluggedType=&quot;OptionalWCF.ServiceImpl.CustomerService, OptionalWCF.ServiceImpl&quot;&lt;/span&gt;
+&lt;span class=&quot;rem&quot;&gt;      Scope=&quot;Singleton&quot;&lt;/span&gt;
+&lt;span class=&quot;rem&quot;&gt;      /&amp;gt;--&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;kwrd&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;StructureMap&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;</pre>
+<p>Now if the client is running on the same machine WCF is discarded.  If the service is moved to another machine with a simple configuration file tweak WCF is used.  The clients code is none the wiser.</p>
+<p>This pattern can be extending to support duplex communication by using .Net events instead of exposing the callback contracts to the clients.  I plan on writing an additional blog to cover this topic.</p>
+<p>The full source to this post can be downloaded here <a href="http://www.headspring.com/wp-content/uploads/2013/02/OptionalWCF.zip">OptionalWCF</a></p>
 
 		
 		
@@ -180,454 +220,332 @@ Space is limited. To register, please <a href="https://msevents.microsoft.com/CU
   
 
 
-<time datetime="2012-10-28T00:00:00-05:00" pubdate data-updated="true">Oct 28<span>th</span>, 2012</time></div>
+<time datetime="2013-02-13T00:00:00-06:00" pubdate data-updated="true">Feb 13<span>th</span>, 2013</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/blog/'>Blog</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/named-pipes/'>Named Pipes</a>, <a class='category' href='/blog/categories/wcf/'>WCF</a>, <a class='category' href='/blog/categories/dependency-injection/'>dependency injection</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/from-imperative-to-declarative/">
+		
+			From Imperative to Declarative</a>
+	</h2>
+	<div class="entry-content">
+		<p>Two weeks ago, we took a peek at the <a href="http://www.headspring.com/patrick/whittling-parsley/">low-level pattern recognition classes</a> that make up the core of <a href="https://github.com/plioi/parsley">Parsley</a>.  Last week, we saw how pattern recognition involves 3 pivotal <a href="http://www.headspring.com/patrick/composable-operations/">composable operations</a>: repetition, choice, and sequence.  We saw how Parsley implements basic repetition and choice operations, but sequence was still too hard to address.</p>
+<p>Today, we&#8217;ll finally see how to extract a useful sequence operation into a useful class, finally giving us the last of the necessary composable operations, and freeing us to finish our high-level <a href="http://martinfowler.com/bliki/DomainSpecificLanguage.html">DSL</a>.</p>
+<h2>Manual Sequence Recognition</h2>
+<p>Recall the horrible imperative code necessary to recognize the trivial three-token sequence of [left-parenthesis, letter, right-parenthesis]:</p>
+<p><div><script src='https://gist.github.com/4688927.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>To recognize a 3 token sequence, we need 3 nested if statements and 4 return statements.  To recognize an N token sequence, we need N nested if statements and N+1 returns.  Each if statement tests whether the last call to Parse(&#8230;) succeeded, and each if statement&#8217;s body hands off the remanining unparsed tokens to the next step.  Clearly, this does not scale well.</p>
+<h2>(Ab)using LINQ</h2>
+<p>Note how similar each step is: we always call Parse(&#8230;), then test for success, then pass the remaining unparsed tokens along.  The main thing that changes each time we dig deeper is the particular Parser object in play.  I&#8217;d rather just say &#8220;Require(LeftParen), then Require(Letter), then Require(RightParen), halting at the first point of failure&#8221;.</p>
+<p>Our goal is to extract the &#8220;success check and unparsed token hand-off&#8221; action so that we don&#8217;t have to repeat it ourselves, and we want to do so in a way that lets us chain together any number of parsers representing a sequence of expectations, without having to indent deeper as the chain grows longer.  With no further ado, ParserQuery:</p>
+<p><div><script src='https://gist.github.com/4802811.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p><strong>I apologize for this.</strong>  This was hands-down the most difficult 12 lines of code I have written or will ever write.  The pattern in play here is so difficult, so abstract, that <em>I don&#8217;t even know what to name some of the variables.</em></p>
+<p>This is the <a href="http://blogs.msdn.com/b/wesdyer/archive/2008/01/11/the-marvels-of-monads.aspx">Monad</a> pattern.  It can be performed in any language that has lambda expressions in which the lambda body can refer to variables in the surrounding scope, like C#, Javascript, and Python, but is only ever used in practice when the language <em>also</em> has special syntax for its usages.  In C#, the special syntax which makes this pattern compelling is the <code>from/select</code> LINQ syntax.</p>
+<p>This special syntax lets us &#8220;flatten&#8221; our nested if statements into a series of &#8216;from&#8217; clauses.  When using the complete Parsley DSL, we can rewrite IsParenthesizedLetter without any nesting:</p>
+<p><div><script src='https://gist.github.com/4919965.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>ParserQuery defines some extension methods that are treated specially by the compiler.  Their existence allows us to select from Parser&lt;T&gt; objects instead of the usual ability to select from IEnumerable&lt;T&gt; objects.  Note how instead of having 3 nested if statements, we have 3 from clauses <em>in sequence</em>.</p>
+<p>Note how the query does little more than <em>list</em> the 3 expectations in the order we expect them to appear in the input.  We &#8220;flattened&#8221; the nested if statements into a vertical series of from clauses.</p>
+<p>Note also how this sequence operation is operating on 3 Parser&lt;Token&gt; objects (the right hand side of each from clause) and the type of the whole query is <em>also</em> a Parser&lt;Token&gt;.  Since our sequence operation results in the same type as it acts on, it is highly composable with last week&#8217;s repetition and choice operations.</p>
+<p>Although complicated, there&#8217;s no magic here.  If we ask ReSharper to translate the above select statement into plain old method calls, we see that ParserQuery&#8217;s SelectMany method is being called N-1 times when there are N from clauses:</p>
+<p><div><script src='https://gist.github.com/4942002.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>In other words, our SelectMany method&#8217;s job is to hook a single from clause into the chain of execution.</p>
+<p>C# rewrites a flat query into calls to the SelectMany extension method, which in turn does the success check and the passing along of remaining unparsed tokens, so all the same <em>work</em> is going on here as in the origial imperative code.  Thankfully, we&#8217;re no longer the ones doing that work!</p>
+<p>Rather than trying to make sense of ParserQuery itself, it may be more illuminating to read <a href="https://github.com/plioi/parsley/blob/cb69098da8135f7ac5fb1b0f84071e0e8b94b8a0/src/Parsley.Test/ParserQueryTests.cs">ParserQuery&#8217;s unit tests</a>.</p>
+<h2>So Where Are We?</h2>
+<p>2 weeks back, we started with the low-level imperative classes.  These let us deliberately walk through the input, pattern matching as we go along.  It was annoying, but it worked.  Like assembly language, we wanted to instead work with a high-level alternative, even if the high-level alternative was ultimately doing this imperative stuff behind the scenes.</p>
+<p>1 week back, we identified 3 fundamental operations necessary for a pattern recognition DSL: repetition, choice, and sequence.  We saw how repetition could be implemented as a class, ZeroOrMoreParser.  We saw how choice could be implemented as a class, ChoiceParser.</p>
+<p>This week, we see that sequence can be handled by ParserQuery and the from/select keywords.</p>
+<p><strong>Now, we have all the tools we need to finally create our DSL.</strong></p>
+<h2>Assembling Parsley&#8217;s DSL</h2>
+<p>Parsley deals with defining grammars for languages.  You could define a grammar for a language like JSON, and use that to turn JSON text into .NET objects.  Parsley contains a Grammar class full of useful operations.  To keep things highly-composable, many of these operations both produce Parser&lt;T&gt; objects and operate on other Parser&lt;T&gt; objects.</p>
+<p>First, the Grammar class includes a few helper methods for constructing the classes developed last week:</p>
+<p><div><script src='https://gist.github.com/4911336.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Next, we note that ZeroOrMore is useful, but not really enough in practice.  We may rather require that the input include OneOrMore occurrences of something.  Thankfully, we can <em>compose</em> sequence with ZeroOrMore to build OneOrMore.  OneOrMore things is the same as one thing followed by ZeroOrMore things:</p>
+<p><div><script src='https://gist.github.com/4912909.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Where ZeroOrMore required a whole class full of imperative code, OneOrMore required <em>one 3-line expression</em>.</p>
+<p>It&#8217;s also very common to expect the input to contain a repetition of items <em>separated by</em> some other expected thing.  A JSON array literal contains zero or more items <em>separated by</em> commas.  Here, the third operation, choice, makes an appearance.</p>
+<p><div><script src='https://gist.github.com/4914803.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Finally, a little payoff for all this infrastructure!  Imagine how horrifyingly verbose and error-prone these methods would be, if we had to implement them directly in terms of the low-level imperative style.</p>
+<p>Lastly, there&#8217;s one more built-in operation worth discussing as it directly affects the IsParenthesizedLetter method from the start of this post.  We often need to recognize that something important appears <em>between</em> two other, less important things.  A JSON array is zero or more items <em>between</em> the &#8220;[&#8221; and &#8220;]&#8221; symbols.  We care that the &#8220;[&#8221; and &#8220;]&#8221; are present, but the meaningful data we want to extract from that is the part in the middle:</p>
+<p><div><script src='https://gist.github.com/4916812.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<h2>Revisiting the Original Example</h2>
+<p>Now, in order to recognize a parenthesized letter, all we need is:</p>
+<p><div><script src='https://gist.github.com/4923462.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Here, parenthesizedLetter is an object which can be handed the raw input tokens and can reply with one of two statements: &#8220;The input is not a parenthesized letter and here is why,&#8221; or &#8220;The input is a parenthesized letter and here is that letter.&#8221;  No nested if statements, no explicit progress through the token stream, no manual error checks at every step.</p>
+<p>Most importantly, this says <em>what</em> it does rather than <em>how</em>.  <strong>We&#8217;ve turned our imperative API into a declarative API by repeatedly extracting common and monotonous patterns into highly-composable operations, and by further hiding those helper classes behind a few simply-named helper methods.</strong></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-13T00:00:00-06:00" pubdate data-updated="true">Feb 13<span>th</span>, 2013</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/composable-operations/">
+		
+			Composable Operations</a>
+	</h2>
+	<div class="entry-content">
+		<p>Last week, we took a peek at the <a href="http://www.headspring.com/patrick/whittling-parsley/">low-level pattern recognition classes</a> that make up the core of Parsley.  The final example showed how you can walk through some untrustworthy text in small and deliberate steps, looking for expected input along the way.  At each step, the step either succeeds or fails.  On success, the remaining unparsed text is passed along to the next step.</p>
+<p>This process was the epitome of imperative coding: <em>Do this, and then do this, and then do that.</em>  Despite this imperative core, I&#8217;d describe the intended usage of Parsley as declarative: <em>Here&#8217;s what valid input looks like, figure out the details for me.</em></p>
+<p>I said I&#8217;d reveal this week how this shift from low-level imperative coding to high-level declarative coding can be implemented, but I&#8217;ve decided to split it into two posts.  This week, we&#8217;ll see how Parsley builds on the frustrating foundation by baking in a few fundamental and composable imperative operations.  Next week, we&#8217;ll see how that more-useful layer can be extended into a high-level <a href="http://martinfowler.com/bliki/DomainSpecificLanguage.html">Domain Specific Language</a> (DSL).</p>
+<p><strong>A declarative API needs to give your end users a suite of useful and familiar words, in such a way that the words can be easily combined to form larger declarations.</strong>  We&#8217;re going to take some important imperative operations, give them useful names, and package them up in such a way that they will compose well with each other.</p>
+<h2>Pattern Recognition Fundamentals</h2>
+<p>Parsley can recognize patterns not unlike those recognized by regexes.  When working with regexes, we&#8217;re constantly composing three fundamental operations: repetition, choice, and sequence.</p>
+<p>With <strong>repetition</strong>, we say, &#8220;I&#8217;ve got this regex here, and I want it to be repeated.&#8221;  The regex &#8220;A&#8221; recognizes a single letter &#8220;A&#8221;, and we can produce a more interesting regex &#8220;A*&#8221; to recognize zero-or-more As, or &#8220;A+&#8221; to recognize one-or-more As.  A more complex pattern like &#8220;(A+B+)&#8221; can likewise be made more interesting via repetition: &#8220;(A+B+)*&#8221; which recognizes zero-or-more occurrences of As-followed-by-Bs.</p>
+<p>With <strong>choice</strong>, we can combine some small patterns into a larger one by saying, &#8220;Any one of these subpatterns could happen next.&#8221;  The regex &#8220;A|B&#8221; recognizes either an &#8220;A&#8221; or a &#8220;B&#8221;.</p>
+<p>With <strong>sequence</strong>, we can combine some small patterns into a larger one by saying, &#8220;The first pattern, followed by the second, followed by the third.&#8221;  Regexes achieve this by just squishing them together in order: the regex &#8220;ABC&#8221; recognizes an A, followed by a B, followed by a C.  They all have to appear, and in that order.</p>
+<p>These three operations <em>compose</em> very well.  The regex @&#8221;[_a-zA-Z]+[_a-zA-Z0-9]*&#8221; recognizes variable names.  We have repetition: the pattern has one-or-more leading characters and zero-or-more trailing characters.  We have choice: each character is an underscore or a letter or a digit.  We have sequence: to enforce that names don&#8217;t start with a digit, we have a two-part sequence of leading characters <em>followed by</em> trailing characters.  We say these operations &#8220;compose well&#8221; because:</p>
+<ol>
+<li>They can be applied to any pattern.</li>
+<li>Doing so takes very little code.</li>
+<li>Most importantly, <strong>the result is also a pattern to which the operations can be applied again.</strong></li>
+</ol>
+<p>If our API can exhibit these three properties, we can say it is &#8220;highly composable&#8221;, which should go a long way to making the API declarative as well.  Instead of telling the machine what to do, step by step, we&#8217;ll just glue together a bunch of small words into a larger statement.  The small words and the glue operations we perform on them will hide all the imperative details.</p>
+<h2>What Hurt Last Week</h2>
+<p>The big example at the end of the <a href="http://www.headspring.com/patrick/whittling-parsley/">last post</a> just had to tell the user whether or not a string was a single letter surrounded by parentheses.  Despite being a simple pattern, the code involved was quite large and annoying to write.</p>
+<p>Recall the Parser&lt;T&gt; interface:</p>
+<p><div><script src='https://gist.github.com/4727988.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>A Parser of Things consumes some input tokens with the intent to construct a Thing.  On success, the Parser of Things produces a Thing and a reference to the remaining unconsumed tokens.  On failure, you get an error instead of a Thing.</p>
+<p>To write the Parser of Parenthesized Letters, we first needed to write an implementation of this interface, just so that we could say &#8220;I expect the next token to be of a certain kind, would you kindly try to consume one such token?&#8221;  We then made a convenience method to construct instances of this class, to save on keystrokes later.  Finally, we could write the big, ugly Parser of Parenthesized Letters.</p>
+<p>It hurts to have to write so much for so little gain.  I&#8217;d rather Parsley contain a suite of useful Parser&lt;T&gt; implementations out of the box, so I could just dive in and focus on detecting the pattern I&#8217;m interested in.  This suite of useful Parser&lt;T&gt; implementations ought to include our 3 fundamental/composable pattern-recognition operations: repetition, choice, and sequence.</p>
+<p>First, though, the suite should provide some primitive operations to get started with.  Compared to our regex examples, we need to be able to express things like &#8220;A&#8221; before we can augment them into interesting patterns like &#8220;A*&#8221;.</p>
+<h2>Parsley&#8217;s Default Parsers</h2>
+<p>The default parser implementations are as frustrating to write as the sample from last week, since they are written in terms of the awkward low-level API.  However, they make things easier on the end user, as we&#8217;ll see next week.  They are found under the <a href="https://github.com/plioi/parsley/tree/cb69098da8135f7ac5fb1b0f84071e0e8b94b8a0/src/Parsley/Primitives">Primitives</a> folder.  Four of these are relevant to today&#8217;s discussion:</p>
+<p><strong>TokenByKindParser</strong> - Last week we wrote a parser that takes an expected token <em>kind</em> and demands that the next token in the input be of that kind.  On success, the token is consumed.  For instance, if you are parsing C# you may reach a point where you expect the next token to be an identifier.  You don&#8217;t care what specific identifier it is, only that it is an identifier as opposed to an operator or number.  The real implementation of that class in Parsley is called TokenByKindParser:</p>
+<p><div><script src='https://gist.github.com/4728010.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p><strong>TokenByLiteralParser</strong> - Sometimes you have a more specific expectation of what will appear next in the input.  Rather than only caring about what kind of token appears next, you&#8217;ll expect that the token will be a specific known string.  When parsing C#, you may reach a point where you know the next token must be a &#8220;;&#8221; character.  TokenByLiteralParser serves this purpose.  As with TokenByKindParser, we simply inspect the current token and return success or failure, advancing one token on success:</p>
+<p><div><script src='https://gist.github.com/4728017.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p><strong>ZeroOrMoreParser</strong> - This class gives us our much-needed repetition operation.  Note that this class is constructed <em>with another Parser&lt;T&gt;</em> to be augmented, just as the regex &#8220;A&#8221; augmented by &#8220;*&#8221; becomes the regex &#8220;A*&#8221;.  The parser works by attempting the given parser against the input.  On success, we repeat from the new position in the input, collecting each intermediate result into a list.  As soon as the item-parser finally fails, we are finished and can return a successful result containing all the items collected along the way.  Note that this is a Parser&lt;IEnumerable&lt;T&gt;&gt;, meaning that after consuming a bunch of tokens, the result you get is a collection of things, where each thing was recognized by the initial input Parser&lt;T&gt;.  That&#8217;s our first hint at composabilty:</p>
+<p><div><script src='https://gist.github.com/4728052.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p><strong>ChoiceParser</strong> - This beast gives us our much-needed choice operation.  When we want the next thing in the input to be one of several possible things, and each of those things is individually recognized by a different Parser class, this combines them into one operation that says &#8220;Any of these things could appear next.&#8221;  The first one to match the input wins:</p>
+<p><div><script src='https://gist.github.com/4728061.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>ZeroOrMoreParser and ChoiceParser make up a part of the composability we are shooting for here.  They take in Parsers as their input and are themselves Parsers.  That means you could feed one into the other: you might have two ZeroOrMoreParser instances, and pass them into a ChoiceParser: I expect zero-or-more As or else I expect zero-or-more Bs.</p>
+<p>There&#8217;s a subtle gotcha within both ZeroOrMoreParser and ChoiceParser.  By default, Parsley distinguishes between a parser that fails <strong>without</strong> advancing in the input and a parser that fails <strong>after</strong> advancing in the input.  If you are parsing C# and you know that the next thing in the input is a choice between a foreach statement or an if statement, but the input is &#8220;if $typo$&#8221;, we don&#8217;t just want to say that the choice failed; we want to say that your if statement is broken.  This is why these two classes care so much about detecting changes in position along the way.</p>
+<h2>What About Sequence?</h2>
+<p>TokenByKindParser and TokenByLiteralParser give us our trivial starting point, like a regex that only recognizes a single letter &#8220;A&#8221;.  ZeroOrMoreParser gives us repetition.  ChoiceParser gives us choice.  We still don&#8217;t have a useful sequence operation to build on.  Our complicated example from last week is still complicated!</p>
+<p>Recall my criticism from last week:</p>
+<blockquote><p>[IsParenthesizedLetter] is nearly as tedious as writing assembly. Each time I wanted to progress a little further, I had to indent again and declare some new local variables. I had to carefully pass along the remaining unparsed tokens at each step, and I had to concern myself with failure at each step.</p>
+<p>To make matters worse, this stuff motivates having lots of returns from a single function, making it extremely hard to break the function apart into smaller parts. <a href="http://www.headspring.com/patrick/detect-reflect-decomplect/">Return statements are &#8220;Extract Method&#8221; fences.</a></p></blockquote>
+<p>With all the code we&#8217;ve seen so far, we&#8217;re stuck with implementing all sequence patterns in this way, producing a convoluted morass of nested if statements.  We don&#8217;t even have the option of Extract Method refactorings to ease the pain.  We&#8217;ve coded ourselves into a corner!</p>
+<p>Fortunately, a little-used design pattern will save the day next week, allowing us to bottle up the subtle code duplication exhibited by last week&#8217;s manual attempt at a sequence operation.  Once we have sequencing down, all of these peices will start to fit together smoothly, and our end user will finally have that suite of useful composable words at their disposal.</p>
+<h2>Recap</h2>
+<p>Last week, we saw how Parsley represents progress through the input, and caught a glimpse of how a desired pattern can be recognized (or not) within that input.  The code to use those classes was verbose, ugly, and apparently refactor-proof.</p>
+<p>To ease the pain, we&#8217;ve seen how a few composable operations could be provided on top of the original core classes, but we&#8217;re still left with the tricky situation of sequencing.  Next week, we&#8217;ll implement sequencing, completing our DSL and insulating the end user from having to work with the ugly core directly.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-07T00:00:00-06:00" pubdate data-updated="true">Feb 7<span>th</span>, 2013</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/mvc-boot-camp/">
+		
+			MVC Boot Camp</a>
+	</h2>
+	<div class="entry-content">
+		<p><img class="size-full wp-image-5716 alignright" title="ASP.NET MVC4 In Action" alt="ASP.NET MVC4 In Action" src="http://www.headspring.com/wp-content/uploads/2012/06/Palermo-ASPNET4-fc.jpg" width="239" height="300" /></p>
+<p>&nbsp;</p>
+<p>Instead of listening to lectures and doing boring written exercises, participants jump in and work on real code using real examples - applying these techniques on an existing application.</p>
+<p>We&#8217;ve made registration even easier through Eventbrite, but for other registration options call (877) 459 - 2260</p>
+<p><strong>Next Class: TBD - Ask about private training options</strong></p>
+<p><strong>You’ll Come Out of MVC Boot Camp Knowing:</strong></p>
+<ul>
+<li>How to Avoid Common Web Development Pitfalls</li>
+<li>How to Write Maintainable Systems</li>
+<li>25% Discount on a Personal ReSharper License</li>
+</ul>
+<p>Best of all, we have updated our curriculum for the latest version of MVC4 and mobile web development. If you are looking to get started with MVC, convert from an older version or learn how to use MVC in mobile web development projects, we highly recommend this course.</p>
+<p><em> <a title="MVC4 Boot Camp Curriculum" href="http://www.headspring.com/headspring/mvc-boot-camp/" target="_blank">Course curriculum</a> was created by the guys that wrote the book on <strong>MVC</strong>, Jeffrey Palermo and Jimmy Bogard.</em></p>
+<p><strong>Who Benefits Most? Developers With:</strong></p>
+<ul>
+<li>1 Year+ Experience in C#</li>
+<li>A Basic Understanding of Web Development Languages, Including HTML</li>
+<li>A Basic Understanding of the Web Life-Cycle</li>
+</ul>
+<p><em></em>Cost $1,975</p>
+<p>If you have any concerns whether or not this course is a fit, contact us for help at (512) 459 – 2260..</p>
+<p>Training located in Austin, Texas (8:30 a.m. to 5:00 p.m.)</p>
+<p>View a <a title="Contact" href="http://www.headspring.com/contact/">map to our facility</a> and nearby hotels.</p>
+<p>Although it is unlikely, class dates are subject to change. We encourage you to obtain transferable airline/hotel reservations in the event that this should occur.</p>
+<p>By signing up for a Headspring training course, you are accepting the terms and conditions of our <a title="Education Services Agreement" href="http://www.headspring.com/education-services-agreement/" target="_blank">Education Services Agreement</a>.</p>
+<p>&nbsp;</p>
+<p><strong>Agenda</strong></p>
+<p><strong>Day 1</strong></p>
+<p><strong>Session 1.1 – MVC Overview</strong><br />
+<em>Background<br />
+MVC parts</em></p>
+<p><strong>Session 1.2 – Controller basics</strong><br />
+<em>Anatomy of an Action<br />
+Querystring parameters<br />
+Working with forms<br />
+Model binding<br />
+View data</em></p>
+<p><strong>Session 1.3 – View basics</strong><br />
+<em>WebForms view engine<br />
+Razor view engine<br />
+Folder structure<br />
+Execution order<br />
+View data<br />
+Helpers<br />
+URLs</em></p>
+<p><strong>Session 1.4 – Model basics</strong><br />
+<em>Persistence/Domain Model vs. View Model<br />
+Projection<br />
+Repositories</em></p>
+<p>&nbsp;</p>
+<p><strong>Day 2</strong></p>
+<p><strong>Session 2.1 – Routing</strong><br />
+<em>Routing in the MVC pipeline<br />
+Designing URLs<br />
+SEO<br />
+Custom routes</em></p>
+<p><strong>Session 2.2 – Controller in depth</strong><br />
+<em>ActionResults<br />
+ActionFilters<br />
+Customizing the controller</em></p>
+<p><strong>Session 2.3 – Model in depth</strong><br />
+<em>ViewModels<br />
+AutoMapper<br />
+Custom ModelBinders</em></p>
+<p><strong>Session 2.4 – View in depth</strong><br />
+<em>Layouts and Master Pages<br />
+Partials<br />
+Child actions</em></p>
+<p>&nbsp;</p>
+<p><strong>Day 3</strong></p>
+<p><strong>Session 3.1 – Templates and validation</strong><br />
+<em>View/Edit templates<br />
+Validation<br />
+Custom validators</em></p>
+<p><strong>Session 3.2 – AJAX and jQuery</strong><br />
+<em>Intro to jQuery<br />
+Integrating jQuery<br />
+AJAX and MVC</em></p>
+<p><strong>Session 3.3 – Testing ASP.NET MVC</strong><br />
+<em>Unit testing MVC pieces<br />
+UI testing</em></p>
+<p><strong>Session 3.4 – Best Practices in ASP.NET MVC</strong><br />
+<em>Lessons learned from large ASP.NET MVC projects</em></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-05T00:00:00-06:00" pubdate data-updated="true">Feb 5<span>th</span>, 2013</time></div>
 	<div class="tags">
 
 
 	<a class='category' href='/blog/categories/events/'>Events</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/jack-welch-mba-course-business-communication-and-ethics/">
-		
-			Jack Welch MBA Course: Business Communication and Ethics</a>
-	</h2>
-	<div class="entry-content">
-		<p>Earlier, <a href="http://www.headspring.com/jeffrey/jack-welch-mbaa-new-graduate/">I wrote</a> about my experience at the <a href="https://twitter.com/jack_welch"><a href="http://www.jwmi.com">Jack Welch Management Institute</a>.</a>&nbsp; One of the courses in the program is Business Communications and Ethics.&nbsp; In hindsight, it was very appropriate that this course be the very first course in the program.&nbsp; After an overview of communications and ethics, the course pressed two things very hard.</p>
-<h2>Candor and differentiation</h2>
-<p>Mr. Welch <a href="http://www.jwmi.com/content/business-communication-and-ethics-candor">contends</a> that “the biggest dirty little secret in business” is the absence of candor (Winning).&nbsp; The course teaches that so many problems rise out of the fear of honest communication.&nbsp; We are reminded that children are naturally candid and have no filter in what they say.&nbsp; It is through cultural conditioning that we learn to hold in what we are really thinking.&nbsp; In some organizations, the culture discourages real candor.&nbsp; Instead, saving face is valued more.</p>
-<p>A key example of candor taught in this course relates to performance appraisals.&nbsp; Jack is famous for teaching a 20/70/10 differentiation method where management communicates to employees where they stand.&nbsp; This is most important for the bottom 10%.&nbsp; He contends that it is unfair to the employee to keep that honest feedback from those employees, who may spend more years at the company not understanding why they are not progressing in their careers.&nbsp; Instead, Jack contends that being candid with these employees, and helping them leave, is much more fair to them.&nbsp; The central idea in this is the belief that everyone is a star at the right company and the faster they realize the current company isn’t tapping their unique strengths, the sooner they can find the company and role that helps them shine.&nbsp; </p>
-<p>This method of candid performance communication drives a lot of controversy, but usually not from the top 20%.&nbsp; After this course, we slowly implemented this method at <a href="http://www.headspring.com/">Headspring</a>, and I have to attest that it works.&nbsp; We do quarterly performance reviews, and we differentiate.&nbsp; Through some conference call questions with Mr. Welch during the program, students were able to ask him questions, and he clarified his method for smaller companies where the law of large numbers doesn’t yield a good 20/70/10 distribution.&nbsp; He said that the benefit is there as long as there is real differentiation.&nbsp; He coaches that management must be honest with itself and realize that not all employees are the same.&nbsp; </p>
-<h2>Ethics and managing a crisis</h2>
-<p>After some academic reading on case studies involving corporate ethics, we were able to discuss a timely scandal.&nbsp; That was the scandal of BP and the communication method used after the oil spill in the Gulf of Mexico.&nbsp; Tony Hayward, the CEO of BP at the time, failed to get out ahead of the crisis.&nbsp; When a crisis happens, the curriculum teaches that leaders need to get out ahead of crisis communication and be the source of new information.&nbsp; Tony Hayward failed to do this.&nbsp; Because of it, news media filled the role of finding and communicating new pieces of information.&nbsp; When the news is coming from reporters, the revelations allude to a cover-up, where there is one or not.&nbsp; As a leader, claiming the role of briefer positions one as transparent.&nbsp; Regardless of mistakes made in a crisis, a worse mistake is not owning and leading crisis resolution.</p>
-<p>You can read one of the <a href="http://www.jwmi.com/content/business-communication-and-ethics-candor">lectures of this course here</a>.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-10-26T00:00:00-05:00" pubdate data-updated="true">Oct 26<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/bottom-ten-percent/'>bottom ten percent</a>, <a class='category' href='/blog/categories/business-communications/'>business communications</a>, <a class='category' href='/blog/categories/candor/'>candor</a>, <a class='category' href='/blog/categories/differentiation/'>differentiation</a>, <a class='category' href='/blog/categories/ethics/'>ethics</a>, <a class='category' href='/blog/categories/jack-welch-mba/'>jack welch mba</a>, <a class='category' href='/blog/categories/jwmi/'>jwmi</a>, <a class='category' href='/blog/categories/mba/'>mba</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/headspring-out-on-the-town/">
-		
-			Headspring Out on the Town</a>
-	</h2>
-	<div class="entry-content">
-		<p>We often think of bonding and rapport as something done with clients, but it’s just as valuable with your colleagues.  At Headspring, we believe it’s important to celebrate our successes and reenergize by bonding as a team.  We do this daily through teamwork, but every once in a while we simply need to have some fun together.  For our Q3 get together, we teamed up with City Sleuth, an expert city scavenger hunt company, to enjoy an afternoon of solving riddles and scavenging around downtown.  We sure got to know Austin really well!  In the end, we honored team members with awards, ate a great lunch, and created memories outside of the office environment.</p>
-<p><img class="alignleft size-large wp-image-5827" title="Team Meeting" src="http://www.headspring.com/wp-content/uploads/2012/10/Jeffrey-Palermo-speaking-1024x680.jpg" alt="" width="640" height="425" /></p>
-<p>&nbsp;</p>
-<p><img class="alignleft size-large wp-image-5828" title="Headspring Value Award" src="http://www.headspring.com/wp-content/uploads/2012/10/Anne-Epstein-receives-Headspring-Value-Award-1024x680.jpg" alt="" width="640" height="425" /></p>
-<p>&nbsp;</p>
-<p><img class="alignleft size-large wp-image-5829" title="Scavenger Hunt" src="http://www.headspring.com/wp-content/uploads/2012/10/Team-Pics-2-1024x767.jpg" alt="" width="640" height="479" /></p>
-<p>&nbsp;</p>
-<p>Let us know if you have fun ways to connect with your colleagues.  We are always looking for new ideas!</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-10-26T00:00:00-05:00" pubdate data-updated="true">Oct 26<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/avoid-mutation-by-default/">
-		
-			Avoid Mutation by Default</a>
-	</h2>
-	<div class="entry-content">
-		<p>Several weeks back, I was <a href="http://www.headspring.com/patrick/low-ceremony-xunit/">customizing xUnit</a> to cut down on ceremony in my tests.  When I ran into some trouble, I started looking through the source code for xUnit, and saw something a little surprising: tests within a test class are executed in a random order.  Sure, tests need to be isolated so that test execution order doesn&#8217;t affect their success or failure, but randomizing within the test runner seemed like overkill.</p>
-<p>If it ever caught an issue, it still wouldn&#8217;t tell me where the problem was, right?  It seemed like it would be better to execute in a deterministic order so that when I <em>do</em> get myself into trouble, it will be reproducible trouble.  Today, though, I was grateful for this behavior.  If you&#8217;re running tests frequently during development, the very fact that your newly-coded tests start failing at random <strong>is</strong> informative: <em>&#8220;What test is wrong?  The one that I just wrote.&#8221;</em></p>
-<h2>A Trivial Yet Broken Class</h2>
-<p>I was working on a routine whose job was to produce a date range after taking into account several business rules.  If none of the rules applied, we wanted to return the range [DateTime.MinValue, DateTime.MaxValue] to indicate &#8220;all the dates we could ever possibly care about&#8221;.  Each business rule could possibly shorten this range, affecting the start, the end, or both.  The overall result was, basically, the range where several other ranges overlapped.  I started by creating a helper class, DateRange, as a glorified pair of DateTimes:</p>
-<p><div><script src='https://gist.github.com/3949963.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>To make it clear to the reader that we were starting with &#8220;all the dates we could ever possibly care about&#8221; and subsequently narrowing that down to the overlapping range, I added a static field:</p>
-<p><div><script src='https://gist.github.com/3949966.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>This field allowed the main algorithm to look something like this:</p>
-<p><div><script src='https://gist.github.com/3950102.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Do you see the bug?  <strong>The terrible, horrible, no good, very bad bug?</strong>  xUnit did.</p>
-<p>The 3 rules I was applying were involved yet test-friendly, so it was easy to implement several tests to make sure my bases were covered.  All was well, until I got to the seventh test.  It failed with an impossible result.  The dates in the resulting range didn&#8217;t even show up anywhere in my test setup.  Mystified, I ran that test in the debugger.  It passed!  I ran the whole test class a few times, and this one test would pass or fail at random.  This was extremely odd, as the code under test seemed to be clearly deterministic.</p>
-<h2>Excessive Mutation</h2>
-<p>Realizing that xUnit was running my tests in a different order each time helped me to see my mistake.  This implementation of DateRange is mutable, and AllOfTime is static and therefore shared.  AllOfTime is a shared mutable thing whose name suggests an immutable thing.  AllOfTime is lying.</p>
-<p>I had broken my own rule: I make classes immutable by default, making them mutable as soon as being dogmatic starts to hurt.  Instead, I had made this mutable from the start and immediately tripped on my own intellectual shoelaces.  Marking the properties as read-only forced me to rephrase the main logic, but that actually resulted in simplifying everything and ensured that AllOfTime is in fact <em>all</em> of it:</p>
-<p><div><script src='https://gist.github.com/3949968.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>DateRange deserves to be a value just like DateTimes deserve to be values.  You can&#8217;t <em>change</em> 10/24/2012 any more than you can change the number 5. 5 will always be 5, 10/24/2012 will always be 10/24/2012, and the range [10/24/2012, 10/31/2012] will always be the range [10/24/2012, 10/31/2012].</p>
-<p>As a general rule, I avoid mutation.  If I did that everywhere, though, my code would likely become too hard to follow.  As soon as keeping things immutable becomes a larger pain than the pain it solves, I back off and allow mutable state to come into the picture.  Even then, I try to limit the &#8220;footprint&#8221; of that state change.</p>
-<p>Unnecessary mutation makes it too easy to make trivial mistakes.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-10-25T00:00:00-05:00" pubdate data-updated="true">Oct 25<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/how-we-decided-on-our-current-vacation-policy/">
-		
-			How We Decided on Our Current Vacation Policy</a>
-	</h2>
-	<div class="entry-content">
-		<p><img style="margin: 0px 5px 5px 0px; display: inline; float: left" align="left" src="http://www.inc.com/uploaded_files/image/170x170/work-vacation-policy-bkt_3122.jpg"></p>
-<p>I very much liked the <a href="https://github.com/blog/1269-the-github-hiring-experience">GitHub write-up</a> on how they hire.&nbsp; It made me think back to a lot of decisions we’ve made at <a href="http://www.headspring.com/">Headspring</a>.&nbsp; One of them is the decision on vacation policy.&nbsp; With a mostly salaried work force, benefits is a big concern, and vacation is one of those.&nbsp; Here, I’ll attempt to share the progression of our vacation policy and how it came about.</p>
-<p>First, in 2007/2008 H1, Headspring had just added its 6th employee.&nbsp; The vacation policy was simple but not consistent.&nbsp; On paper, we said “two weeks” for everyone.&nbsp; In practice, we worked too much and didn’t even track days off.&nbsp; Then, by the end of 2008, we grew to over twelve employees and had to modify the policy.&nbsp; If memory serves me, it was in 2009 when we had real conversations and came up with a policy.</p>
-<h2>The first real policy</h2>
-<p>The idea that arose from having an employee retrospective was that we hired mature professionals, and we didn’t need to have a time-bound, cookie-cutter policy for everyone.&nbsp; The policy that we created them was a “<strong>use as much as you need</strong>” vacation policy.&nbsp; Everyone loved that policy.&nbsp; It communicated to all employees several things.</p>
-<ul>
-<li>You are a professional
-<li>We trust you.</li>
-</ul>
-<p>We didn’t track days off at all.&nbsp; Over the course of the next two years, we found that this policy left a lot of questions on the table.</p>
-<ul>
-<li>Ok.&nbsp; I can take as much vacation as I want?&nbsp; Clearly that can’t be the case?
-<li>How much vacation is too much?
-<li>How much vacation is too little?</li>
-</ul>
-<p>With highly analytical employees who hold themselves to a high standard, the policy of “whatever” proved to be too ambiguous.&nbsp; Folks did take vacation, but there was always an uneasiness of being unsure of expectations in this area.&nbsp; After another company meeting on the topic – probably around the time of twenty (20) employees, we honed the policy yet again.</p>
-<h2>Changing the policy</h2>
-<p>First, we re-established a commitment to a 40-hour work week.&nbsp; While some companies boast “we work hard, and we play hard”, we established a “work hard and go home” standard.&nbsp; Sorry.&nbsp; We don’t have a ping-pong table in the office (although our office complex does have horseshoes, sand volleyball, a basketball court, and a Frisbee golf setup).&nbsp; After communicating this, we made the policy for non-billable staff two or three weeks (in addition to the 7 company holidays we have) based on level in the company.&nbsp; The policy for our software engineers (most of the company) became based on billed time.&nbsp; With a standard of a 40-hour work week, we established a percent of the year that we needed to work on client projects in order for the company to remain financially healthy.&nbsp; After all, we make our money by building great custom software for our clients so they can compete in their industries.&nbsp; </p>
-<p>The solution, then was to based vacation time on the percent of 2080 hours (a year of 40-hour weeks) that we expected to be billed.&nbsp;&nbsp; In effect, by billing continuously for a couple of months, a week of vacation would then pull the percent of time billed down to where we needed it (80%).&nbsp; This system actually worked very well.&nbsp; Everyone knew exactly how much vacation they could take and still meet their commitment for billed time.&nbsp; I must insert here that we don’t have bonuses for top billers.&nbsp; We are a software engineering firm and not a straight consulting company.&nbsp; Therefore, our goal is not to maximize individual billed time to a client.&nbsp; Our goal is to deliver one awesome software system after another.&nbsp; Often we finish milestones early and leave budget on the table.&nbsp; This is celebrated, not lamented.</p>
-<p>With this policy in place, everyone knew what to do, and by tracking our client time, we knew exactly how much time off we could afford per person.&nbsp;&nbsp; One gentleman saved up for himself four weeks of vacation time.</p>
-<h2>How the policy broke, and what we did about it</h2>
-<p><a href="http://www.headspring.com/wp-content/uploads/2012/10/CropperCapture63.png"><img style="background-image: none; border-right-width: 0px; margin: 0px 0px 5px 5px; padding-left: 0px; padding-right: 0px; display: inline; float: right; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 0px" title="CropperCapture[63]" border="0" alt="CropperCapture[63]" align="right" src="http://www.headspring.com/wp-content/uploads/2012/10/CropperCapture63_thumb.png" width="244" height="140"></a>This policy carried us to early 2012.&nbsp; Now, at 30 employees, we have a different policy.&nbsp; The currently policy is much simpler and requires much less math.&nbsp; It is much more in alignment with our philosophy of “light on policy, heavy on judgment.”&nbsp;&nbsp; We have now changed the policy for our software engineers to&nbsp; be the following: 80% client work, 10% non-client company time, and 10% personal time.&nbsp; That means that 10% of the year, it’s yours.&nbsp; With a 52-week year, it is 5.2 weeks.&nbsp; We have found that most people don’t take 5.2 weeks of vacation per year, so that is enough for sick days, other stuff, and small bits of time off spread throughout the year as well.&nbsp; Then, the 10% of company time covers our staff meetings, fun quarterly off-sites, and other stuff.&nbsp; We put that policy in place because we found that a few people we uneasy about taking vacation because they were afraid of bench time.&nbsp; Our policy had not taken that into account.&nbsp; We wanted everyone to take vacation, and now the current policy ensures that.</p>
-<h2>What will it be next?</h2>
-<p>I have no idea.&nbsp; We’ve tweaked it over the years, and if we find another downside to the current policy, we’ll tweak it again.&nbsp; The good news is that we have such great people who live the company values, that they tend to speak up if something isn’t right.&nbsp; One of our company values is honest communication (candor), and they do a great job of living this one out.&nbsp; </p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-10-24T00:00:00-05:00" pubdate data-updated="true">Oct 24<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/benefits/'>benefits</a>, <a class='category' href='/blog/categories/company-policy/'>company policy</a>, <a class='category' href='/blog/categories/employee-morale/'>employee morale</a>, <a class='category' href='/blog/categories/headspring/'>headspring</a>, <a class='category' href='/blog/categories/hiring/'>hiring</a>, <a class='category' href='/blog/categories/programmer-vacation-policy/'>programmer vacation policy</a>, <a class='category' href='/blog/categories/programming-jobs/'>programming jobs</a>, <a class='category' href='/blog/categories/software-engineers/'>software engineers</a>, <a class='category' href='/blog/categories/vacation/'>vacation</a>, <a class='category' href='/blog/categories/vacation-policy/'>vacation policy</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/the-failed-record-of-the-software-industrywhy-software-people-dont-get-it/">
-		
-			The Failed Record of the Software Industry–why Software People Don’t Get It</a>
-	</h2>
-	<div class="entry-content">
-		<p>The Standish Group is an organization that has been studying and reporting on software projects for many years.&nbsp; In 1995, it reported that only 16.2% of software projects succeeded.&nbsp; In large companies, the number was only 8%.&nbsp; That is, these projects were on time and on budget.&nbsp; In 2012, there is some improvement.&nbsp; The 2012 report discusses waterfall projects and agile projects.&nbsp; A <a href="http://www.mountaingoatsoftware.com/uploads/blog/Agile-Waterfall-Success-Failure-Rates.jpg">summary of the success stats</a> demonstrates that agile projects do improve things across the board.&nbsp; That’s not surprising given that the 1995 report cited lack of stakeholder involvement and incomplete requirements as the top two contributing factors.&nbsp; <a href="http://agilemanifesto.org/principles.html">Agile principles</a> address both of those.&nbsp; </p>
-<p>The 2012 report is still fairly damning of the industry as a whole.&nbsp; It cites 12% success rate for waterfall projects and 42% success rates for agile projects.&nbsp; Firms like <a href="http://www.headspring.com/">Headspring</a>, with a 95% success rate, have embraced agile, of course, but there is still so much more to be desired by the track record of the industry.&nbsp; In 2012, 9% of agile projects still out-right fail, and 49% are “challenged”. i.e. they unacceptably ran over budget and/or over schedule – either can have significant impacts on the business.</p>
-<p><a href="http://www.headspring.com/wp-content/uploads/2012/10/Car_crash_1.jpg"><img style="background-image: none; border-right-width: 0px; margin: 0px 7px 5px 0px; padding-left: 0px; padding-right: 0px; display: inline; float: left; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 0px" title="Car_crash_1" border="0" alt="Car_crash_1" align="left" src="http://www.headspring.com/wp-content/uploads/2012/10/Car_crash_1_thumb.jpg" width="404" height="304"></a>The industry even pokes fun at itself in a famous Internet meme, “<a href="http://www.snopes.com/humor/jokes/autos.asp">If cars were like software</a>” where we see that we have much more reasonable expectations of our automobiles than we do of software and the people who make software. Somehow, the software vendors/programmers have set the expectations of paying customers (and executives) so low that they celebrate the smallest successes even in the face of massive budget overruns and late launches.</p>
-<p><strong>This is not acceptable!&nbsp; </strong>Software people don’t get it.&nbsp; Programmers have been writing mission-critical business systems for decades.&nbsp; The newness is gone.&nbsp; The trial period of “we’re figuring out how to do this” is well over.&nbsp; Now is the time when paying customers must demand more from programmers.&nbsp; </p>
-<p>As an executive of a <a href="http://headspring.com">software engineering firm</a>, I see the perspective of our clients.&nbsp; They have a business that is pushing forward in their industries.&nbsp;&nbsp; They have a really old information system that must be revamped in order to take advantage of changes in the industry.&nbsp; Or they need some automation for a brand new market offering.&nbsp; The success of the business initiative rides on many factors, software being one of them.&nbsp; They cannot afford to gamble with a failed $1M (or more) project.&nbsp; Besides the money, once the project calendar has come and gone, you can’t get those months back.&nbsp; Whether you hire a <a href="http://headspring.com">firm</a>, do it in-house, or hire contractors in India, a failed project by any cause could mean the end of the career by the manager in charge of the product or initiative.&nbsp; And it doesn’t have to be this way.</p>
-<p>Right now, across the industry, clients are forced to literally gamble with their capital investments and time.&nbsp; With less than 50% of projects (even the new and improved agile variety) succeeding, clients many times have no recourse but to gamble.&nbsp; The smooth-talking sales personnel do their bonding and rapport.&nbsp; Then comes the confidence building.&nbsp; Then the project plan and schedule – all works of fiction.&nbsp; And don’t forget the budget, which magically covers the time period the project plan lays out.&nbsp; Once the project gets started, the software engineers work for a while – hold meetings according to their agile process – track burn-downs, measure lots of agile numbers – then what comes out the other end is your 42% chance of succeeding.&nbsp; </p>
-<p>In order to increase the pitiful industry track record, software engineers need to change.&nbsp; And when saying “software engineers”, I’m referring to any person responsible for delivering software. Some companies have a plethora of titles and segmentation of specialty, but it’s all software engineering (i.e. software engineering includes leadership).&nbsp; The bed of education and training currently in place does not produce the results that clients demand.&nbsp; I hope to elaborate more on this soon.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-10-18T00:00:00-05:00" pubdate data-updated="true">Oct 18<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/blog/'>Blog</a>, <a class='category' href='/blog/categories/budget/'>budget</a>, <a class='category' href='/blog/categories/chaos/'>chaos</a>, <a class='category' href='/blog/categories/engineer/'>engineer</a>, <a class='category' href='/blog/categories/engineers/'>engineers</a>, <a class='category' href='/blog/categories/fail/'>fail</a>, <a class='category' href='/blog/categories/failure/'>failure</a>, <a class='category' href='/blog/categories/projects/'>projects</a>, <a class='category' href='/blog/categories/report/'>report</a>, <a class='category' href='/blog/categories/software/'>software</a>, <a class='category' href='/blog/categories/standish/'>standish</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/aint-any-is-all-aint/">
-		
-			Ain&#8217;t Any Is All Ain&#8217;t</a>
-	</h2>
-	<div class="entry-content">
-		<p>Today, ReSharper made the same suspicious suggestion to both my coworker and me.  We both had the task of checking a potentially-large collection for items that fail to pass a test, and we both phrased these like so: &#8220;if not any of the items fail, continue…&#8221;.  In each case, ReSharper wanted to rephrase our statements, and it seemed like following the suggestion would be a change for the worse! </p>
-<h2>An Offensive Suggestion</h2>
-<p>Here&#8217;s what each of our situations boiled down to:</p>
-<p><div><script src='https://gist.github.com/3903096.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>We leaned on the Any() extension method, with the intention of &#8220;short circuiting&#8221; the underlying loop.  Any() starts at the front of the list, and tests each item until one of them passes the condition in the lambda expression.  Once we hit that item, there is no need to continue processing items, so Any() returns early.  This is similar to the way that the || operator works: in the expression (a() || b() || c()), we only bother to call method c() when a() and b() are both false.</p>
-<p>So, it seems the ReSharper suggestion is only <em>technically</em> the same.  You&#8217;ll get the same answer, but surely testing &#8220;All&#8221; the items is potentially wasteful in the event that the collection is large.</p>
-<p>What a terrible suggestion!  So terrible, I wanted to write an angry letter to the editor of my local newspaper: &#8220;…these nogoodniks, these ne&#8217;er-do-wells over at <a href="http://www.jetbrains.com/resharper/">JetBrains</a> need to <strong>turn that racket down and get off my lawn!</strong>&#8221;</p>
-<p>I&#8217;m glad I didn&#8217;t, though, because I was completely wrong.</p>
-<h2>Oops</h2>
-<p>While searching for a code sample demonstrating this ReSharper suggestion, I found the truth: <a href="http://stackoverflow.com/questions/9027530/linq-not-any-vs-all-dont">Not Any vs All Don&#8217;t</a>.</p>
-<p>The top answer reveals the actual implementation of both Any() and All().  Naturally, <em>both</em> Any() and All() are implemented with the &#8220;short circuit&#8221; logic mentioned above.  Any() behaves like (a() || b() || c()), <strong>and All() behaves like (a() && b() && c())</strong>.  Both have the opportunity to stop looking at items as soon as they have enough information to have the correct final answer.</p>
-<p>My mistake was to read too much into the use of the word &#8220;All&#8221; without actually thinking about how it could be best implemented.  Yet again, ReSharper has proven itself to be clearly smarter than me.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-10-17T00:00:00-05:00" pubdate data-updated="true">Oct 17<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/jack-welch-mbaa-new-graduate/">
-		
-			Jack Welch MBA–a New Graduate</a>
-	</h2>
-	<div class="entry-content">
-		<p><img style="margin: 0px 15px 5px 0px; display: inline; float: left" alt="Jack Welch Management Institute" align="left" src="http://www.jwmi.com/sites/all/themes/jwmi/images/jwmi-logo.png">For the last two years, I have been enrolled in the <a href="http://www.jwmi.com">Jack Welch Management Institute</a>.&nbsp; I just finished their <a href="http://www.jwmi.com/content/executive-mba-course-descriptions">Executive MBA program</a>, and my perspective has changed.&nbsp; First, I have to thank <a href="https://twitter.com/jack_welch">Jack Welch</a> for creating this program, in which he shares his decades of business leadership experience.&nbsp; </p>
-<p>If you aren’t familiar, Jack Welch was the CEO of <a href="http://www.ge.com/">General Electric</a> from 1981 to 2001.&nbsp; That’s a lot of years!&nbsp;&nbsp; Now, he shares his knowledge and experience with people like me – and whoever else enrolls in his MBA program.</p>
-<p><img style="margin: 5px 0px 5px 5px; display: inline; float: right" alt="Logo-strayer.png" align="right" src="http://upload.wikimedia.org/wikipedia/en/2/2f/Logo-strayer.png">JWMI is a program hosted at <a href="http://www.strayer.edu/">Strayer University</a>, which is a nationwide university that has been around since 1892 – not as old as my alma mater, <a href="http://www.tamu.edu/">Texas A&amp;M</a> (1872/6), but very proven.&nbsp; Chances are there is a Strayer location in a city near you.</p>
-<p>I was very fortunate to have a great classmate who took the courses with me.&nbsp; <a href="http://headspring.com/kevin">Kevin Hurwitz</a>, the Chief Architect at <a href="http://www.headspring.com/">Headspring</a>, also just received his MBA from JWMI.&nbsp; Each course, we were able to swap notes and apply the knowledge every week at Headspring.</p>
-<p>Throughout the two years, I completed courses on a broad range of topics.&nbsp; They are listed here.&nbsp; As I blog about what I have learned and applied in each course, I’ll link to that blog from this list.</p>
-<ul>
-<li><a href="http://www.headspring.com/jeffrey/jack-welch-mba-course-business-communication-and-ethics/">Business Communications and Ethics</a>
-<li>Leading in the 21st Century
-<li>Strategy
-<li>People Management
-<li>Marketing in a Global Environment
-<li>Managerial Economics
-<li>Operations Management
-<li>Financial Management I
-<li>Organizational Change and Culture
-<li>Financial Management II
-<li>New Business Ventures and Entrepreneurship
-<li>Capstone (simulation)</li>
-</ul>
-<p>I am very happy to have attended and graduated from the Jack Welch Management Institute.&nbsp; My contribution to Headspring has materially benefited from the learning.&nbsp; Also, I am so excited that several other Headspringers have decided to enroll for this semester!</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-10-12T00:00:00-05:00" pubdate data-updated="true">Oct 12<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/emba/'>emba</a>, <a class='category' href='/blog/categories/jack-welch/'>jack welch</a>, <a class='category' href='/blog/categories/jwmi/'>jwmi</a>, <a class='category' href='/blog/categories/learning/'>learning</a>, <a class='category' href='/blog/categories/management/'>management</a>, <a class='category' href='/blog/categories/mba/'>mba</a>, <a class='category' href='/blog/categories/strayer/'>strayer</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/get-to-know-a-developer-justin-mason/">
-		
-			Get to Know a Developer: Justin Mason</a>
-	</h2>
-	<div class="entry-content">
-		<p><a href="http://www.headspring.com/wp-content/uploads/2012/10/photo-3.jpg"><img class="alignright size-medium wp-image-5799" title="Justin Mason - Headspring Principal Consultant" src="http://www.headspring.com/wp-content/uploads/2012/10/photo-3-224x300.jpg" alt="Justin Mason - Headspring Principal Consultant" width="224" height="300" /></a>Justin Mason is our newest team member at Headspring. An experienced developer, Justin joins us from Catapult Systems where he designed and developed a sensor data recording and management application for natural gas and oil drilling rigs. Justin has a passion for the ever-changing landscape of viable technologies and their potential applications, which makes him a great addition to our team of like minded and ambitious people!</p>
-<p><strong>Are you an expert at anything?</strong></p>
-<p>I have more than 15 years of application development experience. In that time, I’ve seen the evolution of the Web. By understanding where technology originated, it helps provide a clearer picture of where it may go.  The uncertainty of how competing priorities have shaped the software applications that are currently available makes it an exciting time to be at Headspring to contribute to the needs of its customers.</p>
-<p>I became passionate about Microsoft Windows Communication Foundation (WCF) because I understood the pain it was trying to alleviate for companies.  Bidirectional communication using binary serialization over TCP that can be easily transitioned to other transportation protocols like HTTP really caught my interest.  WCF has had to keep pace with the industry due to emerging technologies such as Ajax using JSON serialization instead of SOAP. Its use in the background will remain intact while abstractions are built on top of it to facilitate new applications.       </p>
-<p><strong>Who are your ideal clients to work for?</strong></p>
-<p>The best part of software development is that it has allowed me to work across a wide range of companies. If software can help solve a business problem, we want to work with a company to do it. Then the only other factor is the willingness of the company to come together to work with developers and rely on their expertise to find a technical solution.</p>
-<p><strong>What led you to software development?</strong></p>
-<p>I was led to software by the idea that I could get paid to put together puzzles.  Software allows you to use your imagination to visualize a concept and then bring that concept into something others can see and interact with.  When a day goes by without noticing it, you know the career you have chosen is the right one.</p>
-<p><strong>What did you learn first?</strong></p>
-<p>Besides my introduction to software in elementary school using “Turtle Graphics”, I learned Visual Basic 4 along with Relational Databases coming out of college and started my first “real” job.</p>
-<p><strong>Do you like teaching?</strong></p>
-<p>Yes, I like teaching very much.  I owe my own career to friends and colleagues that took the time to show me how to learn the various technologies.  I enjoy the different ways people learn similar concepts.  Having to adapt to different learning styles makes the teacher’s own understanding greater.  As a result, everyone comes out ahead.</p>
-<p><strong>How do you gauge “time well spent”?</strong></p>
-<p>I ask myself whether I’ve added to my understanding of something new, or did I complete a defined objective?  Time wasted is usually a result of a lack of clear objectives, or misunderstanding a concept foundational to a new technology.</p>
-<p>&nbsp;</p>
-<p>Want to know more? Tweet him! <a href="https://twitter.com/JustinMasonDev" target="_blank">@justinmasondev</a></p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-10-12T00:00:00-05:00" pubdate data-updated="true">Oct 12<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/blog/'>Blog</a>, <a class='category' href='/blog/categories/bonus/'>Bonus!</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/get-to-know-a-headspringer/'>Get To Know a Headspringer</a>
 
 
 </div>

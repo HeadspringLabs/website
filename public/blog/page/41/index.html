@@ -1,0 +1,432 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Headspring Labs</title>
+	<meta name="author" content="Headspring Labs">
+
+	
+	<meta name="description" content="In April 2011, the jQuery team announced development on the popular jQuery Templates plugin would be delayed indefinitely. In need of a replacement &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Headspring Labs" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script async="true" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">Headspring Labs</a></h1>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+	<li><a href="/open-source">Open Source</a></li>
+	<li><a href="/team">The Team</a></li>
+	<li><a href="/about-us">About Us</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:headspringlabs.com">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/HeadspringLabs" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/HeadspringLabs" title="GitHub">GitHub</a>
+		
+	    
+		
+		<a class="coderwall" href="https://coderwall.com/team/headspring" title="Coderwall">Coderwall</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	    
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:headspringlabs.com">
+	</form>
+</nav>
+<nav id="main-nav"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+	<li><a href="/open-source">Open Source</a></li>
+	<li><a href="/team">The Team</a></li>
+	<li><a href="/about-us">About Us</a></li>
+</ul>
+</nav>
+
+</header>
+	
+		
+	
+	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/an-underscore-templates-primer/">
+		
+			An Underscore Templates Primer</a>
+	</h2>
+	<div class="entry-content">
+		<p>In April 2011, the jQuery team <a href="http://api.jquery.com/category/plugins/templates/">announced</a> development on the popular jQuery Templates plugin would be delayed indefinitely. In need of a replacement, I began investigating alternatives and soon discovered <a href="http://documentcloud.github.com/underscore/">Underscore</a>, the &#8220;utility belt&#8221; library behind the awesome <a href="http://documentcloud.github.com/backbone/">Backbone.js</a> framework. The Underscore library includes an easy-to-use templating feature that easily integrates with any JSON data source, so read on to learn how easy it is to create JSON-backed templates.</p>
+<p>Sending JSON data to a browser is outside the scope of this blog post, but, for reference, take a look at this collection of books:</p>
+<pre>&lt;code&gt;[
+  {
+    &quot;title&quot;:&quot;Myst: The Book of Atrus&quot;,
+    &quot;author&quot;:&quot;Rand Miller&quot;
+  },
+  {
+    &quot;title&quot;:&quot;The Hobbit&quot;,
+    &quot;author&quot;:&quot;J.R.R. Tolkien&quot;
+  },
+  {
+    &quot;title&quot;:&quot;Stardust&quot;,
+    &quot;author&quot;:&quot;Neil Gaiman&quot;
+  }
+]
+&lt;/code&gt;</pre>
+<p>In this example, we&#8217;ll display this collection of books as a simple unordered list, but don&#8217;t let that stop you from experimenting!</p>
+<h2>The Template</h2>
+<p>First, we need to define our Underscore template, which we&#8217;ll do in a <code>&lt;script&gt;</code> block (meaning browsers will ignore it while rendering the page, but we can still reference it by its client ID) with the type of <code>text/template</code> (so your fellow developers will know it&#8217;s a template versus a standard bit of JavaScript).</p>
+<pre>&lt;code&gt;&amp;lt;script id=&#39;tmpl-books&#39; type=&#39;text/template&#39;&amp;gt;
+  &amp;lt;ul&amp;gt;
+    &amp;lt;% for (var i = 0; i &amp;lt; books.length; i++) { %&amp;gt;
+      &amp;lt;% var book = books[i]; %&amp;gt;
+      &amp;lt;li&amp;gt;
+        &amp;lt;em&amp;gt;&amp;lt;%= book.title %&amp;gt;&amp;lt;/em&amp;gt; by &amp;lt;%= book.author %&amp;gt;
+      &amp;lt;/li&amp;gt;
+    &amp;lt;% } %&amp;gt;
+  &amp;lt;/ul&amp;gt;
+&amp;lt;/script&amp;gt;
+&lt;/code&gt;</pre>
+<p>If you&#8217;ve worked with tools like ASP.NET &#8220;WebForms&#8221; or Rails, you may recognize the &#8220;bee sting&#8221; operators (<code>&lt;%</code> and <code>%&gt;</code>), which Underscore uses to both output data to the rendered template and encapsulate behavior (as JavaScript). In this template, we first loop through the &#8220;books&#8221; collection (which we&#8217;ll define in the next section), pluck out each book as the loop progresses, and print out the<br />
+title and author of each as an unordered list item.</p>
+<p>You&#8217;re free to inject as much JavaScript as you wish into your templates, but I find they&#8217;re most maintainable when the script is kept to a minimum (for me, this means mostly just loops and ternary operators, like the one below).</p>
+<pre>&lt;code&gt;&amp;lt;% book.published ? print(&#39;(&#39; + book.published + &#39;)&#39;) : &#39;&#39; %&amp;gt;
+&lt;/code&gt;</pre>
+<p>(The <code>print()</code> function is a handy alternative to the <code>&lt;%= %&gt;</code> syntax for outputting values inside other functions, like we&#8217;re doing here.)</p>
+<h2>The Result</h2>
+<p>Now that we&#8217;ve defined our JSON source and the template for displaying our data, we need simply to tell Underscore to render the template and give us back the output HTML (using Underscore&#8217;s <code>template()</code> function).</p>
+<p>In our example, <code>data</code> represents our JSON collection of books, but keep in mind your JSON data source may be named something different. We&#8217;ll tell Underscore to put this data inside the <code>books</code> collection, which we&#8217;ve referenced in our template.</p>
+<pre>&lt;code&gt;// Get the template&#39;s markup...
+var tmplMarkup = $(&#39;#tmpl-books&#39;).html();
+// ...tell Underscore to render the template...
+var compiledTmpl = _.template(tmplMarkup, { books : data });
+// ...and update part of your page:
+$(&#39;#target&#39;).html(compiledTmpl);
+&lt;/code&gt;</pre>
+<p>Underscore kindly compiles the template with our well-formed data and produces the following output, ready for injection into our HTML page:</p>
+<pre>&lt;code&gt;&amp;lt;ul&amp;gt;
+  &amp;lt;li&amp;gt;&amp;lt;em&amp;gt;Myst: The Book of Atrus&amp;lt;/em&amp;gt; by Rand Miller&amp;lt;/li&amp;gt;
+  &amp;lt;li&amp;gt;&amp;lt;em&amp;gt;The Hobbit&amp;lt;/em&amp;gt; by J.R.R. Tolkien&amp;lt;/li&amp;gt;
+  &amp;lt;li&amp;gt;&amp;lt;em&amp;gt;Stardust&amp;lt;/em&amp;gt; by Neil Gaiman&amp;lt;/li&amp;gt;
+&amp;lt;/ul&amp;gt;
+&lt;/code&gt;</pre>
+<p>Underscore&#8217;s templating feature quickly made its way onto my list of must-have tools for client-side Web development. Try your hand at a few JSON-backed templates using this versatile framework and it may appear on yours, as well.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-31T00:00:00-06:00" pubdate data-updated="true">Jan 31<span>st</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/javascript/'>javascript</a>, <a class='category' href='/blog/categories/json/'>json</a>, <a class='category' href='/blog/categories/underscore/'>underscore</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/customizing-visual-studio-with-external-tools-part-3/">
+		
+			Customizing Visual Studio With External Tools, Part 3</a>
+	</h2>
+	<div class="entry-content">
+		<p>In my previous posts (<a title="Customizing Visual Studio With External Tools, Part 1" href="http://www.headspring.com/2012/01/customizing-visual-studio-with-external-tools-part-1">part 1</a>, <a title="Customizing Visual Studio With External Tools, Part 2" href="http://www.headspring.com/2012/01/customizing-visual-studio-with-external-tools-part-2">part 2</a>) I showed you how to create external tools and add them to a custom tool bar. In this post we will go the next logical step and add them to the context menu, so when you right-click on a file in the solution explorer (or other places) you’re tools are right there for use.</p>
+<p>If you’ve been following along, you’ll have noticed that customizing Visual Studio in these ways is a bit cumbersome. Creating context menus are no better considering there are a ton of <em>different</em> menus depending on the <em>context</em> that you’ll have to independently configure.</p>
+<h2>Creating a right-click, Open in Notepad context menu</h2>
+<p>Lets start with a simple example: creating a new context menu to open the selected document in Notepad++ by using the external tool we previously created to open files in Notepad++. Here’s what we’re going to create:</p>
+<p><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0pt none;" src="http://www.headspring.com/wp-content/uploads/2012/01/image9.png" alt="Visual Studio open in notepad context menu" width="358" height="126" border="0" /></p>
+<p>Go to Tools &gt; Customize, or right-click in the toolbar area and click “Customize…” to open the familiar customization dialog. Go to the “Commands” tab and select the radio button for Context menu and expand the drop down list. Brace yourself, because what you’ll see is <em>every single context menu and sub-menu</em> in Visual Studio. And herein lies the pain of creating a context menu – you have to configure it for each <em>context</em> it may need to be used in. You’ll see the menus are separated by the symbol “|” which denotes a sub-menu.</p>
+<p>If you select “Project and Solution Context Menus” the “Controls:” list will show all of the context menus related to Projects and Solutions (a Project menu, Solution Folder menu, and so on). The Project menu is thus in the drop down list as “Project and Solution Context Menus | Project” and it has a controls and sub-menus itself. It’s a little confusing but once you poke around you’ll get the hang of it.</p>
+<p><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0pt none;" src="http://www.headspring.com/wp-content/uploads/2012/01/image10.png" alt="List of context menus" width="421" height="354" border="0" /></p>
+<p>Above I have highlighted the “Project and Solution Context Menus | Item” menu, which is the context menu that appears when you right click a file in the solution explorer. Once this is selected, click “Add Command…” and find the external tool associated with the command you previously created in <a title="Customizing Visual Studio With External Tools, Part 1" href="http://www.headspring.com/2012/01/customizing-visual-studio-with-external-tools-part-1">part 1</a>. It will be in the “Tools” category. You can then click on “Modify Selection” and rename the command.</p>
+<p><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0pt none;" src="http://www.headspring.com/wp-content/uploads/2012/01/image11.png" alt="Adding commands to a context menu" width="398" height="270" border="0" /></p>
+<p>A final, optional step is to create a new “group” for you command(s). Select the command just under the one you added (“Open” in this case) and click “Modify Selection” on it and the “Begin a Group” selection will be available. Click it and a group separator will be created under your command:</p>
+<p><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0pt none;" src="http://www.headspring.com/wp-content/uploads/2012/01/image12.png" alt="Context menu command in a group" width="265" height="66" border="0" /></p>
+<p>You’re done! Close out all the dialogs and right click on a file in the solution explorer and it’ll open up in Notepad++ for editing.</p>
+<h2>Creating a context sub-menu</h2>
+<p>You can create a sub-menu much the same way. Select the menu it belongs in and instead of adding a command, click the “Add New Menu” button. You can rename it the same way you renamed your external command above. Once renamed and placed in the order you wish, it’s time to add commands to it. Because I just added a new menu to the “Project and Solution Context Menus | Item” menu, it will now appear in the context menu drop down list, and we have to select it there in order to add commands to it:</p>
+<p><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0pt none;" src="http://www.headspring.com/wp-content/uploads/2012/01/image13.png" alt="Creating a sub-menu within a context menu" width="370" height="92" border="0" /></p>
+<p>I’ve added the Explorer and Notepad++ commands that I created in <a title="Customizing Visual Studio With External Tools, Part 1" href="http://www.headspring.com/2012/01/customizing-visual-studio-with-external-tools-part-1">part 1</a> in the “My Menu” I created. Now I have these commands available to files in the Solution Explorer in their own sub-menu!</p>
+<p><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0pt none;" src="http://www.headspring.com/wp-content/uploads/2012/01/image14.png" alt="A custom context menu" width="476" height="101" border="0" /></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-30T00:00:00-06:00" pubdate data-updated="true">Jan 30<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/visual-studio/'>Visual Studio</a>, <a class='category' href='/blog/categories/tools/'>tools</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/join-the-polyglots/">
+		
+			Join the Polyglots!</a>
+	</h2>
+	<div class="entry-content">
+		<p>I&#8217;ve been writing software professionally for 9 years now, and unprofessionally for 18.  My recent focus has been on C#, but I&#8217;ve worked with many languages over the years.</p>
+<p>When I was in the 7th grade, one of the other students made a Myst clone with Hypercard using photos taken around the school.  That seemed like <em>pure magic</em>, so I wanted to find out how software is made.  Like most people who get into this subject at an early age, my goal was to make games.</p>
+<p>My first programming language was Pascal.  I used Turbo Pascal, whose IDE lived in text mode.  It actually had a pretty decent debugger, one quite similar to what you get with Visual Studio today.  Pascal is a little verbose with keywords, but that came in handy to a total newbie.  Its type system was simple: you start with basic things like ints and strings, and then declare compound types like arrays and records in terms of simpler types.  It was neat to see the way you could build up ever-more complex types in terms of the primitives.</p>
+<p>After taking a year of Pascal in high school, we switched to C++.  At first, it seemed to be only superficially different.  Instead of <em><code>Writeln("Hello")</code></em>, you <em><code>cout&lt;&lt;"Hello"</code></em>.  Type names appeared <em>before</em> variables now.  The first new thing that came up was pointers.  It wasn&#8217;t <em>too</em> different, but it was pretty neat, and I got a better idea of how interesting types could be built up from this new primitive concept.  Still, C++ didn&#8217;t seam too Earth-shattering compared to Pascal.  I figured all software development would feel like this.</p>
+<p><strong>Then I saw Perl for the first time during an internship, and it blew my mind!</strong></p>
+<p>Perl was weird and ugly in a glorious sort of way.  The Camel Book, written by the creator of Perl, didn&#8217;t just tell me how to write &#8220;Hello&#8221; to the screen or how to declare functions.  Instead, it was <em>entertaining</em>, downright <em>whimsical</em> at times, and that reflected the fun I had playing with Perl.  Right out of the box, I got to work with interesting things like hashes and regular expressions.  I saw the appeal of the brevity that came from some of the shortcuts it takes.</p>
+<p>I had a semester of Functional Programming with Scheme, but I didn&#8217;t really &#8220;get it&#8221; at the time.  I wish I had… I&#8217;ve since come to really enjoy working with lambda expressions, and Scheme is <em>lousy</em> with them.</p>
+<p>In my second internship, I worked briefly with Tcl (pronounced &#8220;tickle&#8221;).  In Tcl, &#8220;everything is a string&#8221;, and when everything is a string, you have to start stretching your definition of things like &#8220;string&#8221; and &#8220;quotation marks&#8221;.  All data types in Tcl can be manipulated as strings, even blocks of code!  This was my first exposure (second, if I had actually understood Scheme) to the idea that code itself can be a value, something you can pass around from one function to another.</p>
+<p><strong>During senior year and in a fit of youthful recklessness, I had an affair with PHP.  Please accept my heartfelt apologies.</strong></p>
+<p>Python started to appeal to me as an alternative to PHP&#8217;s inconsistency and Perl&#8217;s readability issues.  Like with any language, you&#8217;re going to be surprised by some of the details, but by and large Python&#8217;s simplicity just makes sense.  Operator overloading feels very natural; your operators are just methods with special names.  Significant whitespace is weird at first, but it mimics the way I write psuedocode on paper.  Slices, lazy generators, and list comprehensions are all just really slick concepts.</p>
+<p>Ruby re-re-reintroduces functional programming for the masses without making it <em>feel</em> like functional programming.  Ruby blocks are similar to lambdas of other languages, but combined with nonlocal returns you gain the ability to define your own control flow constructs.  It&#8217;s as if you can add new keywords to the language.</p>
+<p>I haven&#8217;t used Clojure much, but it does seem like the first Lisp capable of grabbing wide-ish appeal.  It gives you just a <em>little</em> more syntax out of the box than other Lisps, and the built-in data structures are really interesting and opinionated.</p>
+<p>Haskell forces you to rethink something that other languages take for granted: the order of evaluation of <strong>everything</strong>.  It also forces you to realize just how little of your code <em>really</em> has to deal with mutable state.</p>
+<p>As I said above, C# has been my focus lately.  It&#8217;s a bit of a kitchen sink.  Every few years, it gains a pretty significant upgrade.  The first version was suspiciously similar to Java, but since then they have diverged greatly.  Properties help with readability, generics are far stronger than their Java counterparts, delegates and lambda expressions introduced functional programming constructs, LINQ introduced <em>freaking monads</em>, and you can even opt-into dynamic method invocation reminiscent of Python and Ruby.</p>
+<p><strong>Since C# exposes the developer to such a wide array of concepts from a wide variety of preceding languages, C# is a bit of a polyglot.</strong>  C# is a toolbelt with many tools.  You can pull out only the tools you need, when they&#8217;re appropriate for the job you&#8217;re doing.</p>
+<p><strong>Software developers should take the opportunity to similarly fill their own toolbelts.</strong>  We should expose ourselves to as many languages as possible.  Doing so will give you career security, expand your mind, and strengthen your problem-solving skills.  Most importantly, it&#8217;s just plain fun.</p>
+<p>Fellow-Headspringer <a href="http://www.headspring.com/2012/01/get-to-know-a-developer-sharon-cichelli/">Sharon Cichelli</a> is creating a new organization, the <a href="http://www.polyglotprogrammers.org/">Polyglot Programmers of Austin</a>, to help foster this effort.  Be sure to come by the second and fourth Thursday of each month to learn from your peers, to share what you&#8217;ve been learning, and to see just how green the grass is on the other sides of things.  Sometimes, the grass is purple.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-27T00:00:00-06:00" pubdate data-updated="true">Jan 27<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/get-to-know-a-developer-justin-pope/">
+		
+			Get to Know a Developer: Justin Pope</a>
+	</h2>
+	<div class="entry-content">
+		<p><a href="http://www.headspring.com/2012/01/get-to-know-a-developer-justin-pope/justin-pope" rel="attachment wp-att-3315"><img class="alignright size-medium wp-image-3315" title="Justin Pope" src="http://www.headspring.com/wp-content/uploads/2012/01/justin-pope-199x300.jpg" alt="" width="199" height="300" /></a>Justin Pope began his career working on standardized test score reporting systems and data warehouses for K-12 teachers.  These project teams designed applications that help teachers spend more time in the classroom teaching and less time learning how to use confusing new technology. He joined the Headspring team in 2010 looking for opportunities to enhance the user experience on projects across several clients each year.  When I have talked to other consultants, they all say Justin is really relied on for his unique ability to empathize with the client.  Here is how our conversation about web development went:</p>
+<p><strong>You have done the most Brown Bag Lunch Presentations out of all our developers.  Which one was your favorite?</strong></p>
+<p>The one I did on Fluent Validation.  I called it “Conquering Complex Client Crud”.  It was the first time I took a new skill, one that I had not already been using for years, and shared it right away.  I knew about ¾ of it, and learned the rest specifically so that I could better answer any questions.  It drove me to dig deep into understanding the source code and its limitations.</p>
+<p><strong>Do you like teaching?</strong></p>
+<p>I love teaching!  In college, I considered becoming a high school computer science or math teacher because I enjoy teaching and have a natural talent for it.  I decided not to, because I didn’t want to deal with rebellious students who didn’t want to be in class. At Headspring, teaching boot camps is one of my favorite things to do because all the developers are excited to be there and ready to learn.</p>
+<p><strong>What are your plans for the future?</strong></p>
+<p>I want to have a start up one day and significantly change something about the world.  I’ve found with technology, it’s easy for a great idea like mint.com, or legalzoom.com, or meetup.com to improve the quality of life for people, and I want to make a similar impact on the world.</p>
+<p><strong>What do you wish the industry cared more about?</strong></p>
+<p>I wish my peers – other developers at other companies – cared more about ROI.  A lot of times I see other developers get caught up in rules and absolutes, rather than seeing the big picture.  For example, this can happen a lot with testing.  Sometimes, a developer will write an entire test for something, just in case it needs to be refactored.  But refactoring might be unlikely, and if it is, the person executing may think the test is garbage and throw it out.  Yes, testing is important, but what is the ROI on the time it takes to create a test that might or might not be used by some other operator in the future?</p>
+<p><strong>What do you like most about front-end development?</strong></p>
+<p>I like creating an efficient workflow, and a lot of times you can get the easiest returns on improving the front-end experience.  There is always room for improvement that immediate impacts the user.</p>
+<p>If you would like to read about some of the projects that Justin worked on, visit our<a href="http://www.headspring.com/success-stories"> Success Stories</a> page and read about <a href="http://www.headspring.com/success-stories/legisym">Legisym </a>or <a href="http://www.headspring.com/success-stories/myopenjobs">MyOpenJobs</a>. Also, he is frequently active in the user group community, and you can see announcements of upcoming presentations on <a href="http://justincpope.com/">justincpope.com </a></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-27T00:00:00-06:00" pubdate data-updated="true">Jan 27<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/get-to-know-a-headspringer/'>Get To Know a Headspringer</a>, <a class='category' href='/blog/categories/what-the-tech/'>What the tech?</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/customizing-visual-studio-with-external-tools-part-2/">
+		
+			Customizing Visual Studio With External Tools, Part 2</a>
+	</h2>
+	<div class="entry-content">
+		<p>In my <a href="http://www.headspring.com/2012/01/customizing-visual-studio-with-external-tools-part-1">previous post</a> I showed you how to configure your own External Tools in Visual Studio, such as a command that opens up the current document in an external text editor, or a tool that launches a custom deployment executable. External Tools by default are accessed through the Tools menu, but this is lame. In this post I’ll show you to create your own toolbar to contain your tools so they are no more than one click away.</p>
+<h2>Creating a custom toolbar</h2>
+<p>To create a custom toolbar, click Tools &gt; Customize&#8230; or right-click in the open space in the toolbar area and select “Customize…” at the very bottom of this context menu. Click “New…” to create a new toolbar and give it a name and click OK, then close this dialog box.</p>
+<p><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/01/image4.png" alt="Creating a new toolbar" width="445" height="456" border="0" /></p>
+<p>It may appear that nothing has happened, but your toolbar has been added, it’s just empty. Look closely at your toolbars and you should be able to spot it:</p>
+<p><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/01/image5.png" alt="Customize your toolbar" width="204" height="77" border="0" /></p>
+<p>Click on the arrow, then “Add or Remove Buttons” then “Customize”. From this dialog, click “Add Command…”. Here you’ll see two lists, one for categories and another for the commands associated with the selected category.  Find and select the “Tools” category, then select the “External Command 1” command.</p>
+<p><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/01/image6.png" alt="Add commands to your toolbar" width="494" height="355" border="0" /></p>
+<p>The process is certainly a little cumbersome, but you’ll get the hang of it after doing it once or twice. The “External Commands” listed in the Commands window correspond with the external tools you have [previously configured –link to post #1]. It’s not magical enough to know the name of the external tools you’ve configured, so you’ll have to keep track of what you’ve created and the order they are in. In my example, I have three external tools configured, and I’m going to add each of them to my toolbar: External Command 1, External Command 2, and External Command 3.</p>
+<p><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/01/image7.png" alt="External Commands correspond to the External Tools you have, in order" width="324" height="229" border="0" /></p>
+<p>When you are done, close out any remaining open dialogs and your custom toolbar should be all set!</p>
+<p><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/01/image8.png" alt="A custom toolbar!" width="266" height="42" border="0" /></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-23T00:00:00-06:00" pubdate data-updated="true">Jan 23<span>rd</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/visual-studio/'>Visual Studio</a>, <a class='category' href='/blog/categories/tools/'>tools</a>
+
+
+</div>
+	
+</div>
+</article>
+
+<nav id="pagenavi">
+    
+        <a href="/blog/page/40/" class="prev">Prev</a>
+    
+    
+        <a href="/blog/page/42/" class="next">Next</a>
+    
+    <div class="center"><a href="/blog/archives">Blog Archives</a></div>
+</nav></div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Headspring Labs
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+
+
+
+
+</body>
+</html>

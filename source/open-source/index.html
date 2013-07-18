@@ -3,3 +3,25 @@ layout: page
 title: Open Source
 ---
 
+<p>Open source software is a big part of what we do at Headspring. We often use OSS projects when building solutions and sometimes we end up creating open source projects from the work we do within a custom application.</p>
+
+<p>Check out some of our popular open source libraries and projects:</p>
+
+<section id="open-source-projects">
+{% for key in site.current_open_source_projects %}
+{% assign proj = site.open_source_projects[key] %}
+	<div class="project">
+		<div class="content">
+			<h1>{{ proj.name }}</h1>
+			<p>{{ proj.description }}</p>
+		</div>
+		<div>
+			<img src="{{ proj.image_url }}" alt="{{ proj.name }} logo" />
+			<ul class="project-links">
+				<li><a class="github" href="http://github.com/{{ proj.github }}">github</a></li>
+				<li><a class="web" href="{{ proj.web }}">web</a></li>
+			</ul>
+		</div>
+	</div>
+{% endfor %}
+</section>

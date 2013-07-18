@@ -41,7 +41,7 @@ rdiscount:
     - smart
 pygments: false # default python pygments have been replaced by pygments.rb
 
-paginate: 10          # Posts per page on the blog index
+paginate: 5           # Posts per page on the blog index
 pagination_dir: blog  # Directory base for pagination URLs eg. /blog/page/2/
 recent_posts: 5       # Posts in the sidebar Recent Posts section
 excerpt_link: "Read on &rarr;"  # "Continue reading" link text at the bottom of excerpted articles
@@ -101,6 +101,47 @@ facebook_like: true
 
 # Coderwall
 coderwall_user: headspring
+
+# ----------------------- #
+#   Open Source Projects  #
+# ----------------------- #
+current_open_source_projects: [automapper, enumeration, formo, fixie, mvccontrib, tarantino, naak]
+open_source_projects:
+  automapper:
+    name: AutoMapper
+    description: A convention-based object-object mapper. AutoMapper uses a fluent configuration API to define an object-object mapping strategy. AutoMapper uses a convention-based matching algorithm to match up source to destination values. Currently, AutoMapper is geared towards model projection scenarios to flatten complex object models to DTOs and other simple objects, whose design is better suited for serialization, communication, messaging, or simply an anti-corruption layer between the domain and application layer.
+    image_url: https://secure.gravatar.com/avatar/ef7c786d532e8bf9b1a57e507ff7aaa4?s=200
+    github: AutoMapper/AutoMapper
+    web: http://automapper.org
+    pioneer: jimmy
+  formo:
+    name: Formo
+    description: Formo lets you use your configuration file as a dynamic object.
+    image_url: https://raw.github.com/ChrisMissal/Formo/master/img/formo_200_sq.png
+    github: ChrisMissal/Formo
+    web: http://chrismissal.com/Formo
+    pioneer: chris
+  fixie:
+    name: Fixie
+    description:
+    image_url:
+    github:
+    web:
+    pioneer: patrick
+  mvccontrib:
+    name: MvcContrib
+    description: Better tools for a better framework. MVC Contrib is a collection of assemblies which add additional functionality to Microsoft’s ASP.NET MVC Framework. Microsoft’s approach to the Model-View-Controller pattern is already impressive, but MVC Contrib furthermore fills in some of the gaps.
+    image_url:
+    github:
+    web: http://mvccontrib.org
+    pioneer: 
+  enumeration:
+    name: Enumeration
+    github: HeadspringLabs/Enumeration
+  naak:
+    name: NAAK (.NET Accessibility Analysis Kit)
+  tarantino:
+    name: Tarantino
 
 # ----------------------- #
 #    Author Information   #
