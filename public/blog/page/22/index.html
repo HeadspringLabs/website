@@ -7,7 +7,8 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="Yak Shaving is a term used to describe one of two situations: when you&#8217;re performing some seemingly-wasteful activity that ultimately helps &hellip;">
+	<meta name="description" content="Confession time: I might not be perfect. Thankfully, though, that&#8217;s irrelevant.
+I&#8217;ve coded myself into a bit of a corner, and it&#8217;s &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -84,8 +85,81 @@
 </header>
 	
 		
+<div id="banner" class="inner">
+	<div class="container">
+		<ul class="feed"></ul>
+	</div>
+	<small><a href="http://twitter.com/HeadspringLabs">HeadspringLabs</a> @ <a href="http://twitter.com">Twitter</a></small>
+	<div class="loading">Loading...</div>
+</div>
+<script src="/javascripts/twitter.js"></script>
+<script type="text/javascript">
+	(function($){
+		$('#banner').getTwitterFeed('HeadspringLabs', 5, );
+	})(jQuery);
+</script>
+
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/essential-vs-incidental-complexity/">
+		
+			Essential vs Incidental Complexity</a>
+	</h2>
+	<div class="entry-content">
+		<p>Confession time: I might not be perfect.  Thankfully, though, that&#8217;s irrelevant.</p>
+<p>I&#8217;ve coded myself into a bit of a corner, and it&#8217;s all my fault, but as I said above my imperfection is irrelevant.  What&#8217;s relevant is that when one is faced with a software project that&#8217;s heading in the wrong direction, the problems can always be identified and addressed.  <strong>Code is just too malleable to be intractable.</strong>  Realizing you have a coding problem is the first step to recovery.</p>
+<h2>What Success Feels Like</h2>
+<p>Last week, I wrote about some lessons learned from a <a href="http://www.headspring.com/blog/developer-deep-dive/meta-yak-shaving/">yak shaving</a> project that I&#8217;ve been working on for the last year.  As that yak is now sufficiently sheared, I&#8217;ve shifted gears back to my <em>real</em> pet project, a compiler for the language summarized <a href="http://www.headspring.com/blog/developer-deep-dive/building-a-language/">here</a>.</p>
+<p>While working on Parsley, adding each new feature actually became <em>easier</em> over time.  I had <del>found</del> <del>planned</del> <em>stumbled into</em> the proper abstractions for the task at hand, and it was always clear what I should do next in order to move the project forward while leaving the campground cleaner than I found it.  </p>
+<h2>Suspicious Difficulties</h2>
+<p>With Rook, I&#8217;m finding lately that adding each new feature is getting <em>harder</em>.  Quite so, actually.  Each new feature is interacting very tightly with those already implemented, and they&#8217;re starting to interfere with forward progress.  I may be an hour into implementing a feature, even a simple one like adding support for comment syntax, before realizing that my attempt needs to be reverted.  Adding <a href="https://github.com/plioi/rook/commit/3a5ff34c9a8423c21608f3c876d4212eb0f9cddf">basic support for type checking of method calls</a> was the product of about 1 month and N+1 false starts, and includes more unfortunate compromises than I would usually allow myself.</p>
+<p><strong>Difficulty in adding new features is a tell-tale sign that I&#8217;ve got the wrong abstractions in place.</strong>  Odd, though, since the problem I&#8217;m working on is the poster child for Solved Problems.  There&#8217;s a great deal of prior art I&#8217;m building on, here, so I&#8217;m confident that the overall design is actually still right.  The abstractions that I would fit into an elevator pitch are not the problem.  Probably.</p>
+<h2>Is There Hope? (Spoiler Alert: Yes)</h2>
+<p>The question is, am I having difficulty due to <strong>essential complexity</strong> or <strong>incidental complexity</strong>?  Is the complexity inherent in the problem being solved (essential) or is it a byproduct of poor implementation details (incidental)?</p>
+<p>I&#8217;m leaning towards incidental.  I&#8217;m not exactly breaking RSA encryption here; that&#8217;s a job for quirky characters on procedural crime shows.  Since my difficulties are likely not just a matter of the problem being tough, it&#8217;s a sign that these recent hurdles are really telling me something.</p>
+<p>To sum up the situtation,<br />
+1. I have reason to believe the complexity I&#8217;m experiencing is not essential to the problem.  Rather, it&#8217;s in my control.<br />
+2. My <em>key</em> abstractions are probably right, as they&#8217;re the same used by Every Single Compiler Ever Made.<br />
+3. The increasing difficulty to add new features suggests that I <em>do</em> have poor abstractions somewhere.</p>
+<p>This train of thought leads me to suspect the <em>other</em> abstractions, the ones I&#8217;ve been inventing myself along the way as I try to fill in the gaps of my own understanding of all that prior art.  This hunch is consistent with the last few hurdles I&#8217;ve run into.</p>
+<p>This is great news!  Rather than dispair (&#8220;Oh woe is me, I done goofed!&#8221;), I have every reason to believe that the answers are now reachable.  I need to take a closer look at the abstractions I&#8217;ve invented along the way, the ones I&#8217;ve made with insufficient forethought regarding future prioritized features.  </p>
+<p>I&#8217;ve focused too much time on sharpening my jigsaw&#8217;s blades, and not enough time on what the puzzle is actually supposed to look like when it&#8217;s done.  Lo and behond, I&#8217;ve forgotten to cut out the edge pieces.</p>
+<p>Now that I know the difficulties are due to incidental complexity rather than essential complexity, I know I should slow down on adding new features while I address the problem abstractions.  Overall, my throughput will probably speed up.  I can start to work in earnest on phasing out this incidental complexity.  No &#8220;Grand Rewrite&#8221; for me!</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-07-13T00:00:00-05:00" pubdate data-updated="true">Jul 13<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -296,70 +370,6 @@
 
 
 	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>, <a class='category' href='/blog/categories/small-talk-and-big-news/'>Small Talk &amp; Big News</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/anonymous-function-arguments/">
-		
-			Anonymous Function Arguments</a>
-	</h2>
-	<div class="entry-content">
-		<p>A lambda expression is also called an &#8220;anonymous function&#8221; as it has no official name of its own: <code>x => x + 1</code> does some work, but there&#8217;s no declared name for that function.  Anonymous functions are powerful and expressive, and are now common in .NET projects.</p>
-<p>Anonymous function <em>arguments</em>, on the other hand, are weak and inexpressive.  Since the advent of the <code>Func</code> and <code>Action</code> delegate types, anonymous arguments have unfortuanately become as common as anonymous functions.  That is a trend I&#8217;d like to quash ASAP.</p>
-<h2>Sneaky Ambiguity</h2>
-<p>What do I mean by &#8220;anonymous function arguments&#8221;?  Let&#8217;s say someone else has written a method that takes in a <code>Func</code> and then invokes it as part of its own work:</p>
-<p><div><script src='https://gist.github.com/2992221.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Let&#8217;s say you really need to reticulate some splines, and you have a general idea of what function you should be passing into the <code>ReticulateSplines</code> method, but you don&#8217;t happen to really know what the int and bool arguments are supposed to signify.  You confidently put your keyboard to work and get as far as the open-parenthesis in but a few keystrokes:</p>
-<p><div><script src='https://gist.github.com/2992224.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Alas, your stalled and blinking cursor finds your youthful confidence quaint but ultimately futile.  Visual Studio isn&#8217;t going to be of any use here.  The most you&#8217;ll find out from Intellisense is that you need to supply some function that takes in an int and a bool.  <code>Func</code>&#8217;s declared argument names are <em>arg1</em> and <em>arg2</em>.  These names are so useless that they might as well not exist.  Hence, &#8220;anonymous&#8221; function arguments.</p>
-<p><code>ReticulateSplines</code> has a descriptive name for its <em>own</em> argument (<code>generateSplines</code>), but has provided no clue as to what the arguments to this <code>Func</code> are.  If I started writing methods with parameters named <em>arg1</em>, <em>arg2</em>, <em>arg3</em>… I&#8217;d be immediately despised by every other developer who had to use my code.  Why, then, should I be able to get away with expecting those same developers to make sense of delegate arguments that have equally-ambiguous names?</p>
-<h2>Getting Specific</h2>
-<p>The <code>delegate</code> keyword gets used less and less now that <code>Func</code> and <code>Action</code> are used for everything.  It&#8217;s time to dust it off and put it to work again.  When faced with the problem of anonymous function arguments, and you can resolve the problem with a simple delegate declaration.</p>
-<p>I recently needed to call a method that accepted an <code>Action&lt;Action, Action&gt;</code>.  I had a rough idea of what such an action needed to accomplish, but even after reading the body of the method in question I was unsure of the details.  The two anonymous arguments (the two inner actions) were passed around a bit before they were actually used.  Thankfully, someone had successfully called this method before, and after looking at the concrete method declaration that was being used in that case, I had a real clue what <em>arg1</em> and <em>arg2</em> were supposed to be called.</p>
-<p>The fix was to introduce a more useful yet equivalent delegate type.</p>
-<p><div><script src='https://gist.github.com/2995736.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Now, I could replace all usages of <code>Action&lt;Action, Action&gt;</code> with <code>SavePromptContinuation</code>.  Back in my own code, Intellisense started offering the help I needed, and more importantly started offering the help that the next developer would inevitably need.  When trying to call a method that accepts one of these, ReSharper even offers to write the method stub for the specific delegate expected, complete with well-named parameters!</p>
-<p><code>Func</code> and <code>Action</code> are useful because they are <em>at hand</em>, but the other edge of that sword may just cut your fellow developers.  Here&#8217;s some advice for their use:</p>
-<p>1. Use <code>Func</code> and <code>Action</code> when writing something that is inherently so abstract that you can&#8217;t be more specific.<br />
-2. You are not writing something that abstract.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-06-27T00:00:00-05:00" pubdate data-updated="true">Jun 27<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
 
 
 </div>

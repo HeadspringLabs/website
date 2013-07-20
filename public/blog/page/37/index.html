@@ -7,7 +7,7 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="Chris Missal, Senior Consultant at Headspring, is our newest addition to the team.  His background is mostly in web development using ASP.NET and &hellip;">
+	<meta name="description" content="Git and Mercurial certainly have their differences, but in the grand scheme of things they are both equally-viable source control tools. Bitbucket &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -84,8 +84,99 @@
 </header>
 	
 		
+<div id="banner" class="inner">
+	<div class="container">
+		<ul class="feed"></ul>
+	</div>
+	<small><a href="http://twitter.com/HeadspringLabs">HeadspringLabs</a> @ <a href="http://twitter.com">Twitter</a></small>
+	<div class="loading">Loading...</div>
+</div>
+<script src="/javascripts/twitter.js"></script>
+<script type="text/javascript">
+	(function($){
+		$('#banner').getTwitterFeed('HeadspringLabs', 5, );
+	})(jQuery);
+</script>
+
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/migrating-from-bitbucket-to-github/">
+		
+			Migrating From Bitbucket to GitHub</a>
+	</h2>
+	<div class="entry-content">
+		<p>Git and Mercurial certainly have their differences, but in the grand scheme of things they are both equally-viable source control tools.  Bitbucket and GitHub are also both equally-viable hosts for Mercurial and Git projects.</p>
+<p>All other things being equal, when it comes to open-source software the Capricious and Arbitrary Popularity Contest kicks in with the deciding vote.  Git, and in particular GitHub, has won the popularity contest in recent years and will own the title of Open Source Thingamabob for the near future.  Something cooler will come along and take its place, but for now GitHub is the place to be.</p>
+<p>We still trust Bitbucket with our client work, but we&#8217;re in the process of migrating our open-source projects to the new <a href="https://github.com/HeadspringLabs">GitHub &#8220;HeadspringLabs&#8221; organization</a>.</p>
+<p>After a few failed attempts and much gnashing of teeth, I successfully migrated the <a href="http://www.headspring.com/2011/11/building-rich-enums">Enumeration</a> project from Bitbucket to GitHub, complete with history.
+</p>
+<h2>Installing Hg-Git on Windows</h2>
+<p>If you&#8217;re migrating a Subversion project to GitHub, they already provide an simple import service.  They don&#8217;t yet offer a tool for importing Mercurial repositories, though, so I found a Mercurial-to-Git bridge called <a href="http://hg-git.github.com/">Hg-Git</a>.</p>
+<p>Hg-Git is intended to let you work continuously against a Git repository while using Mercurial tools on the client side.  I didn&#8217;t need all that, but it can also be used to do the initial push to GitHub from within a Mercurial repository.</p>
+<p>The documentation on the Hg-Git&#8217;s main site is a little brief, and after Googling around I found some good advice as well as some good advice that no longer applied.  To get Hg-Git installed on Windows, here&#8217;s all you really need to do:</p>
+<ol>
+<li>Install a recent TortoiseHg if you haven&#8217;t already.  I used TortoiseHg 2.3 (Mercurial 2.1).</li>
+<li>Open a command window and <code>cd</code> to a development folder.  We&#8217;ll be creating some repository folders underneath it:<br />
+$ <code>cd C:dev</code></li>
+<li>You install Hg-Git by simply cloning its own repository off of Bitbucket:<br />
+$ <code>hg clone https://bitbucket.org/durin42/hg-git</code><br />
+This creates a new folder named hg-git under the current directory, and underneath that you&#8217;ll see a folder named hggit.</li>
+<li>Mercurial needs to be told that this extension exists.  Update C:&#92;Users&#92;&lt;username&gt;&#92;mercurial.ini and add the following (using whatever path you cloned to):<br />
+<code>[extensions]<br />
+bookmarks =<br />
+hggit = C:devhg-githggit</code></li>
+<li>Confirm that Mercurial knows what hggit is:<br />
+$ <code>hg help hggit</code></li>
+</ol>
+<h2>Initial Failure</h2>
+<p>You&#8217;ll need to have a new empty repository created on GitHub, and you&#8217;ll need to have the rights to push to it.  You&#8217;ll need to have a local clone of the Bitbucket project you wish to migrate.</p>
+<p>If you follow the advice on <a href="http://hg-git.github.com">the Hg-Git site</a>, you&#8217;ll try to issue a special &#8221;<code>hg push</code>&#8221; command using a git-specific destination URL.  <strong>This can push the history of commits only partially.  The GitHub repository will unforunately fail to show <em>who</em> performed each commit.</strong>  Yikes.  When I got this far, I had to delete the GitHub repo and start over.</p>
+<p>The problem is Mercurial uses one string to represent committer identity while Git uses two (name and email).  Additionally, GitHub pays special attention to the email part, allowing the site to recognize existing GitHub users and linking to their user page.  Since Hg-Git wasn&#8217;t populating email addresses, GitHub had little to go on.</p>
+<h2>Successfuly Migrating from Bitbucket to GitHub</h2>
+<p><strong>Instead</strong> of using Hg-Git to perform the whole push, we&#8217;ll follow some <a href="http://www.theleagueofpaul.com/hg-to-git">excellent Hg-Git advice</a> that lets us step in to fix committer identities along the way.</p>
+<p>That site has a shell script (which can be executed on Windows using the Git Bash command prompt).  The script will use Hg-Git for only one small part of the process: converting a local Mercurial repository folder into an equivalent local git repository.  The only thing wrong with that git repository will be the user names and email addresses.  The script then takes a chainsaw to that local git history, fixing the identity of each committer.  Finally, the script uses regular git commands to do the final push to GitHub.</p>
+<p>The downside is that you have to modify this script with a separate chunk for each real-world person that appears in the Mercurial history.  For instance, let&#8217;s say we have history in Bitbucket for users named hgjohn and hgjane.  John Doe has a GitHub account already and prefers to be known there as &#8220;John Doe&#8221; with email address &#8220;john@example.com&#8221;.  Jane Doe doesn&#8217;t have a GitHub account yet, but later on if she does she&#8217;ll want to be known as &#8220;Jane Doe&#8221; and &#8220;jane@example.com&#8221;.  With these transformations ready, we modify the script to the following:</p>
+<p><div><script src='https://gist.github.com/1954240.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>After saving this as &#8220;migrate_hg_to_git.sh&#8221; in our development folder, we execute the following command (all on one line).  This creates a local folder named &#8216;MyProject&#8217;, populates it with a Bitbucket clone, converts it to a Git repository, fixes the names, and pushes to GitHub:</p>
+<p>$ <code>./migrate_hg_to_git.sh MyProject https://bitbucket.org/johnd/MyProject git@github.com:jdoe/MyProject.git</code></p>
+<p>Now when you view the project on GitHub, John&#8217;s commits display his photo and link to his user page.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-02T00:00:00-06:00" pubdate data-updated="true">Mar 2<span>nd</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -330,57 +421,6 @@
 
 
 	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/what-the-tech/'>What the tech?</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/get-to-know-a-developer-deran-schilling/">
-		
-			Get to Know a Developer: Deran Schilling</a>
-	</h2>
-	<div class="entry-content">
-		<p>Deran Schilling, Senior Consultant at Headspring,  is new to the team, and we have warmly welcomed him in as an additional web technology and design enthusiast.  After working in education for several years at LSU Alexandria, and Clear Creek ISD, Deran has gracefully transitioned to the corporate world and the Austin tech community.  So far, he has lead a team of Headspringers to participate in this year’s <a href="http://www.headspring.com/2012/02/headspring-shows-some-love-at-knowbilitys-austin-air">Knowbility Austin AIR</a>, and has plans for more events and competitions this year.  Here is some of our conversation:</p>
-<p><strong>What led you to software development?</strong></p>
-<p>In high school, I planned to be a band director, but ended up in a programming class my senior year.  From that point on, I was going to be a developer.  Lucky for me the college I chose has a great music program and CIS program.</p>
-<p><strong>Do you like teaching?</strong></p>
-<p>Yes I do.  In my previous jobs, I would always offer up different training sessions from MVC to jQuery to SQL to CSS to whatever they asked to learn about.  I firmly believe that you don’t fully understand something until you can teach it.  Occasionally, I call some of my developer friends to tell them about something new I learned.  In the conversation, I can determine if I really understand it.  If they ask a lot of questions that I can’t answer, I know I need to learn more.  Hopefully they don’t read this post and know they’re my guinea pigs.</p>
-<p><strong>Where do you begin when learning something new?</strong></p>
-<p>It depends on what I’m learning because I have different approaches for various things, but if we’re talking about a new technology then I gauge my co-workers and some reviews on whether or not it’s even worth learning.  If it is, I’ll jump into Google and find some blog posts.  If I can’t find any blog posts, I’ll buy the book.   If there is no book, I’ll figure it out myself and then blog about it.  This way, there will be a post that other people and myself can reference.</p>
-<p><strong>How do you gauge “time well spent?”</strong></p>
-<p>I gauge it based on how much value was brought to the company or to a relationship.  I value the time in the break room or at our lunches because carefully built relationships are important to a healthy team.  One of the main reasons I wanted to come to Headspring is because they seem very people-oriented.  We all work out of the Headspring office, which I think makes for a stronger team, and we are involved in the community.</p>
-<p>&nbsp;</p>
-<p>For more information on Deran, read his <a href="http://derans.blogspot.com">blog</a>, or tweet <a href="http://twitter.com/derans">@derans</a>.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-24T00:00:00-06:00" pubdate data-updated="true">Feb 24<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/get-to-know-a-headspringer/'>Get To Know a Headspringer</a>, <a class='category' href='/blog/categories/what-the-tech/'>What the tech?</a>
 
 
 </div>

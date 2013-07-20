@@ -7,8 +7,7 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="Leadership Team Honored for Dedication to Employee Engagement, Culture and Benefits
-Austin, TX – June 07, 2012, Austin-based Headspring, a custom &hellip;">
+	<meta name="description" content="When you define two methods with the same name in C#, they have to take in different argument types in order for them to be distinguished from each &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -85,8 +84,106 @@ Austin, TX – June 07, 2012, Austin-based Headspring, a custom &hellip;">
 </header>
 	
 		
+<div id="banner" class="inner">
+	<div class="container">
+		<ul class="feed"></ul>
+	</div>
+	<small><a href="http://twitter.com/HeadspringLabs">HeadspringLabs</a> @ <a href="http://twitter.com">Twitter</a></small>
+	<div class="loading">Loading...</div>
+</div>
+<script src="/javascripts/twitter.js"></script>
+<script type="text/javascript">
+	(function($){
+		$('#banner').getTwitterFeed('HeadspringLabs', 5, );
+	})(jQuery);
+</script>
+
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/overloading-on-return-types/">
+		
+			Overloading on Return Types</a>
+	</h2>
+	<div class="entry-content">
+		<p>When you define two methods with the same name in C#, they have to take in different argument types in order for them to be distinguished from each other.  Sometimes, I find myself wishing that you could also overload a method name when the inputs are the same, but return types differ.</p>
+<p>Technically, you can&#8217;t do that in C#, but you can fake it.</p>
+<h2>What would that even <em>mean</em>?</h2>
+<p>Let&#8217;s imagine a hypothetical C# in which you were allowed to overload on return types.  Consider the following class:</p>
+<p><div><script src='https://gist.github.com/2891704.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>In the call to <code>foo.GetValue()</code>, we cannot tell which method should be called.  However, what if we tried to call it with some more context?</p>
+<p><div><script src='https://gist.github.com/2891706.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>When we have some local type information available, we really could make an unambiguous decision about which overload to call.  When initializing <code>i</code>, the only overload that could work is the one returning an <code>int</code>.  When initializing <code>b</code>, the only overload that could work is the one returning a <code>bool</code>.</p>
+<p>We could conceivably find the right overload to call <em>based on how the return value is used</em>.  That seems odd at first, but there&#8217;s nothing really Earth-shattering about it.  Even in today&#8217;s real C#, overloads are picked based on what call-site types we happen to be using, and this would simply be yet another bit of call-site type information at our disposal.  Also, today&#8217;s real C# figures out the type of a lambda expression based on how it&#8217;s <em>used</em> as well, so there&#8217;s a precedent for being able to use usage-site context.</p>
+<h2>Using &#8216;out&#8217; Parameters</h2>
+<p>Let&#8217;s rewrite the original invalid class, using &#8216;out&#8217; parameters instead of return types:</p>
+<p><div><script src='https://gist.github.com/2891722.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>This is completely valid.  <strong>When picking the right overload to call, the compiler considers &#8216;out&#8217; parameters as if they were inputs.</strong></p>
+<blockquote><p>
+  There is no substantive difference between a method that returns some type <code>T</code>, and a <code>void</code> method with an &#8216;out&#8217; parameter of type <code>T</code>.  The difference is only skin deep.
+</p></blockquote>
+<h2>A Concrete Example</h2>
+<p>I&#8217;ve encountered this in the real world on a few projects, dealing with the unfortunate interface <code>IDataReader</code>.  This is the interface used to process low-level ADO.NET result sets one row at a time.  Nowadays, most of us access databases with higher-level tools like NHibernate or PetaPoco, but this interface serves as a good example because:</p>
+<blockquote>
+<p>1) It was written before .NET gained generics, so it has some awkwardly-named methods we&#8217;d like to work around.<br />
+  2) Using it leads you to write hard-to-read, monotonous code.</p>
+</blockquote>
+<p>Both of these issues will be resolved with the &#8216;out&#8217; keyword.</p>
+<p>This interface exposes many methods that take in an <code>int</code> and return a value.  The input <code>int</code> indicates which column of the result set you are interested in, and the method <em>name</em> says what type you hope to find in that column.  <code>reader.GetInt32(2)</code> gives you the <code>int</code> found in the third column, <code>reader.GetDataTime(3)</code> gives you the <code>DateTime</code> found in the fourth column, etc.  To further complicate matters, you shouldn&#8217;t call these methods when the result set contains the special <code>DBNull</code> value.  When using this interface, you end up writing ugly things like this:</p>
+<p><div><script src='https://gist.github.com/2891743.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Note that every time you want call one of these Get* methods, you answer two questions:</p>
+<blockquote>
+<p>1) What type do I expect to find at the given position?<br />
+  2) Are null values possible at the given position?</p>
+</blockquote>
+<p>Note also that in each line, both of these questions are answered by the declared type of the left-hand-side.  Why should we have to repeat those answers on the right-hand-side?  Armed with some extension methods and the &#8216;out&#8217; keyword, things get much less repetative:</p>
+<p><div><script src='https://gist.github.com/2891749.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>When you&#8217;re reading in 10 or so columns, the brevity adds up.  When writing a method that needs to read in a record from an <code>IDataReader</code>, you are <em>thinking</em> &#8220;I expect to get back values with these names, at these positions, with these types&#8221;.  You are <em>not</em> thinking &#8220;I expect to pull a Guid out of the first position so I&#8217;ll GetGuid, and I expect to pull an int out of the second position so I&#8217;ll GetInt32 but watch out for DBNull, and&#8230;&#8221;.  By &#8220;overloading on the return type&#8221;, we get to say what we mean <em>and nothing else</em>.</p>
+<p>I rarely use &#8216;out&#8217; parameters, but it&#8217;s nice to know they actually have a purpose every now and again, when the need presents itself.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-06-07T00:00:00-05:00" pubdate data-updated="true">Jun 7<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -295,73 +392,6 @@ Austin, TX – June 07, 2012, Austin-based Headspring, a custom &hellip;">
 
 
 	<a class='category' href='/blog/categories/podcast/'>Podcast</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/dependency-by-required-coincidence/">
-		
-			Dependency by Required Coincidence</a>
-	</h2>
-	<div class="entry-content">
-		<p>Software developers talk a lot about dependencies.  Dependencies are necessary, but each one carries with it some intellectual weight that can threaten a system&#8217;s stability over time.  Your code is only as stable as its least-stable dependency, so we need to opt-into them with care.</p>
-<p>Usually when we talk about dependencies in .NET, we limit ourselves to discussing the ones that are known statically, at compile time.  Assembly A depends on assembly B because when B is removed, A fails to compile.  Class A depends on Class B because when B is removed, A fails to compile.  The nice thing about such static dependencies is that you can find exactly what lines of code truly depend on the the assembly/class in question: delete it and see what turns all red and squiggly in Visual Studio.</p>
-<p>Unfortunately, there&#8217;s another form of dependency.  It&#8217;s the dynamic and sneaky cousin of our familiar static variety: <strong>Dependency by Required Coincidence</strong>.</p>
-<h2>A Gentlemen&#8217;s Agreement</h2>
-<p>With a Dependency by Required Coincidence, you are writing code intended to be consumed dynamically in some very precise way by another system.  The agreement only works when you give in completely to the demands of the other system, when nearly every line of the class you control is written with full (or hopefully-full!) knowledge of how the other system will consume it.  When the dynamic consumer doesn&#8217;t provide the behavior you need, it is therefore <em>your fault</em> and you are expected to bend your code around the problem.</p>
-<p>Don&#8217;t get me wrong: dynamic languages/platforms/etc are not inherently bad.  It&#8217;s only when some dynamic consumer of your code forces a complex contract upon you that you are in serious trouble.</p>
-<p>Does your code take part in one of these &#8220;gentlemen&#8217;s agreements&#8221; with a system that is likely to change or be replaced?  If so, you&#8217;ve got yourself a required coincidence problem.  Your code must contain properties, methods, and types that are unused by the rest of your code but exist because you just happen to know exactly <em>how</em> the other system will require them to exist at runtime.</p>
-<h2>MVVM in WPF</h2>
-<p>I see this most often when working with the MVVM pattern in WPF applications.  <em>(I don&#8217;t have experience with the MVVM pattern(s) outside of WPF, so for the rest of this post whenever I say &#8220;MVVM&#8221;, assume I mean &#8220;MVVM in WPF&#8221;)</em></p>
-<blockquote><p>
-  MVVM was designed to make use of data binding functions in WPF to better facilitate the separation of view layer development from the rest of the pattern by removing virtually all GUI code (“code-behind”) from the view layer. (<a href="http://en.wikipedia.org/wiki/Model_View_ViewModel">source</a>)
-</p></blockquote>
-<p>This approach seems to have resulted from the following train of thought:<br />
-1. I remember having to work with unmainainable code-behinds when I worked with WinForms.  Therefore, code-behinds must be avoided.<br />
-2. The defining qualities of code-behinds are that they are code files which can directly access control state and can directly receive controls&#8217; events via public methods.<br />
-3. From (1) and (2), accessing control state and receiving events from controls must therefore be bad too.<br />
-4. Somebody else had better access control state and receive events for me: a data binding system.  Instead of a code-behind, I&#8217;ll provide a code-behi-… er… a <em>view model</em>.  This will be a class whose properties will describe the data to be displayed, and I&#8217;ll enter into a Required Coincidence Contract with the binding system so that my code will be properly manipulated by the binding system at runtime.</p>
-<p>I find the premise here faulty, so maybe I&#8217;ve set up a straw-man argument, but I&#8217;m unaware of motivations for MVVM aside from an aversion to code-behind hell.  Most of us have had to work with painfully-unmaintainable code-behinds, but I hold that these pains weren&#8217;t due to the fact that the code-behind classes access control state and receive events.  Rather, the problems came about when the code-behinds did just about anything <em>else</em>.</p>
-<p>This leaves me thinking that we&#8217;ve entered into this elaborate contract with the WPF data binding system just so that we can throw the baby out with the bathwater.  UI controls are inherently stateful/eventy things, and we&#8217;ve opted for a Required Coincidence just to remove stateful/eventy code.  Two examples and their workarounds come to mind:</p>
-<p><strong>First, my view model is not allowed to receive events.</strong>  If an item is removed from a list box control bound to one of my collections, WPF will mess with my collection for me.  That&#8217;s all well and good, but when my code just plain needs to react to some interesting event, it may not be covered by the finite list of things that WPF data binding is written to <em>do</em> to my view model.  Furthermore, the binding system admits the importance of &#8220;eventy&#8221; code by requiring me to publish view model state change events so the data binder can receive them!</p>
-<p>As a workaround, you can use something like <a href="http://caliburnmicro.codeplex.com/">Caliburn.Micro</a>.  Caliburn.Micro is a third-party framework which builds on MVVM so that you can, among other things, set up a control&#8217;s events to trigger calls against public methods on your view model.  An event handler!</p>
-<p><strong>Second, my view model is not allowed to access control state.</strong>  UI controls can be pretty intricate.  Even a lowly text box control has to deal with a lot of possibilities.  By default it will need to handle different kinds of keystrokes, some contributing to the text box content, some highlighting text, some performing other tasks such as cut/copy/paste, or tabbing to another control, etc.  When your application needs to customize the details of a control&#8217;s behavior, you just plain have to have access to its low-level state and events.</p>
-<p>As a workaround, you can use an <a href="http://www.codeproject.com/Articles/28959/Introduction-to-Attached-Behaviors-in-WPF">attached behavior</a>.  These are classes that are suspiciously/exactly like code-behinds!</p>
-<p>With MVVM, WPF isn&#8217;t the Windows Presentation Foundation.  It&#8217;s the Workaround Proliferation Framework.</p>
-<p>By surrendering control to the WPF data binding system, we set ourselves up for a nasty surprise the day that WPF falls by the wayside: our view model classes and attached behavior classes will be of absolutely no use to WPF&#8217;s replacement, but they will have absorbed a scary amount of application logic along the way that will have to be rewritten!</p>
-<h2>Instability by Required Coincidence</h2>
-<p>To sum up, systems like WPF&#8217;s data binding make you enter a Dependency by Required Coincidence.  You must create a great deal of code with hopefully-full knowledge of how the other system will consume it.  Your code is shaped by the thing it indirectly depends on, and may become useless when that unstable dependency is inevitably replaced.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-06-01T00:00:00-05:00" pubdate data-updated="true">Jun 1<span>st</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
 
 
 </div>

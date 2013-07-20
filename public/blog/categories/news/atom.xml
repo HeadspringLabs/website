@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: News | Headspring Labs]]></title>
+  <link href="http://headspringlabs.com/blog/categories/news/atom.xml" rel="self"/>
+  <link href="http://headspringlabs.com/"/>
+  <updated>2013-07-20T15:46:45-05:00</updated>
+  <id>http://headspringlabs.com/</id>
+  <author>
+    <name><![CDATA[Headspring Labs]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Welcome to Headspring Labs]]></title>
+    <link href="http://headspringlabs.com/blog/welcome-to-headspring-labs/"/>
+    <updated>2013-07-20T14:28:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/welcome-to-headspring-labs</id>
+    <content type="html"><![CDATA[<p>Headspring Labs is the new home for content, projects, and experiments from all the talented developers and consultants at <a href="http://www.headspring.com">Headspring</a>. This space was built for developers at Headspring, but we decided to share it with the rest of the software world.</p>
+
+<!--more-->
+
+
+<p>Since we&rsquo;ll be blogging here and adding new content all the time, be sure to <a href="/atom.xml">subscribe</a> to our feed to make sure you&rsquo;re getting all the updates. We also have accounts on <a href="https://twitter.com/HeadspringLabs">Twitter</a> and <a href="https://github.com/HeadspringLabs">GitHub</a>.</p>
+]]></content>
+  </entry>
+  
+</feed>

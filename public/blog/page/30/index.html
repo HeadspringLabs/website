@@ -7,7 +7,7 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="Headspring’s latest new hire is Cedric Yao, Senior Consultant.  We’re really excited to have him on board, and I am super excited to get a fresh &hellip;">
+	<meta name="description" content="Most of my first job out of college was spent doing desktop development, some of which was in VB6. I didn&#8217;t love it, but it was easy to learn &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -84,8 +84,88 @@
 </header>
 	
 		
+<div id="banner" class="inner">
+	<div class="container">
+		<ul class="feed"></ul>
+	</div>
+	<small><a href="http://twitter.com/HeadspringLabs">HeadspringLabs</a> @ <a href="http://twitter.com">Twitter</a></small>
+	<div class="loading">Loading...</div>
+</div>
+<script src="/javascripts/twitter.js"></script>
+<script type="text/javascript">
+	(function($){
+		$('#banner').getTwitterFeed('HeadspringLabs', 5, );
+	})(jQuery);
+</script>
+
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/from-webforms-to-mvc/">
+		
+			From WebForms to MVC</a>
+	</h2>
+	<div class="entry-content">
+		<p>Most of my first job out of college was spent doing desktop development, some of which was in VB6.  I didn&#8217;t love it, but it was easy to learn.  When <em>this</em> button is clicked, <em>that</em> function runs in response to it.  Easy.</p>
+<p>The controls-and-event-handlers model combined with the language also made it exceptionally easy to create a tangled pile of misplaced responsibilities, but I think you&#8217;ve got to experience that kind of pain before you can see that alternatives even <em>exist</em>.  Once you&#8217;ve felt the pain, you can better-evaluate which guidance is actually going to be helpful.
+</p>
+<h2>WebForms Was Designed for Desktop Developers</h2>
+<p>Right around that time, .NET was released.  ASP.NET WebForms shared little with classic ASP.  The primary goal was to let desktop VB developers make a smooth transition to both .NET and web development at the same time.  With that goal in mind, WebForms provided a similar controls-and-event-handlers model.  Making a web app felt like making a desktop app.</p>
+<p>In order to support that approach, WebForms had to make the stateless world of HTTP <em>feel</em> stateful.  View State, the Page Life Cycle, and event handlers allowed the developer to go through the familiar motions of dropping controls onto a designer and wiring up methods to control events, <em>all while ignoring everything that was actually happening</em>.</p>
+<p>Abstractions leak, though, and this was a <em>huge</em> abstraction.  It helped me get over the initial hurdle to get a web app up and running, but I found the code I wrote was suspiciously like the desktop VB6 mess I&#8217;d wanted to grow beyond.  I was frequently surprised by the effects of the Page Life Cycle, and every time that happened I had to learn a little bit more about how the abstraction worked under the hood:</p>
+<blockquote><p>
+  &#8220;Oh! There&#8217;s a Big Honking &lt;form&gt; Tag for the whole page, and it contains an Enormous Encoded &lt;input&gt; Tag containing the current state of all the controls, so whenever I need to hit a button click handler I&#8217;m really submitting a normal HTML form and then…&#8221;
+</p></blockquote>
+<p>Ugh. Eventually, you just have to know what HTML and HTTP are, even when using WebForms, so the abstraction was no longer helping.</p>
+<h2>Many Page Life Cycles Later&#8230;</h2>
+<p>While working for a previous employer, ASP.NET MVC came out.  We wanted to try out the new approach, and the timing coincided with a new project that was starting up.  However, there wasn&#8217;t much guidance available yet on how to do it <em>well</em>.  We were challenged at first by the lack of View State, and in order to keep our old &#8220;stateful stateless web&#8221; habit going we ended up storing a <em>lot</em> of things into the user&#8217;s session object.  We also kept treating controller actions like they were event handlers, leading to some awkward-looking URLs.  Distracted by these initial pains, our controllers started absorbing responsibilities like a sponge.  Actually, our <em>controller</em> started absorbing responsibilities - there was only controller in the whole app!</p>
+<p>I was writing a lot of controller actions like this:</p>
+<p><div><script src='https://gist.github.com/2410072.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>What I saw was the same thing I saw in WebForms development.  The Controller was the new Code Behind, and I was underwhelmed.  WebForms&#8217;s Page Life Cycle and View State hurt, but the real daily pains came from working with classes that were growing out of control, and I was seeing the same thing with my MVC code.  It seemed like the abstractions were lighter-weight, and it felt right to work with HTML more directly, but I was definitely missing some guidance.</p>
+<h2>Turning the Corner</h2>
+<p>Several coworkers got to take an <a href="http://www.headspring.com/services/developer-training/mvc-bootcamp">MVC Boot Camp</a> course here at Headspring, and I got to learn by osmosis from them upon their return.  At last, I had a good picture in my head of what it looks like when you&#8217;ve succeeded with these tools.  Our controllers started to get much more lean:</p>
+<p><div><script src='https://gist.github.com/2416902.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>I started to see how the <a href="http://jeffreypalermo.com/blog/the-onion-architecture-part-1/">Onion Architecture</a>, dependency injection, model binders, AutoMapper, and the like help you to keep your controllers small.  MVC wasn&#8217;t a silver bullet; its primary benefit compared to WebForms was that you could make it <em>get out of the way</em> so you could actually start laying down a solid architecture.</p>
+<p>ASP.NET MVC has been around for a few years now.  Community contributions like <a href="http://mvccontrib.codeplex.com/">MvcContrib</a> helped to motivate change in subsequent releases, and now ASP.NET MVC is legitimately open-sourced.  Better-yet, guidance on how to do this well has had years to mature.</p>
+<p>MVC is a sharper tool than WebForms.  It acknowledges the reality of web technologies like HTML and HTTP, while providing some reasonably-sized abstractions on top of that, such as routing and model binding.  Having a better tool in your toolbelt isn&#8217;t enough, though.  You have to see what it looks like when used correctly.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-20T00:00:00-05:00" pubdate data-updated="true">Apr 20<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -391,88 +471,6 @@
 
 
 	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/metrics-reports-kpis-and-the-stuff-developers-must-provide-to-executives/">
-		
-			Metrics, Reports, KPIs, and the Stuff Developers Must Provide to Executives</a>
-	</h2>
-	<div class="entry-content">
-		<p>In September of 2007, I joined <a href="http://www.headspring.com/">Headspring</a> as the CTO.  Now I serve as President and Chief Operating Officer.  When I joined, there were 4 other employees including the original founder serving as CEO.  He founded the company in 2001.  It has always been professional services, but the strategy has changed a few times over the years.  I started my career as a developer in the mid nineties, and now I’m an executive with lots of great developers that I support.  Like most, our company runs on metrics.  As a manager, I understand their worth.  Earlier in my career, I had no idea.</p>
-<p>Every day, I glance at our <strong>operational dashboard</strong>.  While I won’t share full screen-shots yet, I want to share some of the graphs I use every day to ensure the company is doing well.  Consider this graph.</p>
-<p><a href="http://www.headspring.com/wp-content/uploads/2012/04/CropperCapture22.png"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/04/CropperCapture22_thumb.png" alt="Time allocation BI chart" width="540" height="294" border="0" /></a></p>
-<p>&nbsp;</p>
-<p><strong>“BD” stands for “big dial”.</strong>  We have 3 big dials we glance at every day.  If we don’t like what we see, we have some “smaller dials” we can look at.  We use the analogy of a plane cockpit. There are a few things pilots always glance at, and then there are smaller, more detailed ones that are consulted as the need arises.</p>
-<p>This graph shows us our utilization breakdown in the categories that are relevant.  Here are the categories:</p>
-<ul>
-<li><strong>Personal Time</strong>: holidays, vacations, dentist appts, etc.</li>
-<li><strong>Assigned Time</strong>: Department meetings, 1x1’s, stand-up meetings, etc</li>
-<li><strong>Bench Time</strong>: Time without available project work (doesn’t show because it’s zero)</li>
-<li><strong>Other Time</strong>: Unplanned unproductive time, such as having a flat tire on the way to work</li>
-<li><strong>Sales Time</strong>: Mostly used by the sales department: work to acquire a client</li>
-<li><strong>Billed Time</strong>: self-explanatory</li>
-<li><strong>Unbilled Time</strong>: Working for a client, but not charging</li>
-<li><strong>CI Time</strong>: Continuous Improvement time:  We expect that our people are working to improve.</li>
-<li><strong>Client Time:</strong>  sum of billed and unbilled time.</li>
-</ul>
-<p>You will notice the big dip during the week of 4/7.  We had our Q1 <strong>quarterly off-site</strong> during that week.  We spent 12% of that week to use as a fun off-site where the entire company toured Inner Space Cavern hundreds of feet under Georgetown.  It shows up on the dashboard because it affects the performance of the company.  As an executive team, we decided it was a good investment in the future productivity of our staff.</p>
-<p>You might have also noticed that 4/7 was a Thursday in 2011.  How can it be the week of 4/7?  We use the concept of <strong>“moving weeks”</strong> instead of calendar weeks.  We used to use calendar weeks, but the last data point of the graph was always skewed because it didn’t represent a full data point until people logged their time for Friday.  By taking data from a moving week, when I look at the data on Thursday, it pulls data from the previous Thursday through this Wednesday (yesterday).  That way, every point on the graph represents exactly the same size of a data point.  We do the same for months, quarters and years.</p>
-<p><strong>There is a big problem with pull metrics by calendar month (for 2011)</strong>:</p>
-<ul>
-<li>January has <strong>21</strong> business days</li>
-<li>February has <strong>20</strong> business days</li>
-<li>March has <strong>23</strong> business days</li>
-<li>April has <strong>21</strong> business days</li>
-<li>May has <strong>22</strong> business days</li>
-</ul>
-<p>You can see how using calendar months can <strong>wreak havoc</strong> on the comparability of month metrics.  We expect larger months to pose better numbers than the smaller months.  On the financial side, we have to accrue the payroll appropriately as well in order to keep net income from becoming skewed.</p>
-<p>To deal with this, we use the concept of a <strong>moving month</strong>.  There are 13 moving months in a year.  Each moving month is a 28-day time period from yesterday to 28 days before yesterday.  In this way, every data point will be exactly the same size as the other.  There are also 4, 13-week moving quarters in a year.  The following graph is our 2nd big dial shown by moving month.</p>
-<p><img src="http://jeffreypalermo.com/files/media/image/Windows-Live-Writer/d066af3fb6f3_8D6C/CropperCapture%5B28%5D_thumb_1.png" alt="CropperCapture[28]" /></p>
-<p>Before moving to moving months, the calendar month line was consistently <strong>misrepresented</strong> by the larger months.  Where the line moves, we need to know why.  We made the switch so that every curve of the line was meaningful.  We didn’t want our data communicating falsehoods or April-fools jokes.  You think I’m kidding, but April always looks bad coming straight out of March, which boasts 2 more full business days.  In professional services, a business day accounts for a <strong>significant amount of revenue</strong>.</p>
-<p>Using Big Dial 1 and Big Dial 2, we can keep the ship on the right course.  As long as our staff is billing a consistently high percentage: we shoot for 78-79%, and our hourly margins are high enough to account for our unbillable staff (sales, marketing, corporate) and our fixed costs (facilities, supplies, etc.), our company will remain healthy.</p>
-<p><strong>These dials are tactical, not strategic</strong>.  The next dial is strategic.</p>
-<p><img src="http://jeffreypalermo.com/files/media/image/Windows-Live-Writer/d066af3fb6f3_8D6C/CropperCapture%5B31%5D_thumb.png" alt="CropperCapture[31]" /></p>
-<p>This gives us a view into the <strong>structure</strong> of our company.  <strong>We have hired at least 7 new employees since November, 2011</strong>.  With that, it’s important to keep tabs on how we are changing the structure of our company.  When we hired <a href="http://lostechies.com/chrismissal/">Chris Missal</a> for the operations department, we expanded billable staff.  When we hired <a href="http://www.headspring.com/author/mchauvin">Mary Chauvin</a> for marketing, we increased non-billable staff.  Keeping the right balance is important.</p>
-<p>You can see that our % of Operations staff to the rest has dipped a little bit over the last 7 months.  We have done that while growing, and we are re-leveling the organization now.  To level out the organization, we need to <strong>add about five more people</strong> to the Operations department.  This graph, while very high level, gives critical insight into how the other two graphs affect our income statement.</p>
-<p>Using these three charts together, I have a very good sense of what I need to do to improve the financial performance of the company.  Right now:</p>
-<ol>
-<li>I need to hire 5 more great .Net developers</li>
-<li>I need to keep Client Time at the level of Operations % plus Contractor % (since both types bill)</li>
-</ol>
-<p>I hope that this helps some developers understand how different types of reports can give answers and perspective to managers.  If a picture is worth a thousand words, shouldn’t more of our reports be pictures?</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-04-12T00:00:00-05:00" pubdate data-updated="true">Apr 12<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>, <a class='category' href='/blog/categories/business-intelligence/'>business intelligence</a>, <a class='category' href='/blog/categories/dashboard/'>dashboard</a>, <a class='category' href='/blog/categories/management/'>management</a>
 
 
 </div>

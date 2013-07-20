@@ -7,7 +7,7 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="Last week, we saw how to publish a library with NuGet. By including DLL files in our NuGet package under the special &#8220;lib&#8221; folder, NuGet &hellip;">
+	<meta name="description" content="This post is going to cover a pair of topics that aren’t truly related, but topics that I like to use together. When combined they can give you a &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -84,8 +84,85 @@
 </header>
 	
 		
+<div id="banner" class="inner">
+	<div class="container">
+		<ul class="feed"></ul>
+	</div>
+	<small><a href="http://twitter.com/HeadspringLabs">HeadspringLabs</a> @ <a href="http://twitter.com">Twitter</a></small>
+	<div class="loading">Loading...</div>
+</div>
+<script src="/javascripts/twitter.js"></script>
+<script type="text/javascript">
+	(function($){
+		$('#banner').getTwitterFeed('HeadspringLabs', 5, );
+	})(jQuery);
+</script>
+
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/the-null-object-pattern-in-c-and-system-lazy/">
+		
+			The Null Object Pattern in C# and System.Lazy</a>
+	</h2>
+	<div class="entry-content">
+		<p>This post is going to cover a pair of topics that aren’t truly related, but topics that I like to use together. When combined they can give you a nice pattern. First I’m going to briefly talk about the Null Object Pattern:</p>
+<h3><strong>The Null Object Pattern</strong></h3>
+<p>Rather than dealing with uninitialized variable instances, you can start off by assigning a variable to an instance of a “Null Object”. Oftentimes you’ll see this done when developers assign an empty string to a variable because they don’t want to deal with null values. I’m going to be discussing this with types that are a bit more complex than string.</p>
+<p>In the code snippet below, I have represented a method with an optional argument that will fall back to an “empty” signature if one isn’t supplied. This Empty property is our Null Object for Signature that provides a safe instance we can use instead of dealing with null.</p>
+<p><div><script src='https://gist.github.com/2206415.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+<br />
+[gist id=&#8221;2206371&#8221; file=&#8221;Signature.cs&#8221;]</p>
+<p>Another reason I’m a fan of this pattern is when it can be used in sets. Imagine your email signature for a moment. You could have multiple signatures to choose from when you compose an email. Rather than having code to check for the existence of signatures, we can now simply always assume that there will be at least one signature.</p>
+<p>[gist id=&#8221;2206371&#8221; file=&#8221;EmailUser.cs&#8221;]</p>
+<p>While this code example isn’t too complex, one could imagine that creating a new object every time a property is accessed could get a bit expensive depending on the project. In our example with Email and Signatures, we would be perfectly fine using a Singleton. We might also want to set up our code this way if we needed to worry about reference equality. Just something to keep in mind.</p>
+<p>When creating singletons over the years, I’ve seen it done many ways, each better than the next. If we’re going to manage our object’s lifestyle ourselves, there’s a couple of approaches. Each of these is better than the previous:</p>
+<p><div><script src='https://gist.github.com/2206342.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>You’ll notice that making sure this code is lazily initialized and thread safe can add a lot of “noise” to your code.</p>
+<h3><strong>Using .Net’s System.Lazy</strong></h3>
+<p>This is where <a href="http://msdn.microsoft.com/en-us/library/dd642331.aspx">Lazy</a> can help me out. The following code will achieve the same result as the double-checked locking method above.</p>
+<p><div><script src='https://gist.github.com/2206450.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>It is much cleaner, right? I like Lazy because it removes the noise around thread safety from my code, where it really shouldn’t exist anyway.</p>
+<p>I’ve found places that these two patterns work together nicely for me, but one doesn&#8217;t require the other. Keep an eye open for areas to use these individually if the opportunity is right.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-06T00:00:00-05:00" pubdate data-updated="true">Apr 6<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/clean-code/'>clean code</a>, <a class='category' href='/blog/categories/design-patterns/'>design patterns</a>, <a class='category' href='/blog/categories/learning-c-number-and-net/'>learning c# and .net</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -312,58 +389,6 @@
 
 
 	<a class='category' href='/blog/categories/what-the-tech/'>What the tech?</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/publishing-a-library-with-nuget/">
-		
-			Publishing a Library With NuGet</a>
-	</h2>
-	<div class="entry-content">
-		<p>Last week, we saw how to <a href="http://www.headspring.com/2012/03/publishing-a-simple-nuget-package">publish a simple NuGet package</a>.  When installed into your solution in Visual Studio, that package would copy some text files into the target project.  That&#8217;s convenient, but it isn&#8217;t a typical use case for NuGet.  Instead, you usually want to publish compiled assemblies, and you want installation to add those assemblies to the target project&#8217;s list of assembly references.</p>
-<p>In <a href="http://www.headspring.com/2011/11/recognizing-covariance-issues-in-your-code">Recognizing Covariance Issues in Your Code</a>, I introduced my hobby project, <a href="https://github.com/plioi/Parsley">Parsley</a>.  This project has gotten fairly stable in recent weeks, and I decided to publish it so that I could use NuGet to install it in other projects.</p>
-<p>In the <a href="http://www.headspring.com/2012/03/publishing-a-simple-nuget-package">simple NuGet package</a>, we created a *.nuspec file containing a <code>files</code> tag.  That <code>files</code> tag listed the files we wanted to copy into the target project upon installation.  We described the target path starting with &#8220;content&#8221;:</p>
-<p><div><script src='https://gist.github.com/2231965.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p><a href="https://github.com/plioi/parsley/blob/c89236d7f253a13f0eaa3354b9714488d1742d65/default.ps1">Parsley&#8217;s build script</a> generates a *.nuspec file with a slightly different naming convention for the target paths:</p>
-<p><div><script src='https://gist.github.com/2231973.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Starting these paths with &#8220;lib&#8221; instead of &#8220;content&#8221; indicates to NuGet that they are libraries and should be added to the target project&#8217;s list of referenced assemblies.  The &#8220;net40&#8221; folder is also a part of the naming convention, indicating that the assembly was built for .NET 4.0.  If we&#8217;re targeting several different runtimes, we could include them all in one package using folder names like &#8220;net11&#8221;, &#8220;net20&#8221;, etc&#8230;</p>
-<p>Above, I&#8217;m also copying the *.pdb files into the package.  Next week, we&#8217;ll see a better alternative to enhance the debugging experience for your library&#8217;s users: integrating with <a href="http://symbolsource.org/">SymbolSource.org</a>.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-30T00:00:00-05:00" pubdate data-updated="true">Mar 30<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
 
 
 </div>

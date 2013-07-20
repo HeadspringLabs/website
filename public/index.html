@@ -7,7 +7,7 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="Last week, we saw an example of Dynamic Test Discovery in Fixie, in which the test runner can be made to run a different set of tests each time, &hellip;">
+	<meta name="description" content="Headspring Labs is the new home for content, projects, and experiments from all the talented developers and consultants at Headspring. This space &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -84,8 +84,64 @@
 </header>
 	
 		
+<div id="banner" class="inner">
+	<div class="container">
+		<ul class="feed"></ul>
+	</div>
+	<small><a href="http://twitter.com/HeadspringLabs">HeadspringLabs</a> @ <a href="http://twitter.com">Twitter</a></small>
+	<div class="loading">Loading...</div>
+</div>
+<script src="/javascripts/twitter.js"></script>
+<script type="text/javascript">
+	(function($){
+		$('#banner').getTwitterFeed('HeadspringLabs', 5, );
+	})(jQuery);
+</script>
+
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/welcome-to-headspring-labs/">
+		
+			Welcome to Headspring Labs</a>
+	</h2>
+	<div class="entry-content">
+		<p>Headspring Labs is the new home for content, projects, and experiments from all the talented developers and consultants at <a href="http://www.headspring.com">Headspring</a>. This space was built for developers at Headspring, but we decided to share it with the rest of the software world.</p>
+
+
+		
+		<a href="/blog/welcome-to-headspring-labs/" class="more-link">Read on &rarr;</a>
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-20T14:28:00-05:00" pubdate data-updated="true">Jul 20<span>th</span>, 2013</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/news/'>News</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -312,85 +368,6 @@
 
 
 <time datetime="2013-06-20T00:00:00-05:00" pubdate data-updated="true">Jun 20<span>th</span>, 2013</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/dry-test-inheritance/">
-		
-			DRY Test Inheritance</a>
-	</h2>
-	<div class="entry-content">
-		<p>Over the last two weeks, we&#8217;ve seen how <a href="https://github.com/plioi/fixie">Fixie</a> can be configured to <a href="http://www.headspring.com/fixies-life-bicycle/">mimic NUnit</a> and to <a href="http://www.headspring.com/the-sincerest-form-of-flattery/">mimic xUnit</a>.  That&#8217;s a neat little trick, but doesn&#8217;t provide much value.  This week, we&#8217;ll see how Fixie&#8217;s convention API can be used to <em>improve</em> upon NUnit.</p>
-<blockquote><p>Today’s code samples work against <a href="http://nuget.org/packages/Fixie/0.0.1.62">Fixie 0.0.1.62</a>. The customization API is in its infancy, and is likely to change in the coming weeks.</p></blockquote>
-<p>Today&#8217;s sample convention addresses two problems in NUnit:</p>
-<ol>
-<li>Lifecycle attributes are redundant</li>
-<li>Test class inheritance is needlessly complex.</li>
-</ol>
-<h2>NUnit Lifecycle Attributes Are Redundant</h2>
-<p>If you use NUnit, you probably see a lot of test classes like this:</p>
-<p><div><script src='https://gist.github.com/5762364.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>My [SetUp] methods are always named &#8220;SetUp&#8221;, my [TearDown] methods are always named &#8220;TearDown&#8221;, etc. It&#8217;s annoying to sacrifice whole lines to that noise.  When 99% of your test fixtures use naming conventions like mine, the attributes stop telling you something.  These attributes start to fill the same role as excessive comments:</p>
-<p><div><script src='https://gist.github.com/5762368.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<h2>NUnit Inheritance is Needlessly Complex</h2>
-<p>The use of attributes for these &#8220;lifecycle&#8221; hooks poses more serious problems when your test classes take part in inheritance.  Since they don&#8217;t <em>have</em> to be placed on methods with the same name, you could have completely unrelated [SetUp]s, for instance, at different levels of the hierarchy.</p>
-<p>What order do they run in? Should the child class&#8217;s [SetUp] call the base?  Should the base [SetUp] call an abstract method you have to implement instead of providing your own [SetUp] in the child? [SetUp]s get complicated very quickly in the presence of inheritance.</p>
-<p>The order of execution during test setup is important. How bizarre would it be if there were no guarantee about the order of <em>constructor</em> execution in a class hierarchy?  With NUnit lifecycle hooks, order becomes a problem.  Sure, NUnit has rules of its own for the order, <strong>but it doesn&#8217;t matter what they are</strong> because even having to ask the question means it&#8217;s already too complex. In addition, having more than one [SetUp] in the same level of the class hierarchy is allowed but ambiguous: there&#8217;s no guarantee what order they&#8217;ll run in. Worse yet, over the years I&#8217;ve seen the behavior differ across different test <em>runners</em>.</p>
-<blockquote><p>The preparation of state under test should be remarkably dull.  We&#8217;re trying to confirm our assumptions about the behavior of our system, and we can&#8217;t do so with confidence if we aren&#8217;t confident about what all we&#8217;ve set up in the first place.</p></blockquote>
-<h2>A Low-Ceremony Alternative Convention</h2>
-<p>DRY stands for &#8220;Don&#8217;t Repeat Yourself&#8221;, not &#8220;[DontRepeatYourself] Don&#8217;t Repeat Yourself&#8221;! Allowing redundancy has opened the door to complexity. Let&#8217;s improve upon the NUnit style by defining a simpler, <a href="https://github.com/plioi/fixie/blob/a74078dfe3c8f415fd0663af104b75adfb90d29d/src/Fixie.Samples/LowCeremony/CustomConvention.cs">low-ceremony test class convention</a> with Fixie:</p>
-<p><div><script src='https://gist.github.com/5762372.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Armed with this convention class in our test assembly, our original test class gets simpler:</p>
-<p><div><script src='https://gist.github.com/5762378.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>The most relevant part of the convention says that, instead of using attributes, the lifecycle hook methods will be identified by their names:</p>
-<p><div><script src='https://gist.github.com/5762381.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<h2>What Does This Convention Buy Us?</h2>
-<p>There are three benefits to this approach:</p>
-<p>First, we don&#8217;t waste time reminding the reader that &#8220;SetUp&#8221; is in fact spelled &#8220;SetUp&#8221;.</p>
-<p>Second, it&#8217;s impossible to define more than one SetUp method in the same level of the class hierarchy, avoiding the ambiguity allowed by NUnit.</p>
-<p>Third, if you do opt into test class inheritance, we get to take advantage of familiar language features. If the base class has a SetUp and the child class has a SetUp, you take advantage of the <code>virtual/override/base</code> keywords to remove all doubt about execution order.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-06-12T00:00:00-05:00" pubdate data-updated="true">Jun 12<span>th</span>, 2013</time></div>
 	<div class="tags">
 
 

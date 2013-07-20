@@ -7,7 +7,7 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="When the “Express” line of Visual Studio products was introduced with Visual Studio 2008, the Web Developer tool was a one-trick pony.  You could &hellip;">
+	<meta name="description" content="We are all familiar with the basic HomeController in the default ASP.NET MVC project.  We know we can pass values from the controller to the view.  &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -84,8 +84,78 @@
 </header>
 	
 		
+<div id="banner" class="inner">
+	<div class="container">
+		<ul class="feed"></ul>
+	</div>
+	<small><a href="http://twitter.com/HeadspringLabs">HeadspringLabs</a> @ <a href="http://twitter.com">Twitter</a></small>
+	<div class="loading">Loading...</div>
+</div>
+<script src="/javascripts/twitter.js"></script>
+<script type="text/javascript">
+	(function($){
+		$('#banner').getTwitterFeed('HeadspringLabs', 5, );
+	})(jQuery);
+</script>
+
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/how-to-add-a-method-to-viewbag-in-asp-net-mvc/">
+		
+			How to Add a Method to ViewBag in ASP.NET MVC</a>
+	</h2>
+	<div class="entry-content">
+		<p>We are all familiar with the basic HomeController in the default ASP.NET MVC project.  We know we can pass values from the controller to the view.  Sometimes we are tempted to pass the controller itself to the view so that we can call methods on it.  The view should not have to depend on the controller.  This post provides a way to accomplish this.  For more on ASP.NET MVC, check out my book, <a href="http://bit.ly/aspnetmvc3inaction">ASP.NET MVC 3 in Action</a>.  You can also check out the <a href="http://www.headspring.com/headspring/mvc-boot-camp/" target="_blank">MVC Boot Camp</a> training we offer at <a href="http://www.headspring.com">Headspring</a>.  We start with the HomeController.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2011/07/image2.png"><img style="border: 0px;" alt="image" src="http://www.headspring.com/wp-content/uploads/2011/07/image_thumb2.png" width="530" height="403" border="0" /></a></p>
+<p>We know from just a little reading that the ViewBag property on HomeController is a dynamic object – using the new .Net 4 dynamic capabilities.  Merely setting the Message property on the object creates the property.  It is not completely obvious how to create a new method on the object, though.</p>
+<h1>Usage</h1>
+<p>If I were to want to use a method in my Razor view like this&#8230;</p>
+<div class="csharpcode"><a href="http://www.headspring.com/wp-content/uploads/2011/07/image3.png"><img style="border: 0px;" alt="image" src="http://www.headspring.com/wp-content/uploads/2011/07/image_thumb3.png" width="535" height="274" border="0" /></a></div>
+<p>&#8230; then I would need to figure out how to get the GetCurrentTime() method onto the ViewBag.  The following is the solution to that problem.</p>
+<h1>Solution</h1>
+<p>There are two technical capabilities of C# 4 that provide the ability to accomplish our new method.  The first is that I can create and set any new property on the dynamic object.  The second is actually a feature of .Net 2 – delegates.  I will create a method and then wrap it in a delegate and assign it as a property of ViewBag.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2011/07/image4.png"><img style="border: 0px;" alt="image" src="http://www.headspring.com/wp-content/uploads/2011/07/image_thumb4.png" width="538" height="344" border="0" /></a></p>
+<p>.Net 3.5 brought us the Func&lt;&gt; and the lambda expressions.  These make delegates so much more concise to write and read.  I have now create a method, assigned it to a object and set it as a property on ViewBag.</p>
+<p>The only thing left to do is to dereference the property and invoke it with ().</p>
+<p>For those of you who have been programming for a while, you know that I technically haven’t create a method on the ViewBag object.  That is correct.  We have to think back to why I asked for the method in the first place.</p>
+<h1>Why do we need methods?</h1>
+<p>We need methods in order to retrieve values that are resolved at run time.  For instance, if I need to pass in some view-specific value to my ViewBag for evaluation, I need a method. If you were ever tempted to pass a reference to the controller to the view just to be able to execute a method on a value the controller owned, this is your ticket to accomplishing that.  Because the method/closure/delegate in the controller has full scope access to the controller memory space, the ViewBag now holds the gateway to the controller’s state that is necessary.</p>
+<p><a href="http://www.headspring.com/headspring/mvc-boot-camp/">Check out ASP.NET MVC 4 Bootcamp</a></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-29T00:00:00-05:00" pubdate data-updated="true">Jul 29<span>th</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/blog/'>Blog</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -320,56 +390,6 @@
 
 
 	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/duo/'>duo</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/why-my-mom-quit-using-the-computer-when-i-updated-windows/">
-		
-			Why My Mom Quit Using the Computer When I Updated Windows</a>
-	</h2>
-	<div class="entry-content">
-		<p>Are you on the verge of a mutiny?</p>
-<p>For my Mom&#8217;s birthday I decided it would be nice if I bought her a computer. (Moms are funny; she had purchased three PCs for my brother and me before we were out of the house, but she never had the desire to learn to use one herself.)</p>
-<p>We went out to the electronics store one day to pick out the one that she wanted. Her two biggest requirements were that she needed to access washingtonpost.com, and she wanted to learn to play Scrabble online. We ended up picking out a pretty generic machine with a decent amount of memory and some antivirus software for all of the &#8220;free iPod&#8221; ads I was sure she would click on.</p>
-<p>This was six years ago, and she was happy as she could be. I was too, albeit completely unprepared for how good she would get at Scrabble. Then I had to go and screw it all up.</p>
-<p>I stopped by the house a couple of months ago and brought with me a copy of Windows 7. I figured she hadn&#8217;t upgraded in six years, and she&#8217;d be cool with me installing it. Not the case. After I left I got a phone call from a very angry Mom. She sounded like I did after I installed Vista.</p>
-<p>&#8220;I can&#8217;t find my pictures. I wanted to put my pictures from New Zealand on Facebook.&#8221;<br />
-&#8220;Everything&#8217;s different.&#8221;<br />
-&#8220;Can you come over and change it back?&#8221;</p>
-<p>Looking back, it was a sneaky move on my part. I should have asked before I acted, but I thought I was doing her a favor. As a more technically experienced person, I was projecting my own values on to her. I knew Windows 7 was better than her seven year-old XP, but I didn&#8217;t stop to think if she would think so too.</p>
-<p>A lot of times people ask me about the best way to transition their employees to a new piece of software. I always ask them, &#8220;Why do you want to change? Does your team also see a problem?&#8221; Of course you shouldn&#8217;t make your decision on whether to change software based solely on what your employees think about the current system. However, it&#8217;s important to anticipate the feedback from the people who will be learning the new product as well as those who will be measuring its success. Do they see the reason for the change? What is your plan to train them on the new technology? How much user error can you absorb after the change is made? Getting them invested in the reasons for the switch as well as the plan for transition is the key to avoiding a mutiny.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-02-01T00:00:00-06:00" pubdate data-updated="true">Feb 1<span>st</span>, 2011</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/small-talk-and-big-news/'>Small Talk &amp; Big News</a>
 
 
 </div>

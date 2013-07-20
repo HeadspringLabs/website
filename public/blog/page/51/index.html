@@ -7,7 +7,7 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="There are choices to be made when running a business. Where to allocate your resources, especially cash resources, ranks among the top. Determining &hellip;">
+	<meta name="description" content="When we first learn about inheritance, we&#8217;re given some plain-English examples with an emphasis on the phrase &#8220;is-a&#8221;. A car is-a &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -84,8 +84,80 @@
 </header>
 	
 		
+<div id="banner" class="inner">
+	<div class="container">
+		<ul class="feed"></ul>
+	</div>
+	<small><a href="http://twitter.com/HeadspringLabs">HeadspringLabs</a> @ <a href="http://twitter.com">Twitter</a></small>
+	<div class="loading">Loading...</div>
+</div>
+<script src="/javascripts/twitter.js"></script>
+<script type="text/javascript">
+	(function($){
+		$('#banner').getTwitterFeed('HeadspringLabs', 5, );
+	})(jQuery);
+</script>
+
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/array-covariance-in-c/">
+		
+			Array Covariance in C#</a>
+	</h2>
+	<div class="entry-content">
+		<p>When we first learn about inheritance, we&#8217;re given some plain-English examples with an emphasis on the phrase &#8220;is-a&#8221;. A car <em>is-a</em> vehicle, so a <code>Car</code> class would inherit from a <code>Vehicle</code> class. The idea that class inheritance can so directly map to English is <strong>seriously misleading</strong> and can get you into trouble.</p>
+<p>In English, it&#8217;s fair to say that a bag of apples <em>is-a</em> bag of objects. It may have an odd sound to it, but it&#8217;s true. This makes it very tempting to say that in C#, a <code>List&lt;Apple&gt;</code> should be assignable to a <code>List&lt;Object&gt;</code>, since all <code>Apple</code> instances are also <code>Object</code> instances:</p>
+<p><div><script src='https://gist.github.com/1302300.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>The sample above won&#8217;t compile. The compiler is protecting us from potential runtime type exceptions. If this compiled, we could get into trouble like so:</p>
+<p><div><script src='https://gist.github.com/1302301.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>If this compiled, we would be able to attempt to put a string into a collection that simply does not support that operation. The English metaphor for inheritence (<em>is-a</em>) just doesn&#8217;t adequately match the actual constraints of the type system. We&#8217;re trying to violate the <a href="http://en.wikipedia.org/wiki/Liskov_substitution_principle">Liskov Substitution Principle</a>. If we declared that <code>List&lt;Apple&gt;</code> is a subtype of <code>List&lt;Object&gt;</code>, we&#8217;d be saying that <em>every</em> operation that acts on a <code>List&lt;Object&gt;</code> could be given a <code>List&lt;Apple&gt;</code>, and that&#8217;s simply not true. In our example, the operations performed on the <code>List&lt;Object&gt;</code> included putting new arbitrary objects into the list, and you just can&#8217;t do that to a <code>List&lt;Apple&gt;</code>.</p>
+<p><strong>Because <code>List&lt;Apple&gt;</code> has more constraints than <code>List&lt;Object&gt;</code>, <code>List&lt;Apple&gt;</code> is not assignment-compatible with <code>List&lt;Object&gt;</code>.</strong></p>
+<p>Unfortunately, the previous example <strong>does</strong> compile when you replace <code>List&lt;T&gt;</code> with supposedly-strongly-typed arrays. Instead of knowing that you&#8217;ve done something wrong at compile time, you get an exception at runtime:</p>
+<p><div><script src='https://gist.github.com/1302325.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Because <code>TChild[]</code> can be assigned to <code>TParent[]</code> for any <code>TChild</code> inheriting from <code>TParent</code>, we can say &#8220;arrays in C# are covariant&#8221;.</p>
+<p>To sum up, <code>List&lt;Apple&gt;</code> can&#8217;t be treated as <code>List&lt;Object&gt;</code> <em>because of the operations that <code>List&lt;T&gt;</code> provides</em>. The question, then, is could we ever safely take advantage of this convenient funky-casting for <em>other</em> generic types? The answer to this question falls under the category of &#8220;Covariance and Contravariance&#8221; and is provided by the C# 4 keywords <code>in</code> and <code>out</code>. In my next post, we&#8217;ll cover an example where this funky-casting is both convenient and safe.</p>
+<p><a href="http://www.headspring.com/feed" target="_blank">Subscribe to our blog feed</a> for the freshest content.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-10-21T00:00:00-05:00" pubdate data-updated="true">Oct 21<span>st</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -265,69 +337,6 @@
 
 
 	<a class='category' href='/blog/categories/small-talk-and-big-news/'>Small Talk &amp; Big News</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/you-could-have-invented-lambda-expressions/">
-		
-			You Could Have Invented Lambda Expressions</a>
-	</h2>
-	<div class="entry-content">
-		<p>Delegate types and lambda expressions have been a part of the .NET tool belt for a while now, so they show up everywhere. If you&#8217;ve ever used StructureMap, AutoMapper, ASP.NET MVC and the like, then you&#8217;ve surely run into them. Despite this, delegates and lambdas tend to confuse developers when first encountered. Even when you get comfortable with the syntax as it&#8217;s used in your favorite library, you might not really be familiar with what they <em>are</em> or how they allow for such seemingly magical statements.</p>
-<p>Let&#8217;s pretend that delegate types and lambdas don&#8217;t exist yet, and then reinvent them in terms of other .NET concepts that are more widely understood.</p>
-<p>Suppose we have been given an IEnumerable&lt;Customer&gt; and we want to filter that down to the list of those customers who live in Texas. Without delegates, we could write the obvious loop like so:</p>
-<p><div><script src='https://gist.github.com/1253799.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Yeesh. I have written foreach-if-add loops a thousand times. Whenever we find ourselves writing virtually the same thing again and again, we should take a step back and think, &#8220;Is there a deeper concept here I could pull out into a library?&#8221; We have some subtle code duplication whenever we write foreach-if-add loops.</p>
-<p>To remove duplication, we first identify what parts vary from one instance of the pattern to the next. For foreach-if-add loops, the things that vary are the type of the items being filtered, and the if-statement&#8217;s condition expression. To bottle up the foreach-if-add loop, we need a new method that takes in the condition as an <em>argument</em>. Without delegates, we could deal with this using an interface:</p>
-<p><div><script src='https://gist.github.com/1253795.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Ok, so we&#8217;ve pulled out the foreach-if-add loop into a reusable <code>Where</code> extension method. Still, though, that&#8217;s a lot of boilerplate code: every time we want to call <code>Where</code> with a new filter, we have to bottle it up in a whole new class.</p>
-<p>Let&#8217;s start removing boilerplate code until we&#8217;re left with delegates! With this example, we can <strong>imagine a whole family of interfaces that have one thing in common: interfaces with a single method named <code>RunMe</code>, whose implementing classes contain only that method.</strong> If we knew this family of interfaces only have one method, and its name was always <code>RunMe</code>, then we could avoid even writing its name: <code>condition.RunMe(item)</code> could be shortened to simply <code>condition(item)</code>. Since the relevant part of a single <code>IFilterCondition</code> implementation is the body of the now-nameless method, we should be able to simply provide the code for that method inline:</p>
-<p><div><script src='https://gist.github.com/1253808.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p><strong>We can imagine that this use of the <code>delegate</code> keyword is just shorthand for an instance of a class implementing our single-method interface.</strong></p>
-<p>Since most of these small unnamed classes exist just to evaluate and return a single expression, we might as well get rid of the <code>return</code> keyword and braces. Since we already know what the item type T is, we might as well leave out the type declaration of the <code>customer</code> parameter, allowing the compiler to fill in the blank. We&#8217;ll need <em>something</em> between the argument list and the return expression so the compiler knows which is which, so we introduce the =&gt; operator. This makes the <code>delegate</code> keyword redundant, leaving us with some valid (and clean!) C#:</p>
-<p><div><script src='https://gist.github.com/1253881.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>There&#8217;s a lot more to delegates and lamda expressions, but in most cases I find it easiest to reason about them as shorthand for the interfaces and classes we would have otherwise used.</p>
-<p>If you found this blog to be helpful <a href="http://www.headspring.com/feed" target="_blank">subscribe to our blog feed</a> for the freshest content.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-09-30T00:00:00-05:00" pubdate data-updated="true">Sep 30<span>th</span>, 2011</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
 
 
 </div>

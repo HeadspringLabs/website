@@ -1279,12 +1279,16 @@
         <lastmod>2013-07-17T22:27:35-05:00</lastmod>
     </url>
     <url>
+        <loc>http://headspringlabs.com/blog/welcome-to-headspring-labs/</loc>
+        <lastmod>2013-07-20T15:44:42-05:00</lastmod>
+    </url>
+    <url>
         <loc>http://headspringlabs.com/about-us/</loc>
-        <lastmod>2013-07-17T22:27:35-05:00</lastmod>
+        <lastmod>2013-07-20T15:44:42-05:00</lastmod>
     </url>
     <url>
         <loc>http://headspringlabs.com/blog/archives/</loc>
-        <lastmod>2013-07-17T22:27:35-05:00</lastmod>
+        <lastmod>2013-07-20T15:44:42-05:00</lastmod>
     </url>
     <url>
         <loc>http://headspringlabs.com/humans.txt</loc>
@@ -1292,11 +1296,11 @@
     </url>
     <url>
         <loc>http://headspringlabs.com/</loc>
-        <lastmod>2013-07-17T23:11:56-05:00</lastmod>
+        <lastmod>2013-07-20T15:44:42-05:00</lastmod>
     </url>
     <url>
         <loc>http://headspringlabs.com/open-source/</loc>
-        <lastmod>2013-07-17T22:27:35-05:00</lastmod>
+        <lastmod>2013-07-20T15:44:42-05:00</lastmod>
     </url>
     <url>
         <loc>http://headspringlabs.com/robots.txt</loc>
@@ -1304,6 +1308,6 @@
     </url>
     <url>
         <loc>http://headspringlabs.com/team/</loc>
-        <lastmod>2013-07-17T22:27:35-05:00</lastmod>
+        <lastmod>2013-07-20T15:44:42-05:00</lastmod>
     </url>
 </urlset>

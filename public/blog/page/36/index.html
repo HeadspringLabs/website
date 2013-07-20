@@ -7,7 +7,7 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="The bags are packed and we’re ready to head out for Dallas Day of Dot NET.  We&#8217;ve heard through event organizers that over 500 people are &hellip;">
+	<meta name="description" content="When writing software, we constantly create abstractions. The goal each time is to present a simple interface in front of something more complex, &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -84,8 +84,100 @@
 </header>
 	
 		
+<div id="banner" class="inner">
+	<div class="container">
+		<ul class="feed"></ul>
+	</div>
+	<small><a href="http://twitter.com/HeadspringLabs">HeadspringLabs</a> @ <a href="http://twitter.com">Twitter</a></small>
+	<div class="loading">Loading...</div>
+</div>
+<script src="/javascripts/twitter.js"></script>
+<script type="text/javascript">
+	(function($){
+		$('#banner').getTwitterFeed('HeadspringLabs', 5, );
+	})(jQuery);
+</script>
+
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/finding-closure/">
+		
+			Finding Closure</a>
+	</h2>
+	<div class="entry-content">
+		<p>When writing software, we constantly create abstractions.  The goal each time is to present a simple interface in front of something more complex, hiding the gory details from us so we can focus on other things.  The problem is, <a href="http://en.wikipedia.org/wiki/Leaky_abstraction">abstractions leak</a>.  Even when you go to great effort to create a really exellent abstraction, some unfortunate implementation detail manages to rear its ugly head.  This even happens with things so fundamental that we take them for granted.  Take the &#8216;foreach&#8217; keyword in C#:</p>
+<p><div><script src='https://gist.github.com/1990055.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Where we would expect the output to be:<br />
+    Hello, Larry!<br />
+    Hello, Moe!<br />
+    Hello, Curly!</p>
+<p>Instead, we see:<br />
+    Hello, Curly!<br />
+    Hello, Curly!<br />
+    Hello, Curly!</p>
+<p>Fortunately, ReSharper points out that something fishy is going on with the reference to <code>name</code> that appears in the loop body: <strong>&#8220;Access to modified closure.&#8221;</strong>  If you follow the ReSharper suggested fix, you get this:</p>
+<p><div><script src='https://gist.github.com/1990084.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Oddly, introducing this local variable <em>does</em> fix the output, but why?  To find out, let&#8217;s first rewrite the original version using a transformation from a <code>foreach</code> loop to a <code>while</code> loop, since that&#8217;s the first thing the compiler does for us.  It still erroneously prints &#8220;Hello, Curly!&#8221; three times:</p>
+<p><div><script src='https://gist.github.com/1990116.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>ReSharper still highlights the use of <code>name</code> within the loop body, and still says it is an &#8220;Access to modified closure.&#8221;  Before we can try to fix the problem, we&#8217;re going to have to make sense of that warning.</p>
+<h2>What&#8217;s a Closure?</h2>
+<p>The word &#8220;closure&#8221; comes up a lot when talking about any language that has anonymous inline functions.  In C#, that means anonymous delegates and their shorthand lambda expressions introduced with <code>=&gt;</code>.  You have comparable anonymous functions in Javascript, Ruby, Python, etc.  Whenever you have an anonymous function whose body refers to identifiers in the surrounding scope, the function earns the right to call itself a closure.</p>
+<p>Lambdas are really shorthand for a class with one method as well as the instantiation of that class.  In our example above, the lambdas are living beyond the execution of the loop, and that means they need to live beyond the normal scope of the loop variable, <code>name</code>.  In order to work, they&#8217;ll need to hold onto something about that variable.  In fact, they hold onto the <em>environment</em> that was in effect at the moment the lambda was reached.  By environment, I mean <em>all</em> of the local variables they might be referring to.  It is as if we wrote the following, which also prints &#8220;Hello, Curly!&#8221; three times:</p>
+<p><div><script src='https://gist.github.com/1990154.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>AHA! See how we have only <em>one</em> instance of Environment shared by all the <code>Greeter</code>s, and each iteration of the loop messes with the <code>name</code> field <em>inside</em> that shared Environment?  No wonder our final loop prints out the same thing each time: all the items in <code>delayedGreetings</code> refer to the same Environment, which contains only one name, which equals whatever we set it to <em>last</em>.</p>
+<p>They call these lambdas &#8220;closures&#8221; because the secret object behind the scenes is grasping-at / enveloping / <em>closing-on</em> the local environment.  As we see in the last example, even after the environment is closed on, we can still affect that environment.  We say that the lambda is closing on the <em>variables themselves</em> rather than simply holding a reference to their <em>values</em>.</p>
+<p><strong>Even foreach leaks.</strong></p>
+<h2>Fixing foreach</h2>
+<p>So we&#8217;ve got this fancy compiler that can take a combination of <code>foreach</code> and lambda expressions, rewriting them into some equivalent-yet-verbose code, which in turn is easier to compile.  It&#8217;s a big abstraction that usually works so well we don&#8217;t stop to think it&#8217;s even <em>happening</em>.  How could we fix it?</p>
+<p>It seems the whole problem comes down to the fact that with one shared environment, each iteration messes with a shared mutable object.  We get one environment per scope, though, and the <code>while</code> loop body introduces a new, more-local scope of its own!  We could take advantage of that by declaring the loop-iteration variable <code>name</code> <em>within</em> the <code>while</code> instead of <em>before</em> it.  This way, each iteration will get its own Environment with its own <code>name</code>.  Nothing shared, nothing mutated, leaving us with the three distinct greetings we wanted.  In other words, we wish that <code>foreach</code> gets translated into a <code>while</code> loop like so:</p>
+<p><div><script src='https://gist.github.com/1990196.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>ReSharper&#8217;s suggestions basically accomplish the same thing.  By introducing a seemingly-redundant copy within the smaller scope, the environment used by the lambdas is different in each iteration.</p>
+<p>Usually when something as fundamental as a looping keyword has a problem like this, the language designers don&#8217;t really have the option of correcting it.  It&#8217;s technically a breaking change to make all <code>foreach</code> loops translate to the better version of the <code>while</code> seen in the last example.  <strong>However, they are going to be <a href="http://blogs.msdn.com/b/ericlippert/archive/2009/11/12/closing-over-the-loop-variable-considered-harmful.aspx">fixing foreach in C#5</a>.</strong> It&#8217;s a breaking change, but one that will <em>fix</em> more mistakes than it <em>creates</em>!</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-09T00:00:00-06:00" pubdate data-updated="true">Mar 9<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/developing-with-c-number/'>developing with C#</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -411,83 +503,6 @@
 
 
 	<a class='category' href='/blog/categories/mythical-man-month/'>Mythical Man-Month</a>, <a class='category' href='/blog/categories/what-the-tech/'>What the tech?</a>, <a class='category' href='/blog/categories/reliability/'>reliability</a>, <a class='category' href='/blog/categories/software/'>software</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/migrating-from-bitbucket-to-github/">
-		
-			Migrating From Bitbucket to GitHub</a>
-	</h2>
-	<div class="entry-content">
-		<p>Git and Mercurial certainly have their differences, but in the grand scheme of things they are both equally-viable source control tools.  Bitbucket and GitHub are also both equally-viable hosts for Mercurial and Git projects.</p>
-<p>All other things being equal, when it comes to open-source software the Capricious and Arbitrary Popularity Contest kicks in with the deciding vote.  Git, and in particular GitHub, has won the popularity contest in recent years and will own the title of Open Source Thingamabob for the near future.  Something cooler will come along and take its place, but for now GitHub is the place to be.</p>
-<p>We still trust Bitbucket with our client work, but we&#8217;re in the process of migrating our open-source projects to the new <a href="https://github.com/HeadspringLabs">GitHub &#8220;HeadspringLabs&#8221; organization</a>.</p>
-<p>After a few failed attempts and much gnashing of teeth, I successfully migrated the <a href="http://www.headspring.com/2011/11/building-rich-enums">Enumeration</a> project from Bitbucket to GitHub, complete with history.
-</p>
-<h2>Installing Hg-Git on Windows</h2>
-<p>If you&#8217;re migrating a Subversion project to GitHub, they already provide an simple import service.  They don&#8217;t yet offer a tool for importing Mercurial repositories, though, so I found a Mercurial-to-Git bridge called <a href="http://hg-git.github.com/">Hg-Git</a>.</p>
-<p>Hg-Git is intended to let you work continuously against a Git repository while using Mercurial tools on the client side.  I didn&#8217;t need all that, but it can also be used to do the initial push to GitHub from within a Mercurial repository.</p>
-<p>The documentation on the Hg-Git&#8217;s main site is a little brief, and after Googling around I found some good advice as well as some good advice that no longer applied.  To get Hg-Git installed on Windows, here&#8217;s all you really need to do:</p>
-<ol>
-<li>Install a recent TortoiseHg if you haven&#8217;t already.  I used TortoiseHg 2.3 (Mercurial 2.1).</li>
-<li>Open a command window and <code>cd</code> to a development folder.  We&#8217;ll be creating some repository folders underneath it:<br />
-$ <code>cd C:dev</code></li>
-<li>You install Hg-Git by simply cloning its own repository off of Bitbucket:<br />
-$ <code>hg clone https://bitbucket.org/durin42/hg-git</code><br />
-This creates a new folder named hg-git under the current directory, and underneath that you&#8217;ll see a folder named hggit.</li>
-<li>Mercurial needs to be told that this extension exists.  Update C:&#92;Users&#92;&lt;username&gt;&#92;mercurial.ini and add the following (using whatever path you cloned to):<br />
-<code>[extensions]<br />
-bookmarks =<br />
-hggit = C:devhg-githggit</code></li>
-<li>Confirm that Mercurial knows what hggit is:<br />
-$ <code>hg help hggit</code></li>
-</ol>
-<h2>Initial Failure</h2>
-<p>You&#8217;ll need to have a new empty repository created on GitHub, and you&#8217;ll need to have the rights to push to it.  You&#8217;ll need to have a local clone of the Bitbucket project you wish to migrate.</p>
-<p>If you follow the advice on <a href="http://hg-git.github.com">the Hg-Git site</a>, you&#8217;ll try to issue a special &#8221;<code>hg push</code>&#8221; command using a git-specific destination URL.  <strong>This can push the history of commits only partially.  The GitHub repository will unforunately fail to show <em>who</em> performed each commit.</strong>  Yikes.  When I got this far, I had to delete the GitHub repo and start over.</p>
-<p>The problem is Mercurial uses one string to represent committer identity while Git uses two (name and email).  Additionally, GitHub pays special attention to the email part, allowing the site to recognize existing GitHub users and linking to their user page.  Since Hg-Git wasn&#8217;t populating email addresses, GitHub had little to go on.</p>
-<h2>Successfuly Migrating from Bitbucket to GitHub</h2>
-<p><strong>Instead</strong> of using Hg-Git to perform the whole push, we&#8217;ll follow some <a href="http://www.theleagueofpaul.com/hg-to-git">excellent Hg-Git advice</a> that lets us step in to fix committer identities along the way.</p>
-<p>That site has a shell script (which can be executed on Windows using the Git Bash command prompt).  The script will use Hg-Git for only one small part of the process: converting a local Mercurial repository folder into an equivalent local git repository.  The only thing wrong with that git repository will be the user names and email addresses.  The script then takes a chainsaw to that local git history, fixing the identity of each committer.  Finally, the script uses regular git commands to do the final push to GitHub.</p>
-<p>The downside is that you have to modify this script with a separate chunk for each real-world person that appears in the Mercurial history.  For instance, let&#8217;s say we have history in Bitbucket for users named hgjohn and hgjane.  John Doe has a GitHub account already and prefers to be known there as &#8220;John Doe&#8221; with email address &#8220;john@example.com&#8221;.  Jane Doe doesn&#8217;t have a GitHub account yet, but later on if she does she&#8217;ll want to be known as &#8220;Jane Doe&#8221; and &#8220;jane@example.com&#8221;.  With these transformations ready, we modify the script to the following:</p>
-<p><div><script src='https://gist.github.com/1954240.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>After saving this as &#8220;migrate_hg_to_git.sh&#8221; in our development folder, we execute the following command (all on one line).  This creates a local folder named &#8216;MyProject&#8217;, populates it with a Bitbucket clone, converts it to a Git repository, fixes the names, and pushes to GitHub:</p>
-<p>$ <code>./migrate_hg_to_git.sh MyProject https://bitbucket.org/johnd/MyProject git@github.com:jdoe/MyProject.git</code></p>
-<p>Now when you view the project on GitHub, John&#8217;s commits display his photo and link to his user page.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-02T00:00:00-06:00" pubdate data-updated="true">Mar 2<span>nd</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
 
 
 </div>

@@ -4,7 +4,7 @@
   <title><![CDATA[Headspring Labs]]></title>
   <link href="http://headspringlabs.com/atom.xml" rel="self"/>
   <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-17T23:12:05-05:00</updated>
+  <updated>2013-07-20T15:46:45-05:00</updated>
   <id>http://headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
@@ -12,6 +12,20 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Welcome to Headspring Labs]]></title>
+    <link href="http://headspringlabs.com/blog/welcome-to-headspring-labs/"/>
+    <updated>2013-07-20T14:28:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/welcome-to-headspring-labs</id>
+    <content type="html"><![CDATA[<p>Headspring Labs is the new home for content, projects, and experiments from all the talented developers and consultants at <a href="http://www.headspring.com">Headspring</a>. This space was built for developers at Headspring, but we decided to share it with the rest of the software world.</p>
+
+<!--more-->
+
+
+<p>Since we&rsquo;ll be blogging here and adding new content all the time, be sure to <a href="http://headspringlabs.com/atom.xml">subscribe</a> to our feed to make sure you&rsquo;re getting all the updates. We also have accounts on <a href="https://twitter.com/HeadspringLabs">Twitter</a> and <a href="https://github.com/HeadspringLabs">GitHub</a>.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[By Your Command (Line)]]></title>
@@ -872,40 +886,6 @@
 <h2>Footwear Accomplished</h2>
 <p>Phew!  These first steps can be frustrating, and a little boring, but they pay for themselves very quickly.  Now that we have a reliable build script, a simple NuGet-friendly file structure, and a simple versioning scheme, we can finally dive into development.</p>
 <p>Socks fully donned, next week, we&#8217;ll stretch the footwear metaphor a bit further, as we &#8220;bootstrap&#8221; Fixie to the point where it can test itself!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[MVC Custom Unobtrusive Validator Attribute (Date Range Validation)]]></title>
-    <link href="http://headspringlabs.com/blog/mvc-custom-unobtrusive-validator-attribute-date-range-validation/"/>
-    <updated>2013-03-19T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/mvc-custom-unobtrusive-validator-attribute-date-range-validation</id>
-    <content type="html"><![CDATA[<p>There are some useful attributes in MVC that help render dynamic unobtrusive validation to the browser.   The more you can accomplish by simply adding an attribute to a property on a view model the less duplication of JavaScript you have to manage.  Out of the “MVC” box validation for date ranges would require custom JavaScript.  If you have multiple pages that all need to validate ranges, either from the current date or from another date property on your view model, how about having an attribute that you can use to handles this?</p>
-<p>In this blog I’m going to cover:</p>
-<ul>
-<li>Creating a Custom MVC Validation Attribute</li>
-<li>Creating a  Client Validation Rule</li>
-<li>Creating and wiring up the unobtrusive JavaScript to do the validation</li>
-</ul>
-<p>First to create a validation Attribute you need to inherit from the <strong>ValidationAttribute</strong>.  To make this validation available on the client you need to implement the <strong>IClientValidatable</strong> interface.  The <strong>ValidationAttribute</strong> is where you define the settable properties that can be used by the View Model.  To handle the validation server side you can override the <strong>IsValid</strong> method to execute your validation logic.  The <strong>IClientValidatable</strong> interface exposes the <strong>GetClientValidationRules</strong> method.  The validation rules are parameters that will be provided to your JavaScript as an array.  The <strong>ModelClientValidationRule </strong>is where you define the Rules/Settings that the <strong>ValidationAttribute</strong> will provide based upon what was supplied when the attribute was applied to a property on a View Model.</p>
-<p>Lets look at some code before we go to far.</p>
-<p><div><script src='https://gist.github.com/5200208.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>The <strong>DataComparerAttribute</strong> exposes the properties that will be used when the attribute is applied to a property on a View Model.  Notice that the <strong>ModelClientValidationRangeDateRule</strong> exposes the same properties and maps to the validation attribute.  This type is created in the <strong>GetClientValidationRules</strong> method which creates the <strong>ValidationParameters</strong> that will be passed to the Client JavaScript validation method.  Now we have enough to implement the server side <strong>IsValid</strong> method and the client side JavaScript to handle the unobtrusive validation.</p>
-<p>With the attribute defined the JavaScript can be created.  The client JavaScript function is linked through the <strong>ModelClientValidationRule.ValidationType</strong> string property.  In this validator the <strong>ValidationType</strong> was set to <em>“rangeDate”</em>.  This value is what we will use to add to the JQuery validator.  There are two JQuery validator concepts we need to link to the magic string <em>“rangeDate”</em> .  The <strong>$.validator.unobtrusive.adapters </strong>which is where MVC will supply the View Model rules from the <strong>GetClientValidationRules</strong> method and the <strong>$.validator.addMethod </strong>which is where the actual JavaScript validation function is defined.</p>
-<p><div><script src='https://gist.github.com/5205136.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Notice the signature of the <strong>$.validator.unobtrusive.adapters </strong>(line 4).  This is where the same array defined in the <strong>ModelClientValidationRangeDateRule.ValidationParameters</strong> lines up to the client code.  MVC will expect the C# and JavaScript to match.  Notice the date format being used to supply the <em>“minDate”</em> and <em>“maxDate”</em>.  Since date formatting can be complicated having the server side format match the client side format helps to make the validation more predictable.</p>
-<p>With the attribute complete now we can apply it to our View Model and see it in action.  This validator is designed to do validation based upon a Max Date and a Min Date.  For Min and Max the choices are either a sibling property on the View Model (MinDateSelector and MaxDateSelector) or an interval from DateTime.Now (MinDateAddDaysFromNow, MaxDateAddDaysFromNow).  The *DateSelector will be used to get the current value from the property on the View Model.  When the server side <strong>IsValid</strong> is executed Reflection is used to get the property value.  When the client side JavaScript is executed JQuery is used to get the value from a HTML element on the browser.</p>
-<p><div><script src='https://gist.github.com/5205378.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>In the above usage of the attribute the BirthDate must be from January 1st 2013 through the current Date and Time the validation is executed.</p>
-<h3>Summary</h3>
-<p>Adding custom validation to MVC is useful in reducing duplication of code.  As you can see it’s not all that complicated to do.  The validation methods for server side and client side validation risk having different logic and need to use different mechanisms to get property values.  Reflection and JQuery make this easy enough but there are still gotchas that need to be considered.  When your using JQuery to select a value on a page you need to make sure your selector is unique.  If in our case we have more than one View Model loaded on the page the JQuery Selector could return another html elements value.  I hope this gets you started and can open up some new possibilities for validation.</p>
-<p>To see the full example and source code go to <a title="https://github.com/jdmgomoo/MVC-CustomAttributes" href="https://github.com/jdmgomoo/MVC-CustomAttributes">https://github.com/jdmgomoo/MVC-CustomAttributes</a></p>
 ]]></content>
   </entry>
   

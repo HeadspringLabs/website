@@ -7,7 +7,7 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="Over the past month, we&#8217;ve seen the inception and early development of my ongoing side project, the Fixie test framework. As of last week, it &hellip;">
+	<meta name="description" content="As soon as your software project has a useful feature or two, it&#8217;s time to start eating your own dogfood. The usual advice is to use your own &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -84,8 +84,88 @@
 </header>
 	
 		
+<div id="banner" class="inner">
+	<div class="container">
+		<ul class="feed"></ul>
+	</div>
+	<small><a href="http://twitter.com/HeadspringLabs">HeadspringLabs</a> @ <a href="http://twitter.com">Twitter</a></small>
+	<div class="loading">Loading...</div>
+</div>
+<script src="/javascripts/twitter.js"></script>
+<script type="text/javascript">
+	(function($){
+		$('#banner').getTwitterFeed('HeadspringLabs', 5, );
+	})(jQuery);
+</script>
+
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/dogfooding/">
+		
+			Dogfooding</a>
+	</h2>
+	<div class="entry-content">
+		<p>As soon as your software project has a useful feature or two, it&#8217;s time to start <a href="http://en.wikipedia.org/wiki/Eating_your_own_dog_food">eating your own dogfood</a>. The usual advice is to use your own software in order to get early feedback, but there&#8217;s another major benefit to dogfooding that usually goes unmentioned:</p>
+<blockquote><p>To dogfood your software, you have to treat its <em>deployment</em> as a first-class feature.</p></blockquote>
+<p>Deployment is not some secondary activity to be figured out later. Just like we should use our products early and often to make them better, we should use our deployment processes early and often to make <em>them</em> better.</p>
+<h2>Dogfooding Fixie</h2>
+<p>Now that my test framework is powerful enough to <a href="http://www.headspring.com/patrick/bootstrapping/">run all of its own tests</a>, has a <a href="https://github.com/plioi/fixie/blob/9a124ba6c460cf93c1507be68622245033f30454/src/Fixie.Console/Program.cs">command line test runner</a>, and <a href="https://github.com/plioi/fixie/blob/9a124ba6c460cf93c1507be68622245033f30454/src/Fixie.TestDriven/Runner.cs">integrates with TestDriven.NET</a>, it&#8217;s time to start dogfooding it.</p>
+<p>Deploying a test framework involves making it available for use in other projects. For this project, that means publishing a <a href="http://nuget.org/packages/Fixie">Fixie NuGet package</a> to the NuGet Gallery. When another developer installs the package, they should gain three things: an assembly reference added to their test project, the console test runner EXE, and TestDriven.NET support.</p>
+<p>Since dogfooding a project demands treating its deployment as a first-class feature, I needed to automate as much of the NuGet work as possible. I have set up a one-click deployment process for Fixie, and have tried it out for real by installing it into two other open source projects.</p>
+<h2>Creating and Publishing the NuGet Package</h2>
+<p>First, I added a nuspec file which describes the package contents.  I named it <a href="https://github.com/plioi/fixie/blob/a4a358e45e5c1ef2aa6074f12d1075066d4e28ca/src/Fixie/Fixie.nuspec">Fixie.nuspec</a> and placed this beside the Fixie.csproj file. Recall that the <a href="http://www.headspring.com/patrick/socks-then-shoes/">AssemblyInfo values in this project are set by the build script</a>.  By naming the nuspec file after the csproj file, NuGet.exe will know to use those same values as replacements for the $tokens$ in the nuspec:</p>
+<p><div><script src='https://gist.github.com/5359835.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Fixie.dll will be included in the package automatically, since that is the output of compiling Fixie.csproj.  The <code>&lt;files&gt;</code> section lists additional files I needed to include in the package: the console runner, its config, and 3 files needed to integrate with TestDriven.NET.  Since we&#8217;re including some files we don&#8217;t always want to add as project references during installation, I explicitly list Fixie.dll as the only reference.</p>
+<p>Dropping this nuspec file into the project isn&#8217;t enough.  I also added a &#8216;Package&#8217; task to the <a href="https://github.com/plioi/fixie/blob/a4a358e45e5c1ef2aa6074f12d1075066d4e28ca/default.ps1">build script</a>, which runs NuGet.exe against the nuspec file and produces the deployable package.  This task is the one executed by TeamCity upon each commit to GitHub:</p>
+<p><div><script src='https://gist.github.com/5359834.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>TeamCity creates the NuGet package files with each build, but I don&#8217;t really want to publish a package to the world upon each commit. I&#8217;d rather just publish when I know I&#8217;ve made enough changes to warrant a new deployment.  I found some good advice on how to <a href="http://blog.jonnyzzz.name/2011/09/selective-publishing-of-nuget-packages.html">selectively publish NuGet packages with TeamCity</a>.  In short, my main TeamCity build configuration compiles, runs tests, and creates NuGet package files automatically upon each commit to GitHub, while  a secondary TeamCity build handles publishing the latest successful package to the world.  The secondary TeamCity build only runs when I decide to run it, giving me one-click deployment.</p>
+<h2>Inevitable Explosions</h2>
+<p>Applying this NuGet package to the first target project, <a href="https://github.com/plioi/parsley">Parsley</a>, was a complete success.  That&#8217;s unfortunate, because it is boring.  It gave me no new information to drive Fixie&#8217;s development.  Parsley&#8217;s tests spend all of their time twiddling and comparing strings. Not much can go wrong here that would depend on the details of the host test framework.</p>
+<p>Applying this NuGet package to the second target project, <a href="https://github.com/plioi/rook">Rook</a>, has <em>fortunately</em> proven very difficult, yielding far more interesting results.</p>
+<p>First, Rook&#8217;s integration tests need to read text files from a folder found beside the tests&#8217; own DLL, meaning the tests depend on a test framework&#8217;s own notion of where the current directory is.  The fix here was easy: <a href="https://github.com/plioi/fixie/commit/9a124ba6c460cf93c1507be68622245033f30454">Fixie&#8217;s console runner changes the current directory to the test assembly location during execution, and then reverts to the previous directory</a>.</p>
+<p>Second, this project&#8217;s integration tests actually produce some additional DLLs at runtime and call into them, and those DLLs may depend on <em>other</em> DLLs that live beside the tests&#8217; DLL.  These dependencies are not being found.  That may sound like the same problem: .NET wants to look in the wrong directory for some DLLs.  Unfortunately we&#8217;re not talking about the operating system&#8217;s concept of a current directory.  Instead, we&#8217;re talking about the .NET concept of an AppDomain and its &#8220;base directory&#8221;, and <em>that</em> topic is a can of worms for another day.</p>
+<p>Dogfooding Fixie on two real projects has given me valuable feedback.  I ran into two similar issues and have realized one major requirement that has not been on my radar so far:</p>
+<blockquote><p>A test framework should fool your test DLL into thinking <em>it</em> is an EXE running in the build output folder, when in fact the running EXE is the console runner off in some other folder.</p></blockquote>
+<p>With this week&#8217;s current directory fix and the upcoming fix regarding AppDomains, <em>whatever the heck those are</em>, I&#8217;ll be able to satisfy this new requirement.  Stay tuned!</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-11T00:00:00-05:00" pubdate data-updated="true">Apr 11<span>th</span>, 2013</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -411,72 +491,6 @@
 
 
 	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/mvc-custom-unobtrusive-validator-attribute-date-range-validation/">
-		
-			MVC Custom Unobtrusive Validator Attribute (Date Range Validation)</a>
-	</h2>
-	<div class="entry-content">
-		<p>There are some useful attributes in MVC that help render dynamic unobtrusive validation to the browser.   The more you can accomplish by simply adding an attribute to a property on a view model the less duplication of JavaScript you have to manage.  Out of the “MVC” box validation for date ranges would require custom JavaScript.  If you have multiple pages that all need to validate ranges, either from the current date or from another date property on your view model, how about having an attribute that you can use to handles this?</p>
-<p>In this blog I’m going to cover:</p>
-<ul>
-<li>Creating a Custom MVC Validation Attribute</li>
-<li>Creating a  Client Validation Rule</li>
-<li>Creating and wiring up the unobtrusive JavaScript to do the validation</li>
-</ul>
-<p>First to create a validation Attribute you need to inherit from the <strong>ValidationAttribute</strong>.  To make this validation available on the client you need to implement the <strong>IClientValidatable</strong> interface.  The <strong>ValidationAttribute</strong> is where you define the settable properties that can be used by the View Model.  To handle the validation server side you can override the <strong>IsValid</strong> method to execute your validation logic.  The <strong>IClientValidatable</strong> interface exposes the <strong>GetClientValidationRules</strong> method.  The validation rules are parameters that will be provided to your JavaScript as an array.  The <strong>ModelClientValidationRule </strong>is where you define the Rules/Settings that the <strong>ValidationAttribute</strong> will provide based upon what was supplied when the attribute was applied to a property on a View Model.</p>
-<p>Lets look at some code before we go to far.</p>
-<p><div><script src='https://gist.github.com/5200208.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>The <strong>DataComparerAttribute</strong> exposes the properties that will be used when the attribute is applied to a property on a View Model.  Notice that the <strong>ModelClientValidationRangeDateRule</strong> exposes the same properties and maps to the validation attribute.  This type is created in the <strong>GetClientValidationRules</strong> method which creates the <strong>ValidationParameters</strong> that will be passed to the Client JavaScript validation method.  Now we have enough to implement the server side <strong>IsValid</strong> method and the client side JavaScript to handle the unobtrusive validation.</p>
-<p>With the attribute defined the JavaScript can be created.  The client JavaScript function is linked through the <strong>ModelClientValidationRule.ValidationType</strong> string property.  In this validator the <strong>ValidationType</strong> was set to <em>“rangeDate”</em>.  This value is what we will use to add to the JQuery validator.  There are two JQuery validator concepts we need to link to the magic string <em>“rangeDate”</em> .  The <strong>$.validator.unobtrusive.adapters </strong>which is where MVC will supply the View Model rules from the <strong>GetClientValidationRules</strong> method and the <strong>$.validator.addMethod </strong>which is where the actual JavaScript validation function is defined.</p>
-<p><div><script src='https://gist.github.com/5205136.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Notice the signature of the <strong>$.validator.unobtrusive.adapters </strong>(line 4).  This is where the same array defined in the <strong>ModelClientValidationRangeDateRule.ValidationParameters</strong> lines up to the client code.  MVC will expect the C# and JavaScript to match.  Notice the date format being used to supply the <em>“minDate”</em> and <em>“maxDate”</em>.  Since date formatting can be complicated having the server side format match the client side format helps to make the validation more predictable.</p>
-<p>With the attribute complete now we can apply it to our View Model and see it in action.  This validator is designed to do validation based upon a Max Date and a Min Date.  For Min and Max the choices are either a sibling property on the View Model (MinDateSelector and MaxDateSelector) or an interval from DateTime.Now (MinDateAddDaysFromNow, MaxDateAddDaysFromNow).  The *DateSelector will be used to get the current value from the property on the View Model.  When the server side <strong>IsValid</strong> is executed Reflection is used to get the property value.  When the client side JavaScript is executed JQuery is used to get the value from a HTML element on the browser.</p>
-<p><div><script src='https://gist.github.com/5205378.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>In the above usage of the attribute the BirthDate must be from January 1st 2013 through the current Date and Time the validation is executed.</p>
-<h3>Summary</h3>
-<p>Adding custom validation to MVC is useful in reducing duplication of code.  As you can see it’s not all that complicated to do.  The validation methods for server side and client side validation risk having different logic and need to use different mechanisms to get property values.  Reflection and JQuery make this easy enough but there are still gotchas that need to be considered.  When your using JQuery to select a value on a page you need to make sure your selector is unique.  If in our case we have more than one View Model loaded on the page the JQuery Selector could return another html elements value.  I hope this gets you started and can open up some new possibilities for validation.</p>
-<p>To see the full example and source code go to <a title="https://github.com/jdmgomoo/MVC-CustomAttributes" href="https://github.com/jdmgomoo/MVC-CustomAttributes">https://github.com/jdmgomoo/MVC-CustomAttributes</a></p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-03-19T00:00:00-05:00" pubdate data-updated="true">Mar 19<span>th</span>, 2013</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/blog/'>Blog</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/mvc/'>MVC</a>, <a class='category' href='/blog/categories/unobtrusive/'>Unobtrusive</a>, <a class='category' href='/blog/categories/validation/'>Validation</a>, <a class='category' href='/blog/categories/validationattribute/'>ValidationAttribute</a>
 
 
 </div>

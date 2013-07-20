@@ -7,7 +7,7 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="This is part 6 of an N-part series on identifying and resolving incidental complexity in your software projects. This post assumes you&#8217;ve &hellip;">
+	<meta name="description" content="This post is the conclusion to a 7-part series on identifying and resolving incidental complexity in your software projects. It assumes you&#8217;ve &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -84,8 +84,98 @@
 </header>
 	
 		
+<div id="banner" class="inner">
+	<div class="container">
+		<ul class="feed"></ul>
+	</div>
+	<small><a href="http://twitter.com/HeadspringLabs">HeadspringLabs</a> @ <a href="http://twitter.com">Twitter</a></small>
+	<div class="loading">Loading...</div>
+</div>
+<script src="/javascripts/twitter.js"></script>
+<script type="text/javascript">
+	(function($){
+		$('#banner').getTwitterFeed('HeadspringLabs', 5, );
+	})(jQuery);
+</script>
+
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/quashing-incidental-complexity/">
+		
+			Quashing Incidental Complexity</a>
+	</h2>
+	<div class="entry-content">
+		<p>This post is the conclusion to a 7-part series on identifying and resolving incidental complexity in your software projects.  It assumes you&#8217;ve already read the earlier posts (linked in the sections below).</p>
+<p>The problems I&#8217;ve faced can crop up in any project.  When a concept or responsibility gets applied to the wrong abstraction, we subconsciously start to add workarounds just to make things work at all.  These workarounds take up space, physically as excess lines of code and mentally as distractions from your true intent.  Workarounds beget workarounds, and the problem feeds itself until you think, &#8220;What a mess!  I need to rewrite it all!&#8221;</p>
+<p>By placing responsibilities in their proper home, you can combat this feedback loop and keep your code clean.</p>
+<h2>A Troubled Project</h2>
+<p>In <a href="http://www.headspring.com/blog/developer-deep-dive/essential-vs-incidental-complexity/">Essential vs Incidental Complexity</a>, I admitted that my pet project, a compiler for an experimental language called <a href="https://github.com/plioi/rook">Rook</a>, was starting to run into problems.</p>
+<p>In a healthy project, it can actually get easier to add new features the further along you go, as you discover and flesh out abstractions that help rather than hinder progress.  In Rook, it was getting harder and harder to add new features.  This difficulty was a sign that I was working with the wrong abstractions.</p>
+<p>Two classes in particular were starting to grow wildly complex: Scope (a dictionary-like type that describes which identifiers are visible from the point of view of a line of input source code), and TypeChecker (a recursive process which determines the type of all expressions).</p>
+<p>I&#8217;d like to think I&#8217;m pretty good at writing software, but here I am admitting I created something too complex for its own good.  <strong>This can happen to anyone</strong>.  The important thing to know is that you can always take steps to turn things around.</p>
+<blockquote><p>It&#8217;s tempting to chuck everything and embark on a rewrite, but I&#8217;ve done that before (with this project!) and I&#8217;d rather fix what I have over the course of a few <em>weeks</em> than rewrite it and find myself in the same spot in a few <em>years</em>.</p></blockquote>
+<p>This kind of problem has a direct connection to incidental complexity.  If your abstractions are working against you, you spend more lines of code serving them than they spend serving you.  It starts to get harder and harder to see the intent behind a given method because half of the characters in it amount to boilerplate. </p>
+<p>As I said, this can happen to anyone.  The solution is to identify which abstractions are faulty, and adjust them in small and safe increments until they start working for you again.  </p>
+<p>Faulty abstractions can take many forms:</p>
+<h2>Unnecessary Abstractions</h2>
+<p>In <a href="http://www.headspring.com/blog/developer-deep-dive/identifying-incidental-complexity/">Identifying Incidental Complexity</a>, TypeChecked&lt;T&gt; was an abstraction that complicated things without adding anything of value.  Its existence required many methods in TypeChecker to waste a lot of time and concentration to recombine very small arrays of error messages, completely distracting the reader from the actual intent of the methods.  It ultimately gave me no benefit, and removing it helped to clean up a lot of ugly code.</p>
+<h2>Abstractions with Multiple Personalities</h2>
+<p>In <a href="http://www.headspring.com/blog/developer-deep-dive/scope-creep/">Scope Creep</a>, we saw that the Scope abstraction was right in its inception but had gotten extremely complicated over time.</p>
+<p>One class absorbed many responsibilities as I began to use it in more and more scenarios.  In fact, I was using one Scope class to represent several different <em>kinds</em> of scope (global, local, etc).  The Scope class had multiple personalities, and I saw that splitting such a class into several classes with a common interface would make it easier to see the actual domain concepts I was trying to represent.</p>
+<p>Specifically, I used inheritance and lots of <code>override</code> methods to accomplish this improvement.  I don&#8217;t enjoy doing that, but implementation inhertiance in this case was a <em>tool</em> to nudge things in the right direction in small steps while solidifying what separate classes I needed.</p>
+<h2>Brittle Abstractions</h2>
+<p>In <a href="http://www.headspring.com/blog/developer-deep-dive/spaghetti-alla-code/">Spaghetti alla Code</a>, we saw how implementation inheritance can motivate some horribly convoluted code that just <em>happens</em> to work.  Scope was separated <em>physically</em> into different classes now, but the method implementations were all tied up in knots.</p>
+<p>With lots of <code>virtual/override/base</code> keywords, you have to read <em>all</em> of the code to understand <em>any</em> of the code.  Making changes here without unintended side effects becomes too difficult, making the abstraction brittle in the face of inevitable change.</p>
+<blockquote><p>Implementation inheritance is like writing in assembly language: it <em>works</em>, but good luck ever <em>editing</em> it with confidence.</p></blockquote>
+<p>The solution here was to favor composition over inheritance.  Each individual class can be understood by only looking at that class.  The new implementations read a lot more like an English description of the domain being modeled.</p>
+<h2>Anemic Abstractions</h2>
+<p>In <a href="http://www.headspring.com/blog/developer-deep-dive/primitive-obsession/">Primitive Obsession</a>, I had an abstraction that existed in name only: TypeVariable was a simple wrapper for an int.  I was so obsessed that the TypeVariable class was &#8220;just a glorified int&#8221; that it never occurred to me to put more smarts into it.</p>
+<p>Not realizing that this class was a good home for some important concepts, I had to throw those concepts <em>anywhere</em> that would work, and that just happened to be the unfortunate Scope class mentioned before (as if it didn&#8217;t have enough to worry about).</p>
+<blockquote><p>Scope was a bit of an Idea Sponge at this point.</p></blockquote>
+<p>The solution was to recognize that the TypeVariable abstraction was incomplete, and lots of things got simpler once an appropriate responsibility moved into the TypeVariable class.</p>
+<h2>Complected Abstractions</h2>
+<p>In <a href="http://www.headspring.com/blog/developer-deep-dive/detect-reflect-decomplect/">Detect, Reflect, Decomplect</a>, we saw that when two separate ideas get complected (braided) together, we have to start writing extra code to work around that complexity.</p>
+<p>I was twisting up success and failure results into a single return value, forcing me to place special meaning on <em>null</em>s, and to include excessive early return statements throughout many methods.  These extra return statements set the code in intellectual concrete, severely limiting my ability to apply any cleanup refactorings.</p>
+<p>By untwisting the concepts of success and failure in this class, and by avoiding null with the Null Object pattern, the troubled TypeChecker class finally got <em>linear</em> enough to have a hope of ever getting cleaned up.</p>
+<h2>Code is Too Malleable to be Intractable</h2>
+<p>When you find the complexity of your projects growing out of control, don&#8217;t lose hope!  Take a step back, identify which abstractions you&#8217;re doing <em>extra</em> work <em>for</em>, and nudge them in small and safe steps until they better-represent the Truth of your domain.</p>
+<p>You don&#8217;t even have to put forward progress on hold; these kinds of improvements can be a small part of your daily activities.</p>
+<p>Make your life easier and your project healthier by growing and cultivating abstractions that let you write <em>less and less</em> code.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-24T00:00:00-05:00" pubdate data-updated="true">Aug 24<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -436,59 +526,6 @@
 
 
 	<a class='category' href='/blog/categories/blog/'>Blog</a>, <a class='category' href='/blog/categories/bonus/'>Bonus!</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/get-to-know-a-headspringer/'>Get To Know a Headspringer</a>, <a class='category' href='/blog/categories/what-the-tech/'>What the tech?</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/headspring-chosen-as-exclusive-education-partner-in-north-america-by-ravendb/">
-		
-			Headspring Chosen as Exclusive Education Partner in North America by RavenDB</a>
-	</h2>
-	<div class="entry-content">
-		<p style="text-align: center;"><strong><em><a href="http://www.headspring.com/wp-content/uploads/2012/07/logo-ravendb.png"><img class="alignright size-medium wp-image-5670" title="RavenDB" src="http://www.headspring.com/wp-content/uploads/2012/07/logo-ravendb-300x104.png" alt="RavenDB" width="300" height="104" /></a>First Public Course Scheduled for September at Headspring Headquarters in Austin, Texas</em></strong></p>
-<p>&nbsp;</p>
-<p>Austin, TX – July 30, 2012, Headspring, a custom application development and consulting firm, today announced it was selected as the exclusive training partner for RavenDB, a popular open-source document database.</p>
-<p>The premiere RavenDB training course provided by Headspring is scheduled for September 5-6, 2012 with limited space available. The course will be instructed by Principal Consultant Alonso Robles, with curriculum developed by RavenDB creator and CEO of Hibernating Rhinos, Oren Eini.</p>
-<p>Headspring is a leading educator in the development community and was chosen as the exclusive partner to RavenDB because of its proven experience implementing document database in custom software projects.</p>
-<p>&#8220;We are excited to be working with Headspring in a move that will make it easier and more accessible for customers to adopt RavenDB, and for developers and sys ops to learn just how useful a tool they now have within reach&#8221; says Eini.</p>
-<p>The partnership also signifies Headspring’s ongoing commitment to the adaptation and evangelism of open-source technology.</p>
-<p>“We’ve had a lot of success using RavenDB for our clients,” said Kevin Hurwitz, Chief Architect at Headspring. &#8220;We’re excited about this opportunity and looking forward to educating the new adopters of this great product.”</p>
-<p>To register or learn more about the course, visit: <a href="http://www.headspring.com/events/ravendb-boot-camp/">http://www.headspring.com/events/ravendb-boot-camp/</a></p>
-<p><strong>About RavenDB</strong></p>
-<p>RavenDB is an open source (with a commercial option) second generation document database for the .NET/Windows platform, developed by Hibernating Rhinos, which also developed a set of profilers for Object Relations Mappers for the .NET and Java platforms.</p>
-<p>RavenDB is used by customers for running low end embedded solutionssuch as Point Of Sale systems all the way up to highly scalable, distributed &amp; replicated, systems such as MSNBC.COM, which has moved several keys assets to RavenDB, and plans to move more in the future.</p>
-<p>For more information about RavenDB, visit <a href="http://ravendb.net" target="_blank">http://ravendb.net</a></p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-07-30T00:00:00-05:00" pubdate data-updated="true">Jul 30<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/press/'>Press</a>
 
 
 </div>

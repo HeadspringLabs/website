@@ -7,7 +7,7 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="NuGet is a Visual Studio extension that makes it easy to pull third-party libraries into your projects. It can also bring in their dependencies, &hellip;">
+	<meta name="description" content="Change is inevitable. It is a simple fact of life which permeates into just about everything. Software development is no exception. Many software &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -84,8 +84,87 @@
 </header>
 	
 		
+<div id="banner" class="inner">
+	<div class="container">
+		<ul class="feed"></ul>
+	</div>
+	<small><a href="http://twitter.com/HeadspringLabs">HeadspringLabs</a> @ <a href="http://twitter.com">Twitter</a></small>
+	<div class="loading">Loading...</div>
+</div>
+<script src="/javascripts/twitter.js"></script>
+<script type="text/javascript">
+	(function($){
+		$('#banner').getTwitterFeed('HeadspringLabs', 5, );
+	})(jQuery);
+</script>
+
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/you-want-to-change-what/">
+		
+			You Want to Change What?</a>
+	</h2>
+	<div class="entry-content">
+		<p>Change is inevitable. It is a simple fact of life which permeates into just about everything. Software development is no exception. Many software development life cycles have evolved and others have come into existence in an effort to help us deal with change. Programming languages, tools and techniques are also continuously evolving as well. Yet with all these improvements many project teams continue to struggle with change.</p>
+<p>What can we do about change? The truth is change doesn’t have to be hard. There are many things we can do such as plan for change, design for change, and code for change.</p>
+<p>Sounds great doesn’t it? There are actually dozens of books and a plethora of blog posts that talk about those principles.</p>
+<p>If you are still reading this, then you are probably wondering how to put those principles into practice. I will share a practical example with you.</p>
+<p>A short while ago, I blogged <a href="http://www.headspring.com/2012/02/i-have-frameworkcommitment-issues">about selecting a framework</a>. The premise was a real situation in which a company I was consulting for selected a framework, changed their mind, and then changed it back. The actual frameworks involved are not important. The important thing is that the change was essentially painless.</p>
+<p>Here is how pain was avoided.</p>
+<p>I worked on a subsystem with very well defined boundaries of responsibility. One thing the subsystem had to do was to send a message to another subsystem. That was easy enough.</p>
+<p>I started working on the core domain logic of the subsystem and I reached the point where a domain object implemented the business logic that decided to send a message to the other subsystem. The details of the message format and content were still fuzzy and that was a clear indicator that change was coming. Anticipating change here, I decided to use an interface to allow me to continue developing the business logic while the details of the messages were in limbo.</p>
+<p>My code looked something like this:</p>
+<p><div><script src='https://gist.github.com/1979430.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>I used unit tests to make sure the business logic was sound and leveraged a mocking framework to mock the message publisher. Shortly thereafter a decision was made to implement a third party message bus to handle some of the messaging details. Again this was easy enough to do. We just implemented the IMessagePublisher interface.</p>
+<p><div><script src='https://gist.github.com/1979561.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>I ended up using a dependency injection framework to inject a MessagePublisher instance into the BusinessObject during runtime. We were also able to use a combination of unit tests and integration tests to make sure the third party message bus worked correctly. The key thing to take away here is that this MessagePublisher class and a couple of supporting classes (omitted from the code sample) were the only places where the third party code touched our subsystem.</p>
+<p>When the client decided to change to another third party message bus, we only had to change one class.</p>
+<p><div><script src='https://gist.github.com/1979613.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Honestly, it was a little more involved. There were a couple of other classes involved that handled the set up and configuration of the third party message bus. But the net effect of the change was limited to about three small classes, a few unit tests, and a few integration tests.</p>
+<p>When the client decided to change back to the original third party message bus, I just recovered the previous implementation, unit tests, and integration tests from source control.</p>
+<p>It was pretty much painless.</p>
+<p>Granted not all changes are this easy. But when we plan, design, and code with change in mind we end up in a position where we can respond to change.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-26T00:00:00-05:00" pubdate data-updated="true">Mar 26<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/agile/'>agile</a>, <a class='category' href='/blog/categories/clean-code/'>clean code</a>, <a class='category' href='/blog/categories/code-for-change/'>code for change</a>, <a class='category' href='/blog/categories/dependency-injection/'>dependency injection</a>, <a class='category' href='/blog/categories/interface/'>interface</a>, <a class='category' href='/blog/categories/mocking-frameworks/'>mocking frameworks</a>, <a class='category' href='/blog/categories/source-control/'>source control</a>, <a class='category' href='/blog/categories/test-driven-development/'>test-driven development</a>, <a class='category' href='/blog/categories/unit-testing/'>unit testing</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -416,64 +495,6 @@
 
 
 	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/nosql/'>nosql</a>, <a class='category' href='/blog/categories/ravendb/'>ravendb</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/get-to-know-a-developer-alonso-robles/">
-		
-			Get to Know a Developer: Alonso Robles</a>
-	</h2>
-	<div class="entry-content">
-		<p><a href="http://www.headspring.com/2012/03/get-to-know-a-developer-alonso-robles/alonso-v1" rel="attachment wp-att-4177"><img class="alignright size-medium wp-image-4177" title="Alonso v1" src="http://www.headspring.com/wp-content/uploads/2012/03/Alonso-v1-199x300.jpg" alt="" width="199" height="300" /></a>Alonso Robles is our newest Principal Consultant at Headspring, and has quickly become an office favorite.  He is very enthusiastic about working here, and even <a href="http://alonsorobles.com/2012/03/14/joining-headspring/">wrote a blog</a> the other day expressing this sentiment.  But the thing I’ve noticed about Alonso is that he is enthusiastic about everything – his family, his projects, his clients.  He’s a refreshingly happy addition, and great for conversation.  Here was how ours went this morning:</p>
-<p><strong>Are you an expert at anything?</strong></p>
-<p>Sure. I think everyone is an expert in something they just don’t know it. We all have things that we are really good at and things we are really passionate about. It’s those things that we are both really good and really passionate about that we typically experts in. My passions and experiences are with programming and developing back end systems – specifically distributed system integration and data persistence.</p>
-<p><strong>What led you to software development?</strong></p>
-<p>It’s a long life story that starts from my early childhood. I can sum it up by saying I kind of fell into it as a result of necessity and luck.</p>
-<p><strong>What did you learn first?</strong></p>
-<p>One of my earliest childhood memories involving computers was figuring out how to hack the dictionary file so I could beat an educational spelling game my father purchased for me in grade school on an IBM PS/2. I still remember the look in his face when I showed him I could beat the game by typing in gibberish on the keyboard. I also remember working the Logo programming language at my elementary school and programming a text based game in BASIC on that old IBM PS/2.</p>
-<p><strong>Do you like teaching?</strong></p>
-<p>Yes! I actually tutored math and science in high school. I think that may have been the first time I was in a real role with teaching capacity. I really enjoy speaking at user groups and helping my peers learn when I can. I sometimes find myself considering going back to school and working on a PhD so I may work as a professor.</p>
-<p><strong>Where do begin when learning something new?</strong></p>
-<p>It just depends on the resources available and what is to be learned. I am constantly reading academic journals and blogs about topics I am interested in. When time permits I will go to a conference or convention. If I need to find more depth, I will usually grab a book and/or look for a training course. My favorite way to learn is to pair up with a peer or mentor and get my hands dirty by pair programming or drawing on whiteboard. I find a ton of value in interacting with an expert. Learning about the things they consider and think about while also getting familiar with the subject is indispensible in my opinion.</p>
-<p><strong>What does your team rely on you for?</strong></p>
-<p>Developers do more than just code. They find creative solutions to both technical and human challenges and then translate those solutions to well crafted code. It really is in many ways more of art than a science. They rely on me to help them when they get stuck. I know I rely on them when I get stuck.</p>
-<p><strong>How do you gauge “time well spent”?</strong></p>
-<p>I gauge it by how much quality time I can spend away from work, especially with my wife and kids. If I can go home feeling proud about my day’s accomplishments with a clean conscience, then I can go home without worrying about work and focus on what matters most to me. That is “work time” well spent.</p>
-<p><strong>What are your plans for the future?</strong></p>
-<p>At this point in my life I am pretty focused on raising my kids and getting them ready for life beyond the school years. After that, I am not really sure. Perhaps, I will go back to school and get that PhD. Or maybe just work towards retirement so I can enjoy more time with my family. I think I would like to travel with my wife a bit after the kids leave the nest. But those plans are still very fuzzy.</p>
-<p>Look for Alonso on his <a href="http://alonsorobles.com/">blog</a>, which he updates regularly, or tweet <a href="https://twitter.com/#!/alonsorobles">@alonsorobles</a></p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-16T00:00:00-05:00" pubdate data-updated="true">Mar 16<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/get-to-know-a-headspringer/'>Get To Know a Headspringer</a>, <a class='category' href='/blog/categories/what-the-tech/'>What the tech?</a>
 
 
 </div>

@@ -7,7 +7,8 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="The latest YouTube sensation got us thinking about why people quit their jobs. Joey DeFrancesco got help from his marching band to quit his job at a &hellip;">
+	<meta name="description" content="Do you really want to know how the sausage is made?
+It’s all a matter of perspective. We allow our customers to peek behind the curtain as much as &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -84,8 +85,70 @@
 </header>
 	
 		
+<div id="banner" class="inner">
+	<div class="container">
+		<ul class="feed"></ul>
+	</div>
+	<small><a href="http://twitter.com/HeadspringLabs">HeadspringLabs</a> @ <a href="http://twitter.com">Twitter</a></small>
+	<div class="loading">Loading...</div>
+</div>
+<script src="/javascripts/twitter.js"></script>
+<script type="text/javascript">
+	(function($){
+		$('#banner').getTwitterFeed('HeadspringLabs', 5, );
+	})(jQuery);
+</script>
+
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/how-transparency-builds-trust/">
+		
+			How Transparency Builds Trust</a>
+	</h2>
+	<div class="entry-content">
+		<p><strong>Do you really want to know how the sausage is made?</strong></p>
+<p>It’s all a matter of perspective. We allow our customers to peek behind the curtain as much as they like, but not all of them want to be involved in the minutae. Want to have a daily check-in call with your team lead? Sure thing. Want to find know what tools we use to automate our regression testing? Maybe, maybe not.</p>
+<p>If I’m in the market for 100 lbs of Boudin, the merchant should probably find out why I’m buying it in order to help uncover which parts of the process I would care about. They’d probably ask a lot of questions.  Are you reselling it? Do you have any allergies? How drunk are your guests going to be? Do you want to see the slaughter-room? Why not? Where are you going?</p>
+<p>We’re as transparent as our customers need, it’s not a one-size fits all. That being said, there is a minimum. We don’t want a check from you only to have you disappear until the final product is done. With our iterative development process, we need feedback from our customers as we introduce our solution gradually. We don’t want to cook up a couple of hundred pots of jambalaya only for you to tell us that you don’t like okra. Iterative releases are like the sample cups.</p>
+<p><strong>Tour the facility, put on a hairnet, grab that cleaver.</strong></p>
+<p>We’ve all heard of a vendor that has prestigious mailing addresses on Madison Avenue, K Street, or Rodeo Drive. Meanwhile the work is being done out of a Starbucks. Not necessarily the type of people to bet the ranch on. However, if they’re upfront with how their business is done, talent can overcome infrastructure.</p>
+<p>What people are really concerned about is knowing that your company uses ethical business practices and isn’t tricking them into false beliefs. We provide this transparency to our customers by having weekly face to face meetings to review hours spent on their projects and what value they will see from those hours spent.</p>
+<p>Business transparency is a strong business practice that helps strengthen a company, strengthen the relationships between the company and its clients. How can your company be more transparent?</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-11-03T00:00:00-05:00" pubdate data-updated="true">Nov 3<span>rd</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -310,64 +373,6 @@
 
 
 	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/array-covariance-in-c/">
-		
-			Array Covariance in C#</a>
-	</h2>
-	<div class="entry-content">
-		<p>When we first learn about inheritance, we&#8217;re given some plain-English examples with an emphasis on the phrase &#8220;is-a&#8221;. A car <em>is-a</em> vehicle, so a <code>Car</code> class would inherit from a <code>Vehicle</code> class. The idea that class inheritance can so directly map to English is <strong>seriously misleading</strong> and can get you into trouble.</p>
-<p>In English, it&#8217;s fair to say that a bag of apples <em>is-a</em> bag of objects. It may have an odd sound to it, but it&#8217;s true. This makes it very tempting to say that in C#, a <code>List&lt;Apple&gt;</code> should be assignable to a <code>List&lt;Object&gt;</code>, since all <code>Apple</code> instances are also <code>Object</code> instances:</p>
-<p><div><script src='https://gist.github.com/1302300.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>The sample above won&#8217;t compile. The compiler is protecting us from potential runtime type exceptions. If this compiled, we could get into trouble like so:</p>
-<p><div><script src='https://gist.github.com/1302301.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>If this compiled, we would be able to attempt to put a string into a collection that simply does not support that operation. The English metaphor for inheritence (<em>is-a</em>) just doesn&#8217;t adequately match the actual constraints of the type system. We&#8217;re trying to violate the <a href="http://en.wikipedia.org/wiki/Liskov_substitution_principle">Liskov Substitution Principle</a>. If we declared that <code>List&lt;Apple&gt;</code> is a subtype of <code>List&lt;Object&gt;</code>, we&#8217;d be saying that <em>every</em> operation that acts on a <code>List&lt;Object&gt;</code> could be given a <code>List&lt;Apple&gt;</code>, and that&#8217;s simply not true. In our example, the operations performed on the <code>List&lt;Object&gt;</code> included putting new arbitrary objects into the list, and you just can&#8217;t do that to a <code>List&lt;Apple&gt;</code>.</p>
-<p><strong>Because <code>List&lt;Apple&gt;</code> has more constraints than <code>List&lt;Object&gt;</code>, <code>List&lt;Apple&gt;</code> is not assignment-compatible with <code>List&lt;Object&gt;</code>.</strong></p>
-<p>Unfortunately, the previous example <strong>does</strong> compile when you replace <code>List&lt;T&gt;</code> with supposedly-strongly-typed arrays. Instead of knowing that you&#8217;ve done something wrong at compile time, you get an exception at runtime:</p>
-<p><div><script src='https://gist.github.com/1302325.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Because <code>TChild[]</code> can be assigned to <code>TParent[]</code> for any <code>TChild</code> inheriting from <code>TParent</code>, we can say &#8220;arrays in C# are covariant&#8221;.</p>
-<p>To sum up, <code>List&lt;Apple&gt;</code> can&#8217;t be treated as <code>List&lt;Object&gt;</code> <em>because of the operations that <code>List&lt;T&gt;</code> provides</em>. The question, then, is could we ever safely take advantage of this convenient funky-casting for <em>other</em> generic types? The answer to this question falls under the category of &#8220;Covariance and Contravariance&#8221; and is provided by the C# 4 keywords <code>in</code> and <code>out</code>. In my next post, we&#8217;ll cover an example where this funky-casting is both convenient and safe.</p>
-<p><a href="http://www.headspring.com/feed" target="_blank">Subscribe to our blog feed</a> for the freshest content.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-10-21T00:00:00-05:00" pubdate data-updated="true">Oct 21<span>st</span>, 2011</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
 
 
 </div>

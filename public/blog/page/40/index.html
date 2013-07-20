@@ -7,7 +7,7 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="From championship-winning sports teams to multi-million dollar companies, strong, cohesive and successful teams take a great amount of hard work, &hellip;">
+	<meta name="description" content="A question I’m frequently asked typically goes something like this: &#8220;I hear about all these new HTML tags, but I don’t have any problem with &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -84,8 +84,83 @@
 </header>
 	
 		
+<div id="banner" class="inner">
+	<div class="container">
+		<ul class="feed"></ul>
+	</div>
+	<small><a href="http://twitter.com/HeadspringLabs">HeadspringLabs</a> @ <a href="http://twitter.com">Twitter</a></small>
+	<div class="loading">Loading...</div>
+</div>
+<script src="/javascripts/twitter.js"></script>
+<script type="text/javascript">
+	(function($){
+		$('#banner').getTwitterFeed('HeadspringLabs', 5, );
+	})(jQuery);
+</script>
+
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/why-should-i-use-html5s-new-elements/">
+		
+			Why Should I Use HTML5&#8217;s New Elements?</a>
+	</h2>
+	<div class="entry-content">
+		<p>A question I’m frequently asked typically goes something like this:</p>
+<blockquote><p>
+  &#8220;I hear about all these new HTML tags, but I don’t have any problem with using <code>&lt;div&gt;</code>s like I&#8217;ve always done. Why should I care?&#8221;
+</p></blockquote>
+<p>The questioners are referring to the new elements introduced with HTML5, including <code>&lt;nav&gt;</code> (which encapsulates a part of your page containing navigation elements), <code>&lt;article&gt;</code> (think of a newspaper story, with its heading, byline, callouts, etc.), and <code>&lt;time&gt;</code>, <a href="http://dev.opera.com/articles/view/new-structural-elements-in-html5/">among others</a>. While it&#8217;s true the Web survived for many years without these new elements, there&#8217;s no reason to stand on tradition. The new elements provide a number of benefits to both Web developers and end users, and, best of all, you can start using them right away!</p>
+<ul>
+<li><strong>Content aggregators and search providers can better figure out your content.</strong> News aggregators and search engines are everywhere, and are often an excellent way to disseminate your published content. Why not make it easy on them by explicitly marking what parts of your page they care about and what parts they can ignore?</li>
+<li><strong>Screen readers need all the help they can get.</strong> Many potential visitors require assistive devices to view the Web, but Web sites have been slow to adopt tools to help. HTML5’s new elements help out by letting screen readers know what sections of the page represent real content, and what sections are simply visual fluff.</li>
+<li><strong>The new tags are there, regardless.</strong> Either natively or with easy and clever workarounds, practically all browsers in use today recognize the new elements. Plus, they&#8217;ve been standardized by a number of industry groups. It&#8217;s never been easier to simply start working with them and you can rest easy knowing the new elements are here to stay.</li>
+<li><strong>Your coworkers will thank you.</strong> The new elements are far more descriptive than the <code>&lt;div&gt;</code> standby is, meaning the same content is considerably more understandable to other developers looking at your HTML source. Self-explanatory semantic markup reduces confusion and is often cleaner-looking than its cousins with pervasive use of <code>&lt;div&gt;</code> tags.</li>
+<li><strong>You&#8217;re probably already using them.</strong> These elements were added to the HTML5 specification because Web designers were already using them&#8230;just in a more verbose format. Most Web sites have common sections, like a header, navigation, and footer, yet there was no way to signify this with HTML. Thanks to the new elements, instead of something like this (which used to be all over the Internet):
+<pre>&lt;code&gt;&amp;lt;div id=&#39;footer&#39;&amp;gt;...&amp;lt;/div&amp;gt;
+&lt;/code&gt;</pre>
+<p>&#8230;we now have a much more concise representation of the same concept:</p>
+<pre>&lt;code&gt;&amp;lt;footer&amp;gt;...&amp;lt;/footer&amp;gt;
+&lt;/code&gt;</pre>
+<p>Much better.</p>
+</li>
+</ul>
+<p>Whether you&#8217;re working on a Web site for the newest, hottest start-up or helping maintain a 10-year-old internal Web site, the new HTML5 elements can provide you with a number of benefits. They&#8217;re easy to start using, respected by Web developers and search engines alike, and, soon, you’ll start to wonder how you lived without them.</p>
+<p>Have you encountered other benefits of using the new HTML5 elements? Have a particularly-elegant use case for one? Let us know in the comments!</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-08T00:00:00-06:00" pubdate data-updated="true">Feb 8<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -277,61 +352,6 @@
 
 
 	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/get-to-know-a-headspringer/'>Get To Know a Headspringer</a>, <a class='category' href='/blog/categories/principal-consultant-at-headspring/'>Principal Consultant at Headspring</a>, <a class='category' href='/blog/categories/what-the-tech/'>What the tech?</a>, <a class='category' href='/blog/categories/learning-c-number-and-net/'>learning c# and .net</a>, <a class='category' href='/blog/categories/project-lead-for-epa-systems/'>project lead for EPA Systems</a>, <a class='category' href='/blog/categories/solutions-based-approach/'>solutions based approach</a>, <a class='category' href='/blog/categories/system-for-tracking-greenhouse-gasses/'>system for tracking greenhouse gasses</a>, <a class='category' href='/blog/categories/test-driven-design/'>test-driven design</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/account-management-taking-off-the-rosecolored-glasses/">
-		
-			Account Management: Taking Off the Rose–Colored Glasses</a>
-	</h2>
-	<div class="entry-content">
-		<p>You have probably, at least once, ended an email with this statement:</p>
-<p>“If you have any questions or feedback, please feel free to contact me.”</p>
-<p>How effective has this attempt at quarrying feedback ever been for you? My guess is that this sentiment probably does not move far pass pleasantries. It’s nice. It’s open. But is it really welcoming?</p>
-<p>In account management, honest and timely feedback is of utmost importance. This is the case not only to achieve project goals but also to secure long-lasting relationships. Selling to existing accounts is often characterized as “low–hanging fruit,” but reality speaks much differently. Twenty-four percent of custom software projects are cancelled before completion or never used. I can only imagine how a healthy dose of careful account management in these cases could have changed the failed outcome. Client retention is actually very hard work and depends on the careful attention paid to feedback given to a trustworthy account manager.</p>
-<p>Some clients are powerfully communicative, allowing account managers and consultants to focus on satisfying the scope of the project objectives. With these people, you don’t have to worry about whether you’ll get useful responses to your request for comments. You also don’t have to worry about if you are welcoming enough because you know it’s coming anyway.</p>
-<p>One thing that keeps us from pressing for feedback is what I call “happy ears.” These conversations tend to be brief and end on a good note:</p>
-<p><a href="http://www.headspring.com/wp-content/uploads/2012/01/image15.png"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border-style: initial; border-color: initial; border-image: initial; border-width: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/01/image_thumb2.png" alt="image" width="518" height="266" border="0" /></a></p>
-<p>Two factors play into this scenario: The psychology of the person asking questions and the psychology of the person answering questions. The person answering seeks approval by giving praise and the person asking stops once they receive praise for a job well done. The person asking the questions has his/her happy ears on, and they don’t press for more feedback because that would be more work. The person answering the question then assumes that their feedback would be disregarded or would disrupt a good working relationship with a reliable vendor. This need for approval creates communication walls on both sides.</p>
-<p>So how is it possible to garner feedback from a client that is not an effective communicator? In other words, how do I get constructive feedback from a <em>seemingly</em> <em>satisfied</em> client?</p>
-<p>Some like to start with the Rule of Three: ask the same question three times, in three different ways, and get to the truth. Here’s an example of the supposed conversation:</p>
-<p><a href="http://www.headspring.com/wp-content/uploads/2012/01/image16.png"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/01/image_thumb3.png" alt="image" width="515" height="480" border="0" /></a></p>
-<p>We had to ask three times, but eventually we get to the reality of our situation. Had we not pressed the issue, would we have known about these issues? The results shouldn’t be surprising to the consulting team. Account managers should be able to bring this feedback to the consulting team, and the team should have an action plan already in place to acknowledge these shortcomings. However, having an account manager available to ask the right questions and empathize with the client&#8217;s perception of the project ensures a new level of trust and respect between the client and the organization. This can turn a satisfied client into a return customer.</p>
-<p>My recommendation is to place account managers on every project and stress the importance of their role. Have them hold proactive meetings, even when things are going well. Meet in person, often. Shake hands. Share a meal together. Uncover all assumptions, and get to know your client’s wants and desires on a personal level.</p>
-<p>Some companies have separate departments for account management, but we utilize our sales team because they are the original point of contact.</p>
-<p>Who fills the client satisfaction role in your organization? What can they do to better uncover the hidden opportunities and areas for improvement?</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-01T00:00:00-06:00" pubdate data-updated="true">Feb 1<span>st</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>
 
 
 </div>

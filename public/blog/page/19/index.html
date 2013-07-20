@@ -7,7 +7,7 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="Patrick McVeety-Mill is one of a kind here at Headspring. We found him pretty much straight out of college, but his resume and portfolio showed a &hellip;">
+	<meta name="description" content="Since the basic product sold by software consultancies is consultant-time, you would expect there to be pressure (gentle or not), to put in as many &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -84,8 +84,69 @@
 </header>
 	
 		
+<div id="banner" class="inner">
+	<div class="container">
+		<ul class="feed"></ul>
+	</div>
+	<small><a href="http://twitter.com/HeadspringLabs">HeadspringLabs</a> @ <a href="http://twitter.com">Twitter</a></small>
+	<div class="loading">Loading...</div>
+</div>
+<script src="/javascripts/twitter.js"></script>
+<script type="text/javascript">
+	(function($){
+		$('#banner').getTwitterFeed('HeadspringLabs', 5, );
+	})(jQuery);
+</script>
+
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/seamless-audit-trails-in-ravendb/">
+		
+			Seamless Audit Trails in RavenDB</a>
+	</h2>
+	<div class="entry-content">
+		<p>Since the basic product sold by software consultancies is consultant-time, you would expect there to be pressure (gentle or not), to put in as many billable hours as physically possible, to the detrement of quality.  Fortunately, Headspring takes the long view: excess hours this week may make this week&#8217;s revenue numbers jump, but sustainability matters more for all involved.  I first experienced this policy as a reliable 40 hour work week, but it doesn&#8217;t stop there.  When you take the long view, you respect the need to put some unbillable time towards improving your own skills.  This week, I got to take advantage of that flexibility by attending Headspring&#8217;s own <a href="http://www.headspring.com/events/ravendb-boot-camp/">RavenDB Boot Camp</a>, taught by <a href="http://coderwall.com/alonsorobles">Alonso Robles</a>.</p>
+<p>When new software tools come around, they almost always claim to &#8220;Just Work&#8221;.  Even <a href="http://ravendb.net/">ravendb.net</a> makes this claim.  Real software problems tend to involve lots of competing concerns, so we should always take such claims with a grain of salt in addition to an open mind.  During the Boot Camp, I got to see a perfect example of where this &#8220;It Just Works&#8221; claim comes from.</p>
+<p>RavenDB supports plugins called <a href="http://ravendb.net/docs/server/bundles">bundles</a>.  Bundles are installed by dropping a DLL into the Plugins folder beside the server exe.  One of the bundles demonstrated during the Boot Camp was for <a href="http://ravendb.net/docs/server/bundles/versioning">Versioning writes and deletions</a>.  This bundle has quite-reasonable default behavior, so installation is just a matter of dropping the DLL into the Plugins folder.</p>
+<p>We students didn&#8217;t know exactly how this audit trail would present itself to us.  How would we find the trail, inspect its contents, or revert to some older state?  To find out, we dropped the bundle in its new home and started creating and updating documents through Raven&#8217;s admin tool.  There was a collective, audible &#8220;AHA!&#8221; moment among all the students.  We were updating a document whose ID was &#8220;products/4&#8221;, and right beside it in the admin tool&#8217;s list of related documents, we started to see &#8220;products/4/revisions/1&#8221;, &#8220;products/4/revisions/2&#8221;, &#8220;products/4/revisions/3&#8221;&#8230;  A full copy of the document was being stored upon each change.</p>
+<p>The unit of storage of your primary data in Raven is Just Some Document, so why not also store the audit trail as Just Some More Documents?  A completely-understandable naming convention and a little metadata is all we need to work with.  Of course, the bundle also lets you fetch the revision history from your own application, and reverting to an older state would simply be a matter of fetching the revision you want and saving it again.  <strong>The beauty here lies in how the bundle leverages Raven&#8217;s world view.</strong>  Implementing an audit trail didn&#8217;t require some fundamental change to the way Raven works, and we didn&#8217;t have to roll our own audit trail by increasing complexity in our client application.  Instead, it just used the existing Raven infrastructure.</p>
+<p>Earlier, I warned that &#8220;It Just Works&#8221; claims need to stand up to competing concerns.  By allowing for this kind of low-impact behavior change, adding a Versioning feature to our application doesn&#8217;t have to compete with the rest of our application&#8217;s concerns.  We didn&#8217;t have to make some painful, sweeping change everywhere our client touched the database, and the opportunity to add a history viewer to the application itself was readily available.</p>
+<p>One is an extremely small sample size, so I&#8217;ll need to experience more of these &#8220;AHA!&#8221; moments, but this does suggest that the deliberately-simple mental model promoted by Raven leaves the door open for us to seamlessly introduce features into our projects.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-07T00:00:00-05:00" pubdate data-updated="true">Sep 7<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -302,82 +363,6 @@
 
 
 <time datetime="2012-08-29T00:00:00-05:00" pubdate data-updated="true">Aug 29<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/quashing-incidental-complexity/">
-		
-			Quashing Incidental Complexity</a>
-	</h2>
-	<div class="entry-content">
-		<p>This post is the conclusion to a 7-part series on identifying and resolving incidental complexity in your software projects.  It assumes you&#8217;ve already read the earlier posts (linked in the sections below).</p>
-<p>The problems I&#8217;ve faced can crop up in any project.  When a concept or responsibility gets applied to the wrong abstraction, we subconsciously start to add workarounds just to make things work at all.  These workarounds take up space, physically as excess lines of code and mentally as distractions from your true intent.  Workarounds beget workarounds, and the problem feeds itself until you think, &#8220;What a mess!  I need to rewrite it all!&#8221;</p>
-<p>By placing responsibilities in their proper home, you can combat this feedback loop and keep your code clean.</p>
-<h2>A Troubled Project</h2>
-<p>In <a href="http://www.headspring.com/blog/developer-deep-dive/essential-vs-incidental-complexity/">Essential vs Incidental Complexity</a>, I admitted that my pet project, a compiler for an experimental language called <a href="https://github.com/plioi/rook">Rook</a>, was starting to run into problems.</p>
-<p>In a healthy project, it can actually get easier to add new features the further along you go, as you discover and flesh out abstractions that help rather than hinder progress.  In Rook, it was getting harder and harder to add new features.  This difficulty was a sign that I was working with the wrong abstractions.</p>
-<p>Two classes in particular were starting to grow wildly complex: Scope (a dictionary-like type that describes which identifiers are visible from the point of view of a line of input source code), and TypeChecker (a recursive process which determines the type of all expressions).</p>
-<p>I&#8217;d like to think I&#8217;m pretty good at writing software, but here I am admitting I created something too complex for its own good.  <strong>This can happen to anyone</strong>.  The important thing to know is that you can always take steps to turn things around.</p>
-<blockquote><p>It&#8217;s tempting to chuck everything and embark on a rewrite, but I&#8217;ve done that before (with this project!) and I&#8217;d rather fix what I have over the course of a few <em>weeks</em> than rewrite it and find myself in the same spot in a few <em>years</em>.</p></blockquote>
-<p>This kind of problem has a direct connection to incidental complexity.  If your abstractions are working against you, you spend more lines of code serving them than they spend serving you.  It starts to get harder and harder to see the intent behind a given method because half of the characters in it amount to boilerplate. </p>
-<p>As I said, this can happen to anyone.  The solution is to identify which abstractions are faulty, and adjust them in small and safe increments until they start working for you again.  </p>
-<p>Faulty abstractions can take many forms:</p>
-<h2>Unnecessary Abstractions</h2>
-<p>In <a href="http://www.headspring.com/blog/developer-deep-dive/identifying-incidental-complexity/">Identifying Incidental Complexity</a>, TypeChecked&lt;T&gt; was an abstraction that complicated things without adding anything of value.  Its existence required many methods in TypeChecker to waste a lot of time and concentration to recombine very small arrays of error messages, completely distracting the reader from the actual intent of the methods.  It ultimately gave me no benefit, and removing it helped to clean up a lot of ugly code.</p>
-<h2>Abstractions with Multiple Personalities</h2>
-<p>In <a href="http://www.headspring.com/blog/developer-deep-dive/scope-creep/">Scope Creep</a>, we saw that the Scope abstraction was right in its inception but had gotten extremely complicated over time.</p>
-<p>One class absorbed many responsibilities as I began to use it in more and more scenarios.  In fact, I was using one Scope class to represent several different <em>kinds</em> of scope (global, local, etc).  The Scope class had multiple personalities, and I saw that splitting such a class into several classes with a common interface would make it easier to see the actual domain concepts I was trying to represent.</p>
-<p>Specifically, I used inheritance and lots of <code>override</code> methods to accomplish this improvement.  I don&#8217;t enjoy doing that, but implementation inhertiance in this case was a <em>tool</em> to nudge things in the right direction in small steps while solidifying what separate classes I needed.</p>
-<h2>Brittle Abstractions</h2>
-<p>In <a href="http://www.headspring.com/blog/developer-deep-dive/spaghetti-alla-code/">Spaghetti alla Code</a>, we saw how implementation inheritance can motivate some horribly convoluted code that just <em>happens</em> to work.  Scope was separated <em>physically</em> into different classes now, but the method implementations were all tied up in knots.</p>
-<p>With lots of <code>virtual/override/base</code> keywords, you have to read <em>all</em> of the code to understand <em>any</em> of the code.  Making changes here without unintended side effects becomes too difficult, making the abstraction brittle in the face of inevitable change.</p>
-<blockquote><p>Implementation inheritance is like writing in assembly language: it <em>works</em>, but good luck ever <em>editing</em> it with confidence.</p></blockquote>
-<p>The solution here was to favor composition over inheritance.  Each individual class can be understood by only looking at that class.  The new implementations read a lot more like an English description of the domain being modeled.</p>
-<h2>Anemic Abstractions</h2>
-<p>In <a href="http://www.headspring.com/blog/developer-deep-dive/primitive-obsession/">Primitive Obsession</a>, I had an abstraction that existed in name only: TypeVariable was a simple wrapper for an int.  I was so obsessed that the TypeVariable class was &#8220;just a glorified int&#8221; that it never occurred to me to put more smarts into it.</p>
-<p>Not realizing that this class was a good home for some important concepts, I had to throw those concepts <em>anywhere</em> that would work, and that just happened to be the unfortunate Scope class mentioned before (as if it didn&#8217;t have enough to worry about).</p>
-<blockquote><p>Scope was a bit of an Idea Sponge at this point.</p></blockquote>
-<p>The solution was to recognize that the TypeVariable abstraction was incomplete, and lots of things got simpler once an appropriate responsibility moved into the TypeVariable class.</p>
-<h2>Complected Abstractions</h2>
-<p>In <a href="http://www.headspring.com/blog/developer-deep-dive/detect-reflect-decomplect/">Detect, Reflect, Decomplect</a>, we saw that when two separate ideas get complected (braided) together, we have to start writing extra code to work around that complexity.</p>
-<p>I was twisting up success and failure results into a single return value, forcing me to place special meaning on <em>null</em>s, and to include excessive early return statements throughout many methods.  These extra return statements set the code in intellectual concrete, severely limiting my ability to apply any cleanup refactorings.</p>
-<p>By untwisting the concepts of success and failure in this class, and by avoiding null with the Null Object pattern, the troubled TypeChecker class finally got <em>linear</em> enough to have a hope of ever getting cleaned up.</p>
-<h2>Code is Too Malleable to be Intractable</h2>
-<p>When you find the complexity of your projects growing out of control, don&#8217;t lose hope!  Take a step back, identify which abstractions you&#8217;re doing <em>extra</em> work <em>for</em>, and nudge them in small and safe steps until they better-represent the Truth of your domain.</p>
-<p>You don&#8217;t even have to put forward progress on hold; these kinds of improvements can be a small part of your daily activities.</p>
-<p>Make your life easier and your project healthier by growing and cultivating abstractions that let you write <em>less and less</em> code.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-08-24T00:00:00-05:00" pubdate data-updated="true">Aug 24<span>th</span>, 2012</time></div>
 	<div class="tags">
 
 

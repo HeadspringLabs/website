@@ -7,7 +7,7 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="Sometimes I get a reputation for having a good memory, but I actually don&#8217;t trust it at all. When it comes to my short-term memory, I find &hellip;">
+	<meta name="description" content="Justin Mason is our newest team member at Headspring. An experienced developer, Justin joins us from Catapult Systems where he designed and &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -84,8 +84,78 @@
 </header>
 	
 		
+<div id="banner" class="inner">
+	<div class="container">
+		<ul class="feed"></ul>
+	</div>
+	<small><a href="http://twitter.com/HeadspringLabs">HeadspringLabs</a> @ <a href="http://twitter.com">Twitter</a></small>
+	<div class="loading">Loading...</div>
+</div>
+<script src="/javascripts/twitter.js"></script>
+<script type="text/javascript">
+	(function($){
+		$('#banner').getTwitterFeed('HeadspringLabs', 5, );
+	})(jQuery);
+</script>
+
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/get-to-know-a-developer-justin-mason/">
+		
+			Get to Know a Developer: Justin Mason</a>
+	</h2>
+	<div class="entry-content">
+		<p><a href="http://www.headspring.com/wp-content/uploads/2012/10/photo-3.jpg"><img class="alignright size-medium wp-image-5799" title="Justin Mason - Headspring Principal Consultant" src="http://www.headspring.com/wp-content/uploads/2012/10/photo-3-224x300.jpg" alt="Justin Mason - Headspring Principal Consultant" width="224" height="300" /></a>Justin Mason is our newest team member at Headspring. An experienced developer, Justin joins us from Catapult Systems where he designed and developed a sensor data recording and management application for natural gas and oil drilling rigs. Justin has a passion for the ever-changing landscape of viable technologies and their potential applications, which makes him a great addition to our team of like minded and ambitious people!</p>
+<p><strong>Are you an expert at anything?</strong></p>
+<p>I have more than 15 years of application development experience. In that time, I’ve seen the evolution of the Web. By understanding where technology originated, it helps provide a clearer picture of where it may go.  The uncertainty of how competing priorities have shaped the software applications that are currently available makes it an exciting time to be at Headspring to contribute to the needs of its customers.</p>
+<p>I became passionate about Microsoft Windows Communication Foundation (WCF) because I understood the pain it was trying to alleviate for companies.  Bidirectional communication using binary serialization over TCP that can be easily transitioned to other transportation protocols like HTTP really caught my interest.  WCF has had to keep pace with the industry due to emerging technologies such as Ajax using JSON serialization instead of SOAP. Its use in the background will remain intact while abstractions are built on top of it to facilitate new applications.       </p>
+<p><strong>Who are your ideal clients to work for?</strong></p>
+<p>The best part of software development is that it has allowed me to work across a wide range of companies. If software can help solve a business problem, we want to work with a company to do it. Then the only other factor is the willingness of the company to come together to work with developers and rely on their expertise to find a technical solution.</p>
+<p><strong>What led you to software development?</strong></p>
+<p>I was led to software by the idea that I could get paid to put together puzzles.  Software allows you to use your imagination to visualize a concept and then bring that concept into something others can see and interact with.  When a day goes by without noticing it, you know the career you have chosen is the right one.</p>
+<p><strong>What did you learn first?</strong></p>
+<p>Besides my introduction to software in elementary school using “Turtle Graphics”, I learned Visual Basic 4 along with Relational Databases coming out of college and started my first “real” job.</p>
+<p><strong>Do you like teaching?</strong></p>
+<p>Yes, I like teaching very much.  I owe my own career to friends and colleagues that took the time to show me how to learn the various technologies.  I enjoy the different ways people learn similar concepts.  Having to adapt to different learning styles makes the teacher’s own understanding greater.  As a result, everyone comes out ahead.</p>
+<p><strong>How do you gauge “time well spent”?</strong></p>
+<p>I ask myself whether I’ve added to my understanding of something new, or did I complete a defined objective?  Time wasted is usually a result of a lack of clear objectives, or misunderstanding a concept foundational to a new technology.</p>
+<p>&nbsp;</p>
+<p>Want to know more? Tweet him! <a href="https://twitter.com/JustinMasonDev" target="_blank">@justinmasondev</a></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-12T00:00:00-05:00" pubdate data-updated="true">Oct 12<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/blog/'>Blog</a>, <a class='category' href='/blog/categories/bonus/'>Bonus!</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/get-to-know-a-headspringer/'>Get To Know a Headspringer</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -418,82 +488,6 @@
 
 
 	<a class='category' href='/blog/categories/blog/'>Blog</a>, <a class='category' href='/blog/categories/bonus/'>Bonus!</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/the-defensive-toarray/">
-		
-			The Defensive ToArray</a>
-	</h2>
-	<div class="entry-content">
-		<p>In <a href="http://www.headspring.com/patrick/a-game-of-throws/">A Game of Throws</a>, we saw a frequently-blogged-about gotcha regarding the <code>yield</code> keyword and exception handling.  This week, we&#8217;ll see how there is more than one motivation for using the <code>yield</code> keyword, and when you opt into it for one you get the other whether you like it or not.  This leads to a code smell: littering our code with &#8216;defensive&#8217; calls to ToArray(). </p>
-<h2>Generalizing the Exception Gotcha</h2>
-<p>The exception handling case from last week is a specific example of a larger potential gotcha: with lazy evaluation, some work <em>happens</em> at a different time than the caller might expect.  It allows exceptions to get &#8220;smuggled&#8221; through try/catch blocks, but exceptions are just one way you might be surprised by the change in the order of events: if your <code>yield</code>ing method has any kind of side effect, the caller is likely to experience the odd order of evaluation.</p>
-<p>That can be good.  That can be bad.  It&#8217;s a sharp tool.</p>
-<h2>Complecting Brevity with Laziness</h2>
-<p>This week, I&#8217;d like to cover another problem with lazy evaluation.  Maybe it&#8217;s really just a corollary of the order-of-events gotcha, but I want to call it out specially because it has to do less with the nuts-and-bolts of code execution and more to do with the emergent human behavior that results <em>from</em> people&#8217;s understanding of the problem: the Defensive ToArray.</p>
-<p>There are two reasons to use the <code>yield</code> keyword:  laziness and brevity.</p>
-<p><strong>Laziness is the advertised feature:</strong> you can produce a collection&#8217;s items on demand, as the caller tries to loop through them.  Laziness enables awesome things like assembling LINQ queries over multiple statements before finally starting to iterate through the overall result.</p>
-<p><strong>Brevity is the tempting, likely-unintended feature</strong>: a really monotonous pattern can be shortened using the <code>yield</code> keyword:</p>
-<p><div><script src='https://gist.github.com/3823991.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>It&#8217;s tempting to look at that explicit list create/Add/return pattern and say, &#8220;I can shorten that with <code>yield</code>!&#8221;</p>
-<p><div><script src='https://gist.github.com/3823995.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Or even shorter:</p>
-<p><div><script src='https://gist.github.com/3823997.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>…but even that uses <code>yield</code>&#8217;s semantics under the surface.</p>
-<p>The problem is that we opted into <code>yield</code> (or equivalently Select) for the brevity, but we <em>got</em> laziness along with it.  Now we all have to be wary every time we call a method that returns an IEnumerable.  My inner monologue starts to sound like the following:</p>
-<blockquote><p>Is this call lazy?  Would it be unsafe to pass the result around before defensively <em>realizing</em> it with a call to .ToArray()?  If I <em>do</em> that .ToArray() call defensively, am I stomping all over the original developer&#8217;s intentions?</p></blockquote>
-<p>Now I have to start looking at the implementation of a method I&#8217;m calling in order to know whether or not its result is to be immediately distrusted.  <em>Do I have to finish writing that other developer&#8217;s method with a .ToArray because they were being particularly… er… lazy?</em></p>
-<p>I&#8217;m starting to think that most calls to .ToArray() are a code smell, or rather an in-your-face workaround for a code smell.  Even when it&#8217;s doing the right thing, it&#8217;s too wordy and puts the onus on the caller rather than the guilty callee.  I don&#8217;t want to have to fix the result of another method, and I don&#8217;t want to have to look at a thousand such fixes littered throughout a project.</p>
-<h2>Let&#8217;s Start Communicating Intent</h2>
-<p>In response to all this, I have two items on my wishlist.  One is a wish for an addition to C#, and the other we can use in our projects today.</p>
-<p>First, I wish that if a <code>yield</code>ing method were declared to return an array or anything that has a constructor accepting an IEnumerable&lt;T&gt;, that the items be immediately iterated through and packaged as that type.  This way, you could get the brevity while communicating that you are not interested in the side effects of laziness:</p>
-<p><div><script src='https://gist.github.com/3824003.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Second, something we can do today: I wish that we could start standardizing on a naming convention for extension methods similar to Select that are not lazy: Map is a common term in other platforms.  Select would still lazily produce one IEnumerable from another, but Map methods would always do a defensive .ToArray for you.  You&#8217;d have to write a Map overload for every collection type you care about, but there&#8217;s really just a handful of collection types you&#8217;ll care about in practice.  For instance:</p>
-<p><div><script src='https://gist.github.com/3824012.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Without these Map methods, every time you see a Select you have to wonder what the original developer&#8217;s intention was.  <strong>If instead Map was the first method you reached for, then you would only reach for Select when you actually wanted lazy evaluation.</strong>    Reading through someone else&#8217;s code, Select calls would communicate deliberate laziness with potential side effect gotchas, and Map calls would communicate deliberate brevity with no such gotchas.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-10-02T00:00:00-05:00" pubdate data-updated="true">Oct 2<span>nd</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
 
 
 </div>

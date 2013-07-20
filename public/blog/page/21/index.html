@@ -7,7 +7,9 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="Two weeks back, I said that I was encountering Incidental Complexity in a hobby project, and last week I demonstrated the first of several revisions &hellip;">
+	<meta name="description" content="First Public Course Scheduled for September at Headspring Headquarters in Austin, Texas
+&nbsp;
+Austin, TX – July 30, 2012, Headspring, a custom &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -84,8 +86,75 @@
 </header>
 	
 		
+<div id="banner" class="inner">
+	<div class="container">
+		<ul class="feed"></ul>
+	</div>
+	<small><a href="http://twitter.com/HeadspringLabs">HeadspringLabs</a> @ <a href="http://twitter.com">Twitter</a></small>
+	<div class="loading">Loading...</div>
+</div>
+<script src="/javascripts/twitter.js"></script>
+<script type="text/javascript">
+	(function($){
+		$('#banner').getTwitterFeed('HeadspringLabs', 5, );
+	})(jQuery);
+</script>
+
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/headspring-chosen-as-exclusive-education-partner-in-north-america-by-ravendb/">
+		
+			Headspring Chosen as Exclusive Education Partner in North America by RavenDB</a>
+	</h2>
+	<div class="entry-content">
+		<p style="text-align: center;"><strong><em><a href="http://www.headspring.com/wp-content/uploads/2012/07/logo-ravendb.png"><img class="alignright size-medium wp-image-5670" title="RavenDB" src="http://www.headspring.com/wp-content/uploads/2012/07/logo-ravendb-300x104.png" alt="RavenDB" width="300" height="104" /></a>First Public Course Scheduled for September at Headspring Headquarters in Austin, Texas</em></strong></p>
+<p>&nbsp;</p>
+<p>Austin, TX – July 30, 2012, Headspring, a custom application development and consulting firm, today announced it was selected as the exclusive training partner for RavenDB, a popular open-source document database.</p>
+<p>The premiere RavenDB training course provided by Headspring is scheduled for September 5-6, 2012 with limited space available. The course will be instructed by Principal Consultant Alonso Robles, with curriculum developed by RavenDB creator and CEO of Hibernating Rhinos, Oren Eini.</p>
+<p>Headspring is a leading educator in the development community and was chosen as the exclusive partner to RavenDB because of its proven experience implementing document database in custom software projects.</p>
+<p>&#8220;We are excited to be working with Headspring in a move that will make it easier and more accessible for customers to adopt RavenDB, and for developers and sys ops to learn just how useful a tool they now have within reach&#8221; says Eini.</p>
+<p>The partnership also signifies Headspring’s ongoing commitment to the adaptation and evangelism of open-source technology.</p>
+<p>“We’ve had a lot of success using RavenDB for our clients,” said Kevin Hurwitz, Chief Architect at Headspring. &#8220;We’re excited about this opportunity and looking forward to educating the new adopters of this great product.”</p>
+<p>To register or learn more about the course, visit: <a href="http://www.headspring.com/events/ravendb-boot-camp/">http://www.headspring.com/events/ravendb-boot-camp/</a></p>
+<p><strong>About RavenDB</strong></p>
+<p>RavenDB is an open source (with a commercial option) second generation document database for the .NET/Windows platform, developed by Hibernating Rhinos, which also developed a set of profilers for Object Relations Mappers for the .NET and Java platforms.</p>
+<p>RavenDB is used by customers for running low end embedded solutionssuch as Point Of Sale systems all the way up to highly scalable, distributed &amp; replicated, systems such as MSNBC.COM, which has moved several keys assets to RavenDB, and plans to move more in the future.</p>
+<p>For more information about RavenDB, visit <a href="http://ravendb.net" target="_blank">http://ravendb.net</a></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-07-30T00:00:00-05:00" pubdate data-updated="true">Jul 30<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/press/'>Press</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -361,65 +430,6 @@
 
 
 	<a class='category' href='/blog/categories/blog/'>Blog</a>, <a class='category' href='/blog/categories/small-talk-and-big-news/'>Small Talk &amp; Big News</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/essential-vs-incidental-complexity/">
-		
-			Essential vs Incidental Complexity</a>
-	</h2>
-	<div class="entry-content">
-		<p>Confession time: I might not be perfect.  Thankfully, though, that&#8217;s irrelevant.</p>
-<p>I&#8217;ve coded myself into a bit of a corner, and it&#8217;s all my fault, but as I said above my imperfection is irrelevant.  What&#8217;s relevant is that when one is faced with a software project that&#8217;s heading in the wrong direction, the problems can always be identified and addressed.  <strong>Code is just too malleable to be intractable.</strong>  Realizing you have a coding problem is the first step to recovery.</p>
-<h2>What Success Feels Like</h2>
-<p>Last week, I wrote about some lessons learned from a <a href="http://www.headspring.com/blog/developer-deep-dive/meta-yak-shaving/">yak shaving</a> project that I&#8217;ve been working on for the last year.  As that yak is now sufficiently sheared, I&#8217;ve shifted gears back to my <em>real</em> pet project, a compiler for the language summarized <a href="http://www.headspring.com/blog/developer-deep-dive/building-a-language/">here</a>.</p>
-<p>While working on Parsley, adding each new feature actually became <em>easier</em> over time.  I had <del>found</del> <del>planned</del> <em>stumbled into</em> the proper abstractions for the task at hand, and it was always clear what I should do next in order to move the project forward while leaving the campground cleaner than I found it.  </p>
-<h2>Suspicious Difficulties</h2>
-<p>With Rook, I&#8217;m finding lately that adding each new feature is getting <em>harder</em>.  Quite so, actually.  Each new feature is interacting very tightly with those already implemented, and they&#8217;re starting to interfere with forward progress.  I may be an hour into implementing a feature, even a simple one like adding support for comment syntax, before realizing that my attempt needs to be reverted.  Adding <a href="https://github.com/plioi/rook/commit/3a5ff34c9a8423c21608f3c876d4212eb0f9cddf">basic support for type checking of method calls</a> was the product of about 1 month and N+1 false starts, and includes more unfortunate compromises than I would usually allow myself.</p>
-<p><strong>Difficulty in adding new features is a tell-tale sign that I&#8217;ve got the wrong abstractions in place.</strong>  Odd, though, since the problem I&#8217;m working on is the poster child for Solved Problems.  There&#8217;s a great deal of prior art I&#8217;m building on, here, so I&#8217;m confident that the overall design is actually still right.  The abstractions that I would fit into an elevator pitch are not the problem.  Probably.</p>
-<h2>Is There Hope? (Spoiler Alert: Yes)</h2>
-<p>The question is, am I having difficulty due to <strong>essential complexity</strong> or <strong>incidental complexity</strong>?  Is the complexity inherent in the problem being solved (essential) or is it a byproduct of poor implementation details (incidental)?</p>
-<p>I&#8217;m leaning towards incidental.  I&#8217;m not exactly breaking RSA encryption here; that&#8217;s a job for quirky characters on procedural crime shows.  Since my difficulties are likely not just a matter of the problem being tough, it&#8217;s a sign that these recent hurdles are really telling me something.</p>
-<p>To sum up the situtation,<br />
-1. I have reason to believe the complexity I&#8217;m experiencing is not essential to the problem.  Rather, it&#8217;s in my control.<br />
-2. My <em>key</em> abstractions are probably right, as they&#8217;re the same used by Every Single Compiler Ever Made.<br />
-3. The increasing difficulty to add new features suggests that I <em>do</em> have poor abstractions somewhere.</p>
-<p>This train of thought leads me to suspect the <em>other</em> abstractions, the ones I&#8217;ve been inventing myself along the way as I try to fill in the gaps of my own understanding of all that prior art.  This hunch is consistent with the last few hurdles I&#8217;ve run into.</p>
-<p>This is great news!  Rather than dispair (&#8220;Oh woe is me, I done goofed!&#8221;), I have every reason to believe that the answers are now reachable.  I need to take a closer look at the abstractions I&#8217;ve invented along the way, the ones I&#8217;ve made with insufficient forethought regarding future prioritized features.  </p>
-<p>I&#8217;ve focused too much time on sharpening my jigsaw&#8217;s blades, and not enough time on what the puzzle is actually supposed to look like when it&#8217;s done.  Lo and behond, I&#8217;ve forgotten to cut out the edge pieces.</p>
-<p>Now that I know the difficulties are due to incidental complexity rather than essential complexity, I know I should slow down on adding new features while I address the problem abstractions.  Overall, my throughput will probably speed up.  I can start to work in earnest on phasing out this incidental complexity.  No &#8220;Grand Rewrite&#8221; for me!</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-07-13T00:00:00-05:00" pubdate data-updated="true">Jul 13<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
 
 
 </div>

@@ -7,7 +7,7 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="A couple of years ago, I started working with a client on a system that worked as an integration point and decision engine for a large, nationwide &hellip;">
+	<meta name="description" content="Last week, we saw how to publish a simple NuGet package. When installed into your solution in Visual Studio, that package would copy some text files &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -84,8 +84,74 @@
 </header>
 	
 		
+<div id="banner" class="inner">
+	<div class="container">
+		<ul class="feed"></ul>
+	</div>
+	<small><a href="http://twitter.com/HeadspringLabs">HeadspringLabs</a> @ <a href="http://twitter.com">Twitter</a></small>
+	<div class="loading">Loading...</div>
+</div>
+<script src="/javascripts/twitter.js"></script>
+<script type="text/javascript">
+	(function($){
+		$('#banner').getTwitterFeed('HeadspringLabs', 5, );
+	})(jQuery);
+</script>
+
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/publishing-a-library-with-nuget/">
+		
+			Publishing a Library With NuGet</a>
+	</h2>
+	<div class="entry-content">
+		<p>Last week, we saw how to <a href="http://www.headspring.com/2012/03/publishing-a-simple-nuget-package">publish a simple NuGet package</a>.  When installed into your solution in Visual Studio, that package would copy some text files into the target project.  That&#8217;s convenient, but it isn&#8217;t a typical use case for NuGet.  Instead, you usually want to publish compiled assemblies, and you want installation to add those assemblies to the target project&#8217;s list of assembly references.</p>
+<p>In <a href="http://www.headspring.com/2011/11/recognizing-covariance-issues-in-your-code">Recognizing Covariance Issues in Your Code</a>, I introduced my hobby project, <a href="https://github.com/plioi/Parsley">Parsley</a>.  This project has gotten fairly stable in recent weeks, and I decided to publish it so that I could use NuGet to install it in other projects.</p>
+<p>In the <a href="http://www.headspring.com/2012/03/publishing-a-simple-nuget-package">simple NuGet package</a>, we created a *.nuspec file containing a <code>files</code> tag.  That <code>files</code> tag listed the files we wanted to copy into the target project upon installation.  We described the target path starting with &#8220;content&#8221;:</p>
+<p><div><script src='https://gist.github.com/2231965.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p><a href="https://github.com/plioi/parsley/blob/c89236d7f253a13f0eaa3354b9714488d1742d65/default.ps1">Parsley&#8217;s build script</a> generates a *.nuspec file with a slightly different naming convention for the target paths:</p>
+<p><div><script src='https://gist.github.com/2231973.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Starting these paths with &#8220;lib&#8221; instead of &#8220;content&#8221; indicates to NuGet that they are libraries and should be added to the target project&#8217;s list of referenced assemblies.  The &#8220;net40&#8221; folder is also a part of the naming convention, indicating that the assembly was built for .NET 4.0.  If we&#8217;re targeting several different runtimes, we could include them all in one package using folder names like &#8220;net11&#8221;, &#8220;net20&#8221;, etc&#8230;</p>
+<p>Above, I&#8217;m also copying the *.pdb files into the package.  Next week, we&#8217;ll see a better alternative to enhance the debugging experience for your library&#8217;s users: integrating with <a href="http://symbolsource.org/">SymbolSource.org</a>.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-30T00:00:00-05:00" pubdate data-updated="true">Mar 30<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -303,71 +369,6 @@
 
 
 	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/mercurial/'>mercurial</a>, <a class='category' href='/blog/categories/source-control/'>source control</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/you-want-to-change-what/">
-		
-			You Want to Change What?</a>
-	</h2>
-	<div class="entry-content">
-		<p>Change is inevitable. It is a simple fact of life which permeates into just about everything. Software development is no exception. Many software development life cycles have evolved and others have come into existence in an effort to help us deal with change. Programming languages, tools and techniques are also continuously evolving as well. Yet with all these improvements many project teams continue to struggle with change.</p>
-<p>What can we do about change? The truth is change doesn’t have to be hard. There are many things we can do such as plan for change, design for change, and code for change.</p>
-<p>Sounds great doesn’t it? There are actually dozens of books and a plethora of blog posts that talk about those principles.</p>
-<p>If you are still reading this, then you are probably wondering how to put those principles into practice. I will share a practical example with you.</p>
-<p>A short while ago, I blogged <a href="http://www.headspring.com/2012/02/i-have-frameworkcommitment-issues">about selecting a framework</a>. The premise was a real situation in which a company I was consulting for selected a framework, changed their mind, and then changed it back. The actual frameworks involved are not important. The important thing is that the change was essentially painless.</p>
-<p>Here is how pain was avoided.</p>
-<p>I worked on a subsystem with very well defined boundaries of responsibility. One thing the subsystem had to do was to send a message to another subsystem. That was easy enough.</p>
-<p>I started working on the core domain logic of the subsystem and I reached the point where a domain object implemented the business logic that decided to send a message to the other subsystem. The details of the message format and content were still fuzzy and that was a clear indicator that change was coming. Anticipating change here, I decided to use an interface to allow me to continue developing the business logic while the details of the messages were in limbo.</p>
-<p>My code looked something like this:</p>
-<p><div><script src='https://gist.github.com/1979430.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>I used unit tests to make sure the business logic was sound and leveraged a mocking framework to mock the message publisher. Shortly thereafter a decision was made to implement a third party message bus to handle some of the messaging details. Again this was easy enough to do. We just implemented the IMessagePublisher interface.</p>
-<p><div><script src='https://gist.github.com/1979561.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>I ended up using a dependency injection framework to inject a MessagePublisher instance into the BusinessObject during runtime. We were also able to use a combination of unit tests and integration tests to make sure the third party message bus worked correctly. The key thing to take away here is that this MessagePublisher class and a couple of supporting classes (omitted from the code sample) were the only places where the third party code touched our subsystem.</p>
-<p>When the client decided to change to another third party message bus, we only had to change one class.</p>
-<p><div><script src='https://gist.github.com/1979613.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Honestly, it was a little more involved. There were a couple of other classes involved that handled the set up and configuration of the third party message bus. But the net effect of the change was limited to about three small classes, a few unit tests, and a few integration tests.</p>
-<p>When the client decided to change back to the original third party message bus, I just recovered the previous implementation, unit tests, and integration tests from source control.</p>
-<p>It was pretty much painless.</p>
-<p>Granted not all changes are this easy. But when we plan, design, and code with change in mind we end up in a position where we can respond to change.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-26T00:00:00-05:00" pubdate data-updated="true">Mar 26<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/agile/'>agile</a>, <a class='category' href='/blog/categories/clean-code/'>clean code</a>, <a class='category' href='/blog/categories/code-for-change/'>code for change</a>, <a class='category' href='/blog/categories/dependency-injection/'>dependency injection</a>, <a class='category' href='/blog/categories/interface/'>interface</a>, <a class='category' href='/blog/categories/mocking-frameworks/'>mocking frameworks</a>, <a class='category' href='/blog/categories/source-control/'>source control</a>, <a class='category' href='/blog/categories/test-driven-development/'>test-driven development</a>, <a class='category' href='/blog/categories/unit-testing/'>unit testing</a>
 
 
 </div>

@@ -7,7 +7,7 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="I very much liked the GitHub write-up on how they hire.&nbsp; It made me think back to a lot of decisions we’ve made at Headspring.&nbsp; One of &hellip;">
+	<meta name="description" content="Several weeks back, I was customizing xUnit to cut down on ceremony in my tests. When I ran into some trouble, I started looking through the source &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -84,8 +84,88 @@
 </header>
 	
 		
+<div id="banner" class="inner">
+	<div class="container">
+		<ul class="feed"></ul>
+	</div>
+	<small><a href="http://twitter.com/HeadspringLabs">HeadspringLabs</a> @ <a href="http://twitter.com">Twitter</a></small>
+	<div class="loading">Loading...</div>
+</div>
+<script src="/javascripts/twitter.js"></script>
+<script type="text/javascript">
+	(function($){
+		$('#banner').getTwitterFeed('HeadspringLabs', 5, );
+	})(jQuery);
+</script>
+
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/avoid-mutation-by-default/">
+		
+			Avoid Mutation by Default</a>
+	</h2>
+	<div class="entry-content">
+		<p>Several weeks back, I was <a href="http://www.headspring.com/patrick/low-ceremony-xunit/">customizing xUnit</a> to cut down on ceremony in my tests.  When I ran into some trouble, I started looking through the source code for xUnit, and saw something a little surprising: tests within a test class are executed in a random order.  Sure, tests need to be isolated so that test execution order doesn&#8217;t affect their success or failure, but randomizing within the test runner seemed like overkill.</p>
+<p>If it ever caught an issue, it still wouldn&#8217;t tell me where the problem was, right?  It seemed like it would be better to execute in a deterministic order so that when I <em>do</em> get myself into trouble, it will be reproducible trouble.  Today, though, I was grateful for this behavior.  If you&#8217;re running tests frequently during development, the very fact that your newly-coded tests start failing at random <strong>is</strong> informative: <em>&#8220;What test is wrong?  The one that I just wrote.&#8221;</em></p>
+<h2>A Trivial Yet Broken Class</h2>
+<p>I was working on a routine whose job was to produce a date range after taking into account several business rules.  If none of the rules applied, we wanted to return the range [DateTime.MinValue, DateTime.MaxValue] to indicate &#8220;all the dates we could ever possibly care about&#8221;.  Each business rule could possibly shorten this range, affecting the start, the end, or both.  The overall result was, basically, the range where several other ranges overlapped.  I started by creating a helper class, DateRange, as a glorified pair of DateTimes:</p>
+<p><div><script src='https://gist.github.com/3949963.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>To make it clear to the reader that we were starting with &#8220;all the dates we could ever possibly care about&#8221; and subsequently narrowing that down to the overlapping range, I added a static field:</p>
+<p><div><script src='https://gist.github.com/3949966.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>This field allowed the main algorithm to look something like this:</p>
+<p><div><script src='https://gist.github.com/3950102.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Do you see the bug?  <strong>The terrible, horrible, no good, very bad bug?</strong>  xUnit did.</p>
+<p>The 3 rules I was applying were involved yet test-friendly, so it was easy to implement several tests to make sure my bases were covered.  All was well, until I got to the seventh test.  It failed with an impossible result.  The dates in the resulting range didn&#8217;t even show up anywhere in my test setup.  Mystified, I ran that test in the debugger.  It passed!  I ran the whole test class a few times, and this one test would pass or fail at random.  This was extremely odd, as the code under test seemed to be clearly deterministic.</p>
+<h2>Excessive Mutation</h2>
+<p>Realizing that xUnit was running my tests in a different order each time helped me to see my mistake.  This implementation of DateRange is mutable, and AllOfTime is static and therefore shared.  AllOfTime is a shared mutable thing whose name suggests an immutable thing.  AllOfTime is lying.</p>
+<p>I had broken my own rule: I make classes immutable by default, making them mutable as soon as being dogmatic starts to hurt.  Instead, I had made this mutable from the start and immediately tripped on my own intellectual shoelaces.  Marking the properties as read-only forced me to rephrase the main logic, but that actually resulted in simplifying everything and ensured that AllOfTime is in fact <em>all</em> of it:</p>
+<p><div><script src='https://gist.github.com/3949968.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>DateRange deserves to be a value just like DateTimes deserve to be values.  You can&#8217;t <em>change</em> 10/24/2012 any more than you can change the number 5. 5 will always be 5, 10/24/2012 will always be 10/24/2012, and the range [10/24/2012, 10/31/2012] will always be the range [10/24/2012, 10/31/2012].</p>
+<p>As a general rule, I avoid mutation.  If I did that everywhere, though, my code would likely become too hard to follow.  As soon as keeping things immutable becomes a larger pain than the pain it solves, I back off and allow mutable state to come into the picture.  Even then, I try to limit the &#8220;footprint&#8221; of that state change.</p>
+<p>Unnecessary mutation makes it too easy to make trivial mistakes.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-25T00:00:00-05:00" pubdate data-updated="true">Oct 25<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -305,62 +385,6 @@
 
 
 	<a class='category' href='/blog/categories/emba/'>emba</a>, <a class='category' href='/blog/categories/jack-welch/'>jack welch</a>, <a class='category' href='/blog/categories/jwmi/'>jwmi</a>, <a class='category' href='/blog/categories/learning/'>learning</a>, <a class='category' href='/blog/categories/management/'>management</a>, <a class='category' href='/blog/categories/mba/'>mba</a>, <a class='category' href='/blog/categories/strayer/'>strayer</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/get-to-know-a-developer-justin-mason/">
-		
-			Get to Know a Developer: Justin Mason</a>
-	</h2>
-	<div class="entry-content">
-		<p><a href="http://www.headspring.com/wp-content/uploads/2012/10/photo-3.jpg"><img class="alignright size-medium wp-image-5799" title="Justin Mason - Headspring Principal Consultant" src="http://www.headspring.com/wp-content/uploads/2012/10/photo-3-224x300.jpg" alt="Justin Mason - Headspring Principal Consultant" width="224" height="300" /></a>Justin Mason is our newest team member at Headspring. An experienced developer, Justin joins us from Catapult Systems where he designed and developed a sensor data recording and management application for natural gas and oil drilling rigs. Justin has a passion for the ever-changing landscape of viable technologies and their potential applications, which makes him a great addition to our team of like minded and ambitious people!</p>
-<p><strong>Are you an expert at anything?</strong></p>
-<p>I have more than 15 years of application development experience. In that time, I’ve seen the evolution of the Web. By understanding where technology originated, it helps provide a clearer picture of where it may go.  The uncertainty of how competing priorities have shaped the software applications that are currently available makes it an exciting time to be at Headspring to contribute to the needs of its customers.</p>
-<p>I became passionate about Microsoft Windows Communication Foundation (WCF) because I understood the pain it was trying to alleviate for companies.  Bidirectional communication using binary serialization over TCP that can be easily transitioned to other transportation protocols like HTTP really caught my interest.  WCF has had to keep pace with the industry due to emerging technologies such as Ajax using JSON serialization instead of SOAP. Its use in the background will remain intact while abstractions are built on top of it to facilitate new applications.       </p>
-<p><strong>Who are your ideal clients to work for?</strong></p>
-<p>The best part of software development is that it has allowed me to work across a wide range of companies. If software can help solve a business problem, we want to work with a company to do it. Then the only other factor is the willingness of the company to come together to work with developers and rely on their expertise to find a technical solution.</p>
-<p><strong>What led you to software development?</strong></p>
-<p>I was led to software by the idea that I could get paid to put together puzzles.  Software allows you to use your imagination to visualize a concept and then bring that concept into something others can see and interact with.  When a day goes by without noticing it, you know the career you have chosen is the right one.</p>
-<p><strong>What did you learn first?</strong></p>
-<p>Besides my introduction to software in elementary school using “Turtle Graphics”, I learned Visual Basic 4 along with Relational Databases coming out of college and started my first “real” job.</p>
-<p><strong>Do you like teaching?</strong></p>
-<p>Yes, I like teaching very much.  I owe my own career to friends and colleagues that took the time to show me how to learn the various technologies.  I enjoy the different ways people learn similar concepts.  Having to adapt to different learning styles makes the teacher’s own understanding greater.  As a result, everyone comes out ahead.</p>
-<p><strong>How do you gauge “time well spent”?</strong></p>
-<p>I ask myself whether I’ve added to my understanding of something new, or did I complete a defined objective?  Time wasted is usually a result of a lack of clear objectives, or misunderstanding a concept foundational to a new technology.</p>
-<p>&nbsp;</p>
-<p>Want to know more? Tweet him! <a href="https://twitter.com/JustinMasonDev" target="_blank">@justinmasondev</a></p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-10-12T00:00:00-05:00" pubdate data-updated="true">Oct 12<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/blog/'>Blog</a>, <a class='category' href='/blog/categories/bonus/'>Bonus!</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/get-to-know-a-headspringer/'>Get To Know a Headspringer</a>
 
 
 </div>

@@ -7,7 +7,7 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="This week, I took the opportunity to sit down and chat with one of our Principal Consultants, Mahendra Mavani.  Mahendra is the project lead on our &hellip;">
+	<meta name="description" content="In a perfect world, you build a product that runs smoothly and effortlessly forever.  It is instantly popular, and is built in such a way that it &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -84,8 +84,70 @@
 </header>
 	
 		
+<div id="banner" class="inner">
+	<div class="container">
+		<ul class="feed"></ul>
+	</div>
+	<small><a href="http://twitter.com/HeadspringLabs">HeadspringLabs</a> @ <a href="http://twitter.com">Twitter</a></small>
+	<div class="loading">Loading...</div>
+</div>
+<script src="/javascripts/twitter.js"></script>
+<script type="text/javascript">
+	(function($){
+		$('#banner').getTwitterFeed('HeadspringLabs', 5, );
+	})(jQuery);
+</script>
+
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/technical-debt/">
+		
+			Technical Debt: How Much Interest Are You Willing to Pay?</a>
+	</h2>
+	<div class="entry-content">
+		<p>In a perfect world, you build a product that runs smoothly and effortlessly forever.  It is instantly popular, and is built in such a way that it provides a uniform experience no matter whom or how many gravitate towards it.  Users love it just the way it is, and are pleasantly surprised by each new feature or version. Nothing goes wrong, so this product does not require support staff or maintenance of any kind.  You hire a few developers to add new features here and there, and these employees are completely content to stay in one position at your company forever and ever amen.</p>
+<p>However, this is not a perfect world.  Your users are real people, all with varying skill levels, intellect, hardware, expectations, moods, etc.  Same goes for the staff you hire to support the product and develop new features.  Ahh… the human factor.</p>
+<p>And then maybe you experience an error or two. Maybe the server shuts down. Maybe your new versions aren’t always compatible. If you’re really lucky, maybe you get hacked. Oh joy!</p>
+<p>So, you code.  You code something that will fix the problem.  You code something to patch over what you are dealing with so you don’t have to deal with it again.  Each time you duct tape over a problem with code, it’s as if you have charged the problem to your technical credit card.</p>
+<p>The correlation between technical complexity and debt was first proposed by<a href="http://en.wikipedia.org/wiki/Ward_Cunningham"> </a><a href="http://en.wikipedia.org/wiki/Technical_debt">Ward Cunningham</a> in 1992.  Basically, technical debt is the result of trying to fix problems too quickly, without regard for long term consequences.  In my opinion, this nasty cycle stems from our culture of instant gratification.  Software organizations want to fix problems quickly because they don’t want to lose impatient end users. “Fix it; I don’t care how.”</p>
+<p>User experience is your most important priority; you don’t want to tinker around with too many questions while the server is down.  However, keep in mind that quick fixes accrue interest.  Piecing a whole system together with quick remedies as you go along is a lot like only paying the minimum payment on your balance. Sometimes, a little bit of debt is okay, as long as you are willing to pay the monthly balance back in full. What I mean by that is you will need to look at the problem in terms of the big picture eventually.</p>
+<p>You have to be willing to roll your sleeves up and pull out the engine at some point.  The root of the problem is in there somewhere.  Take a little bit time up front.  When you can, pay for solutions with cash instead of credit.  This means investing your <em>time</em> in looking at how the problem affects the whole system.</p>
+<p>How does your organization highlight technical debt so you can go back and deal with it?</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-03T00:00:00-06:00" pubdate data-updated="true">Jan 3<span>rd</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/what-the-tech/'>What the tech?</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -304,68 +366,6 @@ This is where I am so far.  I have got a lot to learn and lots of mistakes to m
 
 
 	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/get-to-know-a-headspringer/'>Get To Know a Headspringer</a>, <a class='category' href='/blog/categories/what-the-tech/'>What the tech?</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/polaroid-mutation/">
-		
-			Polaroid Mutation</a>
-	</h2>
-	<div class="entry-content">
-		<p>Last week, we saw how <a href="http://www.headspring.com/2011/12/clojures-world-view">Clojure&#8217;s approach to syntax</a> can influence the way we think while using other languages.  Today, we&#8217;ll see how Clojure&#8217;s strong opinions about state change can similarly affect the way we think in our language of choice.</p>
-<p>Some languages embrace mutation (the changing of variables&#8217; values at runtime).  Python and Ruby classes have publicly-settable <em>everything</em> and although this can get you into trouble it can also lead to some pretty slick tools like Ruby on Rails.  Clojure, on the other hand, fears mutation.</p>
-<h2>.NET Strings are Immutable</h2>
-<p>.NET&#8217;s <code>System.String</code> is a good example of Clojure&#8217;s approach to collections.  Once you have a string instance, you cannot change its content.  If you want to change the string you are currently referencing, you have to instead create a whole new string (often based on the original), and then point your reference variable at the new one.</p>
-<p>Although potentially-wasteful with memory, this approach has saved us from a lot of potential complexity.  When I pass a string around, I know it&#8217;s not going to be altered by some rogue library call.  I can expose a string across threads without fear that it will be in mid-change when I try to look at it.</p>
-<p>This immutability can be problematic for large strings that are being frequently &#8216;changed&#8217;, but in practice most of the change we deal with is with small strings where the performance hit is trivial.  In those cases where it <em>really</em> matters, we can use something like <code>StringBuilder</code> to avoid being wasteful with memory and time.</p>
-<h2>.NET Lists Mutate</h2>
-<p>.NET&#8217;s <code>List&lt;T&gt;</code>, on the other hand, is mutable.  We can think of strings as an immutable collection of <code>char</code> values.  A <code>List&lt;char&gt;</code>, on the other hand, can be <strong>changed</strong> rather than simply <strong>replaced</strong>.  You can add, remove, and alter each item in the collection, <em>and anyone looking at the object will see those changes right away, whether they like it or not</em>.</p>
-<h2>Clojure Collections are Immutable</h2>
-<p>The built-in data structures in Clojure are immutable.  The two main types here are lists (corresponding with .NET <code>List&lt;T&gt;</code>), and maps (corresponding with <code>Dictionary&lt;K,V&gt;</code>).</p>
-<p>In Clojure, when you have a list containing 1000 elements and you wish to append item number 1001, you don&#8217;t change the contents of the original list.  Rather, you get a whole new list containing 1001 elements.  This is exactly what we would do with a .NET string to append a single char.</p>
-<p>For maps, adding a new key/value pair likewise starts by copying the original collection and including the new pair.  Anyone who is still holding a reference to the original sees the original contents unaffected.</p>
-<p>That may seem wasteful, since the use cases for lists are far more varied than for strings.  Aren&#8217;t we going to feel the pain of this waste too easily in practice for it to be a good idea?</p>
-<p>Thankfully, Clojure collections are clever.  Behind the scenes, <a href="http://blog.higher-order.net/2009/02/01/understanding-clojures-persistentvector-implementation">lists and a maps are really trees</a>.  The items are stored in the leaves, and whenever we need to create a &#8220;whole new collection&#8221;, the new collection will share as much of the original tree as it can sneakily get away with.  The new collection is safe to share data with the original tree because, after all, nobody is <em>allowed</em> to change it.</p>
-<p>Despite storing items in a tree, Clojure lists can still provide the <em>near</em> constant-time lookups we expect from lists.  These trees are exceptionally <em>wide</em>, but not very <em>deep</em>.  Even a fully-populated tree, with more items in it than you&#8217;d ever care to work with, is only about 6 levels deep.  <em>Slower than a .NET array lookup, for sure, but still O(1)</em>.  Well, O(1-<em>ish</em>).</p>
-<h2>Course-Grained Mutation</h2>
-<p>Clojure does allow some mutation.  It would be difficult to use a language if it had <em>no</em> notion of assignment statements.  A small number of special reference types are available.  These are objects which can point at some other object, and this pointer can be requested to change to point to some new object.  These types are each opinionated about how this re-pointing can act with respect to threads, but the basic idea is that they allow for course-grained mutation.</p>
-<p>Let&#8217;s say I have one of these reference objects currently pointing at a map containing many name/value pairs, and that I&#8217;m using <a href="http://clojure.org/refs">a reference object that ensures transactional re-pointing in the presence of multiple threads</a>.  If I have to perform a significant change to the collection, <strong>I&#8217;d like to be able to take my time to calculate the new version of the collection, without having to lock the original</strong>, so the other threads can keep on trucking along.  Once I&#8217;ve calculated my new collection, sharing a subtree behind the scenes with the original, I&#8217;ll ask my reference object to re-point to the new collection as an atomic operation.  Now, all the other threads will see the new state.</p>
-<p><em>C# represents state change by physically altering an object in-place.  Clojure represents state change by tracking a series of object snapshots.</em>  <strong>The river isn&#8217;t flowing by you in front of your eyes.  Instead, you have a stack of river-photos representing the key moments of its flow.</strong></p>
-<h2>Minimizing Mutation in Your Language of Choice</h2>
-<p>Clojure&#8217;s weird, and weird is good.</p>
-<p>Some of the worst spaghetti code I&#8217;ve ever dealt with was hard to untangle <strong>precisely</strong> because of the fine-grained state change involved.  The first thing I do when faced with a tricky mess like this is to start identifying those parts of the code that are already lacking mutation, pulling them out into <a href="http://en.wikipedia.org/wiki/Pure_function">pure functions</a>.  Next, I look for ways to rephrase the existing mutation-heavy bits with equivalent pure alternatives.  <strong>Often, the percent of your codebase that actually needs to deal with mutating state is remarkably small.</strong></p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-12-23T00:00:00-06:00" pubdate data-updated="true">Dec 23<span>rd</span>, 2011</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
 
 
 </div>

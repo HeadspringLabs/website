@@ -7,7 +7,7 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="Humans learn from experience. Learning to be a consultant is a pinnacle of this idea- you cannot pick up a book, read it, work a few exercises in an &hellip;">
+	<meta name="description" content="TDD or Test Driven Development was considered an industry buzz for a while. Now a days it is considered more of a main stream development &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -84,8 +84,147 @@
 </header>
 	
 		
+<div id="banner" class="inner">
+	<div class="container">
+		<ul class="feed"></ul>
+	</div>
+	<small><a href="http://twitter.com/HeadspringLabs">HeadspringLabs</a> @ <a href="http://twitter.com">Twitter</a></small>
+	<div class="loading">Loading...</div>
+</div>
+<script src="/javascripts/twitter.js"></script>
+<script type="text/javascript">
+	(function($){
+		$('#banner').getTwitterFeed('HeadspringLabs', 5, );
+	})(jQuery);
+</script>
+
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/tdd-caveat-how-not-to-follow-test-driven-development/">
+		
+			TDD Caveat | How Not to Follow Test Driven Development</a>
+	</h2>
+	<div class="entry-content">
+		<p align="justify">TDD or <a href="http://www.agiledata.org/essays/tdd.html" target="_blank">Test Driven Development</a> was considered an industry buzz for a while. Now a days it is considered more of a main stream development methodology. we, at <a href="http://headspring.com" target="_blank">Headspring</a>, are among those early adopters who likes to walk on cutting edge technologies.</p>
+<p align="justify">Over last 5 year, I have transition through different stages of mind set when it comes to unit testing or TDD in general. As an early adoptor I was curious to know to what extend we can take this concept. At this stage, my unit test looked more state testing i.e</p>
+<div class="csharpcode">
+<pre>[Test]</pre>
+</div>
+<div class="csharpcode">
+<pre>&lt;span class=&quot;kwrd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;void&lt;/span&gt; Should_Add_Two_Number()</pre>
+</div>
+<div class="csharpcode">
+<pre>{</pre>
+</div>
+<div class="csharpcode">
+<pre>    var number1 = 100;</pre>
+</div>
+<div class="csharpcode">
+<pre>    var number2 = 50;</pre>
+</div>
+<div class="csharpcode">
+<pre>    var sum = number1 + number2;</pre>
+</div>
+<div class="csharpcode">
+<pre>    sum.ShouldEqual(150);</pre>
+</div>
+<div class="csharpcode">
+<pre>}</pre>
+</div>
+<p>As I moved further and realize power of maintainability and loosely coupled design, I started designing solution in terms of interfaces. With that my knowledge on TDD expanded towards interaction testing. Mocking frameworks like <a href="http://ayende.com/wiki/Rhino+Mocks.ashx" target="_blank">Rhino.Mock</a> and Moq, TypeMock etc emerged during that timeframe to support such testing scenarios. And those test now started looking like this:</p>
+<div class="csharpcode">
+<pre>[Test]</pre>
+</div>
+<div class="csharpcode">
+<pre>&lt;span class=&quot;kwrd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;void&lt;/span&gt; Use_Is_Anything_when_args_are_not_important()</pre>
+</div>
+<div class="csharpcode">
+<pre>{</pre>
+</div>
+<div class="csharpcode">
+<pre>    &lt;span class=&quot;kwrd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;int&lt;/span&gt; intToReturn = 5;</pre>
+</div>
+<div class="csharpcode">
+<pre>    _stub = MockRepository.GenerateStub&amp;lt;ISampleInterface&amp;gt;();</pre>
+</div>
+<div class="csharpcode">
+<pre>    _stub.Stub(s =&amp;gt; s.MethodThatReturnsInteger(&lt;span class=&quot;str&quot;&gt;&quot;foo&quot;&lt;/span&gt;)).Return(intToReturn);</pre>
+</div>
+<div class="csharpcode">
+<pre>    _stub.MethodThatReturnsInteger(&lt;span class=&quot;str&quot;&gt;&quot;foo&quot;&lt;/span&gt;).ShouldEqual(intToReturn);</pre>
+</div>
+<div class="csharpcode">
+<pre>}</pre>
+</div>
+<p>Exploring further, I started utilizing more features provided by those mocking framework. Now you have way to not only  ensure method on stub/mock returns predictable value, but also make assertion that it was called with right argument. Taking this even further, when you have more services to interact with, these frameworks have option to assert sequence in which you call them. Example of first case may look like this:</p>
+<div class="csharpcode">
+<pre>[Test]</pre>
+</div>
+<div class="csharpcode">
+<pre>&lt;span class=&quot;kwrd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;void&lt;/span&gt; Use_GetArgumentsForCallsMadeOn_to_inspect_arguments()</pre>
+</div>
+<div class="csharpcode">
+<pre>{</pre>
+</div>
+<div class="csharpcode">
+<pre>    var interactor = &lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; InteractingClass();</pre>
+</div>
+<div class="csharpcode">
+<pre>    interactor.CallTheInterfaceTwice(_mock);</pre>
+</div>
+<div class="csharpcode">
+<pre>    IList&amp;lt;&lt;span class=&quot;kwrd&quot;&gt;object&lt;/span&gt;[]&amp;gt; argsPerCall = _mock.&lt;strong&gt;GetArgumentsForCallsMadeOn&lt;/strong&gt;(m =&amp;gt; m.MethodThatReturnsInteger(&lt;span class=&quot;kwrd&quot;&gt;null&lt;/span&gt;));</pre>
+</div>
+<div class="csharpcode">
+<pre>    argsPerCall[0][0].ShouldEqual(&lt;span class=&quot;str&quot;&gt;&quot;foo&quot;&lt;/span&gt;);</pre>
+</div>
+<div class="csharpcode">
+<pre>    argsPerCall[1][0].ShouldEqual(&lt;span class=&quot;str&quot;&gt;&quot;bar&quot;&lt;/span&gt;);</pre>
+</div>
+<div class="csharpcode">
+<pre>}</pre>
+</div>
+<p>Picture looked quite rosy here until I passed over excitement phase and entered phase of maintaining such software. <a href="http://www.refactoring.com/" target="_blank">Refactoring</a> such code became painful job now. That is precisely because I have my logic duplicated at two places, one in production code and one in test. Every single change that I make in production code has to be reflected into test interaction as well. This is direct violation of fundamental principle of OOP.  This indeed is one of the code-smell whose root is buried in wrong choice of underlying software design.</p>
+<p>Now let’s step back and analyze what has gone wrong over this journey. Moving from state base test into interaction base test has its value under certain situation. However as we move towards “<strong>loosely coupled</strong>” and “<strong>highly cohesive</strong>” software architecture design, underlying elements are all services that works together to achieve given use case. Unit testing at those service level yields sweet fruit in terms of coverage and confidence in being able to refactor codebase at any give time. However there is little value in testing interaction between these services and their sequencing with much of mocks.</p>
+<p align="justify">Big question that remains here then would be “How do I ensure those end to end scenarios are covered under test?”. Well, the answer is hidden inside question itself. Coverage on “End to end scenarios” needs “End to End” testing. That’s exact where  Integration test has real value to demonstrate. For the case of web page which let user fill in form and take some action, typically such integration test will include testing all but the actual UI layer. In language of <strong>CommandProcessor</strong> from <a href="http://mvccontrib.codeplex.com/" target="_blank">MvcContrib</a>, it is called PageTester.  Last but not least is UI Tests which ensures application level configuration and environment is set up correctly.</p>
+<p>Till next time. Code smartly.</p>
+<p>&nbsp;</p>
+<p><em>Interested in Agile? Download a Copy of our Whitepaper &#8216;The Agile Difference&#8217; on our <a href="http://www.headspring.com/resources/whitepapers/">Whitepapers page</a></em></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-29T00:00:00-05:00" pubdate data-updated="true">Jul 29<span>th</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -281,62 +420,6 @@
 
 
 	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/how-to-add-a-method-to-viewbag-in-asp-net-mvc/">
-		
-			How to Add a Method to ViewBag in ASP.NET MVC</a>
-	</h2>
-	<div class="entry-content">
-		<p>We are all familiar with the basic HomeController in the default ASP.NET MVC project.  We know we can pass values from the controller to the view.  Sometimes we are tempted to pass the controller itself to the view so that we can call methods on it.  The view should not have to depend on the controller.  This post provides a way to accomplish this.  For more on ASP.NET MVC, check out my book, <a href="http://bit.ly/aspnetmvc3inaction">ASP.NET MVC 3 in Action</a>.  You can also check out the <a href="http://www.headspring.com/headspring/mvc-boot-camp/" target="_blank">MVC Boot Camp</a> training we offer at <a href="http://www.headspring.com">Headspring</a>.  We start with the HomeController.</p>
-<p><a href="http://www.headspring.com/wp-content/uploads/2011/07/image2.png"><img style="border: 0px;" alt="image" src="http://www.headspring.com/wp-content/uploads/2011/07/image_thumb2.png" width="530" height="403" border="0" /></a></p>
-<p>We know from just a little reading that the ViewBag property on HomeController is a dynamic object – using the new .Net 4 dynamic capabilities.  Merely setting the Message property on the object creates the property.  It is not completely obvious how to create a new method on the object, though.</p>
-<h1>Usage</h1>
-<p>If I were to want to use a method in my Razor view like this&#8230;</p>
-<div class="csharpcode"><a href="http://www.headspring.com/wp-content/uploads/2011/07/image3.png"><img style="border: 0px;" alt="image" src="http://www.headspring.com/wp-content/uploads/2011/07/image_thumb3.png" width="535" height="274" border="0" /></a></div>
-<p>&#8230; then I would need to figure out how to get the GetCurrentTime() method onto the ViewBag.  The following is the solution to that problem.</p>
-<h1>Solution</h1>
-<p>There are two technical capabilities of C# 4 that provide the ability to accomplish our new method.  The first is that I can create and set any new property on the dynamic object.  The second is actually a feature of .Net 2 – delegates.  I will create a method and then wrap it in a delegate and assign it as a property of ViewBag.</p>
-<p><a href="http://www.headspring.com/wp-content/uploads/2011/07/image4.png"><img style="border: 0px;" alt="image" src="http://www.headspring.com/wp-content/uploads/2011/07/image_thumb4.png" width="538" height="344" border="0" /></a></p>
-<p>.Net 3.5 brought us the Func&lt;&gt; and the lambda expressions.  These make delegates so much more concise to write and read.  I have now create a method, assigned it to a object and set it as a property on ViewBag.</p>
-<p>The only thing left to do is to dereference the property and invoke it with ().</p>
-<p>For those of you who have been programming for a while, you know that I technically haven’t create a method on the ViewBag object.  That is correct.  We have to think back to why I asked for the method in the first place.</p>
-<h1>Why do we need methods?</h1>
-<p>We need methods in order to retrieve values that are resolved at run time.  For instance, if I need to pass in some view-specific value to my ViewBag for evaluation, I need a method. If you were ever tempted to pass a reference to the controller to the view just to be able to execute a method on a value the controller owned, this is your ticket to accomplishing that.  Because the method/closure/delegate in the controller has full scope access to the controller memory space, the ViewBag now holds the gateway to the controller’s state that is necessary.</p>
-<p><a href="http://www.headspring.com/headspring/mvc-boot-camp/">Check out ASP.NET MVC 4 Bootcamp</a></p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-07-29T00:00:00-05:00" pubdate data-updated="true">Jul 29<span>th</span>, 2011</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/blog/'>Blog</a>
 
 
 </div>

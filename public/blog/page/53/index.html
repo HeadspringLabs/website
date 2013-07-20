@@ -7,7 +7,7 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="In my first post in the Unit Testing Best Practices series, I introduced you to the basic lifecycle of an NUnit test fixture. This time, we&#8217;re &hellip;">
+	<meta name="description" content="When LINQ first became available, it was described as having a &#8220;lazy evaluation model&#8221;, meaning that a query would not actually be &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -84,8 +84,87 @@
 </header>
 	
 		
+<div id="banner" class="inner">
+	<div class="container">
+		<ul class="feed"></ul>
+	</div>
+	<small><a href="http://twitter.com/HeadspringLabs">HeadspringLabs</a> @ <a href="http://twitter.com">Twitter</a></small>
+	<div class="loading">Loading...</div>
+</div>
+<script src="/javascripts/twitter.js"></script>
+<script type="text/javascript">
+	(function($){
+		$('#banner').getTwitterFeed('HeadspringLabs', 5, );
+	})(jQuery);
+</script>
+
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/the-compilers-treatment-of-linq-syntax/">
+		
+			The Compiler&#8217;s Treatment of LINQ Syntax</a>
+	</h2>
+	<div class="entry-content">
+		<p>When LINQ first became available, it was described as having a &#8220;lazy evaluation model&#8221;, meaning that a query would not actually be executed until you started to look at the result. Iterating through a result, for instance, would finally cause the query to actually run. This gives you the power to piece together a query over multiple statements before letting it execute.</p>
+<p>Recently, I found that <em>this abstraction can leak</em>. I had a set of queries that were misbehaving, and it seemed that a bug would be reproducible in one set of queries but not in another, even though they were remarkably similar to each other in structure. The culprit was a big surprise: it turns out that <strong>the first &#8216;from&#8217; clause in a query is treated differently from subsequent &#8216;from&#8217; clauses</strong>. Although my project&#8217;s &#8216;from&#8217; clauses were not implemented with side effects, an example that does use side effects best illustrates what is going on. Consider the following:</p>
+<p><div><script src='https://gist.github.com/1203504.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>If we trusted the explanations of LINQ queries as having a lazy evaluation model, we would expect the output to be:</p>
+<pre>Before Loop
+First Clause Side Effect
+Second Clause Side Effect
+Third Clause Side Effect
+3</pre>
+<p>We expect this because we&#8217;re told that the query doesn&#8217;t start doing any work until we start iterating throught the results. Surprisingly, the actual output is:</p>
+<pre>First Clause Side Effect
+Before Loop
+Second Clause Side Effect
+Third Clause Side Effect
+3</pre>
+<p>Yikes. <strong>The SQL-like query syntax is an abstraction over plain old method calls, and that abstraction is leaking.</strong> To make sense of what is going on, it is helpful to know what the compiler does every time it encounters query syntax. Before the compiler even bothers to determine whether your query is actually valid, it performs a plain text transformation to a series of specially-nested method calls. Only after that plain text transformation will it actually determine whether the methods being called exist, that the arguments passed to them are of the right type, etc. ReSharper can actually perform that transformation for you. When we do that to the query above, we get the following:</p>
+<p><div><script src='https://gist.github.com/1203437.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>A query with multiple &#8216;from&#8217; clauses is transformed into a series of nested method calls. Lambda expressions are used to introduce a new local scope for the identifiers x, y, and z. SelectMany is an extension method, so the specific implementation is irrelevant during the plain text transformation. In other words, you can define the query syntax yourself, based on the type of the object you are selecting from (in this case, we&#8217;re using the default IEnumerable&lt;T&gt; implementation of SelectMany).</p>
+<p><strong>The right hand side of the first from clause is evaluated immediately. Subsequent from clauses are evaluated lazily, because only they appear on the right hand side of a lambda operator =&gt;.</strong></p>
+<p>By better-understanding what the compiler is actually doing with our LINQ queries, we can avoid frustrating surprises when the abstraction starts leaking.</p>
+<p>If you found this blog to be helpful <a href="http://www.headspring.com/feed" target="_blank">subscribe to our blog feed</a> for the freshest content.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-09-08T00:00:00-05:00" pubdate data-updated="true">Sep 8<span>th</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -360,53 +439,6 @@ Note that even with a base class, all our observations from last time are still 
 
 
 	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/what-the-tech/'>What the tech?</a>, <a class='category' href='/blog/categories/agile/'>agile</a>, <a class='category' href='/blog/categories/agile-benefits/'>agile benefits</a>, <a class='category' href='/blog/categories/best-practices/'>best practices</a>, <a class='category' href='/blog/categories/knowledge-transfer/'>knowledge transfer</a>, <a class='category' href='/blog/categories/pair-programming/'>pair programming</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/legacy-operating-systems-and-legacy-languages-if-it-aint-broke-it-still-needs-fixing/">
-		
-			Legacy Operating Systems and Legacy Languages: If It Ain&#8217;t Broke, It Still Needs Fixing</a>
-	</h2>
-	<div class="entry-content">
-		<p>In my travels I&#8217;ve encountered systems chugging happily along on outdated, discontinued, unsupported technology stacks. Apps written in VB6, FoxPro, Classic ASP, still running without a hitch because the kinks had been shaken out years ago&#8230; Software users delicately avoiding upgrading their Windows 95 machine because it does what they need, in a manner they understand, running the apps they&#8217;ve built their business on&#8230; As a techie, the idea makes your hair curl, but the thing is: these applications <em>work</em>. They&#8217;ve been working, and they give the appearance of continuing to work indefinitely.</p>
-<p>It&#8217;s an illusion, though. I sympathize with getting taken in by that illusion. After all, I&#8217;ve owned the same cell phone for seven years—I don&#8217;t mind that it doesn&#8217;t do the <em>latest</em> stuff because it does everything I need (makes phone calls). To replace it, just because someone else has something shinier, sounds ridiculous. I&#8217;m the same way with cars, computers, furniture: I evaluate an item&#8217;s utility against my own needs, not something else&#8217;s capabilities. Taking the same view of your software applications can seem like good sense.</p>
-<p>Here&#8217;s the difference with software. Factors outside your control can make your application stop working. This is especially true when it is running on a legacy operating system or a legacy language.</p>
-<p>I just had a sharp lesson in this on one of my personal websites. My site uses a content-management system written in PHP, which I had allowed to drift a bit behind on version updates. Last weekend my webhost, quite reasonably, upgraded their servers with the latest stable version of PHP. They had notified me, so I was looking out for it, and sure enough: my site was broken. My outdated version of the content-management system was calling deprecated and discontinued PHP methods. To drive the lesson home, I was enough out of date that upgrading the content-management system wasn&#8217;t trivial, either. Here is a case where &#8220;if it ain&#8217;t broke&#8221; turned into &#8220;it&#8217;s broke anyway.&#8221;</p>
-<p>Keeping software platforms current is not about wanting the latest features. It is about routine maintenance that keeps your critical systems comfortably supported. If you fall behind the pack, software patches and operating system upgrades offer no guarantees. That&#8217;s what it means when a technology is no longer supported: it means the manufacturer won&#8217;t be testing whether their latest change will impact that end-of-life technology. Complacency is perilous.</p>
-<p>You might find it daunting to estimate the value of rewriting an application in a supported language. The cost is plain, but what is the return? It can sound like spending considerable time and resources to end up with the same feature set. We have helped some of our clients make such an assessment, so that they can decide when it is prudent to bring their technology stack up to date. <a href="http://www.headspring.com/services/consulting-development">Please get in touch</a> if you are weighing similar trade-offs.</p>
-<p>In order to make an informed decision, consider what it would cost to lose the application, to have it rendered non-functional—even non-starting—by an environment change. Is the application critical to your business? Is it your business&#8217;s product? What would it cost to lose it? Keeping current is insurance against that cost.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-08-25T00:00:00-05:00" pubdate data-updated="true">Aug 25<span>th</span>, 2011</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/what-the-tech/'>What the tech?</a>, <a class='category' href='/blog/categories/legacy-software/'>legacy software</a>
 
 
 </div>
