@@ -1,17 +1,15 @@
-$header-height: 30px;
+$header-height: 115px;
 
 #header{
-	height: $header-height;
-	padding: 30px 0;
+	background-color: $color-background-header;
 	border-bottom: 1px solid $color-gray04;
-	line-height: $header-height;
 	@media screen and (max-width: 1040px){
 		height: auto;
 		position: relative;
 		padding-bottom: 10px;
 	}
 	a{
-		color: $color-gray01;
+		color: $color-gray05;
 		@include transition(color 0.3s);
 		&:hover{
 			color: $color-main;
@@ -19,16 +17,21 @@ $header-height: 30px;
 	}
 	h1{
 		float: left;
-		font-weight: 300;
-		font-size: 30px;
+		text-indent: -9999px;
+		background: image-url('logos/hslabs_left_logo.png') center no-repeat;
+		height: $header-height;
+		width: 470px;
 		@media screen and (max-width: 1040px){
 			float: none;
 		}
 	}
 }
 #main-nav{
-	float: left;
-	margin-left: 30px;
+	color: $color-navbar-text;
+	background-color: $color-navbar-background;
+	width: 100%;
+	clear: left;
+	padding: 10px 0;
 	@media screen and (max-width: 1040px){
 		float: none;
 		margin-left: 0;
@@ -257,6 +260,7 @@ $header-height: 30px;
 	}
 }
 #sub-nav{
+	padding: 75px 15px;
 	@media screen and (max-width: 1040px){
 		position: absolute;
 		top: 30px;
@@ -314,12 +318,8 @@ $header-height: 30px;
 			@include inline-block;
 			text-indent: -9999px;
 			margin-right: 15px;
-			opacity: 0.5;
 			@include square(28px);
 			@include transition(0.3s);
-			&:hover{
-				opacity: 1;
-			}
 			&.facebook{
 				background: image-url('social/facebook.png') center no-repeat #3B5998;
 				border: 1px solid #3B5998;

@@ -1,7 +1,16 @@
-$color-background: #eee !default;
-$color-main: #258fb8 !default;
+$headspring-blue: #0079C2 !default;
+
 $color-gray01: #666 !default;
 $color-gray02: #999 !default;
 $color-gray03: #ccc !default;
 $color-gray04: #ddd !default;
 $color-gray05: #fff !default;
+$color-black01: #000 !default;
+$color-black02: #222 !default;
+
+$color-background: #fff !default;
+$color-main: $headspring-blue;
+$color-body-text: $color-black02;
+$color-background-header: $headspring-blue;
+$color-navbar-background: $color-black01;
+$color-navbar-text: #fff !default;
