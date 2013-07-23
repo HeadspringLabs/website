@@ -146,216 +146,6 @@
 </div>
 </article>
 
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/dependency-injection-ceremony/">
-		
-			Dependency Injection Ceremony</a>
-	</h2>
-	<div class="entry-content">
-		<p>The vast majority of the time, I enjoy working with <a href="http://en.wikipedia.org/wiki/Dependency_injection">dependency injection</a>.  Sometimes, however, I find myself rolling my eyes at the amount of &#8220;ceremony&#8221; boilerplate code it takes in order to take advantage of it.  <em>Disclaimer: This is more a limitation of C# having been created before DI containers became common than a problem with DI itself.</em>
-</p>
-<p>DI and its benefits have been written about for years, but the short version is that your classes can accept interface arguments through their constructors, and these arguments represent the class&#8217;s dependencies.  A simple example can be seen in the <a href="https://github.com/DarthFubuMVC/fubumvc-examples/blob/master/src/Actions/HandlerStyle/SimpleWebsite/Handlers/Movies/ListHandler.cs">FubuMVC samples</a>:</p>
-<p><div><script src='https://gist.github.com/2641353.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Here, the ListHandler class is declaring, incidentally to the compiler but primarily to the <em>reader</em>, that it depends on a repository to do its work.  Rather than construct a <code>new Repository()</code> itself, it assumes a pre-constructed <code>IRepository</code> will be provided.</p>
-<p>At a minimum, this is convenient in the case that the <code>Repository</code> constructor itself has potentially-tricky-to-instantiate arguments, each of which may have their own constructors to call, ad nauseum.</p>
-<p>More importantly, since your class no longer has to &#8216;new up&#8217; the dependencies itself, it is decoupled from the concrete implementations of those dependencies.  At test time, you can pass in a mock or stub implementation to prove that your class makes use of the abstraction as expected, and at run time you can trust a tool like <a href="http://docs.structuremap.net/">StructureMap</a> to create and pass in the real implementation.  When looking at a class written in this style, you can quickly see what it depends on by looking at its constructor, rather than looking through the entire class definition.</p>
-<h2>Playing Devil&#8217;s Advocate</h2>
-<p>The ListHandler class is easy to read, easy to understand, so easy to test that it might not be worth the bother, and it absolutely follows the Single Responsibility Principle.  It&#8217;s simple, basically the &#8220;Hello, World!&#8221; of Dependency Injection, but simple is a good thing to shoot for whenever we put our hands on a keyboard.  It&#8217;s a Good Class.</p>
-<p>However, when I find myself writing similar single-responsibility classes with a dependency or two passed to the constructor, a little imaginary Devil pops up on my left shoulder, accompanied by his Angel twin on my right.  The Devil wispers, &#8220;Why in the <em>heck</em> are you writing all that boilerplate!?&#8221; and the little Angel looks at the class and says, &#8220;Yeah, I hate to say this, but I think you should be listening to <em>that</em> guy.&#8221;</p>
-<p>What does this class tell the reader?  First, it says &#8220;I depend on a repository.&#8221;  Then it says &#8220;And when I say repository, I mean repository.&#8221;  Followed by &#8220;No, seriously dude, we&#8217;re talking about a repository here.&#8221;  When we inject an interface like this, we pay the syntax tax by saying &#8216;repository&#8217; <strong>six times in a row</strong>.  12 lines so that we could say the 1 line that we actually wanted to say.</p>
-<p>Of course, this is not a problem with DI itself.  This is a problem of the language not knowing DI would be so prevalent.  What we really want, in these single-method dependency-injected classes, is effectively a global function, with some arguments specially-marked as dependencies.  Consider a hypothetical C# from the future:</p>
-<p><div><script src='https://gist.github.com/2641473.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Such a function, if it could be declared, could be called with zero arguments when we want a real IRepository injected, and could be passed an IRepository at test time.  What do you think?  Would this kind of language support be useful in practice?</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-05-11T00:00:00-05:00" pubdate data-updated="true">May 11<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/headspring-founderceo-profiled-in-popular-podcast-series/">
-		
-			Headspring Founder/CEO Profiled in Popular Podcast Series</a>
-	</h2>
-	<div class="entry-content">
-		<p><em>Dustin Wells shares his story of success in podcast series, The Eventual Millionaire</em></p>
-<p><strong>Austin, Texas - May 2012</strong> - The Eventual Millionaire podcast series has released a recorded interview of Founder/CEO Dustin Wells sharing the story of his success in the custom software industry.  The interview explores his entry into entrepreneurship, personal struggles and triumphs along the way.  It also features insight into the daily operations of Headspring, Wells&#8217; leadership goals, and future plans for the company&#8217;s continued growth.</p>
-<p>&#8220;The Eventual Millionaire is a great resource for people early in the process of building a business,&#8221; said Dustin Wells.  &#8221;I feel privileged to have been chosen to serve as a reference for those who are looking to grow their career.&#8221;</p>
-<p>The Eventual Millionaire podcast series, led by Jaime Tardy, features weekly interviews of individuals with a net worth of $1 million who have built their own businesses. Previously interviewed entrepreneurs include best-selling author and Apple evangelist, Guy Kawaski, and Derek Sivers, Founder of CD Baby.  The series has been featured on media channels such as CNN, MSNMoney, Fortune.com, and Success Magazine.</p>
-<p>For more information, or to listen to the interview, visit: <a href="http://www.eventualmillionaire.com/blog/jaimetardy/">http://www.eventualmillionaire.com/blog/jaimetardy/</a></p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-05-08T00:00:00-05:00" pubdate data-updated="true">May 8<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/press/'>Press</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/delegate-frustration/">
-		
-			Delegate Frustration</a>
-	</h2>
-	<div class="entry-content">
-		<p>One of the things I like about C#&#8217;s delegate types, compared to similar concepts in other languages, is that C#&#8217;s take on the concept lets you give a useful <em>name</em> to a family of functions:</p>
-<p><div><script src='https://gist.github.com/2582885.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>With this definition, all functions that turn one thing into another thing are Converters.  Nice.</p>
-<p>We also have some generically-named <code>Action&lt;…&gt;</code> and <code>Func&lt;…&gt;</code> delegate types defined for us, and these have become ubiquitous ever since LINQ was introduced.  They&#8217;re not as communicative, but still extremely useful, and for the most part the naming stays out of the way.</p>
-<p>Delegate types allow you to give a name to a family of functions.  However, you can run into trouble when you use two different names to refer to the <em>same</em> family of functions:</p>
-<p><div><script src='https://gist.github.com/2582784.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Since all methods are compatable with any delegate type that has matching input/output types, why aren&#8217;t the following queries equivalent?</p>
-<p><div><script src='https://gist.github.com/2582790.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>This was a little frustrating when C# 3 came out.  Before then, all the delegate types we were used to working with had explicit names like <code>Converter</code> and <code>Predicate</code>.  When C# 3 introduced lambdas and LINQ, we gained <code>Func&lt;…&gt;</code> and <code>Action&lt;…&gt;</code>, and I found myself stumbling while converting older code to use the new LINQ extension methods like <code>Select</code>, which takes a <code>Func&lt;T, TResult&gt;</code>.</p>
-<p>It&#8217;s extra-frustrating because <em>every single Converter&lt;T, TResult> method that ever lived is also a Func&lt;T, TResult>!</em> I know it, you know it, Grandma tweeted it.  We can drive that point home by making the <code>convert</code> delegate work with <code>Select</code> by wrapping it in a trivial do-nothing lambda: <code>integers.Select(x =&gt; convert(x));</code>  Yeesh!</p>
-<p>To help make sense of this behavior, we can make an analogy between delegates and interfaces.</p>
-<p>Think of a delegate <em>type</em> as a special kind of interface type.  The interface has only one method, called &#8220;Call&#8221;.  Since it is <em>always</em> called &#8220;Call&#8221;, you can shorten the reader-unfriendly <code>convert.Call(5)</code> to simply <code>convert(5)</code>.</p>
-<p>Think of a method as an <em>instance</em> of these interfaces.  All methods implement the infinite number of possible delegate &#8216;interfaces&#8217; that match their input and output types.  <code>Stringify</code> is an object that implements the imaginary <code>IConverter&lt;int, string&gt;</code> interface, and also implements the imaginary <code>IFunc&lt;int, string&gt;</code> interface.  Both of these interfaces just happen to contain the imaginary method with the signature: <code>string Call(int x)</code>.</p>
-<p>Now, the example above makes more sense.  We have two variables declared as &#8216;interface&#8217; types, and assign the same object to both variables.  <code>Select</code> is written to accept instances of one &#8216;interface&#8217; type, and although <code>convert</code> points at a method compatable with <code>Select</code>, <code>convert</code> itself can only be seen as having some other, incompatible type.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-05-04T00:00:00-05:00" pubdate data-updated="true">May 4<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/another-tiny-contribution-to-webapicontrib/">
-		
-			Another Tiny Contribution to WebApiContrib</a>
-	</h2>
-	<div class="entry-content">
-		<p>I have the privilege of working with lots of smart people. Sometimes they blog about things that are new, weird, wrong or backwards. <a href="http://lostechies.com/jimmybogard/">Jimmy Bogard</a> posted something the other day that, to me, was weird. If you’re bringing <a href="http://www.asp.net/web-api">ASP.NET Web API</a> into an existing ASP.NET web site or application, you probably want your API custom errors to match your web app’s custom errors. By default, this isn’t hooked up out of the box. In Jimmy’s post on <a href="http://lostechies.com/">Los Techies</a>, you’ll notice how he solves this problem.</p>
-<h3><strong>What is ASP.NET Web API?</strong></h3>
-<p>I’ve worked with ASP.NET’s take on HTTP for quite some time, but I&#8217;m usually the guy that avoids the past opinions of the Microsoft team. I feel like I understand how the web works and bulky .NET classes around it seem heavy handed and usually overkill; I try to avoid them at all costs. This is why ASP.NET Web API appeals to me. It’s a lighter-weight approach to the web with C# and the .NET stack. A few individuals have been paying attention to this for a few months now and I decided to help out a little bit after.</p>
-<h3><strong>Why WebApiContrib?</strong></h3>
-<p>While I’ve been focusing a good amount of time onASP.NET Web API, I decided that his post was a perfect fit for a small amount of code in the <a href="http://webapicontrib.github.com/">WebApiContrib</a> project. This project is aimed to be a supplement to what Web API already provides. It&#8217;s still new, and the help of the community can really drive this project in the right direction.</p>
-<h3><strong>Adding Code to WebApiContrib</strong></h3>
-<p>I went ahead and took <a href="http://lostechies.com/jimmybogard/2012/04/18/custom-errors-and-error-detail-policy-in-asp-net-web-api/">Jimmy’s blog post</a> and <a href="https://github.com/WebApiContrib/WebAPIContrib/commit/27381146d65b3958cf267e7bb7fcd80e1b913b66">turned it into code</a> so it could be used <a href="https://nuget.org/packages/webapicontrib">straight from NuGet</a>. If you are ever wanting to give back to open source and you read a blog post like this one. You’re basically being tossed a lob ball. Thanks Jimmy!</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-04-30T00:00:00-05:00" pubdate data-updated="true">Apr 30<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/asp-dot-net-web-api/'>asp.net web api</a>, <a class='category' href='/blog/categories/open-source/'>open source</a>
-
-
-</div>
-	
-</div>
-</article>
-
 <nav id="pagenavi">
     
         <a href="/blog/page/27/" class="prev">Prev</a>
@@ -365,7 +155,44 @@
     
     <div class="center"><a href="/blog/archives">Blog Archives</a></div>
 </nav></div>
-	<footer id="footer" class="inner">Copyright &copy; 2013
+	<footer id="footer" class="inner"><div class="related-links">
+	<h3>Other Headspring Sites</h3>
+	<ul>
+		<li><a href="http://www.headspring.com">Headspring</a></li>
+		<li><a href="http://www.headspringmobile.com">Headspring Mobile</a></li>
+	</ul>
+</div>
+
+<div class="related-links">
+	<h3>Communities/Groups</h3>
+	<ul>
+		<li><a href="http://www.adnug.org">ADNUG</a></li>
+		<li><a href="http://polyglotprogrammers.org">Polyglot ATX</a></li>
+	</ul>
+</div>
+
+<div class="related-links">
+	<h3>Open Source</h3>
+	<ul>
+		<li><a href="http://www.adnug.org">AutoMapper</a></li>
+		<li><a href="http://polyglotprogrammers.org">Formo</a></li>
+		<li><a href="http://polyglotprogrammers.org">Parsely</a></li>
+		<li><a href="http://polyglotprogrammers.org">NAAK</a></li>
+	</ul>
+</div>
+
+<div class="related-links">
+	<h3>Events</h3>
+	<ul>
+		<li><a href="http://www.adnug.org">CTX Givecamp</a></li>
+		<li><a href="http://polyglotprogrammers.org">Houston TechFest</a></li>
+		<li><a href="http://polyglotprogrammers.org">Austin Code Camp</a></li>
+	</ul>
+</div>
+
+<hr />
+
+Copyright &copy; 2013
 
     Headspring Labs
 

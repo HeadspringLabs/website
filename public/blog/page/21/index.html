@@ -154,287 +154,6 @@ Austin, TX – July 30, 2012, Headspring, a custom &hellip;">
 </div>
 </article>
 
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/scope-creep/">
-		
-			Scope Creep</a>
-	</h2>
-	<div class="entry-content">
-		<p>Two weeks back, I said that I was encountering <a href="http://www.headspring.com/blog/developer-deep-dive/essential-vs-incidental-complexity/">Incidental Complexity</a> in a hobby project, and last week I demonstrated <a href="http://www.headspring.com/blog/developer-deep-dive/identifying-incidental-complexity/">the first of several revisions</a> meant to identify and remove that incidental complexity.</p>
-<p>Last week focused on identifying an abstraction that was providing no value at all and needed to be removed.  This week, we&#8217;ll see an abstraction that was right in its inception, but had become increasingly complex as it took on more and more functionality.</p>
-<h2>Rook&#8217;s Representation of Scope</h2>
-<p>We all take scope for granted.  A locally-declared variable is visible only within the block it was declared, a method only exists within the class block it is declared in, function parameters only exist within their function, etc.  When we&#8217;re looking at a line of code and we refer to a variable that <em>wasn&#8217;t</em> declared in the closest containing block, we instinctively look to the next outer block, and the next outer block, until we find it.</p>
-<p>If you&#8217;re writing a compiler, you need some way to represent this concept.  For any point in a given program, you need to be able to look up the type of an identifier applicable at that point.</p>
-<p>It turns out that you can easily represent nested scopes using a stack of dictionaries.  Each item in the stack is a dictionary, and a single such dictionary includes the identifier/type pairs that are defined in a single code block.  When the compiler encounters a new block with its own local variables, for instance, it pushes a new dictionary onto the top of the stack and fills it with those declarations.  Upon exiting the block the compiler pops that dictionary off of the stack because those names no longer exist.</p>
-<p>When inspecting an expression, the compiler can look up the type of any identifier by starting at the top: if the top dictionary has the identifer, we&#8217;re done; if it doesn&#8217;t, the search continues down the stack until it is found.</p>
-<blockquote><p>In other words, when a human looks for an identifier by moving their eyes to the next-outer-block, the compiler accomplishes the same thing by inspecting the next dictionary down the stack.</p></blockquote>
-<h2>The Troubled Implementation</h2>
-<p>That&#8217;s exactly how Rook&#8217;s own Scope type started: a basic stack of dictionaries, in which key lookup walks through the stack until a match is found.  This served me well, until it started absorbing lots of special cases.  </p>
-<p>First, take a quick scan through <a href="https://github.com/plioi/rook/blob/e5ba86001a06b28bdae3e4eb41d31641d08d1d4c/src/Rook.Compiling/Scope.cs">the troubled Scope implementation.</a>  It&#8217;s not the ugliest thing in the world, but it&#8217;s certainly not <em>clean</em>.  A few problems jump out at me:</p>
-<ol>
-<li><strong>It&#8217;s null-happy:</strong> Since <em>all</em> Scope objects have a reference to their surrounding &#8216;parent&#8217; scope (aka the next scope down the stack), we have to store parent=null in the global scope.  In several methods, we have to inspect whether parent is null in order to know what <em>kind</em> of scope we&#8217;re dealing with.  There&#8217;s nothing about &#8220;parent == null&#8221; that says &#8220;this is the global scope&#8221;, so while reading through this you have to constantly remind yourself what null means.</li>
-<li><strong>The localNonGenericTypeVariables field is weird and confusing:</strong> even if you read through all its usages, it&#8217;s really hard to know what this member field is even used for.  Why does it exist?  What <em>kind</em> of scope is it applicable for?  What if I call <code>TreatAsNonGeneric</code> against the wrong <em>kind</em> of scope?  Ugh.</li>
-<li><strong>The CreateTypeVariable field is weird and confusing:</strong> if you were to trace the long series of calls along which this object gets passed in order to arrive here, it would only confuse things further.  We go to great lengths to trick all the Scope instances into having a reference to the same shared Func, just so it can be called by <code>FreshenGenericTypeVariables</code>, and <em>that</em> method doesn&#8217;t even really belong in this class in the first place!</li>
-<li><strong>Inconsistency in construction:</strong> depending on what <em>kind</em> of scope you want, you&#8217;ll either call a static factory (<code>CreateRoot</code>), an instance factory (<code>CreateLocalScope</code>), or a &#8216;Try&#8217; instance method with an <code>out</code> parameter (<code>TryGetMemberScope</code>).</li>
-<li><strong>What in the heck is a &#8216;root&#8217; scope, anyway?</strong></li>
-</ol>
-<h2>Recognizing the Problem</h2>
-<p>All in all, it is exceedingly easy to misunderstand and misuse this class because it has accumulated so many mixed up concepts over time.</p>
-<p>I emphasized the word &#8216;kind&#8217; a few times now, and that&#8217;s a clue as to what the real problem is.  When working within this class, and when using this class from elsewhere in the system&#8230;</p>
-<ul>
-<li>you must constantly think about what <em>kind</em> of scope you are dealing with.</li>
-<li>you must constantly think about what <em>category</em> of scope you are dealing with.</li>
-<li>you must constantly think about what <em>class</em> of scope you are dealing with.</li>
-</ul>
-<p>Aha!  We&#8217;ve got one class that is trying to represent several classes of scopes!  This isn&#8217;t the only thing wrong with Scope, and we&#8217;ll get to the rest in future posts, but the problem to solve this week is to split this class into a few meaningful classes, and clean up as much as we can in the process.  The result won&#8217;t be perfect, but it will put us into a better position for future refactorings.</p>
-<blockquote><p>We&#8217;ll split <code>Scope</code> into several classes over the course of several commits.  Each commit will have a small&#8230; um&#8230; <em>scope</em> in order to let our source control document the train of thought.</p></blockquote>
-<h2>Commit #1</h2>
-<p><a href="https://github.com/plioi/rook/blob/5b18f455b79b956f8933c73aedfcf33434f55cf1/src/Rook.Compiling/Scope.cs">Extract LambdaScope subclass from Scope, as it is the only kind of scope that can treat type variables as non-generic.</a></p>
-<p>It turns out that type checking lambda expressions is unusual compared to other kinds of expressions.  The fact that lambda expression parameters don&#8217;t have explicit type declarations means that we have to infer them from how the lambda is <em>used</em> and we have to generate some temporary placeholders for those as-yet-unknown types before we&#8217;ve collected enough info to nail them down.</p>
-<p>The details are irrelevant for this post, but the important part is the realization that <strong>the <code>TreatAsNonGeneric</code> method and the <code>localNonGenericTypeVariables</code> list were only ever used when we knew we were dealing with a lambda declaration&#8217;s scope.</strong>  Therefore, I extracted <code>LambdaScope</code> as a subclass of Scope.  This special method and list now live only in <code>LambdaScope</code>, which at least gives some clue as to their purpose.</p>
-<h2>Commit #2</h2>
-<p><a href="https://github.com/plioi/rook/blob/fb9fa6c9853fd1af1b069f5e83246ba806baf266/src/Rook.Compiling/Scope.cs">Rename &#8216;root&#8217; scope to &#8216;global&#8217; scope because that&#8217;s what it is.</a></p>
-<p>The &#8216;root&#8217; scope was special because it contains built-in definitions, like operators, which should be visible to all parts of a program being compiled.  It never deserved to be called &#8216;root&#8217;, and should have always been called &#8216;global&#8217; to match common terminology and communicate intent.</p>
-<h2>Commit #3</h2>
-<p><a href="https://github.com/plioi/rook/blob/d4628e28608437500fe80a4df45f8befdb42bed8/src/Rook.Compiling/Scope.cs">Extract GlobalScope subclass from Scope.</a></p>
-<p>Since global scope objects are special due to their initial contents, I extracted another subclass.  The old static factory method CreatGlobalScope became the constructor of the new <code>GlobalScope</code> class.</p>
-<h2>Commit #4</h2>
-<p><a href="https://github.com/plioi/rook/blob/5038da7a86aff5b42d1818cc8af83ba20c764d06/src/Rook.Compiling/Scope.cs">Extract TypeMemberScope subclass from Scope.</a></p>
-<p>Back when I started this series of posts, I mentioned that it was getting harder and harder to add new features due to the growing amount of incidental complexity.  The worst offender was adding the ability to type check method calls.  Type checking function calls (&#8220;Function(arg)&#8221;) had been simple, but type checking method calls (&#8220;instance.Method(arg)&#8221;) had been <em>shockingly</em> difficult, and it all came down to the unhelpful version of the <code>Scope</code> class.</p>
-<p>It turns out that type checking method calls involves yet another <em>kind</em> of scope.  When type checking an expression like <code>username.Trim()</code>, we look up the type of <code>username</code> in the local scope, but what if we then tried to look up <code>Trim</code> there too?  If we find &#8220;Trim&#8221; in the local scope, <em>that&#8217;s just an unfortunate coincidence!</em>  It would be some local variable that happens to be the same name as the method we&#8217;re calling.</p>
-<p>Before I understood this detail, I was running into mind-boggling behavior.  My tests included a code snippet containing a top-level function whose name and arguments were coincidentally the same as those of an instance method.  Type checking calls to that method would work by accident: we were looking in the wrong scope for the Func type of the code being called, and we found the coincidentally-correct answer by accidentally looking up the type of the top-level function!</p>
-<p><em>Where</em> should we look up method names?  Well, we can consider the known type of the instance to the left of the &#8220;.&#8221; operator.  For any type, there is a sort of &#8220;member scope&#8221; containing the names of all types members and their associated Func types.</p>
-<p>The offending method here was <code>TryGetMemberScope</code>, which constructs this kind of scope.  This method is further complicated by the notion that it might fail for unknown types, so it uses the &#8216;Try&#8217; pattern with an <code>out</code> parameter.  To make things worse, it doesn&#8217;t even really make use of any member variables, so it doesn&#8217;t even need to live in this class!</p>
-<p>With this commit, I first moved this method to the one place it was actually used, and then extracted <code>TypeMemberScope</code> as another scope.  Like <code>GlobalScope</code>, these don&#8217;t have a &#8216;parent&#8217; to defer to when lookups fail.</p>
-<p>One really cool thing about this refactoring was that after moving the method over to the class it belonged in, it sort of simplified-and-collapsed-into the only method that made use of it.</p>
-<blockquote><p>
-    You know you&#8217;ve moved a method to its proper home when, upon arrival, it evaporates.  Every part that disappeared was incidental complexity.
-</p></blockquote>
-<h2>Commit #5</h2>
-<p><a href="https://github.com/plioi/rook/blob/249d33890a621f4c90a6b80e8c5563fcb0020820/src/Rook.Compiling/Scope.cs">Split Scope class into abstract Scope and concrete LocalScope classes, as the &#8216;parent&#8217; field is only applicable in local scopes.</a></p>
-<p>This commit addresses the complaint that the class is &#8216;null happy&#8217;.  Local scopes defer to their surrounding scope when they don&#8217;t find an identifier, but global and type-member scopes don&#8217;t have any surrounding scope to defer to.  By splitting the class into local and non-local versions, the implementations of both got much simpler.  <code>LocalScope</code>&#8217;s methods are all one-liners, and it&#8217;s pretty clear what they&#8217;re doing and why they&#8217;re doing it.</p>
-<h2>Commit #6</h2>
-<p><a href="https://github.com/plioi/rook/blob/0efcd783fbec0e62624b4a5716d34122dd97cb8a/src/Rook.Compiling/Scope.cs">TypeChecker is responsible for freshening generic type variables upon Name lookups, rather than having Scope perform that operation.</a></p>
-<p>By the end of the previous commit, we had all the classes we needed: abstract <code>Scope</code>, <code>GlobalScope</code>, <code>TypeMemberScope</code>, <code>LocalScope</code>, and <code>LambdaScope</code>.  The abstract base class had one glaring offender left to phase out: the suspicious <code>CreateTypeVariable</code> field mentioned before, which was passed and passed and passed along to get here just so we could use it in the <code>FreshenGenericTypeVariables</code> method.</p>
-<p>This &#8216;freshen&#8217; method comes into play when type checking calls to functions that have generic type parameters, like <code>IEnumerable&lt;T&gt;</code>&#8217;s <code>Select&lt;T&gt;</code> extension method.  I&#8217;d explain the details, <strong>but I don&#8217;t have to</strong>.  We&#8217;re talking about scope today, and <strong>this operation has as much to with scope as a washing machine does</strong>.  This operation belongs in the <code>TypeChecker</code> class.</p>
-<blockquote><p>Once this method moved back where it belongs, we could drop all the convoluted passing-along of the <code>CreateTypeVariable</code> field.</p></blockquote>
-<p>The results of this commit aren&#8217;t perfect.  I&#8217;m not thrilled that I&#8217;m accomplishing this with subclassing: I&#8217;d rather Scope be an interface and avoid implementation inheritence.  I hate using <code>override</code> and <code>base</code>.  The benefit of the subclassing approach is that it was a tool to help me separate these concepts from each other in small steps.  Now that things are separated by purpose, I&#8217;m left with something I can actually work with.  I may be able to futher clean things up and avoid subclassing down the road.</p>
-<h2>Addressing Scope Creep</h2>
-<p><a href="http://en.wikipedia.org/wiki/Scope_creep">Scope creep</a> usually deals with the problem of a project&#8217;s requirements growing and changing in an unwieldy way, but the same thing happens to your classes in response to those requirements changes.</p>
-<blockquote><p>It&#8217;s important to cultivate a negative vicseral reaction to growing complexity, rather than to just accept it as necessary.</p></blockquote>
-<p>When one of your classes starts to absorb competing concerns, you may be able to turn things around by recognizing what types are hidden in there, wanting to escape and become classes of their own.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-07-29T00:00:00-05:00" pubdate data-updated="true">Jul 29<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/get-to-know-a-developer-kyle-nunery/">
-		
-			Get to Know a Developer: Kyle Nunery</a>
-	</h2>
-	<div class="entry-content">
-		<p><a href="http://www.headspring.com/wp-content/uploads/2012/07/photo-51.jpg"><img class="alignright size-medium wp-image-5674" title="kyle nunery" src="http://www.headspring.com/wp-content/uploads/2012/07/photo-51-224x300.jpg" alt="kyle nunery" width="224" height="300" /></a>I should have posted this last week, so forgive my tardiness. We&#8217;ve hired three amazing new developers in the month of July! The first of which is Kyle Nunery, Senior Consultant. He relocated from Florida for the position. Kyle lucked out, because his first Friday with us happened to be a quarterly company offsite at <a href="http://www.headspring.com/blog/small-talk-and-big-news/new-office-and-k1-racing/">K1 Speed Go Kart Racing</a>. He and I joined the rest of the crew for lunch at Chuy&#8217;s (yum!) before we headed to the track.  There, we talked with Tim Thomas about the direction of front-end development and how crucial Javascript knowledge has become. Interesting talk. Here are some other things he had to say:</p>
-<p><strong>Are you an expert at anything?</strong></p>
-<p>I like to think I am an expert at building business websites.  My strongest programming languages are C# and JavaScript.</p>
-<p><strong>What led you to software development?</strong></p>
-<p>In middle school I wanted to make a video game, so my step dad bought me a book on programming in C.  This passion for programming continued on into college and led to my career in software development.</p>
-<p><strong>What did you learn first?</strong></p>
-<p>My first programming language was C using the Borland Turbo C++ compiler.</p>
-<p><strong>Where do you begin when learning something new?</strong></p>
-<p>I will typically build many small programs testing out various features of a new technology.  Besides reading blogs and Googling I will often reference books via Safari Books Online.</p>
-<p><strong>How do you gauge “time well spent”?</strong></p>
-<p>At work, “time well spent”, is anything that will help in delivering the highest quality solution for your customer as quickly as possible.</p>
-<p><strong>What are your plans for the future?</strong></p>
-<p>I am interested in making more mobile applications.  In general, I would like to become a stronger voice in the development community.</p>
-<p>&nbsp;</p>
-<p>To learn more about Kyle, tweet: <a href="https://twitter.com/knunery" target="_blank">@knunery</a></p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-07-27T00:00:00-05:00" pubdate data-updated="true">Jul 27<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/blog/'>Blog</a>, <a class='category' href='/blog/categories/bonus/'>Bonus!</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/get-to-know-a-headspringer/'>Get To Know a Headspringer</a>, <a class='category' href='/blog/categories/small-talk-and-big-news/'>Small Talk &amp; Big News</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/identifying-incidental-complexity/">
-		
-			Identifying Incidental Complexity</a>
-	</h2>
-	<div class="entry-content">
-		<p>Last week, I mentioned that I was encountering <a href="http://www.headspring.com/blog/developer-deep-dive/essential-vs-incidental-complexity/">Incidental Complexity</a> in a hobby project.  <a href="https://github.com/plioi/rook">Rook</a> is a compiler for a simple programming language, and lately it seems that adding new features is getting harder, suggesting that some of my abstractions are working against me.  Adding new features to this project <em>should</em> be getting easier and easier. Over the next few weeks, I&#8217;ll be writing about the refactorings that get this project back on track.</p>
-<p><strong>Incidental complexity shows up when you are using the wrong abstractions.</strong>  You&#8217;ll find yourself writing more lines of code <em>serving</em> the abstraction than solving the real problem.  Your abstractions should be <em>removing</em> obstacles, not throwing obstacles in your face on every other line.</p>
-<h2>A Complex Visitor</h2>
-<p>This week, I&#8217;ve identified an abstraction in Rook&#8217;s type checker that needed to be removed completely.  The <code>TypeChecker</code> class was recently created when I refactored to use the <a href="http://en.wikipedia.org/wiki/Visitor_pattern">Visitor Pattern</a>.  One downside to refactoring to the Visitor Pattern is that, upon success, you are left with a potentially-large class.  The large class has a single overall purpose, but that purpose is rather involved.  There are some pretty tough pros and cons to consider when deciding whether or not to use a visitor, but one of the benefits in this case is that I could finally <em>see</em> that I had a great deal of suspicious duplication of code.</p>
-<p>With the Visitor Pattern, you have a tree of objects where the nodes of the tree can be of different types.  You have an algorithm you wish to apply to the whole tree, and you want a clean way to recursively traverse all those different node types.  You wind up creating a class that has one method for each concrete tree node type.</p>
-<p>The <code>TypeChecker</code> class is a visitor that traverses the tree with the goal of building up a brand new, slightly modified tree.  The input tree represents all the Rook source code that has been parsed, and the output tree produced by <code>TypeChecker</code> represents that same Rook source code, but with a concrete <code>DataType</code> filled in for each node.</p>
-<p>When the <code>TypeChecker</code> succeeded, you&#8217;d get a tree with type information.  When it failed, you&#8217;d get a list of error messages instead.  More on that oddity later&#8230;</p>
-<h2>Type Checking &#8216;if&#8217; Expressions</h2>
-<p>Consider a simple if-expression in Rook, which is equivalent to the <code>? :</code> ternary operator in C#:</p>
-<p><div><script src='https://gist.github.com/3154382.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>These four lines form a single expression.  The value of the expression as a whole is the value of the true branch (x) or the value of the false branch (y), whichever is actually evaluated at runtime.</p>
-<p>The requirements for type checking these expressions are rather simple, but the implementation of those checks had a great deal of incidental complexity.  To pass the type checker, an if expression:</p>
-<ol>
-<li>must have a condition expression of type bool.</li>
-<li>must have well-typed body expressions.</li>
-<li>must have body expressions whose types are the same as each other.</li>
-</ol>
-<p>When these requirements are met, the type of the whole if-expression is the type of one of its branches&#8217; body expressions.  In the sample above, <code>count > 0</code> must be a boolean expression, and <code>x</code> had better have the same type as <code>y</code>.</p>
-<h2>The Troubled Implementation</h2>
-<p>It just takes a few clear sentences to describe the type checking of if-expressions, but the implementation of those rules is jam-packed with incidental complexity:</p>
-<p><div><script src='https://gist.github.com/3151220.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>After attempting to type check the condition, true branch, and false branch, we jump through some strange hoops to collect any error messages that were encountered so far.  Then, we declare three more variables with suspiciously-similar names to the variables already in scope.  Next, we &#8216;Unify&#8217; the condition expression&#8217;s type with Boolean and &#8216;Unify&#8217; the true-branch&#8217;s type with the false-branch&#8217;s type (<code>Unify</code> calls are basically assertions like &#8220;These two types had better be the same as each other&#8221;).  <em>Again</em>, we jump through some weird hoops to collect any error messages encountered before returning a result.  <strong>On success, the result is a new If tree node with its DataType property populated, and on failure we instead return a list of error messages.</strong></p>
-<p>Reread that last sentence.  It&#8217;s weird.</p>
-<p>We&#8217;re returning <em>either</em> a tree node of type If, or a list of error messages.  In a statically-typed language, returning either one thing or a completely different thing is not strictly doable.  To handle that, <strong>I created an abstraction that had big consequences on the complexity of the type checker.</strong>  The return type, <code>TypeChecked&lt;Expression&gt;</code>, is the unfortunate abstraction I needed to remove.</p>
-<p>A <code>TypeChecked</code>-thing is either a) a thing with a known DataType plus an empty list of error messages, or b) a null thing plus a nonempty list of error messages.  Since this was the return type of the many <code>TypeCheck</code> methods, those methods had to do a lot of explicit testing of intermediate results to see which of the two states each result was in.  In the case of failures, these methods had to do a lot of explicit combining of error messages so that the returned object included all errors encountered along the way.</p>
-<p><strong>The fact that this is hard to explain in English should have been my first clue that I was working with a bad abstraction.  A lot of these words just don&#8217;t show up in the requirements.</strong></p>
-<p>I was writing way more lines of code serving <code>TypeChecked&lt;T&gt;</code>&#8217;s idiosyncrasies than I was writing to actually implement the requirements!  What, exactly, did this thing buy me?  Also, it&#8217;s wasteful to spend so much of our time combining and recombining these collections of error messages as they get passed up the recursive call chain.  It&#8217;s probably not wasteful in CPU cycles (the collections are very small in practice), but was extremely wasteful in brain cycles.</p>
-<h2>Don&#8217;t let the door hit you on the way out!</h2>
-<p>Let&#8217;s kick this abstraction out of the project entirely.</p>
-<p>The <code>TypeChecker</code> class should simply own a growing list of error messages encountered during the tree traversal, so <code>TypeChecked&lt;T&gt;</code> would no longer need to store a list of its own.  That would make <code>TypeChecked&lt;T&gt;</code> a trivial wrapper of a node, adding nothing of value to that node.  I removed the class, and change occurrences of <code>TypeChecked&lt;T&gt;</code> to simply T.</p>
-<p>Now, each <code>TypeCheck</code> method just returns null when no properly-typed node can be produced, and non-null when one can be produced.  That subtle shift in the meaning of returned objects lets us get rid of a lot of the cruft that was accumulating.  The new version of the if-expression type checker is much more to the point:</p>
-<p><div><script src='https://gist.github.com/3154330.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>It&#8217;s not perfect, but it&#8217;s a clear step in the right direction.  <strong>To sum up, when you&#8217;re working <em>for</em> your abstractions, they&#8217;re not working for you.  Render them pointness, and then drop them like the bad habit they are.</strong></p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-07-21T00:00:00-05:00" pubdate data-updated="true">Jul 21<span>st</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/new-office-and-k1-racing/">
-		
-			New Office and K1 Racing</a>
-	</h2>
-	<div class="entry-content">
-		<p>Last time I posted we were just packing up to move from the Spicewood Office. We&#8217;re set up nicely now at the Avallon Building on Braker and Jollyville. I updated the slideshow with pics of our new place:</p>
-<p><object width="400" height="300"><param name="flashvars" value="offsite=true&lang=en-us&page_show_url=%2Fphotos%2Fheadspring%2Fsets%2F72157630451128500%2Fshow%2F&page_show_back_url=%2Fphotos%2Fheadspring%2Fsets%2F72157630451128500%2F&set_id=72157630451128500&jump_to="></param><param name="movie" value="http://www.flickr.com/apps/slideshow/show.swf?v=109615"></param><param name="allowFullScreen" value="true"></param><embed type="application/x-shockwave-flash" src="http://www.flickr.com/apps/slideshow/show.swf?v=109615" allowFullScreen="true" flashvars="offsite=true&lang=en-us&page_show_url=%2Fphotos%2Fheadspring%2Fsets%2F72157630451128500%2Fshow%2F&page_show_back_url=%2Fphotos%2Fheadspring%2Fsets%2F72157630451128500%2F&set_id=72157630451128500&jump_to=" width="400" height="300"></embed></object></p>
-<p>Also, last week we had our quarterly offsite meeting and headed over to K1 Speed for Go Kart Racing. I came in last place and was just fine with it - going fast is dangerous. But the rest of the crowd had a grand ole time racing, bumping and running each other off the track like a bunch of professionals. Oh, we had a meeting too. Key points: the company is still growing strong and everyone still like working here.</p>
-<p><object width="400" height="300"><param name="flashvars" value="offsite=true&lang=en-us&page_show_url=%2Fphotos%2Fheadspring%2Fsets%2F72157630653691854%2Fshow%2F&page_show_back_url=%2Fphotos%2Fheadspring%2Fsets%2F72157630653691854%2F&set_id=72157630653691854&jump_to="></param><param name="movie" value="http://www.flickr.com/apps/slideshow/show.swf?v=109615"></param><param name="allowFullScreen" value="true"></param><embed type="application/x-shockwave-flash" src="http://www.flickr.com/apps/slideshow/show.swf?v=109615" allowFullScreen="true" flashvars="offsite=true&lang=en-us&page_show_url=%2Fphotos%2Fheadspring%2Fsets%2F72157630653691854%2Fshow%2F&page_show_back_url=%2Fphotos%2Fheadspring%2Fsets%2F72157630653691854%2F&set_id=72157630653691854&jump_to=" width="400" height="300"></embed></object></p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-07-19T00:00:00-05:00" pubdate data-updated="true">Jul 19<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/blog/'>Blog</a>, <a class='category' href='/blog/categories/small-talk-and-big-news/'>Small Talk &amp; Big News</a>
-
-
-</div>
-	
-</div>
-</article>
-
 <nav id="pagenavi">
     
         <a href="/blog/page/20/" class="prev">Prev</a>
@@ -444,7 +163,44 @@ Austin, TX – July 30, 2012, Headspring, a custom &hellip;">
     
     <div class="center"><a href="/blog/archives">Blog Archives</a></div>
 </nav></div>
-	<footer id="footer" class="inner">Copyright &copy; 2013
+	<footer id="footer" class="inner"><div class="related-links">
+	<h3>Other Headspring Sites</h3>
+	<ul>
+		<li><a href="http://www.headspring.com">Headspring</a></li>
+		<li><a href="http://www.headspringmobile.com">Headspring Mobile</a></li>
+	</ul>
+</div>
+
+<div class="related-links">
+	<h3>Communities/Groups</h3>
+	<ul>
+		<li><a href="http://www.adnug.org">ADNUG</a></li>
+		<li><a href="http://polyglotprogrammers.org">Polyglot ATX</a></li>
+	</ul>
+</div>
+
+<div class="related-links">
+	<h3>Open Source</h3>
+	<ul>
+		<li><a href="http://www.adnug.org">AutoMapper</a></li>
+		<li><a href="http://polyglotprogrammers.org">Formo</a></li>
+		<li><a href="http://polyglotprogrammers.org">Parsely</a></li>
+		<li><a href="http://polyglotprogrammers.org">NAAK</a></li>
+	</ul>
+</div>
+
+<div class="related-links">
+	<h3>Events</h3>
+	<ul>
+		<li><a href="http://www.adnug.org">CTX Givecamp</a></li>
+		<li><a href="http://polyglotprogrammers.org">Houston TechFest</a></li>
+		<li><a href="http://polyglotprogrammers.org">Austin Code Camp</a></li>
+	</ul>
+</div>
+
+<hr />
+
+Copyright &copy; 2013
 
     Headspring Labs
 

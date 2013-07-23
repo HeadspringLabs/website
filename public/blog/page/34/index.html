@@ -164,342 +164,6 @@
 </div>
 </article>
 
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/publishing-a-simple-nuget-package/">
-		
-			Publishing a Simple NuGet Package</a>
-	</h2>
-	<div class="entry-content">
-		<p><a href="http://nuget.org/">NuGet</a> is a Visual Studio extension that makes it easy to pull third-party libraries into your projects.  It can also bring in their dependencies, along the same lines as gems for Ruby development.</p>
-<p>I recently <a href="http://www.headspring.com/2012/03/migrating-from-bitbucket-to-github">migrated Headspring&#8217;s Enumeration class to GitHub</a>.  This is a simple class that, for the most part, replaces the need for .NET enum types.  One of the simplest things a NuGet package can do is add a file to your project, so creating and publishing an updated NuGet package for Enumeration was a great way to get my feet wet.</p>
-<p>Unlike most things, it was as easy as it should be.</p>
-<p>First, I created an account on <a href="http://nuget.org">nuget.org</a> and installed the extension using the link on the front page.  Next, I downloaded the <a href="http://nuget.codeplex.com/releases/view/58939">NuGet.exe command-line tool</a> and made sure it was included in my PATH.  On my account profile page, I&#8217;m given the chance to see my API Key.  Keep this secret.  At the command line, we need to issue a one-time command so that this key can be active during subsequent nuget commands:</p>
-<p><code>$ nuget setApiKey 123-abc-123-abc-123</code></p>
-<p>You create a *.nuspec file which describes the files you want to publish.  Then you ask nuget.exe to turn that file into a *.nupkg file.  A nupkg file is actually a zip file containing the files to be deployed as well as some metadata.</p>
-<p>At this point, the project consisted of 3 files: a README, LICENSE.txt, and Enumeration.cs.  While in this folder, I issued a command to create a skeleton of a nuspec file:</p>
-<p><code>$ nuget spec</code></p>
-<p>This creates Package.nuspec, which I renamed to Enumeration.nuspec and populated:</p>
-<p><div><script src='https://gist.github.com/2155348.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>There isn&#8217;t much going on here.  We say what version number we want to publish, a few descriptive fields, and then list the files we want to be included in the nupkg &#8216;zip&#8217; file.  In the file tags, <code>src</code> refers to the files relative to the location of the nuspec file, and <code>target</code> describes the path we want to copy it to <em>within</em> the zip.  Starting these paths with &#8220;content&#8221; means that when someone installs the package into one of their own projects, the files will be copied and then added to the target project file.</p>
-<p>To publish, we just need to issue the following commands:</p>
-<p><code>$ nuget pack Enumeration.nuspec</code><br />
-<code>$ nuget push Enumeration.1.0.4.nupkg</code><br />
-<code>$ del Enumeration.1.0.4.nupkg</code></p>
-<p><code>nuget pack</code> converts a nuspec into a nupkg, and <code>nuget push</code> submits it to <a href="http://nuget.org/">nuget.org</a>.  After that, we don&#8217;t need to keep a copy of the nupgk, so we delete it.</p>
-<p>That&#8217;s it!  Next week, we&#8217;ll cover the slightly more involved scenario of publishing a whole open-source library.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-23T00:00:00-05:00" pubdate data-updated="true">Mar 23<span>rd</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/headspring-values-what-matters-most/">
-		
-			Headspring Values: What Matters Most?</a>
-	</h2>
-	<div class="entry-content">
-		<p style="text-align: center;"><a href="http://www.headspring.com/2012/03/headspring-values-what-matters-most/sharon-and-jt" rel="attachment wp-att-4229"><img class="alignnone size-medium wp-image-4229" title="sharon and jt" src="http://www.headspring.com/wp-content/uploads/2012/03/sharon-and-jt-229x300.jpg" alt="" width="229" height="300" /></a><a href="http://www.headspring.com/2012/03/headspring-values-what-matters-most/kevin-award" rel="attachment wp-att-4230"><img class="alignnone size-medium wp-image-4230" title="kevin award" src="http://www.headspring.com/wp-content/uploads/2012/03/kevin-award-199x300.jpg" alt="" width="199" height="300" /></a></p>
-<p>I come from a long list of companies that “talk the talk” about how valuable their employees are.  It comes from a good place, and it’s rarely insincere.  In my opinion, and you may disagree, most people are good people – even your boss and your boss’s boss.</p>
-<p>However, “walking the walk” is extremely difficult, and my experience of the corporate world has shown me the implementation of all those good intentions usually turns out a little lack luster.  Treating everyone equally, rewarding good service, or fostering an open environment for communication is all fine and good when sales are up, negativity is down and there are only great things to say.  But there is often a huge disconnect between what a company <em>tells</em> their employees is encouraged, and what they show them when the going gets tough.</p>
-<p>Ever worked somewhere with an “Open Door” policy? Unofficially interprets itself as the “Open Door, but not, y’know, <em>That</em> Door” policy.</p>
-<p>At previous jobs, I’ve been barked at, I’ve been told “my place”, and I’ve been scolded for trying to do more good the wrong way.  I am not alone in those experiences. Most people at most companies have dealt with these issues at some point.  All the Employee of the Month awards in the world can’t take away the sting of a reactionary reprimand.</p>
-<p>And then there was Headspring.</p>
-<p>Working at Headspring is a breath of honest to goodness fresh air.  Everything I ever believed about how a company should treat people - employees and customers alike - is right here in this space.</p>
-<p>Headspring has a really interesting take on keeping the culture in check.  First of all, and like most companies, we have Core Values:</p>
-<ol>
-<li>Drive for Excellence</li>
-<li>People are Valued</li>
-<li>Honest Communication</li>
-<li>Passion for Learning and Growth</li>
-</ol>
-<p>&nbsp;</p>
-<p>These four values are the driving force behind every decision we make – top down, bottom up, etc.  If we have a policy, you can bet there has been a long, companywide discussion about how it touches each value.  Same goes for internal processes and procedures.  If anything conflicts with one of the values, we put it to test and revisit the drawing board. The values never change, and never will.  Everything revolves around them.</p>
-<p>This is hard.  Is your boss prepared to open up all the financial statements of the company to every employee – including cash on hand – every month? Mine is. Is your boss prepared to lead an open discussion on what we want in a new office space or where it should be? Mine is. Is your boss ready to show you the hiring pipeline of candidates on a display big enough for the whole company to see? You guessed it; mine is. Just like our tagline, <strong>No Surprises</strong>.</p>
-<p>Another way we keep the values in the forefront is through our Headspring Values Awards.  Each month, we email our Office Manager and People Are Valued Award Recipient, Rebecca Heath, with nominations for fellow teammates that have displayed these values in their everyday work.  The nominations are usually long and descriptive, sometimes emotional, and sometimes funny.  Nominations never expire, and there is no limit on the number that can be submitted per person.</p>
-<p><span style="text-align: center;">When it’s time for our Monthly All Hands Meeting, Rebecca types up and distributes all the nominations.  The leadership team awards two a month, with a plaque, speech, and a handshake.  It’s worth mentioning that we get to read all the nominations, which is nearly as good as getting selected for an award.</span></p>
-<p>“Yeah, only two were picked, but Alonso appreciated my work on our project, and wrote it down. I had feared maybe I was irritating him, but he appreciated that I challenged his ideas! I know this because the awards process is as open as anything else” – Sharon Cichelli, recent nominee</p>
-<p>What’s important about this to me is that we nominate each other.  We decide.  We share.  Together, we keep the values from becoming cute or meaningless.  They are real and relevant every day.</p>
-<p><span style="text-align: center;">Keeping the company in check is hard to do, but it helps to put your money where your mouth is.  We believe there is a better way to do business, to build software, and to run a company.</span></p>
-<p>How does your company show you that you are valued?</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-22T00:00:00-05:00" pubdate data-updated="true">Mar 22<span>nd</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/how-not-to-say-um-when-presenting/">
-		
-			How Not to Say &#8220;Um&#8221; When Presenting</a>
-	</h2>
-	<div class="entry-content">
-		<p>I&#8217;ll start with the tip, then unpack the reason why it works and explain how to apply it. To avoid those hemming and hawing filler words—um, y&#8217;know, like—and give your presentations the polish of eloquence:</p>
-<blockquote style="margin: 3em; font-size: 1.5em;"><p>Make eye contact.</p></blockquote>
-<h2>An Excursion into Psycholinguistics</h2>
-<p>To avoid filler words, it helps to understand why we say them, which falls under the domain of <a href="http://en.wikipedia.org/wiki/Psycholinguistics">psycholinguistics</a>.</p>
-<p>When you and I are having a conversation, we take turns speaking, and we use a variety of verbal and non-verbal cues to signal when to switch. I&#8217;ll ask a question and then pause, and you instinctively know that it is your turn to talk. While you&#8217;re telling a story, you&#8217;ll pause periodically to see if I am following, and I will make an encouraging sound (&#8220;mm hm&#8221; or &#8220;go on&#8221;) to confirm that it is still your turn. You might say something that sparks an idea in me that I very much want to share, and the changes in my facial expression—bright eyes and an intake in breath—convey my request to have a turn. If I get these cues wrong and repeatedly speak during what you consider <em>your turn</em>, you will think I&#8217;m rude and interrupty.</p>
-<p>Note that most of those transitions were signaled by a pause. To avoid being interrupted, when you need a moment to organize your thoughts but are not ready to relinquish your turn, you&#8217;ll phonate (fancy linguist term for &#8220;make noise with your speech apparatus&#8221;). You don&#8217;t have any words to say, but you want to fill the silence to retain your hold on the conversation, so you&#8217;ll use meaningless words. You&#8217;ll say &#8220;um.&#8221;</p>
-<h2>Maintaining Your Turn While Presenting</h2>
-<p>Consider how turn negotiation changes when you are presenting in front of an audience. Your instincts tell you that a pause will cause you to lose your turn, but in reality, you&#8217;re on stage. It&#8217;s your show. We in the audience have granted you an extended turn. You would feel uncomfortable in a one-on-one conversation talking for 20 minutes without exchanging turns, but it is normal, expected, and exactly appropriate during a presentation.</p>
-<p>How do you override the unconscious desire to say &#8220;um&#8221; to maintain your turn? You make eye contact with your audience members. Deliberate, focused eye contact. Avoid scattershot scans over their heads or a fixated stare at the clock on the back wall. Instead, look at the members of your audience. Deliver a clause or a whole sentence to one person, then connect with another person for the next. Two beneficial side-effects are better reception from your audience and improved pacing in your delivery. Deliberate pauses become built in as you deliver points to different individuals.</p>
-<p>When you make eye contact, your unconscious mind gets direct evidence that it is still your turn. You can see that there are no bids from the audience. You can feel the audience&#8217;s attention. That need to fill pauses with noise melts away.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-20T00:00:00-05:00" pubdate data-updated="true">Mar 20<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/getting-started-with-ravendb/">
-		
-			Getting Started With RavenDB</a>
-	</h2>
-	<div class="entry-content">
-		<p>I have been following the NoSQL movement for a while now. I have <a href="http://alonsorobles.com/2012/01/10/nosql-big-data-polyglot-persistence-a-new-era/">blogged about the movement</a> and even written a how to post on <a href="http://alonsorobles.com/2011/08/08/running-apache-cassandra-0-8-2-on-windows-7/">setting up a popular column oriented data store</a>. It’s exciting to see the development of so many persistence alternatives. Don’t get me wrong either. The RDBMS is not dead. It just no longer the only kid on the block.</p>
-<p>Document databases are another persistence alternative to the traditional RDBMS and there are plenty to chose from (like <a href="http://couchdb.apache.org/">CouchDB</a>, <a href="http://aws.amazon.com/simpledb/">SimpleDB</a>, <a href="http://ravendb.net/">RavenDB</a>,  and <a href="http://wiki.basho.com/Riak.html">Riak</a> to name a few). This post is intended to help get you started using RavenDB.</p>
-<p>Let’s get started!</p>
-<h3><span style="font-weight: bold;">Installing RavenDB</span></h3>
-<p>There are <a href="http://ravendb.net/download">a few different options for obtaining RavenDB</a>. When it’s available, I prefer using <a href="http://nuget.org/">Nuget</a> via the package manager console. So that’s how we are going to do it… Here we go.</p>
-<p>I am assuming you already have a Visual Studio solution with some projects in it. I have a class library project targeting the .NET 4.0 framework called Persistence where all of my persistence logic goes. Using the package manager console, I install the RavenDB package.</p>
-<p><div><script src='https://gist.github.com/1987578.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>From the output you can see a number of dependencies were installed. Feel free to hit your easy button now.</p>
-<h3><span style="font-weight: bold;">Starting the Server</span></h3>
-<p>The next thing we need to do is to start up the server. Please note that these steps are here to get you started, not the steps you should follow for production use. I’ll throw in some other pointers along the way.</p>
-<p>To start the server, open up windows explorer and navigate to your solution directory. You should find a packages directory there which was created by Nuget.</p>
-<p><a href="http://www.headspring.com/2012/03/getting-started-with-ravendb/image-png-32" rel="attachment wp-att-3954"><img class="alignnone size-medium wp-image-3954" src="http://www.headspring.com/wp-content/uploads/2012/03/image.png" alt="" width="440" height="232" /></a></p>
-<p>Navigate into the packages directory, then into the RavenDB directory, then into the server directory and locate the Raven.Server.exe file.</p>
-<p><a href="http://www.headspring.com/2012/03/getting-started-with-ravendb/image-png-33" rel="attachment wp-att-3956"><img class="alignnone size-medium wp-image-3956" src="http://www.headspring.com/wp-content/uploads/2012/03/image1.png" alt="" width="440" height="232" /></a></p>
-<p>Double click the Raven.Server.exe file to start the server. This will start a console window that looks like this:</p>
-<p><a href="http://www.headspring.com/2012/03/getting-started-with-ravendb/image-png-34" rel="attachment wp-att-3958"><img class="alignnone size-medium wp-image-3958" src="http://www.headspring.com/wp-content/uploads/2012/03/image2.png" alt="" width="440" height="232" /></a></p>
-<p>Feel free to hit that easy button again!</p>
-<p>The server has automatically created a data directory and started an HTTP server on port 8080. These settings can be changed in the Raven.Server.exe.config file as needed. Let’s move on.</p>
-<h3><span style="font-weight: bold;">The Basics</span></h3>
-<p>Before we start fiddling with data, we need to understand the basic mechanics of a document database. The concepts are pretty easy, but can be a mental leap if you spent years working with traditional relational databases. Here are the basic concepts from the top down.</p>
-<p><strong>Database </strong>– The server is made up of database instances. Each database is made up of document collections. I like to think of a database like a filing cabinet.</p>
-<p><strong>Collection</strong> – The instance is made up of collections which are nothing more than logical grouping of documents. I like to think of them as a folder or a bin that contain related documents.</p>
-<p><strong>Document</strong> – A document is a single unit of data. It is made up of fields. Think about an email. It is a document which contains a single sender, one or more recipients, a subject, a timestamp, and a body. It is important to note that every document does not necessarily contain all the fields. That means there is no enforced schema for the documents. It may be helpful to think about a handwritten letter. A letter will most likely contain a recipient, a body, and a sender. But you could optionally add a return address, a subject line, a post script message, and/or a date.</p>
-<p><strong>Field</strong> – A field is a key value pair. The key describes the contents of the field. The value maybe an array or a scalar value. It could also be a document or an array of documents. They are pretty flexible.</p>
-<p>If you are still having a hard time wrapping your mind around these concepts, then you may find it useful to conceptually map these terms to relational data terms. Just remember that these mappings are not literally identical, they are somewhat similar concepts. I have also added a real world equivalent for comparison.</p>
-<table width="374" border="1" cellspacing="0" cellpadding="2">
-<tbody>
-<tr>
-<td valign="top" width="195"><strong>Document DB Concept/Term</strong></td>
-<td valign="top" width="177"><strong>Similar SQL Concept/Term</strong></td>
-</tr>
-<tr>
-<td valign="top" width="208">Database</td>
-<td valign="top" width="183">Database</td>
-</tr>
-<tr>
-<td valign="top" width="211">Collection</td>
-<td valign="top" width="186">Table</td>
-</tr>
-<tr>
-<td valign="top" width="211">Document</td>
-<td valign="top" width="187">Row</td>
-</tr>
-<tr>
-<td valign="top" width="210">Field</td>
-<td valign="top" width="188">Column</td>
-</tr>
-</tbody>
-</table>
-<p>You may still not fully understand the difference and that’s okay. The differences will become more apparent as you play with document databases.</p>
-<p>Let’s get some hands on experience now.</p>
-<p>Fire up the management studio by using your favorite browser and navigating to http://localhost:8080 while the server is still running.</p>
-<p><a href="http://www.headspring.com/2012/03/getting-started-with-ravendb/image-png-35" rel="attachment wp-att-3960"><img class="alignnone size-medium wp-image-3960" src="http://www.headspring.com/wp-content/uploads/2012/03/image3.png" alt="" width="440" height="286" /></a></p>
-<p>By default, the RavenDB server has created a “Default” database instance and that is the instance the management studio has connected to. The first thing we are going to do is create a database instance that we will use for the remainder of this discussion.</p>
-<p>Click on the “Database” link towards the top right of the studio.</p>
-<p><a href="http://www.headspring.com/2012/03/getting-started-with-ravendb/image-png-36" rel="attachment wp-att-3962"><img class="alignnone size-medium wp-image-3962" src="http://www.headspring.com/wp-content/uploads/2012/03/image4.png" alt="" width="440" height="286" /></a></p>
-<p>Next click on the “New Database” button.</p>
-<p><a href="http://www.headspring.com/2012/03/getting-started-with-ravendb/image-png-37" rel="attachment wp-att-3964"><img class="alignnone size-medium wp-image-3964" src="http://www.headspring.com/wp-content/uploads/2012/03/image5.png" alt="" width="300" height="96" /></a></p>
-<p>Enter “ShoppingCartDemo” for the database name and click the “OK” button. You may be prompted for credentials. Go ahead and enter them.</p>
-<p><a href="http://www.headspring.com/2012/03/getting-started-with-ravendb/image-png-38" rel="attachment wp-att-3966"><img class="alignnone size-medium wp-image-3966" src="http://www.headspring.com/wp-content/uploads/2012/03/image6.png" alt="" width="440" height="286" /></a></p>
-<p>Click on the “ShoppingCartDemo” database. Notice the navigation bar changed from “Databases &gt; Default” to “Databases &gt; ShoppingCartDemo”.</p>
-<p><a href="http://www.headspring.com/2012/03/getting-started-with-ravendb/image-png-39" rel="attachment wp-att-3968"><img class="alignnone size-medium wp-image-3968" src="http://www.headspring.com/wp-content/uploads/2012/03/image7.png" alt="" width="440" height="286" /></a></p>
-<p>Congrats! You now have a new database instance and the management studio is now working in its context.</p>
-<p>We could have done the same thing with some code. It looks like this.</p>
-<p><div><script src='https://gist.github.com/2176197.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Now we are ready to add some data.</p>
-<h3><span style="font-weight: bold;">Creating Documents</span></h3>
-<p>First we need to define our classes. We can do that with some simple C# like this:</p>
-<p><div><script src='https://gist.github.com/1988820.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Then the application can do something like this:</p>
-<p><div><script src='https://gist.github.com/2176205.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>After that code is executed by the application you can see a few things in the RavenDB management studio.</p>
-<p>Let’s take a look at the collections page which can be accessed by clicking the “Collections” tab at the top of the studio.</p>
-<p><a href="http://www.headspring.com/2012/03/getting-started-with-ravendb/image-png-33" rel="attachment wp-att-3956"><img class="alignnone size-medium wp-image-3956" src="http://www.headspring.com/wp-content/uploads/2012/03/image8.png" alt="" width="440" height="286" /></a></p>
-<p>Notice that RavenDB has created a “ShoppingCarts” collection for us. This collection is a logical grouping of the ShoppingCart documents. Now click on the pencil icon on the document.</p>
-<p><a href="http://www.headspring.com/2012/03/getting-started-with-ravendb/image-png-33" rel="attachment wp-att-3956"><img class="alignnone size-medium wp-image-3956" src="http://www.headspring.com/wp-content/uploads/2012/03/image9.png" alt="" width="440" height="286" /></a></p>
-<p>Notice that the document is just a JSON serialized representation of the created cart. There is some metadata that RavenDB keeps to help it serialize and deserialize the JSON documents to plain old CLR objects.</p>
-<p>Now we can retrieve documents.</p>
-<h3><span style="font-weight: bold;">Retrieving Documents</span></h3>
-<p>We can now retrieve the shopping cart.</p>
-<p><div><script src='https://gist.github.com/2176209.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<h3></h3>
-<h3><span style="font-weight: bold;">Updating Documents</span></h3>
-<p>After retrieving a document, you will probably want to persist changes to it. This easy pretty easy to do.</p>
-<p>We can refactor the shopping cart class a little here. By changing the array of line items to a list of line items, we can now easily add items to the cart.</p>
-<p><div><script src='https://gist.github.com/1989715.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Now our application can make changes like this:</p>
-<p><div><script src='https://gist.github.com/2176221.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Take a look at the document data in the management studio</p>
-<p><a href="http://www.headspring.com/2012/03/getting-started-with-ravendb/image-png-33" rel="attachment wp-att-3956"><img class="alignnone size-medium wp-image-3956" src="http://www.headspring.com/wp-content/uploads/2012/03/image10.png" alt="" width="440" height="286" /></a></p>
-<p>Notice that the change in the shopping cart class had no impact in this operation. This is one of the neat features of a document DB. Adding and changing fields is pretty easy without having to worry about migrating data most of the time. There are some caveats with this. But that is a topic for another discussion.</p>
-<h3></h3>
-<h3><span style="font-weight: bold;">Deleting Documents</span></h3>
-<p>We can now add a delete a cart easily like this:</p>
-<p><div><script src='https://gist.github.com/2176223.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Take another look at collections tab in the management studio:</p>
-<p><a href="http://www.headspring.com/2012/03/getting-started-with-ravendb/image-png-33" rel="attachment wp-att-3956"><img class="alignnone size-medium wp-image-3956" src="http://www.headspring.com/wp-content/uploads/2012/03/image11.png" alt="" width="440" height="286" /></a></p>
-<p>Notice the document is gone, but RavenDB remembers the ShoppingCarts collection.</p>
-<p>We have looked at:</p>
-<ol>
-<li>How to install RavenDB using Nuget for development</li>
-<li>How to start up the RavenDB server (again for development and tinkering)</li>
-<li>How to access the management studio</li>
-<li>How to create a database using code and the studio</li>
-<li>How to perform simplistic CRUD operations (create, retrieve, update, and delete) using the RavenDB client.</li>
-</ol>
-<p>There is much more to discuss about Raven. Make sure you look at the <a href="http://ravendb.net/">official RavenDB site for more information</a>.</p>
-<p><strong>Update:</strong> Thanks for the feedback. I removed the repository pattern from the examples as the implementation example was taking away from the intent of the post.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-19T00:00:00-05:00" pubdate data-updated="true">Mar 19<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/nosql/'>nosql</a>, <a class='category' href='/blog/categories/ravendb/'>ravendb</a>
-
-
-</div>
-	
-</div>
-</article>
-
 <nav id="pagenavi">
     
         <a href="/blog/page/33/" class="prev">Prev</a>
@@ -509,7 +173,44 @@
     
     <div class="center"><a href="/blog/archives">Blog Archives</a></div>
 </nav></div>
-	<footer id="footer" class="inner">Copyright &copy; 2013
+	<footer id="footer" class="inner"><div class="related-links">
+	<h3>Other Headspring Sites</h3>
+	<ul>
+		<li><a href="http://www.headspring.com">Headspring</a></li>
+		<li><a href="http://www.headspringmobile.com">Headspring Mobile</a></li>
+	</ul>
+</div>
+
+<div class="related-links">
+	<h3>Communities/Groups</h3>
+	<ul>
+		<li><a href="http://www.adnug.org">ADNUG</a></li>
+		<li><a href="http://polyglotprogrammers.org">Polyglot ATX</a></li>
+	</ul>
+</div>
+
+<div class="related-links">
+	<h3>Open Source</h3>
+	<ul>
+		<li><a href="http://www.adnug.org">AutoMapper</a></li>
+		<li><a href="http://polyglotprogrammers.org">Formo</a></li>
+		<li><a href="http://polyglotprogrammers.org">Parsely</a></li>
+		<li><a href="http://polyglotprogrammers.org">NAAK</a></li>
+	</ul>
+</div>
+
+<div class="related-links">
+	<h3>Events</h3>
+	<ul>
+		<li><a href="http://www.adnug.org">CTX Givecamp</a></li>
+		<li><a href="http://polyglotprogrammers.org">Houston TechFest</a></li>
+		<li><a href="http://polyglotprogrammers.org">Austin Code Camp</a></li>
+	</ul>
+</div>
+
+<hr />
+
+Copyright &copy; 2013
 
     Headspring Labs
 

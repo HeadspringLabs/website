@@ -163,273 +163,6 @@
 </div>
 </article>
 
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/mercurial-basics/">
-		
-			Mercurial Basics With Logan Turner</a>
-	</h2>
-	<div class="entry-content">
-		<p><a href="http://feeds.headspring.com/headspringpodcast"><img class="alignleft size-full wp-image-5635" src="http://www.headspring.com/wp-content/uploads/2012/06/rss-icon40.jpg" alt="" width="40" height="40" /></a>In this cast, Logan Turner and Jeffrey Palermo discuss Mercurial basics.  Logan Turner is a Headspring intern and a student at LeTourneau University.  Logan has recently learned Mercurial, and he has helped another new employee come up to speed with this distributed version control system.</p>
-<p>You might be interested in these Mercurial resources:</p>
-<ul>
-<li><a href="http://mercurial.selenic.com/">Mercurial/TortoiseHg</a></li>
-<li><a href="http://hgbook.red-bean.com/read/">Free Mercurial ebook by Bryan O&#8217;Sullivan</a></li>
-</ul>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-06-26T00:00:00-05:00" pubdate data-updated="true">Jun 26<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/podcast/'>Podcast</a>, <a class='category' href='/blog/categories/logan-turner/'>logan turner</a>, <a class='category' href='/blog/categories/mercurial/'>mercurial</a>, <a class='category' href='/blog/categories/source-control/'>source control</a>, <a class='category' href='/blog/categories/tortoisehg/'>tortoisehg</a>, <a class='category' href='/blog/categories/vcs/'>vcs</a>, <a class='category' href='/blog/categories/version-control/'>version control</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/loops-obfuscate/">
-		
-			Loops Obfuscate</a>
-	</h2>
-	<div class="entry-content">
-		<p>Most of the world&#8217;s loops have already been written, and their names are &#8220;Where&#8221; and &#8220;Select&#8221;.</p>
-<p>Loops are so commonplace in software that it barely deserves mentioning.  It&#8217;s like saying &#8220;saws are ubiquitous in woodworking&#8221; or &#8220;epic guitar solos are ubiquitous in Journey albums&#8221;.  Although there is nothing good or bad about loop constructs themselves, LINQ has changed the way I think about them over the last few years.</p>
-<p>Let&#8217;s start with some typical, monotonous loops:</p>
-<p><div><script src='https://gist.github.com/2969701.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>There&#8217;s nothing Earth-shattering about these methods, and there&#8217;s nothing particularly wrong with them.  Let&#8217;s assume, though, that as requirements change the condition for <em>valuable-ness</em> and the means of formatting items become more comlex.  Keeping that logic inside these methods would start to feel a little wrong, as it would <a href="http://en.wiktionary.org/wiki/complect">complect</a> the low-level details of iteration and list-building with the high-level business concepts of product value and formatting.</p>
-<p><strong>I don&#8217;t want to think about iteration and list-building when I&#8217;m also trying to think about business concepts.</strong></p>
-<p>Let&#8217;s say that once these rules got complicated enough, and reading them as monolithic methods got a little too painful, we simplify by doing an Extract-Method refactoring on them:</p>
-<p><div><script src='https://gist.github.com/2969706.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Now it&#8217;s easier to see that we&#8217;re building up <code>List</code> objects just so that we can return them for <code>IEnumerable</code> iteration.  Armed with the <code>yield</code> keyword, we clean up further:</p>
-<p><div><script src='https://gist.github.com/2969708.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Imagine we have performed a similar refactoring all over a large project.  Our code would be littered with these annoying loop methods that are all suspiciously similar to each other.  All the methods like <code>ValuableProducts</code> would take a collection, loop through it, and apply a filter condition function to each item. All the methods like <code>FormattedProducts</code> would take a collection, loop through it, and apply some transforming function on each item.</p>
-<p>They&#8217;re all so similar that you might be tempted to reach for your copy/paste shortcuts to write them, and that should tell us something about the value of writing that code: <strong>the operations of iterating, filtering, and transforming collections are so fundamental that we shouldn&#8217;t have to write them out.</strong></p>
-<p>Using delegates and generics, we can pluck out the tiny parts that vary from one copy/pasted loop method to another, collapsing all those methods down to two:</p>
-<p><div><script src='https://gist.github.com/2969718.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>At this point we have accidentally reinvented the <code>Enumerable</code> extension methods <code>Where</code> and <code>Select</code>, so even these two methods can be removed.  We&#8217;re left with the now-commonplace alternatives:</p>
-<p><div><script src='https://gist.github.com/2969719.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Once you start writing in this style rather than the original imperative style, <strong>the surface area of your code that corresponds with your actual goals increases compared to that of your infrastructure</strong>.  The focus is on <em>what</em> your goal is, and not on <em>how</em> you intend to trick a box of wires into reaching that goal.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-06-22T00:00:00-05:00" pubdate data-updated="true">Jun 22<span>nd</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/using-waithandles-to-test-asynchronous-events/">
-		
-			Using WaitHandles to Test Asynchronous Events</a>
-	</h2>
-	<div class="entry-content">
-		<p><em>By Casey Gum</em></p>
-<p>In my last post, I talked about some of the dangers of using lambda expressions (anonymous delegates) as event handlers.  However, one place where this can be really handy is when you are unit testing classes that raise events. </p>
-<p>Occasionally, you will find yourself in a situation where you need to unit test a class that raises an event or calls a callback method on a different thread than the one that initiated the action in the first place.  This is especially common when dealing with web requests and can lead to some obtuse unit testing techniques.  In this post, I&#8217;ll demonstrate a technique that I use that relies on WaitHandles that is pretty darn handy.</p>
-<p>Let&#8217;s say that we have to unit test the following class.</p>
-<p><div><script src='https://gist.github.com/2942373.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>This class has a method, StartJob() and an event JobComplete.  StartJob() spins up a new thread and sleeps for the executionTime to simulate work and then raises an event, notifying the caller that the job is complete.  (ProTip: If I initialize the event to an empty delegate{}, I don&#8217;t have to null-check the event before raising it.)  However, JobComplete is being raised on the new thread.  What implications do you think this will have on a unit test?  Let&#8217;s take a look.</p>
-<p>Here&#8217;s a unit test one might write that would work perfectly provided there was no thread-switching going on.</p>
-<p><div><script src='https://gist.github.com/2942411.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>A test like this *might* even work if there was a thread-switch, but it would all depend on how quickly the code executed and the thread scheduler.  However, I would suspect that most of the time it would fail.</p>
-<p>The next approach someone might take to solve this unit testing dilemma is to use a Thread.Sleep() in the unit test.</p>
-<p><div><script src='https://gist.github.com/2942427.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>This may work most of the time, but if the unit of work exceeds the period provided in the Thread.Sleep() call, the test will fail even though the class under test functions properly.  But under normal circumstances, it would just make your unit test take longer to run.</p>
-<p>Another approach one might take is to use polling and a Thread.Sleep().</p>
-<p><div><script src='https://gist.github.com/2942442.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>This one will definitely work and is more time-efficient, but has one big drawback: if the thing being tested actually does fail, this unit test will spin forever and prevent any other unit tests from running.  In a continuous integration or production build environment, it might even take awhile before anyone realizes there&#8217;s a problem.  The build just doesn&#8217;t finish.</p>
-<p>Okay, next thing to try is to bail out after a certain number of spins.</p>
-<p><div><script src='https://gist.github.com/2942450.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>This one will definitely work and will timeout if the test doesn&#8217;t complete within 30 seconds, but it is obtuse.  Just look at how much code is spent dealing with waiting long enough, but not too long.</p>
-<p>A better approach is to use a WaitHandle, specifically the ManualResetEvent class.</p>
-<p><div><script src='https://gist.github.com/2942461.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>The whole purpose of WaitHandles is to pass signals across thread boundaries.  Using a WaitHandle is much more concise and is perfectly efficient.  The unit test code will sit there on the waitHandle.WaitOne(timeout) line until either the timeout period expires or the waitHandle.Set() method is called.  If Set() is called, WaitOne() returns true.  If the timeout expires before Set() is called, it returns false.  All you need to do is Assert that the result of WaitOne() is true.</p>
-<p>Pretty neat, don&#8217;t you think?</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-06-20T00:00:00-05:00" pubdate data-updated="true">Jun 20<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/blog/'>Blog</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/events/'>events</a>, <a class='category' href='/blog/categories/unit-testing/'>unit testing</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/sneaky-leaky-lambda-listeners/">
-		
-			Sneaky Leaky Lambda Listeners</a>
-	</h2>
-	<div class="entry-content">
-		<p><em>By Casey Gum</em></p>
-<p>Sometimes, it can be very convenient to use lambda expressions as event handlers.  If the event handler does something short and sweet, it can also be a lot easier to read than having to jump down to the method that implements the handler.</p>
-<p>However, as with all events handlers, you really need to understand the lifetime of the instance that exposes the event or you can leak, leak, leak. </p>
-<p>Let&#8217;s take a look at some code.  The following is a typical way to hook up to an event using a method as an event handler.</p>
-<p><div><script src='https://gist.github.com/2941654.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>This next block of code uses a lambda expression instead. As you can see, it is much more concise.</p>
-<p><div><script src='https://gist.github.com/2941702.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Interestingly, when you do this, behind the scenes, the compiler will actually add a method to your class.  So, you&#8217;re really not making your class any smaller, you&#8217;re just making it easier to read.  You can see this if you look at it using <a title=".Net Reflector" href="http://www.reflector.net/" target="_blank">.Net Reflector</a>.</p>
-<p><a href="http://www.headspring.com/wp-content/uploads/2012/06/reflector.png"><img class="alignnone size-full wp-image-5590" src="http://www.headspring.com/wp-content/uploads/2012/06/reflector.png" alt="" width="240" height="91" /></a></p>
-<p>Okay, so that&#8217;s all well and good, but now let&#8217;s consider the implementation of the <strong>Publisher</strong> class.  For simplicity sake (normally I let my IoC container sort this out), I did a quick Singleton pattern implementation on it so that we can get a Publisher instance by calling the <strong>static</strong> .Instance property.  When you see the &#8220;static&#8221; keyword, you should really think &#8220;immortal&#8221;.  From the perspective of the GarbageCollector, once it has a value, it&#8217;s not going away unless you set it to null.</p>
-<p>Now, consider this block of code.</p>
-<p><div><script src='https://gist.github.com/2941741.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>If you haven&#8217;t had to deal much with memory leaks in the past, you might think that the code above would nuke all instances of Listener, but it does not.  As a matter of fact, after making the call to this function, here&#8217;s what <a title=".Net Memory Profiler" href="http://memprofiler.com/" target="_blank">.Net Memory Profiler</a> shows.  We have 10 new instances and they are not going away.</p>
-<p><a href="http://www.headspring.com/wp-content/uploads/2012/06/snapshot12-e1339861888756.png"><img class="alignnone size-full wp-image-5593" src="http://www.headspring.com/wp-content/uploads/2012/06/snapshot12-e1339861888756.png" alt="" width="500" height="79" /></a></p>
-<p>The following image shows what it looks like to the GarbageCollector.  The static instance of Publisher is rooted and will not go away.  Its event variable is a MulticastDelegate.  The MulticastDelegate holds a reference to a System.Action&lt;string&gt; delegate. And the Action delegate holds a reference to your Listener.  So, even though your listener instance has fallen out of scope, it will survive garbage collection because there is a reference path to it via the Publisher.PublishedMessage event.  Incidentally, this is true whether you use a traditionally implemented event handler or a lambda expression.</p>
-<p><a href="http://www.headspring.com/wp-content/uploads/2012/06/root-path1.png"><img class="alignnone size-full wp-image-5594" src="http://www.headspring.com/wp-content/uploads/2012/06/root-path1.png" alt="" width="151" height="445" /></a><a href="http://www.headspring.com/wp-content/uploads/2012/06/root-path21.png"><img class="alignnone size-full wp-image-5596" src="http://www.headspring.com/wp-content/uploads/2012/06/root-path21.png" alt="" width="172" height="450" /></a></p>
-<p>What to do, what to do?  Well, one thing we could do is to implement IDisposable and unhook our event handler in the Dispose() method.  Of course, we will also need to actually call Dispose() after we are done with our listener.</p>
-<p><div><script src='https://gist.github.com/2941797.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>This totally works and now here&#8217;s what the memory profiler reports:</p>
-<p><a href="http://www.headspring.com/wp-content/uploads/2012/06/snapshot2.png"><img class="alignnone size-full wp-image-5598" src="http://www.headspring.com/wp-content/uploads/2012/06/snapshot2.png" alt="" width="512" height="94" /></a></p>
-<p>Can you do the same thing with a lambda listeners?  Unfortunately, no, you cannot, but we can give it a try just to see what happens.  The following is our desperate attempt to unhook a lambda event handler in the Dispose() method.</p>
-<p><div><script src='https://gist.github.com/2941810.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>So, why doesn&#8217;t that work?  Well, because the compiler is creating a different method for each of our lambdas, one in the constructor and one in Dispose().  Again, this can be proven using .Net Reflector.</p>
-<p><a href="http://www.headspring.com/wp-content/uploads/2012/06/reflector2.png"><img class="alignnone size-full wp-image-5599" src="http://www.headspring.com/wp-content/uploads/2012/06/reflector2.png" alt="" width="288" height="188" /></a></p>
-<p><strong>CONCLUSION</strong></p>
-<p>The C# language makes dealing with events very easy. Unfortunately, by hiding some of the implementation details from the developer, it may lull you into a false sense of security with respect to memory management.  Whenever you are dealing with events, you need to carefully consider the lifetimes of both the publisher and the listener and make sure you unhook your event handlers or risk dealing with OutOfMemoryExecptions that are very difficult to diagnose.  This is ESPECIALLY important if you are doing WPF, Silverlight or Metro development.  If your View Model is listening for events on a long-lived object, and your View is listening to your View Model&#8217;s INotifyPropertyChanged.PropertyChanged event, and your View&#8217;s .Parent property holds a reference to its container, you can see that you can easily keep a very large object graph from being garbage collected.</p>
-<p>If you are doing UI development, object graph teardown can get extremely complex.  You can simplify these event/lifetime management headaches by using an Event Aggregator that uses weak reference eventing such as the one found in the Microsoft PRISM composite application framework.</p>
-<p>I should probably cover that in a future post.</p>
-<p>Until then, remember, you can be freaky, but try not to be leaky!</p>
-<p>&nbsp;</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-06-16T00:00:00-05:00" pubdate data-updated="true">Jun 16<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/debugging/'>debugging</a>, <a class='category' href='/blog/categories/events/'>events</a>, <a class='category' href='/blog/categories/memory-leaks/'>memory_leaks</a>
-
-
-</div>
-	
-</div>
-</article>
-
 <nav id="pagenavi">
     
         <a href="/blog/page/22/" class="prev">Prev</a>
@@ -439,7 +172,44 @@
     
     <div class="center"><a href="/blog/archives">Blog Archives</a></div>
 </nav></div>
-	<footer id="footer" class="inner">Copyright &copy; 2013
+	<footer id="footer" class="inner"><div class="related-links">
+	<h3>Other Headspring Sites</h3>
+	<ul>
+		<li><a href="http://www.headspring.com">Headspring</a></li>
+		<li><a href="http://www.headspringmobile.com">Headspring Mobile</a></li>
+	</ul>
+</div>
+
+<div class="related-links">
+	<h3>Communities/Groups</h3>
+	<ul>
+		<li><a href="http://www.adnug.org">ADNUG</a></li>
+		<li><a href="http://polyglotprogrammers.org">Polyglot ATX</a></li>
+	</ul>
+</div>
+
+<div class="related-links">
+	<h3>Open Source</h3>
+	<ul>
+		<li><a href="http://www.adnug.org">AutoMapper</a></li>
+		<li><a href="http://polyglotprogrammers.org">Formo</a></li>
+		<li><a href="http://polyglotprogrammers.org">Parsely</a></li>
+		<li><a href="http://polyglotprogrammers.org">NAAK</a></li>
+	</ul>
+</div>
+
+<div class="related-links">
+	<h3>Events</h3>
+	<ul>
+		<li><a href="http://www.adnug.org">CTX Givecamp</a></li>
+		<li><a href="http://polyglotprogrammers.org">Houston TechFest</a></li>
+		<li><a href="http://polyglotprogrammers.org">Austin Code Camp</a></li>
+	</ul>
+</div>
+
+<hr />
+
+Copyright &copy; 2013
 
     Headspring Labs
 

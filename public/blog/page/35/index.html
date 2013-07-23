@@ -157,288 +157,6 @@
 </div>
 </article>
 
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/escape-analysis/">
-		
-			Escape Analysis</a>
-	</h2>
-	<div class="entry-content">
-		<p>In languages like Java and C#, most objects wind up on the heap instead of the stack.  Heap-allocated objects can only be cleaned up by garbage collection, while stack-allocated objects get cleaned up &#8216;for free&#8217; when the function that they were created in returns.</p>
-<p>If you have a method that constructs a new instance of a class, uses it a little, and then discards it, there&#8217;s no real reason to put it on the heap.  It&#8217;s not going to need to exist after we return, so we might as well put it on the stack and get the deallocation for free.</p>
-<p>If you instead have a method that constructs a new instance of a class and <em>returns</em> that to the caller, we <strong>definitely</strong> have to put it on the heap, because we need to ensure it still exists after we return.  There are lots of things we might do with an object that would require us to use the heap.  We can return it, pass it to another thread, pass it to another function that passes it to another thread, etc.</p>
-<p>The basic idea is that if, after your function exits, there could not possibly be any remaining references to that object, then it might as well be put on the stack and cleaned away without the need for garbage collection.</p>
-<p><a href="http://en.wikipedia.org/wiki/Escape_analysis">Escape analysis</a> is a compiler optimization that can be applied to languages like these.  If the compiler can prove to itself that the object can&#8217;t &#8220;escape&#8221; beyond the lifetime of the method, it will use the stack.</p>
-<p>Although escape analysis really just refers to this compiler trick, I like to use the term to describe a specific kind of refactoring effort.  Before I get to that, though, we need to talk about your arch-nemesis.</p>
-<h2>Code Doesn&#8217;t Just Rot</h2>
-<p>Over the long life of a software project, certain parts of the code will become more difficult than they deserve to be.  One area might be a frequent source of bugs, and the fixes applied by many hands may make it needlessly complex, for instance.</p>
-<p>Sometimes it seems that even when an area doesn&#8217;t go through much flux, it still rots.  Newer and better ideas are introduced to the project, and one area may be left behind the times.  By the time you come across it again, it feels like it&#8217;s rotting away.</p>
-<p>Code rot taken to its extreme gives you a <a href="http://miksovsky.blogs.com/flowstate/2010/09/every-app-has-a-scary-basement.html">spooky basement</a>, the part of the project <em>nobody</em> wants to touch.  It&#8217;s a tangled mass of patches and awkward abstractions.</p>
-<p>I don&#8217;t really like the code rot metaphor because it makes the problem code out to be a passive byproduct.  I prefer to think of bad/awkward/old design decisions as being an <strong>active and malicious adversary hell-bent on escaping from the confines of its files</strong> with the goal of making the rest of your project rot along with it.</p>
-<p>Code doesn&#8217;t just rot.  The rot escapes and spreads.  This thing is out to get you.</p>
-<h2>Escape Analysis at Refactoring Time</h2>
-<p>When I&#8217;m working in a clean area of a project, refactoring is an easy process.  You rename things to make them read better, extract a method or class here or there to organize responsibilities better, and the like.</p>
-<p>When I&#8217;m working on a spooky basement, or even a not-so-bad eerie breakfast nook, I put on the Escape Analysis Hat.  Unlike the compiler optimization which asks &#8220;At runtime, how can this <em>instance</em> escape into the rest of the running system&#8221;, I ask &#8220;How do <em>references</em> to this unwanted method/property/field/class escape into the rest of the code?&#8221;</p>
-<p>This starts with ReSharper, but tools like this can only get you started.  You find usages of the unwanted thing&#8217;s identifier, and then find usages of those usages, and usages of <em>those</em> usages, to start to get a feel for what other areas depend on it.</p>
-<p>That&#8217;s not enough!  Remember, this method/property/field/class is actively trying to escape into the rest of your system.  It wants to escape in any sneaky, devious way it can.  Maybe it gets AutoMapped to some other type, whose usages you&#8217;ll need to investigate.  Maybe it gets serialized to JSON which in turn gets consumed by some javascript you&#8217;ll need to investigate.  Maybe it gets accessed via reflection, or appears in a binding in a XAML file, or gets passed to a web service…</p>
-<h2>A Particularly Tricky Example</h2>
-<p>I was recently refactoring an area of a project that wasn&#8217;t a serious problem yet.  Left alone, the complexity would have eventually gotten out of control, so we decided to address a particular source of the growing complexity.  I encountered a property in a View Model class that I wanted to simplify; I didn&#8217;t quite see the need for it at first.  After seeing how references to this property escaped into the rest of the system, my first thought was &#8220;Oh, this really does get used in a lot of places, and not just in the UI layer.  It needs to exist.&#8221;</p>
-<p>After looking into the escape paths again, though, I realized it was largely unnecessary.  It satisfied a UI requirement, but that could have been satisfied in a simpler way and in only the UI layer.</p>
-<p>The escape path was pretty intricate.  This property had a few real and meaningful usages.  Additionally, it got AutoMapped to another type, which ultimately got serialized and later deserialized so it could be AutoMapped <em>back</em> to the original type.  This circuitous route was not actually used for anything (anymore) and could be removed.</p>
-<p>The next time you find yourself refactoring, and you reach a point where it&#8217;s not obvious what the next step should be, find a suspicious identifier and see where he&#8217;s escaping to.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-16T00:00:00-05:00" pubdate data-updated="true">Mar 16<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/sxsw-interactive-2012-over-and-out/">
-		
-			SXSW Interactive 2012: Over and Out</a>
-	</h2>
-	<div class="entry-content">
-		<p>Last Friday I took to the Austin Convention Center for the five day frenzy known as SXSW Interactive.  Basically, I made this meme summing up my time spent downtown quite nicely:</p>
-<p style="text-align: center;"><a href="http://www.headspring.com/2012/03/sxsw-interactive-2012-over-and-out/sxswwhatiactuallydo" rel="attachment wp-att-4127"><img class="size-large wp-image-4127 aligncenter" title="sxswWhatIActuallyDo" src="http://www.headspring.com/wp-content/uploads/2012/03/sxswWhatIActuallyDo-1024x651.png" alt="" width="517" height="329" /></a></p>
-<p>The lines were insane! I waited three hours to pick up my badge.  However, the rest of the time I experienced very little trouble getting into the panels I wanted to see or any of the other events on my schedule.  I would have been lost without the iPhone and iPad app.</p>
-<p>During the event, I exercised the full use of all available resources:  time, research, relationships, and drink tickets.  I kept a full schedule each day, beginning at 9:00 AM and lasting into the late evening.  During the day, I made it to as many presentations, panels, and discussions as possible - usually 3 to 4.  The first few days there, I was being carried by adrenaline, and made the mistake of neglecting breaks.  Next year will be different.</p>
-<p>My favorite panels and presentations were those that were well thought out and prepared.  I really liked Ray Kurzweil’s discussion about AI and singularity, Jen Pahlka’s presentation on Code for America, and the panel on Agile Apps: Effective Moblie and Native Development.  Here are some more photos:</p>
-<p>&nbsp;</p>
-<p style="text-align: center;"><a href="http://www.headspring.com/2012/03/sxsw-interactive-2012-over-and-out/photo-3" rel="attachment wp-att-4117"><img class="size-medium wp-image-4117 aligncenter" title="ray kurzweil sxsw" src="http://www.headspring.com/wp-content/uploads/2012/03/photo-3-300x224.jpg" alt="" width="300" height="224" /></a><a href="http://www.headspring.com/2012/03/sxsw-interactive-2012-over-and-out/photo-4" rel="attachment wp-att-4118"><img class="size-medium wp-image-4118 aligncenter" title="jen pahlka sxsw" src="http://www.headspring.com/wp-content/uploads/2012/03/photo-4-300x224.jpg" alt="" width="300" height="224" /></a><a href="http://www.headspring.com/2012/03/sxsw-interactive-2012-over-and-out/photo-5" rel="attachment wp-att-4119"><img class="size-medium wp-image-4119 aligncenter" title="ogilvy notes sxsw" src="http://www.headspring.com/wp-content/uploads/2012/03/photo-5-300x224.jpg" alt="" width="300" height="224" /></a><a href="http://www.headspring.com/2012/03/sxsw-interactive-2012-over-and-out/photo-8" rel="attachment wp-att-4120"><img class="size-medium wp-image-4120 aligncenter" title="sxsw presentation crowd" src="http://www.headspring.com/wp-content/uploads/2012/03/photo-8-300x224.jpg" alt="" width="300" height="224" /></a></p>
-<p>In between scheduled events, I would browse the trade show floor, designated networking lounges and workshops. I reserved some time each day to check in with fellow industry friends, and exchange information on who’s who and where the free food was.</p>
-<p>The panels and discussions exceeded my expectations.  The content was current, interesting, and informative, and the presentations - led by credible industry influencers – were well prepared and polished.  Topics ranged from highly technical, to quirky and imaginative, or challenging and perceptive.  I took lots of notes.</p>
-<p>With over 30,000 attendees, there was no shortage of opportunity to network.  I made it a point to get to know the people around me at events, sitting next to me during presentations, or evening those that I stood in line with.  Because SXSW is designed to encourage community and relationship building, I found that most people were very open to participating in conversation when prompted. The parties each evening were great for meeting up, too, although we tried to keep the business chatter light.</p>
-<p>However the <em>best</em> part of the conference was supporting the<a href="http://www.headspring.com/2012/02/headspring-shows-some-love-at-knowbilitys-austin-air"> Headspring Hurwitzes</a> as they received 2<sup>nd</sup> Place in the Formula One division of Knowbility’s AIR Interactive Competition.  I’m so proud of my team!  Here is a picture of them with their award:</p>
-<p style="text-align: center;"><a href="http://www.headspring.com/2012/03/sxsw-interactive-2012-over-and-out/photo-6" rel="attachment wp-att-4123"><img class="size-medium wp-image-4123 aligncenter" title="headspring second place AIR Interactive" src="http://www.headspring.com/wp-content/uploads/2012/03/photo-6-300x224.jpg" alt="" width="300" height="224" /></a></p>
-<p>So, now that it’s over I’ll be catching up on my beauty rest and rehydrating.  I’m looking forward to next year!</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-15T00:00:00-05:00" pubdate data-updated="true">Mar 15<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/small-talk-and-big-news/'>Small Talk &amp; Big News</a>, <a class='category' href='/blog/categories/conferences/'>conferences</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/why-i-like-testcase/">
-		
-			Why I Like TestCase</a>
-	</h2>
-	<div class="entry-content">
-		<p><a href="http://nunit.org/?p=testCase&amp;r=2.5" target="_blank">TestCase</a> is one way you can run parameterized tests with NUnit. An example of how this is useful is testing a whitelist or blacklist. You only need to write the test once, then pass in your items to test some sort of output. If the requirements change and words need to be added to or removed from your list, you simply add another entry without the need for writing another test or set of tests.</p>
-<p>I&#8217;ve found myself using TestCase (formerly <a title="What Happened to NUnit's RowTest" href="http://stackoverflow.com/questions/4069841/what-happended-to-nunit-extensions-rowtest" target="_blank">RowTest</a>) more and more often. If you see lots of very similar tests that shared assertions, or test method names with numbers/values in them, these are signs that you might be wanting to use TestCase. Let&#8217;s take a look at the following examples.</p>
-<h3><strong>One Test, Many Assertions</strong></h3>
-<p>Here you can see that we have one test and many assertions. I&#8217;ve often seen this pattern in tests that have been around the project for a long time. It can be faster to add an assertion rather than to write a whole new test.  This might get the job done, but there are better ways.</p>
-<p><div><script src='https://gist.github.com/1981200.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>This isn&#8217;t ideal because your test can fail at the first assertion, skipping all the rest. Imagine a more complex test that fails at the first assert call and subsequent code changes make it fail at the second and so on. The feedback on the failed tests is less valuable in these situations. This is also why we don&#8217;t write one test for our entire application; tests are more helpful as they become more granular.</p>
-<h3><strong>Many Tests, Each with One Assertion</strong></h3>
-<p>Another not so great way to test this is breaking the assertions into many tests. This also technically works, but is prone to test names representing the wrong idea if values change and the name does not. Maintenance becomes a bit tougher when they&#8217;re written this way.</p>
-<p><div><script src='https://gist.github.com/1981202.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>The reason I wouldn&#8217;t recommend this is because you tend to see duplication in your values under test and your metadata (test method name). Since duplication is bad, we want to avoid this.</p>
-<h3><strong>One Test, Many Values</strong></h3>
-<p>A better approach is TestCase. As you&#8217;ll see by the following example. We&#8217;re writing the test in a way that doesn&#8217;t rely on values from within the test&#8217;s body, but to be supplied by attributes that are &#8220;stacked&#8221; on top.</p>
-<div><div><script src='https://gist.github.com/1935584.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</div>
-<p>I like this test because it&#8217;s very simply testing boundary conditions. The code is largely quite discoverable and very easy to modify if our requirements were to change.</p>
-<p>There&#8217;s nothing magical about TestCase. It&#8217;s just another tool I&#8217;ve found helpful when writing tests for code that I want to be able to take advantage of &#8220;given a set of inputs, verify some output&#8221;.</p>
-<p>What are you thoughts on this? Is TestCase new to you? Have you been using it already? Any drawbacks to using it?</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-14T00:00:00-05:00" pubdate data-updated="true">Mar 14<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/best-practices/'>best practices</a>, <a class='category' href='/blog/categories/clean-code/'>clean code</a>, <a class='category' href='/blog/categories/unit-testing/'>unit testing</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/making-conditional-validation-logic-readable/">
-		
-			Making Conditional Validation Logic Readable</a>
-	</h2>
-	<div class="entry-content">
-		<h2>Summary</h2>
-<p>Why are readable conditionals important?</p>
-<ul>
-<li>Reduce the chance of making an error while creating the initial implementation</li>
-<li>Reduce the time to understand the conditional while maintaining the implementation</li>
-</ul>
-<p>&nbsp;</p>
-<p>What techniques can I use?</p>
-<ul>
-<li>Invert if statements where possible
-<ul>
-<li>reduces nesting</li>
-<li>reduces vertical height of the conditionals</li>
-</ul>
-</li>
-<li>Extract methods from conditional payloads
-<ul>
-<li>emphasizes control flow decision logic instead of the implementations of the decisions</li>
-<li>reduces vertical height of the conditionals</li>
-</ul>
-</li>
-</ul>
-<p>&nbsp;</p>
-<p>The <em>Practical Example</em> section below contains a walkthrough demonstrating a refactoring using these techniques.</p>
-<h2>Why Conditionals Matter</h2>
-<p>Conditional logic is a large component of software.  While it’s certainly possible to write software without conditionals (usually some sort of number crunching calculation), it’s fairly rare.  Conditionals make it possible for a program to do different things based on a set of circumstances that might change while the program is running.  Almost all user input has to be filtered by conditional validation, since you can never be sure what a user is going to type into your program!</p>
-<p>Finding defects in conditionals can be difficult because it usually takes a set of specific circumstances to flow through the defective code.  In worst cases you may not even know how to reliably trigger the error because you don’t the exact circumstances that cause the defective lines to be reached.</p>
-<p>Since conditionals are so common, and the potential for problems is so high, it’s important to write conditional statements that are clear to understand and easy to follow.</p>
-<h2>Practical Example – Refactoring A Password Change Validation</h2>
-<p>Recently I needed to add an audit trail to a small web application.  The app was about 5 pages and I felt doing it explicitly would be quicker and simpler than spending time setting up and configuring an automated approach.</p>
-<p>One of the pages provided a way for users to change their password using the standard “enter your current password, type the new password twice” design:</p>
-<p><a href="http://www.headspring.com/wp-content/uploads/2012/02/changePassword1.png"><img style="padding-left: 0px; padding-right: 0px; float: none; margin-left: auto; margin-right: auto; padding-top: 0px; border-width: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/02/changePassword_thumb1.png" alt="changePassword" width="326" height="208" border="0" /></a></p>
-<p>Clicking Submit triggers two phases of validation.  The first phase checks the current password is correct, a new password is supplied, that the new password was typed correctly twice, and the new password was not used recently.  The second phase ensures the new password is sufficiently complex – e.g. a minimum length and a minimum number of numeric and alpha characters are used.</p>
-<p>I needed to add an audit entry for any password change attempt and the corresponding result.  This is what the original code looked like:</p>
-<p><div><script src='https://gist.github.com/1934704.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>There are several suboptimal things to note about the above code:</p>
-<ul>
-<li>There are six levels of nested if statements.</li>
-<li>The longest conditional block is 65 lines between the opening and closing.  I can’t even see the entire block at once in my editor, I have to scroll up and down.</li>
-<li>The phase two validation on lines 38-54 is buried inside error handling for phase one validation.  You cannot glance through the conditional and find it without reading almost the entire conditional.</li>
-<li>The logic for displaying a validation failure is duplicated several times.</li>
-</ul>
-<p>&nbsp;</p>
-<p>Implementing the auditing would require making multiple additions, and it would be easy for a particular condition to get missed if the validation logic changed later.  I decided to refactor the conditional.</p>
-<p>The first thing I did was reduce the vertical height by encapsulating the payloads of the conditionals into a call to a new method DenyChanges(string reason).  Your conditional payloads may not always be completely duplicated like this, but you can still encapsulate them into methods to reduce the space between the conditional clauses.</p>
-<p>[gist id = 1934740]</p>
-<p>&nbsp;</p>
-<p>This is already much easier to look at.</p>
-<ul>
-<li>The longest conditional block is 42 lines, and we can see the whole conditional at once.</li>
-<li>The decisions around control flow are emphasized over what the conditionals are doing.  It’s easier to spot a logic error in the conditionals.</li>
-<li>The normal case (user changes password) stands out much clearer from all the validation checks.</li>
-</ul>
-<p>&nbsp;</p>
-<p>Now that we can see the entire block in our screen, it becomes apparent the outer if statement doesn’t have an else clause.  We can remove an unnecessary level of nesting by inverting the history check and returning instead.  Here’s what that inversion looks like (see line 9 specifically):</p>
-<p>[gist id = 1934825]</p>
-<p>&nbsp;</p>
-<p>This reduces the nesting from 6 levels to 5.  Looking over the remainder of the validation, we can remove virtually ALL of the nesting by applying the same technique – perform a validation, and return if a failure occurred.  I’m not going to show each little step, but here’s the end result of continuing to invert ifs and extract methods.</p>
-<p>[gist id = 1934871]</p>
-<p>&nbsp;</p>
-<p>Much better!  In ChangePassword_Click we can tell what happens just by reading top to bottom.  Method names like ValidateChange and DenyChange, along with variable names like changeErrors, communicate the WHAT without forcing us to suffer through reading the HOW to implicitly figure out WHAT’s going on.</p>
-<h2>Practical Example – Wrap up</h2>
-<p>We’ve used two techniques to simplify a conditional that was nested 6 levels deep and difficult to quickly trace through the decision flow.  By extracting the conditional payloads into methods and inverting if clauses when possible, we’ve completely eliminated the nested conditionals, and also managed to eliminate all the else clauses as well.  The result is a much shorter block of conditionals that can be read and followed without having to understand the implementation of what each conditional state does, and will be much easier to modify in the future.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-13T00:00:00-05:00" pubdate data-updated="true">Mar 13<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/conditionals/'>Conditionals</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/refactoring/'>Refactoring</a>
-
-
-</div>
-	
-</div>
-</article>
-
 <nav id="pagenavi">
     
         <a href="/blog/page/34/" class="prev">Prev</a>
@@ -448,7 +166,44 @@
     
     <div class="center"><a href="/blog/archives">Blog Archives</a></div>
 </nav></div>
-	<footer id="footer" class="inner">Copyright &copy; 2013
+	<footer id="footer" class="inner"><div class="related-links">
+	<h3>Other Headspring Sites</h3>
+	<ul>
+		<li><a href="http://www.headspring.com">Headspring</a></li>
+		<li><a href="http://www.headspringmobile.com">Headspring Mobile</a></li>
+	</ul>
+</div>
+
+<div class="related-links">
+	<h3>Communities/Groups</h3>
+	<ul>
+		<li><a href="http://www.adnug.org">ADNUG</a></li>
+		<li><a href="http://polyglotprogrammers.org">Polyglot ATX</a></li>
+	</ul>
+</div>
+
+<div class="related-links">
+	<h3>Open Source</h3>
+	<ul>
+		<li><a href="http://www.adnug.org">AutoMapper</a></li>
+		<li><a href="http://polyglotprogrammers.org">Formo</a></li>
+		<li><a href="http://polyglotprogrammers.org">Parsely</a></li>
+		<li><a href="http://polyglotprogrammers.org">NAAK</a></li>
+	</ul>
+</div>
+
+<div class="related-links">
+	<h3>Events</h3>
+	<ul>
+		<li><a href="http://www.adnug.org">CTX Givecamp</a></li>
+		<li><a href="http://polyglotprogrammers.org">Houston TechFest</a></li>
+		<li><a href="http://polyglotprogrammers.org">Austin Code Camp</a></li>
+	</ul>
+</div>
+
+<hr />
+
+Copyright &copy; 2013
 
     Headspring Labs
 

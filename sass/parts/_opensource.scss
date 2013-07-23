@@ -7,16 +7,28 @@
 			float: right;
 		}
 		img {
+			@include square(200px);
 			margin: 20px 0 0 20px;
 		}
-		ul {
+		ul.project-links {
 			display: inline-block;
 			list-style-type: none;
-		}
-		li {
-			@include square(28px);
-			display: block;
-			float: left;
+
+			li {
+				@include square(28px);
+				float: left;
+
+				a {
+					display: block;
+					text-indent: -9999px;
+				}
+				.github {
+					background: url('/images/logos/github_icon.png') center no-repeat;
+				}
+				.web {
+					background: url('/images/logos/web_icon.png') center no-repeat;
+				}
+			}
 		}
 	}
 }

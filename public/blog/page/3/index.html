@@ -198,292 +198,6 @@
 </div>
 </article>
 
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/the-boiling-backlog/">
-		
-			The Boiling Backlog</a>
-	</h2>
-	<div class="entry-content">
-		<p>Software development processes tend to be too prescriptive, leading to waste. For instance, most Agile training prescribes fixed-sized iterations ending with a retrospective meeting. Blindly following this structure may waste time: either you hold an expensive meeting when there isn&#8217;t enough to discuss, or you motivate the team to hold back ideas for improvement until the next meeting. By taking retrospectives out of the process, you may instead enable the team to make improvements constantly.</p>
-<p>The only prescriptive advice I can give is to <strong>ruthlessly remove waste from your process</strong>. What remains ought to communicate useful information to the team and its stakeholders. Anything more than that is just software development <em>theater</em>. Approach your development process the same way you approach a bit of ugly code: refactor away anything redundant or overly-complex.</p>
-<p>Each project&#8217;s process is going to vary in response to the project&#8217;s constraints. The process I&#8217;ve been using on <a href="https://github.com/plioi/fixie">my side project</a> is especially low-tech. It is only ideal for this particular project. If I blindly applied it to some other project, I&#8217;d be falling into the same trap as everyone who ever sold a prescriptive Agile ScrumMaster certificate. On this project, my constraints are:</p>
-<ol>
-<li>The team is very small (1 person).</li>
-<li>The overall vision is well known. Even with little planning, I know where I&#8217;m heading.</li>
-<li>The high risk requirements were vetted early on with a <a href="http://www.headspring.com/patrick/strongly-typed-whiteboarding/">proof of concept</a>.</li>
-</ol>
-<p>Fitting these constraints, the <a href="http://c2.com/cgi/wiki?EinsteinPrinciple">&#8220;simple as possible, but no simpler&#8221;</a> process that has served me well the last 2 months is a specific variation on Kanban. My Kanban board has four swim lanes: Backlog, Doing, Publish, and Done:</p>
-<p><a href="http://www.headspring.com/wp-content/uploads/2013/05/kanban.png"><img src="http://www.headspring.com/wp-content/uploads/2013/05/kanban.png" alt="Fixie&#039;s Kanban has four lanes: Backlog, Doing, Publish, and Done" width="363" height="271" class="aligncenter size-full wp-image-6525" /></a></p>
-<p>Since this is a one-person project, tools like JIRA, PivotalTracker, or Trello are overkill. Sticky notes will always be faster to work with than issue tracking software, as long as all (1) team members have access to the board. I often dramatically reorder the backlog in a few seconds to match my current plans, which would be tedious with a mouse.</p>
-<p>Most of the notes are simply the name of a feature. I don&#8217;t bother forcing them into the Agile template &#8220;As a &lt;type of user&gt;, I want &lt;some goal&gt; so that &lt;some benefit&gt;.&#8221; If I did, a note for feature X would always expand into &#8220;As a Patrick, I want X so that I can have X.&#8221; I wouldn&#8217;t gain any new insight or communication from that exercise.</p>
-<p>I limit the Doing lane to have one task at a time, because anything else would be a lie. I can only do one thing at a time.</p>
-<p>Some tasks deserve special treatment. Documenting my progress here is as important as making progress in the first place, so I gave the blog writing tasks their own Publish lane. Like Doing, this only ever has one incomplete task.  Unlike Doing, Publish tasks can stack up. If I&#8217;ve written ahead 2 or 3 articles, they pile up here as a reminder of the order I wish to publish them.</p>
-<p>I&#8217;ve been picturing the Backlog lane as a pot of boiling water. At the start of the project, I had identified 3 &#8220;Epic&#8221; features encompassing the whole project. The first of these Epics started to split apart into a few concrete tasks and a few medium-sized wish list tasks. At any time, I could pull one small, concrete task over to Doing. As I discover more about what I need, vague tasks split into smaller concrete tasks and &#8220;bubble up&#8221; to the top of the lane. The more I learn about a task, the higher it floats up the Backlog. Now that I have reached the end of the first Epic, the second one is naturally splitting into several medium tasks and a few specific tasks have made their way to the surface.</p>
-<blockquote><p>The boiling/bubbling action in the Backlog has helped in two unexpected ways. First, I&#8217;m never at a loss for what to do next because there is always at least one manageable task to claim from the top. Second, because only so many tasks can fit in the lane, the board naturally resists my attempts to plan too much in advance.</p></blockquote>
-<p>I&#8217;ve deliberately let the Done lane become overstuffed with completed tasks. I didn&#8217;t empty it out until the first of the 3 Epics was complete. There&#8217;s some kind of psychological trick about seeing your successes pile up. If I just discarded them as soon as they were done, I&#8217;d probably feel less motivated.</p>
-<p>I don&#8217;t have iterations, as they seem to artificially slow things down. I&#8217;d rather be in a constant state of pulling the next task.</p>
-<p>A process this small won&#8217;t work for everyone, but should serve as an example of just how low-tech and simple you can get. It gives me the information I need while putting zero obstacles in my path. I get to focus on one thing at a time, and I let the board tell me when it&#8217;s time to plan ahead.</p>
-<p>What does your current process look like? How is it serving your project&#8217;s constraints, and what obstacles is it putting in your way?</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-01T00:00:00-05:00" pubdate data-updated="true">May 1<span>st</span>, 2013</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/cutting-scope/">
-		
-			Cutting Scope</a>
-	</h2>
-	<div class="entry-content">
-		<p>Over the last week, I&#8217;ve implemented support for <code>async</code>/<code>await</code> in the <a href="https://github.com/plioi/fixie">Fixie test framework</a>. Thanks to a suggestion from <a href="https://twitter.com/pedroreys">Pedro Reys</a>, I found that this project was susceptible to a serious bug, one that NUnit and xUnit both encountered and addressed back when the <code>async</code>/<code>await</code> keywords were introduced in C# 5.</p>
-<p>While developing the fix, I relearned an important lesson: cutting scope is not a sign of defeat. Sometimes less really is more.</p>
-<h2>The Bug</h2>
-<p>With the bug in place, a test framework can report that a test has passed even when it should fail. Consider the following test fixture:</p>
-<p><div><script src='https://gist.github.com/5448833.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>The developer of these tests should expect TestAwaitThenPass to be the only passing test. The other four tests should all fail with one exception or another. Unfortunately, <em>Fixie would claim that all 5 of these tests pass</em>. To make matters even more confusing, despite &#8220;passing&#8221;, TestAsyncVoid&#8217;s DivideByZeroException would still be output to the user.</p>
-<p>When you call most async methods, the method call will not actually do the work. Rather, the method will quickly return a <code>Task</code> that <em>knows how</em> to do that work. To provoke the <code>Task</code> to execute, you must call its Wait() method. I was failing to call Wait(), so I would happily report success for a test that was never actually executed in full!</p>
-<p>In the case of an <code>async void</code> method, calling the method <em>does</em> cause the work to take place, but the exception does not surface in the normal fashion. The test framework&#8217;s own try/catch blocks won&#8217;t catch it, and it will bubble all the way up before appearing in the output as an unhandled exception.</p>
-<h2>The Initial Requirements</h2>
-<p>Once I could reproduce the problem, I came up with the first version of my new requirements. Since <code>async</code> methods must be declared to return <code>void</code>, <code>Task</code>, or <code>Task&lt;T&gt;</code>, and since all of these pose the same risk of the test passing when it shouldn&#8217;t,</p>
-<ol>
-<li>an <code>async Task</code> test method must be waited upon before deciding whether it passes or fails.</li>
-<li>an <code>asyc Task&lt;T&gt;</code> test method must be waited upon before deciding whether it passes or fails.</li>
-<li>an <code>async void</code> test method must be waited upon before deciding whether it passes or fails.</li>
-</ol>
-<h2>The Easy Part</h2>
-<p>We want to do the extra work for methods declared with the <code>async</code> keyword, and fortunately we can detect that keyword using reflection. When you use this keyword, the compiled method gains an attribute available to us at runtime:</p>
-<p><div><script src='https://gist.github.com/5448836.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Before the fix, a test method would be executed via reflection like so:</p>
-<p><div><script src='https://gist.github.com/5448839.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>We can fix the execution of <code>async Task</code> and <code>asyc Task&lt;T&gt;</code> by waiting for the returned <code>Task</code> to complete:</p>
-<p><div><script src='https://gist.github.com/5448843.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>When a regular test fails, <code>method.Invoke(...)</code> throws. When an <code>async</code> test fails, <code>task.Wait()</code> throws.</p>
-<h2>Unforeseen Complexity</h2>
-<p>The third requirement is problematic. If a test method is declared <code>async void</code>, <code>method.Invoke(...)</code> returns null, so we&#8217;ll never see the <code>Task</code> object and will never be able to call <code>task.Wait()</code>.  It turns out there is an extremely complex workaround, implemented in NUnit, which takes advantage of implementation details surrounding <code>async</code>/<code>await</code> execution.  After researching the technique, I lacked confidence that I would use it correctly.</p>
-<h2>The Actual Requirement</h2>
-<p>I started to question the train of thought which led to the original 3 requirements.  All async methods have to be declared as returning <code>void</code>, <code>Task</code>, or <code>Task&lt;T&gt;</code>, otherwise they won&#8217;t compile, and <strong>I was naively assuming that all three of these variations were good test declarations.</strong></p>
-<p>It turns out that declaring methods <code>async void</code> is frowned upon for exactly the same reason they were giving me trouble: it is crazy weird and difficult to correctly wait on a <code>Task</code> when the <code>Task</code> itself is inaccessible to you! <code>async void</code> declarations say, &#8220;I want to fire and forget&#8221;, but a test author does <em>not</em> want the test framework to forget what&#8217;s going on! The only reason <code>async void</code> even <em>exists</em> is for a specific edge case: <a href="http://stackoverflow.com/questions/8043296/whats-the-difference-between-returning-void-and-returning-a-task">async event handlers have no choice but to be declared void</a>.</p>
-<blockquote><p>The <em>actual</em> requirement I needed to meet was to <strong>provide accurate pass/fail reporting</strong>: a test passes if and only if the test framework executes it in full without throwing exceptions.</p></blockquote>
-<p>In the case of <code>async void</code>, I satisfy <em>this</em> requirement by <em>slapping the test author&#8217;s hand</em>. I fail such a test method immediately, without bothering to execute it. The failure message explains that &#8220;void&#8221; should be replaced with &#8220;Task&#8221;. Requiring that the test author replace 4 characters with 4 characters, rather than encourage a bad habit of writing <code>async void</code> methods, is actually <em>better</em> than supporting all variations of <code>async</code> methods.</p>
-<h2>Less is More</h2>
-<p>Requirements are human decisions based on incomplete information. With enough information, you may better-serve the needs of your system and its users by <em>not</em> doing something.</p>
-<p>In this case, supporting all 3 kinds of asynchronous methods would have introduced a great deal of complexity and risk, and I have absolutely no interest in introducing complexity or risk into something as fundamental as a test framework. By treating <code>async void</code> methods as &#8220;real&#8221; test cases that always fail, I satisfy the requirement of providing accurate pass/fail reporting. By cutting scope, I&#8217;m providing a better solution.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-04-24T00:00:00-05:00" pubdate data-updated="true">Apr 24<span>th</span>, 2013</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/isolating-execution/">
-		
-			Isolating Execution</a>
-	</h2>
-	<div class="entry-content">
-		<p>In last week&#8217;s post, <a href="http://www.headspring.com/patrick/dogfooding/">Dogfooding</a>, I uncovered a bug in the <a href="https://github.com/plioi/fixie">Fixie test framework</a> by trying to use it on two of my other side projects.  At the end of that post, I claimed that the bug had something to do with &#8220;AppDomains&#8221; and stated that it would be fixed once I met the following requirement:</p>
-<blockquote>
-<p>A test framework should fool your test DLL into thinking it is an EXE running in the build output folder, when in fact the running EXE is the console runner off in some other folder.</p>
-</blockquote>
-<p>Today, we&#8217;ll cover the bug&#8217;s diagnosis and resolution.</p>
-<h2>Initial Clues</h2>
-<p>I originally developed <a href="https://github.com/plioi/rook">Rook</a> with the xUnit test framework.  I installed Fixie beside xUnit to see if they produced the same results.  The results were surprising:</p>
-<ol>
-<li>xUnit under TestDriven.NET ran all the tests, as it always has.</li>
-<li>xUnit&#8217;s console EXE ran all the tests, as it always has.</li>
-<li>Fixie under TestDriven.NET ran all the tests.</li>
-<li>Fixie&#8217;s console EXE failed on all the <em>integration</em> tests.</li>
-</ol>
-<p>This odd mix gave me some useful information.</p>
-<p>First, xUnit and TestDriven.NET must be doing extra work prior to executing the tests, but Fixie&#8217;s console EXE was neglecting that work.</p>
-<p>Second, in the failure scenario, all the unit tests worked while all the integration tests failed.  The unit tests were relatively simple: chop up strings, walk through collections, assert on the collection contents.  The integration tests, on the other hand, needed to touch the file system too.</p>
-<p>I concluded that Fixie&#8217;s console EXE was most likely neglecting some kind of setup step related to the file system, but I needed more information.</p>
-<h2>Diagnosing the Bug</h2>
-<p>Rook&#8217;s integration tests take plain text files as input and generate new assemblies (DLLs) as output.  When the tests failed, the generated assemblies were trying to locate some types defined in the Rook.Core.dll library, which sits right beside the tests&#8217; own DLL.  <strong>When the tests failed, they failed because they could not find Rook.Core.dll, even though it was sitting right there in plain sight.</strong></p>
-<p>I added some debugging output to the tests, right before the point of failure, in order to see where .NET was trying to look for assemblies like Rook.Core.  I output the value of <code>AppDomain.CurrentDomain.BaseDirectory</code>, the first place .NET looks for DLLs.  The results revealed the issue:</p>
-<ol>
-<li>Under TestDriven.NET, the BaseDirectory was src/Rook.Test/bin/Debug, which I expected.</li>
-<li>Under the console EXE, the BaseDirectory was src/packages/Fixie.0.0.1.24/lib/net45, <strong>which is where the console EXE lives.</strong></li>
-</ol>
-<p>Aha! When you run a .NET EXE, the BaseDirectory is the same as the EXE&#8217;s directory, so that the EXE can find all the DLLs that live right beside it.  This default is convenient 99.9% of the time, because the EXE is <em>king</em> 99.9% of the time.  A test runner EXE, however, should allow your test assembly to be king.  If a test tries to use the &#8220;current directory&#8221;, it should use the test assembly&#8217;s directory.  If a test tries to load a DLL from the &#8220;base directory&#8221;, it should use the test assembly&#8217;s directory.  When Fixie.Console.exe ran tests within Rook.Test.dll, and those tests generated assemblies that depended on Rook.Core.dll, <em>Fixie was looking for that in the wrong folder</em>.  I was asking .NET to perform magic:</p>
-<blockquote>
-<p><strong>Me:</strong> Would you kindly locate a DLL for me? <br />
-<strong>.NET:</strong> Sure, I&#8217;ll look where I always look. <br />
-<strong>Me:</strong> Oh, no, you should look in a folder that I consider to be special. <br />
-<strong>.NET:</strong> Where&#8217;s that? <br />
-<strong>Me:</strong> It&#8217;s a secret. <br />
-<strong>.NET:</strong> Get off my lawn.</p>
-</blockquote>
-<h2>The Solution: Multiple AppDomains</h2>
-<p>We usually don&#8217;t hear much about AppDomains because most of the time they are 1-1 with our EXE&#8217;s process. Most of the things we think of as &#8220;the process&#8221; are really &#8220;the single AppDomain living inside the process&#8221;.  The basic idea is that an AppDomain is a list of assemblies that have been loaded and that can call each other.  AppDomains also have some state such as the BaseDirectory, which answers the question, &#8220;What folder should I look in to find DLLs?&#8221;</p>
-<p>Since the default BaseDirectory was wrong for my purposes, I needed to spin up a second AppDomain within the process, with BaseDirectory set correctly.  Then, I needed to make sure that Fixie did all of its work within <em>that</em> AppDomain instead of the default AppDomain.</p>
-<p>Communicating between AppDomains is tricky because they are very much like separate processes.  They don&#8217;t share access to objects in memory, so you have to throw serializable objects across the chasm.  In order to make this &#8220;long distance&#8221; communication <em>feel</em> like a regular method call, you can use a subclass of <code>MarshalByRefObject</code> to act as an intermediary.</p>
-<blockquote>
-<p>In AppDomain 1, we ask AppDomain 2 to create an instance of our intermediary class.  This request creates a <em>real</em> instance over in AppDomain 2.  Back in AppDomain 1, we get a <em>proxy</em>.  If you call a method on the proxy in AppDomain 1, the arguments get serialized and thrown over the chasm to the real object in AppDomain 2.  When the work is performed and the real object returns a result, that result is serialized and thrown back over the chasm to AppDomain 1.  It feels like a regular method call.</p>
-</blockquote>
-<p>I created the <code>ExecutionEnvironment</code> to wrap all of the AppDomain interaction:</p>
-<p><div><script src='https://gist.github.com/5409040.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Upon construction, this class creates the second AppDomain, treating the given folder path as the BaseDirectory.  You call <code>Create&lt;T&gt;(...)</code> in order to create an object in the new AppDomain.  You get back a proxy which knows how to cross the chasm between AppDomains.  <code>Dispose()</code> frees up the resources used by the secondary AppDomain and returns the current directory back to its original value.  Fixie&#8217;s <code>Main</code> method uses this class like so:</p>
-<p><div><script src='https://gist.github.com/5409049.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p><code>ConsoleRunner</code> is our <code>MarshalByRefObject</code>, which effectively lives on both sides of the AppDomain chasm:</p>
-<p><div><script src='https://gist.github.com/5409051.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>I wanted to minimize the amount of code that cared about AppDomains, so the <code>MarshalByRefObject</code> subclass is very small.  It receives the <code>assemblyPath</code> (the serializable object that got thrown across the chasm), and defers to <code>Runner</code> as quickly as possible.  <code>Runner</code> does the real work, and is used by both the console EXE and TestDriven.NET.  <code>Runner</code> has no idea that AppDomains are involved at all.  Only <code>ConsoleRunner</code> cares about that detail.</p>
-<h2>Isolating Test Execution</h2>
-<p>I came to this solution by studying the similar steps taken by NUnit, xUnit, and Machine.Specifications.  All these test frameworks need to let the developer pretend that their unit test assembly is their main EXE, and they all do it by isolating test execution in a specially-configured AppDomain.  AppDomains are like processes-within-the-process, and <code>MarshalByRefObject</code> classes help to make inter-AppDomain communication feel like regular method calls.</p>
-<p>It takes a lot of work to set up AppDomains, communicate with them, and clean up afterwards.  If you need to run code in isolation, <code>ExecutionEnvironment</code> is a useful starting point.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-04-18T00:00:00-05:00" pubdate data-updated="true">Apr 18<span>th</span>, 2013</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/disabling-language-changes-in-visual-studio/">
-		
-			Disabling Language Changes in Visual Studio</a>
-	</h2>
-	<div class="entry-content">
-		<p>On a recent project I used a workstation given to me by the client. It was typical &#8220;big enterprise&#8221; setup with support for multiple languages. I discovered there&#8217;s a keyboard shortcut &#8220;Ctrl+Space&#8221; for changing your language that I would keep accidentally activating in Visual Studio. This post explains how to disable that.</p>
-<ul>
-<li>Go to the control panel.</li>
-<li>Choose &#8220;Region and Language&#8221;.</li>
-<li>Click the &#8220;Keyboard and Layout&#8221; tab.</li>
-<li>Click on &#8220;Change Keyboards&#8221;.</li>
-<li>Click on &#8220;Advanced Key Settings&#8221;.</li>
-<li>Look over the list of sequences, ensure they are all set to &#8220;none&#8221; for keyboard activation.</li>
-</ul>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-04-12T00:00:00-05:00" pubdate data-updated="true">Apr 12<span>th</span>, 2013</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/visual-studio/'>Visual Studio</a>, <a class='category' href='/blog/categories/keyboard-shortcuts/'>keyboard shortcuts</a>
-
-
-</div>
-	
-</div>
-</article>
-
 <nav id="pagenavi">
     
         <a href="/blog/page/2/" class="prev">Prev</a>
@@ -493,7 +207,44 @@
     
     <div class="center"><a href="/blog/archives">Blog Archives</a></div>
 </nav></div>
-	<footer id="footer" class="inner">Copyright &copy; 2013
+	<footer id="footer" class="inner"><div class="related-links">
+	<h3>Other Headspring Sites</h3>
+	<ul>
+		<li><a href="http://www.headspring.com">Headspring</a></li>
+		<li><a href="http://www.headspringmobile.com">Headspring Mobile</a></li>
+	</ul>
+</div>
+
+<div class="related-links">
+	<h3>Communities/Groups</h3>
+	<ul>
+		<li><a href="http://www.adnug.org">ADNUG</a></li>
+		<li><a href="http://polyglotprogrammers.org">Polyglot ATX</a></li>
+	</ul>
+</div>
+
+<div class="related-links">
+	<h3>Open Source</h3>
+	<ul>
+		<li><a href="http://www.adnug.org">AutoMapper</a></li>
+		<li><a href="http://polyglotprogrammers.org">Formo</a></li>
+		<li><a href="http://polyglotprogrammers.org">Parsely</a></li>
+		<li><a href="http://polyglotprogrammers.org">NAAK</a></li>
+	</ul>
+</div>
+
+<div class="related-links">
+	<h3>Events</h3>
+	<ul>
+		<li><a href="http://www.adnug.org">CTX Givecamp</a></li>
+		<li><a href="http://polyglotprogrammers.org">Houston TechFest</a></li>
+		<li><a href="http://polyglotprogrammers.org">Austin Code Camp</a></li>
+	</ul>
+</div>
+
+<hr />
+
+Copyright &copy; 2013
 
     Headspring Labs
 

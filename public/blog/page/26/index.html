@@ -166,242 +166,6 @@
 </div>
 </article>
 
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/get-to-know-a-developer-casey-gum/">
-		
-			Get to Know a Developer: Casey Gum</a>
-	</h2>
-	<div class="entry-content">
-		<p><a href="http://www.headspring.com/2012/05/get-to-know-a-developer-casey-gum/headshot-1" rel="attachment wp-att-5334"><img class="alignright size-full wp-image-5334" title="Casey Gum" src="http://www.headspring.com/wp-content/uploads/2012/05/headshot-1.jpg" alt="Casey Gum" width="200" height="256" /></a>I&#8217;m so happy to finally have another new developer to write about!  Casey Gum just joined the team as a Principal Consultant yesterday, and so far he&#8217;s doing great with jumping right in to working with clients. He&#8217;s got a pretty full schedule already, but he spared me a few moments this morning.</p>
-<p>Casey is our first new Principal Consultant at Headspring since <a href="http://www.headspring.com/author/arobles" target="_blank">Alonso Robles</a> came on board in December, and boy did we need him for all the big projects we have taken on in 2012.  He comes from 8 years spent in tech consulting for military intelligence and law enforcement with Textron.  He is also one of the original founders of Austin&#8217;s <a href="http://www.fg2.com/" target="_blank">FG Squared</a>.</p>
-<p>Here&#8217;s a bit of our conversation:</p>
-<p><strong>Are you an expert at anything?</strong></p>
-<p>C# in general, Silverlight and WPF.  Other than that, I would merely categorize myself as proficient in a wide variety of technologies.</p>
-<p><strong>Who is on your list of ideal clients to work for or individuals to work with?</strong></p>
-<p>My ideal client is the one that can most benefit from my expertise.  As far as individuals, I like working with anyone with a good attitude and a passion for learning.</p>
-<p><strong>What led you to software development?</strong></p>
-<p>I have always loved computers. I knew from a very early age that I would be an engineer or a programmer.</p>
-<p><strong>What did you learn first?</strong></p>
-<p>The first language I learned was BASIC on a TI-99 in 1981.  I saved/loaded my (mostly Dungeons and Dragons-related) programs to a cassette tape.  Good times, good times.</p>
-<p><strong>Do you like teaching?</strong></p>
-<p>I do like teaching. I actually taught my first computer class to kids at Computerland in El Paso when I was 15.  I have taught a number of developer training sessions on Design Principles, Patterns and Practices.</p>
-<p><strong>What are your plans for the future?</strong></p>
-<p>For the next 10-12 years, I am going to do everything I can to prepare my children for a career in engineering. We need more engineers.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-05-31T00:00:00-05:00" pubdate data-updated="true">May 31<span>st</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/get-to-know-a-headspringer/'>Get To Know a Headspringer</a>, <a class='category' href='/blog/categories/small-talk-and-big-news/'>Small Talk &amp; Big News</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/building-a-language/">
-		
-			Building a Language</a>
-	</h2>
-	<div class="entry-content">
-		<p>I&#8217;ve had an on-again, off-again relationship with a hobby project for the last few years.  I&#8217;m (slowly) implementing a compiler for a new language, called <a href="https://github.com/plioi/rook">Rook</a>.  I recently gave a presentation at the <a href="http://www.polyglotprogrammers.org/">Polyglot Programmers of Austin</a> during the mid-meeting break.  The presentation was less focused on Rook itself, as it&#8217;s constantly in flux, and instead focused on how you might go about implementing a similar project yourself.  Whether you want to implement a full-blown programming language, or the next time-saving structured-text-processing tool like <a href="http://lesscss.org/">Less</a>, much of the same priciples and patterns apply.</p>
-<p>As <a href="http://www.headspring.com/2012/05/headspringers-at-austin-code-camp">Nolan Egly mentioned last week</a>, I&#8217;ve submitted the longer version of this presentation for this year&#8217;s <a href="http://austincodecamp2012.com/">Austin Code Camp</a> on June 9.</p>
-<p>Although the language&#8217;s syntax, priorities, and long term vision are a little wibbly/wobbly at the moment, here&#8217;s a basic rundown of what I have working so far.
-</p>
-<h2>Hello, World!</h2>
-<p>In this example, we print some text to standard out.  Note that the <code>Main</code> function doesn&#8217;t have to live inside of a boilerplate class.  Since the body of the function is just one little function call, we also don&#8217;t bother surrounding it with <code>{</code> curly braces <code>}</code>:<br />
-<div><script src='https://gist.github.com/2772642.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<h2>Everything&#8217;s an Expression</h2>
-<p>Well, most things are expressions.  Most of the things you see in a Rook program have a value, even things like <code>if/else</code> conditional logic.  Here, the value of the whole <code>if/else</code> is the value of the branch that was actually executed.  Since the <code>Factorial</code> function&#8217;s body is just a single expression, we have no need to bother with more <code>{</code> curly braces <code>}</code> or an explicit <code>return</code> keyword:<br />
-<div><script src='https://gist.github.com/2772676.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<h2>Blocks: Fancy Expressions</h2>
-<p>Sometimes you just need to go into &#8216;statement mode&#8217; and declare some local variables to work with.  Rook blocks are special compound expressions.  They are surrounded with <code>{</code> curly braces <code>}</code> and can contain zero or more local variable declarations followed by one or more body expressions.  The value of the whole block is the value of the last body expression evaluated.</p>
-<p>The local variables can have an explicit type declaration if you want one, but when you leave it off it will be inferred just like C#&#8217;s &#8216;var&#8217; keyword.  Here, Main() will return 50:</p>
-<p><div><script src='https://gist.github.com/2772851.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<h2>The Billion Dollar Feature</h2>
-<p>Allowing reference types to be nullable by default in languages like Java and C# has been called <a href="http://www.infoq.com/presentations/Null-References-The-Billion-Dollar-Mistake-Tony-Hoare">The Billion Dollar Mistake</a>.  Honestly, how often would it be meaningful for your domain objects to be nulls?  Most of the time, when your Customer/Account/Whathaveyou objects are null, you have encountered a bug and are moments away from a NullReferenceException cropping up <em>nowhere near</em> the actual point where the mistake was made.</p>
-<p>Nullability should be something you <em>ask for</em>, when it has <em>meaning</em> in your system.  Also, when you look at a method signature for a method someone else wrote, it would be nice to know right away whether or not the other programmer is taking on the responsibility of handling nulls.  Just like <code>int</code> is a different type from <code>int?</code> in C#, <code>string</code> is a different type from <code>string?</code> in Rook:<br />
-<div><script src='https://gist.github.com/2772701.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<h2>Collections</h2>
-<p>In C#, <code>IEnumerable&lt;T&gt;</code> has become extremely commonplace.  Any arbitrarily-sized collection that you could loop through implements this interface.  It&#8217;s useful, prevalent, <em>and the length of its name drives me bonkers</em>.  <strong>The most commonly-used things should take the fewest characters to write.</strong>  In Rook variable declarations, <code>int*</code> is shorthand for <code>IEnumerable&lt;int&gt;</code>.</p>
-<p>C#&#8217;s basic built in collection type, the one that get special syntax support and shorthand in variable declarations, is mutable.  This is The Million Dollar Mistake.  It&#8217;s not quite as offensive as nullability-by-default, but it does encourage some brittleness.  If a library call returns an array of something, and you mess with the result, you&#8217;re probably abusing the intent of the library developers.  This might even give you unintended access to the data that the library is trying to maintain privately.  Let&#8217;s use things like <code>List&lt;T&gt;</code> for mutation, and keep our array-like things immutable.  Again, the most commonplace things should take the fewest characters to write, so I&#8217;d rather devote shorthand like <code>int[]</code> to something I can really feel safe using everywhere.</p>
-<p>In Rook, <code>int[]</code> is shorthand for <code>Vector&lt;int&gt;</code>, where <code>Vector&lt;T&gt;</code> is an <em>abstract</em> base class for an immutable array-like collection.  Since it&#8217;s abstract, there&#8217;s the potential for multiple implementations benefiting from the same built-in syntax.</p>
-<p>Because <code>Vector&lt;T&gt;</code> isn&#8217;t a concrete type, we can play some neat tricks to keep these immutable collections efficient.  <code>Vector&lt;T&gt;</code> supports Python-style slicing operations with the [:] operator, which gives results similar to <code>String.Substring(...)</code>.  The operation returns a <code>Slice&lt;T&gt;</code>, which also happens to implement <code>Vector&lt;T&gt;</code>.  This structure allows the slicing operation to have O(1) performance characteristics (taking a large slice of a large collection is as fast as taking a small slice of a small collection).</p>
-<p><strong>Letting the language favor interfaces and abstract types right from the get-go opens the door to neat trickery like fast slicing.</strong>  We preach coding to abstractions when <em>using</em> languages, and our languages should start following that advice as well.</p>
-<p>Also similar to strings, operations like <code>Append()</code> produce a whole new collection instead of modifying the original:<br />
-<div><script src='https://gist.github.com/2772715.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<h2>Austin Code Camp</h2>
-<p>All of this is in constant flux as I figure out what I really want this to <em>be</em> in the long run, but the implementation and patterns involved have become more and more stable in the past year.  Come on by the Austin Code Camp on June 9 to see how this seemingly-complex task can be broken down into managable pieces.  Be there and be square!</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-05-25T00:00:00-05:00" pubdate data-updated="true">May 25<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/polyglot-programmers-of-austin-and-the-importance-of-industry-groups-with-sharon-cichelli-and-jeffrey-palermo/">
-		
-			Industry Groups With Sharon Cichelli, the Founder of Polyglot Programmers of Austin</a>
-	</h2>
-	<div class="entry-content">
-		<p><a href="http://feeds.headspring.com/headspringpodcast"><img class="alignleft size-full wp-image-5225" src="http://www.headspring.com/wp-content/uploads/2012/05/rss-icon402.jpg" alt="Subscribe to podcast" width="40" height="40" /></a>In this cast, Sharon Cichelli and Jeffrey Palermo discuss the importance of industry groups, both the benefits of participating in, and volunteering for them.</p>
-<p>Sharon is a Senior Consultant for Headspring.  Aside from building valuable custom business software, Sharon writes a blog at <a href="http://www.girlwritescode.com/">GirlWritesCode.com</a>, builds unusual home furnishings with Arduinos, and plays too much pinball. She founded Polyglot Programmers of Austin, a co-working study group which encourages developers to branch out and learn other languages and platforms.</p>
-<p>Here are some other relevant resources that were mentioned in the cast.</p>
-<ul>
-<li><a href="http://www.meetup.com/">Meetup</a></li>
-<li><a href="http://door64.com/">door64</a></li>
-<li><a href="http://southcentralcommunity.com/">South Central Community</a></li>
-<li><a href="http://www.polyglotprogrammers.org/">Polyglot Programmers of Austin</a></li>
-<li><a href="http://adnug.org/">Austin .NET User Group</a></li>
-<li><a href="http://www.agileaustin.org/">Agile Austin</a></li>
-<li><a href="https://groups.google.com/forum/?fromgroups#!forum/atx-code-lunch">ATX Code Lunch</a></li>
-<li><a href="http://www.toastmasters.org/">Toastmasters International</a></li>
-</ul>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-05-21T00:00:00-05:00" pubdate data-updated="true">May 21<span>st</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/podcast/'>Podcast</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/a-bidirectional-heisenbug/">
-		
-			A Bidirectional Heisenbug</a>
-	</h2>
-	<div class="entry-content">
-		<p>I think I may have encountered the world&#8217;s first bidirectional Heisenbug.</p>
-<p>The Heisenberg Uncertainty Principle in physics deals with the problem of observing very small things.  If you want to detect an electron, to &#8220;see&#8221; where it&#8217;s going, you have to basically &#8220;shine a light on it&#8221; by letting it interact with a photon.  At those scales, simply shining a light on something is enough to push it off course!  In short, <em>observing something can change the thing being observed</em>.</p>
-<p>A <a href="http://en.wikipedia.org/wiki/Heisenbug">Heisenbug</a> is a software bug that seems to correct itself the moment you start trying to find its root cause.  This can be particularly frustrating.  You know the bug is really there.  You&#8217;ve seen its effects.  The moment you start stepping through your program to see it in action, though, everything starts working again.  <strong>Although initially frustrating, this strange behavior can actually provide vital clues about a bug&#8217;s root cause.</strong></p>
-<p>I encountered the epitome of a Heisenbug today.</p>
-<p>The application has a data entry grid reminiscent of a spreadsheet.  The bug report stated that when adding a new record to this grid, some of the necessary data would not get saved successfully, and that lack of data would be apparent on one of the other screens.</p>
-<p>Sure enough, I could reproduce the issue consistently and I knew what part of the project to look into first.  I set up some breakpoints in the suspicious part of the code, and <em>unlike</em> a typical Heisenbug, I could see some real clues about what was going wrong.  I made a prediction, that if I made a particular column visible in this grid, then I would be able to see the effects of the problem without having to go to the second screen.  This prediction turned out to be correct: I included the column in the grid, and immediately saw the inconsistency created by my earlier attempts to add records to the grid.</p>
-<p>I continued attempting to trigger the bug, and step through the suspect code, but everything started to look correct.  The data I expected to be missing was right there, clear as day, in my debugger.  Just before frustration got the best of me, though, I asked myself to look back over every step I had taken, in case it would explain the sudden disappearance of the bug.</p>
-<p><strong>Between the failure scenarios and the working scenarios, I had included that extra column in the grid!</strong>  It turns out that the suspect code depended on the presence of certain columns in order to function properly.</p>
-<p>That discovery didn&#8217;t just explain the bug&#8217;s sudden disappearance, it actually provided the main clue as to what was really going wrong, and suggested where I needed to apply the fix.  If the bug hadn&#8217;t disappeared, it probably would have taken <em>longer</em> to actually hunt it down.</p>
-<p>The Heisenbug-ness of this issue was actually bidirectional.  Not only did the bug stop happening when I attempted to look at it, but the official Steps-to-Reproduce The Issue involve deliberately trying to avoid seeing its effects!</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-05-18T00:00:00-05:00" pubdate data-updated="true">May 18<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
 <nav id="pagenavi">
     
         <a href="/blog/page/25/" class="prev">Prev</a>
@@ -411,7 +175,44 @@
     
     <div class="center"><a href="/blog/archives">Blog Archives</a></div>
 </nav></div>
-	<footer id="footer" class="inner">Copyright &copy; 2013
+	<footer id="footer" class="inner"><div class="related-links">
+	<h3>Other Headspring Sites</h3>
+	<ul>
+		<li><a href="http://www.headspring.com">Headspring</a></li>
+		<li><a href="http://www.headspringmobile.com">Headspring Mobile</a></li>
+	</ul>
+</div>
+
+<div class="related-links">
+	<h3>Communities/Groups</h3>
+	<ul>
+		<li><a href="http://www.adnug.org">ADNUG</a></li>
+		<li><a href="http://polyglotprogrammers.org">Polyglot ATX</a></li>
+	</ul>
+</div>
+
+<div class="related-links">
+	<h3>Open Source</h3>
+	<ul>
+		<li><a href="http://www.adnug.org">AutoMapper</a></li>
+		<li><a href="http://polyglotprogrammers.org">Formo</a></li>
+		<li><a href="http://polyglotprogrammers.org">Parsely</a></li>
+		<li><a href="http://polyglotprogrammers.org">NAAK</a></li>
+	</ul>
+</div>
+
+<div class="related-links">
+	<h3>Events</h3>
+	<ul>
+		<li><a href="http://www.adnug.org">CTX Givecamp</a></li>
+		<li><a href="http://polyglotprogrammers.org">Houston TechFest</a></li>
+		<li><a href="http://polyglotprogrammers.org">Austin Code Camp</a></li>
+	</ul>
+</div>
+
+<hr />
+
+Copyright &copy; 2013
 
     Headspring Labs
 

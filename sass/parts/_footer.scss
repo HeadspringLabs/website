@@ -1,6 +1,27 @@
-footer{
+footer {
 	padding: 15px 0;
 	border-top: 1px solid $color-gray05;
 	text-align: center;
 	font-size: 0.9em;
+
+	.related-links {
+		text-align: left;
+		display: block;
+		float: left;
+		width: 25%;
+		margin-left: 50px;
+		ul {
+			li {
+				line-height: 22px;
+				background: image-url('logos/hslabs_bullet.png') left no-repeat;
+				padding-left: 20px;
+				margin: 15px;
+				list-style-type: none;
+			}
+		}
+	}
+	hr {
+		margin: 10px 0;
+		clear: both;
+	}
 }

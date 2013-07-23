@@ -164,286 +164,6 @@ Third Clause Side Effect
 </div>
 </article>
 
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/unit-testing-best-practices-know-your-tests-lifecycle-part-2/">
-		
-			Unit Testing Best Practices: Know Your Test’s Lifecycle, Part 2</a>
-	</h2>
-	<div class="entry-content">
-		<p>In my <a title="Unit Testing Best Practices: Know your test’s lifecycle, Part 1" href="http://www.headspring.com/2011/08/unit-testing-best-practices-know-your-tests-lifecycle-part-1">first post in the Unit Testing Best Practices series</a>, I introduced you to the basic lifecycle of an NUnit test fixture. This time, we&#8217;re going to see what happens when we give our tests a common test fixture base class.<br />
-<span class="Apple-style-span" style="font-size: 26px"><strong>Why a base class?</strong></span><br />
-There are two cases where having a base test fixture can be useful in keeping your test code simpler:</p>
-<ol>
-<li><strong>You have lots of the same kind of tests. </strong>Maybe you&#8217;re writing integration tests for your persistence layer. Your tests are going to all be performing some similar operations, like creating a database connection. Maybe they all need to reference an Inversion of Control container like StructureMap or Autofac in order to retrieve repository instances. You don&#8217;t want to write that boilerplate code for every fixture, do you?</li>
-<li><strong>You have a hierarchy of classes that need testing.</strong> If you have a base class in your domain, you will probably want to set up a parallel type hierarchy of test fixtures. In this case, a base test fixture gives you one place to define tests that verify the base class invariants to which all your derived classes need to conform.</li>
-</ol>
-<p><span class="Apple-style-span" style="font-size: 26px"><strong>The Code</strong></span></p>
-<div>Let&#8217;s take a look at what happens to our simple test fixture when we give it a base class:</p>
-<p><span class="Apple-style-span" style="font-family: Consolas, Monaco, monospace;font-size: 12px;line-height: 18px"><div><script src='https://gist.github.com/1262440.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</span></p>
-</div>
-<p>Notice that the base class isn&#8217;t attributed with the [TestFixture] attribute. I only want this class to act as a base for my actual fixtures. I don&#8217;t intend for it to be run as a fixture in its own right.</p>
-<p>Note too that I&#8217;m reinforcing the fact that this class doesn&#8217;t stand alone by making the base class abstract, and following standard practices for an abstract base class by making the constructor protected instead of public. We&#8217;ve also made the IDisposable.Dispose method implementation virtual so we can extend its behavior in derived classes.</p>
-<p><em>Test code is still code. Follow the same design practices here that you would in your application code.</em></p>
-<p><span class="Apple-style-span" style="font-size: 26px"><strong>The Results</strong></span><br />
-Now when we run our tests, we get the following output:</p>
-<ul>
-<li>Base Constructor</li>
-<li>Derived Constructor</li>
-<ul>
-<li>Base TestFixtureSetup</li>
-<li>Derived TestFixtureSetup</li>
-<ul>
-<li>Base SetUp</li>
-<li>Derived SetUp</li>
-<ul>
-<li>Derived First Test passes!</li>
-</ul>
-<li>Derived TearDown</li>
-<li>Base TearDown</li>
-<li>Base SetUp</li>
-<li>Derived SetUp</li>
-<ul>
-<li>Derived Second Test fails!</li>
-</ul>
-<li>Derived TearDown</li>
-<li>Base TearDown</li>
-<li>Base SetUp</li>
-<li>Derived SetUp</li>
-<ul>
-<li>Base First Test passes!</li>
-</ul>
-<li>Derived TearDown</li>
-<li>Base TearDown</li>
-<li>Base SetUp</li>
-<li>Derived SetUp</li>
-<ul>
-<li>Base Second Test fails!</li>
-</ul>
-<li>Derived TearDown</li>
-<li>Base TearDown</li>
-</ul>
-<li>Derived TestFixtureTearDown</li>
-<li>Base TestFixtureTearDown</li>
-</ul>
-<li>Derived Dispose</li>
-<li>Base Dispose</li>
-</ul>
-<p><span class="Apple-style-span" style="font-size: 26px"><strong>Observations</strong></span><br />
-Note that even with a base class, all our observations from last time are still true:</p>
-<ol>
-<li>The Test Fixture class is constructed once.</li>
-<li>TestFixtureSetup and TestFixtureTeardDown run one time.</li>
-<li>TestSetup and TestTearDown run around every test.</li>
-<li>TestTearDown runs even when a test fails.</li>
-<li>NUnit knows about IDisposable.</li>
-</ol>
-<div>But now we can also see the following new behaviors:</div>
-<div>
-<ol>
-<li><strong>TestFixture constructors and dispose methods are called in the same order as for any other class. </strong>This is one of the reasons I prefer using constructor/disposable semantics with test fixtures instead of relying on the special FixtureSetUp/FixtureTearDown attributes - we already know the rules for constructors and disposables.</li>
-<li><strong>The base class SetUp and TearDown methods run <em>around</em> those from the derived class.</strong> This is true for both Fixture- and Test- SetUp and TearDown methods. You can think of your base class wrapping your derived class, like Russian nested dolls. This pattern also extends as you create deeper inheritance hierarchies. SetUp is run from the outermost base class down to the leaf derived class, and TearDown is run in exactly the opposite order.</li>
-<li><strong>All Test-level SetUp and TearDown methods are run for <em>every</em> test. </strong>This behavior is a little surprising. Notice that even on the test methods defined in the base class, <em>the derived class&#8217; SetUp and TearDown methods are still getting run</em>. If you start seeing base class tests failing because something they expected from SetUp is suddenly different, this is a likely culprit.</li>
-<li><strong>Tests are run in alphabetical order</strong>. Ok, you can&#8217;t infer this one from the output, you&#8217;re just going to have to take my word for it (or go play with the test names yourself and see what happens.) NUnit sorts all tests on the fixture by name, from A to Z, and then runs them in that order. Base class test methods are identified as &lt;ClassName&gt;.&lt;TestMethodName&gt; for purposes of sorting. This means that your base class tests will all be grouped together when the fixture is run, but they could all run right in the middle of your derived class&#8217; tests.</li>
-</ol>
-</div>
-<div><span class="Apple-style-span" style="font-size: 26px"><strong>Guidelines</strong></span></div>
-<p>You can quickly see from the results above that our first guideline, <em>Use constructors for class-wide setup. Use IDisposable for class-wide cleanup. Avoid TestFixtureSetup and TestFixtureTearDown, </em>is even more relevant once we start creating a hierarchy of test fixtures.  Constructors and IDisposable keep our test fixtures working like any other class we&#8217;d write.</p>
-<div>Let&#8217;s add two more guidelines:</div>
-<div>
-<ol>
-<li><strong>Don&#8217;t rely on test run order</strong>. Test method run order varies between different hosts. NUnit and ReSharper and Gallio rarely all agree on which order to run your tests. As a developer, you&#8217;re often not even running a full test suite -you&#8217;re running specific fixtures, or even just a few tests within a fixture. If your tests only pass when they&#8217;re run in a specific order, you&#8217;re going to waste a lot of time hunting down false failures. Remember, the closer you are to release, the more likely that your tests will start failing for &#8220;no reason at all.&#8221; Keep your tests independent of each other, and you&#8217;ll <em>always</em> be able to run them with confidence.</li>
-<li><strong>Limit test-level SetUp and TearDown semantics<em>. </em></strong>It&#8217;s bad enough when a test fails. It&#8217;s even worse when you have to jump around between base and derived class code to stitch together what&#8217;s happening for each test. If at all possible, limit the definition of SetUp and TearDown methods to your base class. In recent years, I find that if I get my fixture initialization right in the constructor, then I rarely have to do much resetting around each individual test.</li>
-</ol>
-</div>
-<div>You&#8217;ve now got a clear understanding of how an individual test fixture is created, initialized, and executed, and how that changes when the fixture has a derived class with its own lifecycle. You&#8217;ve also got a few more guidelines to help you keep your unit tests easy to maintain and extend.</div>
-<p>Next time, we&#8217;re going to see how to run our own initialization code <em>before any of our test fixtures are even created. </em></p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-09-07T00:00:00-05:00" pubdate data-updated="true">Sep 7<span>th</span>, 2011</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/agile-benefits/'>agile benefits</a>, <a class='category' href='/blog/categories/best-practices/'>best practices</a>, <a class='category' href='/blog/categories/unit-testing/'>unit testing</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/youre-doing-your-code-reviews-wrong-2/">
-		
-			You&#8217;re Doing Your Code Reviews Wrong!</a>
-	</h2>
-	<div class="entry-content">
-		<p>Well, not YOU, of course. YOUR team&#8217;s code reviews, I&#8217;m sure, are pleasant, productive engagements where everybody leaves feeling good about the results. They happen early and regularly in the development process, the goal of the review is well understood, and you wouldn&#8217;t dream of shipping a line of code that hadn&#8217;t been through your review process. Your team loves doing them, and you don&#8217;t worry about who does the review because you&#8217;ve got a consistent standard that your whole team agrees with. You&#8217;re just reading this article because there&#8217;s this <em>other </em>team in the building that you think would benefit from reading it, and you&#8217;re going to forward it to them when you&#8217;re done reading.</p>
-<p>I&#8217;m with you. Personally, I&#8217;ve <em>never</em> sat around a meeting table with 15 other developers, all checking their email, while one poor sacrificial lamb walked us through a line-by-line explanation of code in &#8220;Representative changeset XYZ&#8221; the day <em>after</em> we put it into production. I&#8217;ve <em>never</em> been told (or said!) &#8220;That&#8217;s good feedback, but we don&#8217;t have time to re-test those changes before the release date.&#8221; And I&#8217;ve <em>never, ever</em> had an hours-long debate about where our braces should go.</p>
-<p>Really.</p>
-<p>But, for the benefit of that <em>other</em> team, I&#8217;ve put together some advice about  <span style="color: #000000;"><a href="http://www.headspring.com/resources/whitepapers/" target="_blank">how to conduct effective code reviews</a></span>. Some of the things I cover are:</p>
-<ul>
-<li>Understanding why we do code reviews in the first place</li>
-<li>Using code reviews to drive quality in your products early</li>
-<li>Getting a consistent code style across your team so you can focus on higher-level issues</li>
-<li>And more.</li>
-</ul>
-<p>&nbsp;</p>
-<div>Come take a look at <em><span style="color: #ff0000;"><a href="http://www.headspring.com/resources/whitepapers/" target="_blank">Conducting Effective Code Reviews</a></span></em>, and remember to share it with the guys down the hall who <em>actually</em> need it!</div>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-09-02T00:00:00-05:00" pubdate data-updated="true">Sep 2<span>nd</span>, 2011</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/what-the-tech/'>What the tech?</a>, <a class='category' href='/blog/categories/best-practices/'>best practices</a>, <a class='category' href='/blog/categories/code-reviews/'>code reviews</a>, <a class='category' href='/blog/categories/developer-productivity/'>developer productivity</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/improve-developer-productivity-by-losing-your-mouse/">
-		
-			Improve Developer Productivity by Losing Your Mouse</a>
-	</h2>
-	<div class="entry-content">
-		<p>I started my development career working for a very small company that developed accessibility software for the blind. I was fresh out of school and working on a screen reader for Windows 3.1. It was quite a challenge, in more ways than one.</p>
-<p>One of the things I had to learn was how blind people used the computer at all. My boss (the owner of the company) was blind and taught me a lot – but he could only work in DOS, as there just weren’t any screen readers for Windows yet. So I had to figure out a lot of things on my own.</p>
-<p><a href="http://www.headspring.com/wp-content/uploads/2011/08/image.png"><img style="margin: 0px 30px 25px 0px; padding-left: 0px; padding-right: 0px; float: left; padding-top: 0px; border: 0px;" src="http://www.headspring.com/wp-content/uploads/2011/08/image_thumb.png" alt="image" width="165" height="169" align="left" border="0" /></a>As you might guess, blind people have terrible eye-hand coordination, so they never use a mouse. I decided that I would also learn to avoid my mouse as much as possible. One of the best things for me was to just push the mouse out of reach – if it wasn’t there, it made it more inconvenient to use it. Sometimes I would go so far as disconnecting it or dropping down behind my desk. I very quickly learned that the Alt key would let me get to menus, and that the tab key would move me between controls in a dialog. I learned that the Enter key in a dialog would (usually) press the default button, which looked different than other buttons. Over time, I developed a very strong ability to use nothing but the keyboard – and it has helped in many ways.</p>
-<p>One thing I noticed as I moved on to other jobs is that many developers had not learned the same keyboard skills that I had. I would frequently wince as I watched someone use the mouse to do something, and then I would gently suggest the (much faster) keyboard way of doing the same thing. One time I was working with someone on a word processing document, and they wanted to change the font of the whole document. I t was painful to watch them first click on the up arrow in the scroll bar to get to the top of the document, then use the mouse to select the whole document. They thought it was pretty cool when I showed them that CTRL+A almost always works to “select all”. One of my other favorites is that when I am filling in a form on a website, when it gets to asking about my address, there is almost always a huge dropdown for State. Since I live in Texas, hitting T twice gets me right where I need to be super-fast. You can also do this for those “what year were you born in” dropdowns – rather than pointing and clicking, just start typing, and it will select the right year.</p>
-<p>Pair programming is a great way to share these kinds of tips and tricks. Attending a coding dojo is another one. Of course, the <a href="http://www.headspring.com/services/developer-training">Headspring training classes</a> usually introduce students to all kinds of productivity enhancing techniques too!</p>
-<p>There are too many keyboard shortcuts to list here, but start looking around for lists of keyboard shortcuts for the programs you use most often. Use something like <a href="http://osherove.com/tools">Key Jedi</a> when you pair with someone so you can learn they shortcuts they use. and try ‘losing’ your mouse every once in a while to force yourself out of your comfort zone. It may take longer at first, but when you master them, you will be faster than ever.</p>
-<p>Here are a few keyboard shortcut references to get you started:</p>
-<p><a href="http://support.microsoft.com/kb/126449">Keyboard Shortcuts for Windows</a> – a nice general list to get you started.</p>
-<p><a href="http://windows.microsoft.com/en-US/windows7/Keyboard-shortcuts">Windows 7 Shortcuts</a> – some duplicates here, but some things that are Windows 7 specific.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-08-31T00:00:00-05:00" pubdate data-updated="true">Aug 31<span>st</span>, 2011</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/what-the-tech/'>What the tech?</a>, <a class='category' href='/blog/categories/accessibility/'>accessibility</a>, <a class='category' href='/blog/categories/keyboard/'>keyboard</a>, <a class='category' href='/blog/categories/learning/'>learning</a>, <a class='category' href='/blog/categories/productivity/'>productivity</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/pair-programming-in-agile/">
-		
-			How Pair Programming Benefits Agile Teams</a>
-	</h2>
-	<div class="entry-content">
-		<div>Hands down, pair programming is one of the most valuable agile techniques, but at the same it is one of the most controversial because it can be a tough sell to a manager or non-technical stakeholder. At face value, two developers and one keyboard sounds like a perfect recipe for double the cost. The problem with that equation is it naively assumes that value is limited to the speed at which developers type, and that adding a second developer won&#8217;t do any good unless he also has a keyboard to pound on. In reality though, pair programming helps agile teams solve difficult problems quicker as well as help keep your team up-to-date on the latest business and technical knowledge. I want to give you the arguments to use to quell those management fears and allow you to get all the benefits of pair programming for your agile team.</div>
-<p>&nbsp;</p>
-<div>Have you ever watched Wheel of Fortune with a friend, without the slightest idea what the answer could be, then your friend, thinking out-loud, says one of the words and instantly you can complete the rest of the phrase? Neither of you knew the answer, but as a team you were able to solve the problem neither of you could solve on your own. Given enough time, one of you would likely have figured it out, but by working as a team you arrived at it much quicker. When developing software, the same type of problems can pop-up, and two people can solve them quicker as a team than either could individually&#8230; and most often times, far beyond twice as quickly! When situations like these pop-up, it just makes sense from a cost perspective to pair on them so the total amount of time spent on the task is reduced.</div>
-<p>&nbsp;</p>
-<div>The other fundamental justification for pair programming is knowledge transfer. Knowledge transfer is the process where one person shares his wisdom with a peer. This can be done countless was, such as just sitting in a room and talking to a group of other developers, but with pair programming it is baked right it. There are two types of knowledge that can be transferred: business and technical. Transferring business knowledge, such as what must happen in a system for a user to be considered a preferred customer, help to ensure multiple developers in the organization know how the system works and mitigate risk for the company when an employee leaves. Transferring technical knowledge, such as one partner in the pair sharing a keyboard shortcut key with the other, allows developers to become more efficient in how they operate and increase their productivity over the lifetime of the project.</div>
-<p>&nbsp;</p>
-<div>The caveat to pair programming is you shouldn&#8217;t over do it. In practice, I&#8217;ve found about 20% of the time I pair program, and about 80% I work solo. This varies greatly week to week, and I tend to pair program more (sometimes even 80-100%) earlier in the life-cycle of an application when there are lots of difficult portions to think though and even small design mistakes can be costly down the road. As a project becomes more mature, I usually taper down to closer to a few hours a week, and then there is more emphasis on the knowledge transfer aspect&#8211;both what business rules have been developed in parallel that I have not found out about yet as well as what can I be doing to be more efficient while developing.</div>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-08-29T00:00:00-05:00" pubdate data-updated="true">Aug 29<span>th</span>, 2011</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/what-the-tech/'>What the tech?</a>, <a class='category' href='/blog/categories/agile/'>agile</a>, <a class='category' href='/blog/categories/agile-benefits/'>agile benefits</a>, <a class='category' href='/blog/categories/best-practices/'>best practices</a>, <a class='category' href='/blog/categories/knowledge-transfer/'>knowledge transfer</a>, <a class='category' href='/blog/categories/pair-programming/'>pair programming</a>
-
-
-</div>
-	
-</div>
-</article>
-
 <nav id="pagenavi">
     
         <a href="/blog/page/52/" class="prev">Prev</a>
@@ -453,7 +173,44 @@ Note that even with a base class, all our observations from last time are still 
     
     <div class="center"><a href="/blog/archives">Blog Archives</a></div>
 </nav></div>
-	<footer id="footer" class="inner">Copyright &copy; 2013
+	<footer id="footer" class="inner"><div class="related-links">
+	<h3>Other Headspring Sites</h3>
+	<ul>
+		<li><a href="http://www.headspring.com">Headspring</a></li>
+		<li><a href="http://www.headspringmobile.com">Headspring Mobile</a></li>
+	</ul>
+</div>
+
+<div class="related-links">
+	<h3>Communities/Groups</h3>
+	<ul>
+		<li><a href="http://www.adnug.org">ADNUG</a></li>
+		<li><a href="http://polyglotprogrammers.org">Polyglot ATX</a></li>
+	</ul>
+</div>
+
+<div class="related-links">
+	<h3>Open Source</h3>
+	<ul>
+		<li><a href="http://www.adnug.org">AutoMapper</a></li>
+		<li><a href="http://polyglotprogrammers.org">Formo</a></li>
+		<li><a href="http://polyglotprogrammers.org">Parsely</a></li>
+		<li><a href="http://polyglotprogrammers.org">NAAK</a></li>
+	</ul>
+</div>
+
+<div class="related-links">
+	<h3>Events</h3>
+	<ul>
+		<li><a href="http://www.adnug.org">CTX Givecamp</a></li>
+		<li><a href="http://polyglotprogrammers.org">Houston TechFest</a></li>
+		<li><a href="http://polyglotprogrammers.org">Austin Code Camp</a></li>
+	</ul>
+</div>
+
+<hr />
+
+Copyright &copy; 2013
 
     Headspring Labs
 

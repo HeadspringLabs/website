@@ -165,317 +165,6 @@
 </div>
 </article>
 
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/get-to-know-a-developer-cedric-yao/">
-		
-			Get to Know a Developer: Cedric Yao</a>
-	</h2>
-	<div class="entry-content">
-		<p><a href="http://www.headspring.com/2012/04/get-to-know-a-developer-cedric-yao/cedric" rel="attachment wp-att-4884"><img class="alignright size-medium wp-image-4884" title="Cedric" src="http://www.headspring.com/wp-content/uploads/2012/04/Cedric-199x300.jpg" alt="" width="199" height="300" /></a>Headspring’s latest new hire is Cedric Yao, Senior Consultant.  We’re really excited to have him on board, and I am super excited to get a fresh addition into this series.</p>
-<p>Cedric has been in Austin for a few years, and just welcomed his first born son into the family 5 weeks ago!  We talked about Austin, why working here is so much fun, and what we really love about technology.  As it turns out we share a lot of the same interests in bringing together communities through technology.  His experiences are going to be a real help to me with planning and preparation for Headspring’s Central Texas <a href="http://ctxgivecamp.org/">Give Camp</a> in September.</p>
-<p>Here’s how the rest of our conversation went:</p>
-<p><strong>Are you an expert at anything?</strong></p>
-<p>I’m really great at creating tangible systems for internal processes.  This can be really useful to organizations when it comes time to, say, track metrics.  At my last job, I developed an authentication system for web applications, and integrated some ERP systems for order automation.  I think I’m good at this because I tend to approach problem solving visually, with a creative mindset, before getting analytical.</p>
-<p><strong>Who is on your list of ideal clients to work for or individuals to work with?</strong></p>
-<p>Coming to Headspring to work with Jimmy and Jeffrey is definitely up there on my list.  I would also really like to work on a project with Apple one day.  I really appreciate their design methodology</p>
-<p><strong>What led you to software development?</strong></p>
-<p>When I was in 5<sup>th</sup> grade my teacher had a puzzle closet.  If we solved the puzzles, we would get free days and homework excuses.  I got really good at solving the puzzles and I pretty much never had to do homework.  I think that was the early start of my interest in engineering, and software development stemmed from it as a natural extension of problem solving.  By high school, I found myself using or creating software all the time.</p>
-<p><strong>Do you like teaching?</strong></p>
-<p>Yes! Teaching is the best way to study.  It requires me to understand all the levels of details that go into something.  In my opinion, you don’t fully cement an idea until you teach it.</p>
-<p><strong>Where do begin when learning something new?</strong></p>
-<p>I study Brazilian Jiu Jitsu, and one of the concepts I’ve realized is that you have to be able to throw yourself into a challenge.  When thrown into a challenge, we immediately begin to imitate the opponent.  After that, we go through a series of experiments until skills become instinctual.  Anything I’m learning I can approach the same way.  Imitate first, experiment and learn.</p>
-<p><strong>How do you gauge “time well spent”?</strong></p>
-<p>If I learn or gain mastery, it’s definitely time well spent.  Sometimes that’s not always so easy to see, especially if my results don’t match my expectations.  But if I can learn through my mistakes, then it’s worth it to me.</p>
-<p>&nbsp;</p>
-<p>Hiring great developers is something this company has become really good at.  If you need help on the subject, read our <a href="http://www.headspring.com/resources/whitepapers/">How Headspring Hires Developers whitepaper</a> on what has worked for us.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-04-19T00:00:00-05:00" pubdate data-updated="true">Apr 19<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/get-to-know-a-headspringer/'>Get To Know a Headspringer</a>, <a class='category' href='/blog/categories/what-the-tech/'>What the tech?</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/demystifying-ravendb-queries-and-dynamic-indexes/">
-		
-			Demystifying RavenDB Queries and Dynamic Indexes</a>
-	</h2>
-	<div class="entry-content">
-		<p>Not long a go, I wrote a detailed blog post on <a href="http://www.headspring.com/2012/03/getting-started-with-ravendb">getting started with RavenDB</a> and described the process of performing the most basic CRUD (create, retrieve, update, and delete) operations. The operations covered in the post are great for working with single data entities. One thing I didn’t discuss was how to retrieve a set of data entities and that is exactly what I want to dive into here.</p>
-<p>Retrieving data from RavenDB is dead simple and the .NET client offers excellent support for LINQ based queries. Let’s start by reviewing the IDocumentSession interface:</p>
-<p><div><script src='https://gist.github.com/2153059.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>The query method in the interface is the gateway to retrieving sets of data and offers three signatures which give us immense flexibility with our queries.</p>
-<p>Let’s explore the Query&lt;T&gt;() method! Beginning with the example context…</p>
-<p>Imagine we have a database of orders. Each order has some customer and payment information and a list of line items. Each line item consists of a product and a quantity. Our very simplified domain model might  resemble something like this:</p>
-<p><div><script src='https://gist.github.com/2423417.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Let’s also assume we have a RavenDB instance with some orders in it. Using the management studio we take a peek at the orders collection and see 324 orders sitting in it!</p>
-<p><a href="http://www.headspring.com/wp-content/uploads/2012/04/image.png"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border-width: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/04/image_thumb.png" alt="image" width="480" height="310" border="0" /></a></p>
-<h3>The Simplest and Most Dangerous Query</h3>
-<p>What can we do this with this? A whole lot. The simplest thing we can do is ask Raven to give us all the orders in the collection. The query would look something like this:</p>
-<p><div><script src='https://gist.github.com/2423510.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Or you could use lambda expressions if you prefer:</p>
-<p><div><script src='https://gist.github.com/2423571.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Both of the code snippets generate the same query and return the same result set. You end up with an array containing 128 Order instances. Wait a minute…. Didn’t we have 324 orders in the database? Where are the rest? Raven limits unbounded queries to 128 result by default. This is a really neat safety measure that keeps you from doing something silly like asking for all objects in an huge dataset. Imagine issuing a similar query against Amazon’s order database… Yeah, that probably wouldn’t be good. Of course you can override this behavior specifying it using the <em>Take&lt;TSource&gt;</em> method. So if you really mean give me everything, then you need to say it explicitly.</p>
-<h3>Under the Hood of the .NET Client</h3>
-<p>A lot of other interesting things happen when a query is prepared and executed in the code snippets. Let’s take a look under the hood of the Raven client and see what is going on.</p>
-<p>The <em>session.Query&lt;Order&gt;()</em> method call is the first point of interest. The document session instance will begin by picking a dynamic index to use for the query. In this case, it selects a dynamic index named “dynamic/Orders”. It will then build a <em>RavenQueryStatistics</em> instance and a <em>RavenQueryProvider&lt;Order&gt;</em> instance and use them to build and return a <em>RavenQueryInspector&lt;Order&gt;</em> instance. The inspector object implements the <em>IRavenQueryable&lt;T&gt;</em> interface. At this point, the facilities for generating the query. There is a subtle difference between the LINQ expression and the lambda expression here. With the lambda expression, the <em>RavenQueryInspector&lt;Order&gt;</em> instance is immediately assigned to the <em>results</em> variable. The LINQ statement on the other hand then invokes the  <em>Select</em> LINQ extension method as a result of the LINQ syntax. This subtle difference forces the <em>RavenQueryProvider&lt;Orders&gt; </em>contained in the inspector object execute a few additional instructions that result in a second (yet identical) inspector instance that is assigned to the <em>results</em> variable.</p>
-<p>Notice that no query has actually been issued to the RavenDB server yet. That happens in the <em>results.ToArray()</em> method call. This method will make the <em>RavenQueryInspector&lt;Order&gt;</em> instance enumerate itself. When this happens, the inspector asks the underlying <em>RavenQueryProvider&lt;Order&gt;</em> instance to execute the select expression.  The provider will then get a processor object to help execute the expression. The processor first translates the expression into a Lucene query and issues the query command against RavenDB server. The details of the query command execution can vary quite a bit based on your configuration and is beyond the scope of this post. Take it on trust, the client knows what it’s doing. Now the client waits for the result from the server and begins processing it as soon as it receives it. The result contains some additional data including the time to execute, number or results returned, the number of results matched, and the actual index used. These results are available to you via the <em>Statistics</em> method declared in the <em>IRavenQueryable&lt;T&gt;</em> interface. After processing the result, the execution continues back up the call stack where the inspector instance finally returns the enumerator that becomes the final array of Order instances that is assigned to the <em>orders</em> variable.</p>
-<h3>Enter the Dynamic Index</h3>
-<p>Interestingly enough, the simplest query uses the “Raven/DocumentsByEntityName” index which is the default static index RavenDB creates to access all of the documents stored within it. You can see this index by clicking on the “Indexes” tab in the management studio.</p>
-<p><a href="http://www.headspring.com/wp-content/uploads/2012/04/image1.png"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border-width: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/04/image_thumb1.png" alt="image" width="480" height="310" border="0" /></a></p>
-<p>By the way, its not a good idea to delete this index. The server will complain quite a bit if this happens. But if you do, don’t worry Raven is self healing. Just shut restart the server process and Raven will add the missing index and stop complaining.</p>
-<p>You may have noticed that I haven’t talked one bit about how the server processes the request and I have done that on purpose. There is a lot to be said about what happens on the server side. For now, lets build another more useful query and see what happens.</p>
-<p>Hypothetically speaking, let’s say that we need to find all the orders placed by one of our customers named “Jane Doe”. A query for that may look like:</p>
-<p><div><script src='https://gist.github.com/2424678.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>When executed the client will send “dynamic/Orders” index to the server. If you inspect the results you will see that the actual index used is the “Temp/Orders/ByName” index. Why is this? The server noticed that the default index was not sufficient to efficiently find the records queried. The server then creates a temporary index and returns the result set containing 108 orders for a total operation time of 321ms. Not bad. If I execute the query again, it returns in under 1ms. I can live with that. Here is the really cool part, RavenDB cleans up after itself. If RavenDB doesn’t receive any more queries like this for some time, it will simply delete the temporary index. You can see the temporary indexes in the management studio.</p>
-<p><a href="http://www.headspring.com/wp-content/uploads/2012/04/image2.png"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border-width: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/04/image_thumb2.png" alt="image" width="480" height="310" border="0" /></a></p>
-<h3>More Query Fu</h3>
-<p>Now let’s say that we reviewed the results and learned that what we really wanted was all the orders placed by either Jane Doe or her husband, John Doe. We can fix our query to look like this:</p>
-<p><div><script src='https://gist.github.com/2424749.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>This query will also be sent with the “dynamic/Orders” index (the rest of the examples in this blog post will use the same dynamic index) and the server will reuse the “Temp/Orders/ByName” index. In fact, any additional queries that only make use of the name property will use this index.</p>
-<p>Let’s say that we really meant all orders placed by any member of the Doe family. We may then use this variation of the query:</p>
-<p><div><script src='https://gist.github.com/2424767.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>We can also use the <em>StartsWith() </em>and <em>Contains()</em> methods with strings. With numeric fields we can use all the typical operators such as equals (=), not equals (!=), greater than (&gt;), greater than or equal to (&gt;=), less than (&lt;), and less than or equal to (&lt;=). By the way, we can also make use of some calculated values and we can combine them with others. For example, may we want to find all the orders placed by Jane Doe that had single line item.</p>
-<p><div><script src='https://gist.github.com/2424816.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<h3>Even More Query Fu</h3>
-<p>There are a couple of other useful operations for filtering results. They are the <em>In</em> and <em>Any</em> operations. Let’s see them in action!</p>
-<p>Say, we need to find all the orders containing a line item requested in bulk quantity. Assume that by bulk quantity we mean at least two dozen or more of a line item. The query will look something like this:</p>
-<p><div><script src='https://gist.github.com/2483951.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Now, imagine we really wanted was the orders containing products valued over $100.00 in bulk quantity. Then the query would look like this:</p>
-<p><div><script src='https://gist.github.com/2484054.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Remember when we wanted find all of the orders from just Jane and John Doe. We can rewrite that query and leverage the <em>In </em>operator. This example maybe trivial, but imaging you had a larger list of names to compare against. This operator can make the query very readable.</p>
-<p><div><script src='https://gist.github.com/2484118.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Just like we did with the string and numeric comparisons, we can also combine these operators and nest them to give us some pretty advanced queries. For example, assume we needed to find all orders with bulk quantity line items of our “Better Thingy” or “Thingy” products:</p>
-<p><div><script src='https://gist.github.com/2484165.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Combine these operators with the other string and numeric comparisons and you are equipped to write some serious queries!</p>
-<h3>Know Your Limits</h3>
-<p>Just because you can write it doesn’t mean you can query it. While the query processor is very good, there are some things it can’t do. Here are a few limitations:</p>
-<ul>
-<li>The <strong>let</strong> keyword is not currently supported.</li>
-<li>The only LINQ aggregate operations currently supported are <em>Distinct</em> and <em>Count</em></li>
-</ul>
-<p>You will see these limitations arise when the query processor object we talked about earlier fails to generate (or translate) an expression to a document query at runtime. So make sure you write tests around your queries. Also you should know there are solutions and workarounds to get beyond the limitations such as using MapReduce index or N+1 queries.</p>
-<h3>From Temporary To Permanent</h3>
-<p>One last note about the temporary indexes… When a temporary index gets significant usage, Raven may decide to promote them permanently. When this happens their name changes from “Temp/Foo/Bar” to “Auto/Foo/Bar” and are really easy to spot in the management studio.</p>
-<p><a href="http://www.headspring.com/wp-content/uploads/2012/04/image3.png"><img style="padding-left: 0px; padding-right: 0px; padding-top: 0px; border-width: 0px;" src="http://www.headspring.com/wp-content/uploads/2012/04/image_thumb3.png" alt="image" width="480" height="392" border="0" /></a></p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-04-19T00:00:00-05:00" pubdate data-updated="true">Apr 19<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/ravendb/'>ravendb</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/overcoming-perfectionism/">
-		
-			Overcoming Perfectionism</a>
-	</h2>
-	<div class="entry-content">
-		<h2></h2>
-<blockquote><p><em>Perfectionist (my rough definition):  Someone who wants to always do things without errors or mistakes, without considering the costs incurred or likelihood of attainment.</em></p></blockquote>
-<h2>Summary</h2>
-<p>In this article I share my personal struggles with unproductive perfectionism in my work.  I point out how much “true perfection” really costs, and that it often isn’t even possible.  I discuss why overcoming perfectionism is important, and share some strategies I’ve found useful for balancing passion and perfectionism.</p>
-<h2>Introduction</h2>
-<p>Hi, my name is Nolan and I’m a recovering perfectionist.  I love software development and I’m very passionate about what I do.  The problem is, sometimes I care too much and passion turns into perfectionism.</p>
-<p>I started thinking about this after my first post.  I was checking it to see if there were any comments I needed to respond to.  I’d written the article over a week before it was published, so I casually glanced over it.  While reading I suddenly realized I’d completely left a word out of a sentence.  I was mortified.  I’d proofread it at least three times and had gotten someone else to look over it.  How could this have happened?  My first blog post and I’d failed to do it “right”.</p>
-<p>It wasn’t a big error.  <em>Fun contest: I’ll send some Headspring swag to the first commenter that finds the word omission in </em><a href="http://www.headspring.com/2012/03/making-conditional-validation-logic-readable" target="_blank"><em>that post</em></a>.  But it felt big, and I felt it reflected badly on me.  “How can I write posts that help others when I communicate so poorly?” I wondered.</p>
-<p>Last night I got an email from an old colleague that I haven’t talked with for almost two years.  He wrote “…I saw your post.  Really enjoyed reading it.  Nice job!”</p>
-<p>Isn’t this ironic?  Here I was despondent about my ability to write in an understandable fashion, when in reality people are finding the article useful despite the error.  It was so encouraging to get that email.</p>
-<h2>Self Reflection</h2>
-<p>I’ve spent some time looking back over my career, and I can see some examples of times when I’ve let perfectionism run a little too wild:</p>
-<ul>
-<li>Striving for very high code coverage with automated tests, regardless of the cost of writing and maintaining those tests compared to the risks of the covered code becoming broken.</li>
-<li>Defensive coding to a superfluous level.  For example, having a public class method perform input validation before calling a private method, and then having the private method perform the same validation.</li>
-<li>Crafting a long email with all the relevant details and background when it would have been quicker to just go talk to the individual in person.</li>
-</ul>
-<p>&nbsp;</p>
-<p>Take a few minutes and reflect back on your life about something you are passionate about – software, cooking, or perhaps golf.  Try to look in a detached, unemotional manner – do you ever strive for an unreasonably high standard?</p>
-<h2>Is Perfection Even Possible?</h2>
-<p>If there’s any organization that has to “get it right”, it’s the National Aeronautics and Space Administration (NASA).  They design space vehicles controlled by software responsible for safely flying humans into and back from space.  Vehicle failure doesn’t mean walking home, it means not coming home.  While NASA has had fatal accidents, <a href="http://www.nasa.gov/mission_pages/shuttle/flyout/flyfeature_shuttlecomputers.html" target="_blank">none of them were caused by software.</a></p>
-<p>So how did NASA ensure that a system where each software change that goes through 15 months of testing is perfect?  They assumed it might not be perfect and paid a different company to create a <a href="http://spaceflight.nasa.gov/shuttle/reference/shutref/orbiter/avionics/dps/bfs.html" target="_blank">backup flight control</a> with a completely different implementation.</p>
-<h2>Why Overcoming Perfectionism Is Important</h2>
-<p>There are at least two reasons why it’s important to overcome perfectionist tendencies:  cost, and your personal well-being.</p>
-<p>“More perfect” means more costly with no substantial benefit.  You wouldn’t buy a $500 toothpick because it was made from teak wood and hand carved and sanded into the perfect shape, would you?  Likewise you need to be aware of the cost of what you’re doing for your company or client and if they’re getting value out of the effort your expending.</p>
-<p>Secondly, perfectionism is dangerous to your mental health.  It&#8217;s good to care, but it&#8217;s bad to care so much you feel inadequate.  Overcoming perfectionism doesn&#8217;t mean you stop caring, it means adjusting to a healthier perspective.  The danger in not overcoming the agony of not reaching perfection is slipping into cynicism about the glass &#8220;always being half empty&#8221; and a general sense of depression about not reaching your goals.</p>
-<h2>Strategies For Overcoming Perfectionism</h2>
-<p>These are a few strategies I’ve found helpful in dealing with perfectionist tendencies. If you have some others, please add a comment to share it.</p>
-<p>Seek a crystal clear understanding of the context for the work you’re doing.  How will this be used, and how much &#8220;quality&#8221; do we need?  Test cases help.  Recognize that dealing with edge cases can add significant work, figure out the cost and make sure it&#8217;s worth the effort.</p>
-<p>If at all possible, don’t work alone.  Use others as a sounding board to make sure you haven’t gone overboard in a design or implementation.  You’ll get positive feedback from someone else, and seeing others struggle at times and assisting them helps you realize we’re all human and keeps you from expecting too much from yourself.</p>
-<p>Don’t try to plan everything up front.  Have a rough idea of what you need and start top down and adjust as needed.  If you try to plan every last detail before you start, you’ll never start.</p>
-<p>When you make a mistake, don’t dwell on it.  Give yourself credit for how hard and demanding software development really is.  Natural language can be understood even when misteaks are maid, but in programs ONE LITTLE CHARACTER makes something right or wrong.</p>
-<p>Celebrate your accomplishments! It’s important to analyze your mistakes and learn from them, but it’s just as important to reflect and revel in your successes.</p>
-<h2>Wrap Up</h2>
-<p>Randy Pausch was a computer science professor at Carnegie Mellon University.  When he found out he had terminal cancer, he gave an incredibly uplifting speech reflecting on what’s really important in life.  The speech was expanded into a book titled “The Last Lecture”.  One observation Randy made that really grabbed my attention was this:  <strong>“Engineering isn&#8217;t about perfect solutions; it&#8217;s about doing the best you can with limited resources”</strong>.  Randy faced the ultimate &#8220;it can&#8217;t be perfect&#8221; scenario by not being able to live the average lifespan most of us assume we&#8217;ll get.  He courageously dealt with it the best he could, and is an inspiration to the rest of us.</p>
-<p>Your work doesn’t have to be perfect – rarely CAN it be perfect, and recognizing this doesn’t mean giving up on your passion for doing things well.  Getting over perfectionism enables you to do more things and be a happier person.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-04-16T00:00:00-05:00" pubdate data-updated="true">Apr 16<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/bonus/'>Bonus!</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/nuget-package-restore/">
-		
-			NuGet Package Restore</a>
-	</h2>
-	<div class="entry-content">
-		<p>Text is easy.</p>
-<p>Source control tools slice and dice text all day.  It&#8217;s easy to compare, easy to merge, and easy to compress.  Even in a busy project, large portions of your code don&#8217;t really change all that often.  Git, for instance, can pretend to store every commit as a point-in-time copy of your whole source tree by <a href="http://progit.org/book/ch1-3.html">sharing large unchanged blobs</a> of text with other commits.</p>
-<p>Text is easy.  Binary is tough.</p>
-<h2>Do you pass the &#8220;New Hire Day 1&#8221; test?</h2>
-<p>We often store binaries in our source control tools, and with good reason.  We want to make it easy to spin up a new development environment.  When you hire a new developer, they should be able to pull down your project from source control <em>and just go</em>.  Dependencies such as libraries, build tools, and the like should be versioned with the project.</p>
-<p>The alternative experience can be painful.  You show up for your first day at a new job, pull down the project, and try to run it… <strong>THUD</strong>.  It won&#8217;t even build.  You try to install the right third-party libraries and tools after diagnosing each build error, and hopefully you&#8217;re using the same version as everyone else.  Maybe the Dependency Gods smile upon you, and you&#8217;ll be up and running before the end of the day.</p>
-<p>It&#8217;s easy to avoid these problems by including your dependencies, both libraries and tools, in source control, but can we do better?</p>
-<h2>Binary is Tough</h2>
-<p>You can store binaries in source control, but binaries are tough.  Even small changes in functionality can result in dramatically different file contents, so it&#8217;s impractical to diff/merge them.  Changes in a binary file over time have to be stored without the sneaky compression tricks used for text files.</p>
-<p>NuGet makes it easy to install libraries into your projects, but this means dumping a whole lot of DLLs into source control.  <strong>Your repo might start to grow impractically large.</strong></p>
-<h2>Package Restore</h2>
-<p>Fortunately, though, we can have the best of both worlds.  We can provide our team with a reliable and easy way to set up new development environments, and benefit from NuGet&#8217;s version/dependency smarts, without having to actually store NuGet package binaries in source control.</p>
-<p>First, <a href="http://docs.nuget.org/docs/start-here/installing-nuget">install NuGet</a> if you haven&#8217;t already.</p>
-<p>Next, go to Solution Explorer, right click on the Solution itself, and select &#8220;Enable Nuget Package Restore&#8221;.  This adds some files to a special .nuget folder, and adjusts the projects of your solution to use that folder at build time.</p>
-<p>Lastly, note that NuGet has been placing downloaded packages under a <code>packages/</code> folder near your *.sln.  You can wipe this out.  When using git, I also add this folder to my <code>.gitignore</code> so that its contents no longer get saved to the repository.</p>
-<p>Read that last step again.  <strong>We deliberately deleted away all the versioned packages that NuGet has been maintaining for us!</strong></p>
-<p>When enabling Package Restore in your solution, you changed the way that your solution builds.  When you try to build again, NuGet will notice that your projects reference specific packages that are no longer found under <code>packages/</code>.  Fortunately, your solution still contains <code>packages.config</code> files which list dependencies along with their version numbers.  Armed with these config files, NuGet will pull down the missing files into <code>packages/</code> for you right before your project gets compiled.  Upon the next build, it will just use the files already in <code>packages/</code>.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-04-13T00:00:00-05:00" pubdate data-updated="true">Apr 13<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
-
-
-</div>
-	
-</div>
-</article>
-
 <nav id="pagenavi">
     
         <a href="/blog/page/29/" class="prev">Prev</a>
@@ -485,7 +174,44 @@
     
     <div class="center"><a href="/blog/archives">Blog Archives</a></div>
 </nav></div>
-	<footer id="footer" class="inner">Copyright &copy; 2013
+	<footer id="footer" class="inner"><div class="related-links">
+	<h3>Other Headspring Sites</h3>
+	<ul>
+		<li><a href="http://www.headspring.com">Headspring</a></li>
+		<li><a href="http://www.headspringmobile.com">Headspring Mobile</a></li>
+	</ul>
+</div>
+
+<div class="related-links">
+	<h3>Communities/Groups</h3>
+	<ul>
+		<li><a href="http://www.adnug.org">ADNUG</a></li>
+		<li><a href="http://polyglotprogrammers.org">Polyglot ATX</a></li>
+	</ul>
+</div>
+
+<div class="related-links">
+	<h3>Open Source</h3>
+	<ul>
+		<li><a href="http://www.adnug.org">AutoMapper</a></li>
+		<li><a href="http://polyglotprogrammers.org">Formo</a></li>
+		<li><a href="http://polyglotprogrammers.org">Parsely</a></li>
+		<li><a href="http://polyglotprogrammers.org">NAAK</a></li>
+	</ul>
+</div>
+
+<div class="related-links">
+	<h3>Events</h3>
+	<ul>
+		<li><a href="http://www.adnug.org">CTX Givecamp</a></li>
+		<li><a href="http://polyglotprogrammers.org">Houston TechFest</a></li>
+		<li><a href="http://polyglotprogrammers.org">Austin Code Camp</a></li>
+	</ul>
+</div>
+
+<hr />
+
+Copyright &copy; 2013
 
     Headspring Labs
 
