@@ -7,7 +7,8 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="Over the last two weeks, we&#8217;ve seen how Fixie can be configured to mimic NUnit and to mimic xUnit. That&#8217;s a neat little trick, but doesn &hellip;">
+	<meta name="description" content="This article is part of a series exploring how to create installers for Windows software.  Here&#8217;s the complete contents of the series.
+Part 1 &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -90,50 +91,56 @@
     <article class="post">
 	<h2 class="title">
 		
-		<a href="/blog/dry-test-inheritance/">
+		<a href="/blog/creating-windows-installers-with-the-wix-toolset-part-7/">
 		
-			DRY Test Inheritance</a>
+			Creating Windows Installers With the WiX Toolset Part 7</a>
 	</h2>
 	<div class="entry-content">
-		<p>Over the last two weeks, we&#8217;ve seen how <a href="https://github.com/plioi/fixie">Fixie</a> can be configured to <a href="http://www.headspring.com/fixies-life-bicycle/">mimic NUnit</a> and to <a href="http://www.headspring.com/the-sincerest-form-of-flattery/">mimic xUnit</a>.  That&#8217;s a neat little trick, but doesn&#8217;t provide much value.  This week, we&#8217;ll see how Fixie&#8217;s convention API can be used to <em>improve</em> upon NUnit.</p>
-<blockquote><p>Today’s code samples work against <a href="http://nuget.org/packages/Fixie/0.0.1.62">Fixie 0.0.1.62</a>. The customization API is in its infancy, and is likely to change in the coming weeks.</p></blockquote>
-<p>Today&#8217;s sample convention addresses two problems in NUnit:</p>
-<ol>
-<li>Lifecycle attributes are redundant</li>
-<li>Test class inheritance is needlessly complex.</li>
-</ol>
-<h2>NUnit Lifecycle Attributes Are Redundant</h2>
-<p>If you use NUnit, you probably see a lot of test classes like this:</p>
-<p><div><script src='https://gist.github.com/5762364.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>My [SetUp] methods are always named &#8220;SetUp&#8221;, my [TearDown] methods are always named &#8220;TearDown&#8221;, etc. It&#8217;s annoying to sacrifice whole lines to that noise.  When 99% of your test fixtures use naming conventions like mine, the attributes stop telling you something.  These attributes start to fill the same role as excessive comments:</p>
-<p><div><script src='https://gist.github.com/5762368.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<h2>NUnit Inheritance is Needlessly Complex</h2>
-<p>The use of attributes for these &#8220;lifecycle&#8221; hooks poses more serious problems when your test classes take part in inheritance.  Since they don&#8217;t <em>have</em> to be placed on methods with the same name, you could have completely unrelated [SetUp]s, for instance, at different levels of the hierarchy.</p>
-<p>What order do they run in? Should the child class&#8217;s [SetUp] call the base?  Should the base [SetUp] call an abstract method you have to implement instead of providing your own [SetUp] in the child? [SetUp]s get complicated very quickly in the presence of inheritance.</p>
-<p>The order of execution during test setup is important. How bizarre would it be if there were no guarantee about the order of <em>constructor</em> execution in a class hierarchy?  With NUnit lifecycle hooks, order becomes a problem.  Sure, NUnit has rules of its own for the order, <strong>but it doesn&#8217;t matter what they are</strong> because even having to ask the question means it&#8217;s already too complex. In addition, having more than one [SetUp] in the same level of the class hierarchy is allowed but ambiguous: there&#8217;s no guarantee what order they&#8217;ll run in. Worse yet, over the years I&#8217;ve seen the behavior differ across different test <em>runners</em>.</p>
-<blockquote><p>The preparation of state under test should be remarkably dull.  We&#8217;re trying to confirm our assumptions about the behavior of our system, and we can&#8217;t do so with confidence if we aren&#8217;t confident about what all we&#8217;ve set up in the first place.</p></blockquote>
-<h2>A Low-Ceremony Alternative Convention</h2>
-<p>DRY stands for &#8220;Don&#8217;t Repeat Yourself&#8221;, not &#8220;[DontRepeatYourself] Don&#8217;t Repeat Yourself&#8221;! Allowing redundancy has opened the door to complexity. Let&#8217;s improve upon the NUnit style by defining a simpler, <a href="https://github.com/plioi/fixie/blob/a74078dfe3c8f415fd0663af104b75adfb90d29d/src/Fixie.Samples/LowCeremony/CustomConvention.cs">low-ceremony test class convention</a> with Fixie:</p>
-<p><div><script src='https://gist.github.com/5762372.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Armed with this convention class in our test assembly, our original test class gets simpler:</p>
-<p><div><script src='https://gist.github.com/5762378.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>The most relevant part of the convention says that, instead of using attributes, the lifecycle hook methods will be identified by their names:</p>
-<p><div><script src='https://gist.github.com/5762381.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<h2>What Does This Convention Buy Us?</h2>
-<p>There are three benefits to this approach:</p>
-<p>First, we don&#8217;t waste time reminding the reader that &#8220;SetUp&#8221; is in fact spelled &#8220;SetUp&#8221;.</p>
-<p>Second, it&#8217;s impossible to define more than one SetUp method in the same level of the class hierarchy, avoiding the ambiguity allowed by NUnit.</p>
-<p>Third, if you do opt into test class inheritance, we get to take advantage of familiar language features. If the base class has a SetUp and the child class has a SetUp, you take advantage of the <code>virtual/override/base</code> keywords to remove all doubt about execution order.</p>
+		<address>This article is part of a series exploring how to create installers for Windows software.  Here&#8217;s the complete contents of the series.</address>
+<address><a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-01/">Part 1 – What Kinds of Software Projects Benefit From an Installer?</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-02/">Part 2 – An Overview Of Windows Installer and its Features</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-03/">Part 3 – Tooling Options for Building Installers</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-04/">Part 4 – The Windows Installer Runtime Sequence</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-5/">Part 5 – The Contents of an MSI</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-6/">Part 6 – The Structure of a WiX File</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-7/">Part 7 – Generating an MSI Package From Your WiX</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-8/">Part 8 – Troubleshooting Installer Runtime Problems</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-summary/">Part 9 - Summary</a><br />
+</address>
+<p><br/><br />
+This post explains how to create an MSI installer from the WiX files you’ve written from either the command line or within Visual Studio.</p>
+<h2>The Missing Magic</h2>
+<p>So we’ve discussed how an MSI is an installer package that Windows can process and taken a peek at what the insides of an MSI looks like, and then we’ve examined a simple WiX file that can be used to create an MSI and how WiX schema is heavily tied to the entities of Windows Installer.  But we don’t quite have the complete picture yet – how do we magically get our MSI once we’ve authored some WiX?</p>
+<h2><a href="http://www.headspring.com/wp-content/uploads/2013/03/magicHappensHere.png"><img class="alignnone size-full wp-image-6459" alt="magicHappensHere" src="http://www.headspring.com/wp-content/uploads/2013/03/magicHappensHere.png" width="800" height="233" /><br />
+</a>It&#8217;s Just A Compiler</h2>
+<p>So the answer is 42.  <a href="http://en.wikipedia.org/wiki/Answer_to_The_Ultimate_Question_of_Life,_the_Universe,_and_Everything#Answer_to_the_Ultimate_Question_of_Life.2C_the_Universe.2C_and_Everything_.2842.29">Just kidding.</a>  The answer is that the WiX toolset comes with its own compiler and linker tools.  If you’ve ever set up an automated build, this is the WiX equivalent of MsBuild.exe (or if you’re really hard core, csc.exe).  Most of the tooling in WiX is related to candles in some fashion (WiX sounds like “wicks”, the burning portion of a candle), so you might find it amusing to learn the name of the compiler is “candle”, and the linker is called “light”.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/03/candleAndLight.png"><img class="alignnone size-full wp-image-6460" alt="candleAndLight" src="http://www.headspring.com/wp-content/uploads/2013/03/candleAndLight.png" width="499" height="299" /></a></p>
+<p>There are two ways you can run the compiler:  through the command line, or as an integrated extension of Visual Studio.  I’ll discuss both below.</p>
+<h2>From the Command Line</h2>
+<p>This is my preferred method.  Usually when I’m building an installer, I’ve had to do some PowerShell scripting to stage the output that I want to be packaged up by the installer.  This is usually artifacts like help files, shortcut icons, and so forth.  This is also the primary method for getting an installer compilation rolled into your automated build (you might be able to use Votive with TFS, you’ll have to verify that with someone that willingly uses TFS).</p>
+<p>Invocation looks something like this in a simple bat file:</p>
+<pre>rem If we don&#39;t specify an output directory, the wixobj files will get dumped in the current working directory of the bat file</pre>
+<pre>tools\wix\candle.exe src\installer\HelloWorld.wxs -out artifacts\wix\</pre>
+<pre>tools\wix\light.exe artifacts\wix\HelloWorld.wixobj -out artifacts\wix\HelloWorld.msi</pre>
+<pre></pre>
+<pre>rem Move the final output for exposure to CI build or shared network folder</pre>
+<pre>copy artifacts\wix\HelloWorld.msi artifacts\installer</pre>
+<h2> Inside Visual Studio</h2>
+<p>The WiX tooling comes with a Visual Studio extension called Votive.  I mentioned it earlier how you can use it to get IntelliSense when editing your WiX files.  Votive also makes it possible to compile your WiX when doing a build in Visual Studio.</p>
+<p>If you examine the properties of your WiX project, you’ll find a host of options for controlling your compilation.</p>
+<p>The Installer tab lets you name your output file, and choose alternate output types if you happen to need something besides MSI (if you don’t know otherwise, then stick with MSI).</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/03/buildTab.png"><img class="alignnone size-large wp-image-6461" alt="buildTab" src="http://www.headspring.com/wp-content/uploads/2013/03/buildTab-970x335.png" width="970" height="335" /></a></p>
+<p>&nbsp;</p>
+<p>The Build tab allows you to specify values for your preprocessor variables (WiX supports preprocessing similar to C and C++ compilers), and where to place your output.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/03/buildTab1.png"><img class="alignnone size-full wp-image-6462" alt="buildTab" src="http://www.headspring.com/wp-content/uploads/2013/03/buildTab1.png" width="673" height="642" /></a></p>
+<p>&nbsp;</p>
+<p>The Tool Settings tab can be used to ignore ICE validation on your package (although I’d suggest leaving it on, you always want to know about potential problems), and pass additional arguments to the compiler and linker.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/03/toolSettings.png"><img class="alignnone size-full wp-image-6463" alt="toolSettings" src="http://www.headspring.com/wp-content/uploads/2013/03/toolSettings.png" width="655" height="521" /></a></p>
+<p>&nbsp;</p>
+<p>When you compile the project in Visual Studio, if you look carefully at the build output you’ll see that it’s simply invoking candle and light for you under the hood:</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/03/votiveOutput.png"><img class="alignnone size-large wp-image-6464" alt="votiveOutput" src="http://www.headspring.com/wp-content/uploads/2013/03/votiveOutput-970x158.png" width="970" height="158" /></a></p>
+<p>&nbsp;</p>
+<p>If you do use Votive, you probably won’t want to build the installer in debug configuration.  Otherwise you’ll have to wait for an installer to build every time you recompile the solution.</p>
 
 		
 		
@@ -153,11 +160,11 @@
   
 
 
-<time datetime="2013-06-12T00:00:00-05:00" pubdate data-updated="true">Jun 12<span>th</span>, 2013</time></div>
+<time datetime="2013-03-15T00:00:00-05:00" pubdate data-updated="true">Mar 15<span>th</span>, 2013</time></div>
 	<div class="tags">
 
 
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
+	<a class='category' href='/blog/categories/blog/'>Blog</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/wix/'>WiX</a>, <a class='category' href='/blog/categories/windows-installer/'>windows installer</a>
 
 
 </div>

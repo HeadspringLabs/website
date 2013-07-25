@@ -7,7 +7,7 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="Justin Mason is our newest team member at Headspring. An experienced developer, Justin joins us from Catapult Systems where he designed and &hellip;">
+	<meta name="description" content="The programming language you use has a very large impact on the way you think about problems. Despite superficial similaries, each language comes &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -90,27 +90,34 @@
     <article class="post">
 	<h2 class="title">
 		
-		<a href="/blog/get-to-know-a-developer-justin-mason/">
+		<a href="/blog/clojures-world-view/">
 		
-			Get to Know a Developer: Justin Mason</a>
+			Clojure&#8217;s World View</a>
 	</h2>
 	<div class="entry-content">
-		<p><a href="http://www.headspring.com/wp-content/uploads/2012/10/photo-3.jpg"><img class="alignright size-medium wp-image-5799" title="Justin Mason - Headspring Principal Consultant" src="http://www.headspring.com/wp-content/uploads/2012/10/photo-3-224x300.jpg" alt="Justin Mason - Headspring Principal Consultant" width="224" height="300" /></a>Justin Mason is our newest team member at Headspring. An experienced developer, Justin joins us from Catapult Systems where he designed and developed a sensor data recording and management application for natural gas and oil drilling rigs. Justin has a passion for the ever-changing landscape of viable technologies and their potential applications, which makes him a great addition to our team of like minded and ambitious people!</p>
-<p><strong>Are you an expert at anything?</strong></p>
-<p>I have more than 15 years of application development experience. In that time, I’ve seen the evolution of the Web. By understanding where technology originated, it helps provide a clearer picture of where it may go.  The uncertainty of how competing priorities have shaped the software applications that are currently available makes it an exciting time to be at Headspring to contribute to the needs of its customers.</p>
-<p>I became passionate about Microsoft Windows Communication Foundation (WCF) because I understood the pain it was trying to alleviate for companies.  Bidirectional communication using binary serialization over TCP that can be easily transitioned to other transportation protocols like HTTP really caught my interest.  WCF has had to keep pace with the industry due to emerging technologies such as Ajax using JSON serialization instead of SOAP. Its use in the background will remain intact while abstractions are built on top of it to facilitate new applications.       </p>
-<p><strong>Who are your ideal clients to work for?</strong></p>
-<p>The best part of software development is that it has allowed me to work across a wide range of companies. If software can help solve a business problem, we want to work with a company to do it. Then the only other factor is the willingness of the company to come together to work with developers and rely on their expertise to find a technical solution.</p>
-<p><strong>What led you to software development?</strong></p>
-<p>I was led to software by the idea that I could get paid to put together puzzles.  Software allows you to use your imagination to visualize a concept and then bring that concept into something others can see and interact with.  When a day goes by without noticing it, you know the career you have chosen is the right one.</p>
-<p><strong>What did you learn first?</strong></p>
-<p>Besides my introduction to software in elementary school using “Turtle Graphics”, I learned Visual Basic 4 along with Relational Databases coming out of college and started my first “real” job.</p>
-<p><strong>Do you like teaching?</strong></p>
-<p>Yes, I like teaching very much.  I owe my own career to friends and colleagues that took the time to show me how to learn the various technologies.  I enjoy the different ways people learn similar concepts.  Having to adapt to different learning styles makes the teacher’s own understanding greater.  As a result, everyone comes out ahead.</p>
-<p><strong>How do you gauge “time well spent”?</strong></p>
-<p>I ask myself whether I’ve added to my understanding of something new, or did I complete a defined objective?  Time wasted is usually a result of a lack of clear objectives, or misunderstanding a concept foundational to a new technology.</p>
-<p>&nbsp;</p>
-<p>Want to know more? Tweet him! <a href="https://twitter.com/JustinMasonDev" target="_blank">@justinmasondev</a></p>
+		<p>The programming language you use has a very large impact on the way you think about problems. Despite superficial similaries, each language comes with its own set of opinions about what is Important, what is Clean, what is Right, and what is Dangerous.</p>
+<p>It&#8217;s a good idea to take a look at the opinions of languages outside of your comfort zone, in case any of those tools can be incorporated into your toolbelt. My language of choice is C#, partly because it has similarly been influenced by a wide range of other languages. You <em>can</em> write Java in C#, but you don&#8217;t <em>have</em> to.</p>
+<p><a href="http://clojure.org/">Clojure</a>&#8217;s view of the world is dramatically different from C# and Java, even though it runs on the JVM and can interop with Java libraries. There are two main areas where Clojure can be contrasted with C#: its syntax and its approach to state changes.</p>
+<p>Today, we&#8217;ll see how Clojure&#8217;s approach to syntax can help us achieve brevity in C#. Next week, we&#8217;ll see how Clojure&#8217;s opinions can shape the way we think about state change.</p>
+<h4><strong>Clojure Syntax</strong></h4>
+<p>Clojure is a dialect of Lisp, which means the first thing you&#8217;ll notice (is all the (nested (parentheses))). The look and feel of Lisp dialects can be initially confusing to newcomers. Instead of saying <em>1 + 2 + 3</em>, we say <em>(+ 1 2 3)</em>. The name of an operation comes before its arguments, never between them. This inside-out syntax has an interesting effect: <strong>everything looks the same</strong>. Every construct in the language, from simple expressions, to conditional logic, to function and type definitions <code>(looks like this)</code>.</p>
+<p>The fact that everything looks the same as everything else is a double-edged sword. I <em>like</em> that different constructs in C# <em>look</em> different. I find it helps me &#8220;chunk&#8221; up the screen as I read through something unfamiliar.</p>
+<p>On the other hand, the extreme simplicity of Clojure syntax gives us <a href="http://en.wikipedia.org/wiki/Homoiconicity">homoiconicity</a>, meaning that every bit of Clojure code is also a description of a data structure, namely a list of lists. <em>(* 3 (+ 2 1))</em> is both an arithmetic expression to be evaluated <strong>and</strong> a list containing three items: the symbol <strong>*</strong>, the number <strong>3</strong>, and another list containing 3 more items.</p>
+<p>Because all Clojure code is <em>also</em> a literal for a Clojure list, code generation becomes orders of magnitude simpler with Clojure than with C#. In fact, code generation is so common in Lisp dialects that it gets special treatment. A <strong>macro</strong> is a function whose job it is to take in code as its input and produce new code as its output. Even most of the seamingly-built-in keywords are in fact implemented as code-twiddling functions called early in the execution process.</p>
+<h4><strong>Hypothetical C# Macros</strong></h4>
+<p>Imagine we had a version of C# that didn&#8217;t have <a href="http://msdn.microsoft.com/en-us/library/bb384054.aspx">auto properties</a>, but did have macros. With macros, we could effectively add a new keyword to the language, implementing it in a library, to give us the same shorthand:</p>
+<p><div><script src='https://gist.github.com/1484258.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>Our hypothetical macro function <strong>public macro Code prop(Code c) { &#8230; }</strong> would receive as its input a description of the code between &#8216;prop&#8217; and the semicolon, returning a description of the more elaborate property code. The compiler could call that function early on, generating the code we would have otherwise written:</p>
+<p><div><script src='https://gist.github.com/1484255.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>This hypothetical C# wouldn&#8217;t need <strong>using() { &#8230; }</strong> blocks, or even <strong>foreach</strong> loops, because those keywords could be implemented in a library in terms of other existing constructs. Most language features that we think of as &#8216;syntax sugar&#8217; wouldn&#8217;t have to be thought of by the language designers in advance. With Clojure, developers invent their own new syntax sugar as a part of their daily thought process.</p>
+<h4><strong>Back to Reality</strong></h4>
+<p>A future version of C#, codenamed <a href="http://msdn.microsoft.com/en-us/roslyn">Roslyn</a>, will be exposing some of the compiler&#8217;s inner guts to us as a library. As with Clojure, we&#8217;ll be able to treat C# code as both a set of instructions and as a data structure. I <strong>seriously doubt</strong> this means that C# will gain macros, but I wouldn&#8217;t be surprised if we do end up seeing some powerful tools aimed at the same target as macros.</p>
+<p>The closest thing to macros that we have today in C# is lambda expressions and their corresponding expression trees. HTML helpers in MVC, for instance, leverage the code-twiddling power of lambda expressions in order to prevent us from reaching for our copy/paste shortcuts, saving us from having to maintain monotonously-verbose view files. Once you hand developers a powerful code-traversal tool like this, you empower them to <a href="http://www.headspring.com/2011/12/opening-the-black-box">invent powerful shorthand of their own</a>.</p>
+<p><strong>When you find yourself writing suspiciously-similar code in C# ask yourself, &#8220;What would Clojure do?&#8221;</strong></p>
 
 		
 		
@@ -130,11 +137,11 @@
   
 
 
-<time datetime="2012-10-12T00:00:00-05:00" pubdate data-updated="true">Oct 12<span>th</span>, 2012</time></div>
+<time datetime="2011-12-16T00:00:00-06:00" pubdate data-updated="true">Dec 16<span>th</span>, 2011</time></div>
 	<div class="tags">
 
 
-	<a class='category' href='/blog/categories/blog/'>Blog</a>, <a class='category' href='/blog/categories/bonus/'>Bonus!</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/get-to-know-a-headspringer/'>Get To Know a Headspringer</a>
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
 
 
 </div>

@@ -7,7 +7,7 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="At this point in the holiday season, you may be scrambling for gift giving ideas.  Who better than tried and true techies to weigh in on the must- &hellip;">
+	<meta name="description" content="Today, I was investigating a pretty intricate bug, and wanted to determine whether it was introduced recently or had always been present. I wanted &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -90,29 +90,38 @@
     <article class="post">
 	<h2 class="title">
 		
-		<a href="/blog/gizmos-that-should-be-on-your-wish-list-this-holiday/">
+		<a href="/blog/detached-head-state/">
 		
-			Gizmos That Should Be on Your Wish List This Holiday!</a>
+			Detached HEAD State</a>
 	</h2>
 	<div class="entry-content">
-		<p>At this point in the holiday season, you may be scrambling for gift giving ideas.  Who better than tried and true techies to weigh in on the must-have gadgets for the New Year. Scoop them up for someone you love or put them on your wish list!  Here are some ideas from the Headspring Development team.</p>
-<p><strong>Microsoft Arc Touch Mouse </strong></p>
-<p><em>Suggested by Jimmy Bogard</em><strong></strong></p>
-<p><img class="aligncenter size-medium wp-image-6272" title="atmafrontcurvedfy111" src="http://www.headspring.com/wp-content/uploads/2012/12/atmafrontcurvedfy111-395x300.jpeg" alt="" width="395" height="300" /></p>
-<p>The <a href="http://www.microsoft.com/hardware/en-us/p/arc-touch-mouse" target="_blank">Arc Touch Mouse by Microsoft</a> is a sleek, wireless, and reliable tool that will improve the fluidity of work. It features the high-tech Touch strip technology that makes use precise. A fringe benefit for business and pleasure travel is the mouse can be flattened for easy storage!</p>
-<p>&nbsp;</p>
-<p><strong>Arduino Microcontroller</strong></p>
-<p><em>Suggested by Sharon Cichelli</em></p>
-<p><img class="aligncenter size-full wp-image-6273" title="300px-Arduino316" src="http://www.headspring.com/wp-content/uploads/2012/12/300px-Arduino316.jpeg" alt="" width="300" height="209" /></p>
-<p>The <a href="http://www.arduino.cc/" target="_blank">Arduino microcontroller</a> is a great introduction to programming and electronics. Designed to be affordable and approachable, it opens the door for inspiring the next generation of developers.  It’s also great for building cool stuff as you work on fun projects with your sweetie or kids. It is open-source hardware supported by open-source software and a rich community of tinkerers who are happy to share their knowledge and get you started.</p>
-<p>&nbsp;</p>
-<p><strong>Kindle Paperwhite</strong></p>
-<p><em>Suggested by Anne Epstein</em></p>
-<p><img class="aligncenter size-medium wp-image-6274" title="MG_7921-660x439" src="http://www.headspring.com/wp-content/uploads/2012/12/MG_7921-660x439-451x300.jpeg" alt="" width="451" height="300" /></p>
-<p>The <a href="http://www.amazon.com/Kindle-Paperwhite-Touch-light/dp/B007OZNZG0" target="_blank">newest version of Kindle</a>, the “world’s most advanced e-reader,” features: higher resolution, higher contrast touchscreen, built-in light and an 8-week battery life. An improved screen, the ability for nighttime reading, and Amazon’s expansive e-book selection makes the Kindle Paperwhite a sought-after gadget this holiday!</p>
-<p>&nbsp;</p>
-<p><strong>What’s on your wish list this holiday?</strong></p>
-<p>&nbsp;</p>
+		<p>Today, I was investigating a pretty intricate bug, and wanted to determine whether it was introduced recently or had always been present.  I wanted to revert my workspace to an old commit to see if the problem could be reproduced there.  If not, I&#8217;d be well on my way to finding the Guilty Commit That Broke Things.  When I tried to jump back in time like this, I was presented with an unusually verbose warning message that helped to fill in a gap of my understanding of git.</p>
+<p>With git, you switch between branches by issuing the command <code>git checkout branchname</code>.  Branches are just convenient nicknames for commits, though, so I knew that you could also switch to any commit using the commit&#8217;s ID.  I tried <code>git checkout 77cdf</code> and was surprised by the following message:</p>
+<pre>&lt;code&gt;
+Note: checking out &#39;77cdf&#39;.
+
+You are in &#39;detached HEAD&#39; state.  You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by performing another checkout.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -b with the checkout command again.  Example:
+
+  git checkout -b new_branch_name
+
+HEAD is now at 77cdf...
+&lt;/code&gt;</pre>
+<h2>Branches and HEAD</h2>
+<p>Before breaking this down, let&#8217;s review a few basics.  Git commits each have an ID number.  Git branches are convenient nicknames for commits.  A branch points at a single commit by remember its ID number.  Git also has a special pointer called HEAD which represents your current location in the potentially-large database of commits.</p>
+<p>Almost all of the time, HEAD points at (&#8220;is attached to&#8221;) some branch.  HEAD points at your branch, and the branch points at a commit ID, so when you ask git &#8220;Where am I?&#8221;, git knows the commit you are at as well as its user-facing nickname.  <strong>When HEAD points at a branch that points at the current commit, and you make a new commit, HEAD and the branch follow you to the new commit.</strong>  Even when you&#8217;re in a fresh repository and haven&#8217;t made any branches yet, the default branch named &#8216;master&#8217; fills this same role.</p>
+<p>I understood that much before trying to <code>git checkout 77cdf</code>, but I expected no warning, and I expected that this would put me into a read-only state since no branches were involved.  I was so used to the idea that branches are <em>always involved</em> during the act of committing, and figured that without a branch, a new commit would be meaningless.</p>
+<h2>Breaking Down the Warning</h2>
+<p><strong>You are in &#8216;detached HEAD&#8217; state.</strong>  HEAD almost always points at a branch, which points at the current commit.  When you jump back in time to a commit that has no branch pointed at it, HEAD is no longer attached to a branch.  HEAD still lets you and git know where you are, but we no longer have an answer to the question &#8220;What user-facing nickname describes where I am?&#8221;</p>
+<p><strong>You can look around, make experimental changes and commit them&#8230;</strong>  This surprised me.  Without a branch name to follow me to the next commit, what would it even <em>mean</em> to commit?  Later on, I&#8217;d need a nice nickname for any new commits, so my repository viewer could know to show them to me at all, right?  If I commit from here right now, wouldn&#8217;t I just forget the ID later on when I wanted to find it again?</p>
+<p>Working with HEAD attached to a branch had influenced my mental image of what it means to make a commit; I was so used to the idea of a branch following you along that I mistook them for two parts of the same action.  In reality, creating a commit and having the branch name follow you are two distinct acts.  You can create a commit without having a branch follow you to the new state.</p>
+<p><strong>&#8230;and you can discard any commits you make in this state without impacting any branches by performing another checkout.</strong> AHA!  If I make several commits in this state, I <em>do</em> blaze a new nameless trail, and jumping away from that trail without first giving it a name will effectively discard my work (it&#8217;s still there, but surely you&#8217;ll forget the ID).  No harm, no foul.  Just an experiment.</p>
+<p><strong>If you want to create a new branch to retain commits you create, you may do so (now or later) by using -b with the checkout command again.</strong> Double-AHA!  If I start blazing a nameless trail as an experiment, and then I realize that I don&#8217;t want to discard it after all, I can give it a name.  Interestingly, you can give it a name using the exact same command that you would use to create a feature branch off of master: <code>git checkout -b newbranchname</code>.  This makes sense.  When I&#8217;m on master during normal development and issue this command to create a branch, I&#8217;m really just saying &#8220;Oh by the way, the current commit is now ALSO known as newbranchname, and <em>that</em> name should start following me.&#8221;</p>
+<p>To sum up, detached HEAD state is a sharp tool.  Use it to inspect an old commit, or to perform an experiment using an old commit as a starting point.  Be sure to give that new work a name as soon as it stops being experimental.</p>
 
 		
 		
@@ -132,11 +141,11 @@
   
 
 
-<time datetime="2012-12-13T00:00:00-06:00" pubdate data-updated="true">Dec 13<span>th</span>, 2012</time></div>
+<time datetime="2012-02-24T00:00:00-06:00" pubdate data-updated="true">Feb 24<span>th</span>, 2012</time></div>
 	<div class="tags">
 
 
-	<a class='category' href='/blog/categories/blog/'>Blog</a>, <a class='category' href='/blog/categories/bonus/'>Bonus!</a>
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
 
 
 </div>

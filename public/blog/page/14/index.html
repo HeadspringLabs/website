@@ -7,7 +7,7 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="Imagine for a moment that you are a member of the government in colonial India during the period of British rule. You&#8217;re concerned about the &hellip;">
+	<meta name="description" content="As I mentioned last week, I&#8217;ve started using git recently, specifically a git-to-tfs bridge so that I can avoid as much contact with TFS as &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -90,31 +90,17 @@
     <article class="post">
 	<h2 class="title">
 		
-		<a href="/blog/the-cobra-effect/">
+		<a href="/blog/am-i-not-dead-commit/">
 		
-			The Cobra Effect</a>
+			Am I Not Dead? Commit.</a>
 	</h2>
 	<div class="entry-content">
-		<p>Imagine for a moment that you are a member of the government in colonial India during the period of British rule.  You&#8217;re concerned about the population of venomous cobras, so you attempt to impose a solution.  You offer a reward to anyone who brings you a dead cobra.  After a while, though, you start to get suspicious of some of the cobra hunters.  They seem to be bringing in far more cobras that any single person is likely to encounter, let alone trap and kill.  You discover that some individuals have begun raising cobras in order to turn a profit!  Clearly, your plan isn&#8217;t working, so you stop offering the bounty.  Countless cobra farmers&#8217; snakes become worthless, so they are released into the wild, increasing the population of cobras.</p>
-<p>You meant well, but your attempt to impose a solution to the problem actually made things worse.</p>
-<p>The <a href="http://en.wikipedia.org/wiki/Cobra_effect">Cobra Effect</a> is similar to the more frequently-referenced <a href="http://en.wikipedia.org/wiki/Murphy's_law">Murphy&#8217;s Law</a>.  Murphy&#8217;s a bit of a pessimist: if something can go wrong, it will, as if the universe is out to get you.  The Cobra Effect, on the other hand, has more to do with human nature: you see a problem and attempt to impose a solution on a group of people, and their natural reaction to your solution ends up making the original problem worse.</p>
-<p>Cobra Effect problems have 4 parts: a) recognizing a problem, b) imposing a solution on a group of people, c) people react naturally <em>to the solution</em>, and d) in turn that reaction makes the problem worse.  Years ago, I experienced these 4 stages on a software project.</p>
-<h2>Farming Venomous Comments</h2>
-<p><strong>The problem:</strong> Reading other people&#8217;s code can be frustrating when it doesn&#8217;t communicate enough of the intent.  You may not feel tempted to add lots of comments to your own code, but sometimes when looking at something ugly or unfamiliar, you find yourself wishing the other developers <em>were</em> writing lots of informative comments.  The more experienced developers on the team naturally fear the ocean of undocumented code that the rest of the team is sure to write in the coming months.</p>
-<p><strong>Imposing a solution:</strong> We need to ensure everyone is writing documented code, therefore commits will not pass code review unless each method has complete <a href="http://msdn.microsoft.com/en-us/library/aa288481(v=vs.71).aspx">XML documentation comments</a>.  Each method will tell you what it is, what each of its arguments is, and what the returned value is.  The user of your code will see this information as they type via IntelliSense.</p>
-<p><strong>People react naturally to the solution:</strong> It <em>hurts</em> to write those XML comments.  They are verbose, they are usually redundant, they are time consuming, and they are usually redundant.  If your product is a library to be used by other developers, you owe it to them to document the non-obvious details of your public interface, but beyond that writing these comments is absolutely painful.  Enter <a href="http://visualstudiogallery.msdn.microsoft.com/46A20578-F0D5-4B1E-B55D-F001A6345748">GhostDoc</a>, a Visual Studio extension that writes these comments for you by inspecting the names and types of your methods and parameters.  You start with an undocumented method like so:</p>
-<p><div><script src='https://gist.github.com/4159059.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>You place your cursor on the first line, hit a keyboard shortcut, and it automatically turns into this:</p>
-<p><div><script src='https://gist.github.com/4159061.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Code Review Accomplished.</p>
-<p><strong>That reaction makes the problem worse:</strong> GhostDoc was <em>encouraged</em> because meeting the code review requirement <em>hurt</em> so much.  Every time I used it, a sarcastic little voice in the back of my head said &#8220;Oh, is <em>that</em> what a customerId is?&#8221; or &#8220;Oh, is <em>that</em> what that method does?&#8221;  That voice started getting louder and I soon started to block out all XML comments whenever I read through anybody&#8217;s code.  It wasn&#8217;t even a conscious decision: my eyes started scanning right by the comments as if they were whitespace.  <em>When I actually needed one of these comments to communicate something real about my intent, nobody would ever notice it; it was a an intent-needle in an angle-bracket-haystack.</em></p>
-<p>Compare that last sentence to the original problem: &#8220;Reading other people&#8217;s code can be frustrating when it doesn&#8217;t communicate enough of the intent.&#8221;  The imposed solution made that problem <em>worse</em> by making it even harder to see important information about intent when the need actually arose, and it made it harder to see the intent that was already present in the code itself because you could only fit a few real lines of code on the screen at a time.  </p>
-<h2>People Smells</h2>
-<p>We talk about &#8220;code smells&#8221;, simple things we see in a snippet of code that give us a negative gut reaction, suggesting a deeper problem.  There are also &#8220;people smells&#8221;, where a solution to a human problem should give us a similar negative gut reaction.  With the notable exception of dubstep fans, people naturally try to avoid pain.  We seek out the path of least resistence.  When the solution to a human problem hurts more than the problem, you may get exactly what you asked for.</p>
+		<p>As I mentioned last week, I&#8217;ve <a href="http://www.headspring.com/2012/02/hey-tfs-git-out-of-my-way">started using git</a> recently, specifically a git-to-tfs bridge so that I can avoid as much contact with TFS as humanly possible.</p>
+<p>Most of my recent experience has been with subversion, so I have been <em>unlearning</em> that as much as I have been <em>learning</em> git.  The most apparent difference right away is what it really means to make a &quot;commit&quot;.</p>
+<p>With subversion, even when working in a feature branch, my commits would be immediately shared with my coworkers.  I was basically handing a diff to my coworkers every time I checked something in.   Since anything I committed would be immediately shared, I had an extra concern at commit-time: &#8220;If I commit right now, and someone else gets latest, will I mess things up for them?&#8221;.  Despite wanting to commit as often as possible, I could only allow myself to commit when I had completed <em>the smallest chunk of work that could be shipped if I got hit by a bus</em>.  This seemed like the most reasonable rule of thumb to follow, but even these commits could end up fairly large.</p>
+<p>Subversion is like a video game with sparse save points.  You play for a while, maybe even an hour or two, before reaching a point where you&#8217;re even <em>allowed</em> to save your progress.  You might even get a little lost along the way, and you can&#8217;t just jump back to the last save point without wasting all that time.</p>
+<p>Working with git has felt a lot more like playing the original <a href="http://en.wikipedia.org/wiki/Half-Life_(video_game)">Half-Life</a>.  Maybe it was really difficult, or maybe I was just terrible at it, but I found myself being squashed or blown up every other minute.  Thankfully, instead of having to make your way to a special save point, you could just save your progress at any moment or jump back to any previous save.  <strong>Have I moved 10 feet?  Am I not dead?  Save.</strong></p>
+<p>Now that I can work with a local feature branch, I can think differently about what a commit actually <em>is</em>.  If I commit far more often than I did with subversion, I harm nobody; it&#8217;s all just local anyway.  When I ultimately push up to TFS, it&#8217;ll batch up all my local commits into a single set of changes representing the before/after comparison of all of my work.  Any missteps along the way won&#8217;t show up to my coworkers, yet while <em>doing</em> the work I could always look back to retrace my own train of thought.  <strong>Have I made any forward progress, shippable or not?  Am I not dead? Commit.</strong></p>
 
 		
 		
@@ -134,7 +120,7 @@
   
 
 
-<time datetime="2012-11-29T00:00:00-06:00" pubdate data-updated="true">Nov 29<span>th</span>, 2012</time></div>
+<time datetime="2012-02-10T00:00:00-06:00" pubdate data-updated="true">Feb 10<span>th</span>, 2012</time></div>
 	<div class="tags">
 
 

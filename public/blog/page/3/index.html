@@ -7,7 +7,8 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="I&#8217;m often guilty of this myself, but I cringe whenever I hear a software developer say that in order to implement a feature, they &#8220;Just &hellip;">
+	<meta name="description" content="This article is part of a series exploring how to create installers for Windows software.  Here&#8217;s the complete contents of the series.
+Part 1 &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -90,70 +91,32 @@
     <article class="post">
 	<h2 class="title">
 		
-		<a href="/blog/just-is-a-four-letter-word/">
+		<a href="/blog/creating-windows-installers-with-the-wix-toolset-part-03/">
 		
-			&#8220;Just&#8221; Is a Four Letter Word</a>
+			Creating Windows Installers With the WiX Toolset Part 03</a>
 	</h2>
 	<div class="entry-content">
-		<p>I&#8217;m often guilty of this myself, but I cringe whenever I hear a software developer say that in order to implement a feature, they &#8220;Just&#8221; have to do x, y, and z.  The reality is that even on healthy projects, you will face at least a little more complexity than could be anticipated in advance.  This complexity makes time-based estimates risky, especially on seemingly-small features.  This week, I was particularly guilty of declaring to myself that a feature would take &#8220;Just a few lines of code&#8221;.</p>
-<h2>The Feature</h2>
-<p>Working on the <a href="https://github.com/plioi/fixie">Fixie test framework</a> this week, I pulled the next task from my backlog.  It read:</p>
-<blockquote><p>Honor Dispose() when present.</p></blockquote>
-<p>When a test fixture class happens to implement IDisposable, the test framework should treat Dispose() as special.  After constructing your fixture and calling its test methods, and before it discards the fixture instance, it should be sure to call Dispose().  For example, the xUnit test framework uses Dispose() in the same way that NUnit uses [TearDown] methods.  In both of those frameworks, you have a chance to perform cleanup after tests execute, and I wanted Fixie to support Dispose() too.</p>
-<h2>Initial Analysis</h2>
-<p>To get a better idea of what I would have to do, I took a look at the way C# <code>using</code> blocks work.  When you write a block like this:</p>
-<p><div><script src='https://gist.github.com/5521208.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>&#8230;the compiler will rewrite it before actually compiling anything:</p>
-<p><div><script src='https://gist.github.com/5521212.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>To satisfy the requirement, &#8220;Honor Dipose() when present,&#8221; I <em><strong>just</strong></em> had to wrap my test-running code in a similar try/finally block.  Easy as pie.  It should take about 4 minutes, mostly just to write its acceptance test.</p>
-<p>&#8220;<em><strong>Just</strong></em> 4 minutes&#8221; quickly turned into 4 hours.</p>
-<h2>The Easy Part</h2>
-<p>The <a href="https://github.com/plioi/fixie/commit/16f079b08131026e75d5ae5075dfbf5ec7e1df1b">primary commit for this feature</a> is exactly what I expected.  My acceptance test for this feature involved a sample fixture that implemented IDisposable along with two tests, one that passes and one that fails.  My real test fixture would run that sample test fixture, inspecting the results.  This pattern of having a real fixture wrap a private sample fixture allows me to have sample fixtures with failing tests. Only failures in the outer real fixture cause my build to fail:</p>
-<p><div><script src='https://gist.github.com/5521216.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>The primary commit&#8217;s fix involved wrapping test execution in a <code>try/finally</code>:</p>
-<p><div><script src='https://gist.github.com/5521221.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<h2>The First Four Monkey Wrenches</h2>
-<p>That wasn&#8217;t actually the first commit for this feature.  I tried that all first, but the outer test fixture would fail.  Within the sample fixture, Dispose() was being called at the end of test execution, as expected, but Dispose() was <em>also</em> being called as a test method too!  Output suggested that my 2-test fixture had 3 tests, and Dispose() was being called 4 times.  Yeesh.</p>
-<p>To resolve that issue, I <em><strong>just</strong></em> had to omit Dispose() from being treated as a test method.  I introduced a helper method to test whether a given method is Dispose().</p>
-<p><div><script src='https://gist.github.com/5521227.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Oops. Not every method with that name is the Dispose() method.  I really had to look for the right method <em>signature</em>:</p>
-<p><div><script src='https://gist.github.com/5521229.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Oops. Not every method with that signature is really IDisposable.Dispose():</p>
-<p><div><script src='https://gist.github.com/5521231.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Oops.  DeclaredType isn&#8217;t always the right type to inspect for IDisposable.  Consider this situation:</p>
-<p><div><script src='https://gist.github.com/5521235.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>In this case, the DeclaredType for the Dispose() method is HasDisposeButNotIDisposable, which doesn&#8217;t implement IDisposable.  When Fixie tried to run tests in a class like DisposableTestFixture, it <em>still</em> treated Dispose() as a test case.  I had to replace DeclaredType with ReflectedType:</p>
-<p><div><script src='https://gist.github.com/5521240.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Finally, I could <a href="https://github.com/plioi/fixie/commit/3f9dc52a3e4570c7baa197773ae8a1983abc50f8">use that helper method to exclude IDisposable.Dispose()</a> from being treated as a test case.  Running the sample fixture produced one pass and one expected failure, and Dispose was called the right number of times.</p>
-<p>All done.</p>
-<h2>The Plot Thickens</h2>
-<p>Wait.  What if someone&#8217;s test fixture has a Dispose() that throws exceptions?  Just like an NUnit [TearDown], we want exceptions here to cause the corresponding tests to fail, and we want the disposal exception to be included in the output.  I <em><strong>just</strong></em> have to wrap the disposal in a try/catch and emit a failure when Dispose() throws, like I already do when a test method throws:</p>
-<p><div><script src='https://gist.github.com/5521243.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>When a test method passes but Dispose() throws, this code does the right thing by treating the test as a failure and presenting the exception to the user.  When a test method <em>fails</em> and Dipose() throws, it would incorrectly report 2 test failures (one reported by the test method execution, and one reported by this catch block).  Instead, I want to treat it as one test failure, while reporting both exceptions to the user as the <em>reasons</em> the single test failed.</p>
-<p>To address that detail, I had to dramatically restructure the test execution code so that it would accumulate potentially-many exceptions throughout the test lifecycle.  Only at the end of the lifecycle would it decide whether the test passed or failed.  If any exceptions had been accumulated, the test would fail and the reasons would list all the exceptions.</p>
-<blockquote><p>I&#8217;m glad I ran into this problem now, because it will surely come up again when I address other test lifecycle methods, corresponding with NUnit concepts like [TestFixtureSetUp], [TestFixtureTearDown], [SetUp], and [TearDown]. The new code makes it easy to have multiple steps in the test lifecycle, all possibly contributing reasons for the test to fail.</p></blockquote>
-<h2>4 Hours Later</h2>
-<p>Finally, the original feature, &#8220;Honor Dipose() when present,&#8221; was implemented, and it <em><strong>just</strong></em> took 4 hours.  The next time you catch yourself saying &#8220;Just&#8221;, take a moment to think critically about what all you&#8217;ve hidden behind that word.  Any given feature may be easy to describe to a user, and the most likely use case may very well be easy to implement, but the devil&#8217;s in the details.</p>
+		<address>This article is part of a series exploring how to create installers for Windows software.  Here&#8217;s the complete contents of the series.</address>
+<address><a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-01/">Part 1 – What Kinds of Software Projects Benefit From an Installer?</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-02/">Part 2 – An Overview Of Windows Installer and its Features</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-03/">Part 3 – Tooling Options for Building Installers</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-04/">Part 4 – The Windows Installer Runtime Sequence</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-5/">Part 5 – The Contents of an MSI</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-6/">Part 6 – The Structure of a WiX File</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-7/">Part 7 – Generating an MSI Package From Your WiX</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-8/">Part 8 – Troubleshooting Installer Runtime Problems</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-summary/">Part 9 - Summary</a><br />
+</address>
+<p><br/></p>
+<h2>Free Options</h2>
+<p>There are several free options for authoring Windows installers, including WiX.  One of these is Nullsoft Scriptable Install System (NSIS).  NSIS was created a number of years ago in order to distribute a media player called Winamp.  Some reasons to consider NSIS are that it&#8217;s relatively simple and straightforward to learn, and it supports a plugin system to extend it.  Some reasons to avoid NSIS are it&#8217;s relatively old (the last release was in 2009), and the size of the community using it has been dwindling as a result.  You can check out NSIS <a href="http://nsis.sourceforge.net/">here</a>.</p>
+<p> Another free option with a lot of current traction is Inno Setup.  It&#8217;s been around nearly as long as NSIS and is being more actively updated.  It has a custom Pascal scripting engine to customize the install process, and appears to have a few features (such as Unicode support) that NSIS doesn&#8217;t.  You can find out more at the Inno Setup <a href="http://www.jrsoftware.org/isinfo.php">website</a>.</p>
+<p> Both NSIS and Inno Setup have one major drawback compared to WiX - neither use the Windows Installer system in Windows discussed in a previous <a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-02/">part</a>.  Whether or not this matters depends on whether your application targets consumers or corporations.  Consumers are not going to care much HOW software installs on their machine as long as it works and doesn&#8217;t silently add malware.  Corporations on the other hand have concerns well beyond the average consumer.  This includes things like inspecting the contents of the installer for worrisome system configuration changes, customizing the installer with separate transforms to meet IT standards, and safely allowing nonadmin users to run an installer that needs some admin privileges.  There&#8217;s a great discussion about the advantages of Windows Installer at <a href="http://serverfault.com/questions/11670/advantages-of-using-msi-files/274609#274609">ServerFault</a> (msi files are Windows Installer packages).</p>
+<p> So if WiX has all these great features compared to Inno Setup, what disadvantages does it have?  In my opinion the answer to this is easily the steep learning curve.  Because WiX is essentially a wrapper around the concepts in Windows Installer, you MUST understand Windows Installer to use it effectively.  This will be the topic of future discussions in this series.</p>
+<h2>Commercial Options</h2>
+<p>There are some commercial options that have more polish and user friendliness than WiX.  The two that appear to be most popular are <a href="http://www.advancedinstaller.com/">Advanced Installer</a> and <a href="http://www.installshield.com/">InstallShield</a>.  I have not used either because my installer needs are so irregular that I haven&#8217;t been able to justify the licensing cost for an occasional &#8220;one off&#8221; installer project, but if your job responsibilities include fulltime or near fulltime work with Windows installers you probably want to investigate them as an option.</p>
+<h2>Summary</h2>
+<p>There are a variety of tooling options for your installer needs.  If you have a sufficiently simple software product and aren&#8217;t targeting corporate installs, Inno Setup might be a good fit.  If you have more advanced needs that Inno Setup cannot handle, or your targeting corporations that have deployment requirements and standards, you&#8217;ll probably want to use WiX unless maintaining installers is your primary job responsibility or your company has sufficiently deep pockets for a good commercial tool.</p>
 
 		
 		
@@ -173,11 +136,11 @@
   
 
 
-<time datetime="2013-05-05T00:00:00-05:00" pubdate data-updated="true">May 5<span>th</span>, 2013</time></div>
+<time datetime="2012-12-28T00:00:00-06:00" pubdate data-updated="true">Dec 28<span>th</span>, 2012</time></div>
 	<div class="tags">
 
 
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
+	<a class='category' href='/blog/categories/blog/'>Blog</a>, <a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>, <a class='category' href='/blog/categories/wix/'>WiX</a>, <a class='category' href='/blog/categories/windows-installer/'>windows installer</a>
 
 
 </div>

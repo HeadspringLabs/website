@@ -7,9 +7,7 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="Software management company provides additional options for customers.
-&nbsp;
-AUSTIN, TX – (January 24, 2013) – Headspring, a leading custom &hellip;">
+	<meta name="description" content="Yes this is a lame title, but it made me chuckle. I thought I’d share a quick shortcut that good ole Func&lt;&gt; provides as an alternative to a &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -92,21 +90,33 @@ AUSTIN, TX – (January 24, 2013) – Headspring, a leading custom &hellip;">
     <article class="post">
 	<h2 class="title">
 		
-		<a href="/blog/headspring-forms-strategic-alliance-with-clear-measure-in-support-of-new-business-enterprise/">
+		<a href="/blog/add-a-little-func-to-your-tests/">
 		
-			Headspring Forms Strategic Alliance With Clear Measure in Support of New Business Enterprise</a>
+			Add a Little Func to Your Tests</a>
 	</h2>
 	<div class="entry-content">
-		<h3><em style="font-size: 1.17em;">Software management company provides additional options for customers.</em></h3>
-<p>&nbsp;</p>
-<p><b>AUSTIN, TX – (January 24, 2013) – </b>Headspring, a leading custom software development company, today announced a strategic alliance with Clear Measure, a software management solutions company recently founded by Headspring’s former president and COO, Jeffrey Palermo. Clear Measure complements Headspring’s existing services by providing software management consulting and professional services. The alliance allows Headspring to add another option to its robust package of services for its customers.</p>
-<p>Headspring has experienced rapid growth increasing revenues by more than 50 percent year over year, and in 2011 Headspring experienced a 162 percent increase in the number of clients the company served through the software development and software consulting projects. In 2012, the company added 12 new employees and plans to continue expanding opening an office in Houston, Texas in January 2013.</p>
-<p>“We are committed to the continual growth and improvement of our business and our team,” said Dustin Wells, CEO of Headspring.  “This alliance exemplifies our belief that supporting our team’s growth and entrepreneurial instincts turns into exciting new opportunities. We are thrilled to support Jeffrey in this new venture.”</p>
-<p>Headspring will provide Clear Measure access to expert software engineering services by developers who are recognized leaders in the industry and Clear Measure will provide management consulting and project management services such as systems assessments, data monitoring, and continual auditing.</p>
-<p>“I’m thankful to be able to continue a long and fruitful relationship with Headspring,” said Jeffrey Palermo, Managing Partner &amp; CEO of Clear Measure.  “Companies rely on software for a competitive advantage. Our goal is to provide the clarity, measurement, and control that companies need to get the most of their software investments, while partnering with a company we know has the expertise to deliver forward thinking and beneficial long-term software solutions.”</p>
-<p>Until recently, Jeffrey Palermo was the president and COO of Headspring.  He was instrumental in helping build Headspring’s team of talented developers and the alliance between the two companies leverages the capabilities of both to serve the growing software needs of companies.</p>
-<p><b>About Clear Measure                                                                                                          </b></p>
-<p>Clear Measure provides professional services and consulting that enable the clarity, measurement, and control businesses need to get the most from their software investments. Using a proven methodology, Clear Measure equips senior software executives and managers with the tools and knowledge to maximize ROI and reduce risk. For more information, go to <a href="http://www.clear-measure.com">www.clear-measure.com</a> or call 512-298-1232</p>
+		<p>Yes this is a lame title, but it made me chuckle. I thought I’d share a quick shortcut that good ole Func&lt;&gt; provides as an alternative to a private method.</p>
+<p>With Func&lt;&gt; it’s easy to clean up tests. Let’s assume you need to test a query that returns a list of books in a particular genre.</p>
+<p><div><script src='https://gist.github.com/2015251.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>By creating a Func&lt;&gt; to set the properties on an object, it shortens the test and makes it much more readable. Obviously if you have more than one test that needs new books, then I&#8217;d recommend using a private method. If you&#8217;re wondering about the .ShouldEqual or .ShouldBeTrue in the test, I&#8217;m using the <a title="Should Assertion Library" href="http://nuget.org/packages/Should" target="_blank">Should Assertion Library</a> because I like the readability.</p>
+<p>If you want to set more than just the Genre, it would look like this:</p>
+<p><div><script src='https://gist.github.com/2015265.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>The above example would be called like this:</p>
+<p><div><script src='https://gist.github.com/2015266.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>If you want to specify even more properties, try this out:</p>
+<p><div><script src='https://gist.github.com/2015268.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+<p>The above example would look like this:</p>
+<p><div><script src='https://gist.github.com/2015272.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+ </p>
 
 		
 		
@@ -126,11 +136,11 @@ AUSTIN, TX – (January 24, 2013) – Headspring, a leading custom &hellip;">
   
 
 
-<time datetime="2013-01-24T00:00:00-06:00" pubdate data-updated="true">Jan 24<span>th</span>, 2013</time></div>
+<time datetime="2012-04-02T00:00:00-05:00" pubdate data-updated="true">Apr 2<span>nd</span>, 2012</time></div>
 	<div class="tags">
 
 
-	<a class='category' href='/blog/categories/press/'>Press</a>
+	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
 
 
 </div>

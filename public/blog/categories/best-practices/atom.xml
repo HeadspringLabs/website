@@ -4,7 +4,7 @@
   <title><![CDATA[Category: best practices | Headspring Labs]]></title>
   <link href="http://headspringlabs.com/blog/categories/best-practices/atom.xml" rel="self"/>
   <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-24T19:08:18-05:00</updated>
+  <updated>2013-07-24T22:47:07-05:00</updated>
   <id>http://headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
@@ -204,76 +204,6 @@ Note that even with a base class, all our observations from last time are still 
 
 
 <p>Next time, we're going to see how to run our own initialization code <em>before any of our test fixtures are even created. </em></p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[You're Doing Your Code Reviews Wrong!]]></title>
-    <link href="http://headspringlabs.com/blog/youre-doing-your-code-reviews-wrong-2/"/>
-    <updated>2011-09-02T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/youre-doing-your-code-reviews-wrong-2</id>
-    <content type="html"><![CDATA[<p>Well, not YOU, of course. YOUR team's code reviews, I'm sure, are pleasant, productive engagements where everybody leaves feeling good about the results. They happen early and regularly in the development process, the goal of the review is well understood, and you wouldn't dream of shipping a line of code that hadn't been through your review process. Your team loves doing them, and you don't worry about who does the review because you've got a consistent standard that your whole team agrees with. You're just reading this article because there's this <em>other </em>team in the building that you think would benefit from reading it, and you're going to forward it to them when you're done reading.</p>
-
-
-<p>I'm with you. Personally, I've <em>never</em> sat around a meeting table with 15 other developers, all checking their email, while one poor sacrificial lamb walked us through a line-by-line explanation of code in "Representative changeset XYZ" the day <em>after</em> we put it into production. I've <em>never</em> been told (or said!) "That's good feedback, but we don't have time to re-test those changes before the release date." And I've <em>never, ever</em> had an hours-long debate about where our braces should go.</p>
-
-
-<p>Really.</p>
-
-
-<p>But, for the benefit of that <em>other</em> team, I've put together some advice about  <span style="color: #000000;"><a href="http://www.headspring.com/resources/whitepapers/" target="_blank">how to conduct effective code reviews</a></span>. Some of the things I cover are:</p>
-
-
-<ul>
-<li>Understanding why we do code reviews in the first place</li>
-<li>Using code reviews to drive quality in your products early</li>
-<li>Getting a consistent code style across your team so you can focus on higher-level issues</li>
-<li>And more.</li>
-</ul>
-
-
-<p>&nbsp;</p>
-
-
-<div>Come take a look at <em><span style="color: #ff0000;"><a href="http://www.headspring.com/resources/whitepapers/" target="_blank">Conducting Effective Code Reviews</a></span></em>, and remember to share it with the guys down the hall who <em>actually</em> need it!</div>
-
-
-<p>&nbsp;</p>
-
-
-<p>&nbsp;</p>
-
-
-<p>&nbsp;</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[How pair programming benefits agile teams]]></title>
-    <link href="http://headspringlabs.com/blog/pair-programming-in-agile/"/>
-    <updated>2011-08-29T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/pair-programming-in-agile</id>
-    <content type="html"><![CDATA[<div>Hands down, pair programming is one of the most valuable agile techniques, but at the same it is one of the most controversial because it can be a tough sell to a manager or non-technical stakeholder. At face value, two developers and one keyboard sounds like a perfect recipe for double the cost. The problem with that equation is it naively assumes that value is limited to the speed at which developers type, and that adding a second developer won't do any good unless he also has a keyboard to pound on. In reality though, pair programming helps agile teams solve difficult problems quicker as well as help keep your team up-to-date on the latest business and technical knowledge. I want to give you the arguments to use to quell those management fears and allow you to get all the benefits of pair programming for your agile team.</div>
-
-
-<p>&nbsp;</p>
-
-
-<div>Have you ever watched Wheel of Fortune with a friend, without the slightest idea what the answer could be, then your friend, thinking out-loud, says one of the words and instantly you can complete the rest of the phrase? Neither of you knew the answer, but as a team you were able to solve the problem neither of you could solve on your own. Given enough time, one of you would likely have figured it out, but by working as a team you arrived at it much quicker. When developing software, the same type of problems can pop-up, and two people can solve them quicker as a team than either could individually... and most often times, far beyond twice as quickly! When situations like these pop-up, it just makes sense from a cost perspective to pair on them so the total amount of time spent on the task is reduced.</div>
-
-
-<p>&nbsp;</p>
-
-
-<div>The other fundamental justification for pair programming is knowledge transfer. Knowledge transfer is the process where one person shares his wisdom with a peer. This can be done countless was, such as just sitting in a room and talking to a group of other developers, but with pair programming it is baked right it. There are two types of knowledge that can be transferred: business and technical. Transferring business knowledge, such as what must happen in a system for a user to be considered a preferred customer, help to ensure multiple developers in the organization know how the system works and mitigate risk for the company when an employee leaves. Transferring technical knowledge, such as one partner in the pair sharing a keyboard shortcut key with the other, allows developers to become more efficient in how they operate and increase their productivity over the lifetime of the project.</div>
-
-
-<p>&nbsp;</p>
-
-
-<div>The caveat to pair programming is you shouldn't over do it. In practice, I've found about 20% of the time I pair program, and about 80% I work solo. This varies greatly week to week, and I tend to pair program more (sometimes even 80-100%) earlier in the life-cycle of an application when there are lots of difficult portions to think though and even small design mistakes can be costly down the road. As a project becomes more mature, I usually taper down to closer to a few hours a week, and then there is more emphasis on the knowledge transfer aspect--both what business rules have been developed in parallel that I have not found out about yet as well as what can I be doing to be more efficient while developing.</div>
 
 ]]></content>
   </entry>

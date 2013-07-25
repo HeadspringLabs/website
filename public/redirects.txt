@@ -4,88 +4,12 @@ old: http://www.headspring.com/blog/welcome-to-headspring-labs/
 new: http://headspringlabs.com/blog/welcome-to-headspring-labs/
 
 
-old: http://www.headspring.com/blog/by-your-command-line/
-new: http://headspringlabs.com/blog/by-your-command-line/
-
-
-old: http://www.headspring.com/blog/dynamic-test-discovery/
-new: http://headspringlabs.com/blog/dynamic-test-discovery/
-
-
-old: http://www.headspring.com/blog/when-writing-c-use-c/
-new: http://headspringlabs.com/blog/when-writing-c-use-c/
-
-
-old: http://www.headspring.com/blog/streamlined-integration-tests/
-new: http://headspringlabs.com/blog/streamlined-integration-tests/
-
-
-old: http://www.headspring.com/blog/dry-test-inheritance/
-new: http://headspringlabs.com/blog/dry-test-inheritance/
-
-
-old: http://www.headspring.com/blog/the-sincerest-form-of-flattery/
-new: http://headspringlabs.com/blog/the-sincerest-form-of-flattery/
-
-
-old: http://www.headspring.com/blog/fixies-life-bicycle/
-new: http://headspringlabs.com/blog/fixies-life-bicycle/
-
-
-old: http://www.headspring.com/blog/test-discovery/
-new: http://headspringlabs.com/blog/test-discovery/
-
-
-old: http://www.headspring.com/blog/enabling-change/
-new: http://headspringlabs.com/blog/enabling-change/
-
-
-old: http://www.headspring.com/blog/just-is-a-four-letter-word/
-new: http://headspringlabs.com/blog/just-is-a-four-letter-word/
-
-
-old: http://www.headspring.com/blog/the-boiling-backlog/
-new: http://headspringlabs.com/blog/the-boiling-backlog/
-
-
-old: http://www.headspring.com/blog/cutting-scope/
-new: http://headspringlabs.com/blog/cutting-scope/
-
-
-old: http://www.headspring.com/blog/isolating-execution/
-new: http://headspringlabs.com/blog/isolating-execution/
-
-
 old: http://www.headspring.com/blog/disabling-language-changes-in-visual-studio/
 new: http://headspringlabs.com/blog/disabling-language-changes-in-visual-studio/
 
 
-old: http://www.headspring.com/blog/dogfooding/
-new: http://headspringlabs.com/blog/dogfooding/
-
-
-old: http://www.headspring.com/blog/leaky-abstractions-rot-code/
-new: http://headspringlabs.com/blog/leaky-abstractions-rot-code/
-
-
-old: http://www.headspring.com/blog/bootstrapping/
-new: http://headspringlabs.com/blog/bootstrapping/
-
-
-old: http://www.headspring.com/blog/headspring-named-a-best-company-to-work-for-in-texas/
-new: http://headspringlabs.com/blog/headspring-named-a-best-company-to-work-for-in-texas/
-
-
-old: http://www.headspring.com/blog/socks-then-shoes/
-new: http://headspringlabs.com/blog/socks-then-shoes/
-
-
 old: http://www.headspring.com/blog/mvc-custom-unobtrusive-validator-attribute-date-range-validation/
 new: http://headspringlabs.com/blog/mvc-custom-unobtrusive-validator-attribute-date-range-validation/
-
-
-old: http://www.headspring.com/blog/meet-headspring-angel-rivera/
-new: http://headspringlabs.com/blog/meet-headspring-angel-rivera/
 
 
 old: http://www.headspring.com/blog/creating-windows-installers-with-the-wix-toolset-summary/
@@ -100,112 +24,16 @@ old: http://www.headspring.com/blog/creating-windows-installers-with-the-wix-too
 new: http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-7/
 
 
-old: http://www.headspring.com/blog/strongly-typed-whiteboarding/
-new: http://headspringlabs.com/blog/strongly-typed-whiteboarding/
-
-
-old: http://www.headspring.com/blog/meet-headspring-sam-garrison/
-new: http://headspringlabs.com/blog/meet-headspring-sam-garrison/
-
-
-old: http://www.headspring.com/blog/insufficiently-round-wheels/
-new: http://headspringlabs.com/blog/insufficiently-round-wheels/
-
-
-old: http://www.headspring.com/blog/you-need-solutions-not-surprises/
-new: http://headspringlabs.com/blog/you-need-solutions-not-surprises/
-
-
-old: http://www.headspring.com/blog/powerful-design-long-term-vision/
-new: http://headspringlabs.com/blog/powerful-design-long-term-vision/
-
-
-old: http://www.headspring.com/blog/meet-headspring-joe-lockbaum/
-new: http://headspringlabs.com/blog/meet-headspring-joe-lockbaum/
-
-
 old: http://www.headspring.com/blog/creating-windows-installers-with-the-wix-toolset-part-6/
 new: http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-6/
-
-
-old: http://www.headspring.com/blog/graphiti/
-new: http://headspringlabs.com/blog/graphiti/
 
 
 old: http://www.headspring.com/blog/creating-windows-installers-with-the-wix-toolset-part-5/
 new: http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-5/
 
 
-old: http://www.headspring.com/blog/headspring-ceo-finalist-for-austin-under-40-awards/
-new: http://headspringlabs.com/blog/headspring-ceo-finalist-for-austin-under-40-awards/
-
-
-old: http://www.headspring.com/blog/headspring-competes-at-2013-austin-startup-games/
-new: http://headspringlabs.com/blog/headspring-competes-at-2013-austin-startup-games/
-
-
-old: http://www.headspring.com/blog/the-debugger-must-be-broken/
-new: http://headspringlabs.com/blog/the-debugger-must-be-broken/
-
-
 old: http://www.headspring.com/blog/wcf-ioc-away-the-need-for-named-pipes/
 new: http://headspringlabs.com/blog/wcf-ioc-away-the-need-for-named-pipes/
-
-
-old: http://www.headspring.com/blog/from-imperative-to-declarative/
-new: http://headspringlabs.com/blog/from-imperative-to-declarative/
-
-
-old: http://www.headspring.com/blog/composable-operations/
-new: http://headspringlabs.com/blog/composable-operations/
-
-
-old: http://www.headspring.com/blog/mvc-boot-camp/
-new: http://headspringlabs.com/blog/mvc-boot-camp/
-
-
-old: http://www.headspring.com/blog/whittling-parsley/
-new: http://headspringlabs.com/blog/whittling-parsley/
-
-
-old: http://www.headspring.com/blog/headspring-announces-employee-promotions/
-new: http://headspringlabs.com/blog/headspring-announces-employee-promotions/
-
-
-old: http://www.headspring.com/blog/headspring-reports-year-end-results-and-projections-for-2013/
-new: http://headspringlabs.com/blog/headspring-reports-year-end-results-and-projections-for-2013/
-
-
-old: http://www.headspring.com/blog/whittling-nunit/
-new: http://headspringlabs.com/blog/whittling-nunit/
-
-
-old: http://www.headspring.com/blog/headspring-forms-strategic-alliance-with-clear-measure-in-support-of-new-business-enterprise/
-new: http://headspringlabs.com/blog/headspring-forms-strategic-alliance-with-clear-measure-in-support-of-new-business-enterprise/
-
-
-old: http://www.headspring.com/blog/no-offshoring/
-new: http://headspringlabs.com/blog/no-offshoring/
-
-
-old: http://www.headspring.com/blog/whittling-xunit/
-new: http://headspringlabs.com/blog/whittling-xunit/
-
-
-old: http://www.headspring.com/blog/get-to-know-a-developer-jose-basilio/
-new: http://headspringlabs.com/blog/get-to-know-a-developer-jose-basilio/
-
-
-old: http://www.headspring.com/blog/whittling-rhino-licensing/
-new: http://headspringlabs.com/blog/whittling-rhino-licensing/
-
-
-old: http://www.headspring.com/blog/get-to-know-a-developer-patrick-abbs/
-new: http://headspringlabs.com/blog/get-to-know-a-developer-patrick-abbs/
-
-
-old: http://www.headspring.com/blog/code-whittling/
-new: http://headspringlabs.com/blog/code-whittling/
 
 
 old: http://www.headspring.com/blog/creating-windows-installers-with-the-wix-toolset-part-04/
@@ -216,20 +44,8 @@ old: http://www.headspring.com/blog/creating-windows-installers-with-the-wix-too
 new: http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-03/
 
 
-old: http://www.headspring.com/blog/the-dunning-kruger-effect/
-new: http://headspringlabs.com/blog/the-dunning-kruger-effect/
-
-
 old: http://www.headspring.com/blog/teaching-and-learning-from-developers-internationally/
 new: http://headspringlabs.com/blog/teaching-and-learning-from-developers-internationally/
-
-
-old: http://www.headspring.com/blog/calm-driven-development/
-new: http://headspringlabs.com/blog/calm-driven-development/
-
-
-old: http://www.headspring.com/blog/nservicebus-training/
-new: http://headspringlabs.com/blog/nservicebus-training/
 
 
 old: http://www.headspring.com/blog/creating-windows-installers-with-the-wix-toolset-part-02/
@@ -240,30 +56,6 @@ old: http://www.headspring.com/blog/creating-windows-installers-with-the-wix-too
 new: http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-01/
 
 
-old: http://www.headspring.com/blog/gizmos-that-should-be-on-your-wish-list-this-holiday/
-new: http://headspringlabs.com/blog/gizmos-that-should-be-on-your-wish-list-this-holiday/
-
-
-old: http://www.headspring.com/blog/lean-lambdas/
-new: http://headspringlabs.com/blog/lean-lambdas/
-
-
-old: http://www.headspring.com/blog/the-solution-is-never-inheritance/
-new: http://headspringlabs.com/blog/the-solution-is-never-inheritance/
-
-
-old: http://www.headspring.com/blog/get-to-know-a-developer-wayne-denier/
-new: http://headspringlabs.com/blog/get-to-know-a-developer-wayne-denier/
-
-
-old: http://www.headspring.com/blog/austin-based-custom-software-company-named-one-of-the-best-companies-to-work-for-in-texas/
-new: http://headspringlabs.com/blog/austin-based-custom-software-company-named-one-of-the-best-companies-to-work-for-in-texas/
-
-
-old: http://www.headspring.com/blog/the-cobra-effect/
-new: http://headspringlabs.com/blog/the-cobra-effect/
-
-
 old: http://www.headspring.com/blog/learn-mercurial-basics-with-logan-turner/
 new: http://headspringlabs.com/blog/learn-mercurial-basics-with-logan-turner/
 
@@ -272,32 +64,12 @@ old: http://www.headspring.com/blog/headspring-is-ready-to-rock/
 new: http://headspringlabs.com/blog/headspring-is-ready-to-rock/
 
 
-old: http://www.headspring.com/blog/take-a-dip-to-get-dry/
-new: http://headspringlabs.com/blog/take-a-dip-to-get-dry/
-
-
 old: http://www.headspring.com/blog/migrating-a-windows-install-to-a-new-macbook/
 new: http://headspringlabs.com/blog/migrating-a-windows-install-to-a-new-macbook/
 
 
-old: http://www.headspring.com/blog/want-to-learn-to-be-a-better-leader/
-new: http://headspringlabs.com/blog/want-to-learn-to-be-a-better-leader/
-
-
-old: http://www.headspring.com/blog/mentorship-and-pie-potential/
-new: http://headspringlabs.com/blog/mentorship-and-pie-potential/
-
-
 old: http://www.headspring.com/blog/windows-8-for-business-breakfast-with-jeffrey-palermo/
 new: http://headspringlabs.com/blog/windows-8-for-business-breakfast-with-jeffrey-palermo/
-
-
-old: http://www.headspring.com/blog/jack-welch-mba-course-business-communication-and-ethics/
-new: http://headspringlabs.com/blog/jack-welch-mba-course-business-communication-and-ethics/
-
-
-old: http://www.headspring.com/blog/headspring-out-on-the-town/
-new: http://headspringlabs.com/blog/headspring-out-on-the-town/
 
 
 old: http://www.headspring.com/blog/avoid-mutation-by-default/
@@ -312,144 +84,12 @@ old: http://www.headspring.com/blog/the-failed-record-of-the-software-industrywh
 new: http://headspringlabs.com/blog/the-failed-record-of-the-software-industrywhy-software-people-dont-get-it/
 
 
-old: http://www.headspring.com/blog/aint-any-is-all-aint/
-new: http://headspringlabs.com/blog/aint-any-is-all-aint/
-
-
-old: http://www.headspring.com/blog/jack-welch-mbaa-new-graduate/
-new: http://headspringlabs.com/blog/jack-welch-mbaa-new-graduate/
-
-
-old: http://www.headspring.com/blog/get-to-know-a-developer-justin-mason/
-new: http://headspringlabs.com/blog/get-to-know-a-developer-justin-mason/
-
-
-old: http://www.headspring.com/blog/memory-management/
-new: http://headspringlabs.com/blog/memory-management/
-
-
-old: http://www.headspring.com/blog/ravendb-boot-camp/
-new: http://headspringlabs.com/blog/ravendb-boot-camp/
-
-
 old: http://www.headspring.com/blog/a-peek-inside-the-headspring-toolbox/
 new: http://headspringlabs.com/blog/a-peek-inside-the-headspring-toolbox/
 
 
-old: http://www.headspring.com/blog/headspring-hosts-central-texas-givecamp/
-new: http://headspringlabs.com/blog/headspring-hosts-central-texas-givecamp/
-
-
-old: http://www.headspring.com/blog/the-defensive-toarray/
-new: http://headspringlabs.com/blog/the-defensive-toarray/
-
-
-old: http://www.headspring.com/blog/a-game-of-throws/
-new: http://headspringlabs.com/blog/a-game-of-throws/
-
-
-old: http://www.headspring.com/blog/mvc-boot-camp-updated-for-asp-net-mvc-4/
-new: http://headspringlabs.com/blog/mvc-boot-camp-updated-for-asp-net-mvc-4/
-
-
-old: http://www.headspring.com/blog/bugs-of-omission/
-new: http://headspringlabs.com/blog/bugs-of-omission/
-
-
-old: http://www.headspring.com/blog/low-ceremony-xunit/
-new: http://headspringlabs.com/blog/low-ceremony-xunit/
-
-
-old: http://www.headspring.com/blog/seamless-audit-trails-in-ravendb/
-new: http://headspringlabs.com/blog/seamless-audit-trails-in-ravendb/
-
-
-old: http://www.headspring.com/blog/get-to-know-a-developer-patrick-mcveety-mill/
-new: http://headspringlabs.com/blog/get-to-know-a-developer-patrick-mcveety-mill/
-
-
-old: http://www.headspring.com/blog/headspring-1st-down-technologies/
-new: http://headspringlabs.com/blog/headspring-1st-down-technologies/
-
-
-old: http://www.headspring.com/blog/headspring-hosts-central-texas-givecamp-to-benefit-10-local-non-profits/
-new: http://headspringlabs.com/blog/headspring-hosts-central-texas-givecamp-to-benefit-10-local-non-profits/
-
-
-old: http://www.headspring.com/blog/a-c-feature-that-shocks-the-conscience/
-new: http://headspringlabs.com/blog/a-c-feature-that-shocks-the-conscience/
-
-
-old: http://www.headspring.com/blog/quashing-incidental-complexity/
-new: http://headspringlabs.com/blog/quashing-incidental-complexity/
-
-
-old: http://www.headspring.com/blog/detect-reflect-decomplect/
-new: http://headspringlabs.com/blog/detect-reflect-decomplect/
-
-
-old: http://www.headspring.com/blog/primitive-obsession/
-new: http://headspringlabs.com/blog/primitive-obsession/
-
-
-old: http://www.headspring.com/blog/spaghetti-alla-code/
-new: http://headspringlabs.com/blog/spaghetti-alla-code/
-
-
-old: http://www.headspring.com/blog/get-to-know-a-developer-andrew-west/
-new: http://headspringlabs.com/blog/get-to-know-a-developer-andrew-west/
-
-
-old: http://www.headspring.com/blog/headspring-chosen-as-exclusive-education-partner-in-north-america-by-ravendb/
-new: http://headspringlabs.com/blog/headspring-chosen-as-exclusive-education-partner-in-north-america-by-ravendb/
-
-
-old: http://www.headspring.com/blog/scope-creep/
-new: http://headspringlabs.com/blog/scope-creep/
-
-
-old: http://www.headspring.com/blog/get-to-know-a-developer-kyle-nunery/
-new: http://headspringlabs.com/blog/get-to-know-a-developer-kyle-nunery/
-
-
-old: http://www.headspring.com/blog/identifying-incidental-complexity/
-new: http://headspringlabs.com/blog/identifying-incidental-complexity/
-
-
-old: http://www.headspring.com/blog/new-office-and-k1-racing/
-new: http://headspringlabs.com/blog/new-office-and-k1-racing/
-
-
-old: http://www.headspring.com/blog/essential-vs-incidental-complexity/
-new: http://headspringlabs.com/blog/essential-vs-incidental-complexity/
-
-
-old: http://www.headspring.com/blog/meta-yak-shaving/
-new: http://headspringlabs.com/blog/meta-yak-shaving/
-
-
-old: http://www.headspring.com/blog/saying-goodbye-to-spicewood-springs-road/
-new: http://headspringlabs.com/blog/saying-goodbye-to-spicewood-springs-road/
-
-
-old: http://www.headspring.com/blog/get-to-know-a-developer-michael-nero/
-new: http://headspringlabs.com/blog/get-to-know-a-developer-michael-nero/
-
-
-old: http://www.headspring.com/blog/bowling-night/
-new: http://headspringlabs.com/blog/bowling-night/
-
-
-old: http://www.headspring.com/blog/anonymous-function-arguments/
-new: http://headspringlabs.com/blog/anonymous-function-arguments/
-
-
 old: http://www.headspring.com/blog/mercurial-basics/
 new: http://headspringlabs.com/blog/mercurial-basics/
-
-
-old: http://www.headspring.com/blog/loops-obfuscate/
-new: http://headspringlabs.com/blog/loops-obfuscate/
 
 
 old: http://www.headspring.com/blog/using-waithandles-to-test-asynchronous-events/
@@ -460,36 +100,8 @@ old: http://www.headspring.com/blog/sneaky-leaky-lambda-listeners/
 new: http://headspringlabs.com/blog/sneaky-leaky-lambda-listeners/
 
 
-old: http://www.headspring.com/blog/public-private-super-private/
-new: http://headspringlabs.com/blog/public-private-super-private/
-
-
-old: http://www.headspring.com/blog/headspring-developer-boot-cam/
-new: http://headspringlabs.com/blog/headspring-developer-boot-cam/
-
-
 old: http://www.headspring.com/blog/power-to-the-pinkies/
 new: http://headspringlabs.com/blog/power-to-the-pinkies/
-
-
-old: http://www.headspring.com/blog/austin-code-camp-presentation/
-new: http://headspringlabs.com/blog/austin-code-camp-presentation/
-
-
-old: http://www.headspring.com/blog/html5-boot-camp/
-new: http://headspringlabs.com/blog/html5-boot-camp/
-
-
-old: http://www.headspring.com/blog/overloading-on-return-types/
-new: http://headspringlabs.com/blog/overloading-on-return-types/
-
-
-old: http://www.headspring.com/blog/headspring-named-one-of-top-5-best-places-to-work-in-austin/
-new: http://headspringlabs.com/blog/headspring-named-one-of-top-5-best-places-to-work-in-austin/
-
-
-old: http://www.headspring.com/blog/win-a-copy-of-asp-net-mvc-4-in-action/
-new: http://headspringlabs.com/blog/win-a-copy-of-asp-net-mvc-4-in-action/
 
 
 old: http://www.headspring.com/blog/why-try-vi-part-1/
@@ -500,32 +112,12 @@ old: http://www.headspring.com/blog/ravendb-with-alonso-robles-and-jeffrey-paler
 new: http://headspringlabs.com/blog/ravendb-with-alonso-robles-and-jeffrey-palermo/
 
 
-old: http://www.headspring.com/blog/dependency-by-required-coincidence/
-new: http://headspringlabs.com/blog/dependency-by-required-coincidence/
-
-
-old: http://www.headspring.com/blog/get-to-know-a-developer-casey-gum/
-new: http://headspringlabs.com/blog/get-to-know-a-developer-casey-gum/
-
-
-old: http://www.headspring.com/blog/building-a-language/
-new: http://headspringlabs.com/blog/building-a-language/
-
-
 old: http://www.headspring.com/blog/polyglot-programmers-of-austin-and-the-importance-of-industry-groups-with-sharon-cichelli-and-jeffrey-palermo/
 new: http://headspringlabs.com/blog/polyglot-programmers-of-austin-and-the-importance-of-industry-groups-with-sharon-cichelli-and-jeffrey-palermo/
 
 
-old: http://www.headspring.com/blog/a-bidirectional-heisenbug/
-new: http://headspringlabs.com/blog/a-bidirectional-heisenbug/
-
-
 old: http://www.headspring.com/blog/javascript-first-letter-mystery/
 new: http://headspringlabs.com/blog/javascript-first-letter-mystery/
-
-
-old: http://www.headspring.com/blog/headspring-named-one-of-austins-best-places-to-work/
-new: http://headspringlabs.com/blog/headspring-named-one-of-austins-best-places-to-work/
 
 
 old: http://www.headspring.com/blog/cqrs-with-kevin-hurwitz-and-jeffrey-palermo/
@@ -544,18 +136,6 @@ old: http://www.headspring.com/blog/free-icons-for-the-artistically-challenged/
 new: http://headspringlabs.com/blog/free-icons-for-the-artistically-challenged/
 
 
-old: http://www.headspring.com/blog/dependency-injection-ceremony/
-new: http://headspringlabs.com/blog/dependency-injection-ceremony/
-
-
-old: http://www.headspring.com/blog/headspring-founderceo-profiled-in-popular-podcast-series/
-new: http://headspringlabs.com/blog/headspring-founderceo-profiled-in-popular-podcast-series/
-
-
-old: http://www.headspring.com/blog/delegate-frustration/
-new: http://headspringlabs.com/blog/delegate-frustration/
-
-
 old: http://www.headspring.com/blog/another-tiny-contribution-to-webapicontrib/
 new: http://headspringlabs.com/blog/another-tiny-contribution-to-webapicontrib/
 
@@ -564,28 +144,12 @@ old: http://www.headspring.com/blog/becoming-a-headspringer-my-first-week/
 new: http://headspringlabs.com/blog/becoming-a-headspringer-my-first-week/
 
 
-old: http://www.headspring.com/blog/architecture-resists-change/
-new: http://headspringlabs.com/blog/architecture-resists-change/
-
-
 old: http://www.headspring.com/blog/mvp-vs-mvc-seeking-better-testability/
 new: http://headspringlabs.com/blog/mvp-vs-mvc-seeking-better-testability/
 
 
-old: http://www.headspring.com/blog/q1-2012-company-offsite-hula-hut-and-a-boat-ride/
-new: http://headspringlabs.com/blog/q1-2012-company-offsite-hula-hut-and-a-boat-ride/
-
-
 old: http://www.headspring.com/blog/increasing-development-enjoyment-with-ravendb/
 new: http://headspringlabs.com/blog/increasing-development-enjoyment-with-ravendb/
-
-
-old: http://www.headspring.com/blog/from-webforms-to-mvc/
-new: http://headspringlabs.com/blog/from-webforms-to-mvc/
-
-
-old: http://www.headspring.com/blog/get-to-know-a-developer-cedric-yao/
-new: http://headspringlabs.com/blog/get-to-know-a-developer-cedric-yao/
 
 
 old: http://www.headspring.com/blog/demystifying-ravendb-queries-and-dynamic-indexes/
@@ -594,10 +158,6 @@ new: http://headspringlabs.com/blog/demystifying-ravendb-queries-and-dynamic-ind
 
 old: http://www.headspring.com/blog/overcoming-perfectionism/
 new: http://headspringlabs.com/blog/overcoming-perfectionism/
-
-
-old: http://www.headspring.com/blog/nuget-package-restore/
-new: http://headspringlabs.com/blog/nuget-package-restore/
 
 
 old: http://www.headspring.com/blog/metrics-reports-kpis-and-the-stuff-developers-must-provide-to-executives/
@@ -616,20 +176,8 @@ old: http://www.headspring.com/blog/notepad-will-corrupt-your-data/
 new: http://headspringlabs.com/blog/notepad-will-corrupt-your-data/
 
 
-old: http://www.headspring.com/blog/headspring-experiences-dynamic-growth-moves-to-bigger-office/
-new: http://headspringlabs.com/blog/headspring-experiences-dynamic-growth-moves-to-bigger-office/
-
-
 old: http://www.headspring.com/blog/the-null-object-pattern-in-c-and-system-lazy/
 new: http://headspringlabs.com/blog/the-null-object-pattern-in-c-and-system-lazy/
-
-
-old: http://www.headspring.com/blog/publishing-a-library-to-symbolsource-org/
-new: http://headspringlabs.com/blog/publishing-a-library-to-symbolsource-org/
-
-
-old: http://www.headspring.com/blog/sharing-an-office-with-your-boss/
-new: http://headspringlabs.com/blog/sharing-an-office-with-your-boss/
 
 
 old: http://www.headspring.com/blog/add-a-little-func-to-your-tests/
@@ -640,20 +188,12 @@ old: http://www.headspring.com/blog/the-confusion-around-qa-why-doesnt-the-indus
 new: http://headspringlabs.com/blog/the-confusion-around-qa-why-doesnt-the-industry-agree/
 
 
-old: http://www.headspring.com/blog/publishing-a-library-with-nuget/
-new: http://headspringlabs.com/blog/publishing-a-library-with-nuget/
-
-
 old: http://www.headspring.com/blog/how-to-integrate-with-other-systems-reliably/
 new: http://headspringlabs.com/blog/how-to-integrate-with-other-systems-reliably/
 
 
 old: http://www.headspring.com/blog/onion-architecture-part-4-after-four-years/
 new: http://headspringlabs.com/blog/onion-architecture-part-4-after-four-years/
-
-
-old: http://www.headspring.com/blog/what-is-technology/
-new: http://headspringlabs.com/blog/what-is-technology/
 
 
 old: http://www.headspring.com/blog/what-is-hg-rebase/
@@ -664,32 +204,12 @@ old: http://www.headspring.com/blog/you-want-to-change-what/
 new: http://headspringlabs.com/blog/you-want-to-change-what/
 
 
-old: http://www.headspring.com/blog/publishing-a-simple-nuget-package/
-new: http://headspringlabs.com/blog/publishing-a-simple-nuget-package/
-
-
-old: http://www.headspring.com/blog/headspring-values-what-matters-most/
-new: http://headspringlabs.com/blog/headspring-values-what-matters-most/
-
-
 old: http://www.headspring.com/blog/how-not-to-say-um-when-presenting/
 new: http://headspringlabs.com/blog/how-not-to-say-um-when-presenting/
 
 
 old: http://www.headspring.com/blog/getting-started-with-ravendb/
 new: http://headspringlabs.com/blog/getting-started-with-ravendb/
-
-
-old: http://www.headspring.com/blog/get-to-know-a-developer-alonso-robles/
-new: http://headspringlabs.com/blog/get-to-know-a-developer-alonso-robles/
-
-
-old: http://www.headspring.com/blog/escape-analysis/
-new: http://headspringlabs.com/blog/escape-analysis/
-
-
-old: http://www.headspring.com/blog/sxsw-interactive-2012-over-and-out/
-new: http://headspringlabs.com/blog/sxsw-interactive-2012-over-and-out/
 
 
 old: http://www.headspring.com/blog/why-i-like-testcase/
@@ -700,10 +220,6 @@ old: http://www.headspring.com/blog/making-conditional-validation-logic-readable
 new: http://headspringlabs.com/blog/making-conditional-validation-logic-readable/
 
 
-old: http://www.headspring.com/blog/finding-closure/
-new: http://headspringlabs.com/blog/finding-closure/
-
-
 old: http://www.headspring.com/blog/dallas-day-of-dot-net-get-nerdy-with-it/
 new: http://headspringlabs.com/blog/dallas-day-of-dot-net-get-nerdy-with-it/
 
@@ -712,36 +228,16 @@ old: http://www.headspring.com/blog/defect-density-estimation/
 new: http://headspringlabs.com/blog/defect-density-estimation/
 
 
-old: http://www.headspring.com/blog/make-the-most-of-sxswi-for-free/
-new: http://headspringlabs.com/blog/make-the-most-of-sxswi-for-free/
-
-
-old: http://www.headspring.com/blog/why-isnt-software-as-reliable-as-a-car/
-new: http://headspringlabs.com/blog/why-isnt-software-as-reliable-as-a-car/
-
-
 old: http://www.headspring.com/blog/migrating-from-bitbucket-to-github/
 new: http://headspringlabs.com/blog/migrating-from-bitbucket-to-github/
-
-
-old: http://www.headspring.com/blog/get-to-know-a-developer-chris-missal/
-new: http://headspringlabs.com/blog/get-to-know-a-developer-chris-missal/
 
 
 old: http://www.headspring.com/blog/becoming-a-headspringer-know-thy-resharper/
 new: http://headspringlabs.com/blog/becoming-a-headspringer-know-thy-resharper/
 
 
-old: http://www.headspring.com/blog/creative-leap-year-ideas-for-the-office/
-new: http://headspringlabs.com/blog/creative-leap-year-ideas-for-the-office/
-
-
 old: http://www.headspring.com/blog/i-have-frameworkcommitment-issues/
 new: http://headspringlabs.com/blog/i-have-frameworkcommitment-issues/
-
-
-old: http://www.headspring.com/blog/get-to-know-a-developer-deran-schilling/
-new: http://headspringlabs.com/blog/get-to-know-a-developer-deran-schilling/
 
 
 old: http://www.headspring.com/blog/detached-head-state/
@@ -760,20 +256,8 @@ old: http://www.headspring.com/blog/improve-your-linq-with-any/
 new: http://headspringlabs.com/blog/improve-your-linq-with-any/
 
 
-old: http://www.headspring.com/blog/get-to-know-a-developer-nolan-egly/
-new: http://headspringlabs.com/blog/get-to-know-a-developer-nolan-egly/
-
-
 old: http://www.headspring.com/blog/branching-subversion-vs-git/
 new: http://headspringlabs.com/blog/branching-subversion-vs-git/
-
-
-old: http://www.headspring.com/blog/headspring-shows-some-love-at-knowbilitys-austin-air/
-new: http://headspringlabs.com/blog/headspring-shows-some-love-at-knowbilitys-austin-air/
-
-
-old: http://www.headspring.com/blog/get-to-know-a-developer-brandon-barry/
-new: http://headspringlabs.com/blog/get-to-know-a-developer-brandon-barry/
 
 
 old: http://www.headspring.com/blog/am-i-not-dead-commit/
@@ -784,24 +268,8 @@ old: http://www.headspring.com/blog/why-should-i-use-html5s-new-elements/
 new: http://headspringlabs.com/blog/why-should-i-use-html5s-new-elements/
 
 
-old: http://www.headspring.com/blog/leadership-characteristics-for-a-strong-team/
-new: http://headspringlabs.com/blog/leadership-characteristics-for-a-strong-team/
-
-
-old: http://www.headspring.com/blog/client-retention-get-new-keep-existing/
-new: http://headspringlabs.com/blog/client-retention-get-new-keep-existing/
-
-
 old: http://www.headspring.com/blog/hey-tfs-git-out-of-my-way/
 new: http://headspringlabs.com/blog/hey-tfs-git-out-of-my-way/
-
-
-old: http://www.headspring.com/blog/get-to-know-a-developer-steve-donie/
-new: http://headspringlabs.com/blog/get-to-know-a-developer-steve-donie/
-
-
-old: http://www.headspring.com/blog/account-management-taking-off-the-rosecolored-glasses/
-new: http://headspringlabs.com/blog/account-management-taking-off-the-rosecolored-glasses/
 
 
 old: http://www.headspring.com/blog/an-underscore-templates-primer/
@@ -816,16 +284,8 @@ old: http://www.headspring.com/blog/join-the-polyglots/
 new: http://headspringlabs.com/blog/join-the-polyglots/
 
 
-old: http://www.headspring.com/blog/get-to-know-a-developer-justin-pope/
-new: http://headspringlabs.com/blog/get-to-know-a-developer-justin-pope/
-
-
 old: http://www.headspring.com/blog/customizing-visual-studio-with-external-tools-part-2/
 new: http://headspringlabs.com/blog/customizing-visual-studio-with-external-tools-part-2/
-
-
-old: http://www.headspring.com/blog/get-to-know-a-developer-pedro-reys/
-new: http://headspringlabs.com/blog/get-to-know-a-developer-pedro-reys/
 
 
 old: http://www.headspring.com/blog/early-experiences-with-unit-testing/
@@ -844,72 +304,28 @@ old: http://www.headspring.com/blog/refactoring-pong/
 new: http://headspringlabs.com/blog/refactoring-pong/
 
 
-old: http://www.headspring.com/blog/get-to-know-a-developer-ryan-vice/
-new: http://headspringlabs.com/blog/get-to-know-a-developer-ryan-vice/
-
-
-old: http://www.headspring.com/blog/when-does-a-loyalty-system-do-more-harm-than-good/
-new: http://headspringlabs.com/blog/when-does-a-loyalty-system-do-more-harm-than-good/
-
-
 old: http://www.headspring.com/blog/tostring-or-not-tostring/
 new: http://headspringlabs.com/blog/tostring-or-not-tostring/
-
-
-old: http://www.headspring.com/blog/get-to-know-a-developer-sharon-cichelli/
-new: http://headspringlabs.com/blog/get-to-know-a-developer-sharon-cichelli/
 
 
 old: http://www.headspring.com/blog/technical-debt/
 new: http://headspringlabs.com/blog/technical-debt/
 
 
-old: http://www.headspring.com/blog/get-to-know-a-developer-mahendra-mavani/
-new: http://headspringlabs.com/blog/get-to-know-a-developer-mahendra-mavani/
-
-
 old: http://www.headspring.com/blog/infinite-laziness/
 new: http://headspringlabs.com/blog/infinite-laziness/
-
-
-old: http://www.headspring.com/blog/learning-to-be-a-great-manager/
-new: http://headspringlabs.com/blog/learning-to-be-a-great-manager/
-
-
-old: http://www.headspring.com/blog/get-to-know-a-developer-kurt-schindler/
-new: http://headspringlabs.com/blog/get-to-know-a-developer-kurt-schindler/
 
 
 old: http://www.headspring.com/blog/polaroid-mutation/
 new: http://headspringlabs.com/blog/polaroid-mutation/
 
 
-old: http://www.headspring.com/blog/office-plants-and-employee-productivity/
-new: http://headspringlabs.com/blog/office-plants-and-employee-productivity/
-
-
-old: http://www.headspring.com/blog/get-to-know-a-developer-anne-epstein/
-new: http://headspringlabs.com/blog/get-to-know-a-developer-anne-epstein/
-
-
 old: http://www.headspring.com/blog/clojures-world-view/
 new: http://headspringlabs.com/blog/clojures-world-view/
 
 
-old: http://www.headspring.com/blog/3-redesigns-i-love/
-new: http://headspringlabs.com/blog/3-redesigns-i-love/
-
-
-old: http://www.headspring.com/blog/get-to-know-a-developer-glenn-burnside/
-new: http://headspringlabs.com/blog/get-to-know-a-developer-glenn-burnside/
-
-
 old: http://www.headspring.com/blog/cargo-cult-programming/
 new: http://headspringlabs.com/blog/cargo-cult-programming/
-
-
-old: http://www.headspring.com/blog/reduce-stress-put-down-the-zoloft-and-start-base-jumping/
-new: http://headspringlabs.com/blog/reduce-stress-put-down-the-zoloft-and-start-base-jumping/
 
 
 old: http://www.headspring.com/blog/get-to-know-a-developer-patrick-lioi/
@@ -920,16 +336,8 @@ old: http://www.headspring.com/blog/opening-the-black-box/
 new: http://headspringlabs.com/blog/opening-the-black-box/
 
 
-old: http://www.headspring.com/blog/losing-yourself-in-the-data/
-new: http://headspringlabs.com/blog/losing-yourself-in-the-data/
-
-
 old: http://www.headspring.com/blog/continuous-integration-early-indicators-mean-inexpensive-fixes/
 new: http://headspringlabs.com/blog/continuous-integration-early-indicators-mean-inexpensive-fixes/
-
-
-old: http://www.headspring.com/blog/strategic-planning-writers-block/
-new: http://headspringlabs.com/blog/strategic-planning-writers-block/
 
 
 old: http://www.headspring.com/blog/get-to-know-a-developer-tim-thomas/
@@ -940,52 +348,16 @@ old: http://www.headspring.com/blog/guard-rail-programming/
 new: http://headspringlabs.com/blog/guard-rail-programming/
 
 
-old: http://www.headspring.com/blog/failure-leads-to-success/
-new: http://headspringlabs.com/blog/failure-leads-to-success/
-
-
-old: http://www.headspring.com/blog/best-kept-secret-ms-words-selection-pane-saves-time-reduces-frustration/
-new: http://headspringlabs.com/blog/best-kept-secret-ms-words-selection-pane-saves-time-reduces-frustration/
-
-
-old: http://www.headspring.com/blog/can-you-spare-some-change/
-new: http://headspringlabs.com/blog/can-you-spare-some-change/
-
-
 old: http://www.headspring.com/blog/building-rich-enums/
 new: http://headspringlabs.com/blog/building-rich-enums/
-
-
-old: http://www.headspring.com/blog/a-worthy-opponent/
-new: http://headspringlabs.com/blog/a-worthy-opponent/
-
-
-old: http://www.headspring.com/blog/what-did-the-interrupting-cow-say/
-new: http://headspringlabs.com/blog/what-did-the-interrupting-cow-say/
 
 
 old: http://www.headspring.com/blog/recognizing-covariance-issues-in-your-code/
 new: http://headspringlabs.com/blog/recognizing-covariance-issues-in-your-code/
 
 
-old: http://www.headspring.com/blog/improve-corporate-culture-through-the-disc-test/
-new: http://headspringlabs.com/blog/improve-corporate-culture-through-the-disc-test/
-
-
-old: http://www.headspring.com/blog/tips-on-managing-organizational-change/
-new: http://headspringlabs.com/blog/tips-on-managing-organizational-change/
-
-
 old: http://www.headspring.com/blog/seamless-delegate-type-casting/
 new: http://headspringlabs.com/blog/seamless-delegate-type-casting/
-
-
-old: http://www.headspring.com/blog/how-transparency-builds-trust/
-new: http://headspringlabs.com/blog/how-transparency-builds-trust/
-
-
-old: http://www.headspring.com/blog/reasons-why-people-break-upwith-their-company/
-new: http://headspringlabs.com/blog/reasons-why-people-break-upwith-their-company/
 
 
 old: http://www.headspring.com/blog/seamless-generic-type-casting/
@@ -996,28 +368,8 @@ old: http://www.headspring.com/blog/unit-testing-best-practices-know-your-tests-
 new: http://headspringlabs.com/blog/unit-testing-best-practices-know-your-tests-lifecycle-part-3/
 
 
-old: http://www.headspring.com/blog/4-growth-strategies-for-your-evolving-business/
-new: http://headspringlabs.com/blog/4-growth-strategies-for-your-evolving-business/
-
-
 old: http://www.headspring.com/blog/array-covariance-in-c/
 new: http://headspringlabs.com/blog/array-covariance-in-c/
-
-
-old: http://www.headspring.com/blog/is-an-investment-in-updating-our-software-systems-wise/
-new: http://headspringlabs.com/blog/is-an-investment-in-updating-our-software-systems-wise/
-
-
-old: http://www.headspring.com/blog/why-generation-x-outgrew-the-mullet-and-how-were-preparing-for-the-future/
-new: http://headspringlabs.com/blog/why-generation-x-outgrew-the-mullet-and-how-were-preparing-for-the-future/
-
-
-old: http://www.headspring.com/blog/jeffrey-palermocoo-of-headspring-opens-up-on-pluralcast/
-new: http://headspringlabs.com/blog/jeffrey-palermocoo-of-headspring-opens-up-on-pluralcast/
-
-
-old: http://www.headspring.com/blog/headsprings-first-intern/
-new: http://headspringlabs.com/blog/headsprings-first-intern/
 
 
 old: http://www.headspring.com/blog/you-could-have-invented-lambda-expressions/
@@ -1048,20 +400,8 @@ old: http://www.headspring.com/blog/unit-testing-best-practices-know-your-tests-
 new: http://headspringlabs.com/blog/unit-testing-best-practices-know-your-tests-lifecycle-part-2/
 
 
-old: http://www.headspring.com/blog/youre-doing-your-code-reviews-wrong-2/
-new: http://headspringlabs.com/blog/youre-doing-your-code-reviews-wrong-2/
-
-
 old: http://www.headspring.com/blog/improve-developer-productivity-by-losing-your-mouse/
 new: http://headspringlabs.com/blog/improve-developer-productivity-by-losing-your-mouse/
-
-
-old: http://www.headspring.com/blog/pair-programming-in-agile/
-new: http://headspringlabs.com/blog/pair-programming-in-agile/
-
-
-old: http://www.headspring.com/blog/legacy-operating-systems-and-legacy-languages-if-it-aint-broke-it-still-needs-fixing/
-new: http://headspringlabs.com/blog/legacy-operating-systems-and-legacy-languages-if-it-aint-broke-it-still-needs-fixing/
 
 
 old: http://www.headspring.com/blog/agile-best-practices/
@@ -1132,23 +472,7 @@ old: http://www.headspring.com/blog/creating-a-glimpse-plugin-to-log-sql-generat
 new: http://headspringlabs.com/blog/creating-a-glimpse-plugin-to-log-sql-generated-by-nhibernate/
 
 
-old: http://www.headspring.com/blog/from-programmer-to-manager/
-new: http://headspringlabs.com/blog/from-programmer-to-manager/
-
-
 old: http://www.headspring.com/blog/test-driven-development/
 new: http://headspringlabs.com/blog/test-driven-development/
-
-
-old: http://www.headspring.com/blog/why-my-mom-quit-using-the-computer-when-i-updated-windows/
-new: http://headspringlabs.com/blog/why-my-mom-quit-using-the-computer-when-i-updated-windows/
-
-
-old: http://www.headspring.com/blog/the-top-5-reasons-the-bcs-is-like-your-legacy-system-2/
-new: http://headspringlabs.com/blog/the-top-5-reasons-the-bcs-is-like-your-legacy-system-2/
-
-
-old: http://www.headspring.com/blog/the-top-5-reasons-the-bcs-is-like-your-legacy-system/
-new: http://headspringlabs.com/blog/the-top-5-reasons-the-bcs-is-like-your-legacy-system/
 
 

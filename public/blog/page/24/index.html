@@ -7,7 +7,7 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="I&#8217;ll never understand why it works, but it turns out that generating pseudorandom numbers takes very little code. Consider the following &hellip;">
+	<meta name="description" content="We are all familiar with the basic HomeController in the default ASP.NET MVC project.  We know we can pass values from the controller to the view.  &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -90,30 +90,27 @@
     <article class="post">
 	<h2 class="title">
 		
-		<a href="/blog/public-private-super-private/">
+		<a href="/blog/how-to-add-a-method-to-viewbag-in-asp-net-mvc/">
 		
-			Public, Private, Super-Private</a>
+			How to Add a Method to ViewBag in ASP.NET MVC</a>
 	</h2>
 	<div class="entry-content">
-		<p>I&#8217;ll never understand <em>why</em> it works, but it turns out that generating pseudorandom numbers takes very little code. Consider the following Random class. Given a seed integer to get started, it will produce an apparently-random list of ints as you repeatedly call Next():</p>
-<p><div><script src='https://gist.github.com/2938870.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Easy as pie. Shortest blog post ever.</p>
-<p><strong>*Record Scratch*</strong></p>
-<p>Wait, why is <code>x</code> public? It&#8217;s so wrong, your gut says &#8220;That should be private!&#8221; long before your brain catches up and agrees. The downside, of course, is that the coder using this class can mess with <code>x</code>, and that could have the effect of the algorithm no longer producing a &#8220;fair&#8221; sequence.</p>
-<p>We mark that field private and call it a day. Later, we revisit the class to start adding convenience methods, written in terms of the existing <code>Next()</code> method:</p>
-<p><div><script src='https://gist.github.com/2938877.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>We balked at <code>x</code> being public because more code <em>could</em> mess with it than <em>should</em> mess with it. By marking it public, we were <em>telling</em> the next coder that altering the value of <code>x</code> was something you might want to do <em>from anywhere</em>.</p>
-<p>However, if the person implementing additional methods on this class doesn&#8217;t already know that <code>x</code> is sacred, not to be altered anywhere but within <code>Next()</code>, then marking it private hasn&#8217;t actually helped. We&#8217;re stuck with the same problem: by merely marking it private, we are <em>telling</em> the next coder that altering the value of <code>x</code> is something you might want to do <em>from anywhere within the class</em>.</p>
-<p>That&#8217;s a risk we&#8217;re likely willing to take in practice, but in a perfect world we could further constrain <code>x</code> so that it is only visible to the method that deserves to see it. Consider the following, in which <code>x</code> is promoted from private to super-private:</p>
-<p><div><script src='https://gist.github.com/2938890.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>This produces the same results. Although <code>x</code> is declared local to the constructor, it will still live on after construction because the <code>Next</code> lambda expression &#8220;closes over&#8221; or &#8220;grabs onto&#8221; it. The lambda is even allowed to change it. Think of every lambda expression as being an instance of a class that has fields of its own, and those fields are implied by which local variables we happen to refer to in the lambda&#8217;s body.</p>
-<p>I&#8217;m <em>not</em> recommending that you start obfuscating all of your classes in this fashion. The main point, though, is that once you get comfortable with the idea that lambdas have their own &#8216;super private&#8217; state that lives on for the lambda&#8217;s lifetime, you may find that you just don&#8217;t need as many class-level fields as you used to.</p>
+		<p>We are all familiar with the basic HomeController in the default ASP.NET MVC project.  We know we can pass values from the controller to the view.  Sometimes we are tempted to pass the controller itself to the view so that we can call methods on it.  The view should not have to depend on the controller.  This post provides a way to accomplish this.  For more on ASP.NET MVC, check out my book, <a href="http://bit.ly/aspnetmvc3inaction">ASP.NET MVC 3 in Action</a>.  You can also check out the <a href="http://www.headspring.com/headspring/mvc-boot-camp/" target="_blank">MVC Boot Camp</a> training we offer at <a href="http://www.headspring.com">Headspring</a>.  We start with the HomeController.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2011/07/image2.png"><img style="border: 0px;" alt="image" src="http://www.headspring.com/wp-content/uploads/2011/07/image_thumb2.png" width="530" height="403" border="0" /></a></p>
+<p>We know from just a little reading that the ViewBag property on HomeController is a dynamic object – using the new .Net 4 dynamic capabilities.  Merely setting the Message property on the object creates the property.  It is not completely obvious how to create a new method on the object, though.</p>
+<h1>Usage</h1>
+<p>If I were to want to use a method in my Razor view like this&#8230;</p>
+<div class="csharpcode"><a href="http://www.headspring.com/wp-content/uploads/2011/07/image3.png"><img style="border: 0px;" alt="image" src="http://www.headspring.com/wp-content/uploads/2011/07/image_thumb3.png" width="535" height="274" border="0" /></a></div>
+<p>&#8230; then I would need to figure out how to get the GetCurrentTime() method onto the ViewBag.  The following is the solution to that problem.</p>
+<h1>Solution</h1>
+<p>There are two technical capabilities of C# 4 that provide the ability to accomplish our new method.  The first is that I can create and set any new property on the dynamic object.  The second is actually a feature of .Net 2 – delegates.  I will create a method and then wrap it in a delegate and assign it as a property of ViewBag.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2011/07/image4.png"><img style="border: 0px;" alt="image" src="http://www.headspring.com/wp-content/uploads/2011/07/image_thumb4.png" width="538" height="344" border="0" /></a></p>
+<p>.Net 3.5 brought us the Func&lt;&gt; and the lambda expressions.  These make delegates so much more concise to write and read.  I have now create a method, assigned it to a object and set it as a property on ViewBag.</p>
+<p>The only thing left to do is to dereference the property and invoke it with ().</p>
+<p>For those of you who have been programming for a while, you know that I technically haven’t create a method on the ViewBag object.  That is correct.  We have to think back to why I asked for the method in the first place.</p>
+<h1>Why do we need methods?</h1>
+<p>We need methods in order to retrieve values that are resolved at run time.  For instance, if I need to pass in some view-specific value to my ViewBag for evaluation, I need a method. If you were ever tempted to pass a reference to the controller to the view just to be able to execute a method on a value the controller owned, this is your ticket to accomplishing that.  Because the method/closure/delegate in the controller has full scope access to the controller memory space, the ViewBag now holds the gateway to the controller’s state that is necessary.</p>
+<p><a href="http://www.headspring.com/headspring/mvc-boot-camp/">Check out ASP.NET MVC 4 Bootcamp</a></p>
 
 		
 		
@@ -133,11 +130,11 @@
   
 
 
-<time datetime="2012-06-15T00:00:00-05:00" pubdate data-updated="true">Jun 15<span>th</span>, 2012</time></div>
+<time datetime="2011-07-29T00:00:00-05:00" pubdate data-updated="true">Jul 29<span>th</span>, 2011</time></div>
 	<div class="tags">
 
 
-	<a class='category' href='/blog/categories/developer-deep-dive/'>Developer Deep Dive</a>
+	<a class='category' href='/blog/categories/blog/'>Blog</a>
 
 
 </div>
@@ -149,8 +146,6 @@
     
         <a href="/blog/page/23/" class="prev">Prev</a>
     
-    
-        <a href="/blog/page/25/" class="next">Next</a>
     
     <div class="center"><a href="/blog/archives">Blog Archives</a></div>
 </nav></div>

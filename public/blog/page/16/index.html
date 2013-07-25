@@ -7,7 +7,7 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="Several weeks back, I was customizing xUnit to cut down on ceremony in my tests. When I ran into some trouble, I started looking through the source &hellip;">
+	<meta name="description" content="One of my first successes with refactoring was in a text-mode Pong clone. My parents got Turbo Pascal for my brother and me when I was in middle &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -90,37 +90,18 @@
     <article class="post">
 	<h2 class="title">
 		
-		<a href="/blog/avoid-mutation-by-default/">
+		<a href="/blog/refactoring-pong/">
 		
-			Avoid Mutation by Default</a>
+			Refactoring Pong</a>
 	</h2>
 	<div class="entry-content">
-		<p>Several weeks back, I was <a href="http://www.headspring.com/patrick/low-ceremony-xunit/">customizing xUnit</a> to cut down on ceremony in my tests.  When I ran into some trouble, I started looking through the source code for xUnit, and saw something a little surprising: tests within a test class are executed in a random order.  Sure, tests need to be isolated so that test execution order doesn&#8217;t affect their success or failure, but randomizing within the test runner seemed like overkill.</p>
-<p>If it ever caught an issue, it still wouldn&#8217;t tell me where the problem was, right?  It seemed like it would be better to execute in a deterministic order so that when I <em>do</em> get myself into trouble, it will be reproducible trouble.  Today, though, I was grateful for this behavior.  If you&#8217;re running tests frequently during development, the very fact that your newly-coded tests start failing at random <strong>is</strong> informative: <em>&#8220;What test is wrong?  The one that I just wrote.&#8221;</em></p>
-<h2>A Trivial Yet Broken Class</h2>
-<p>I was working on a routine whose job was to produce a date range after taking into account several business rules.  If none of the rules applied, we wanted to return the range [DateTime.MinValue, DateTime.MaxValue] to indicate &#8220;all the dates we could ever possibly care about&#8221;.  Each business rule could possibly shorten this range, affecting the start, the end, or both.  The overall result was, basically, the range where several other ranges overlapped.  I started by creating a helper class, DateRange, as a glorified pair of DateTimes:</p>
-<p><div><script src='https://gist.github.com/3949963.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>To make it clear to the reader that we were starting with &#8220;all the dates we could ever possibly care about&#8221; and subsequently narrowing that down to the overlapping range, I added a static field:</p>
-<p><div><script src='https://gist.github.com/3949966.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>This field allowed the main algorithm to look something like this:</p>
-<p><div><script src='https://gist.github.com/3950102.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>Do you see the bug?  <strong>The terrible, horrible, no good, very bad bug?</strong>  xUnit did.</p>
-<p>The 3 rules I was applying were involved yet test-friendly, so it was easy to implement several tests to make sure my bases were covered.  All was well, until I got to the seventh test.  It failed with an impossible result.  The dates in the resulting range didn&#8217;t even show up anywhere in my test setup.  Mystified, I ran that test in the debugger.  It passed!  I ran the whole test class a few times, and this one test would pass or fail at random.  This was extremely odd, as the code under test seemed to be clearly deterministic.</p>
-<h2>Excessive Mutation</h2>
-<p>Realizing that xUnit was running my tests in a different order each time helped me to see my mistake.  This implementation of DateRange is mutable, and AllOfTime is static and therefore shared.  AllOfTime is a shared mutable thing whose name suggests an immutable thing.  AllOfTime is lying.</p>
-<p>I had broken my own rule: I make classes immutable by default, making them mutable as soon as being dogmatic starts to hurt.  Instead, I had made this mutable from the start and immediately tripped on my own intellectual shoelaces.  Marking the properties as read-only forced me to rephrase the main logic, but that actually resulted in simplifying everything and ensured that AllOfTime is in fact <em>all</em> of it:</p>
-<p><div><script src='https://gist.github.com/3949968.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-<p>DateRange deserves to be a value just like DateTimes deserve to be values.  You can&#8217;t <em>change</em> 10/24/2012 any more than you can change the number 5. 5 will always be 5, 10/24/2012 will always be 10/24/2012, and the range [10/24/2012, 10/31/2012] will always be the range [10/24/2012, 10/31/2012].</p>
-<p>As a general rule, I avoid mutation.  If I did that everywhere, though, my code would likely become too hard to follow.  As soon as keeping things immutable becomes a larger pain than the pain it solves, I back off and allow mutable state to come into the picture.  Even then, I try to limit the &#8220;footprint&#8221; of that state change.</p>
-<p>Unnecessary mutation makes it too easy to make trivial mistakes.</p>
+		<p>One of my first successes with refactoring was in a text-mode Pong clone.  My parents got <a href="http://en.wikipedia.org/wiki/Turbo_Pascal">Turbo Pascal</a> for my brother and me when I was in middle school.  The first nontrivial thing I made was Pong.  Instead of plotting individual pixels, the screen was drawn with plain text.  An asterisk was the ball, and the paddles were drawn with vertical | bars.</p>
+<p>I was extremely proud of the way the ball would bounce around the screen.  It would detect when the ball hit a side wall or a paddle, changing direction.  At first, the code that handled this collision detection was enormous.  I didn&#8217;t know what I was doing, so every step of the way was very verbose.  I didn&#8217;t quite start out with the right data structure to represent the ball, so every time I wanted to <em>say</em> something about it, I&#8217;d write another awkward function that <em>worked</em> but made things ever-more <em>complicated</em>..</p>
+<p>We&#8217;ve all experienced that feeling on at least one past project.  &quot;This thing is getting away from us, and fast!&quot;</p>
+<p>Every once in a while, I&#8217;d realize that a few lines here or there could be simplfied.  I&#8217;d see that if I made a particular helper function, then the body of my 4-page switch statement could be shortened to 1 page.  I chipped away at the stone, a little bit at a time.  Holy crap, that was fun.</p>
+<p>At one point I realized that if the ball&#8217;s <em>speed</em> in the X and Y directions could be <em>negative</em>, I didn&#8217;t have to track <em>direction</em> as a separate concept via an enum.  After that, all the ball-bouncing code collapsed on its own, as if by magic, down to a few lines.  Best of all, those few lines made sense.  No gargantuan switch statement.  No awkwardly-phrased statements.  <strong>I was finally saying what I meant.</strong></p>
+<p>On real-world software projects, we can&#8217;t allow ourselves to get into the trap of perpetually-refactoring-everything for no good reason.  It is fun and intellectually satisfying, but once you let yourself lose site of where you are <em>headed</em>, you might be introducing some very expensive waste.  Still, you have to weigh the cost of this effort against the cost of <em>not</em> doing it.  <strong>Refactoring while you make forward progress</strong>, and not as an occasional recess from work, may help you to make these decisions more responsibly.</p>
+<p>If you&#8217;re writing Pong, though, just have fun.</p>
 
 		
 		
@@ -140,7 +121,7 @@
   
 
 
-<time datetime="2012-10-25T00:00:00-05:00" pubdate data-updated="true">Oct 25<span>th</span>, 2012</time></div>
+<time datetime="2012-01-13T00:00:00-06:00" pubdate data-updated="true">Jan 13<span>th</span>, 2012</time></div>
 	<div class="tags">
 
 

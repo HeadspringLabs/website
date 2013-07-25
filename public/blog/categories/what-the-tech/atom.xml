@@ -4,7 +4,7 @@
   <title><![CDATA[Category: What the tech? | Headspring Labs]]></title>
   <link href="http://headspringlabs.com/blog/categories/what-the-tech/atom.xml" rel="self"/>
   <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-24T19:08:18-05:00</updated>
+  <updated>2013-07-24T22:47:07-05:00</updated>
   <id>http://headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
@@ -12,208 +12,6 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[Get to Know a Developer: Jose Basilio]]></title>
-    <link href="http://headspringlabs.com/blog/get-to-know-a-developer-jose-basilio/"/>
-    <updated>2013-01-11T00:00:00-06:00</updated>
-    <id>http://headspringlabs.com/blog/get-to-know-a-developer-jose-basilio</id>
-    <content type="html"><![CDATA[<p><img class="alignright size-medium wp-image-6321" alt="Jose Basilio" src="http://www.headspring.com/wp-content/uploads/2013/01/photo-2-e1357940416657-224x300.jpg" width="224" height="300" />This week we welcomed Jose Basilio to the team! Jose currently lives in Houston, but he’s originally from the Dominican Republic. I was so excited to speak with him because he told me that participating in <a href="http://www.headspring.com/mary/headspring-hosts-central-texas-givecamp-to-benefit-10-local-non-profits/" target="_blank">CTX GiveCamp</a> (one of my projects last year) convinced him to look into working for us full time. In fact, Jose was on the TX Kidney Foundation team, which won CTX GiveCamp’s highest honor: the “Meg Ryan Facelift Award for Coolest UI”. I knew he was a winner. Here’s the rest of our conversation:</p>
-
-
-<p>Where did you work, and what did you do before coming to Headspring?</p>
-
-
-<p>I was a senior developer at Dril-Quip, Inc., a manufacturer of oil and gas drilling equipment in Houston. Prior to that, I worked in various roles in application and database administration at Compaq / HP.</p>
-
-
-<p>What or who made you want to work here?</p>
-
-
-<p>Throughout my career, I have worked for companies where software was a cost-center. I wanted the opportunity to work for a company where my efforts directly contribute to the bottom-line. I also wanted work along-size like-minded individuals that have a passion for learning and moving their careers forward. I believe Headspring is that company.</p>
-
-
-<p>What led you to software development?</p>
-
-
-<p>Computers are better than humans at performing repetitive tasks in a fast and consistent manner. I wanted to automate my day-to-day activities as a database admin. This led me to learn scripting languages, and I enjoyed that so much that moved into full-blown development.</p>
-
-
-<p>What did you learn first?</p>
-
-
-<p>I started by learning VBScript to create windows scripts and dynamic web pages back in the day.</p>
-
-
-<p>Do you like teaching?</p>
-
-
-<p>I love teaching and learning new things. The best way to truly learn and become an expert at something is to teach it.  I think that in the process of simplifying a topic in order to teach it to others, we gain clarity of mind and reach those “aha” moments in our understanding of the subject.</p>
-
-
-<p>&nbsp;</p>
-
-
-<p>Want to know more? Tweet <a href="https://twitter.com/jbasilio" target="_blank">@jbasilio</a>.</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Get to Know a Developer: Patrick Abbs]]></title>
-    <link href="http://headspringlabs.com/blog/get-to-know-a-developer-patrick-abbs/"/>
-    <updated>2013-01-08T00:00:00-06:00</updated>
-    <id>http://headspringlabs.com/blog/get-to-know-a-developer-patrick-abbs</id>
-    <content type="html"><![CDATA[<p><img class="alignright size-medium wp-image-6318" title="Patrick Abbs" src="http://www.headspring.com/wp-content/uploads/2013/01/photo-1-e1357685470139-224x300.jpg" alt="Patrick Abbs" width="224" height="300" />This week we welcomed in a New Year and a new consultant to the team: Patrick Abbs.  Patrick is a native Austinite, but just moved back from New York.  He went to NYU for Individualized Study – a new type of customized undergraduate degree program. He explained to me that he chose a focus of study (Game Theory) and developed his own course schedule around it. He had to produce a senior thesis and submit it before a board, similar to the process of obtaining a graduate degree.</p>
-
-
-<p>In school and in the workforce, he found programming knowledge to be very helpful in crunching data for statistical analysis. Eventually, he was led to Headspring. Read more about how that happened:</p>
-
-
-<p><strong>Where did you work, and what did you do before coming to Headspring?</strong></p>
-
-
-<p>My last two jobs were completely different from each other, but Headspring is interestingly kind of a mix between the two.  At the tech startup Tilde, I worked with the LAMP stack (as well as some C# and Python) to create a B-to-B tool for businesses to streamline their back-office processes.  At DRSdigital, I worked directly with new and existing clients to create, customize, and maintain secure data rooms (typically for potential merger and acquisition deals).</p>
-
-
-<p><strong>Are you an expert at anything?</strong></p>
-
-
-<p>I have worked extensively with algorithms geared towards statistical analysis of information sets, and am especially well-acquainted with mixture models (a more specific type of statistical algorithm).  As much as I love statistics algorithms, though, I definitely want to expand my expertise into other areas of programming.  At the moment I'm fascinated with the differences between and advantages of different types of databases, as well as with how compilers work.</p>
-
-
-<p><strong>What led you to software development?</strong></p>
-
-
-<p>The initial appeal of software development for me came from the recognition that once a program has been written to solve a given type of problem once, it can thereafter solve any instance of that problem an endless number of times with incredible efficiency and little effort.  For instance, it might take me two minutes to sort fifty documents according to some ordering criteria manually, versus ten minutes to write a program which executes the same sorting methodology.  However, after I have written such a program I can use it to sort any number of documents any number of times in a matter of milliseconds for each execution, all with the click of a button.  Once I started thinking about software development as something that requires some initial time investment but can save exponentially more time in the long run, I was hooked.</p>
-
-
-<p><strong>What did you learn first?</strong></p>
-
-
-<p>My first introduction to code was as a mathematically-oriented person trying to convey algorithms to software developers for implementation.  The fact that I had no experience with code and the developers I was working with had a limited understanding of math significantly slowed the rate at which theory could be converted to practice, so I decided to try to bridge the gap between our areas of understanding by learning the relatively simple, mathematical language Python.</p>
-
-
-<p><strong>What or who made you want to work here?</strong></p>
-
-
-<p>Headspring is an appealing place to work for me for several reasons.  It is known for having a great and open company culture (which I saw first-hand at the two lunch-and-learns I've attended).  I'm also excited about the fact that the vast majority of the people working there are seasoned, experienced professionals, and as a less experienced developer I really value being able to ask questions and learn from the experience of the people around me.</p>
-
-
-<p>As far as the actual responsibilities of being a Headspring consultant, I really like the fact that the projects are diverse and let me work on a variety of different programming challenges.  Finally, I like the fact that working at Headspring often involves working directly with clients.  I love technology, but regularly interacting with clients is exciting to me.</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Get to Know a Developer: Andrew West]]></title>
-    <link href="http://headspringlabs.com/blog/get-to-know-a-developer-andrew-west/"/>
-    <updated>2012-08-02T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/get-to-know-a-developer-andrew-west</id>
-    <content type="html"><![CDATA[<p><a href="http://www.headspring.com/wp-content/uploads/2012/08/andrew-west.png"><img class="alignright size-medium wp-image-5681" title="andrew west" src="http://www.headspring.com/wp-content/uploads/2012/08/andrew-west-300x300.png" alt="" width="300" height="300" /></a>This week's developer actually started last week: Andrew West, Senior Consultant.  Andrew has been riding the contract train for all kinds of companies for about 10 years.  He's done some server side work for mobile geo-caching apps, developed a bar code app for hazardous waste tracking in the healthcare industry, worked on projects in the financial and academic worlds, and more.  Now, he's happy to give Headspring and our clients his full attention, telling me that he intentionally steered away from other offers because he knew he wanted to work here.  Here's more of our conversation:</p>
-
-
-<p><strong>Are you an expert at anything?</strong></p>
-
-
-<p>I have a lot of experience with C#, ASP.NET MVC, and relational databases, but the learning process never ends.  I’m always looking for ways to improve my skills.</p>
-
-
-<p><strong>Who is on your list of ideal clients to work for or individuals to work with?</strong></p>
-
-
-<p>I’m fascinated by the space industry, so it would be interesting to work with clients in that field.  I’m amazed by things like the Mars Science Laboratory mission.</p>
-
-
-<p><strong>What led you to software development?</strong></p>
-
-
-<p>When I was 9 or 10 years old my parents gave me a toy computer.  It only had 2 kilobytes of RAM and a 16-character display, but I managed to create simple games with it.  Eventually I learned to program the Apple II, TRS-80, and IBM PC.  By the time I was in high school, I knew I wanted a career in software.</p>
-
-
-<p><strong>What did you learn first?</strong></p>
-
-
-<p>I started out learning various dialects of BASIC.  A few years later I learned C++ and x86 assembly language.</p>
-
-
-<p><strong>Do you like teaching?</strong></p>
-
-
-<p>Teaching a room full of people can be intimidating, but it’s still a great experience if you don’t worry too much about being perfect.  I learn a lot when I’m preparing to teach.</p>
-
-
-<p><strong>Where do you begin when learning something new?</strong></p>
-
-
-<p>I still like to read books in hard copy format.  Reading a technical book from cover to cover gives me a broader understanding of a new technology than reading online code examples or documentation.</p>
-
-
-<p>&nbsp;</p>
-
-
-<p>I agree, Andy. Hard copy books for life!  To learn more, tweet: <a href="https://twitter.com/andrewtwest">@andrewtwest</a></p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Get to Know a Developer: Cedric Yao]]></title>
-    <link href="http://headspringlabs.com/blog/get-to-know-a-developer-cedric-yao/"/>
-    <updated>2012-04-19T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/get-to-know-a-developer-cedric-yao</id>
-    <content type="html"><![CDATA[<p><a href="http://www.headspring.com/2012/04/get-to-know-a-developer-cedric-yao/cedric" rel="attachment wp-att-4884"><img class="alignright size-medium wp-image-4884" title="Cedric" src="http://www.headspring.com/wp-content/uploads/2012/04/Cedric-199x300.jpg" alt="" width="199" height="300" /></a>Headspring’s latest new hire is Cedric Yao, Senior Consultant.  We’re really excited to have him on board, and I am super excited to get a fresh addition into this series.</p>
-
-
-<p>Cedric has been in Austin for a few years, and just welcomed his first born son into the family 5 weeks ago!  We talked about Austin, why working here is so much fun, and what we really love about technology.  As it turns out we share a lot of the same interests in bringing together communities through technology.  His experiences are going to be a real help to me with planning and preparation for Headspring’s Central Texas <a href="http://ctxgivecamp.org/">Give Camp</a> in September.</p>
-
-
-<p>Here’s how the rest of our conversation went:</p>
-
-
-<p><strong>Are you an expert at anything?</strong></p>
-
-
-<p>I’m really great at creating tangible systems for internal processes.  This can be really useful to organizations when it comes time to, say, track metrics.  At my last job, I developed an authentication system for web applications, and integrated some ERP systems for order automation.  I think I’m good at this because I tend to approach problem solving visually, with a creative mindset, before getting analytical.</p>
-
-
-<p><strong>Who is on your list of ideal clients to work for or individuals to work with?</strong></p>
-
-
-<p>Coming to Headspring to work with Jimmy and Jeffrey is definitely up there on my list.  I would also really like to work on a project with Apple one day.  I really appreciate their design methodology</p>
-
-
-<p><strong>What led you to software development?</strong></p>
-
-
-<p>When I was in 5<sup>th</sup> grade my teacher had a puzzle closet.  If we solved the puzzles, we would get free days and homework excuses.  I got really good at solving the puzzles and I pretty much never had to do homework.  I think that was the early start of my interest in engineering, and software development stemmed from it as a natural extension of problem solving.  By high school, I found myself using or creating software all the time.</p>
-
-
-<p><strong>Do you like teaching?</strong></p>
-
-
-<p>Yes! Teaching is the best way to study.  It requires me to understand all the levels of details that go into something.  In my opinion, you don’t fully cement an idea until you teach it.</p>
-
-
-<p><strong>Where do begin when learning something new?</strong></p>
-
-
-<p>I study Brazilian Jiu Jitsu, and one of the concepts I’ve realized is that you have to be able to throw yourself into a challenge.  When thrown into a challenge, we immediately begin to imitate the opponent.  After that, we go through a series of experiments until skills become instinctual.  Anything I’m learning I can approach the same way.  Imitate first, experiment and learn.</p>
-
-
-<p><strong>How do you gauge “time well spent”?</strong></p>
-
-
-<p>If I learn or gain mastery, it’s definitely time well spent.  Sometimes that’s not always so easy to see, especially if my results don’t match my expectations.  But if I can learn through my mistakes, then it’s worth it to me.</p>
-
-
-<p>&nbsp;</p>
-
-
-<p>Hiring great developers is something this company has become really good at.  If you need help on the subject, read our <a href="http://www.headspring.com/resources/whitepapers/">How Headspring Hires Developers whitepaper</a> on what has worked for us.</p>
-
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[The confusion around QA: why doesn’t the industry agree?]]></title>
@@ -242,6 +40,280 @@
 
 
 <p>What are your experiences with QA?</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Becoming a Headspringer: Know thy ReSharper]]></title>
+    <link href="http://headspringlabs.com/blog/becoming-a-headspringer-know-thy-resharper/"/>
+    <updated>2012-02-29T00:00:00-06:00</updated>
+    <id>http://headspringlabs.com/blog/becoming-a-headspringer-know-thy-resharper</id>
+    <content type="html"><![CDATA[<p>Since I'm new to Headspring and we are hiring, I thought I would help give an edge to anyone applying and subscribing to our blog. There are many “features” (pun attempted) that make up a Headspringer and I’m hoping my fellow Headspring bloggers will help me verbalize them through the “Becoming a Headspringer” blog series. I will be starting this series with some quick tips on <a href="http://www.jetbrains.com/resharper/">ReSharper</a>. If you do not already have ReSharper or know what it is, immediately after reading this post is as good a time as any to try it out.</p>
+
+
+<p>I was assigned my first development project a few weeks ago and was quickly told my hand reached for the mouse too often by Mr. Justin Pope. If you know me at all, you know that I enjoy shortcuts and dislike the mouse quite a bit. In fact, at my previous job, I removed all of my team members’ mice so they would be forced to learn to navigate with the keyboard for a day. So when  I was told I use the mouse too much, I knew I was going to love it at Headspring and thoroughly enjoy becoming a Headspringer. Shortly after a friendly insult, Mr. Justin Pope gave me a quick crash course in many of the common ReSharper shortcuts and I will share some of those shortcuts with you.</p>
+
+
+<h2>Navigate to a File</h2>
+
+
+<p>ctrl+n (to navigate to specific type) or ctrl+shift+n (to navigate to a specific file or folder)</p>
+
+
+<h2>Highlight within File</h2>
+
+
+<p>ctrl+w (continue pressing w until everything you want highlighted is highlighted)</p>
+
+
+<h2>Safe Delete</h2>
+
+
+<p>alt+del (tells you whether or not it’s safe to delete a method, property, class, etc)</p>
+
+
+<h2>Go to Usages</h2>
+
+
+<p>ctrl+alt+f7 (shows all usages of a particular method, property, class, etc)</p>
+
+
+<h2>Parameter information</h2>
+
+
+<p>ctrl+p (must be just inside parentheses)</p>
+
+
+<h2>Create Constructor</h2>
+
+
+<p>1. alt+insert (not just to insert constructor)</p>
+
+
+<p>2. Select “Constructor” (if you already have fields defined, it will prompt if you want to initialize them)</p>
+
+
+<h2>Introduce Variable</h2>
+
+
+<p>1. Highlight what needs to become a variable</p>
+
+
+<p>2. ctrl+alt+v</p>
+
+
+<h2>Move Variable to Outer Scope</h2>
+
+
+<p>1. Navigate near the variable name</p>
+
+
+<p>2. alt+enter</p>
+
+
+<p>3. Select “Move to outer scope”</p>
+
+
+<h2>Create a New Class or File Based on Another</h2>
+
+
+<p>1. ctrl+n (to navigate to a similar class) or ctrl+shift+n (to navigate to a similar file)</p>
+
+
+<p>2. alt+shift+l (to navigate to the file in the Solution Explorer)</p>
+
+
+<p>3. ctrl+c (to copy)</p>
+
+
+<p>4. ctrl+v (to paste)</p>
+
+
+<p>5. F2 (to rename)</p>
+
+
+<p>6. Enter (to open)</p>
+
+
+<p>7. Start modifying the file</p>
+
+
+<p align="left">The shortcuts above are a small percentage of the shortcuts I found useful, but a good start to becoming a more productive developer. You may also notice that not all of these are specifically ReSharper shortcuts, some of them are Visual Studio or Windows shortcuts. Anyhow, you can <a href="http://www.jetbrains.com/resharper/webhelp/Reference__Keyboard_Shortcuts.html">find a more extensive list of ReSharper shortcuts on the Jetbrains site</a>.</p>
+
+
+<p align="left">As I mentioned above, Headspring is hiring. So if you are interested in being challenged, working with smart people, and being led by a great group of people, <a href="http://www.headspring.com/about-us/careers">apply</a>!</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[I Have Framework Commitment Issues]]></title>
+    <link href="http://headspringlabs.com/blog/i-have-frameworkcommitment-issues/"/>
+    <updated>2012-02-27T00:00:00-06:00</updated>
+    <id>http://headspringlabs.com/blog/i-have-frameworkcommitment-issues</id>
+    <content type="html"><![CDATA[<p>Once upon a time, a problem was identified. Shortly thereafter a solution was found. After all it wasn't a tough problem and the solution was simple. A commercial framework was selected and the solution was implemented. Then it was re-implemented with an open source framework and then rolled back to the commercial framework. Both frameworks were evaluated and the findings revealed both frameworks had the features and functionality to solve the problem within the context of the solution. So what was the reason for indecisiveness?</p>
+
+
+<p>To put it simply, it was a matter of commitment to a license.</p>
+
+
+<p>Many folks in information technology have to evaluate software because there are typically at least two or more software packages that accomplish similar functions. Think about how many content management systems are available. Or how many virtualization solutions you can pick from. How about web servers? Text editors? Operating systems? The list goes on. In the business of software production we are often faced with similar choices. From selecting the programming languages to build tools, from source control to the integrated development environment (IDE), we are constantly tasked with evaluating things and selecting them. We make choices all the time.</p>
+
+
+<p>In an ideal world, all the decisions would be as simple as picking the right tool for the job. That's where it starts. We start picking the tool for the job. It's not a hard thing to do. You eliminate the tools that don't work at all. Then you exclude those that only solve part of the problem. You may find yourself with no remaining choices and this complicates things. But generally, you find a few tools that work well. It should be easy to just pick one. Right? A coin toss or a random drawing may seem to be all that is needed. But the fact is - in the real world it's not that simple.</p>
+
+
+<p>Frameworks and software have licenses and the licenses have implications... and that's when you realize, "I have framework commitment issues". How do you overcome these issues when selecting frameworks? It's not always easy, but by asking a few questions the selection can become more apparent.</p>
+
+
+<p><strong>How is the framework supported?</strong></p>
+
+
+<p>When things go wrong and you need help, who will be there to help fix the problem? Will you have to fix it yourself?</p>
+
+
+<p>Most open source software support is provided by the community. The community includes you. So aside from yourself, no one is under any obligation to help you. This means you should have the ability and resources to fix the problem.</p>
+
+
+<p>Commercially licensed frameworks on the other hand usually offer some type of incident support.</p>
+
+
+<p>At the end of the day, it falls on you to make sure your solution works and meets expectations. Neither types of licenses free you from this.</p>
+
+
+<p><strong>Is the framework proven?</strong></p>
+
+
+<p>Who is using it and what do they have riding on it? Do some homework and ask around. There are many great commercial and open source frameworks.</p>
+
+
+<p>If you have a lot riding on the framework you are about to select, you may want to conservatively go with a framework that is tried and true. It's a safe bet until you use it in a way that has never been used before, but those situations are rare.</p>
+
+
+<p>Sometimes, there won't be a tried and true framework available. You should still ask around. It is rare to find yourself in a position where you are attempting something completely new that is not even remotely similar to another problem.</p>
+
+
+<p>While your problem and solution may be unique, it does not imply that there no other problems or solutions that share similar traits.</p>
+
+
+<p><strong>What resources are available to help you use the framework?</strong></p>
+
+
+<p>Is there a book? A user group? A conference? Does anyone offer a training course or certification program? How good is the online documentation? Don't forget to look for a bundled help file.</p>
+
+
+<p><strong>What does the framework cost? The total cost?</strong></p>
+
+
+<p>Yes. Commercial software licenses are not free. Some get really expensive. But don't let this deter you from purchasing it.</p>
+
+
+<p>Open source software is free. Sort of. Think about what it may cost to support it in the event you can't find any community help.</p>
+
+
+<p>For either type of license, you are likely to incur cost related to learning the framework. Whether it is a developer's time while they research it on the Internet or an intense multi-day certification course, expect to incur some direct and/or indirect cost.</p>
+
+
+<p>Risk is inevitable. You can minimize this risk by using tried and true frameworks.</p>
+
+
+<p><strong>Should I build my own?</strong></p>
+
+
+<p>This is the most expensive and riskiest option. Let me state that one more time for good measure...</p>
+
+
+<p>This is the most expensive and riskiest option. Sure you won't have to worry about a license fee. You can also be certain you will be the one to support it (even if you open source it). Books, training, events, certifications, and similar resources won't exist unless you make them (or you open source it and even then it’s not guaranteed).</p>
+
+
+<p>Avoid rolling your own.</p>
+
+
+<p><strong>How do I make the commitment?</strong></p>
+
+
+<p>Pick a framework. As a rule of thumb pick a framework that meets your needs the best (even if it has a significant commercial license fee). If you have few good ones to choose from, consider the questions discussed. If you still can't decide... flip a coin.</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Joining the Dark Side: Learning to Code with Grace and Dignity]]></title>
+    <link href="http://headspringlabs.com/blog/joining-the-dark-side-learning-to-code-with-grace-and-dignity/"/>
+    <updated>2012-01-17T00:00:00-06:00</updated>
+    <id>http://headspringlabs.com/blog/joining-the-dark-side-learning-to-code-with-grace-and-dignity</id>
+    <content type="html"><![CDATA[<p>Upon the suggestion of a coworker I joined 342,787 people (and counting) with a 2012 resolution to learn how to code.  It’s called <a href="http://codeyear.com/">CodeYear</a>, presented by <a href="http://www.codecademy.com/#!/exercises/0">CodeAcademy</a>, supported by companies like YCombinator, and made viral by the addition of my fellow student, <a href="http://mashable.com/2012/01/05/bloomberg-codecademy/">Michael Bloomberg</a>.   It’s a very simple, learn as you go platform, with big clean buttons and “dumbed down” explanations for the average Joe (or Jill).  I get an email every Monday with a new lesson to work on for the week.  As I progress, I earn badges and bragging rights to publish on Facebook and Twitter.</p>
+
+
+<p>There are a number of courses and levels to choose from, and I have just completed the first one, “Getting Started with Programming”.  After creating an account, I can sign in and access courses that I am working on and track my progress.</p>
+
+
+<p>Here are a couple screen shots which demonstrate the clean design and learning module:</p>
+
+
+<p style="text-align: center;"><a href="http://www.headspring.com/2012/01/joining-the-dark-side-learning-to-code-with-grace-and-dignity/code-academy-courses1-2" rel="attachment wp-att-3178"><img class="aligncenter size-large wp-image-3178" title="code academy courses1" src="http://www.headspring.com/wp-content/uploads/2012/01/code-academy-courses11-1024x554.png" alt="" width="614" height="332" /></a><a href="http://www.headspring.com/2012/01/joining-the-dark-side-learning-to-code-with-grace-and-dignity/code-academy-lesson1" rel="attachment wp-att-3155"><img class="aligncenter size-large wp-image-3155" title="code academy lesson1" src="http://www.headspring.com/wp-content/uploads/2012/01/code-academy-lesson1-1024x554.png" alt="" width="819" height="443" /></a></p>
+
+
+<p>Now, let me take the time to clearly state that <strong>I have absolutely no intention of becoming a programmer</strong>. If I wanted to be a programmer, there are plenty of resources out there for entering a career in programming, all of which existed long before CodeAcademy came along.  What attracts me to this particular platform is that it is built specifically for non-technical people to learn how to think like a technical person when needed.</p>
+
+
+<p>I can already tell this is going to be a very beneficial process for me.</p>
+
+
+<p>I am surrounded by developers at work and at home, and I have found that they are a unique breed of communicators.  You see, in marketing, we care about the ideas, elaborating on them, and we don’t care much for the process of getting from A to B.</p>
+
+
+<p><strong>Conversely, developers (good ones) care about the process just as much as they care about the conclusion</strong>.  Words, steps, and systems are really important to them.  They think the way code looks!  If a statement at the top of a string of code does not compute correctly, then the statement at the bottom of the string of code cannot compute either, <em>even if</em> that second statement is true.  Let me demonstrate with a snippet from Lesson 8 of “Getting Started with Programming”:</p>
+
+
+<p style="text-align: center;">The while loop defined in the editor code won't ever run because its condition, times <code>&gt;</code> 0 <code>&amp;&amp;</code>times <code>&lt;</code> 3, is never true since times <code>=</code> 0 and the two conditions 0 <code>&gt;</code> 0 <code>&amp;&amp;</code> 0 <code>&lt;</code> 3 evaluates tofalse.</p>
+
+
+<p style="text-align: center;">If the conditions of the loop aren't met, the code will be skipped entirely.</p>
+
+
+<p>Does this read like a familiar scenario? Now that I have been exposed to the process of coding, I am starting to notice the similarities between speaking to a developer and reading what a developer creates.</p>
+
+
+<p>And the benefits don’t stop with enhanced communication.  I’m looking forward to being a more versatile teammate, not having to ask so many questions, and the possibility of using code to make my daily tasks easier.</p>
+
+
+<p>But don’t take my word for it.  There are plenty of helpful blogs out there that detail the benefits of learning to code, like this one: <a href="http://www.giftrocket.com/why-marketing-bd-should-learn-to-code">10 Reasons Why Marketing and BD Professionals Should Learn to Code</a>.</p>
+
+
+<p>So if you have ever considered learning how to code, I encourage you to visit <a href="http://codeyear.com/">CodeYear.com</a>, or follow the <a href="https://twitter.com/#!/search/%23codeyear">#codeyear</a> trending topic on Twitter (follow <a href="https://twitter.com/#!/headspring">@headspring</a> while you're there).</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Technical Debt: How Much Interest Are You Willing to Pay?]]></title>
+    <link href="http://headspringlabs.com/blog/technical-debt/"/>
+    <updated>2012-01-03T00:00:00-06:00</updated>
+    <id>http://headspringlabs.com/blog/technical-debt</id>
+    <content type="html"><![CDATA[<p>In a perfect world, you build a product that runs smoothly and effortlessly forever.  It is instantly popular, and is built in such a way that it provides a uniform experience no matter whom or how many gravitate towards it.  Users love it just the way it is, and are pleasantly surprised by each new feature or version. Nothing goes wrong, so this product does not require support staff or maintenance of any kind.  You hire a few developers to add new features here and there, and these employees are completely content to stay in one position at your company forever and ever amen.</p>
+
+
+<p>However, this is not a perfect world.  Your users are real people, all with varying skill levels, intellect, hardware, expectations, moods, etc.  Same goes for the staff you hire to support the product and develop new features.  Ahh… the human factor.</p>
+
+
+<p>And then maybe you experience an error or two. Maybe the server shuts down. Maybe your new versions aren’t always compatible. If you’re really lucky, maybe you get hacked. Oh joy!</p>
+
+
+<p>So, you code.  You code something that will fix the problem.  You code something to patch over what you are dealing with so you don’t have to deal with it again.  Each time you duct tape over a problem with code, it’s as if you have charged the problem to your technical credit card.</p>
+
+
+<p>The correlation between technical complexity and debt was first proposed by<a href="http://en.wikipedia.org/wiki/Ward_Cunningham"> </a><a href="http://en.wikipedia.org/wiki/Technical_debt">Ward Cunningham</a> in 1992.  Basically, technical debt is the result of trying to fix problems too quickly, without regard for long term consequences.  In my opinion, this nasty cycle stems from our culture of instant gratification.  Software organizations want to fix problems quickly because they don’t want to lose impatient end users. “Fix it; I don’t care how.”</p>
+
+
+<p>User experience is your most important priority; you don’t want to tinker around with too many questions while the server is down.  However, keep in mind that quick fixes accrue interest.  Piecing a whole system together with quick remedies as you go along is a lot like only paying the minimum payment on your balance. Sometimes, a little bit of debt is okay, as long as you are willing to pay the monthly balance back in full. What I mean by that is you will need to look at the problem in terms of the big picture eventually.</p>
+
+
+<p>You have to be willing to roll your sleeves up and pull out the engine at some point.  The root of the problem is in there somewhere.  Take a little bit time up front.  When you can, pay for solutions with cash instead of credit.  This means investing your <em>time</em> in looking at how the problem affects the whole system.</p>
+
+
+<p>How does your organization highlight technical debt so you can go back and deal with it?</p>
 
 ]]></content>
   </entry>

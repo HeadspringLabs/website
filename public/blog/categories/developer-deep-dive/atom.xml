@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Developer Deep Dive | Headspring Labs]]></title>
   <link href="http://headspringlabs.com/blog/categories/developer-deep-dive/atom.xml" rel="self"/>
   <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-24T19:08:18-05:00</updated>
+  <updated>2013-07-24T22:47:07-05:00</updated>
   <id>http://headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
@@ -14,379 +14,328 @@
 
   
   <entry>
-    <title type="html"><![CDATA[By Your Command (Line)]]></title>
-    <link href="http://headspringlabs.com/blog/by-your-command-line/"/>
-    <updated>2013-07-12T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/by-your-command-line</id>
-    <content type="html"><![CDATA[<p>Last week, we saw an example of <a href="http://www.headspring.com/dynamic-test-discovery/">Dynamic Test Discovery</a> in Fixie, in which the test runner can be made to run a different set of tests each time, depending on context. A Fixie convention could make decisions based on how the test run was initiated. This week, I'll demonstrate a similar feature which takes advantage of yet more context.  For this example, our convention will get to make decisions based on the command line arguments used to kick off the test run.</p>
+    <title type="html"><![CDATA[Disabling language changes in Visual Studio]]></title>
+    <link href="http://headspringlabs.com/blog/disabling-language-changes-in-visual-studio/"/>
+    <updated>2013-04-12T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/disabling-language-changes-in-visual-studio</id>
+    <content type="html"><![CDATA[<p>On a recent project I used a workstation given to me by the client. It was typical "big enterprise" setup with support for multiple languages. I discovered there's a keyboard shortcut "Ctrl+Space" for changing your language that I would keep accidentally activating in Visual Studio. This post explains how to disable that.</p>
 
 
-<!--more-->
-
-
-<blockquote><p>Today's code sample works against <a href="http://nuget.org/packages/Fixie/0.0.1.70">Fixie 0.0.1.70</a>. The customization API is in its infancy, and is likely to change in the coming weeks.</p></blockquote>
-
-
-<p>Before this build, Fixie.Console.exe treated <em>all</em> of its arguments as paths to test assembly files. As of Fixie 0.0.1.70, you can also specify arbitrary key/value pairs on the command line:</p>
-
-
-<p><div><script src='https://gist.github.com/5981304.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-
-
-<p>The console runner converts the named arguments into an ILookup&lt;string, string&gt;.  ILookup objects are similar to a dictionary, except that each key can hold any number of values instead of just one.</p>
-
-
-<p>Let's take advantage of this ILookup collection in order to implement NUnit-like categories. Consider a test class with several tests, some of which have been categorized with attributes:</p>
-
-
-<p><div><script src='https://gist.github.com/5972309.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-
-
-<p>Fixie has no idea what these category attributes mean, and it has no idea what any of the command line key/value pairs mean. Fixie's responsibility in the matter is simply to pass the ILookup along so that your custom conventions can make use of them however you see fit. Along with test classes like CategorizedTests, my test assembly contains my own category attributes:</p>
-
-
-<p><div><script src='https://gist.github.com/5972294.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-
-
-<p>Beside these category types, we define a custom convention to take advantage of them:</p>
-
-
-<p><div><script src='https://gist.github.com/5972318.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-
-
-<p>As we saw last week, our convention class can optionally accept a RunContext in its constructor. Now, this RunContext includes the ILookup of command line arguments. This convention says that a method in a test class should be treated as a runnable test case when a) no categories have been requested or b) categories have been requested and the method in question has at least one matching category attribute.</p>
-
-
-<p>Let's run our tests a few times, with different command line arguments:</p>
-
-
-<p><div><script src='https://gist.github.com/5972353.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-
-
-<blockquote><p>Oh, dear. When creating this demo project, I discovered a bug with the way the assembly path arguments are treated. If you use relative file paths, Fixie will fail to find them, and will produce a completely useless error message. It incorrectly alters the current directory <em>before</em> resolving the paths. That's easy to fix, but if you try this demo out yourself against this build, be sure to use an absolute path like the example above. Yay for dogfooding!</p></blockquote>
-
-
-<p>Ushering arbitrary key/value pairs from the command line to your custom conventions is a very <em>small</em> feature, but one that opens up an important door for open-ended customization.</p>
+<ul>
+<li>Go to the control panel.</li>
+<li>Choose "Region and Language".</li>
+<li>Click the "Keyboard and Layout" tab.</li>
+<li>Click on "Change Keyboards".</li>
+<li>Click on "Advanced Key Settings".</li>
+<li>Look over the list of sequences, ensure they are all set to "none" for keyboard activation.</li>
+</ul>
 
 ]]></content>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Dynamic Test Discovery]]></title>
-    <link href="http://headspringlabs.com/blog/dynamic-test-discovery/"/>
-    <updated>2013-07-05T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/dynamic-test-discovery</id>
-    <content type="html"><![CDATA[<p>Recently I received feature requests for <a href="http://plioi.github.io/fixie">Fixie</a> that initially proved difficult. I was tempted to engage in a vague refactoring effort until it became more clear how to proceed. Of course, giving in to that temptation would have proven wasteful. I might have achieved some degree of subjective cleanliness while getting no closer to actually solving the problems I faced.</p>
+    <title type="html"><![CDATA[MVC Custom Unobtrusive Validator Attribute (Date Range Validation)]]></title>
+    <link href="http://headspringlabs.com/blog/mvc-custom-unobtrusive-validator-attribute-date-range-validation/"/>
+    <updated>2013-03-19T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/mvc-custom-unobtrusive-validator-attribute-date-range-validation</id>
+    <content type="html"><![CDATA[<p>There are some useful attributes in MVC that help render dynamic unobtrusive validation to the browser.   The more you can accomplish by simply adding an attribute to a property on a view model the less duplication of JavaScript you have to manage.  Out of the “MVC” box validation for date ranges would require custom JavaScript.  If you have multiple pages that all need to validate ranges, either from the current date or from another date property on your view model, how about having an attribute that you can use to handles this?</p>
 
 
-<p>Instead, I moved Fixie's design forward by selecting one of the feature requests as a specific goal. I let the feature tell me where the current design was lacking, which suggested a simple improvement. The more often I focus on concrete features, the faster Fixie's design will approach what it needs to be. You don't stop feature development in order to engage in open-ended refactoring. Rather, refactoring is what we should do <em>throughout</em> feature development.</p>
+<p>In this blog I’m going to cover:</p>
 
 
-<p>The first of these initially-tricky features was to imitate <a href="http://www.nunit.org/index.php?p=explicit&r=2.6.2">NUnit's [Explicit] attribute</a>. Let's say you want to mark one of your tests so that it will only run when it is explicitly selected to run. Under normal runs of your test suite, these "explicit" tests should be ignored. When you run one specifically, though, <em>only</em> that test is run.</p>
+<ul>
+<li>Creating a Custom MVC Validation Attribute</li>
+<li>Creating a  Client Validation Rule</li>
+<li>Creating and wiring up the unobtrusive JavaScript to do the validation</li>
+</ul>
 
 
-<p>Supporting explicit tests is a matter of customizing test <em>discovery</em>. All the examples of test discovery I've written about so far have been <em>static</em>: a method is determined to be a test or not based on the method definition alone. Explicit tests, on the other hand, demonstrate the need for <em>dynamic</em> test discovery rules: sometimes an explicit method is a test, sometimes it isn't, and the decision has to be made based on the runtime context we're executing under.</p>
+<p>First to create a validation Attribute you need to inherit from the <strong>ValidationAttribute</strong>.  To make this validation available on the client you need to implement the <strong>IClientValidatable</strong> interface.  The <strong>ValidationAttribute</strong> is where you define the settable properties that can be used by the View Model.  To handle the validation server side you can override the <strong>IsValid</strong> method to execute your validation logic.  The <strong>IClientValidatable</strong> interface exposes the <strong>GetClientValidationRules</strong> method.  The validation rules are parameters that will be provided to your JavaScript as an array.  The <strong>ModelClientValidationRule </strong>is where you define the Rules/Settings that the <strong>ValidationAttribute</strong> will provide based upon what was supplied when the attribute was applied to a property on a View Model.</p>
 
 
-<h2>A Convention for Explicit Tests</h2>
+<p>Lets look at some code before we go to far.</p>
 
 
-<blockquote><p>Today’s code sample works against <a href="http://nuget.org/packages/Fixie/0.0.1.65">Fixie 0.0.1.65</a>. The customization API is in its infancy, and is likely to change in the coming weeks.</p>
-</blockquote>
-
-
-<p>Consider a test class containing an explicit test:</p>
-
-
-<p><div><script src='https://gist.github.com/5931115.js'></script>
+<p><div><script src='https://gist.github.com/5200208.js'></script>
 <noscript><pre><code></code></pre></noscript></div>
 </p>
 
 
-<p>Out of the box, Fixie has no idea what [Explicit] means. To support it, we have to define the attribute as well as a custom convention to use it:</p>
+<p>The <strong>DataComparerAttribute</strong> exposes the properties that will be used when the attribute is applied to a property on a View Model.  Notice that the <strong>ModelClientValidationRangeDateRule</strong> exposes the same properties and maps to the validation attribute.  This type is created in the <strong>GetClientValidationRules</strong> method which creates the <strong>ValidationParameters</strong> that will be passed to the Client JavaScript validation method.  Now we have enough to implement the server side <strong>IsValid</strong> method and the client side JavaScript to handle the unobtrusive validation.</p>
 
 
-<p><div><script src='https://gist.github.com/5931118.js'></script>
+<p>With the attribute defined the JavaScript can be created.  The client JavaScript function is linked through the <strong>ModelClientValidationRule.ValidationType</strong> string property.  In this validator the <strong>ValidationType</strong> was set to <em>“rangeDate”</em>.  This value is what we will use to add to the JQuery validator.  There are two JQuery validator concepts we need to link to the magic string <em>“rangeDate”</em> .  The <strong>$.validator.unobtrusive.adapters </strong>which is where MVC will supply the View Model rules from the <strong>GetClientValidationRules</strong> method and the <strong>$.validator.addMethod </strong>which is where the actual JavaScript validation function is defined.</p>
+
+
+<p><div><script src='https://gist.github.com/5205136.js'></script>
 <noscript><pre><code></code></pre></noscript></div>
 </p>
 
 
-<p>In this example, we're identifying explicit tests with an attribute. We could have just as easily used some other rule for determining which tests are explicit. Perhaps we could see whether the method in question lives in a special *.Explicit namespace, or follows some test naming convention. Attributes seem fine here, though, since explicit tests are rare and should stand out as having a special purpose.</p>
+<p>Notice the signature of the <strong>$.validator.unobtrusive.adapters </strong>(line 4).  This is where the same array defined in the <strong>ModelClientValidationRangeDateRule.ValidationParameters</strong> lines up to the client code.  MVC will expect the C# and JavaScript to match.  Notice the date format being used to supply the <em>“minDate”</em> and <em>“maxDate”</em>.  Since date formatting can be complicated having the server side format match the client side format helps to make the validation more predictable.</p>
 
 
-<p>When Fixie searches for test methods, it will use the conditions we specify in the convention. In this case, we inspect each method for an [Explicit] attribute <em>and we consider the context in which we're running</em>. We are saying that a method in a test class is a test method if a) it is not [Explicit] or b) it is the sole target of execution.</p>
+<p>With the attribute complete now we can apply it to our View Model and see it in action.  This validator is designed to do validation based upon a Max Date and a Min Date.  For Min and Max the choices are either a sibling property on the View Model (MinDateSelector and MaxDateSelector) or an interval from DateTime.Now (MinDateAddDaysFromNow, MaxDateAddDaysFromNow).  The *DateSelector will be used to get the current value from the property on the View Model.  When the server side <strong>IsValid</strong> is executed Reflection is used to get the property value.  When the client side JavaScript is executed JQuery is used to get the value from a HTML element on the browser.</p>
 
 
-<h2>Driving Design with Features</h2>
+<p><div><script src='https://gist.github.com/5205378.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 
 
-<p>When I first attempted to write an example of explicit tests, I didn't yet have access to any such runtime context. I couldn't phrase the if-statement because that line of code had no information about how the test execution was kicked off. This stumbling block motivated a simple design change: if a convention accepts a RunContext in its constructor, Fixie will pass in that context. Conventions are no longer limited to static decision making.</p>
+<p>In the above usage of the attribute the BirthDate must be from January 1st 2013 through the current Date and Time the validation is executed.</p>
 
 
-<p>I'm glad I didn't give in to the temptation to refactor without a specific feature in mind. Only when I picked a feature and seriously thought about what was missing did I realize how simple the solution would be.</p>
+<h3>Summary</h3>
 
 
-<p>The effect is similar to TDD.  TDD doesn't magically create your design for you, but selecting the next test to write focuses your attention on something concrete while giving you a definition of success and an opportunity to improve your design by a small amount.  Similarly, tackling features one at a time doesn't magically create your design for you, but selecting the next feature focuses your attention on something concrete while giving you a larger-scale definition of success and a larger opportunity to improve your design.</p>
+<p>Adding custom validation to MVC is useful in reducing duplication of code.  As you can see it’s not all that complicated to do.  The validation methods for server side and client side validation risk having different logic and need to use different mechanisms to get property values.  Reflection and JQuery make this easy enough but there are still gotchas that need to be considered.  When your using JQuery to select a value on a page you need to make sure your selector is unique.  If in our case we have more than one View Model loaded on the page the JQuery Selector could return another html elements value.  I hope this gets you started and can open up some new possibilities for validation.</p>
+
+
+<p>To see the full example and source code go to <a title="https://github.com/jdmgomoo/MVC-CustomAttributes" href="https://github.com/jdmgomoo/MVC-CustomAttributes">https://github.com/jdmgomoo/MVC-CustomAttributes</a></p>
 
 ]]></content>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[When Writing C#, Use C#]]></title>
-    <link href="http://headspringlabs.com/blog/when-writing-c-use-c/"/>
-    <updated>2013-06-26T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/when-writing-c-use-c</id>
-    <content type="html"><![CDATA[<p>Recently, Jimmy Bogard described several <a href="http://lostechies.com/jimmybogard/2013/06/18/strategies-for-isolating-the-database-in-tests/">strategies for isolating a database in tests</a>.  Today, we'll see how one of these strategies can be implemented.  We'll start with a common implementation under NUnit, then we'll identify some issues with that implementation, and lastly we'll translate it into a Fixie convention to address those issues.</p>
+    <title type="html"><![CDATA[Creating Windows Installers with the WiX Toolset - Summary]]></title>
+    <link href="http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-summary/"/>
+    <updated>2013-03-15T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-summary</id>
+    <content type="html"><![CDATA[<address>This article is part of a series exploring how to create installers for Windows software.  Here's the complete contents of the series.</address>
 
 
-<blockquote><p>Today’s code samples work against <a href="http://nuget.org/packages/Fixie/0.0.1.63">Fixie 0.0.1.63</a>. The customization API is in its infancy, and is likely to change in the coming weeks.</p></blockquote>
+<address><a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-01/">Part 1 – What Kinds of Software Projects Benefit From an Installer?</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-02/">Part 2 – An Overview Of Windows Installer and its Features</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-03/">Part 3 – Tooling Options for Building Installers</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-04/">Part 4 – The Windows Installer Runtime Sequence</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-5/">Part 5 – The Contents of an MSI</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-6/">Part 6 – The Structure of a WiX File</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-7/">Part 7 – Generating an MSI Package From Your WiX</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-8/">Part 8 – Troubleshooting Installer Runtime Problems</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-summary/">Part 9 - Summary</a><br />
+</address>
 
 
-<h2>Transactions Under NUnit</h2>
+<p><br/></p>
 
 
-<p>One of the strategies from Jimmy's post involves starting up a transaction before a test and rolling back that transaction at the end of the test.  If we're using NUnit, a common technique is to stow this concept away in a test fixture base class like so:</p>
+<h2>Summing It All Up</h2>
 
 
-<p><div><script src='https://gist.github.com/5864032.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
+<p>We've covered a lot of ground over this series. We've talked about what kind of projects benefit from having an installer and why you should consider making one. We've learned what Windows Installer actually is (a feature of the Windows operating system) and what some of the tooling options for creating installers are. We've explored the sequence of events that occur when installing a package as well as the contents of an actual MSI package. We've dived into the basic structure of a WiX file and how an understanding of the Windows Installer concepts makes authoring WiX files easier. Coming full circle, we've created an installer package from WiX source with the WiX tooling.</p>
 
 
-<p>Our integration tests can inherit this base class, allowing each test to run in isolation.  Each test gets to work against the same state.</p>
+<p>There's certainly a lot left we could discuss: automatic file harvesting, custom actions, etc. However I haven't had much feedback on the series up to this point: Windows Installer is a niche topic in software development, especially with the rise of the web. I'm thinking about moving on to other topics.</p>
 
 
-<p>This approach has a few problems.</p>
+<h2>Last Call...</h2>
 
 
-<p>First, we've got a bit of a temporal coupling issue: this works because we trust that SetUp() and TearDown() will be called in a particular order. Ok, so it's not an example of temporal coupling gone horribly wrong - NUnit <em>will</em> call them in the right order. Still, it's a bit of a code smell in that it motivates us to explicitly call Dispose(), despite the fact that C# already has a keyword ("using") devoted to automating that call safely. NUnit's lifecycle attributes are like a mini language built on top of C#, and <strong>we're writing this code in NUnit-the-language instead of writing it in C#</strong>.</p>
-
-
-<p>Second, relying on [SetUp] and [TearDown] in a base class can get a little ugly when the child test class also needs to have a [SetUp] or [TearDown], as we saw in <a href="http://www.headspring.com/dry-test-inheritance/">DRY Test Inheritance</a>.  Should we mark these methods <code>virtual</code> so child classes don't have to come up with new names for their own [SetUp]s and [TearDown]s? If child classes override them, they could easily forget to call base.SetUp() and base.TearDown(). Even if they remember to, that's more boilerplate than feels necessary.</p>
-
-
-<p><strong>Yikes. I just wanted to wrap my tests in transactions. Let's do that instead.</strong></p>
-
-
-<h2>Transactions Under Fixie</h2>
-
-
-<p>As I've demonstrated in recent weeks, Fixie conventions allow you to describe test <em>discovery</em> as well as test<em>execution</em>. In this case, we'll stick with the simple style of test discovery that Fixie uses by default, but we'll also augment test execution with a transaction:</p>
-
-
-<p><div><script src='https://gist.github.com/5864039.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-
-
-<p>The Fixtures and Cases code resembles what Fixie offers in its DefaultConvention.  Like the DefaultConvention, we also get one instance of the test class for each test being executed.  The relevant bit is the last section:</p>
-
-
-<p><div><script src='https://gist.github.com/5864050.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-
-
-<p>Here, we are saying that the normal behavior for each test class instance ("run the test") should be wrapped in a new TransactionScope. In other words, "within a transaction, proceed with the test execution".</p>
-
-
-<blockquote><p>This part of the API deserves more attention. Better names for each concept could make it more clear what's going on with this 'innerBehavior'. It works, but it's still too wordy.</p></blockquote>
-
-
-<p>I've been focusing lately on supporting this notion of <em>wrapping</em> the built-in behavior with a short code snippet, instead of NUnit's separate Before/After approach, because it offers more degrees of freedom: a wrapping action can do extra work before, after, around, or even <em>instead of</em> the built-in behavior. A nice little bonus is that we get to write our C# in C#: the code that cares about transactions is now as small as can be and resembles the way you would use a TransactionScope in the code-under-test.</p>
+<p>Is there something you want to know that I haven't covered yet? This is the time to leave feedback in the comments if you want to see more articles in this series. Thanks for reading with me!</p>
 
 ]]></content>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Streamlined Integration Tests]]></title>
-    <link href="http://headspringlabs.com/blog/streamlined-integration-tests/"/>
-    <updated>2013-06-20T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/streamlined-integration-tests</id>
-    <content type="html"><![CDATA[<p>Last week, we saw how <a href="http://plioi.github.io/fixie/">Fixie</a> can be used to <a href="http://www.headspring.com/dry-test-inheritance/">simplify NUnit's treatment of inheritance</a>.  This week, we'll see how to use it to streamline integration tests in systems that leverage IoC containers.</p>
+    <title type="html"><![CDATA[Creating Windows Installers with the WiX Toolset Part 8]]></title>
+    <link href="http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-8/"/>
+    <updated>2013-03-15T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-8</id>
+    <content type="html"><![CDATA[<address>This article is part of a series exploring how to create installers for Windows software.  Here's the complete contents of the series.</address>
 
 
-<blockquote><p>Today's code samples work against <a href="http://nuget.org/packages/Fixie/0.0.1.62">Fixie 0.0.1.62</a>. The customization API is in its infancy, and is likely to change in the coming weeks.</p></blockquote>
+<address><a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-01/">Part 1 – What Kinds of Software Projects Benefit From an Installer?</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-02/">Part 2 – An Overview Of Windows Installer and its Features</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-03/">Part 3 – Tooling Options for Building Installers</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-04/">Part 4 – The Windows Installer Runtime Sequence</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-5/">Part 5 – The Contents of an MSI</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-6/">Part 6 – The Structure of a WiX File</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-7/">Part 7 – Generating an MSI Package From Your WiX</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-8/">Part 8 – Troubleshooting Installer Runtime Problems</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-summary/">Part 9 - Summary</a><br />
+</address>
 
 
-<h2>Setting the Scene</h2>
+<p><br/><span style="font-size: 13px;">This entry describes how to enable diagnostic logging when running an installer and some tools for analyzing the output.</span></p>
 
 
-<p>Assume, for the sake of argument, that you've already weighed the pros and cons of using IoC containers and have decided to use one in an ASP.NET MVC application.  During app startup, the IoC container is configured to provide the real implementations of your dependencies, but at test time you have the option of providing fakes.  You've also configured MVC to defer to the container whenever MVC wishes to instantiate a controller.</p>
+<h2>Troubleshooting Runtime Problems - When All Else Fails, Print</h2>
 
 
-<p>Voilà!  Now your controllers can declare their dependencies by simply accepting them via constructor parameters:</p>
+<p>Let’s face it: things don’t always work the way they’re supposed to and installers are no different. If you’re making anything more complex than the simple Hello World example we’ve been using in this series, you’re going to run into situation where something doesn’t work quite right and you can’t figure out why.</p>
 
 
-<p><div><script src='https://gist.github.com/5819891.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
+<p>Probably the world’s oldest debugging technique that predates debuggers themselves is printing a line of output with the current program location and variable values at runtime.  Windows installer doesn’t provide a native way to do this in the UI itself, but we do have the next best thing: log files.</p>
 
 
-<p>This approach gives you something very powerful: a way to say, "I need a thing.  I don't care where it came from.  I don't even care if it's real.  Get me one so I can interact with it."  To make such a request, you simply accept an argument in the controller constructor.</p>
+<h2>Enabling Logging During an Installation</h2>
 
 
-<h2>Typical Integration Testing</h2>
+<pre>Use msiexec (builts into Windows) to run your msi in a diagnostic mode and get a log file. Here’s an example invocation that asks for verbose logging into a file called HelloWorld.log: &#160;%windir%\system32\msiexec.exe /i artifacts\installer\HelloWorld.msi /l*v HelloWorld.log</pre>
 
 
-<p>Now consider the testing of classes which accept such dependencies in their constructors.  In <em>unit</em> tests for such a class, you can pass in a fake implementation or a mock if the dependency is complex, resource intensive, or unreliable in a way that distracts from the behavior you are trying to test.  In <em>integration</em> tests, though, you're far more likely to want to pass in the <em>real</em> implementations of the constructor arguments, to demonstrate something closer to the true behavior you'll experience in production.</p>
+<p>The content of the log for our simple Hello World is 749 lines. I’m obviously not going to paste it in here, but I will briefly describe some of the contents you’ll see in a log file.</p>
 
 
-<p>The integration test classes therefore likely call into some helper class or base class method in order to obtain a test-friendly version of the IoC container.  It might be <em>identical</em> to the IoC configuration used at runtime, so that the tests hit real databases and web services, for instance.  More likely, this test-specific IoC configuration would be <em>mostly</em> like the real thing but with a select few fakes still in the mix.  Perhaps you want to test your system's interaction with your database and internal web services, while still faking out unreliable third-party systems.</p>
+<ul>
+<li>Machine environment settings, such as whether the computer can have patches applied or not</li>
+<li>The value of properties (variables), such as the install directory</li>
+<li>The beginning and end of the execute stage</li>
+<li>The value of all properties at the end of the installation</li>
+</ul>
 
 
-<blockquote><p>Running your integration tests should exercise as much of the real system as is reasonably possible.  However, running your integration tests shouldn't trigger a hurricane of unintentional spam tweets to all of your CEO's followers.  Better to still use a fake ITwitter, eh?</p></blockquote>
+<p>Most importantly, any errors that occurred should be contained here as well. You can simply search through the log for “error”.</p>
 
 
-<h2>Leveraging IoC in Tests</h2>
+<h2>Tools for Analyzing a Log File</h2>
 
 
-<p><strong>We use IoC containers to streamline the code-under-test, so why do we throw that train of thought out the window when we write the tests themselves?</strong></p>
+<p>I have not gotten a large amount of use from the tool I’m about to introduce, but I want to make you aware of it because it might be valuable to you.</p>
 
 
-<p>If I want to, I should be able to declare test classes whose constructors similarly accept <em>their</em> dependencies too.  I shouldn't have to explicitly call out to a test helper method to get the integration-test-friendly IoC container, just so I can bypass all the intended brevity and instead explicitly ask the container for instances of things I want to interact with!</p>
+<p>The Windows SDK includes a utility reader for installer logs located at %PROGRAMFILES%\Microsoft SDKs\Windows\v7.1\Bin (or something similar). The utility is named WiLogUtl.exe. When you start the log analyzer, you’ll need to browse to your log file and open it. I’ve already done that step in the screenshot below.</p>
 
 
-<p>Here's a sample test class in Fixie that leverages IoC just as much as the familiar controller does:</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/03/logAnalyzer.png"><img class="alignnone size-full wp-image-6466" alt="logAnalyzer" src="http://www.headspring.com/wp-content/uploads/2013/03/logAnalyzer.png" width="638" height="335" /></a></p>
 
 
-<p><div><script src='https://gist.github.com/5819905.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
+<p>When you click Analyze, you’re taken to another screen.</p>
 
 
-<p>We don't have to throw out all the benefits of IoC when writing tests for things that take part in IoC.  There are a few noteworthy details in this example:</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/03/analysis.png"><img class="alignnone size-full wp-image-6467" alt="analysis" src="http://www.headspring.com/wp-content/uploads/2013/03/analysis.png" width="669" height="545" /></a></p>
 
 
-<p><strong>Familiar constructor injection</strong> - The test class accepts dependencies via the constructor.  In this case, we inject an ISupportTicketRepository to inspect the effects of our controller.  We also inject the controller under test itself, allowing the IoC container to build it just like it would in the running application.</p>
+<p>The most prominent UI element at the top is an errors list. Our log doesn’t have any, but this view makes it easy to see them all in one place.<br />
+We also have a variety of options on the right. States will show you the detected status of the features in your package – whether they are already installed or not. Properties will give you a list of all the properties (variables) and their values in your installer.</p>
 
 
-<p><strong>No test base/helper class</strong> - Just like our controllers, our test classes avoid explicitly interacting with the IoC container.  Instead, they focus on the behavior being tested.</p>
+<p>The HTML Log is rather nice because it will color code all the log entries by category, and provide controls for navigating between any errors.</p>
 
 
-<p><strong>Fakes when you wanted them</strong> - The intent of these tests involves hitting a real web service backed by a real database in our test environment, while avoiding real-world tweeting.</p>
-
-
-<h2>Take Control of Test Fixture Construction</h2>
-
-
-<p>Clearly, we've missed a step.  How could a test framework possibly know which container to use, or how to configure it for real web services but fake tweeting?  The answer lies in our Fixie convention (assume that IoCContainer is some newfangled third-party IoC container, similar to StructureMap):</p>
-
-
-<p><div><script src='https://gist.github.com/5819909.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-
-
-<p>With this convention class in place, all of our integration tests can accept arguments through their constructors, and they will do so with a container that contains mostly-real things, plus a few fakes.  With this approach, we get to "wear the IoC hat" in our test code as well as our code-under-test.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/03/htmlLogFile.png"><img class="alignnone size-large wp-image-6468" alt="htmlLogFile" src="http://www.headspring.com/wp-content/uploads/2013/03/htmlLogFile-970x709.png" width="970" height="709" /></a></p>
 
 ]]></content>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[DRY Test Inheritance]]></title>
-    <link href="http://headspringlabs.com/blog/dry-test-inheritance/"/>
-    <updated>2013-06-12T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/dry-test-inheritance</id>
-    <content type="html"><![CDATA[<p>Over the last two weeks, we've seen how <a href="https://github.com/plioi/fixie">Fixie</a> can be configured to <a href="http://www.headspring.com/fixies-life-bicycle/">mimic NUnit</a> and to <a href="http://www.headspring.com/the-sincerest-form-of-flattery/">mimic xUnit</a>.  That's a neat little trick, but doesn't provide much value.  This week, we'll see how Fixie's convention API can be used to <em>improve</em> upon NUnit.</p>
+    <title type="html"><![CDATA[Creating Windows Installers with the WiX Toolset Part 7]]></title>
+    <link href="http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-7/"/>
+    <updated>2013-03-15T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-7</id>
+    <content type="html"><![CDATA[<address>This article is part of a series exploring how to create installers for Windows software.  Here's the complete contents of the series.</address>
 
 
-<blockquote><p>Today’s code samples work against <a href="http://nuget.org/packages/Fixie/0.0.1.62">Fixie 0.0.1.62</a>. The customization API is in its infancy, and is likely to change in the coming weeks.</p></blockquote>
+<address><a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-01/">Part 1 – What Kinds of Software Projects Benefit From an Installer?</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-02/">Part 2 – An Overview Of Windows Installer and its Features</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-03/">Part 3 – Tooling Options for Building Installers</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-04/">Part 4 – The Windows Installer Runtime Sequence</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-5/">Part 5 – The Contents of an MSI</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-6/">Part 6 – The Structure of a WiX File</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-7/">Part 7 – Generating an MSI Package From Your WiX</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-8/">Part 8 – Troubleshooting Installer Runtime Problems</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-summary/">Part 9 - Summary</a><br />
+</address>
 
 
-<p>Today's sample convention addresses two problems in NUnit:</p>
+<p><br/><br />
+This post explains how to create an MSI installer from the WiX files you’ve written from either the command line or within Visual Studio.</p>
 
 
-<ol>
-<li>Lifecycle attributes are redundant</li>
-<li>Test class inheritance is needlessly complex.</li>
-</ol>
+<h2>The Missing Magic</h2>
 
 
-<h2>NUnit Lifecycle Attributes Are Redundant</h2>
+<p>So we’ve discussed how an MSI is an installer package that Windows can process and taken a peek at what the insides of an MSI looks like, and then we’ve examined a simple WiX file that can be used to create an MSI and how WiX schema is heavily tied to the entities of Windows Installer.  But we don’t quite have the complete picture yet – how do we magically get our MSI once we’ve authored some WiX?</p>
 
 
-<p>If you use NUnit, you probably see a lot of test classes like this:</p>
+<h2><a href="http://www.headspring.com/wp-content/uploads/2013/03/magicHappensHere.png"><img class="alignnone size-full wp-image-6459" alt="magicHappensHere" src="http://www.headspring.com/wp-content/uploads/2013/03/magicHappensHere.png" width="800" height="233" /><br />
+</a>It's Just A Compiler</h2>
 
 
-<p><div><script src='https://gist.github.com/5762364.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
+<p>So the answer is 42.  <a href="http://en.wikipedia.org/wiki/Answer_to_The_Ultimate_Question_of_Life,_the_Universe,_and_Everything#Answer_to_the_Ultimate_Question_of_Life.2C_the_Universe.2C_and_Everything_.2842.29">Just kidding.</a>  The answer is that the WiX toolset comes with its own compiler and linker tools.  If you’ve ever set up an automated build, this is the WiX equivalent of MsBuild.exe (or if you’re really hard core, csc.exe).  Most of the tooling in WiX is related to candles in some fashion (WiX sounds like “wicks”, the burning portion of a candle), so you might find it amusing to learn the name of the compiler is “candle”, and the linker is called “light”.</p>
 
 
-<p>My [SetUp] methods are always named "SetUp", my [TearDown] methods are always named "TearDown", etc. It's annoying to sacrifice whole lines to that noise.  When 99% of your test fixtures use naming conventions like mine, the attributes stop telling you something.  These attributes start to fill the same role as excessive comments:</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/03/candleAndLight.png"><img class="alignnone size-full wp-image-6460" alt="candleAndLight" src="http://www.headspring.com/wp-content/uploads/2013/03/candleAndLight.png" width="499" height="299" /></a></p>
 
 
-<p><div><script src='https://gist.github.com/5762368.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
+<p>There are two ways you can run the compiler:  through the command line, or as an integrated extension of Visual Studio.  I’ll discuss both below.</p>
 
 
-<h2>NUnit Inheritance is Needlessly Complex</h2>
+<h2>From the Command Line</h2>
 
 
-<p>The use of attributes for these "lifecycle" hooks poses more serious problems when your test classes take part in inheritance.  Since they don't <em>have</em> to be placed on methods with the same name, you could have completely unrelated [SetUp]s, for instance, at different levels of the hierarchy.</p>
+<p>This is my preferred method.  Usually when I’m building an installer, I’ve had to do some PowerShell scripting to stage the output that I want to be packaged up by the installer.  This is usually artifacts like help files, shortcut icons, and so forth.  This is also the primary method for getting an installer compilation rolled into your automated build (you might be able to use Votive with TFS, you’ll have to verify that with someone that willingly uses TFS).</p>
 
 
-<p>What order do they run in? Should the child class's [SetUp] call the base?  Should the base [SetUp] call an abstract method you have to implement instead of providing your own [SetUp] in the child? [SetUp]s get complicated very quickly in the presence of inheritance.</p>
+<p>Invocation looks something like this in a simple bat file:</p>
 
 
-<p>The order of execution during test setup is important. How bizarre would it be if there were no guarantee about the order of <em>constructor</em> execution in a class hierarchy?  With NUnit lifecycle hooks, order becomes a problem.  Sure, NUnit has rules of its own for the order, <strong>but it doesn't matter what they are</strong> because even having to ask the question means it's already too complex. In addition, having more than one [SetUp] in the same level of the class hierarchy is allowed but ambiguous: there's no guarantee what order they'll run in. Worse yet, over the years I've seen the behavior differ across different test <em>runners</em>.</p>
+<pre>rem If we don&#39;t specify an output directory, the wixobj files will get dumped in the current working directory of the bat file</pre>
 
 
-<blockquote><p>The preparation of state under test should be remarkably dull.  We're trying to confirm our assumptions about the behavior of our system, and we can't do so with confidence if we aren't confident about what all we've set up in the first place.</p></blockquote>
+<pre>tools\wix\candle.exe src\installer\HelloWorld.wxs -out artifacts\wix\</pre>
 
 
-<h2>A Low-Ceremony Alternative Convention</h2>
+<pre>tools\wix\light.exe artifacts\wix\HelloWorld.wixobj -out artifacts\wix\HelloWorld.msi</pre>
 
 
-<p>DRY stands for "Don't Repeat Yourself", not "[DontRepeatYourself] Don't Repeat Yourself"! Allowing redundancy has opened the door to complexity. Let's improve upon the NUnit style by defining a simpler, <a href="https://github.com/plioi/fixie/blob/a74078dfe3c8f415fd0663af104b75adfb90d29d/src/Fixie.Samples/LowCeremony/CustomConvention.cs">low-ceremony test class convention</a> with Fixie:</p>
+<pre></pre>
 
 
-<p><div><script src='https://gist.github.com/5762372.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
+<pre>rem Move the final output for exposure to CI build or shared network folder</pre>
 
 
-<p>Armed with this convention class in our test assembly, our original test class gets simpler:</p>
+<pre>copy artifacts\wix\HelloWorld.msi artifacts\installer</pre>
 
 
-<p><div><script src='https://gist.github.com/5762378.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
+<h2> Inside Visual Studio</h2>
 
 
-<p>The most relevant part of the convention says that, instead of using attributes, the lifecycle hook methods will be identified by their names:</p>
+<p>The WiX tooling comes with a Visual Studio extension called Votive.  I mentioned it earlier how you can use it to get IntelliSense when editing your WiX files.  Votive also makes it possible to compile your WiX when doing a build in Visual Studio.</p>
 
 
-<p><div><script src='https://gist.github.com/5762381.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
+<p>If you examine the properties of your WiX project, you’ll find a host of options for controlling your compilation.</p>
 
 
-<h2>What Does This Convention Buy Us?</h2>
+<p>The Installer tab lets you name your output file, and choose alternate output types if you happen to need something besides MSI (if you don’t know otherwise, then stick with MSI).</p>
 
 
-<p>There are three benefits to this approach:</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/03/buildTab.png"><img class="alignnone size-large wp-image-6461" alt="buildTab" src="http://www.headspring.com/wp-content/uploads/2013/03/buildTab-970x335.png" width="970" height="335" /></a></p>
 
 
-<p>First, we don't waste time reminding the reader that "SetUp" is in fact spelled "SetUp".</p>
+<p>&nbsp;</p>
 
 
-<p>Second, it's impossible to define more than one SetUp method in the same level of the class hierarchy, avoiding the ambiguity allowed by NUnit.</p>
+<p>The Build tab allows you to specify values for your preprocessor variables (WiX supports preprocessing similar to C and C++ compilers), and where to place your output.</p>
 
 
-<p>Third, if you do opt into test class inheritance, we get to take advantage of familiar language features. If the base class has a SetUp and the child class has a SetUp, you take advantage of the <code>virtual/override/base</code> keywords to remove all doubt about execution order.</p>
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/03/buildTab1.png"><img class="alignnone size-full wp-image-6462" alt="buildTab" src="http://www.headspring.com/wp-content/uploads/2013/03/buildTab1.png" width="673" height="642" /></a></p>
+
+
+<p>&nbsp;</p>
+
+
+<p>The Tool Settings tab can be used to ignore ICE validation on your package (although I’d suggest leaving it on, you always want to know about potential problems), and pass additional arguments to the compiler and linker.</p>
+
+
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/03/toolSettings.png"><img class="alignnone size-full wp-image-6463" alt="toolSettings" src="http://www.headspring.com/wp-content/uploads/2013/03/toolSettings.png" width="655" height="521" /></a></p>
+
+
+<p>&nbsp;</p>
+
+
+<p>When you compile the project in Visual Studio, if you look carefully at the build output you’ll see that it’s simply invoking candle and light for you under the hood:</p>
+
+
+<p><a href="http://www.headspring.com/wp-content/uploads/2013/03/votiveOutput.png"><img class="alignnone size-large wp-image-6464" alt="votiveOutput" src="http://www.headspring.com/wp-content/uploads/2013/03/votiveOutput-970x158.png" width="970" height="158" /></a></p>
+
+
+<p>&nbsp;</p>
+
+
+<p>If you do use Votive, you probably won’t want to build the installer in debug configuration.  Otherwise you’ll have to wait for an installer to build every time you recompile the solution.</p>
 
 ]]></content>
   </entry>

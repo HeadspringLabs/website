@@ -4,7 +4,7 @@
   <title><![CDATA[Category: quattro | Headspring Labs]]></title>
   <link href="http://headspringlabs.com/blog/categories/quattro/atom.xml" rel="self"/>
   <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-24T19:08:18-05:00</updated>
+  <updated>2013-07-24T22:47:07-05:00</updated>
   <id>http://headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
@@ -166,135 +166,6 @@ Dispose</pre>
 
 
 <p>When we were done the picture finally became clear. All my requirements, even those that I had forgotten about, were there and easy to follow. No matter what you’re building, please learn from my mistake and start off drawing your requirements, because if it can’t be drawn, it can’t be built.</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[From Programmer to Manager]]></title>
-    <link href="http://headspringlabs.com/blog/from-programmer-to-manager/"/>
-    <updated>2011-07-27T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/from-programmer-to-manager</id>
-    <content type="html"><![CDATA[<p>I started my career as a programmer. I was fortunate enough to get into computing as the Internet revolution was a strong possibility in the early nineties. My career has largely followed the rise of the PC, the Internet, and now cloud computing. Being one of the first on my block with an email address and a web site (which we called "<a href="http://en.wikipedia.org/wiki/Home_page">home pages</a>" back then), I started web development very early.</p>
-
-
-<h1>In the beginning</h1>
-
-
-<p>I started my professional programming career as a programmer at the local school district. Some of my software is still running today, and one of their websites for teachers and high school counselors is still online and serving their needs. It's written in ASP Classic, but it works well. My first applications used Internet Database Connector technology with ODBC data sources and HTX templates on IIS 2 running on Windows NT 4 servers. As far as I know, this was the birth of the "code nugget" in ASP.NET (&lt;% %&gt;). Microsoft <a href="http://msdn.microsoft.com/en-us/library/ms525756(v=vs.90).aspx">still supports this technology</a>.</p>
-
-
-<p>As my career progressed and I <img src="http://www.headspring.com/wp-content/uploads/2011/07/072711_1557_FromProgram15.png" alt="" align="left" />became more senior as a programmer, I vowed that I would never enter management. After all, I enjoyed coding all day, and I saw some examples of bosses that didn't understand the underlying complexities involved in software.</p>
-
-
-<p>After a few years as a Senior Software Developer, I became interested in not only programming the software that was the solution but also in performing the analysis work to look at a situation and decide the overarching solution.</p>
-
-
-<h1>The switch</h1>
-
-
-<p>Later, I became interested in business, and now I am the Chief Operating Officer at <a href="http://www.headspring.com/">Headspring, LP</a>. Headspring is a <img src="http://www.headspring.com/wp-content/uploads/2011/07/072711_1557_FromProgram25.jpg" alt="" align="right" />custom software company in Austin, TX. We help companies compete by helping them get greater value out of their existing custom software investments as well as creating new custom software assets for them. I can see on a daily basis the real operating dollars generated and saved by our software solutions we have deployed for our customers.</p>
-
-
-<p>My view of the industry has changed quite a bit now that I am a manager. Because Headspring is a custom software company, I still program (everyone does), but I also do the following:</p>
-
-
-<ul>
-<li>Grow our people</li>
-<li>Close out monthly financials</li>
-<li>Perform financial and operation briefings for the company</li>
-<li>Recruit new technical staff</li>
-<li>Set compensations levels and promote staff</li>
-<li>Manage facilities</li>
-<li>Manage vendors</li>
-<li>Help set company strategy</li>
-</ul>
-
-
-<h1>Professional development</h1>
-
-
-<p>We have a learning culture here at Headspring. Everyone is given time for and expected to foster what we call Continuous Improvement. In fact, CI Time is one of the things we track on our time system. Because we are a professional services company, we bill by the hour; therefore, we track every hour.</p>
-
-
-<p><img src="http://www.headspring.com/wp-content/uploads/2011/07/072711_1557_FromProgram35.gif" alt="" align="left" />In January of 2011, I began a new initiative in my own quest for continuous improvement. I started the MBA program at the <a href="http://www.jwmi.com/">Jack Welch Management Institute</a>. JWMI is a 2-year MBA program started and authored by the long-time CEO of General Electric, Jack Welch. After reading Jack's book, <em>Winning</em>, I knew that I could learn a lot from him, and I jumped at the opportunity to apply to be in his Masters of Business Administration program. I have already learned so much about business communication, leadership, strategy, and people management. As a manager, I am seeing that people management might be the most important topic covered in the program.</p>
-
-
-<h1>What's next?</h1>
-
-
-<p>As a manager, my success depends completely on the work of others, not myself. The only way I succeed is if others succeed. That's the big difference between hands-on work and management work. People decisions can make or break an outcome. I have learned a great deal since entering management five years ago. I also know that I have so much more to learn. I am grateful for a terrific staff. They constantly challenge me to find other great people they can work with, and I do that to the best of my ability.</p>
-
-
-<p>The more I learn, the more I discover how much there is to learn.</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[The Top 5 Reasons the BCS is like Your Legacy System]]></title>
-    <link href="http://headspringlabs.com/blog/the-top-5-reasons-the-bcs-is-like-your-legacy-system/"/>
-    <updated>2010-12-28T00:00:00-06:00</updated>
-    <id>http://headspringlabs.com/blog/the-top-5-reasons-the-bcs-is-like-your-legacy-system</id>
-    <content type="html"><![CDATA[<p>The BCS formula has determined that Auburn and Oregon will square off in the BCS National Championship Game. What does this have to do with your company's legacy system? More than you might think.</p>
-
-
-<p>One: It sounded like a good idea at the time.</p>
-
-
-<p>As strange as it may sound, the BCS system was created to solve a problem. The old way of crowning a national champion failed for the first time in 1992. Mark Brunell's Washington Huskies had won their bowl game and finished the season undefeated. In most seasons this would have been enough to secure the national championship, but this year was different. The University of Miami (featuring Dwayne "The Rock" Johnson) had likewise finished the regular season undefeated and pummeled Nebraska in the Orange Bowl. Although The Rock would go on to claim to be "The People's Champion," the national title was declared a tie. Everyone threw a big fit because there were two national champions, and America doesn't do ties. Something had to be done—and the solution was to be the Bowl Championship Series. The BCS ranking formula would include the opinions of people who talk about sports on TV, coaches who are allowed to vote for their own teams, and six computers that would calculate secret algorithms. What could possibly go wrong?</p>
-
-
-<p>Like college football, businesses grow and change over time. Systems evolve naturally around activities and tasks that are of higher value to the bottom line. Back in the day, it was easy to tweak the system. Putting a file in a different inbox, or firing the guy with messy handwriting was how things got done. Then businesses grew and grew and grew, until they could produce no more without bringing in an IT expert to automate everything. To quote the slick talking software-salesman: "Using this great new system of expensive software that only a couple of people understand, your business will be free to expand, and the system probably won't have to ever be changed! Even if some minor adjustments have to be made, I'm sure it would be no problem to find someone who can do it right, and every employee will have no problem at all adjusting to the new features. What could possibly go wrong?"</p>
-
-
-<p>Two: It usually works. But even when it does, it freaks you out right up to the end.</p>
-
-
-<p>For the most part, the BCS rankings put together the two best teams in the country. It provides us with an entertaining game and a great excuse for some New Year's Day laziness. With the exceptions of 2003 (LSU/USC), and 2004 (USC/Auburn) there haven't been co-national champions since the BCS formula was implemented. Surely a system that works 85% of the time can't be bad.</p>
-
-
-<p>Although it usually works, there's the potential for disaster every time. Every November, there is a possibility that 3, 4, or sometimes 5 teams would have a legitimate claim to play in the looming national title game. Fan bases get all worked up, and Lou Holtz gets so flustered he can't speak.</p>
-
-
-<p>Legacy systems are the same way. If you've survived a few screw-ups before, you'll survive them again. As long as the orders go through the same way each time eventually you'll get your funding/paycheck, and there's probably not a reason to change anything. We know a lot of people who've been dealing with the uncertainty of a faulty system for years. At crunch time, they bite their nails and prepare for the worst. Then at the last second, everything usually comes together—the system that's held up with duct tape comes through yet again. But hey, they're no worse for the wear.</p>
-
-
-<p>Three: The guys who designed it spend more time counting their money than fixing the problems.</p>
-
-
-<p>It's almost cliché to skewer the NCAA and money-hungry college Presidents. Yes, they make loot hand-over-foot while the masses demand a playoff. But give them credit—they designed a system that usually delivers what consumers want and supplies enormous profits for their schools. After all, boosting revenue for the universities and conferences is one of the most important parts of their jobs. Without this revenue, schools would be forced to slash research budgets, cut programs, and generally lose their ability to equip young men and women with the tools needed to succeed in the world. Sure, they'll listen to important boosters and the bully pulpit that is the NCAA, but they're not going to rush to change anything unless it's worth their while.</p>
-
-
-<p>As opposed to the NCAA, the software team you selected usually builds exactly what you tell them to. That might be the problem. Chances are your vendor is not going to know your business as well as you do. The development team should understand the "who, what, when, and where," and most importantly the "why." This involves some up-front commitment in time, and a little bit of back and forth between the two of you to ensure that they get it. Ideally, the vendor that you choose should be able to listen to your requirements, but also be able to make suggestions about something that might work better in the long run.</p>
-
-
-<p>Four: It's the only game in town.</p>
-
-
-<p>Every year people discuss boycotting the national championship game. There's always the guy at the bar who says, "I love college football, but I'm not going to watch the BCS games until they put in a playoff."</p>
-
-
-<p>That guy is a liar. He is going to cave in and watch the sport he loves, played at the highest level for the last time until September. People have the option to watch the FCS Playoffs, but I doubt 50 million TVs will tune in to watch football games that are apparently being played at Roland Garros.</p>
-
-
-<p>The flaws in a legacy system are similarly well known. There's generally a sense of resignation that you have to make due with what you have. You can't just stop using it; after all, business would grind to a halt. Your other option would be to update it, and most people don't even know where to begin with a project like that. You use it and learn to tolerate it, because you don't have any other recourse. Sometimes the devil you know is preferable to watching Eastern Washington vs. Delaware.<br />
-Five: It's only going to be fixed when the problem becomes more costly than the solution.</p>
-
-
-<p>Great news NCAA football fans! ESPN has a deal with the BCS that will guarantee the rights to air all of the BCS games through 2014. For all that's broken with the BCS, they're still being paid $125 million per year just for the rights to broadcast the games. Like it or not, the BCS is nothing if not profitable. That's not going to change until there's a run of consecutive co-champions, or a viable alternative with a smooth transition is offered. Mark Cuban, the ball is in your court.</p>
-
-
-<p>People ask, "When should I do something about our legacy system?"</p>
-
-
-<p>It's simple math really.</p>
-
-
-<p>How many orders/grants/contracts has the system cost you? How much time do you spend worrying about, fixing, or paying others to handle issues with the current system? What is your hourly rate? Add those numbers together and you get an idea of how much the legacy system is costing you. From there it's pretty simple to figure out what your budget should be and when you will recognize a return on that investment. Maybe it makes sense to keep using the current one in spite of all its flaws. Maybe there's a place in this world for somewhat serviceable broken-down systems that used to be fast. After all, Mark Brunell still has a job.</p>
-
-
-<p>If you have run the numbers and realize it is time to invest in a way out of your legacy system, Headspring would like to speak with you and we hope you will contact us. Helping enterprises out of legacy systems is what we do best. If you select another vendor, please do due diligence and choose well. You will be frustrated if the "solution" is a brand new legacy system. Example: BCS</p>
 
 ]]></content>
   </entry>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Blog | Headspring Labs]]></title>
   <link href="http://headspringlabs.com/blog/categories/blog/atom.xml" rel="self"/>
   <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-24T19:08:18-05:00</updated>
+  <updated>2013-07-24T22:47:07-05:00</updated>
   <id>http://headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
@@ -74,91 +74,6 @@
 
 
 <p>To see the full example and source code go to <a title="https://github.com/jdmgomoo/MVC-CustomAttributes" href="https://github.com/jdmgomoo/MVC-CustomAttributes">https://github.com/jdmgomoo/MVC-CustomAttributes</a></p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Meet Headspring: Angel Rivera]]></title>
-    <link href="http://headspringlabs.com/blog/meet-headspring-angel-rivera/"/>
-    <updated>2013-03-15T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/meet-headspring-angel-rivera</id>
-    <content type="html"><![CDATA[<p>Looking for a warmer place to live and the best city to raise a family, Angel Rivera touched down in Austin in 2010 with his wife. The couple grew their family with a son in 2011, and he is very proud. “My son takes my breath away. There’s no getting used to it, and there are new adventures every day. It gives me a whole new way of looking at life.” Angel joined our Headspring team in January, and we’re happy to have him!</p>
-
-
-<p style="text-align: center;"><img class="size-medium wp-image-6483 aligncenter" alt="" src="http://www.headspring.com/wp-content/uploads/2013/03/Angel1-200x300.jpg" width="200" height="300" /></p>
-
-
-<p><b>What did you do before coming to Headspring?</b></p>
-
-
-<p>I was born and raised in Puerto Rico where I went to college and graduated with a B.A. in graphic design.  I moved to Ohio when I was 21 years old. From there, I spent several years in Iowa, Kansas and Minnesota before I moved here for the long haul.</p>
-
-
-<p><b>What do you love most about Austin?</b></p>
-
-
-<p>The culture: laid-back, diverse, and relaxed. You can find everything from high-class restaurants to ones with a pet-friendly patio. There’s a little bit of everything for everyone.</p>
-
-
-<p><b>What attracted you to Headspring?</b></p>
-
-
-<p>I was attracted to the opportunity to work with a close-knit team, to the company culture, and to the opportunity to jump into the ever-changing software industry. I’m thankful for the opportunity!</p>
-
-
-<p><b>How do you gauge “time well spent?"</b></p>
-
-
-<p>When I’m being productive.</p>
-
-
-<p><b>Who is your role model?</b></p>
-
-
-<p>I would have to say my parents.  They were both very young when I was born. With no education, it must have been incredibly hard for them to raise both my sister and me, but they pulled it off.</p>
-
-
-<p><b>What is your role at Headspring?</b></p>
-
-
-<p>I’m a Business Development Consultant. I look for companies that would benefit from our services and who we can establish a strong business relationship with. A win-win.</p>
-
-
-<p><b>What do you hope to accomplish professionally and personally in the next 5 years?</b></p>
-
-
-<p>In the 11 years since Headspring was created, we have grown tremendously. I want to make sure Headspring continues to grow and expand so that every company out there knows how awesome we are.</p>
-
-
-<p>Personally, I want to buy my mom a house in Puerto Rico. She is renting a small one-bedroom apartment right now and I think it’s time she has her own place again.</p>
-
-
-<p><b>What do you enjoy doing in your free time?</b></p>
-
-
-<p>I love watching movies and TV shows. The last movie I saw at the theater was Cabin in the Woods. I also enjoy playing video games (if I can find the time), playing my guitar, spending time with my family, going to the park and trying new restaurants. We’re foodies, and I especially love Thai food.</p>
-
-
-<p><b>What’s your favorite Puerto Rican dish?</b></p>
-
-
-<p>Rice, beans and chicken with fried plantains. There’s only one Puerto Rican restaurant – Chagos Restaurant – here. Their food is good but frankly, I cook better than they do, so I’m never homesick for Puerto Rican food!</p>
-
-
-<p><b>What’s a tool you can’t live without?</b></p>
-
-
-<p>Google Navigator, because I have a horrible sense of direction! I went to Puerto Rico during the Christmas holiday, and I got lost constantly because Google Maps doesn’t work there!</p>
-
-
-<p><b>Any social media links?</b></p>
-
-
-<p>Tweet me at <a href="http://twitter.com/angelrivera_pr" target="_blank">@angelrivera_pr</a>.</p>
-
-
-<p>&nbsp;</p>
 
 ]]></content>
   </entry>
@@ -401,6 +316,108 @@ This post explains how to create an MSI installer from the WiX files you’ve wr
 
 
 <p>If you do use Votive, you probably won’t want to build the installer in debug configuration.  Otherwise you’ll have to wait for an installer to build every time you recompile the solution.</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Creating Windows Installers with the WiX Toolset Part 6]]></title>
+    <link href="http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-6/"/>
+    <updated>2013-02-28T00:00:00-06:00</updated>
+    <id>http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-6</id>
+    <content type="html"><![CDATA[<address>This article is part of a series exploring how to create installers for Windows software.  Here's the complete contents of the series.</address>
+
+
+<address><a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-01/">Part 1 – What Kinds of Software Projects Benefit From an Installer?</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-02/">Part 2 – An Overview Of Windows Installer and its Features</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-03/">Part 3 – Tooling Options for Building Installers</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-04/">Part 4 – The Windows Installer Runtime Sequence</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-5/">Part 5 – The Contents of an MSI</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-6/">Part 6 – The Structure of a WiX File</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-7/">Part 7 – Generating an MSI Package From Your WiX</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-8/">Part 8 – Troubleshooting Installer Runtime Problems</a><br />
+<a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-summary/">Part 9 - Summary</a><br />
+</address>
+
+
+<p><br/></p>
+
+
+<h2>Summary</h2>
+
+
+<p>This post is a companion to the previous post in Part 5 - it shows and explains the structure of the WiX file that was used to generate the MSI.</p>
+
+
+<h2>Tooling and References For Editing WiX Files</h2>
+
+
+<p>Since the name of the toolkit is "Windows Installer in XML", you probably won't be terribly surprised to find out that the source files you edit are...wait for it...XML. This means you can author and edit in your favorite XML editor of choice, whether that's Notepad++, some incredibly expensive specialty tool like Altova XML Spy, or Visual Studio. If you use Visual Studio and you've installed WiX on your local machine, you can leverage the included Votive project types to get Intellisense in Visual Studio.</p>
+
+
+<p>[caption id="attachment_6409" align="alignnone" width="582"]<a href="http://www.headspring.com/wp-content/uploads/2013/02/votiveIntellisense.png"><img class=" wp-image-6409 " alt="Picture of editing with Visual Studio and Intellisense supplied by Votive" src="http://www.headspring.com/wp-content/uploads/2013/02/votiveIntellisense-970x562.png" width="582" height="337" /></a> Visual Studio Intellisense with Votive[/caption]</p>
+
+
+<p>There's reference documentation for the schema at <a href=" http://wix.sourceforge.net/manual-wix3/schema_index.htm">SourceForge</a>. The first link is for the WiX schema itself, and there are other schema references for the various extensions that are available.</p>
+
+
+<h2>The Complete Hello World</h2>
+
+
+<p><div><script src='https://gist.github.com/5014691.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+
+<h2>Dissecting the Elements</h2>
+
+
+<p>Line 3 is pretty straightforward: declare our root Wix element and specify the namespace. No that isn't a typo at the end; the namespace really doesn't have an x at the end of it. I have no idea why.</p>
+
+
+<p>Line 5 declares our Product for the installer (recall Product has a cardinality of 1). Some of the supporting attributes like Manufacturer, Name, and Version will show up in the Add Program and Features list for Windows.</p>
+
+
+<p>Line 12 defines the Package (also cardinality of 1), which is the installer itself. Attributes here will show up in the properties of the MSI file.</p>
+
+
+<p>Line 19 introduces the concept of Media, which wasn't discussed in the MSI examination. Windows Installer has a profuse amount of options for the physical layout of the files to be deployed, including things like spanning multiple DVDs (or floppies - <a href="http://superuser.com/questions/231273/what-are-the-windows-a-and-b-drives-used-for">remember those?</a> The need for this has fallen by the wayside as most software is downloaded from the internet or an internal network these days. In this example, we only have one physical media target, and the EmbedCab attribute will package all the deployables into the MSI directly since we don't need disc spanning.</p>
+
+
+<p>Line 21 defines our target directory structure. Note it's nested. I'm not going to discuss it exhaustively, but will point out a few interesting things. Line 22 specifies we're installing into this machine's Program Files directory, and line 23 is the INSTALLDIR, which is our root target directory. More sophisticated installers will allow the user to specify their own directory and replace the value of INSTALLDIR.</p>
+
+
+<p>Line 24 defines our one and only component. Recall from the previous post its possible for a component to have more than one deployable in it, but there are advantages to having a component for every file. Components have a unique ID to identify them.</p>
+
+
+<p>In this example we've associated our component with a target directory by simply nesting it under the desired directory. This works for simple scenarios, but if you have more than one target directory for your product or if your code generating your component definitions, it might be easier to declare the directory structure and components separately and use the DirectoryRef attribute on the component to make the association.</p>
+
+
+<p>Line 25 contains a file that is part of this component. The name attribute is what the file will be called when it is placed on the target file system, and the source attribute specifies where to get the file when compiling the MSI package.</p>
+
+
+<p>Line 26 does what you hopefully would guess; it removes the installation folder from the machine when the component 'MainExecutable' gets uninstalled.</p>
+
+
+<p>Line 32 finishes things out by declaring our single feature (although you'll recall there could be multiple Features in a Product), and associating our component with it.</p>
+
+
+<h2>Tying It All Together</h2>
+
+
+<p>So we have:</p>
+
+
+<ul>
+<li>File HelloWorld.exe containing our executable</li>
+<li>Component MainExecutable containing the HelloWorld.exe File</li>
+<li>Directory INSTALLDIR (which itself is a subdirectory) associated with the MainExecutable Component</li>
+<li>Feature called Complete containing the MainExecutable Component</li>
+<li>Product that contains the Complete Feature (this is implied and doesn't have to be explicitly defined)</li>
+</ul>
+
+
+<p>All of this maps neatly to the MSI we took apart in the <a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-05/">last post</a>. In the next installment, we'll look at the process for actually turning WiX into an MSI.</p>
 
 ]]></content>
   </entry>

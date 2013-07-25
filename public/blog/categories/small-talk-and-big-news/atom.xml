@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Small Talk &amp; Big News | Headspring Labs]]></title>
   <link href="http://headspringlabs.com/blog/categories/small-talk-and-big-news/atom.xml" rel="self"/>
   <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-24T19:08:18-05:00</updated>
+  <updated>2013-07-24T22:47:07-05:00</updated>
   <id>http://headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
@@ -14,121 +14,181 @@
 
   
   <entry>
-    <title type="html"><![CDATA[MVC Boot Camp updated for ASP.NET MVC 4]]></title>
-    <link href="http://headspringlabs.com/blog/mvc-boot-camp-updated-for-asp-net-mvc-4/"/>
-    <updated>2012-09-25T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/mvc-boot-camp-updated-for-asp-net-mvc-4</id>
-    <content type="html"><![CDATA[<p>With the release of ASP.NET MVC 4, we’ve updated <a title="MVC4 Boot Camp Curriculum" href="http://www.headspring.com/headspring/mvc-boot-camp/" target="_blank">our boot camp curriculum</a> to include the latest enhancements and features - the biggest of which is the inclusion of ASP.NET Web API. We’ll look at where Web API fits with modern web applications, and where we’ve seen Web API fit best.</p>
+    <title type="html"><![CDATA[Headspringers at Austin Code Camp]]></title>
+    <link href="http://headspringlabs.com/blog/headspringers-at-austin-code-camp/"/>
+    <updated>2012-05-11T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/headspringers-at-austin-code-camp</id>
+    <content type="html"><![CDATA[<p>Austin Code Camp has become a running tradition in the Austin area.  I still have a t-shirt from 2007 I occasionally mow the yard in!  While Austin Code Camp doesn't give out t-shirts anymore, it's still focused on providing FREE sessions for the development community, by members of the community.  This year's event is going to be June 9th.  You can register over at <a href="http://austincodecamp2012.com/">http://austincodecamp2012.com/</a>.</p>
 
 
-<p>ASP.NET MVC 4 also includes a number of mobile enhancements, AJAX improvements, bundling and minification, all of which will be covered in the course.</p>
+<p>A number of Headspringers are going to be presenting sessions this year.  The subjects cover a lot of varied ground - from introductions to deep dives, and focuses ranging from managing technology to managing your career.</p>
 
 
-<p>Hope to see you there!</p>
+<p>Here's a list of what Headspringers are going to be presenting or facilitating:</p>
+
+
+<p>Steve Donie – Client Side JavaScript Frameworks<br />
+Sharon Cichelli - Crafting your Career<br />
+Nolan Egly - Cryptography 101<br />
+Alonso Robles - Getting Started with Raven DB<br />
+Patrick Lioi - Building a Language<br />
+Tim Thomas - Avoiding the Threat of Awful CSS, Web Usability on a Budget<br />
+Anne Epstein - Don't Do This in NHibernate, Lightning Talks!<br />
+Jeffrey Palermo - Star Schema and Reports, Onion Architecture</p>
+
+
+<p>We hope to see you there! (Did I mention it's FREE?)</p>
 
 ]]></content>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Get to Know a Developer: Kyle Nunery]]></title>
-    <link href="http://headspringlabs.com/blog/get-to-know-a-developer-kyle-nunery/"/>
-    <updated>2012-07-27T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/get-to-know-a-developer-kyle-nunery</id>
-    <content type="html"><![CDATA[<p><a href="http://www.headspring.com/wp-content/uploads/2012/07/photo-51.jpg"><img class="alignright size-medium wp-image-5674" title="kyle nunery" src="http://www.headspring.com/wp-content/uploads/2012/07/photo-51-224x300.jpg" alt="kyle nunery" width="224" height="300" /></a>I should have posted this last week, so forgive my tardiness. We've hired three amazing new developers in the month of July! The first of which is Kyle Nunery, Senior Consultant. He relocated from Florida for the position. Kyle lucked out, because his first Friday with us happened to be a quarterly company offsite at <a href="http://www.headspring.com/blog/small-talk-and-big-news/new-office-and-k1-racing/">K1 Speed Go Kart Racing</a>. He and I joined the rest of the crew for lunch at Chuy's (yum!) before we headed to the track.  There, we talked with Tim Thomas about the direction of front-end development and how crucial Javascript knowledge has become. Interesting talk. Here are some other things he had to say:</p>
+    <title type="html"><![CDATA[Dallas Day of Dot NET: Get Nerdy With It]]></title>
+    <link href="http://headspringlabs.com/blog/dallas-day-of-dot-net-get-nerdy-with-it/"/>
+    <updated>2012-03-08T00:00:00-06:00</updated>
+    <id>http://headspringlabs.com/blog/dallas-day-of-dot-net-get-nerdy-with-it</id>
+    <content type="html"><![CDATA[<p>The bags are packed and we’re ready to head out for Dallas Day of Dot NET.  We've heard through event organizers that over 500 people are expected to attend.  Woo Hoo!  Half of our team is going, including President, Jeffrey Palermo, sporting a fresh polo from his recently bestowed and 7<sup>th</sup> consecutive Microsoft MVP title.</p>
 
 
-<p><strong>Are you an expert at anything?</strong></p>
+<p style="text-align: center;"><a href="http://www.headspring.com/2012/03/dallas-day-of-dot-net-get-nerdy-with-it/photo-2" rel="attachment wp-att-4036"><img class="alignnone size-medium wp-image-4036" title="Katie and Jeffrey heading to Dallas Day of Dot NET" src="http://www.headspring.com/wp-content/uploads/2012/03/photo-2-224x300.jpg" alt="" width="224" height="300" /></a><a href="http://www.headspring.com/2012/03/dallas-day-of-dot-net-get-nerdy-with-it/photo-1" rel="attachment wp-att-4037"><img class="alignnone size-medium wp-image-4037" title="photo (1)" src="http://www.headspring.com/wp-content/uploads/2012/03/photo-1-224x300.jpg" alt="" width="224" height="300" /></a></p>
 
 
-<p>I like to think I am an expert at building business websites.  My strongest programming languages are C# and JavaScript.</p>
+<p>Obviously, we’re super excited about the main event:  keynote speaker Scott Hanselman.  Hanselman is well known for many things, most notably his evangelism for Microsoft and all things .NET.  His popular weekly podcast series <em>Hanselminutes</em> and blog <em>Scott Hanselman’s Computer Zen</em> will be the source of inspiration for his presentation titled <em>Making Your Blog Suck Less</em>.</p>
 
 
-<p><strong>What led you to software development?</strong></p>
+<p>The posted <a href="http://dallasdayofdotnet.com/dallasdayofdotnet/Home/Agenda">agenda</a> doesn’t include any abstracts. Lucky for you, a few Headspringers are presenting and provided me with their details:</p>
 
 
-<p>In middle school I wanted to make a video game, so my step dad bought me a book on programming in C.  This passion for programming continued on into college and led to my career in software development.</p>
+<p style="padding-left: 30px;"><strong>Jeffrey Palermo: </strong><em>Developing for Business Intelligence</em></p>
 
 
-<p><strong>What did you learn first?</strong></p>
+<p style="padding-left: 30px;">With Microsoft aligning several of its products to serve BI needs, .Net developers are left with little support for providing analytical answers from data stored in system databases.  Even reports are often just formatted query results on a screen.  Business intelligence is about deriving knowledge from your data, not just view raw data.  From fact tables to star schemas to methods of visualization, Visual Studio doesn't provide much support for these important and enabling concepts for BI.  This session will introduce developers to the fundamentals of BI development and the basic tools and techniques they can use to start extracting intelligence from their data.</p>
 
 
-<p>My first programming language was C using the Borland Turbo C++ compiler.</p>
+<p style="padding-left: 30px;"><strong>Jimmy Bogard: </strong><em>Keeping Integration Sane with NServiceBus</em></p>
 
 
-<p><strong>Where do you begin when learning something new?</strong></p>
+<p style="padding-left: 30px;">Building apps used to be simple when we just needed to push data into a database. However, more and more we see our applications needing to communicate with other external applications via REST, SOAP, or for the less fortunate, flat files. We can assume these external services are always 100% up, but inevitably, someone trips over the cord and communication fails. Often, recovering from these kinds of failures are the hardest to recover from, causing developers and the business alike significant heartburn.</p>
 
 
-<p>I will typically build many small programs testing out various features of a new technology.  Besides reading blogs and Googling I will often reference books via Safari Books Online.</p>
+<p style="padding-left: 30px;">In this session we'll examine the common causes for failures integrating with other systems. We'll look at the basics of messaging and alternate UI interaction models to accommodate failure. Finally, we'll dig in to NServiceBus and see how NServiceBus kicks the problems of flaky integration to the curb once and for all.</p>
 
 
-<p><strong>How do you gauge “time well spent”?</strong></p>
+<p style="padding-left: 30px;"><strong>Tim Thomas: </strong><em>Building Games with .NET and XNA Game Studio</em></p>
 
 
-<p>At work, “time well spent”, is anything that will help in delivering the highest quality solution for your customer as quickly as possible.</p>
+<p style="padding-left: 30px;"><em></em>Developing your own game can be a daunting task. In this session, you’ll see how easy it is to get started from scratch with XNA Game Studio 4.0, the latest version of Microsoft’s multi-platform game creation toolkit. You’ll be introduced to the developer-friendly—and free!—community resources available for building games for the PC, Xbox, and Windows Phone and learn more about this industry-changing game development technology.</p>
 
 
-<p><strong>What are your plans for the future?</strong></p>
+<p style="padding-left: 30px;"><strong>Ryan Vice:  </strong><em>State Management in Windows 8 Metro Applications</em></p>
 
 
-<p>I am interested in making more mobile applications.  In general, I would like to become a stronger voice in the development community.</p>
+<p style="padding-left: 30px;">Metro introduces a new application lifecyle in which your application could be terminated at anytime. This example driven session will explore how to write applications that sucessfully manage persisted, session and view state in the Metro environment allowing you to provide a good user experience for your end users. The concepts apply to all Metro development but will be demonstrated using C# and XAML.</p>
+
+
+<p>After that, Headspringers disperse to “get nerdy with it.”  If you’re in town, plan on stopping by to visit Katie in the sponsor area.  She’ll have swag, stickers, and as always, good conversation.  Pick up one of these beauties for your car bumper, and share the photo on our <a href="http://www.facebook.com/pages/Headspring/280556282000204">Facebook wall</a>!</p>
+
+
+<p><a href="http://www.headspring.com/2012/03/dallas-day-of-dot-net-get-nerdy-with-it/photo" rel="attachment wp-att-4038"><img class="size-medium wp-image-4038 aligncenter" title="Headspring bumper stickers" src="http://www.headspring.com/wp-content/uploads/2012/03/photo-224x300.jpg" alt="" width="224" height="300" /></a></p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Joining the Dark Side: Learning to Code with Grace and Dignity]]></title>
+    <link href="http://headspringlabs.com/blog/joining-the-dark-side-learning-to-code-with-grace-and-dignity/"/>
+    <updated>2012-01-17T00:00:00-06:00</updated>
+    <id>http://headspringlabs.com/blog/joining-the-dark-side-learning-to-code-with-grace-and-dignity</id>
+    <content type="html"><![CDATA[<p>Upon the suggestion of a coworker I joined 342,787 people (and counting) with a 2012 resolution to learn how to code.  It’s called <a href="http://codeyear.com/">CodeYear</a>, presented by <a href="http://www.codecademy.com/#!/exercises/0">CodeAcademy</a>, supported by companies like YCombinator, and made viral by the addition of my fellow student, <a href="http://mashable.com/2012/01/05/bloomberg-codecademy/">Michael Bloomberg</a>.   It’s a very simple, learn as you go platform, with big clean buttons and “dumbed down” explanations for the average Joe (or Jill).  I get an email every Monday with a new lesson to work on for the week.  As I progress, I earn badges and bragging rights to publish on Facebook and Twitter.</p>
+
+
+<p>There are a number of courses and levels to choose from, and I have just completed the first one, “Getting Started with Programming”.  After creating an account, I can sign in and access courses that I am working on and track my progress.</p>
+
+
+<p>Here are a couple screen shots which demonstrate the clean design and learning module:</p>
+
+
+<p style="text-align: center;"><a href="http://www.headspring.com/2012/01/joining-the-dark-side-learning-to-code-with-grace-and-dignity/code-academy-courses1-2" rel="attachment wp-att-3178"><img class="aligncenter size-large wp-image-3178" title="code academy courses1" src="http://www.headspring.com/wp-content/uploads/2012/01/code-academy-courses11-1024x554.png" alt="" width="614" height="332" /></a><a href="http://www.headspring.com/2012/01/joining-the-dark-side-learning-to-code-with-grace-and-dignity/code-academy-lesson1" rel="attachment wp-att-3155"><img class="aligncenter size-large wp-image-3155" title="code academy lesson1" src="http://www.headspring.com/wp-content/uploads/2012/01/code-academy-lesson1-1024x554.png" alt="" width="819" height="443" /></a></p>
+
+
+<p>Now, let me take the time to clearly state that <strong>I have absolutely no intention of becoming a programmer</strong>. If I wanted to be a programmer, there are plenty of resources out there for entering a career in programming, all of which existed long before CodeAcademy came along.  What attracts me to this particular platform is that it is built specifically for non-technical people to learn how to think like a technical person when needed.</p>
+
+
+<p>I can already tell this is going to be a very beneficial process for me.</p>
+
+
+<p>I am surrounded by developers at work and at home, and I have found that they are a unique breed of communicators.  You see, in marketing, we care about the ideas, elaborating on them, and we don’t care much for the process of getting from A to B.</p>
+
+
+<p><strong>Conversely, developers (good ones) care about the process just as much as they care about the conclusion</strong>.  Words, steps, and systems are really important to them.  They think the way code looks!  If a statement at the top of a string of code does not compute correctly, then the statement at the bottom of the string of code cannot compute either, <em>even if</em> that second statement is true.  Let me demonstrate with a snippet from Lesson 8 of “Getting Started with Programming”:</p>
+
+
+<p style="text-align: center;">The while loop defined in the editor code won't ever run because its condition, times <code>&gt;</code> 0 <code>&amp;&amp;</code>times <code>&lt;</code> 3, is never true since times <code>=</code> 0 and the two conditions 0 <code>&gt;</code> 0 <code>&amp;&amp;</code> 0 <code>&lt;</code> 3 evaluates tofalse.</p>
+
+
+<p style="text-align: center;">If the conditions of the loop aren't met, the code will be skipped entirely.</p>
+
+
+<p>Does this read like a familiar scenario? Now that I have been exposed to the process of coding, I am starting to notice the similarities between speaking to a developer and reading what a developer creates.</p>
+
+
+<p>And the benefits don’t stop with enhanced communication.  I’m looking forward to being a more versatile teammate, not having to ask so many questions, and the possibility of using code to make my daily tasks easier.</p>
+
+
+<p>But don’t take my word for it.  There are plenty of helpful blogs out there that detail the benefits of learning to code, like this one: <a href="http://www.giftrocket.com/why-marketing-bd-should-learn-to-code">10 Reasons Why Marketing and BD Professionals Should Learn to Code</a>.</p>
+
+
+<p>So if you have ever considered learning how to code, I encourage you to visit <a href="http://codeyear.com/">CodeYear.com</a>, or follow the <a href="https://twitter.com/#!/search/%23codeyear">#codeyear</a> trending topic on Twitter (follow <a href="https://twitter.com/#!/headspring">@headspring</a> while you're there).</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[What can we learn from Calvin & Hobbes?]]></title>
+    <link href="http://headspringlabs.com/blog/what-can-we-learn-from-calvin-hobbes/"/>
+    <updated>2011-09-27T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/what-can-we-learn-from-calvin-hobbes</id>
+    <content type="html"><![CDATA[<p>A lot of people call me up when they need custom software to solve a problem. While each project is a little bit different, they typically fall within a few categories of maintainable software solutions. I’ve learned a valuable lesson about categories though: Sometimes you have to throw them out the window to clearly understand a problem…</p>
+
+
+<p>Growing up I read a lot of Calvin and Hobbes. I’ve got every anthology including the leather-bound edition. As much as I love reading them, I find myself having to refocus halfway through a single strip. I tend to think that I know the ending to a given strip or series, and I skip ahead.</p>
+
+
+<p>Oh, this is the one where he collects all the UPCs and gets a propeller beanie. I’m going to flip a few pages and see the look on his face when he doesn’t take off!</p>
+
+
+<p>I always thought I had read every single Calvin and Hobbes. There was nothing about that kid and his tiger that I didn’t know.</p>
+
+
+<p>A couple years ago, I was going back through my old collections and I found that I definitely hadn’t read every strip. In fact, I found that I had skipped most of the large Sunday illustrations because over the years I was skipping pages, thinking oh, I’ve read all of these storylines before.</p>
+
+
+<p>It turns out those Sunday illustrations were the best. They were the ones that had cool stuff like T-Rex’s riding in fighter jets! (Spoiler alert for the shockingly Randy Quaid-less ending of Cowboys vs. Aliens).</p>
+
+
+<p>I find that this same pattern shows up if I’m talking with a client who has a familiar problem. I have to focus myself on what they’re telling me so I don’t jump ahead in my mind to what I think the solution is. If I do that, I’ll miss out on all of the really important stuff they’re sharing- things that I wouldn’t have thought could be a part of the problem or answer. I want the Sunday edition of their story, I don’t want to hear the first panel and flip to my ending.</p>
+
+
+<p>If a company is looking to become more agile, if they’re looking for an object-oriented development approach, or if they want us to modernize their legacy system, I have to put away my jump-to-conclusions mat- I might surprise myself and discover something I wouldn’t have found otherwise.</p>
 
 
 <p>&nbsp;</p>
 
-
-<p>To learn more about Kyle, tweet: <a href="https://twitter.com/knunery" target="_blank">@knunery</a></p>
-
 ]]></content>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[New Office and K1 Racing]]></title>
-    <link href="http://headspringlabs.com/blog/new-office-and-k1-racing/"/>
-    <updated>2012-07-19T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/new-office-and-k1-racing</id>
-    <content type="html"><![CDATA[<p>Last time I posted we were just packing up to move from the Spicewood Office. We're set up nicely now at the Avallon Building on Braker and Jollyville. I updated the slideshow with pics of our new place:</p>
+    <title type="html"><![CDATA[Headspring Sponsoring Open Source Hackathon]]></title>
+    <link href="http://headspringlabs.com/blog/headspring-sponsoring-open-source-hackathon/"/>
+    <updated>2011-09-26T00:00:00-05:00</updated>
+    <id>http://headspringlabs.com/blog/headspring-sponsoring-open-source-hackathon</id>
+    <content type="html"><![CDATA[<p>In conjunction with <a href="http://lostechies.github.com/fiesta/">Pablo’s Fiesta</a>, an open-space development conference being held in Austin September 30-October 2, Headspring will be sponsoring an Open Source Hackathon at our offices on Sunday October 2nd from 1 PM to 6 PM. Over 150 developers from all over the United States and beyond are coming to Austin for 3 days of ‘sharpening the saw’, and the Los Techies Crew realized that with all that brainpower in one place, we ought to be able to do some concentrated work on the open source tools we all use so much.</p>
 
 
-<p><object width="400" height="300"><param name="flashvars" value="offsite=true&lang=en-us&page_show_url=%2Fphotos%2Fheadspring%2Fsets%2F72157630451128500%2Fshow%2F&page_show_back_url=%2Fphotos%2Fheadspring%2Fsets%2F72157630451128500%2F&set_id=72157630451128500&jump_to="></param><param name="movie" value="http://www.flickr.com/apps/slideshow/show.swf?v=109615"></param><param name="allowFullScreen" value="true"></param><embed type="application/x-shockwave-flash" src="http://www.flickr.com/apps/slideshow/show.swf?v=109615" allowFullScreen="true" flashvars="offsite=true&lang=en-us&page_show_url=%2Fphotos%2Fheadspring%2Fsets%2F72157630451128500%2Fshow%2F&page_show_back_url=%2Fphotos%2Fheadspring%2Fsets%2F72157630451128500%2F&set_id=72157630451128500&jump_to=" width="400" height="300"></embed></object></p>
+<p>If you’re attending the Fiesta, or even if you aren’t, feel free to come by the Headspring offices on Sunday to learn more about how open source software is written, ask questions about tools you’re using or would like to use, or even kick-start a new open-source project! Please bring a laptop if you can!</p>
 
 
-<p>Also, last week we had our quarterly offsite meeting and headed over to K1 Speed for Go Kart Racing. I came in last place and was just fine with it - going fast is dangerous. But the rest of the crowd had a grand ole time racing, bumping and running each other off the track like a bunch of professionals. Oh, we had a meeting too. Key points: the company is still growing strong and everyone still like working here.</p>
-
-
-<p><object width="400" height="300"><param name="flashvars" value="offsite=true&lang=en-us&page_show_url=%2Fphotos%2Fheadspring%2Fsets%2F72157630653691854%2Fshow%2F&page_show_back_url=%2Fphotos%2Fheadspring%2Fsets%2F72157630653691854%2F&set_id=72157630653691854&jump_to="></param><param name="movie" value="http://www.flickr.com/apps/slideshow/show.swf?v=109615"></param><param name="allowFullScreen" value="true"></param><embed type="application/x-shockwave-flash" src="http://www.flickr.com/apps/slideshow/show.swf?v=109615" allowFullScreen="true" flashvars="offsite=true&lang=en-us&page_show_url=%2Fphotos%2Fheadspring%2Fsets%2F72157630653691854%2Fshow%2F&page_show_back_url=%2Fphotos%2Fheadspring%2Fsets%2F72157630653691854%2F&set_id=72157630653691854&jump_to=" width="400" height="300"></embed></object></p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Saying Goodbye to Spicewood Springs Road]]></title>
-    <link href="http://headspringlabs.com/blog/saying-goodbye-to-spicewood-springs-road/"/>
-    <updated>2012-07-06T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/saying-goodbye-to-spicewood-springs-road</id>
-    <content type="html"><![CDATA[<p>We're moving offices tomorrow, which means today is packing day.  Although we'll miss the awesome view, we're looking forward to spreading out in our (giant) new home on Jollyville and Braker in the Avallon building.  Keep in touch, Dovetail folks!</p>
-
-
-<p>I'll be sure to post pictures of the new place once we move in.<br />
-<object width="400" height="300" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"><param name="flashvars" value="offsite=true&amp;lang=en-us&amp;page_show_url=%2Fphotos%2Fheadspring%2Fsets%2F72157630451128500%2Fshow%2F&amp;page_show_back_url=%2Fphotos%2Fheadspring%2Fsets%2F72157630451128500%2F&amp;set_id=72157630451128500&amp;jump_to=" /><param name="allowFullScreen" value="true" /><param name="src" value="http://www.flickr.com/apps/slideshow/show.swf?v=109615" /><param name="allowfullscreen" value="true" /><embed width="400" height="300" type="application/x-shockwave-flash" src="http://www.flickr.com/apps/slideshow/show.swf?v=109615" flashvars="offsite=true&amp;lang=en-us&amp;page_show_url=%2Fphotos%2Fheadspring%2Fsets%2F72157630451128500%2Fshow%2F&amp;page_show_back_url=%2Fphotos%2Fheadspring%2Fsets%2F72157630451128500%2F&amp;set_id=72157630451128500&amp;jump_to=" allowFullScreen="true" allowfullscreen="true" /></object></p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Bowling Night]]></title>
-    <link href="http://headspringlabs.com/blog/bowling-night/"/>
-    <updated>2012-06-27T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/bowling-night</id>
-    <content type="html"><![CDATA[<p>Summer is here and the livin' is...hot!  And busy!  New projects, family vacations, conferences (and sleep) have kept our plates so full that I almost forgot to update the blog! Never fear; pictures are here.</p>
-
-
-<p>Recently, we were selected for the highly coveted 4<a href="http://www.headspring.com/news/headspring-named-one-of-top-5-best-places-to-work-in-austin/" target="_blank">th place ranking</a> on the ABJ's Best Places to Work in Central Texas list.  In celebration, the team managed to wrangle their families together for bowling night at the Main Event.  Our company bowling team, the Headspring Hurwitzes, attempted to show off their skills, but they were no match for the kids. Those of us that knew better than to compete, delighted in the endless supply of nachos. We had a blast!</p>
-
-
-<p>Check out the photos:</p>
-
-
-<p><object width="600" height="400" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"><param name="src" value="https://picasaweb.google.com/s/c/bin/slideshow.swf" /><param name="flashvars" value="host=picasaweb.google.com&amp;hl=en_US&amp;feat=flashalbum&amp;RGB=0x000000&amp;feed=https%3A%2F%2Fpicasaweb.google.com%2Fdata%2Ffeed%2Fapi%2Fuser%2F116995917277898038900%2Falbumid%2F5756332069269080945%3Falt%3Drss%26kind%3Dphoto%26hl%3Den_US" /><param name="pluginspage" value="http://www.macromedia.com/go/getflashplayer" /><embed width="600" height="400" type="application/x-shockwave-flash" src="https://picasaweb.google.com/s/c/bin/slideshow.swf" flashvars="host=picasaweb.google.com&amp;hl=en_US&amp;feat=flashalbum&amp;RGB=0x000000&amp;feed=https%3A%2F%2Fpicasaweb.google.com%2Fdata%2Ffeed%2Fapi%2Fuser%2F116995917277898038900%2Falbumid%2F5756332069269080945%3Falt%3Drss%26kind%3Dphoto%26hl%3Den_US" pluginspage="http://www.macromedia.com/go/getflashplayer" /></object></p>
+<p>Get more details by going to the <a href="http://groups.google.com/group/pablos-fiesta-hackathon?hl=en_US">Google Group for Pablo’s Fiesta Hackathon</a>.</p>
 
 ]]></content>
   </entry>
