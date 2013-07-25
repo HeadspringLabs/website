@@ -1,0 +1,59 @@
+#team-page {
+    .teamMember {
+        stroke: #000;
+        stroke-width: 1px;
+    }
+
+    path.link {
+        fill: none;
+        stroke: #0F416D;
+        stroke-width: 1.5px;
+    }
+
+    .link {
+        stroke-opacity: .6;
+    }
+
+    .home {
+        stroke: #FFB50B;
+        font-size: 25px;
+        stroke-width: 3px;
+    }
+
+    .member {
+        stroke: #0F416D;
+    }
+
+    .badge {
+        stroke: #000;
+        stroke-width: 1px;
+    }
+
+    #wait-for-visualization {
+        display: inline-block;
+        text-align: center;
+        box-sizing: border-box;
+        width: 100%;
+        min-height: 900px;
+        background: url(/images/logos/logo.png) center center no-repeat;
+        text-shadow: 10px 5px 9px rgba(122, 150, 150, 1);
+    }
+
+    h1 {
+        font: normal 2em/1.1 'Fjalla One', Arial, sans-serif;
+        color: #5f5e61;
+        text-transform: uppercase;
+        border: .125em solid #5f5e61;
+        display: inline-block;
+        border-radius: .2em;
+        padding: .075em .075em 0;
+        -webkit-mask-image: url(/images/logos/b.png);
+        -webkit-transform: rotate(-3deg);
+        -moz-mask-image: url(b.png);
+        -moz-transform: rotate(-3deg);
+        -o-mask-image: url(/images/logos/b.png);
+        -o-transform: rotate(-3deg);
+        mask-image: url(/images/logos/b.png);
+        transform: rotate(-3deg);
+    }
+}

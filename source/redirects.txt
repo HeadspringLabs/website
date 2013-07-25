@@ -1,0 +1,10 @@
+---
+layout: nil
+---
+
+{% for post in site.posts %}
+
+old: http://www.headspring.com{{ post.url }}
+new: http://headspringlabs.com{{ post.url }}
+{% endfor %}
+

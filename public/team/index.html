@@ -7,7 +7,7 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="Learn more about our bright and talented developers. ">
+	<meta name="description" content="Learn more about our bright and talented developers. Loading Team Members var svg, force; var width = 1000, height = 720; var d3Data = { allMembers &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -17,6 +17,7 @@
 	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
 	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 	<script async="true" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.1.6/d3.min.js"></script>
 	
 </head>
 
@@ -82,20 +83,6 @@
 </header>
 	
 		
-<div id="banner" class="inner">
-	<div class="container">
-		<ul class="feed"></ul>
-	</div>
-	<small><a href="http://twitter.com/HeadspringLabs">HeadspringLabs</a> @ <a href="http://twitter.com">Twitter</a></small>
-	<div class="loading">Loading...</div>
-</div>
-<script src="/javascripts/twitter.js"></script>
-<script type="text/javascript">
-	(function($){
-		$('#banner').getTwitterFeed('HeadspringLabs', 5, );
-	})(jQuery);
-</script>
-
 	
 	<div id="content" class="inner"><article class="page">
     
@@ -103,7 +90,183 @@
     
     <div class="entry-content"><p>Learn more about our bright and talented developers.</p>
 
-</div>
+<div id="team-page">
+
+	<div id="wait-for-visualization"><h1>Loading Team Members</h1></div>
+    <div id="home" class="fix" style="display: none;">
+        <div class="team">
+        </div>
+    </div>
+    <script type="text/javascript">
+        var svg, force;
+        var width = 1000, height = 720;
+        var d3Data = {
+            allMembers: [],
+            links: [],
+            badges: [],
+            memberCount: 0,
+            loadedMemberCounter: 0,
+            showBadges: false
+        };
+
+        function showRenderWaitImage() {
+            $("#wait-for-visualization").show();
+            $("#home").hide();
+        }
+
+        function showRenderedVisualization() {
+            $("#wait-for-visualization").hide();
+            $("#home").show();
+        }
+
+        function onRenderComplete(force, callback) {
+            //When force.alpha() reaches 0, the simulation is complete.
+            function pollSimulationUntilComplete() {
+                //console.log(force.alpha());
+                if (force.alpha() > .04) {
+                    setTimeout(pollSimulationUntilComplete, 300);
+                } else {
+                    callback();
+                }
+            }
+
+            pollSimulationUntilComplete();
+        }
+
+        function loadD3() {
+            force = d3.layout.force()
+                             .nodes(d3Data.allMembers)
+                             .links(d3Data.links)
+                             .size([width, height])
+                             .linkDistance(function (d) { if (d.type === 'home') { return 250 } else if (d.type === 'badge') { return 10; }; return 175; })
+                             .charge(-900)
+                             .on("tick", tick)
+                             .start();
+
+            svg = d3.select(".team").append("svg")
+                                    .attr("width", width)
+                                    .attr("height", height);
+
+            // Define arrow head markers, one for each type of arrow.
+            svg.append("svg:defs")
+               .selectAll("marker")
+               .data(["member", "home", "badge", "teamMember"])
+               .enter().append("svg:marker")
+               .attr("id", String)
+               .attr("viewBox", "0 -5 10 10")
+               .attr("stroke", "0F416D")
+               .attr("fill", "#0F416D")
+               .attr("refX", 15)
+               .attr("refY", -1.5)
+               .attr("markerWidth", 6)
+               .attr("markerHeight", 6)
+               .attr("orient", "auto")
+               .append("svg:path")
+               .attr("d", "M0,-5L10,0L0,5");
+
+            //Draw edges.
+            var path = svg.append("svg:g")
+                          .selectAll("path")
+                          .data(force.links())
+                          .enter()
+                          .append("svg:path")
+                          .attr("class", function (d) { return "link " + d.type; })
+                          .attr("marker-end", function (d) { return "url(#" + d.type + ")"; });
+
+            var teamMember = svg.selectAll(".teamMember")
+                                .data(d3Data.allMembers)
+                                .enter()
+                                .append("g")
+                                .attr("class", "teamMember")
+                                .call(force.drag);
+
+            teamMember.append("image")
+                           .attr("xlink:href", "/images/logos/headspring.png")
+                           .attr("x", -8)
+                           .attr("y", -8)
+                           .attr("width", 20)
+                           .attr("height", 21);
+
+            teamMember.append("text")
+                            .attr("dx", 12)
+                            .attr("dy", ".35em")
+                            .append("a")
+                            .text(function (d) { return d.name; })
+                            .attr("class", function (d) { return "link " + d.type })
+                            .attr("xlink:href", function (d) { if (d.username == undefined) return ''; return "https://coderwall.com/" + d.username; })
+
+            onRenderComplete(force, showRenderedVisualization);
+
+            function tick() {
+                path.attr("d", function (d) {
+                    var dx = d.target.x - d.source.x,
+                    dy = d.target.y - d.source.y,
+                    dr = Math.sqrt(dx * dx + dy * dy);
+                    return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
+                });
+
+                teamMember.attr("transform", function (d) { return "translate(" + d.x + "," + d.y + ")"; });
+            }
+        }
+
+        function loadBadgesNodes(badges, currentMemberIndex) {
+            if (badges.length > 0) {
+                d3Data.badges.push(badges);
+
+                var currentBadgeIndex = currentMemberIndex;
+                for (var i = 0; i < badges.length; i++) {
+                    currentBadgeIndex++;
+                    d3Data.allMembers.push({ "name": badges[i].name, "location": "austin", "type": "badge" });
+                    d3Data.links.push({ "source": currentBadgeIndex, "target": currentMemberIndex, "value": 3, "type": "badge" });
+                }
+            }
+        }
+
+        function tempLoadOfLocationNodes() {
+            d3Data.allMembers.push({ "name": "Austin", "location": "austin", "type": "home" });
+            d3Data.allMembers.push({ "name": "Houston", "location": "houston", "type": "home" });
+            d3Data.links.push({ "source": 1, "target": 0, "value": 9, "type": "home" });
+        }
+
+        var loadUser = (function () {
+            var loader = function (response) {
+                var currentMember = response.data;
+                var locationIndex = 0;
+                d3Data.loadedMemberCounter++;
+
+                currentMember.type = "member";
+
+                d3Data.allMembers.push(currentMember);
+
+                var currentMemberIndex = d3Data.allMembers.length - 1;
+
+                if (currentMember.location.toLowerCase().match(/houston/i)) { locationIndex = 1; }
+
+                d3Data.links.push({ "source": locationIndex, "target": currentMemberIndex, "value": 3, "type": "member" });
+
+                if (d3Data.showBadges) {
+                    loadBadgesNodes(currentMember.badges, currentMemberIndex);
+                }
+
+                if (d3Data.loadedMemberCounter == d3Data.memberCount - 1) {
+                    loadD3();
+                }
+
+            };
+            return loader;
+        })();
+
+        var loadTeam = function (response) {
+            tempLoadOfLocationNodes();
+            d3Data.memberCount = response.data.team_members.length;
+            d3.select("body").data(response.data.team_members)
+              .enter().append("script")
+                .attr("src", function (d) { return "http://www.coderwall.com/" + d.username + ".json?callback=loadUser"; });
+        }
+    </script>
+    <script type="text/javascript" src="https://coderwall.com/team/headspring.json?callback=loadTeam"></script>
+
+</div></div>
 </article>
 
 	<div class="share">
