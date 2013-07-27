@@ -4,7 +4,7 @@ title: "Welcome to Headspring Labs"
 date: 2013-07-20 14:28
 comments: true
 categories: News
-author: chris
+author: 
 ---
 
 Headspring Labs is the new home for content, projects, and experiments from all the talented developers and consultants at [Headspring](http://www.headspring.com). This space was built for developers at Headspring, but we decided to share it with the rest of the software world.
