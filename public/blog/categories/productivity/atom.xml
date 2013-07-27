@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: productivity | Headspring Labs]]></title>
-  <link href="http://headspringlabs.com/blog/categories/productivity/atom.xml" rel="self"/>
-  <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-24T23:22:04-05:00</updated>
-  <id>http://headspringlabs.com/</id>
+  <link href="http://www.headspringlabs.com/blog/categories/productivity/atom.xml" rel="self"/>
+  <link href="http://www.headspringlabs.com/"/>
+  <updated>2013-07-27T15:36:16-05:00</updated>
+  <id>http://www.headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Increasing Development Enjoyment with RavenDB]]></title>
-    <link href="http://headspringlabs.com/blog/increasing-development-enjoyment-with-ravendb/"/>
+    <link href="http://www.headspringlabs.com/blog/increasing-development-enjoyment-with-ravendb/"/>
     <updated>2012-04-23T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/increasing-development-enjoyment-with-ravendb</id>
+    <id>http://www.headspringlabs.com/blog/increasing-development-enjoyment-with-ravendb</id>
     <content type="html"><![CDATA[<p>We have a lot of different options for data storage and retrieval available today. These options include the traditional relational database, document databases, key value stores, and even flat files. Every option has its benefits over the others, making some options better for some things and other options better for other things. Once the data storage and retrieval option is selected, we then typically have to select a product. Within a solution space, most products offer some distinction from their competitors. Such distinctions make certain products popular choices for a particular technology stack. For example, MySQL is a common choice for the LAMP stack, as is Microsoft SQL Server for the .NET stack.</p>
 
 
@@ -62,9 +62,9 @@
   
   <entry>
     <title type="html"><![CDATA[Improve developer productivity by losing your mouse]]></title>
-    <link href="http://headspringlabs.com/blog/improve-developer-productivity-by-losing-your-mouse/"/>
+    <link href="http://www.headspringlabs.com/blog/improve-developer-productivity-by-losing-your-mouse/"/>
     <updated>2011-08-31T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/improve-developer-productivity-by-losing-your-mouse</id>
+    <id>http://www.headspringlabs.com/blog/improve-developer-productivity-by-losing-your-mouse</id>
     <content type="html"><![CDATA[<p>I started my development career working for a very small company that developed accessibility software for the blind. I was fresh out of school and working on a screen reader for Windows 3.1. It was quite a challenge, in more ways than one.</p>
 
 

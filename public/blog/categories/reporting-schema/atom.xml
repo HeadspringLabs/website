@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: reporting schema | Headspring Labs]]></title>
-  <link href="http://headspringlabs.com/blog/categories/reporting-schema/atom.xml" rel="self"/>
-  <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-24T23:22:04-05:00</updated>
-  <id>http://headspringlabs.com/</id>
+  <link href="http://www.headspringlabs.com/blog/categories/reporting-schema/atom.xml" rel="self"/>
+  <link href="http://www.headspringlabs.com/"/>
+  <updated>2013-07-27T15:36:16-05:00</updated>
+  <id>http://www.headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Crafting an Extensible Reporting Schema]]></title>
-    <link href="http://headspringlabs.com/blog/crafting-an-extensible-reporting-schema/"/>
+    <link href="http://www.headspringlabs.com/blog/crafting-an-extensible-reporting-schema/"/>
     <updated>2011-09-28T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/crafting-an-extensible-reporting-schema</id>
+    <id>http://www.headspringlabs.com/blog/crafting-an-extensible-reporting-schema</id>
     <content type="html"><![CDATA[<p>Traditional relational database schemas are designed to keep computers happy. Indexes, foreign keys, joins...all of these tools allow for the highest level of optimization so data can be recorded and read back in record time. However, humans are typically very <em>un</em>happy when it comes time to answer business questions from this data.</p>
 
 

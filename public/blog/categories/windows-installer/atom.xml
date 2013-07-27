@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: windows installer | Headspring Labs]]></title>
-  <link href="http://headspringlabs.com/blog/categories/windows-installer/atom.xml" rel="self"/>
-  <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-24T23:22:04-05:00</updated>
-  <id>http://headspringlabs.com/</id>
+  <link href="http://www.headspringlabs.com/blog/categories/windows-installer/atom.xml" rel="self"/>
+  <link href="http://www.headspringlabs.com/"/>
+  <updated>2013-07-27T15:36:16-05:00</updated>
+  <id>http://www.headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Creating Windows Installers with the WiX Toolset - Summary]]></title>
-    <link href="http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-summary/"/>
+    <link href="http://www.headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-summary/"/>
     <updated>2013-03-15T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-summary</id>
+    <id>http://www.headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-summary</id>
     <content type="html"><![CDATA[<address>This article is part of a series exploring how to create installers for Windows software.  Here's the complete contents of the series.</address>
 
 
@@ -55,9 +55,9 @@
   
   <entry>
     <title type="html"><![CDATA[Creating Windows Installers with the WiX Toolset Part 8]]></title>
-    <link href="http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-8/"/>
+    <link href="http://www.headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-8/"/>
     <updated>2013-03-15T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-8</id>
+    <id>http://www.headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-8</id>
     <content type="html"><![CDATA[<address>This article is part of a series exploring how to create installers for Windows software.  Here's the complete contents of the series.</address>
 
 
@@ -137,9 +137,9 @@ We also have a variety of options on the right. States will show you the detecte
   
   <entry>
     <title type="html"><![CDATA[Creating Windows Installers with the WiX Toolset Part 7]]></title>
-    <link href="http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-7/"/>
+    <link href="http://www.headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-7/"/>
     <updated>2013-03-15T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-7</id>
+    <id>http://www.headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-7</id>
     <content type="html"><![CDATA[<address>This article is part of a series exploring how to create installers for Windows software.  Here's the complete contents of the series.</address>
 
 
@@ -257,9 +257,9 @@ This post explains how to create an MSI installer from the WiX files you’ve wr
   
   <entry>
     <title type="html"><![CDATA[Creating Windows Installers with the WiX Toolset Part 6]]></title>
-    <link href="http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-6/"/>
+    <link href="http://www.headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-6/"/>
     <updated>2013-02-28T00:00:00-06:00</updated>
-    <id>http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-6</id>
+    <id>http://www.headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-6</id>
     <content type="html"><![CDATA[<address>This article is part of a series exploring how to create installers for Windows software.  Here's the complete contents of the series.</address>
 
 
@@ -359,9 +359,9 @@ This post explains how to create an MSI installer from the WiX files you’ve wr
   
   <entry>
     <title type="html"><![CDATA[Creating Windows Installers with the WiX Toolset Part 5]]></title>
-    <link href="http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-5/"/>
+    <link href="http://www.headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-5/"/>
     <updated>2013-02-26T00:00:00-06:00</updated>
-    <id>http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-5</id>
+    <id>http://www.headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-5</id>
     <content type="html"><![CDATA[<address>This article is part of a series exploring how to create installers for Windows software.  Here's the complete contents of the series.</address>
 
 

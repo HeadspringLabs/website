@@ -22,3 +22,10 @@
 	width: $width;
 	height: $height;
 }
+@mixin headspring-list($margin){
+	line-height: 22px;
+	background: image-url('logos/hslabs_bullet.png') left no-repeat;
+	padding-left: 20px;
+	list-style-type: none;
+	margin: $margin;
+}

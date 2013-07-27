@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: notepad | Headspring Labs]]></title>
-  <link href="http://headspringlabs.com/blog/categories/notepad/atom.xml" rel="self"/>
-  <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-24T23:22:04-05:00</updated>
-  <id>http://headspringlabs.com/</id>
+  <link href="http://www.headspringlabs.com/blog/categories/notepad/atom.xml" rel="self"/>
+  <link href="http://www.headspringlabs.com/"/>
+  <updated>2013-07-27T15:36:16-05:00</updated>
+  <id>http://www.headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Notepad Will Corrupt Your Data]]></title>
-    <link href="http://headspringlabs.com/blog/notepad-will-corrupt-your-data/"/>
+    <link href="http://www.headspringlabs.com/blog/notepad-will-corrupt-your-data/"/>
     <updated>2012-04-09T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/notepad-will-corrupt-your-data</id>
+    <id>http://www.headspringlabs.com/blog/notepad-will-corrupt-your-data</id>
     <content type="html"><![CDATA[<h2>Summary</h2>
 
 

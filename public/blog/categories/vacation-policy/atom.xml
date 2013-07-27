@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: vacation policy | Headspring Labs]]></title>
-  <link href="http://headspringlabs.com/blog/categories/vacation-policy/atom.xml" rel="self"/>
-  <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-24T23:22:04-05:00</updated>
-  <id>http://headspringlabs.com/</id>
+  <link href="http://www.headspringlabs.com/blog/categories/vacation-policy/atom.xml" rel="self"/>
+  <link href="http://www.headspringlabs.com/"/>
+  <updated>2013-07-27T15:36:16-05:00</updated>
+  <id>http://www.headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[How we decided on our current vacation policy]]></title>
-    <link href="http://headspringlabs.com/blog/how-we-decided-on-our-current-vacation-policy/"/>
+    <link href="http://www.headspringlabs.com/blog/how-we-decided-on-our-current-vacation-policy/"/>
     <updated>2012-10-24T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/how-we-decided-on-our-current-vacation-policy</id>
+    <id>http://www.headspringlabs.com/blog/how-we-decided-on-our-current-vacation-policy</id>
     <content type="html"><![CDATA[<p><img style="margin: 0px 5px 5px 0px; display: inline; float: left" align="left" src="http://www.inc.com/uploaded_files/image/170x170/work-vacation-policy-bkt_3122.jpg"></p>
 
 

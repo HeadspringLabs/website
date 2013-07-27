@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: rhino mocks | Headspring Labs]]></title>
-  <link href="http://headspringlabs.com/blog/categories/rhino-mocks/atom.xml" rel="self"/>
-  <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-24T23:22:04-05:00</updated>
-  <id>http://headspringlabs.com/</id>
+  <link href="http://www.headspringlabs.com/blog/categories/rhino-mocks/atom.xml" rel="self"/>
+  <link href="http://www.headspringlabs.com/"/>
+  <updated>2013-07-27T15:36:16-05:00</updated>
+  <id>http://www.headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[When to Use a Rhino Mock, and When Not To]]></title>
-    <link href="http://headspringlabs.com/blog/when-to-use-a-rhino-mock-and-when-not-to/"/>
+    <link href="http://www.headspringlabs.com/blog/when-to-use-a-rhino-mock-and-when-not-to/"/>
     <updated>2011-08-22T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/when-to-use-a-rhino-mock-and-when-not-to</id>
+    <id>http://www.headspringlabs.com/blog/when-to-use-a-rhino-mock-and-when-not-to</id>
     <content type="html"><![CDATA[<p>When I sit down to write a unit test, my first step is to describe for myself, in English instead of code, what I intend to test. The words I choose give clues as to the structure of the test and the style: interaction-based versus state-based. I'll describe an example below.</p>
 
 

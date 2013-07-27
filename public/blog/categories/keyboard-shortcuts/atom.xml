@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: keyboard shortcuts | Headspring Labs]]></title>
-  <link href="http://headspringlabs.com/blog/categories/keyboard-shortcuts/atom.xml" rel="self"/>
-  <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-24T23:22:04-05:00</updated>
-  <id>http://headspringlabs.com/</id>
+  <link href="http://www.headspringlabs.com/blog/categories/keyboard-shortcuts/atom.xml" rel="self"/>
+  <link href="http://www.headspringlabs.com/"/>
+  <updated>2013-07-27T15:36:16-05:00</updated>
+  <id>http://www.headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Disabling language changes in Visual Studio]]></title>
-    <link href="http://headspringlabs.com/blog/disabling-language-changes-in-visual-studio/"/>
+    <link href="http://www.headspringlabs.com/blog/disabling-language-changes-in-visual-studio/"/>
     <updated>2013-04-12T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/disabling-language-changes-in-visual-studio</id>
+    <id>http://www.headspringlabs.com/blog/disabling-language-changes-in-visual-studio</id>
     <content type="html"><![CDATA[<p>On a recent project I used a workstation given to me by the client. It was typical "big enterprise" setup with support for multiple languages. I discovered there's a keyboard shortcut "Ctrl+Space" for changing your language that I would keep accidentally activating in Visual Studio. This post explains how to disable that.</p>
 
 

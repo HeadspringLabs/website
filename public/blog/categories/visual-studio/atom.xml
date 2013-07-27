@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Visual Studio | Headspring Labs]]></title>
-  <link href="http://headspringlabs.com/blog/categories/visual-studio/atom.xml" rel="self"/>
-  <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-24T23:22:04-05:00</updated>
-  <id>http://headspringlabs.com/</id>
+  <link href="http://www.headspringlabs.com/blog/categories/visual-studio/atom.xml" rel="self"/>
+  <link href="http://www.headspringlabs.com/"/>
+  <updated>2013-07-27T15:36:16-05:00</updated>
+  <id>http://www.headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Disabling language changes in Visual Studio]]></title>
-    <link href="http://headspringlabs.com/blog/disabling-language-changes-in-visual-studio/"/>
+    <link href="http://www.headspringlabs.com/blog/disabling-language-changes-in-visual-studio/"/>
     <updated>2013-04-12T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/disabling-language-changes-in-visual-studio</id>
+    <id>http://www.headspringlabs.com/blog/disabling-language-changes-in-visual-studio</id>
     <content type="html"><![CDATA[<p>On a recent project I used a workstation given to me by the client. It was typical "big enterprise" setup with support for multiple languages. I discovered there's a keyboard shortcut "Ctrl+Space" for changing your language that I would keep accidentally activating in Visual Studio. This post explains how to disable that.</p>
 
 
@@ -35,9 +35,9 @@
   
   <entry>
     <title type="html"><![CDATA[Customizing Visual Studio With External Tools, Part 3]]></title>
-    <link href="http://headspringlabs.com/blog/customizing-visual-studio-with-external-tools-part-3/"/>
+    <link href="http://www.headspringlabs.com/blog/customizing-visual-studio-with-external-tools-part-3/"/>
     <updated>2012-01-30T00:00:00-06:00</updated>
-    <id>http://headspringlabs.com/blog/customizing-visual-studio-with-external-tools-part-3</id>
+    <id>http://www.headspringlabs.com/blog/customizing-visual-studio-with-external-tools-part-3</id>
     <content type="html"><![CDATA[<p>In my previous posts (<a title="Customizing Visual Studio With External Tools, Part 1" href="http://www.headspring.com/2012/01/customizing-visual-studio-with-external-tools-part-1">part 1</a>, <a title="Customizing Visual Studio With External Tools, Part 2" href="http://www.headspring.com/2012/01/customizing-visual-studio-with-external-tools-part-2">part 2</a>) I showed you how to create external tools and add them to a custom tool bar. In this post we will go the next logical step and add them to the context menu, so when you right-click on a file in the solution explorer (or other places) you’re tools are right there for use.</p>
 
 
@@ -96,9 +96,9 @@
   
   <entry>
     <title type="html"><![CDATA[Customizing Visual Studio With External Tools, Part 2]]></title>
-    <link href="http://headspringlabs.com/blog/customizing-visual-studio-with-external-tools-part-2/"/>
+    <link href="http://www.headspringlabs.com/blog/customizing-visual-studio-with-external-tools-part-2/"/>
     <updated>2012-01-23T00:00:00-06:00</updated>
-    <id>http://headspringlabs.com/blog/customizing-visual-studio-with-external-tools-part-2</id>
+    <id>http://www.headspringlabs.com/blog/customizing-visual-studio-with-external-tools-part-2</id>
     <content type="html"><![CDATA[<p>In my <a href="http://www.headspring.com/2012/01/customizing-visual-studio-with-external-tools-part-1">previous post</a> I showed you how to configure your own External Tools in Visual Studio, such as a command that opens up the current document in an external text editor, or a tool that launches a custom deployment executable. External Tools by default are accessed through the Tools menu, but this is lame. In this post I’ll show you to create your own toolbar to contain your tools so they are no more than one click away.</p>
 
 
@@ -139,9 +139,9 @@
   
   <entry>
     <title type="html"><![CDATA[Customizing Visual Studio With External Tools, Part 1]]></title>
-    <link href="http://headspringlabs.com/blog/customizing-visual-studio-with-external-tools-part-1/"/>
+    <link href="http://www.headspringlabs.com/blog/customizing-visual-studio-with-external-tools-part-1/"/>
     <updated>2012-01-16T00:00:00-06:00</updated>
-    <id>http://headspringlabs.com/blog/customizing-visual-studio-with-external-tools-part-1</id>
+    <id>http://www.headspringlabs.com/blog/customizing-visual-studio-with-external-tools-part-1</id>
     <content type="html"><![CDATA[<p>Visual Studio has some deep customization options and extensibility points that many of us just ignore. Once such option is “External Tools” which allow you to create a menu item (and optional toolbar) that can run any external program you wish.</p>
 
 
@@ -210,9 +210,9 @@ Start /D.libdeployer .libdeployerTarantino.Deployer.exe</p>
   
   <entry>
     <title type="html"><![CDATA[Using jQuery in ASP.NET with IntelliSense Correctly]]></title>
-    <link href="http://headspringlabs.com/blog/using-jquery-in-asp-net-with-intellisense/"/>
+    <link href="http://www.headspringlabs.com/blog/using-jquery-in-asp-net-with-intellisense/"/>
     <updated>2011-09-23T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/using-jquery-in-asp-net-with-intellisense</id>
+    <id>http://www.headspringlabs.com/blog/using-jquery-in-asp-net-with-intellisense</id>
     <content type="html"><![CDATA[<p>When I'm teaching the MVC boot camp, I'm always amazed at how some of the smallest things are most impressive to students. One of the most common "wow" moments I see from students not familiar with jQuery is how you can trick Visual Studio to provide IntelliSense by including the vsdoc file, but make sure it still uses the min file for performance. That can be done by including the vsdoc file in an if(false) condition like below. This ensures it will never get included in the production code, which still tricking visual studio's tooling to import the IntelliSense.</p>
 
 

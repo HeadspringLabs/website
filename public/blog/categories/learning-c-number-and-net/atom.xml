@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: learning c# and .net | Headspring Labs]]></title>
-  <link href="http://headspringlabs.com/blog/categories/learning-c-number-and-net/atom.xml" rel="self"/>
-  <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-24T23:22:04-05:00</updated>
-  <id>http://headspringlabs.com/</id>
+  <link href="http://www.headspringlabs.com/blog/categories/learning-c-number-and-net/atom.xml" rel="self"/>
+  <link href="http://www.headspringlabs.com/"/>
+  <updated>2013-07-27T15:36:16-05:00</updated>
+  <id>http://www.headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[The Null Object Pattern in C# and System.Lazy]]></title>
-    <link href="http://headspringlabs.com/blog/the-null-object-pattern-in-c-and-system-lazy/"/>
+    <link href="http://www.headspringlabs.com/blog/the-null-object-pattern-in-c-and-system-lazy/"/>
     <updated>2012-04-06T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/the-null-object-pattern-in-c-and-system-lazy</id>
+    <id>http://www.headspringlabs.com/blog/the-null-object-pattern-in-c-and-system-lazy</id>
     <content type="html"><![CDATA[<p>This post is going to cover a pair of topics that aren’t truly related, but topics that I like to use together. When combined they can give you a nice pattern. First I’m going to briefly talk about the Null Object Pattern:</p>
 
 

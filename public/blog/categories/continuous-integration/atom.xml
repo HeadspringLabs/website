@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: continuous integration | Headspring Labs]]></title>
-  <link href="http://headspringlabs.com/blog/categories/continuous-integration/atom.xml" rel="self"/>
-  <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-24T23:22:04-05:00</updated>
-  <id>http://headspringlabs.com/</id>
+  <link href="http://www.headspringlabs.com/blog/categories/continuous-integration/atom.xml" rel="self"/>
+  <link href="http://www.headspringlabs.com/"/>
+  <updated>2013-07-27T15:36:16-05:00</updated>
+  <id>http://www.headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Continuous Integration: Early indicators mean inexpensive fixes]]></title>
-    <link href="http://headspringlabs.com/blog/continuous-integration-early-indicators-mean-inexpensive-fixes/"/>
+    <link href="http://www.headspringlabs.com/blog/continuous-integration-early-indicators-mean-inexpensive-fixes/"/>
     <updated>2011-12-02T00:00:00-06:00</updated>
-    <id>http://headspringlabs.com/blog/continuous-integration-early-indicators-mean-inexpensive-fixes</id>
+    <id>http://www.headspringlabs.com/blog/continuous-integration-early-indicators-mean-inexpensive-fixes</id>
     <content type="html"><![CDATA[<p>Earlier this year, I bought a car—my first <em>new</em> car. Although it fills me with sanctimonious hybrid glee (it really does), it's making me neurotic with instrument panel indicator lights. The low-tire-pressure indicator after the weather turned cold. The insistent exclamation point from the airbag computer in my seat. The glaring amber beacon from the Integrated Motor Assist battery. I've never had so many things go wrong with a car!</p>
 
 

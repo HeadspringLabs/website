@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Events | Headspring Labs]]></title>
-  <link href="http://headspringlabs.com/blog/categories/events/atom.xml" rel="self"/>
-  <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-24T23:22:04-05:00</updated>
-  <id>http://headspringlabs.com/</id>
+  <link href="http://www.headspringlabs.com/blog/categories/events/atom.xml" rel="self"/>
+  <link href="http://www.headspringlabs.com/"/>
+  <updated>2013-07-27T15:36:16-05:00</updated>
+  <id>http://www.headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Windows 8 For Business: Breakfast with Jeffrey Palermo]]></title>
-    <link href="http://headspringlabs.com/blog/windows-8-for-business-breakfast-with-jeffrey-palermo/"/>
+    <link href="http://www.headspringlabs.com/blog/windows-8-for-business-breakfast-with-jeffrey-palermo/"/>
     <updated>2012-10-28T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/windows-8-for-business-breakfast-with-jeffrey-palermo</id>
+    <id>http://www.headspringlabs.com/blog/windows-8-for-business-breakfast-with-jeffrey-palermo</id>
     <content type="html"><![CDATA[<p>Join Headspring President &amp; COO Jeffrey Palermo for a Windows 8 Small Business Workshop to learn how the new operating system can help your business succeed. Jeffrey will teach you how to navigate all the new features and demonstrate ways to make your business more productive.</p>
 
 

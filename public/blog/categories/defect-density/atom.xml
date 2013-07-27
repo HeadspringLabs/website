@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Defect Density | Headspring Labs]]></title>
-  <link href="http://headspringlabs.com/blog/categories/defect-density/atom.xml" rel="self"/>
-  <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-24T23:22:04-05:00</updated>
-  <id>http://headspringlabs.com/</id>
+  <link href="http://www.headspringlabs.com/blog/categories/defect-density/atom.xml" rel="self"/>
+  <link href="http://www.headspringlabs.com/"/>
+  <updated>2013-07-27T15:36:16-05:00</updated>
+  <id>http://www.headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Guest Blog [Muhammad Shujaat Siddiqi]: Defect Density as Estimation Tool]]></title>
-    <link href="http://headspringlabs.com/blog/defect-density-estimation/"/>
+    <link href="http://www.headspringlabs.com/blog/defect-density-estimation/"/>
     <updated>2012-03-07T00:00:00-06:00</updated>
-    <id>http://headspringlabs.com/blog/defect-density-estimation</id>
+    <id>http://www.headspringlabs.com/blog/defect-density-estimation</id>
     <content type="html"><![CDATA[<p><em><strong>Introduction</strong></em>:</p>
 
 

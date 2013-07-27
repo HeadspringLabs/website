@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: asp.net web api | Headspring Labs]]></title>
-  <link href="http://headspringlabs.com/blog/categories/asp-dot-net-web-api/atom.xml" rel="self"/>
-  <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-24T23:22:04-05:00</updated>
-  <id>http://headspringlabs.com/</id>
+  <link href="http://www.headspringlabs.com/blog/categories/asp-dot-net-web-api/atom.xml" rel="self"/>
+  <link href="http://www.headspringlabs.com/"/>
+  <updated>2013-07-27T15:36:16-05:00</updated>
+  <id>http://www.headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Another Tiny Contribution to WebApiContrib]]></title>
-    <link href="http://headspringlabs.com/blog/another-tiny-contribution-to-webapicontrib/"/>
+    <link href="http://www.headspringlabs.com/blog/another-tiny-contribution-to-webapicontrib/"/>
     <updated>2012-04-30T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/another-tiny-contribution-to-webapicontrib</id>
+    <id>http://www.headspringlabs.com/blog/another-tiny-contribution-to-webapicontrib</id>
     <content type="html"><![CDATA[<p>I have the privilege of working with lots of smart people. Sometimes they blog about things that are new, weird, wrong or backwards. <a href="http://lostechies.com/jimmybogard/">Jimmy Bogard</a> posted something the other day that, to me, was weird. If you’re bringing <a href="http://www.asp.net/web-api">ASP.NET Web API</a> into an existing ASP.NET web site or application, you probably want your API custom errors to match your web app’s custom errors. By default, this isn’t hooked up out of the box. In Jimmy’s post on <a href="http://lostechies.com/">Los Techies</a>, you’ll notice how he solves this problem.</p>
 
 

@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Podcast | Headspring Labs]]></title>
-  <link href="http://headspringlabs.com/blog/categories/podcast/atom.xml" rel="self"/>
-  <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-24T23:22:04-05:00</updated>
-  <id>http://headspringlabs.com/</id>
+  <link href="http://www.headspringlabs.com/blog/categories/podcast/atom.xml" rel="self"/>
+  <link href="http://www.headspringlabs.com/"/>
+  <updated>2013-07-27T15:36:16-05:00</updated>
+  <id>http://www.headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Mercurial basics with Logan Turner]]></title>
-    <link href="http://headspringlabs.com/blog/mercurial-basics/"/>
+    <link href="http://www.headspringlabs.com/blog/mercurial-basics/"/>
     <updated>2012-06-26T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/mercurial-basics</id>
+    <id>http://www.headspringlabs.com/blog/mercurial-basics</id>
     <content type="html"><![CDATA[<p><a href="http://feeds.headspring.com/headspringpodcast"><img class="alignleft size-full wp-image-5635" src="http://www.headspring.com/wp-content/uploads/2012/06/rss-icon40.jpg" alt="" width="40" height="40" /></a>In this cast, Logan Turner and Jeffrey Palermo discuss Mercurial basics.  Logan Turner is a Headspring intern and a student at LeTourneau University.  Logan has recently learned Mercurial, and he has helped another new employee come up to speed with this distributed version control system.</p>
 
 
@@ -34,9 +34,9 @@
   
   <entry>
     <title type="html"><![CDATA[RavenDB with Alonso Robles and Jeffrey Palermo]]></title>
-    <link href="http://headspringlabs.com/blog/ravendb-with-alonso-robles-and-jeffrey-palermo/"/>
+    <link href="http://www.headspringlabs.com/blog/ravendb-with-alonso-robles-and-jeffrey-palermo/"/>
     <updated>2012-06-02T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/ravendb-with-alonso-robles-and-jeffrey-palermo</id>
+    <id>http://www.headspringlabs.com/blog/ravendb-with-alonso-robles-and-jeffrey-palermo</id>
     <content type="html"><![CDATA[<p><a href="http://feeds.headspring.com/headspringpodcast"><img class="alignleft size-full wp-image-5225" title="Subscribe to podcast" src="http://www.headspring.com/wp-content/uploads/2012/05/rss-icon402.jpg" alt="Subscribe to podcast" width="40" height="40" /></a>In this cast, Alonso Robles and Jeffrey Palermo discuss RavenDB.  RavenDB is a document database that is very easy to use with .Net applications.  Alonso is a Principal Consultant at Headspring and teaches the RavenDB Boot Camp.  Along with spending time with his family, he enjoys learning new programming languages and is a self-described technology junkie.</p>
 
 
@@ -56,9 +56,9 @@
   
   <entry>
     <title type="html"><![CDATA[Industry groups with Sharon Cichelli, the founder of Polyglot Programmers of Austin]]></title>
-    <link href="http://headspringlabs.com/blog/polyglot-programmers-of-austin-and-the-importance-of-industry-groups-with-sharon-cichelli-and-jeffrey-palermo/"/>
+    <link href="http://www.headspringlabs.com/blog/polyglot-programmers-of-austin-and-the-importance-of-industry-groups-with-sharon-cichelli-and-jeffrey-palermo/"/>
     <updated>2012-05-21T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/polyglot-programmers-of-austin-and-the-importance-of-industry-groups-with-sharon-cichelli-and-jeffrey-palermo</id>
+    <id>http://www.headspringlabs.com/blog/polyglot-programmers-of-austin-and-the-importance-of-industry-groups-with-sharon-cichelli-and-jeffrey-palermo</id>
     <content type="html"><![CDATA[<p><a href="http://feeds.headspring.com/headspringpodcast"><img class="alignleft size-full wp-image-5225" src="http://www.headspring.com/wp-content/uploads/2012/05/rss-icon402.jpg" alt="Subscribe to podcast" width="40" height="40" /></a>In this cast, Sharon Cichelli and Jeffrey Palermo discuss the importance of industry groups, both the benefits of participating in, and volunteering for them.</p>
 
 
@@ -84,9 +84,9 @@
   
   <entry>
     <title type="html"><![CDATA[CQRS with Kevin Hurwitz and Jeffrey Palermo]]></title>
-    <link href="http://headspringlabs.com/blog/cqrs-with-kevin-hurwitz-and-jeffrey-palermo/"/>
+    <link href="http://www.headspringlabs.com/blog/cqrs-with-kevin-hurwitz-and-jeffrey-palermo/"/>
     <updated>2012-05-15T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/cqrs-with-kevin-hurwitz-and-jeffrey-palermo</id>
+    <id>http://www.headspringlabs.com/blog/cqrs-with-kevin-hurwitz-and-jeffrey-palermo</id>
     <content type="html"><![CDATA[<p><a href="http://feeds.headspring.com/headspringpodcast"><img class="alignleft size-full wp-image-5212" title="Subscribe to podcast" src="http://www.headspring.com/wp-content/uploads/2012/05/rss-icon401.jpg" alt="Subscribe to podcast" width="40" height="40" /></a>In this cast, Kevin Hurwitz (Chief Architect) discusses the Command Query Responsibility Segregation pattern with Jeffrey Palermo (President/COO).  We have used CQRS successfully in several development projects for clients, and we have learned when it is appropriate and when it is not.  This cast distills the pattern down to its simplest essence and attempts to talk concretely about what is different from applications that employ CQRS.  Here are some other resources.</p>
 
 
@@ -103,9 +103,9 @@
   
   <entry>
     <title type="html"><![CDATA[Database migrations with Kevin Hurwitz and Jeffrey Palermo]]></title>
-    <link href="http://headspringlabs.com/blog/database-migrations-with-kevin-hurwitz-and-jeffrey-palermo-on-the-headspring-podcast/"/>
+    <link href="http://www.headspringlabs.com/blog/database-migrations-with-kevin-hurwitz-and-jeffrey-palermo-on-the-headspring-podcast/"/>
     <updated>2012-05-14T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/database-migrations-with-kevin-hurwitz-and-jeffrey-palermo-on-the-headspring-podcast</id>
+    <id>http://www.headspringlabs.com/blog/database-migrations-with-kevin-hurwitz-and-jeffrey-palermo-on-the-headspring-podcast</id>
     <content type="html"><![CDATA[<p><a href="http://feeds.headspring.com/headspringpodcast"><img class="alignleft size-full wp-image-5225" title="Subscribe to podcast" src="http://www.headspring.com/wp-content/uploads/2012/05/rss-icon402.jpg" alt="Subscribe to podcast" width="40" height="40" /></a><a>In this cast, Kevin Hurwitz (Chief Architect) discusses database migrations and database change management with Jeffrey Palermo (President/COO) while covering the problem, options, and our recommended approach.  We use an open source tool called Tarantino in our deployment-based process.  This tool can be executed via a NAnt or Psake build script as well as stand-alone from the command line.  Here are some additional resources.</a></p>
 
 

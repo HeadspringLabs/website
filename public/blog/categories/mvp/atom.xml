@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: mvp | Headspring Labs]]></title>
-  <link href="http://headspringlabs.com/blog/categories/mvp/atom.xml" rel="self"/>
-  <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-24T23:22:04-05:00</updated>
-  <id>http://headspringlabs.com/</id>
+  <link href="http://www.headspringlabs.com/blog/categories/mvp/atom.xml" rel="self"/>
+  <link href="http://www.headspringlabs.com/"/>
+  <updated>2013-07-27T15:36:16-05:00</updated>
+  <id>http://www.headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[MVP vs MVC: Seeking better testability]]></title>
-    <link href="http://headspringlabs.com/blog/mvp-vs-mvc-seeking-better-testability/"/>
+    <link href="http://www.headspringlabs.com/blog/mvp-vs-mvc-seeking-better-testability/"/>
     <updated>2012-04-25T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/mvp-vs-mvc-seeking-better-testability</id>
+    <id>http://www.headspringlabs.com/blog/mvp-vs-mvc-seeking-better-testability</id>
     <content type="html"><![CDATA[<p>There's something nice about returning to an old design pattern. Comparing it with the pattern you're currently using gives you new insights about both.</p>
 
 

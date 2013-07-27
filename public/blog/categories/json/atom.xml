@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: json | Headspring Labs]]></title>
-  <link href="http://headspringlabs.com/blog/categories/json/atom.xml" rel="self"/>
-  <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-24T23:22:04-05:00</updated>
-  <id>http://headspringlabs.com/</id>
+  <link href="http://www.headspringlabs.com/blog/categories/json/atom.xml" rel="self"/>
+  <link href="http://www.headspringlabs.com/"/>
+  <updated>2013-07-27T15:36:16-05:00</updated>
+  <id>http://www.headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[An Underscore Templates Primer]]></title>
-    <link href="http://headspringlabs.com/blog/an-underscore-templates-primer/"/>
+    <link href="http://www.headspringlabs.com/blog/an-underscore-templates-primer/"/>
     <updated>2012-01-31T00:00:00-06:00</updated>
-    <id>http://headspringlabs.com/blog/an-underscore-templates-primer</id>
+    <id>http://www.headspringlabs.com/blog/an-underscore-templates-primer</id>
     <content type="html"><![CDATA[<p>In April 2011, the jQuery team <a href="http://api.jquery.com/category/plugins/templates/">announced</a> development on the popular jQuery Templates plugin would be delayed indefinitely. In need of a replacement, I began investigating alternatives and soon discovered <a href="http://documentcloud.github.com/underscore/">Underscore</a>, the "utility belt" library behind the awesome <a href="http://documentcloud.github.com/backbone/">Backbone.js</a> framework. The Underscore library includes an easy-to-use templating feature that easily integrates with any JSON data source, so read on to learn how easy it is to create JSON-backed templates.</p>
 
 

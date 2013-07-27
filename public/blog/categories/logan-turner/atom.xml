@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: logan turner | Headspring Labs]]></title>
-  <link href="http://headspringlabs.com/blog/categories/logan-turner/atom.xml" rel="self"/>
-  <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-24T23:22:04-05:00</updated>
-  <id>http://headspringlabs.com/</id>
+  <link href="http://www.headspringlabs.com/blog/categories/logan-turner/atom.xml" rel="self"/>
+  <link href="http://www.headspringlabs.com/"/>
+  <updated>2013-07-27T15:36:16-05:00</updated>
+  <id>http://www.headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Mercurial basics with Logan Turner]]></title>
-    <link href="http://headspringlabs.com/blog/mercurial-basics/"/>
+    <link href="http://www.headspringlabs.com/blog/mercurial-basics/"/>
     <updated>2012-06-26T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/mercurial-basics</id>
+    <id>http://www.headspringlabs.com/blog/mercurial-basics</id>
     <content type="html"><![CDATA[<p><a href="http://feeds.headspring.com/headspringpodcast"><img class="alignleft size-full wp-image-5635" src="http://www.headspring.com/wp-content/uploads/2012/06/rss-icon40.jpg" alt="" width="40" height="40" /></a>In this cast, Logan Turner and Jeffrey Palermo discuss Mercurial basics.  Logan Turner is a Headspring intern and a student at LeTourneau University.  Logan has recently learned Mercurial, and he has helped another new employee come up to speed with this distributed version control system.</p>
 
 

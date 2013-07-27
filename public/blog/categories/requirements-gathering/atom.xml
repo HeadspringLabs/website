@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: requirements gathering | Headspring Labs]]></title>
-  <link href="http://headspringlabs.com/blog/categories/requirements-gathering/atom.xml" rel="self"/>
-  <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-24T23:22:04-05:00</updated>
-  <id>http://headspringlabs.com/</id>
+  <link href="http://www.headspringlabs.com/blog/categories/requirements-gathering/atom.xml" rel="self"/>
+  <link href="http://www.headspringlabs.com/"/>
+  <updated>2013-07-27T15:36:16-05:00</updated>
+  <id>http://www.headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Requirement Gathering Techniques | Drawing 101]]></title>
-    <link href="http://headspringlabs.com/blog/requirement-gathering-techniques-drawing-101/"/>
+    <link href="http://www.headspringlabs.com/blog/requirement-gathering-techniques-drawing-101/"/>
     <updated>2011-07-29T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/requirement-gathering-techniques-drawing-101</id>
+    <id>http://www.headspringlabs.com/blog/requirement-gathering-techniques-drawing-101</id>
     <content type="html"><![CDATA[<p>If it can't be drawn, it can't be built. It’s the mantra in our office. Having heard it almost every day that I have been here at Headspring, I never really understood its power before I set out on the (thought to be exciting) task of rebuilding the company website.</p>
 
 

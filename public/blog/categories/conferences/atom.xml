@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: conferences | Headspring Labs]]></title>
-  <link href="http://headspringlabs.com/blog/categories/conferences/atom.xml" rel="self"/>
-  <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-24T23:22:04-05:00</updated>
-  <id>http://headspringlabs.com/</id>
+  <link href="http://www.headspringlabs.com/blog/categories/conferences/atom.xml" rel="self"/>
+  <link href="http://www.headspringlabs.com/"/>
+  <updated>2013-07-27T15:36:16-05:00</updated>
+  <id>http://www.headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Dallas Day of Dot NET: Get Nerdy With It]]></title>
-    <link href="http://headspringlabs.com/blog/dallas-day-of-dot-net-get-nerdy-with-it/"/>
+    <link href="http://www.headspringlabs.com/blog/dallas-day-of-dot-net-get-nerdy-with-it/"/>
     <updated>2012-03-08T00:00:00-06:00</updated>
-    <id>http://headspringlabs.com/blog/dallas-day-of-dot-net-get-nerdy-with-it</id>
+    <id>http://www.headspringlabs.com/blog/dallas-day-of-dot-net-get-nerdy-with-it</id>
     <content type="html"><![CDATA[<p>The bags are packed and we’re ready to head out for Dallas Day of Dot NET.  We've heard through event organizers that over 500 people are expected to attend.  Woo Hoo!  Half of our team is going, including President, Jeffrey Palermo, sporting a fresh polo from his recently bestowed and 7<sup>th</sup> consecutive Microsoft MVP title.</p>
 
 

@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Named Pipes | Headspring Labs]]></title>
-  <link href="http://headspringlabs.com/blog/categories/named-pipes/atom.xml" rel="self"/>
-  <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-24T23:22:04-05:00</updated>
-  <id>http://headspringlabs.com/</id>
+  <link href="http://www.headspringlabs.com/blog/categories/named-pipes/atom.xml" rel="self"/>
+  <link href="http://www.headspringlabs.com/"/>
+  <updated>2013-07-27T15:36:16-05:00</updated>
+  <id>http://www.headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[WCF IOC Away the need for Named Pipes]]></title>
-    <link href="http://headspringlabs.com/blog/wcf-ioc-away-the-need-for-named-pipes/"/>
+    <link href="http://www.headspringlabs.com/blog/wcf-ioc-away-the-need-for-named-pipes/"/>
     <updated>2013-02-13T00:00:00-06:00</updated>
-    <id>http://headspringlabs.com/blog/wcf-ioc-away-the-need-for-named-pipes</id>
+    <id>http://www.headspringlabs.com/blog/wcf-ioc-away-the-need-for-named-pipes</id>
     <content type="html"><![CDATA[<p>The NetNamedPipeBinding is the optimized binding for on-machine communication.  For most WCF implementations I have seen WCF is really only there to help facilitate RPC (Remote Procedure Calls).  When WCF is simply a way to segment your service layer into an optionally distributed deployment architecture there may be a much better way.  WCF has additional overhead that seams useless if the code is being executed on the same machine.  IOC (Inversion of Control) using DI (Dependency Injection) provides a relatively simple way to avoid WCF all together.</p>
 
 

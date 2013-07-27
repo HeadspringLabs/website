@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: ValidationAttribute | Headspring Labs]]></title>
-  <link href="http://headspringlabs.com/blog/categories/validationattribute/atom.xml" rel="self"/>
-  <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-24T23:22:04-05:00</updated>
-  <id>http://headspringlabs.com/</id>
+  <link href="http://www.headspringlabs.com/blog/categories/validationattribute/atom.xml" rel="self"/>
+  <link href="http://www.headspringlabs.com/"/>
+  <updated>2013-07-27T15:36:16-05:00</updated>
+  <id>http://www.headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[MVC Custom Unobtrusive Validator Attribute (Date Range Validation)]]></title>
-    <link href="http://headspringlabs.com/blog/mvc-custom-unobtrusive-validator-attribute-date-range-validation/"/>
+    <link href="http://www.headspringlabs.com/blog/mvc-custom-unobtrusive-validator-attribute-date-range-validation/"/>
     <updated>2013-03-19T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/mvc-custom-unobtrusive-validator-attribute-date-range-validation</id>
+    <id>http://www.headspringlabs.com/blog/mvc-custom-unobtrusive-validator-attribute-date-range-validation</id>
     <content type="html"><![CDATA[<p>There are some useful attributes in MVC that help render dynamic unobtrusive validation to the browser.   The more you can accomplish by simply adding an attribute to a property on a view model the less duplication of JavaScript you have to manage.  Out of the “MVC” box validation for date ranges would require custom JavaScript.  If you have multiple pages that all need to validate ranges, either from the current date or from another date property on your view model, how about having an attribute that you can use to handles this?</p>
 
 

@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: 
 
-Sitemap: http://headspringlabs.com/sitemap.xml 
+Sitemap: http://www.headspringlabs.com/sitemap.xml 

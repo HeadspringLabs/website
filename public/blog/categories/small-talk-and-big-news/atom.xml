@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Small Talk &amp; Big News | Headspring Labs]]></title>
-  <link href="http://headspringlabs.com/blog/categories/small-talk-and-big-news/atom.xml" rel="self"/>
-  <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-24T23:22:04-05:00</updated>
-  <id>http://headspringlabs.com/</id>
+  <link href="http://www.headspringlabs.com/blog/categories/small-talk-and-big-news/atom.xml" rel="self"/>
+  <link href="http://www.headspringlabs.com/"/>
+  <updated>2013-07-27T15:36:16-05:00</updated>
+  <id>http://www.headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Headspringers at Austin Code Camp]]></title>
-    <link href="http://headspringlabs.com/blog/headspringers-at-austin-code-camp/"/>
+    <link href="http://www.headspringlabs.com/blog/headspringers-at-austin-code-camp/"/>
     <updated>2012-05-11T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/headspringers-at-austin-code-camp</id>
+    <id>http://www.headspringlabs.com/blog/headspringers-at-austin-code-camp</id>
     <content type="html"><![CDATA[<p>Austin Code Camp has become a running tradition in the Austin area.  I still have a t-shirt from 2007 I occasionally mow the yard in!  While Austin Code Camp doesn't give out t-shirts anymore, it's still focused on providing FREE sessions for the development community, by members of the community.  This year's event is going to be June 9th.  You can register over at <a href="http://austincodecamp2012.com/">http://austincodecamp2012.com/</a>.</p>
 
 
@@ -44,9 +44,9 @@ Jeffrey Palermo - Star Schema and Reports, Onion Architecture</p>
   
   <entry>
     <title type="html"><![CDATA[Dallas Day of Dot NET: Get Nerdy With It]]></title>
-    <link href="http://headspringlabs.com/blog/dallas-day-of-dot-net-get-nerdy-with-it/"/>
+    <link href="http://www.headspringlabs.com/blog/dallas-day-of-dot-net-get-nerdy-with-it/"/>
     <updated>2012-03-08T00:00:00-06:00</updated>
-    <id>http://headspringlabs.com/blog/dallas-day-of-dot-net-get-nerdy-with-it</id>
+    <id>http://www.headspringlabs.com/blog/dallas-day-of-dot-net-get-nerdy-with-it</id>
     <content type="html"><![CDATA[<p>The bags are packed and we’re ready to head out for Dallas Day of Dot NET.  We've heard through event organizers that over 500 people are expected to attend.  Woo Hoo!  Half of our team is going, including President, Jeffrey Palermo, sporting a fresh polo from his recently bestowed and 7<sup>th</sup> consecutive Microsoft MVP title.</p>
 
 
@@ -96,9 +96,9 @@ Jeffrey Palermo - Star Schema and Reports, Onion Architecture</p>
   
   <entry>
     <title type="html"><![CDATA[Joining the Dark Side: Learning to Code with Grace and Dignity]]></title>
-    <link href="http://headspringlabs.com/blog/joining-the-dark-side-learning-to-code-with-grace-and-dignity/"/>
+    <link href="http://www.headspringlabs.com/blog/joining-the-dark-side-learning-to-code-with-grace-and-dignity/"/>
     <updated>2012-01-17T00:00:00-06:00</updated>
-    <id>http://headspringlabs.com/blog/joining-the-dark-side-learning-to-code-with-grace-and-dignity</id>
+    <id>http://www.headspringlabs.com/blog/joining-the-dark-side-learning-to-code-with-grace-and-dignity</id>
     <content type="html"><![CDATA[<p>Upon the suggestion of a coworker I joined 342,787 people (and counting) with a 2012 resolution to learn how to code.  It’s called <a href="http://codeyear.com/">CodeYear</a>, presented by <a href="http://www.codecademy.com/#!/exercises/0">CodeAcademy</a>, supported by companies like YCombinator, and made viral by the addition of my fellow student, <a href="http://mashable.com/2012/01/05/bloomberg-codecademy/">Michael Bloomberg</a>.   It’s a very simple, learn as you go platform, with big clean buttons and “dumbed down” explanations for the average Joe (or Jill).  I get an email every Monday with a new lesson to work on for the week.  As I progress, I earn badges and bragging rights to publish on Facebook and Twitter.</p>
 
 
@@ -145,9 +145,9 @@ Jeffrey Palermo - Star Schema and Reports, Onion Architecture</p>
   
   <entry>
     <title type="html"><![CDATA[What can we learn from Calvin & Hobbes?]]></title>
-    <link href="http://headspringlabs.com/blog/what-can-we-learn-from-calvin-hobbes/"/>
+    <link href="http://www.headspringlabs.com/blog/what-can-we-learn-from-calvin-hobbes/"/>
     <updated>2011-09-27T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/what-can-we-learn-from-calvin-hobbes</id>
+    <id>http://www.headspringlabs.com/blog/what-can-we-learn-from-calvin-hobbes</id>
     <content type="html"><![CDATA[<p>A lot of people call me up when they need custom software to solve a problem. While each project is a little bit different, they typically fall within a few categories of maintainable software solutions. I’ve learned a valuable lesson about categories though: Sometimes you have to throw them out the window to clearly understand a problem…</p>
 
 
@@ -179,9 +179,9 @@ Jeffrey Palermo - Star Schema and Reports, Onion Architecture</p>
   
   <entry>
     <title type="html"><![CDATA[Headspring Sponsoring Open Source Hackathon]]></title>
-    <link href="http://headspringlabs.com/blog/headspring-sponsoring-open-source-hackathon/"/>
+    <link href="http://www.headspringlabs.com/blog/headspring-sponsoring-open-source-hackathon/"/>
     <updated>2011-09-26T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/headspring-sponsoring-open-source-hackathon</id>
+    <id>http://www.headspringlabs.com/blog/headspring-sponsoring-open-source-hackathon</id>
     <content type="html"><![CDATA[<p>In conjunction with <a href="http://lostechies.github.com/fiesta/">Pablo’s Fiesta</a>, an open-space development conference being held in Austin September 30-October 2, Headspring will be sponsoring an Open Source Hackathon at our offices on Sunday October 2nd from 1 PM to 6 PM. Over 150 developers from all over the United States and beyond are coming to Austin for 3 days of ‘sharpening the saw’, and the Los Techies Crew realized that with all that brainpower in one place, we ought to be able to do some concentrated work on the open source tools we all use so much.</p>
 
 

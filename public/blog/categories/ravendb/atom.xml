@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: ravendb | Headspring Labs]]></title>
-  <link href="http://headspringlabs.com/blog/categories/ravendb/atom.xml" rel="self"/>
-  <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-24T23:22:04-05:00</updated>
-  <id>http://headspringlabs.com/</id>
+  <link href="http://www.headspringlabs.com/blog/categories/ravendb/atom.xml" rel="self"/>
+  <link href="http://www.headspringlabs.com/"/>
+  <updated>2013-07-27T15:36:16-05:00</updated>
+  <id>http://www.headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Increasing Development Enjoyment with RavenDB]]></title>
-    <link href="http://headspringlabs.com/blog/increasing-development-enjoyment-with-ravendb/"/>
+    <link href="http://www.headspringlabs.com/blog/increasing-development-enjoyment-with-ravendb/"/>
     <updated>2012-04-23T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/increasing-development-enjoyment-with-ravendb</id>
+    <id>http://www.headspringlabs.com/blog/increasing-development-enjoyment-with-ravendb</id>
     <content type="html"><![CDATA[<p>We have a lot of different options for data storage and retrieval available today. These options include the traditional relational database, document databases, key value stores, and even flat files. Every option has its benefits over the others, making some options better for some things and other options better for other things. Once the data storage and retrieval option is selected, we then typically have to select a product. Within a solution space, most products offer some distinction from their competitors. Such distinctions make certain products popular choices for a particular technology stack. For example, MySQL is a common choice for the LAMP stack, as is Microsoft SQL Server for the .NET stack.</p>
 
 
@@ -62,9 +62,9 @@
   
   <entry>
     <title type="html"><![CDATA[Demystifying RavenDB Queries and Dynamic Indexes]]></title>
-    <link href="http://headspringlabs.com/blog/demystifying-ravendb-queries-and-dynamic-indexes/"/>
+    <link href="http://www.headspringlabs.com/blog/demystifying-ravendb-queries-and-dynamic-indexes/"/>
     <updated>2012-04-19T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/demystifying-ravendb-queries-and-dynamic-indexes</id>
+    <id>http://www.headspringlabs.com/blog/demystifying-ravendb-queries-and-dynamic-indexes</id>
     <content type="html"><![CDATA[<p>Not long a go, I wrote a detailed blog post on <a href="http://www.headspring.com/2012/03/getting-started-with-ravendb">getting started with RavenDB</a> and described the process of performing the most basic CRUD (create, retrieve, update, and delete) operations. The operations covered in the post are great for working with single data entities. One thing I didn’t discuss was how to retrieve a set of data entities and that is exactly what I want to dive into here.</p>
 
 
@@ -258,9 +258,9 @@
   
   <entry>
     <title type="html"><![CDATA[Getting Started with RavenDB]]></title>
-    <link href="http://headspringlabs.com/blog/getting-started-with-ravendb/"/>
+    <link href="http://www.headspringlabs.com/blog/getting-started-with-ravendb/"/>
     <updated>2012-03-19T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/getting-started-with-ravendb</id>
+    <id>http://www.headspringlabs.com/blog/getting-started-with-ravendb</id>
     <content type="html"><![CDATA[<p>I have been following the NoSQL movement for a while now. I have <a href="http://alonsorobles.com/2012/01/10/nosql-big-data-polyglot-persistence-a-new-era/">blogged about the movement</a> and even written a how to post on <a href="http://alonsorobles.com/2011/08/08/running-apache-cassandra-0-8-2-on-windows-7/">setting up a popular column oriented data store</a>. It’s exciting to see the development of so many persistence alternatives. Don’t get me wrong either. The RDBMS is not dead. It just no longer the only kid on the block.</p>
 
 

@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: management | Headspring Labs]]></title>
-  <link href="http://headspringlabs.com/blog/categories/management/atom.xml" rel="self"/>
-  <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-24T23:22:04-05:00</updated>
-  <id>http://headspringlabs.com/</id>
+  <link href="http://www.headspringlabs.com/blog/categories/management/atom.xml" rel="self"/>
+  <link href="http://www.headspringlabs.com/"/>
+  <updated>2013-07-27T15:36:16-05:00</updated>
+  <id>http://www.headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Metrics, reports, KPIs, and the stuff developers must provide to executives]]></title>
-    <link href="http://headspringlabs.com/blog/metrics-reports-kpis-and-the-stuff-developers-must-provide-to-executives/"/>
+    <link href="http://www.headspringlabs.com/blog/metrics-reports-kpis-and-the-stuff-developers-must-provide-to-executives/"/>
     <updated>2012-04-12T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/metrics-reports-kpis-and-the-stuff-developers-must-provide-to-executives</id>
+    <id>http://www.headspringlabs.com/blog/metrics-reports-kpis-and-the-stuff-developers-must-provide-to-executives</id>
     <content type="html"><![CDATA[<p>In September of 2007, I joined <a href="http://www.headspring.com/">Headspring</a> as the CTO.  Now I serve as President and Chief Operating Officer.  When I joined, there were 4 other employees including the original founder serving as CEO.  He founded the company in 2001.  It has always been professional services, but the strategy has changed a few times over the years.  I started my career as a developer in the mid nineties, and now I’m an executive with lots of great developers that I support.  Like most, our company runs on metrics.  As a manager, I understand their worth.  Earlier in my career, I had no idea.</p>
 
 

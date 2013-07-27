@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: unit testing | Headspring Labs]]></title>
-  <link href="http://headspringlabs.com/blog/categories/unit-testing/atom.xml" rel="self"/>
-  <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-24T23:22:04-05:00</updated>
-  <id>http://headspringlabs.com/</id>
+  <link href="http://www.headspringlabs.com/blog/categories/unit-testing/atom.xml" rel="self"/>
+  <link href="http://www.headspringlabs.com/"/>
+  <updated>2013-07-27T15:36:16-05:00</updated>
+  <id>http://www.headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Using WaitHandles to Test Asynchronous Events]]></title>
-    <link href="http://headspringlabs.com/blog/using-waithandles-to-test-asynchronous-events/"/>
+    <link href="http://www.headspringlabs.com/blog/using-waithandles-to-test-asynchronous-events/"/>
     <updated>2012-06-20T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/using-waithandles-to-test-asynchronous-events</id>
+    <id>http://www.headspringlabs.com/blog/using-waithandles-to-test-asynchronous-events</id>
     <content type="html"><![CDATA[<p><em>By Casey Gum</em></p>
 
 
@@ -100,9 +100,9 @@
   
   <entry>
     <title type="html"><![CDATA[Becoming a Headspringer: Take Advantage of Working with Smart People]]></title>
-    <link href="http://headspringlabs.com/blog/becoming-a-headspringer-take-advantage-of-working-with-smart-people/"/>
+    <link href="http://www.headspringlabs.com/blog/becoming-a-headspringer-take-advantage-of-working-with-smart-people/"/>
     <updated>2012-04-10T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/becoming-a-headspringer-take-advantage-of-working-with-smart-people</id>
+    <id>http://www.headspringlabs.com/blog/becoming-a-headspringer-take-advantage-of-working-with-smart-people</id>
     <content type="html"><![CDATA[<p>As I was pondering a new topic to blog, I stumbled into one this morning. I was running some ideas by a few Headspringers, and they provided several options. I decided to go with a hybrid of their suggestions. What I originally planned to blog was a way to test Enumeration subclasses of the <a href="https://bitbucket.org/headspringlabs/tarantino/wiki/Home" target="_blank">Enumeration class from Tarantino</a>. What I ended up with was an even better way to test them. This is not an unusual happenstance at Headspring. If you talk to other Headspringers, you’re going to learn something new. It never ceases to amaze me how often I’m learning something. I like to think I’m doing some teaching, too, but I’m confident that I’m currently learning more than teaching.</p>
 
 
@@ -146,9 +146,9 @@ Basically, NUnit runs a test per type in EnumerationTypes and passes that type i
   
   <entry>
     <title type="html"><![CDATA[You Want To Change What?]]></title>
-    <link href="http://headspringlabs.com/blog/you-want-to-change-what/"/>
+    <link href="http://www.headspringlabs.com/blog/you-want-to-change-what/"/>
     <updated>2012-03-26T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/you-want-to-change-what</id>
+    <id>http://www.headspringlabs.com/blog/you-want-to-change-what</id>
     <content type="html"><![CDATA[<p>Change is inevitable. It is a simple fact of life which permeates into just about everything. Software development is no exception. Many software development life cycles have evolved and others have come into existence in an effort to help us deal with change. Programming languages, tools and techniques are also continuously evolving as well. Yet with all these improvements many project teams continue to struggle with change.</p>
 
 
@@ -216,9 +216,9 @@ Basically, NUnit runs a test per type in EnumerationTypes and passes that type i
   
   <entry>
     <title type="html"><![CDATA[Why I Like TestCase]]></title>
-    <link href="http://headspringlabs.com/blog/why-i-like-testcase/"/>
+    <link href="http://www.headspringlabs.com/blog/why-i-like-testcase/"/>
     <updated>2012-03-14T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/why-i-like-testcase</id>
+    <id>http://www.headspringlabs.com/blog/why-i-like-testcase</id>
     <content type="html"><![CDATA[<p><a href="http://nunit.org/?p=testCase&amp;r=2.5" target="_blank">TestCase</a> is one way you can run parameterized tests with NUnit. An example of how this is useful is testing a whitelist or blacklist. You only need to write the test once, then pass in your items to test some sort of output. If the requirements change and words need to be added to or removed from your list, you simply add another entry without the need for writing another test or set of tests.</p>
 
 
@@ -277,9 +277,9 @@ Basically, NUnit runs a test per type in EnumerationTypes and passes that type i
   
   <entry>
     <title type="html"><![CDATA[Continuous Integration: Early indicators mean inexpensive fixes]]></title>
-    <link href="http://headspringlabs.com/blog/continuous-integration-early-indicators-mean-inexpensive-fixes/"/>
+    <link href="http://www.headspringlabs.com/blog/continuous-integration-early-indicators-mean-inexpensive-fixes/"/>
     <updated>2011-12-02T00:00:00-06:00</updated>
-    <id>http://headspringlabs.com/blog/continuous-integration-early-indicators-mean-inexpensive-fixes</id>
+    <id>http://www.headspringlabs.com/blog/continuous-integration-early-indicators-mean-inexpensive-fixes</id>
     <content type="html"><![CDATA[<p>Earlier this year, I bought a car—my first <em>new</em> car. Although it fills me with sanctimonious hybrid glee (it really does), it's making me neurotic with instrument panel indicator lights. The low-tire-pressure indicator after the weather turned cold. The insistent exclamation point from the airbag computer in my seat. The glaring amber beacon from the Integrated Motor Assist battery. I've never had so many things go wrong with a car!</p>
 
 

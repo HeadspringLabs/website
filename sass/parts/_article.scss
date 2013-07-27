@@ -136,3 +136,24 @@ article{
 	padding: 15px 0;
 	@include border-shadow();
 }
+.author-info {
+	margin-left: 200px;
+	
+	.information {
+		width: 600px;
+		display: inline-block;
+
+		img {
+			display: block;
+			float: left;
+			margin: 8px;
+		}
+	}
+	.more-posts {
+		ul {
+			li {
+				@include headspring-list(15px);
+			}
+		}
+	}
+}

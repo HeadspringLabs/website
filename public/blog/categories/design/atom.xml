@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: design | Headspring Labs]]></title>
-  <link href="http://headspringlabs.com/blog/categories/design/atom.xml" rel="self"/>
-  <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-24T23:22:04-05:00</updated>
-  <id>http://headspringlabs.com/</id>
+  <link href="http://www.headspringlabs.com/blog/categories/design/atom.xml" rel="self"/>
+  <link href="http://www.headspringlabs.com/"/>
+  <updated>2013-07-27T15:36:16-05:00</updated>
+  <id>http://www.headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Onion Architecture: part 4 - after four years]]></title>
-    <link href="http://headspringlabs.com/blog/onion-architecture-part-4-after-four-years/"/>
+    <link href="http://www.headspringlabs.com/blog/onion-architecture-part-4-after-four-years/"/>
     <updated>2012-03-29T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/onion-architecture-part-4-after-four-years</id>
+    <id>http://www.headspringlabs.com/blog/onion-architecture-part-4-after-four-years</id>
     <content type="html"><![CDATA[<p>In 2008, I coined a new pattern name called Onion Architecture.  You can read the previous parts here: <a href="http://jeffreypalermo.com/blog/the-onion-architecture-part-1/">part 1</a>, <a href="http://jeffreypalermo.com/blog/the-onion-architecture-part-2/">part 2</a>, <a href="http://jeffreypalermo.com/blog/the-onion-architecture-part-3/">part 3</a>.  Over these four years, I’ve spoken about this pattern at user groups, conferences, and it’s even published in one of the chapters of <a href="http://manning.com/palermo3">ASP.NET MVC in Action</a> from <a href="http://manning.com/palermo3">Manning</a>.</p>
 
 

@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: budget | Headspring Labs]]></title>
-  <link href="http://headspringlabs.com/blog/categories/budget/atom.xml" rel="self"/>
-  <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-24T23:22:04-05:00</updated>
-  <id>http://headspringlabs.com/</id>
+  <link href="http://www.headspringlabs.com/blog/categories/budget/atom.xml" rel="self"/>
+  <link href="http://www.headspringlabs.com/"/>
+  <updated>2013-07-27T15:36:16-05:00</updated>
+  <id>http://www.headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[The failed record of the software industry–why software people don’t get it]]></title>
-    <link href="http://headspringlabs.com/blog/the-failed-record-of-the-software-industrywhy-software-people-dont-get-it/"/>
+    <link href="http://www.headspringlabs.com/blog/the-failed-record-of-the-software-industrywhy-software-people-dont-get-it/"/>
     <updated>2012-10-18T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/the-failed-record-of-the-software-industrywhy-software-people-dont-get-it</id>
+    <id>http://www.headspringlabs.com/blog/the-failed-record-of-the-software-industrywhy-software-people-dont-get-it</id>
     <content type="html"><![CDATA[<p>The Standish Group is an organization that has been studying and reporting on software projects for many years.&nbsp; In 1995, it reported that only 16.2% of software projects succeeded.&nbsp; In large companies, the number was only 8%.&nbsp; That is, these projects were on time and on budget.&nbsp; In 2012, there is some improvement.&nbsp; The 2012 report discusses waterfall projects and agile projects.&nbsp; A <a href="http://www.mountaingoatsoftware.com/uploads/blog/Agile-Waterfall-Success-Failure-Rates.jpg">summary of the success stats</a> demonstrates that agile projects do improve things across the board.&nbsp; That’s not surprising given that the 1995 report cited lack of stakeholder involvement and incomplete requirements as the top two contributing factors.&nbsp; <a href="http://agilemanifesto.org/principles.html">Agile principles</a> address both of those.&nbsp; </p>
 
 

@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: quattro | Headspring Labs]]></title>
-  <link href="http://headspringlabs.com/blog/categories/quattro/atom.xml" rel="self"/>
-  <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-24T23:22:04-05:00</updated>
-  <id>http://headspringlabs.com/</id>
+  <link href="http://www.headspringlabs.com/blog/categories/quattro/atom.xml" rel="self"/>
+  <link href="http://www.headspringlabs.com/"/>
+  <updated>2013-07-27T15:36:16-05:00</updated>
+  <id>http://www.headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Powershell and Calling External Executables]]></title>
-    <link href="http://headspringlabs.com/blog/powershell-and-calling-external-executables/"/>
+    <link href="http://www.headspringlabs.com/blog/powershell-and-calling-external-executables/"/>
     <updated>2011-08-18T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/powershell-and-calling-external-executables</id>
+    <id>http://www.headspringlabs.com/blog/powershell-and-calling-external-executables</id>
     <content type="html"><![CDATA[<p>In my last post on <a href="http://www.headspring.com/2011/08/avoiding-on-error-resume-next-when-using-powershell">error handling when using Powershell</a>, we saw how Powershell's default behavior for uncaught exceptions allows the rest of your script to continue running in a likely-invalid state, and how setting <strong>$global:ErrorActionPreference = "Stop"</strong> changes that behavior to stop as soon as an uncaught exception surfaces.</p>
 
 
@@ -79,9 +79,9 @@
   
   <entry>
     <title type="html"><![CDATA[Unit Testing Best Practices: Know your test's lifecycle, Part 1]]></title>
-    <link href="http://headspringlabs.com/blog/unit-testing-best-practices-know-your-tests-lifecycle-part-1/"/>
+    <link href="http://www.headspringlabs.com/blog/unit-testing-best-practices-know-your-tests-lifecycle-part-1/"/>
     <updated>2011-08-17T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/unit-testing-best-practices-know-your-tests-lifecycle-part-1</id>
+    <id>http://www.headspringlabs.com/blog/unit-testing-best-practices-know-your-tests-lifecycle-part-1</id>
     <content type="html"><![CDATA[<p>A long time ago, my development team decided to write our own unit test framework. Today that would be ridiculous, because there are so many mature options from the .NET community (NUnit, MbUnit, xUnit, MsTest, to name a few). But this was 2002, .NET was brand new, and we thought attribute-based metadata was a better approach to describing tests than the interface-and-naming-convention pattern that NUnit required at the time.</p>
 
 
@@ -153,9 +153,9 @@ Dispose</pre>
   
   <entry>
     <title type="html"><![CDATA[Requirement Gathering Techniques | Drawing 101]]></title>
-    <link href="http://headspringlabs.com/blog/requirement-gathering-techniques-drawing-101/"/>
+    <link href="http://www.headspringlabs.com/blog/requirement-gathering-techniques-drawing-101/"/>
     <updated>2011-07-29T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/requirement-gathering-techniques-drawing-101</id>
+    <id>http://www.headspringlabs.com/blog/requirement-gathering-techniques-drawing-101</id>
     <content type="html"><![CDATA[<p>If it can't be drawn, it can't be built. It’s the mantra in our office. Having heard it almost every day that I have been here at Headspring, I never really understood its power before I set out on the (thought to be exciting) task of rebuilding the company website.</p>
 
 

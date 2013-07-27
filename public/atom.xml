@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Headspring Labs]]></title>
-  <link href="http://headspringlabs.com/atom.xml" rel="self"/>
-  <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-24T23:22:04-05:00</updated>
-  <id>http://headspringlabs.com/</id>
+  <link href="http://www.headspringlabs.com/atom.xml" rel="self"/>
+  <link href="http://www.headspringlabs.com/"/>
+  <updated>2013-07-27T15:36:16-05:00</updated>
+  <id>http://www.headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
     
@@ -15,23 +15,23 @@
   
   <entry>
     <title type="html"><![CDATA[Welcome to Headspring Labs]]></title>
-    <link href="http://headspringlabs.com/blog/welcome-to-headspring-labs/"/>
+    <link href="http://www.headspringlabs.com/blog/welcome-to-headspring-labs/"/>
     <updated>2013-07-20T14:28:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/welcome-to-headspring-labs</id>
+    <id>http://www.headspringlabs.com/blog/welcome-to-headspring-labs</id>
     <content type="html"><![CDATA[<p>Headspring Labs is the new home for content, projects, and experiments from all the talented developers and consultants at <a href="http://www.headspring.com">Headspring</a>. This space was built for developers at Headspring, but we decided to share it with the rest of the software world.</p>
 
 <!--more-->
 
 
-<p>Since we&rsquo;ll be blogging here and adding new content all the time, be sure to <a href="http://headspringlabs.com/atom.xml">subscribe</a> to our feed to make sure you&rsquo;re getting all the updates. We also have accounts on <a href="https://twitter.com/HeadspringLabs">Twitter</a> and <a href="https://github.com/HeadspringLabs">GitHub</a>.</p>
+<p>Since we&rsquo;ll be blogging here and adding new content all the time, be sure to <a href="http://www.headspringlabs.com/atom.xml">subscribe</a> to our feed to make sure you&rsquo;re getting all the updates. We also have accounts on <a href="https://twitter.com/HeadspringLabs">Twitter</a> and <a href="https://github.com/HeadspringLabs">GitHub</a>.</p>
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[Disabling language changes in Visual Studio]]></title>
-    <link href="http://headspringlabs.com/blog/disabling-language-changes-in-visual-studio/"/>
+    <link href="http://www.headspringlabs.com/blog/disabling-language-changes-in-visual-studio/"/>
     <updated>2013-04-12T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/disabling-language-changes-in-visual-studio</id>
+    <id>http://www.headspringlabs.com/blog/disabling-language-changes-in-visual-studio</id>
     <content type="html"><![CDATA[<p>On a recent project I used a workstation given to me by the client. It was typical &#8220;big enterprise&#8221; setup with support for multiple languages. I discovered there&#8217;s a keyboard shortcut &#8220;Ctrl+Space&#8221; for changing your language that I would keep accidentally activating in Visual Studio. This post explains how to disable that.</p>
 <ul>
 <li>Go to the control panel.</li>
@@ -46,9 +46,9 @@
   
   <entry>
     <title type="html"><![CDATA[MVC Custom Unobtrusive Validator Attribute (Date Range Validation)]]></title>
-    <link href="http://headspringlabs.com/blog/mvc-custom-unobtrusive-validator-attribute-date-range-validation/"/>
+    <link href="http://www.headspringlabs.com/blog/mvc-custom-unobtrusive-validator-attribute-date-range-validation/"/>
     <updated>2013-03-19T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/mvc-custom-unobtrusive-validator-attribute-date-range-validation</id>
+    <id>http://www.headspringlabs.com/blog/mvc-custom-unobtrusive-validator-attribute-date-range-validation</id>
     <content type="html"><![CDATA[<p>There are some useful attributes in MVC that help render dynamic unobtrusive validation to the browser.   The more you can accomplish by simply adding an attribute to a property on a view model the less duplication of JavaScript you have to manage.  Out of the “MVC” box validation for date ranges would require custom JavaScript.  If you have multiple pages that all need to validate ranges, either from the current date or from another date property on your view model, how about having an attribute that you can use to handles this?</p>
 <p>In this blog I’m going to cover:</p>
 <ul>
@@ -80,9 +80,9 @@
   
   <entry>
     <title type="html"><![CDATA[Creating Windows Installers with the WiX Toolset - Summary]]></title>
-    <link href="http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-summary/"/>
+    <link href="http://www.headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-summary/"/>
     <updated>2013-03-15T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-summary</id>
+    <id>http://www.headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-summary</id>
     <content type="html"><![CDATA[<address>This article is part of a series exploring how to create installers for Windows software.  Here&#8217;s the complete contents of the series.</address>
 <address><a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-01/">Part 1 – What Kinds of Software Projects Benefit From an Installer?</a><br />
 <a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-02/">Part 2 – An Overview Of Windows Installer and its Features</a><br />
@@ -105,9 +105,9 @@
   
   <entry>
     <title type="html"><![CDATA[Creating Windows Installers with the WiX Toolset Part 8]]></title>
-    <link href="http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-8/"/>
+    <link href="http://www.headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-8/"/>
     <updated>2013-03-15T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-8</id>
+    <id>http://www.headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-8</id>
     <content type="html"><![CDATA[<address>This article is part of a series exploring how to create installers for Windows software.  Here&#8217;s the complete contents of the series.</address>
 <address><a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-01/">Part 1 – What Kinds of Software Projects Benefit From an Installer?</a><br />
 <a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-02/">Part 2 – An Overview Of Windows Installer and its Features</a><br />
@@ -148,9 +148,9 @@ We also have a variety of options on the right. States will show you the detecte
   
   <entry>
     <title type="html"><![CDATA[Creating Windows Installers with the WiX Toolset Part 7]]></title>
-    <link href="http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-7/"/>
+    <link href="http://www.headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-7/"/>
     <updated>2013-03-15T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-7</id>
+    <id>http://www.headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-7</id>
     <content type="html"><![CDATA[<address>This article is part of a series exploring how to create installers for Windows software.  Here&#8217;s the complete contents of the series.</address>
 <address><a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-01/">Part 1 – What Kinds of Software Projects Benefit From an Installer?</a><br />
 <a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-02/">Part 2 – An Overview Of Windows Installer and its Features</a><br />
@@ -201,9 +201,9 @@ This post explains how to create an MSI installer from the WiX files you’ve wr
   
   <entry>
     <title type="html"><![CDATA[Creating Windows Installers with the WiX Toolset Part 6]]></title>
-    <link href="http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-6/"/>
+    <link href="http://www.headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-6/"/>
     <updated>2013-02-28T00:00:00-06:00</updated>
-    <id>http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-6</id>
+    <id>http://www.headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-6</id>
     <content type="html"><![CDATA[<address>This article is part of a series exploring how to create installers for Windows software.  Here&#8217;s the complete contents of the series.</address>
 <address><a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-01/">Part 1 – What Kinds of Software Projects Benefit From an Installer?</a><br />
 <a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-02/">Part 2 – An Overview Of Windows Installer and its Features</a><br />
@@ -252,9 +252,9 @@ This post explains how to create an MSI installer from the WiX files you’ve wr
   
   <entry>
     <title type="html"><![CDATA[Creating Windows Installers with the WiX Toolset Part 5]]></title>
-    <link href="http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-5/"/>
+    <link href="http://www.headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-5/"/>
     <updated>2013-02-26T00:00:00-06:00</updated>
-    <id>http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-5</id>
+    <id>http://www.headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-5</id>
     <content type="html"><![CDATA[<address>This article is part of a series exploring how to create installers for Windows software.  Here&#8217;s the complete contents of the series.</address>
 <address><a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-01/">Part 1 – What Kinds of Software Projects Benefit From an Installer?</a><br />
 <a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-02/">Part 2 – An Overview Of Windows Installer and its Features</a><br />
@@ -318,9 +318,9 @@ This post explains how to create an MSI installer from the WiX files you’ve wr
   
   <entry>
     <title type="html"><![CDATA[WCF IOC Away the need for Named Pipes]]></title>
-    <link href="http://headspringlabs.com/blog/wcf-ioc-away-the-need-for-named-pipes/"/>
+    <link href="http://www.headspringlabs.com/blog/wcf-ioc-away-the-need-for-named-pipes/"/>
     <updated>2013-02-13T00:00:00-06:00</updated>
-    <id>http://headspringlabs.com/blog/wcf-ioc-away-the-need-for-named-pipes</id>
+    <id>http://www.headspringlabs.com/blog/wcf-ioc-away-the-need-for-named-pipes</id>
     <content type="html"><![CDATA[<p>The NetNamedPipeBinding is the optimized binding for on-machine communication.  For most WCF implementations I have seen WCF is really only there to help facilitate RPC (Remote Procedure Calls).  When WCF is simply a way to segment your service layer into an optionally distributed deployment architecture there may be a much better way.  WCF has additional overhead that seams useless if the code is being executed on the same machine.  IOC (Inversion of Control) using DI (Dependency Injection) provides a relatively simple way to avoid WCF all together.</p>
 <p>Lets take a simple WCF Service Contract for Customers.<br />
 <div><script src='https://gist.github.com/4945825.js'></script>
@@ -368,9 +368,9 @@ This post explains how to create an MSI installer from the WiX files you’ve wr
   
   <entry>
     <title type="html"><![CDATA[Creating Windows Installers with the WiX Toolset Part 04]]></title>
-    <link href="http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-04/"/>
+    <link href="http://www.headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-04/"/>
     <updated>2012-12-28T00:00:00-06:00</updated>
-    <id>http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-04</id>
+    <id>http://www.headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-04</id>
     <content type="html"><![CDATA[<address>This article is part of a series exploring how to create installers for Windows software.  Here&#8217;s the complete contents of the series.</address>
 <address><a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-01/">Part 1 – What Kinds of Software Projects Benefit From an Installer?</a><br />
 <a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-02/">Part 2 – An Overview Of Windows Installer and its Features</a><br />
@@ -401,9 +401,9 @@ This post explains how to create an MSI installer from the WiX files you’ve wr
   
   <entry>
     <title type="html"><![CDATA[Creating Windows Installers with the WiX Toolset Part 03]]></title>
-    <link href="http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-03/"/>
+    <link href="http://www.headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-03/"/>
     <updated>2012-12-28T00:00:00-06:00</updated>
-    <id>http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-03</id>
+    <id>http://www.headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-03</id>
     <content type="html"><![CDATA[<address>This article is part of a series exploring how to create installers for Windows software.  Here&#8217;s the complete contents of the series.</address>
 <address><a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-01/">Part 1 – What Kinds of Software Projects Benefit From an Installer?</a><br />
 <a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-02/">Part 2 – An Overview Of Windows Installer and its Features</a><br />
@@ -430,9 +430,9 @@ This post explains how to create an MSI installer from the WiX files you’ve wr
   
   <entry>
     <title type="html"><![CDATA[Teaching and Learning From Developers Internationally]]></title>
-    <link href="http://headspringlabs.com/blog/teaching-and-learning-from-developers-internationally/"/>
+    <link href="http://www.headspringlabs.com/blog/teaching-and-learning-from-developers-internationally/"/>
     <updated>2012-12-21T00:00:00-06:00</updated>
-    <id>http://headspringlabs.com/blog/teaching-and-learning-from-developers-internationally</id>
+    <id>http://www.headspringlabs.com/blog/teaching-and-learning-from-developers-internationally</id>
     <content type="html"><![CDATA[<p>At Headspring, we’re proud to have amazing leaders who are experts in the industry. Jimmy Bogard, our Technical Architect, not only excels at Headspring but also enthusiastically participates in the global development community. He recently went on a “world tour” to teach and meet developers in Ireland, England and Ukraine.  Jimmy had the opportunity to speak to the following groups. For more information about what information was presented at each event, <a href="http://lostechies.com/jimmybogard/2012/12/17/dublin-alt-net-skills-matter-kiev-alt-net-slides-code/" target="_blank">click here</a>.</p>
 <ul>
 <li><a href="http://dublinalt.net/2012/11/20/november-meetup-jimmy-bogard-on-real-world-polyglot-persistence/" target="_blank">Dublin ALT.NET</a> in <strong>Dublin, Ireland</strong></li>
@@ -450,9 +450,9 @@ This post explains how to create an MSI installer from the WiX files you’ve wr
   
   <entry>
     <title type="html"><![CDATA[Creating Windows Installers With the WiX Toolset, Part 02]]></title>
-    <link href="http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-02/"/>
+    <link href="http://www.headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-02/"/>
     <updated>2012-12-18T00:00:00-06:00</updated>
-    <id>http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-02</id>
+    <id>http://www.headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-02</id>
     <content type="html"><![CDATA[<address>This article is part of a series exploring how to create installers for Windows software.  Here&#8217;s the complete contents of the series.</address>
 <address><a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-01/">Part 1 – What Kinds of Software Projects Benefit From an Installer?</a><br />
 <a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-02/">Part 2 – An Overview Of Windows Installer and its Features</a><br />
@@ -483,9 +483,9 @@ This post explains how to create an MSI installer from the WiX files you’ve wr
   
   <entry>
     <title type="html"><![CDATA[Creating Windows Installers With the WiX Toolset, Part 01]]></title>
-    <link href="http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-01/"/>
+    <link href="http://www.headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-01/"/>
     <updated>2012-12-14T00:00:00-06:00</updated>
-    <id>http://headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-01</id>
+    <id>http://www.headspringlabs.com/blog/creating-windows-installers-with-the-wix-toolset-part-01</id>
     <content type="html"><![CDATA[<address>This article is part of a series exploring how to create installers for Windows software.  Here&#8217;s the complete contents of the series.</address>
 <address><a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-01/">Part 1 – What Kinds of Software Projects Benefit From an Installer?</a><br />
 <a href="http://www.headspring.com/nolan/creating-windows-installers-with-the-wix-toolset-part-02/">Part 2 – An Overview Of Windows Installer and its Features</a><br />
@@ -512,9 +512,9 @@ This post explains how to create an MSI installer from the WiX files you’ve wr
   
   <entry>
     <title type="html"><![CDATA[Learn Mercurial basics with Logan Turner]]></title>
-    <link href="http://headspringlabs.com/blog/learn-mercurial-basics-with-logan-turner/"/>
+    <link href="http://www.headspringlabs.com/blog/learn-mercurial-basics-with-logan-turner/"/>
     <updated>2012-11-09T00:00:00-06:00</updated>
-    <id>http://headspringlabs.com/blog/learn-mercurial-basics-with-logan-turner</id>
+    <id>http://www.headspringlabs.com/blog/learn-mercurial-basics-with-logan-turner</id>
     <content type="html"><![CDATA[<p>In this cast, Logan Turner and Jeffrey Palermo discuss Mercurial basics.  Logan Turner is a Headspring intern and a student at LeTourneau University.  Logan has recently learned Mercurial, and he has helped another new employee come up to speed with this distributed version control system.</p>
 <p>You might be interested in these Mercurial resources:</p>
 <ul>
@@ -526,9 +526,9 @@ This post explains how to create an MSI installer from the WiX files you’ve wr
   
   <entry>
     <title type="html"><![CDATA[Headspring is Ready to Rock!]]></title>
-    <link href="http://headspringlabs.com/blog/headspring-is-ready-to-rock/"/>
+    <link href="http://www.headspringlabs.com/blog/headspring-is-ready-to-rock/"/>
     <updated>2012-11-09T00:00:00-06:00</updated>
-    <id>http://headspringlabs.com/blog/headspring-is-ready-to-rock</id>
+    <id>http://www.headspringlabs.com/blog/headspring-is-ready-to-rock</id>
     <content type="html"><![CDATA[<p>What event sells out as fast as a Justin Beiber concert? <a href="http://codemash.org/" target="_blank">CodeMash</a>! Last year’s CodeMash conference sold out in 22 minutes. Bieber actually sold his entire North American tour in that time, but why mince words?</p>
 <p>We are excited to get together with developers from across the country for <a href="http://codemash.org/" target="_blank">CodeMash 2013</a> being held January 8 – 11, 2013 in Sandusky, Ohio. The conference is filled with information about updated practices, methodologies, and technology trends in a variety of platforms and development languages. There are terrific keynote speakers, workshops, time to geek out with fellow attendees and talk “code”, and possibly take a dip in Ohio’s largest indoor waterpark.</p>
 <p>Our team members Jimmy Bogard and Sharon Cichelli will be leading sessions at CodeMash.  Sharon will present “Hello, Arduino: Write Code that Interacts with the Real World” and Jimmy will be involved in the PreCompiler workshop.</p>
@@ -546,9 +546,9 @@ This post explains how to create an MSI installer from the WiX files you’ve wr
   
   <entry>
     <title type="html"><![CDATA[Migrating a Windows Install to a New Macbook]]></title>
-    <link href="http://headspringlabs.com/blog/migrating-a-windows-install-to-a-new-macbook/"/>
+    <link href="http://www.headspringlabs.com/blog/migrating-a-windows-install-to-a-new-macbook/"/>
     <updated>2012-11-02T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/migrating-a-windows-install-to-a-new-macbook</id>
+    <id>http://www.headspringlabs.com/blog/migrating-a-windows-install-to-a-new-macbook</id>
     <content type="html"><![CDATA[<p>Recently here at Headspring my workstation got upgraded from a PC laptop to a Macbook Pro. While I was excited about the new hardware and taking the plunge into Mac OS X (that’s the Roman numeral ten, not the 24th letter of the alphabet), I still needed to be able to run Windows and Visual Studio. This post summarizes the various options I explored, and my final setup.</p>
 <h3>Multiboot or Virtual Machine?</h3>
 <p>Multibooting is using a software tool that hooks your computer’s normal power on sequence and provides you a way to choose what operating system you want to load.</p>
@@ -585,9 +585,9 @@ This post explains how to create an MSI installer from the WiX files you’ve wr
   
   <entry>
     <title type="html"><![CDATA[Windows 8 For Business: Breakfast with Jeffrey Palermo]]></title>
-    <link href="http://headspringlabs.com/blog/windows-8-for-business-breakfast-with-jeffrey-palermo/"/>
+    <link href="http://www.headspringlabs.com/blog/windows-8-for-business-breakfast-with-jeffrey-palermo/"/>
     <updated>2012-10-28T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/windows-8-for-business-breakfast-with-jeffrey-palermo</id>
+    <id>http://www.headspringlabs.com/blog/windows-8-for-business-breakfast-with-jeffrey-palermo</id>
     <content type="html"><![CDATA[<p>Join Headspring President &amp; COO Jeffrey Palermo for a Windows 8 Small Business Workshop to learn how the new operating system can help your business succeed. Jeffrey will teach you how to navigate all the new features and demonstrate ways to make your business more productive.</p>
 <p>Learn to:<br />
 • Stay connected to your team and clients<br />
@@ -610,9 +610,9 @@ Space is limited. To register, please <a href="https://msevents.microsoft.com/CU
   
   <entry>
     <title type="html"><![CDATA[Avoid Mutation by Default]]></title>
-    <link href="http://headspringlabs.com/blog/avoid-mutation-by-default/"/>
+    <link href="http://www.headspringlabs.com/blog/avoid-mutation-by-default/"/>
     <updated>2012-10-25T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/avoid-mutation-by-default</id>
+    <id>http://www.headspringlabs.com/blog/avoid-mutation-by-default</id>
     <content type="html"><![CDATA[<p>Several weeks back, I was <a href="http://www.headspring.com/patrick/low-ceremony-xunit/">customizing xUnit</a> to cut down on ceremony in my tests.  When I ran into some trouble, I started looking through the source code for xUnit, and saw something a little surprising: tests within a test class are executed in a random order.  Sure, tests need to be isolated so that test execution order doesn&#8217;t affect their success or failure, but randomizing within the test runner seemed like overkill.</p>
 <p>If it ever caught an issue, it still wouldn&#8217;t tell me where the problem was, right?  It seemed like it would be better to execute in a deterministic order so that when I <em>do</em> get myself into trouble, it will be reproducible trouble.  Today, though, I was grateful for this behavior.  If you&#8217;re running tests frequently during development, the very fact that your newly-coded tests start failing at random <strong>is</strong> informative: <em>&#8220;What test is wrong?  The one that I just wrote.&#8221;</em></p>
 <h2>A Trivial Yet Broken Class</h2>
@@ -644,9 +644,9 @@ Space is limited. To register, please <a href="https://msevents.microsoft.com/CU
   
   <entry>
     <title type="html"><![CDATA[How we decided on our current vacation policy]]></title>
-    <link href="http://headspringlabs.com/blog/how-we-decided-on-our-current-vacation-policy/"/>
+    <link href="http://www.headspringlabs.com/blog/how-we-decided-on-our-current-vacation-policy/"/>
     <updated>2012-10-24T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/how-we-decided-on-our-current-vacation-policy</id>
+    <id>http://www.headspringlabs.com/blog/how-we-decided-on-our-current-vacation-policy</id>
     <content type="html"><![CDATA[<p><img style="margin: 0px 5px 5px 0px; display: inline; float: left" align="left" src="http://www.inc.com/uploaded_files/image/170x170/work-vacation-policy-bkt_3122.jpg"></p>
 <p>I very much liked the <a href="https://github.com/blog/1269-the-github-hiring-experience">GitHub write-up</a> on how they hire.&nbsp; It made me think back to a lot of decisions we’ve made at <a href="http://www.headspring.com/">Headspring</a>.&nbsp; One of them is the decision on vacation policy.&nbsp; With a mostly salaried work force, benefits is a big concern, and vacation is one of those.&nbsp; Here, I’ll attempt to share the progression of our vacation policy and how it came about.</p>
 <p>First, in 2007/2008 H1, Headspring had just added its 6th employee.&nbsp; The vacation policy was simple but not consistent.&nbsp; On paper, we said “two weeks” for everyone.&nbsp; In practice, we worked too much and didn’t even track days off.&nbsp; Then, by the end of 2008, we grew to over twelve employees and had to modify the policy.&nbsp; If memory serves me, it was in 2009 when we had real conversations and came up with a policy.</p>

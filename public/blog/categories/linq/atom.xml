@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: linq | Headspring Labs]]></title>
-  <link href="http://headspringlabs.com/blog/categories/linq/atom.xml" rel="self"/>
-  <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-24T23:22:04-05:00</updated>
-  <id>http://headspringlabs.com/</id>
+  <link href="http://www.headspringlabs.com/blog/categories/linq/atom.xml" rel="self"/>
+  <link href="http://www.headspringlabs.com/"/>
+  <updated>2013-07-27T15:36:16-05:00</updated>
+  <id>http://www.headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Improve your LINQ with .Any()]]></title>
-    <link href="http://headspringlabs.com/blog/improve-your-linq-with-any/"/>
+    <link href="http://www.headspringlabs.com/blog/improve-your-linq-with-any/"/>
     <updated>2012-02-21T00:00:00-06:00</updated>
-    <id>http://headspringlabs.com/blog/improve-your-linq-with-any</id>
+    <id>http://www.headspringlabs.com/blog/improve-your-linq-with-any</id>
     <content type="html"><![CDATA[<p>LINQ's <code>.Any()</code> method is under-utilized, given the benefits it brings in making your code briefer, clearer, and more efficient. LINQ in general improves the expressiveness of your collection-manipulating code by using declarative statements instead of imperative <code>foreach</code> loops; <code>.Any()</code> is a great tool in that regard.</p>
 
 

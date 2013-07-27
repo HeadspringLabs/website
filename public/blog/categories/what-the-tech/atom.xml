@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: What the tech? | Headspring Labs]]></title>
-  <link href="http://headspringlabs.com/blog/categories/what-the-tech/atom.xml" rel="self"/>
-  <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-24T23:22:04-05:00</updated>
-  <id>http://headspringlabs.com/</id>
+  <link href="http://www.headspringlabs.com/blog/categories/what-the-tech/atom.xml" rel="self"/>
+  <link href="http://www.headspringlabs.com/"/>
+  <updated>2013-07-27T15:36:16-05:00</updated>
+  <id>http://www.headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[The confusion around QA: why doesn’t the industry agree?]]></title>
-    <link href="http://headspringlabs.com/blog/the-confusion-around-qa-why-doesnt-the-industry-agree/"/>
+    <link href="http://www.headspringlabs.com/blog/the-confusion-around-qa-why-doesnt-the-industry-agree/"/>
     <updated>2012-03-30T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/the-confusion-around-qa-why-doesnt-the-industry-agree</id>
+    <id>http://www.headspringlabs.com/blog/the-confusion-around-qa-why-doesnt-the-industry-agree</id>
     <content type="html"><![CDATA[<p>Most people in the industry are undoubtedly familiar with the Software Development Lifecycle (SDLC).</p>
 
 
@@ -46,9 +46,9 @@
   
   <entry>
     <title type="html"><![CDATA[Becoming a Headspringer: Know thy ReSharper]]></title>
-    <link href="http://headspringlabs.com/blog/becoming-a-headspringer-know-thy-resharper/"/>
+    <link href="http://www.headspringlabs.com/blog/becoming-a-headspringer-know-thy-resharper/"/>
     <updated>2012-02-29T00:00:00-06:00</updated>
-    <id>http://headspringlabs.com/blog/becoming-a-headspringer-know-thy-resharper</id>
+    <id>http://www.headspringlabs.com/blog/becoming-a-headspringer-know-thy-resharper</id>
     <content type="html"><![CDATA[<p>Since I'm new to Headspring and we are hiring, I thought I would help give an edge to anyone applying and subscribing to our blog. There are many “features” (pun attempted) that make up a Headspringer and I’m hoping my fellow Headspring bloggers will help me verbalize them through the “Becoming a Headspringer” blog series. I will be starting this series with some quick tips on <a href="http://www.jetbrains.com/resharper/">ReSharper</a>. If you do not already have ReSharper or know what it is, immediately after reading this post is as good a time as any to try it out.</p>
 
 
@@ -149,9 +149,9 @@
   
   <entry>
     <title type="html"><![CDATA[I Have Framework Commitment Issues]]></title>
-    <link href="http://headspringlabs.com/blog/i-have-frameworkcommitment-issues/"/>
+    <link href="http://www.headspringlabs.com/blog/i-have-frameworkcommitment-issues/"/>
     <updated>2012-02-27T00:00:00-06:00</updated>
-    <id>http://headspringlabs.com/blog/i-have-frameworkcommitment-issues</id>
+    <id>http://www.headspringlabs.com/blog/i-have-frameworkcommitment-issues</id>
     <content type="html"><![CDATA[<p>Once upon a time, a problem was identified. Shortly thereafter a solution was found. After all it wasn't a tough problem and the solution was simple. A commercial framework was selected and the solution was implemented. Then it was re-implemented with an open source framework and then rolled back to the commercial framework. Both frameworks were evaluated and the findings revealed both frameworks had the features and functionality to solve the problem within the context of the solution. So what was the reason for indecisiveness?</p>
 
 
@@ -240,9 +240,9 @@
   
   <entry>
     <title type="html"><![CDATA[Joining the Dark Side: Learning to Code with Grace and Dignity]]></title>
-    <link href="http://headspringlabs.com/blog/joining-the-dark-side-learning-to-code-with-grace-and-dignity/"/>
+    <link href="http://www.headspringlabs.com/blog/joining-the-dark-side-learning-to-code-with-grace-and-dignity/"/>
     <updated>2012-01-17T00:00:00-06:00</updated>
-    <id>http://headspringlabs.com/blog/joining-the-dark-side-learning-to-code-with-grace-and-dignity</id>
+    <id>http://www.headspringlabs.com/blog/joining-the-dark-side-learning-to-code-with-grace-and-dignity</id>
     <content type="html"><![CDATA[<p>Upon the suggestion of a coworker I joined 342,787 people (and counting) with a 2012 resolution to learn how to code.  It’s called <a href="http://codeyear.com/">CodeYear</a>, presented by <a href="http://www.codecademy.com/#!/exercises/0">CodeAcademy</a>, supported by companies like YCombinator, and made viral by the addition of my fellow student, <a href="http://mashable.com/2012/01/05/bloomberg-codecademy/">Michael Bloomberg</a>.   It’s a very simple, learn as you go platform, with big clean buttons and “dumbed down” explanations for the average Joe (or Jill).  I get an email every Monday with a new lesson to work on for the week.  As I progress, I earn badges and bragging rights to publish on Facebook and Twitter.</p>
 
 
@@ -289,9 +289,9 @@
   
   <entry>
     <title type="html"><![CDATA[Technical Debt: How Much Interest Are You Willing to Pay?]]></title>
-    <link href="http://headspringlabs.com/blog/technical-debt/"/>
+    <link href="http://www.headspringlabs.com/blog/technical-debt/"/>
     <updated>2012-01-03T00:00:00-06:00</updated>
-    <id>http://headspringlabs.com/blog/technical-debt</id>
+    <id>http://www.headspringlabs.com/blog/technical-debt</id>
     <content type="html"><![CDATA[<p>In a perfect world, you build a product that runs smoothly and effortlessly forever.  It is instantly popular, and is built in such a way that it provides a uniform experience no matter whom or how many gravitate towards it.  Users love it just the way it is, and are pleasantly surprised by each new feature or version. Nothing goes wrong, so this product does not require support staff or maintenance of any kind.  You hire a few developers to add new features here and there, and these employees are completely content to stay in one position at your company forever and ever amen.</p>
 
 

@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: duo | Headspring Labs]]></title>
-  <link href="http://headspringlabs.com/blog/categories/duo/atom.xml" rel="self"/>
-  <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-24T23:22:04-05:00</updated>
-  <id>http://headspringlabs.com/</id>
+  <link href="http://www.headspringlabs.com/blog/categories/duo/atom.xml" rel="self"/>
+  <link href="http://www.headspringlabs.com/"/>
+  <updated>2013-07-27T15:36:16-05:00</updated>
+  <id>http://www.headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Test-driven development]]></title>
-    <link href="http://headspringlabs.com/blog/test-driven-development/"/>
+    <link href="http://www.headspringlabs.com/blog/test-driven-development/"/>
     <updated>2011-07-15T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/test-driven-development</id>
+    <id>http://www.headspringlabs.com/blog/test-driven-development</id>
     <content type="html"><![CDATA[<p>[caption id="attachment_426" align="alignright" width="300"]<img class="size-medium wp-image-426" title="RubeGoldberg" alt="" src="http://www.headspring.com/wp-content/uploads/2011/07/RubeGoldberg-300x184.gif" width="300" height="184" /> A as you raise spoon of soup to your mouth B it pulls the string C thereby jerking the ladle D which throws the cracker E past the parrot which jumps F causing the perch to tilt G upsetting seeds H into the pail I adding the extra weight to pull the cord J which opens and lights the automatic cigar lighter K setting off the rocket L which causes the sickle M to cut the string allowing the napkin to swing wiping off your chin[/caption]</p>
 
 

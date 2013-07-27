@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: nosql | Headspring Labs]]></title>
-  <link href="http://headspringlabs.com/blog/categories/nosql/atom.xml" rel="self"/>
-  <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-24T23:22:04-05:00</updated>
-  <id>http://headspringlabs.com/</id>
+  <link href="http://www.headspringlabs.com/blog/categories/nosql/atom.xml" rel="self"/>
+  <link href="http://www.headspringlabs.com/"/>
+  <updated>2013-07-27T15:36:16-05:00</updated>
+  <id>http://www.headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Getting Started with RavenDB]]></title>
-    <link href="http://headspringlabs.com/blog/getting-started-with-ravendb/"/>
+    <link href="http://www.headspringlabs.com/blog/getting-started-with-ravendb/"/>
     <updated>2012-03-19T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/getting-started-with-ravendb</id>
+    <id>http://www.headspringlabs.com/blog/getting-started-with-ravendb</id>
     <content type="html"><![CDATA[<p>I have been following the NoSQL movement for a while now. I have <a href="http://alonsorobles.com/2012/01/10/nosql-big-data-polyglot-persistence-a-new-era/">blogged about the movement</a> and even written a how to post on <a href="http://alonsorobles.com/2011/08/08/running-apache-cassandra-0-8-2-on-windows-7/">setting up a popular column oriented data store</a>. It’s exciting to see the development of so many persistence alternatives. Don’t get me wrong either. The RDBMS is not dead. It just no longer the only kid on the block.</p>
 
 

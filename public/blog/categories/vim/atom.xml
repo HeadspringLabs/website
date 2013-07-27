@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: vim | Headspring Labs]]></title>
-  <link href="http://headspringlabs.com/blog/categories/vim/atom.xml" rel="self"/>
-  <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-24T23:22:04-05:00</updated>
-  <id>http://headspringlabs.com/</id>
+  <link href="http://www.headspringlabs.com/blog/categories/vim/atom.xml" rel="self"/>
+  <link href="http://www.headspringlabs.com/"/>
+  <updated>2013-07-27T15:36:16-05:00</updated>
+  <id>http://www.headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Power to the Pinkies]]></title>
-    <link href="http://headspringlabs.com/blog/power-to-the-pinkies/"/>
+    <link href="http://www.headspringlabs.com/blog/power-to-the-pinkies/"/>
     <updated>2012-06-13T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/power-to-the-pinkies</id>
+    <id>http://www.headspringlabs.com/blog/power-to-the-pinkies</id>
     <content type="html"><![CDATA[<p><em>By Casey Gum</em></p>
 
 
@@ -93,9 +93,9 @@
   
   <entry>
     <title type="html"><![CDATA[Why try vi? (Part 1)]]></title>
-    <link href="http://headspringlabs.com/blog/why-try-vi-part-1/"/>
+    <link href="http://www.headspringlabs.com/blog/why-try-vi-part-1/"/>
     <updated>2012-06-04T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/why-try-vi-part-1</id>
+    <id>http://www.headspringlabs.com/blog/why-try-vi-part-1</id>
     <content type="html"><![CDATA[<p>Like most people, the majority of my time on a computer has been spent on systems having an O/S with a graphical user interface.  Because I was not raised in the arcane dungeons of the command-line interface, I never [thought I] had any reason to learn to use vi.</p>
 
 

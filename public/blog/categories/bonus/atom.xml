@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Bonus! | Headspring Labs]]></title>
-  <link href="http://headspringlabs.com/blog/categories/bonus/atom.xml" rel="self"/>
-  <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-24T23:22:04-05:00</updated>
-  <id>http://headspringlabs.com/</id>
+  <link href="http://www.headspringlabs.com/blog/categories/bonus/atom.xml" rel="self"/>
+  <link href="http://www.headspringlabs.com/"/>
+  <updated>2013-07-27T15:36:16-05:00</updated>
+  <id>http://www.headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Teaching and Learning From Developers Internationally]]></title>
-    <link href="http://headspringlabs.com/blog/teaching-and-learning-from-developers-internationally/"/>
+    <link href="http://www.headspringlabs.com/blog/teaching-and-learning-from-developers-internationally/"/>
     <updated>2012-12-21T00:00:00-06:00</updated>
-    <id>http://headspringlabs.com/blog/teaching-and-learning-from-developers-internationally</id>
+    <id>http://www.headspringlabs.com/blog/teaching-and-learning-from-developers-internationally</id>
     <content type="html"><![CDATA[<p>At Headspring, we’re proud to have amazing leaders who are experts in the industry. Jimmy Bogard, our Technical Architect, not only excels at Headspring but also enthusiastically participates in the global development community. He recently went on a “world tour” to teach and meet developers in Ireland, England and Ukraine.  Jimmy had the opportunity to speak to the following groups. For more information about what information was presented at each event, <a href="http://lostechies.com/jimmybogard/2012/12/17/dublin-alt-net-skills-matter-kiev-alt-net-slides-code/" target="_blank">click here</a>.</p>
 
 
@@ -50,9 +50,9 @@
   
   <entry>
     <title type="html"><![CDATA[Headspring is Ready to Rock!]]></title>
-    <link href="http://headspringlabs.com/blog/headspring-is-ready-to-rock/"/>
+    <link href="http://www.headspringlabs.com/blog/headspring-is-ready-to-rock/"/>
     <updated>2012-11-09T00:00:00-06:00</updated>
-    <id>http://headspringlabs.com/blog/headspring-is-ready-to-rock</id>
+    <id>http://www.headspringlabs.com/blog/headspring-is-ready-to-rock</id>
     <content type="html"><![CDATA[<p>What event sells out as fast as a Justin Beiber concert? <a href="http://codemash.org/" target="_blank">CodeMash</a>! Last year’s CodeMash conference sold out in 22 minutes. Bieber actually sold his entire North American tour in that time, but why mince words?</p>
 
 
@@ -87,9 +87,9 @@
   
   <entry>
     <title type="html"><![CDATA[Becoming a Headspringer: My First Week]]></title>
-    <link href="http://headspringlabs.com/blog/becoming-a-headspringer-my-first-week/"/>
+    <link href="http://www.headspringlabs.com/blog/becoming-a-headspringer-my-first-week/"/>
     <updated>2012-04-27T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/becoming-a-headspringer-my-first-week</id>
+    <id>http://www.headspringlabs.com/blog/becoming-a-headspringer-my-first-week</id>
     <content type="html"><![CDATA[<h2 dir="ltr">Welcome Number 7941</h2>
 
 
@@ -150,9 +150,9 @@ That's when it hit me.  The four core values are a deep commitment at Headsprin
   
   <entry>
     <title type="html"><![CDATA[Overcoming Perfectionism]]></title>
-    <link href="http://headspringlabs.com/blog/overcoming-perfectionism/"/>
+    <link href="http://www.headspringlabs.com/blog/overcoming-perfectionism/"/>
     <updated>2012-04-16T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/overcoming-perfectionism</id>
+    <id>http://www.headspringlabs.com/blog/overcoming-perfectionism</id>
     <content type="html"><![CDATA[<h2></h2>
 
 
@@ -257,9 +257,9 @@ That's when it hit me.  The four core values are a deep commitment at Headsprin
   
   <entry>
     <title type="html"><![CDATA[Metrics, reports, KPIs, and the stuff developers must provide to executives]]></title>
-    <link href="http://headspringlabs.com/blog/metrics-reports-kpis-and-the-stuff-developers-must-provide-to-executives/"/>
+    <link href="http://www.headspringlabs.com/blog/metrics-reports-kpis-and-the-stuff-developers-must-provide-to-executives/"/>
     <updated>2012-04-12T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/metrics-reports-kpis-and-the-stuff-developers-must-provide-to-executives</id>
+    <id>http://www.headspringlabs.com/blog/metrics-reports-kpis-and-the-stuff-developers-must-provide-to-executives</id>
     <content type="html"><![CDATA[<p>In September of 2007, I joined <a href="http://www.headspring.com/">Headspring</a> as the CTO.  Now I serve as President and Chief Operating Officer.  When I joined, there were 4 other employees including the original founder serving as CEO.  He founded the company in 2001.  It has always been professional services, but the strategy has changed a few times over the years.  I started my career as a developer in the mid nineties, and now I’m an executive with lots of great developers that I support.  Like most, our company runs on metrics.  As a manager, I understand their worth.  Earlier in my career, I had no idea.</p>
 
 

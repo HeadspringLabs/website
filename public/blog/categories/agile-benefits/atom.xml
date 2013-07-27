@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: agile benefits | Headspring Labs]]></title>
-  <link href="http://headspringlabs.com/blog/categories/agile-benefits/atom.xml" rel="self"/>
-  <link href="http://headspringlabs.com/"/>
-  <updated>2013-07-24T23:22:04-05:00</updated>
-  <id>http://headspringlabs.com/</id>
+  <link href="http://www.headspringlabs.com/blog/categories/agile-benefits/atom.xml" rel="self"/>
+  <link href="http://www.headspringlabs.com/"/>
+  <updated>2013-07-27T15:36:16-05:00</updated>
+  <id>http://www.headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Unit Testing Best Practices: Know Your Test’s Lifecycle, Part 2]]></title>
-    <link href="http://headspringlabs.com/blog/unit-testing-best-practices-know-your-tests-lifecycle-part-2/"/>
+    <link href="http://www.headspringlabs.com/blog/unit-testing-best-practices-know-your-tests-lifecycle-part-2/"/>
     <updated>2011-09-07T00:00:00-05:00</updated>
-    <id>http://headspringlabs.com/blog/unit-testing-best-practices-know-your-tests-lifecycle-part-2</id>
+    <id>http://www.headspringlabs.com/blog/unit-testing-best-practices-know-your-tests-lifecycle-part-2</id>
     <content type="html"><![CDATA[<p>In my <a title="Unit Testing Best Practices: Know your test’s lifecycle, Part 1" href="http://www.headspring.com/2011/08/unit-testing-best-practices-know-your-tests-lifecycle-part-1">first post in the Unit Testing Best Practices series</a>, I introduced you to the basic lifecycle of an NUnit test fixture. This time, we're going to see what happens when we give our tests a common test fixture base class.<br />
 <span class="Apple-style-span" style="font-size: 26px"><strong>Why a base class?</strong></span><br />
 There are two cases where having a base test fixture can be useful in keeping your test code simpler:</p>
