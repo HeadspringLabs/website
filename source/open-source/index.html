@@ -12,7 +12,11 @@ title: Open Source
 {% assign proj = site.open_source_projects[key] %}
 	<div class="project">
 		<div class="content">
+			{% if proj.web %}
+			<h1><a href="{{ proj.web }}">{{ proj.name }}</a></h1>
+			{% else %}
 			<h1>{{ proj.name }}</h1>
+			{% endif %}
 			<p>{{ proj.description }}</p>
 		</div>
 		<div class="logo-links">
