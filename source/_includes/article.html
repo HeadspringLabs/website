@@ -36,7 +36,7 @@
 	<div class="more-posts">
 		<strong>More Posts by {{ author.name }}</strong>
 		<ul>
-			{% for a_post in site.posts limit: 5 %}
+			{% for a_post in site.posts limit: 10 %}
 			{% if a_post.author == author.key %}
 			<li><a href="{{ a_post.url }}">{{ a_post.title | truncatewords: 5 }}</a></li>
 			{% endif %}
