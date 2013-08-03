@@ -31,13 +31,16 @@
 	<div class="information">
 	    <img src="https://secure.gravatar.com/avatar/{{ author.gravatar }}?s=120" heigh="120" width="120" />
 	    <h4>{{ author.name }}</h4>
-	    <p>is from {{ author.location }}</p>
+	    <p>{{ author.description }}</p>
 	</div>
 	<div class="more-posts">
 		<strong>More Posts by {{ author.name }}</strong>
 		<ul>
-			<li>post 1</li>
-			<li>another post</li>
+			{% for a_post in site.posts limit: 5 %}
+			{% if a_post.author == author.key %}
+			<li><a href="{{ a_post.url }}">{{ a_post.title | truncatewords: 5 }}</a></li>
+			{% endif %}
+			{% endfor %}
 		</ul>
 	</div>
 </div>

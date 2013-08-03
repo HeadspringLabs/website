@@ -219,10 +219,12 @@ authors:
     github: cedricyao
     location: Austin, TX
   chris:
+    key: chris
     name: Chris Missal
     gravatar: 09f73b6f180bb61f39369784d5082d09
     twitter: ChrisMissal
     github: ChrisMissal
+    description: Chris started as a Senior Consultant with Headspring in Feb 2012. He loves C# and JavaScript and likes to bowl with the Headspring Hurwitzes.
     location: Austin, TX
   deran:
     name: Deran Schilling

@@ -137,10 +137,13 @@ article{
 	@include border-shadow();
 }
 .author-info {
+	margin-top: 35px;
 	margin-left: 200px;
+	display: inline-block;
 	
 	.information {
-		width: 600px;
+		width: 400px;
+		float: left;
 		display: inline-block;
 
 		img {
@@ -148,9 +151,21 @@ article{
 			float: left;
 			margin: 8px;
 		}
+		h4, p {
+			margin: 8px;
+		}
+		p {
+			font-size: smaller;
+			line-height: 180%;
+		}
 	}
 	.more-posts {
+		float: left;
+		display: inline-block;
+
 		ul {
+			font-size: smaller;
+			
 			li {
 				@include headspring-list(15px);
 			}
