@@ -3,10 +3,11 @@ $header-height: 115px;
 #header{
 	background-color: $color-background-header;
 	border-bottom: 1px solid $color-gray04;
+	overflow: hidden;
 	@media screen and (max-width: 1040px){
 		height: auto;
 		position: relative;
-		padding-bottom: 10px;
+		padding-bottom: 0;
 	}
 	a{
 		color: $color-gray05;
@@ -22,7 +23,11 @@ $header-height: 115px;
 		height: $header-height;
 		width: 470px;
 		@media screen and (max-width: 1040px){
-			float: none;
+			/*float: none;*/
+		}
+		@media screen and (max-width: 600px){
+			background-size: 300px 300/470*115px;
+			background-position-x: 0;
 		}
 	}
 }
@@ -37,10 +42,10 @@ $header-height: 115px;
 		margin-left: 0;
 		margin-top: 15px;
 	}
+	@media screen and (max-width: 600px){
+		text-align: center;
+	}
 	>ul{
-		@media screen and (max-width: 600px){
-			display: none;
-		}
 		>li{
 			margin-left: 50px;
 			@include inline-block;
@@ -50,6 +55,9 @@ $header-height: 115px;
 				&:last-of-type{
 					margin-right: 0;
 				}
+			}
+			@media screen and (max-width: 600px){
+				margin-right: 20px;
 			}
 			&:hover{
 				>a{
@@ -260,15 +268,18 @@ $header-height: 115px;
 	}
 }
 #sub-nav{
-	padding: 75px 15px;
+	padding: 75px 15px 0px 15px;
+	/*
 	@media screen and (max-width: 1040px){
 		position: absolute;
 		top: 30px;
 		right: 0;
 	}
+	*/
 	@media screen and (max-width: 600px){
 		display: none;
 	}
+	/*
 	.search{
 		float: left;
 		margin-top: 1px;
@@ -303,6 +314,7 @@ $header-height: 115px;
 			}
 		}
 	}
+	*/
 	.social{
 		float: left;
 		margin-right: 15px;
