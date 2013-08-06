@@ -47,6 +47,13 @@ end
 #######################
 # Working with Jekyll #
 #######################
+desc "Generate compiled CSS"
+task :generate_css do
+  raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
+  puts "## Generate compiled CSS"
+  system "compass compile --css-dir #{source_dir}/stylesheets"
+  system "cp #{source_dir}/stylesheets/screen.css #{public_dir}/stylesheets/screen.css"
+end
 
 desc "Generate jekyll site"
 task :generate do
