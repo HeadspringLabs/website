@@ -206,6 +206,7 @@ authors:
     gravatar: 95a087322938a69b9670c28291e4f479
     twitter: alonsorobles
     github: alonsorobles
+    coderwall: alonsorobles
     location: Austin, TX
   anne:
     key: anne
@@ -213,6 +214,7 @@ authors:
     gravatar: 18d71aac83cd382ef818ea8480091546
     twitter: ajepst
     github: ajepst
+    coderwall: ajepst
     location: Austin, TX
   cedric:
     key: cedric
@@ -220,6 +222,7 @@ authors:
     gravatar: 38e93c75af646c8b4032737b202c551c
     twitter: raspar
     github: cedricyao
+    coderwall: raspar
     location: Austin, TX
   chris:
     key: chris
@@ -227,6 +230,7 @@ authors:
     gravatar: 09f73b6f180bb61f39369784d5082d09
     twitter: ChrisMissal
     github: ChrisMissal
+    coderwall: ChrisMissal
     description: Chris started as a Senior Consultant with Headspring in Feb 2012. He loves C# and JavaScript and likes to bowl with the Headspring Hurwitzes.
     location: Austin, TX
   deran:
@@ -235,6 +239,7 @@ authors:
     gravatar: f7f5ab2e221884860465b7b1b3e8b510
     twitter: derans
     github: derans
+    coderwall: derans
     location: Houston, TX
   jimmy:
     key: jimmy
@@ -242,6 +247,7 @@ authors:
     gravatar: 462cca297af6670cf47aaf5551740f12
     twitter: jbogard
     github: jbogard
+    coderwall: jbogard
     location: Austin, TX
   justinm:
     key: justinm
@@ -249,6 +255,7 @@ authors:
     gravatar: 8da49f2d2ef715b9c0286d16ead63da1
     twitter: 
     github: 
+    coderwall: justinmasondev
     location: Austin, TX
   justin:
     key: justin
@@ -256,6 +263,7 @@ authors:
     gravatar: 52adb727732c916e9bbc756f33817d48
     twitter: 
     github: 
+    coderwall: ecelonghorn
     location: Austin, TX
   kevin:
     key: kevin
@@ -263,6 +271,7 @@ authors:
     gravatar: 556e1c922da51113ba0fe95ec5314a1b
     twitter: 
     github: 
+    coderwall: khurwitz
     location: Austin, TX
   kurt:
     key: kurt
@@ -277,6 +286,7 @@ authors:
     gravatar: 29a6abc71855afdb60312a6013772834
     twitter: knunery
     github: knunery
+    coderwall: knunery
     location: Austin, TX
   logan:
     key: logan
@@ -291,6 +301,7 @@ authors:
     gravatar: 5b7c10a7fe37184b3e85187858b68cff
     twitter: mahendramavani
     github: mahendramavani
+    coderwall: mdmavani
     location: Austin, TX
   nolan:
     key: nolan
@@ -298,6 +309,7 @@ authors:
     gravatar: bd9b5f1fa3e3da40260b9124a6fa3178
     twitter: nolanegly
     github: nolanegly
+    coderwall: nolanegly
     location: Austin, TX
   patrick:
     key: patrick
@@ -305,6 +317,7 @@ authors:
     gravatar: 132b05329f7c2dfa5fc9d04c4ab22ce3
     twitter: plioi
     github: plioi
+    coderwall: plioi
     location: Austin, TX
   sharon:
     key: sharon
@@ -312,6 +325,7 @@ authors:
     gravatar: 24e4848cfb6d2508ecebee4ad8ef1c47
     twitter: scichelli
     github: scichelli
+    coderwall: scichelli
     location: Austin, TX
   tim:
     key: tim
@@ -319,4 +333,10 @@ authors:
     gravatar: 9941404190648abe46e52c4b07bd6caf
     twitter: timgthomas
     github: timgthomas
+    coderwall: TimGThomas
     location: Austin, TX
+
+# More to add: https://coderwall.com/pmcvm, https://coderwall.com/pedroreys, https://coderwall.com/josephsouthern, https://coderwall.com/waynedenier, https://coderwall.com/tsmithy
+#              https://coderwall.com/michaelnero, https://coderwall.com/brian_jackson, https://coderwall.com/jbasilio, https://coderwall.com/gbheadspring, https://coderwall.com/davidsavagejr
+#              https://coderwall.com/jka347, https://coderwall.com/heebnerd, https://coderwall.com/bheebner, https://coderwall.com/patrickdenney2, https://coderwall.com/atwest, https://coderwall.com/ebrooks11
+#              https://coderwall.com/ecleamus, https://coderwall.com/lizdykes, https://coderwall.com/lalopong, https://coderwall.com/aspatelvt, https://coderwall.com/bptillman

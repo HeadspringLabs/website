@@ -1,0 +1,15 @@
+---
+layout: nil
+---
+{
+  "members": [{% for key in site.current_authors %}{% assign author = site.authors[key] %}{
+    "id": "{{ author.key }}",
+    "coderwall": "{{ author.coderwall }}",
+    "twitter": "{{ author.twitter }}",
+    "github": "{{ author.github }}",
+    "name": "{{ author.name }}",
+    "gravatar": "{{ author.gravatar }}",
+    "location": "{{ author.location }}"
+  }{% unless forloop.last %},{% endunless %}{% endfor %}],
+  "updated": "{{ site.time }}"
+}
