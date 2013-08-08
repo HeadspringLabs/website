@@ -1,0 +1,132 @@
+{
+  "members": [{
+    "id": "alonso",
+    "coderwall": "alonsorobles",
+    "twitter": "alonsorobles",
+    "github": "alonsorobles",
+    "name": "Alonso Robles",
+    "gravatar": "95a087322938a69b9670c28291e4f479",
+    "location": "Austin, TX"
+  },{
+    "id": "anne",
+    "coderwall": "ajepst",
+    "twitter": "ajepst",
+    "github": "ajepst",
+    "name": "Anne Epstein",
+    "gravatar": "18d71aac83cd382ef818ea8480091546",
+    "location": "Austin, TX"
+  },{
+    "id": "cedric",
+    "coderwall": "raspar",
+    "twitter": "raspar",
+    "github": "cedricyao",
+    "name": "Cedric Yao",
+    "gravatar": "38e93c75af646c8b4032737b202c551c",
+    "location": "Austin, TX"
+  },{
+    "id": "chris",
+    "coderwall": "ChrisMissal",
+    "twitter": "ChrisMissal",
+    "github": "ChrisMissal",
+    "name": "Chris Missal",
+    "gravatar": "09f73b6f180bb61f39369784d5082d09",
+    "location": "Austin, TX"
+  },{
+    "id": "deran",
+    "coderwall": "derans",
+    "twitter": "derans",
+    "github": "derans",
+    "name": "Deran Schilling",
+    "gravatar": "f7f5ab2e221884860465b7b1b3e8b510",
+    "location": "Houston, TX"
+  },{
+    "id": "jimmy",
+    "coderwall": "jbogard",
+    "twitter": "jbogard",
+    "github": "jbogard",
+    "name": "Jimmy Bogard",
+    "gravatar": "462cca297af6670cf47aaf5551740f12",
+    "location": "Austin, TX"
+  },{
+    "id": "justinm",
+    "coderwall": "justinmasondev",
+    "twitter": "",
+    "github": "",
+    "name": "Justin Mason",
+    "gravatar": "8da49f2d2ef715b9c0286d16ead63da1",
+    "location": "Austin, TX"
+  },{
+    "id": "justin",
+    "coderwall": "ecelonghorn",
+    "twitter": "",
+    "github": "",
+    "name": "Justin Pope",
+    "gravatar": "52adb727732c916e9bbc756f33817d48",
+    "location": "Austin, TX"
+  },{
+    "id": "kevin",
+    "coderwall": "khurwitz",
+    "twitter": "",
+    "github": "",
+    "name": "Kevin Hurwitz",
+    "gravatar": "556e1c922da51113ba0fe95ec5314a1b",
+    "location": "Austin, TX"
+  },{
+    "id": "kyle",
+    "coderwall": "knunery",
+    "twitter": "knunery",
+    "github": "knunery",
+    "name": "Kyle Nunery",
+    "gravatar": "29a6abc71855afdb60312a6013772834",
+    "location": "Austin, TX"
+  },{
+    "id": "logan",
+    "coderwall": "",
+    "twitter": "_loganturner",
+    "github": "loganturner",
+    "name": "Logan Turner",
+    "gravatar": "f5203a0532598243c6cc04296a19491e",
+    "location": "Austin, TX"
+  },{
+    "id": "mahendra",
+    "coderwall": "mdmavani",
+    "twitter": "mahendramavani",
+    "github": "mahendramavani",
+    "name": "Mahendra Mavani",
+    "gravatar": "5b7c10a7fe37184b3e85187858b68cff",
+    "location": "Austin, TX"
+  },{
+    "id": "nolan",
+    "coderwall": "nolanegly",
+    "twitter": "nolanegly",
+    "github": "nolanegly",
+    "name": "Nolan Egly",
+    "gravatar": "bd9b5f1fa3e3da40260b9124a6fa3178",
+    "location": "Austin, TX"
+  },{
+    "id": "patrick",
+    "coderwall": "plioi",
+    "twitter": "plioi",
+    "github": "plioi",
+    "name": "Patrick Lioi",
+    "gravatar": "132b05329f7c2dfa5fc9d04c4ab22ce3",
+    "location": "Austin, TX"
+  },{
+    "id": "sharon",
+    "coderwall": "scichelli",
+    "twitter": "scichelli",
+    "github": "scichelli",
+    "name": "Sharon Cichelli",
+    "gravatar": "24e4848cfb6d2508ecebee4ad8ef1c47",
+    "location": "Austin, TX"
+  },{
+    "id": "tim",
+    "coderwall": "TimGThomas",
+    "twitter": "timgthomas",
+    "github": "timgthomas",
+    "name": "Tim G. Thomas",
+    "gravatar": "9941404190648abe46e52c4b07bd6caf",
+    "location": "Austin, TX"
+  }],
+  "updated": "2013-08-08 15:18:26 -0500"
+}
