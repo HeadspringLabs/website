@@ -335,8 +335,171 @@ authors:
     github: timgthomas
     coderwall: TimGThomas
     location: Austin, TX
-
-# More to add: https://coderwall.com/pmcvm, https://coderwall.com/pedroreys, https://coderwall.com/josephsouthern, https://coderwall.com/waynedenier, https://coderwall.com/tsmithy
-#              https://coderwall.com/michaelnero, https://coderwall.com/brian_jackson, https://coderwall.com/jbasilio, https://coderwall.com/gbheadspring, https://coderwall.com/davidsavagejr
-#              https://coderwall.com/jka347, https://coderwall.com/heebnerd, https://coderwall.com/bheebner, https://coderwall.com/patrickdenney2, https://coderwall.com/atwest, https://coderwall.com/ebrooks11
-#              https://coderwall.com/ecleamus, https://coderwall.com/lizdykes, https://coderwall.com/lalopong, https://coderwall.com/aspatelvt, https://coderwall.com/bptillman
+  patrickm:
+    key: patrickm
+    name: Patrick McVeety-Mill
+    gravatar: 3c8c882e989d6a1fb5893a0e0297aafd
+    twitter: loudandatwork
+    github: loudandabrasive
+    coderwall: pmcvm
+    location: Austin, TX
+  pedro:
+    key: pedro
+    name: Pedro Reys
+    gravatar: 3e07c332737b7858ebecb731c6bf4470
+    twitter: pedroreys
+    github: pedroreys
+    coderwall: pedroreys
+    location: Austin, TX
+  joes:
+    key: joes
+    name: Joe Southern
+    gravatar: 2092b3debd6e03385cc0dfe35180b950
+    twitter: JosephSouthern
+    github: JosephSouthern
+    coderwall: josephsouthern
+    location: Houston, TX
+  wayne:
+    key: wayne
+    name: Wayne Denier
+    gravatar: 3edd1af472b4afcf53253b5e1048a8e8
+    twitter: waynedenier
+    github: waynedenier
+    coderwall: waynedenier
+    location: Austin, TX
+  terrance:
+    key: terrance
+    name: Terrance Smith
+    gravatar: 
+    twitter: TerranceSmithy
+    github: tsmithy
+    coderwall: tsmithy
+    location: Austin, TX
+  michael:
+    key: michael
+    name: Michael Nero
+    gravatar: 9f603f2ab43047ef2b9289f8394be7a8
+    twitter: neroware
+    github: michaelnero
+    coderwall: michaelnero
+    location: Austin, TX
+  brian:
+    key: brian
+    name: Brian Jackson
+    gravatar: 2d1bae20bede2034fc49040be45e56cc
+    twitter: greenmako
+    github: greenmako
+    coderwall: brian_jackson
+    location: Austin, TX
+  jose:
+    key: jose
+    name: Jose Basilio
+    gravatar: 5c70aefd8b29eedbf34afed6355c5abd
+    twitter: jbasilio
+    github: jbasilio
+    coderwall: jbasilio
+    location: Houston, TX
+  glenn:
+    key: glenn
+    name: Glenn Burnside
+    gravatar: d786d531c295aec27661f53424bdfd60
+    twitter: glennburnside
+    github: gbheadspring
+    coderwall: gbheadspring
+    location: Austin, TX
+  david:
+    key: david
+    name: David Savage
+    gravatar: 
+    twitter: 
+    github: 
+    coderwall: davidsavagejr
+    location: Houston, TX
+  jeff:
+    key: jeff
+    name: Jeff Atkinson
+    gravatar: 
+    twitter: 
+    github: 
+    coderwall: jka347
+    location: Austin, TX
+  benh:
+    key: benh
+    name: Ben Heebner
+    gravatar: 
+    twitter: heebnerd
+    github: 
+    coderwall: 
+    location: Austin, TX
+  patrickd:
+    key: patrickd
+    name: Patrick Denny
+    gravatar: 
+    twitter: 
+    github: 
+    coderwall: patrickdenney2
+    location: Austin, TX
+  evan:
+    key: evan
+    name: Evan Brooks
+    gravatar: 
+    twitter: 
+    github: 
+    coderwall: ebrooks11
+    location: Austin, TX
+  ecleamus:
+    key: ecleamus
+    name: Ecleamus Ricks
+    gravatar: 
+    twitter: 
+    github: 
+    coderwall: ecleamus
+    location: Austin, TX
+  liz:
+    key: liz
+    name: Liz Dykes
+    gravatar: 
+    twitter: 
+    github: 
+    coderwall: lizdykes
+    location: Austin, TX
+  eduardo:
+    key: eduardo
+    name: Eduardo Ramos
+    gravatar: 
+    twitter: 
+    github: 
+    coderwall: lalopong
+    location: Houston, TX
+  ashish:
+    key: ashish
+    name: Ashis Patel
+    gravatar: 
+    twitter: 
+    github: 
+    coderwall: aspatelvt
+    loation: Austin, TX
+  ben:
+    key: ben
+    name: Ben Tillman
+    gravatar: 
+    twitter: 
+    github: 
+    coderwall: bptillman
+    location: Austin, TX
+  benf:
+    key: benf
+    name: Ben Floyd
+    gravatar: 
+    twitter: 
+    github: dataplex
+    coderwall: dataplex
+    location: Houston, TX
+  bishwas:
+    key: bishwas
+    name: Bishwas Gautam
+    gravatar: 
+    twitter: 
+    github: mojojojo
+    coderwall: mojojojo
+    location: Houston, TX
