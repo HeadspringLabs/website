@@ -1,12 +1,14 @@
 ---
 layout: page
-title: The Agile Diferrence
+title: The Agile Difference
+date: 2013-09-06 17:06
+sharing: true
+footer: true
 description: Delivering Quality Software Predictably Using Agile Project Management and Extreme Programming Engineering Practices
 categories: []
-status: pending
 type: page
 published: true
-author: khurwitz
+author: kevin
 ---
 
 **Delivering Quality Software Predictably Using Agile Project Management and Extreme Programming Engineering Practices**
@@ -41,9 +43,7 @@ The chart below visually depicts the relationship between functionality, complex
 
 Failed Software Implementation
 
-<img src="#" />
-
-Figure 1: Relationship between complexity, functionality, and cost in a failed project
+<img src="/images/pages/the-agile-difference-1.png" title="Figure 1: Relationship between complexity, functionality, and cost in a failed project" />
 
 The x-axis represents the continually increasing functionality of the software application. The yaxis represents the complexity of both the requirements and design of the software as it was implemented. The green line depicts how, in this project, the cumulative set of requirements became linearly more complex as features were added. The pink line shows how the software implementation of the business requirements became exponentially more complex as features were added. Finally, the shaded light blue area represents the total number of hours dedicated to the project as functionality was added.
 
@@ -77,9 +77,7 @@ Like failed software projects, projects can be delivered over budget for a numbe
 
 Over-Budget Software Implementation
 
-<img src="#" />
-
-Figure 2: Relationship between complexity, functionality, and cost in an over-budget project
+<img src="/images/pages/the-agile-difference-2.png" title="Figure 2: Relationship between complexity, functionality, and cost in an over-budget project" />
 
 The diagram looks similar to that of a failed software project. The only key difference is the incline of the complexity curve. In this case, the unnecessarily costly addition of new features was tolerable during the development of the first two versions. The project cost over twice as much as expected, but it was released. It has added value, and, hopefully, more value than it cost to implement. However, in addition to the budget overage, the less-than-optimal implementation has resulted in lost opportunity costs which are difficult to measure. Worse yet, the application will most likely need to be rewritten before a fully-functional, third version can be released.
 
@@ -91,9 +89,7 @@ Now the project sponsors are put in the position of the owner of an old vehicle.
 
 Headspring Software Implementation
 
-<img src="#"/>
-
-Figure 3: Relationship between complexity, functionality, and cost in a Headspring software project
+<img src="/images/pages/the-agile-difference-3.png" title="Figure 3: Relationship between complexity, functionality, and cost in a Headspring software project" />
 
 The dashed green line in the chart represents a client’s original requirements. The solid green line demonstrates how Headspring Systems can help clients simplify their requirements in two ways.
 
@@ -192,15 +188,17 @@ The graphic below visually depicts the feedback developers receive when they acc
 
 Execution of Regression Test Suite
 
-<img src="#"/>
-
-Figure 4: Execution of an automated test suite in which one test failed
+<img src="/images/pages/the-agile-difference-4.png" title="Figure 4: Execution of an automated test suite in which one test failed" />
 
 Pinpointing the Defect
 
-<img src="#"/>
-
-Figure 5: The failed test pinpoints the source of the defect to a few lines of code
+{% codeblock lang:c# Figure 5: The failed test pinpoints the source of the defect to a few lines of code %}
+public int GetInteger(string columnName)
+{
+	int value = int.Parse(GetString("columnName"));
+	return value;
+}
+{% endcodeblock %}
 
 ### Advantages
 
@@ -239,7 +237,7 @@ When objects are scripted for Domain-Driven Design there are considerations whic
   * Interface-based Design
   * Testable classes
 * Well organized so that each class has its own responsibility
-  * Single Responsibility Principle ¤¤ Patterns
+  * Single Responsibility Principle – Patterns
   * Make extensive use of reuse so that a no two class repeat the same responsibility
 * Make liberal use of open-source software libraries to reduce the size of the code base
 * OR Mapping
@@ -271,9 +269,7 @@ The best way to understand FIT is to look at a typical FIT test:
 
 FIT Test
 
-<img src="#"/>
-
-Figure 6: Typical FIT Test with Results
+<img src="/images/pages/the-agile-difference-4.png" title="Figure 6: Typical FIT Test with Results" />
 
 The requirements document above defines how to calculate employee wages. More importantly, though, through the use of FIT, this requirements document has actually been executed against the wage calculation software. Notice the last column of the table – the first two results are green indicating the software correctly calculated the employee’s wages. However, the third result indicates there is a bug in the software per the requirements document. The employee should be paid $1360, but instead would only have been paid $1040 if the software defect hadn’t been identified by the failed FIT test.
 

@@ -1,9 +1,10 @@
 ---
 layout: page
 title: Conducting Effective Code Reviews
-categories: []
-type: page
-published: true
+date: 2013-09-06 17:21
+comments: true
+sharing: true
+footer: true
 author: glenn
 ---
 

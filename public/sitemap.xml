@@ -587,6 +587,10 @@
         <lastmod>2013-09-06T16:30:25-05:00</lastmod>
     </url>
     <url>
+        <loc>http://www.headspringlabs.com/conducting-effective-code-reviews/</loc>
+        <lastmod>2013-09-06T17:22:00-05:00</lastmod>
+    </url>
+    <url>
         <loc>http://www.headspringlabs.com/experiments/</loc>
         <lastmod>2013-09-06T16:30:25-05:00</lastmod>
     </url>
@@ -621,5 +625,9 @@
     <url>
         <loc>http://www.headspringlabs.com/team.json</loc>
         <lastmod>2013-08-08T15:18:03-05:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.headspringlabs.com/the-agile-difference/</loc>
+        <lastmod>2013-09-06T17:42:27-05:00</lastmod>
     </url>
 </urlset>
