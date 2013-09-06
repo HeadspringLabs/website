@@ -4,7 +4,7 @@
   <title><![CDATA[Category: dependency injection | Headspring Labs]]></title>
   <link href="http://www.headspringlabs.com/blog/categories/dependency-injection/atom.xml" rel="self"/>
   <link href="http://www.headspringlabs.com/"/>
-  <updated>2013-08-23T18:05:38-05:00</updated>
+  <updated>2013-09-06T16:39:04-05:00</updated>
   <id>http://www.headspringlabs.com/</id>
   <author>
     <name><![CDATA[Headspring Labs]]></name>
@@ -81,7 +81,7 @@
 <p>This pattern can be extending to support duplex communication by using .Net events instead of exposing the callback contracts to the clients.  I plan on writing an additional blog to cover this topic.</p>
 
 
-<p>The full source to this post can be downloaded here <a href="http://www.headspring.com/wp-content/uploads/2013/02/OptionalWCF.zip">OptionalWCF</a></p>
+<p>The full source to this post can be downloaded here <a href="https://github.com/HeadspringLabs/OptionalWCF">OptionalWCF</a></p>
 
 ]]></content>
   </entry>

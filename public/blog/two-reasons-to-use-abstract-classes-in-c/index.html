@@ -7,7 +7,7 @@
 	<meta name="author" content="Headspring Labs">
 
 	
-	<meta name="description" content="Do you find yourself writing the same methods over and over in different classes? Say your project needs both a &#8220;Dog&#8221; class and a &#8220; &hellip;">
+	<meta name="description" content="Do you find yourself writing the same methods over and over in different classes? Say your project needs both a &ldquo;Dog&rdquo; class and a &ldquo; &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -61,15 +61,25 @@
 	
 	<div id="content" class="inner"><article class="post">
 	<h2 class="title">Two Reasons to Use Abstract Classes in C#</h2>
-	<div class="entry-content"><p>Do you find yourself writing the same methods over and over in different classes? Say your project needs both a &#8220;Dog&#8221; class and a &#8220;Cat&#8221; class &#8211; do you end up writing a &#8220;sleep&#8221; method for both? What if, in two months, the client needs you to add a &#8220;possum&#8221; to the system? Do you end up going in and retyping &#8220;sleep&#8221; instructions yet again? When you&#8217;re modeling a system with many similar parts, it takes way too much time and effort to keep duplicating code for each class. Imagine how hard it would be to maintain a large project with thousands of classes! Besides, it violates the DRY principle of good programming: Don&#8217;t Repeat Yourself! There must be a better way.</p>
-<p>Thankfully, C# has built-in features for sharing code between classes. One of these is called an &#8220;abstract class&#8221;. Just create a new class with the keyword &#8220;abstract&#8221; (e.g. &#8220;public abstract class Mammal&#8221;) and write in its body all the methods you would like your other classes to share in common. Since an abstract class is still a class, your &#8220;Cat&#8221; and &#8220;Dog&#8221; classes can inherit from it using a colon (e.g. &#8220;public Cat : Mammal&#8221;). This means that instead of writing a &#8220;sleep&#8221; method for each animal, you only need to write it in the &#8220;Mammal&#8221; class, and the other animals will be able to use it too.<br />
-But if any class can have inheritance, why not just use a regular class? The answer is that abstract classes have two special features:</p>
-<p>1. They cannot be instantiated (made into objects),<br />
-2. They can have special methods called &#8220;abstract methods&#8221;.</p>
-<p>&#8220;Wait a minute,&#8221; you may be thinking, &#8220;Why would I want a class that can&#8217;t become an object?!&#8221; Sounds useless, right? However, consider the purpose of an abstract class: it contains common methods (and fields) that multiple child classes inherit from, but it does not attempt to follow these directions itself. In fact, a parent class is often missing vital information about the methods and fields it contains, because each child may use them a little bit differently. The &#8220;Mammal&#8221; abstract class only has what is common to all mammals &#8211; since some mammals can&#8217;t crawl and other mammals can&#8217;t gallop, the &#8220;Mammal&#8221; class can&#8217;t do either one. Imagine what would happen if you tried to instantiate a &#8220;generic&#8221; mammal: you&#8217;d get a featureless mass of hair, muscle and bone that probably wouldn&#8217;t survive on its own! In the same way, it is undesirable (sometimes dangerous!) to leave a class open to instantiation when it is simply a placeholder for common features. Guard against this possibility by using an abstract class.</p>
-<p>What if two classes have methods so different that the only common factor is their name? This is where an abstract method comes in handy. An abstract method looks just like a normal method, except it has the word &#8220;abstract&#8221; (e.g. &#8220;abstract exampleMethod(args);&#8221; ) and a semicolon &#8220;;&#8221; instead of body brackets &#8220;{}&#8221;. What does it do? It basically tells each inheriting class to create its own method with that same name. For instance, since a dog and a bat both sleep, you could write a &#8220;sleep&#8221; method in the &#8220;Mammal&#8221; class. However, there are very few commonalities between a dog&#8217;s sleep and a bat&#8217;s sleep. So instead of trying to account for each individual animal&#8217;s sleeping habits, you would make the &#8220;sleep&#8221; method abstract. Now the code won&#8217;t even compile until each animal that inherits from &#8220;Mammal&#8221; has a method called &#8220;sleep&#8221;, using the &#8220;override&#8221; keyword to replace the abstract one (e.g. &#8220;public override sleep(args) {}&#8221; ). Now even though all mammals sleep, each individual mammal can sleep in its own way. After this, you may be wondering, &#8220;Why even bother putting that method in the parent class? Each inheritor is going to have its own version anyway.&#8221; You really do want to have that abstract class, not to prevent syntax errors, but to prevent human memory errors. You may know intellectually that all mammals sleep, but without a mechanism forcing you to write a &#8220;sleep&#8221; method for each mammal, it is all too easy to forget to do so. You may not even realize your mistake until you get a phone call from the client in the middle of the night. By refusing to compile until each abstract method is implemented in every inheriting class, the C# compiler is doing you a favor: it&#8217;s helping you remember the obvious.</p>
-<p>Abstract classes help you improve your code not only through what they can do, but also through what they can&#8217;t. They can hold common features for many classes to inherit, without accidentally becoming objects themselves. They can also force you to write unique implementations of a common method, preventing human errors of forgetfulness. When you set up a class hierarchy, seriously consider whether you need a normal class to inherit from, or whether an abstract class will do. It may end up making the difference between a solid or buggy program.</p>
-<p>Now, if only we had something to write the rest of our code for us&#8230;</p>
+	<div class="entry-content"><p>Do you find yourself writing the same methods over and over in different classes? Say your project needs both a &ldquo;Dog&rdquo; class and a &ldquo;Cat&rdquo; class &mdash; do you end up writing a &ldquo;sleep&rdquo; method for both? What if, in two months, the client needs you to add a &ldquo;possum&rdquo; to the system? Do you end up going in and retyping &ldquo;sleep&rdquo; instructions yet again? When you&rsquo;re modeling a system with many similar parts, it takes way too much time and effort to keep duplicating code for each class. Imagine how hard it would be to maintain a large project with thousands of classes! Besides, it violates the DRY principle of good programming: Don&rsquo;t Repeat Yourself! There must be a better way.</p>
+
+<p>Thankfully, C# has built-in features for sharing code between classes. One of these is called an &ldquo;abstract class&rdquo;. Just create a new class with the keyword &ldquo;abstract&rdquo; (e.g. &ldquo;public abstract class Mammal&rdquo;) and write in its body all the methods you would like your other classes to share in common. Since an abstract class is still a class, your &ldquo;Cat&rdquo; and &ldquo;Dog&rdquo; classes can inherit from it using a colon (e.g. &ldquo;public Cat : Mammal&rdquo;). This means that instead of writing a &ldquo;sleep&rdquo; method for each animal, you only need to write it in the &ldquo;Mammal&rdquo; class, and the other animals will be able to use it too.</p>
+
+<p>But if any class can have inheritance, why not just use a regular class? The answer is that abstract classes have two special features:</p>
+
+<ol>
+<li>They cannot be instantiated (made into objects),</li>
+<li>They can have special methods called &ldquo;abstract methods&rdquo;.</li>
+</ol>
+
+
+<p>&ldquo;Wait a minute,&rdquo; you may be thinking, &ldquo;Why would I want a class that can&rsquo;t become an object?!&rdquo; Sounds useless, right? However, consider the purpose of an abstract class: it contains common methods (and fields) that multiple child classes inherit from, but it does not attempt to follow these directions itself. In fact, a parent class is often missing vital information about the methods and fields it contains, because each child may use them a little bit differently. The &ldquo;Mammal&rdquo; abstract class only has what is common to all mammals &mdash; since some mammals can&rsquo;t crawl and other mammals can&rsquo;t gallop, the &ldquo;Mammal&rdquo; class can&rsquo;t do either one. Imagine what would happen if you tried to instantiate a &ldquo;generic&rdquo; mammal: you&rsquo;d get a featureless mass of hair, muscle and bone that probably wouldn&rsquo;t survive on its own! In the same way, it is undesirable (sometimes dangerous!) to leave a class open to instantiation when it is simply a placeholder for common features. Guard against this possibility by using an abstract class.</p>
+
+<p>What if two classes have methods so different that the only common factor is their name? This is where an abstract method comes in handy. An abstract method looks just like a normal method, except it has the word &ldquo;abstract&rdquo; (e.g. &ldquo;abstract exampleMethod(args);&rdquo; ) and a semicolon &ldquo;;&rdquo; instead of body brackets &ldquo;{}&rdquo;. What does it do? It basically tells each inheriting class to create its own method with that same name. For instance, since a dog and a bat both sleep, you could write a &ldquo;sleep&rdquo; method in the &ldquo;Mammal&rdquo; class. However, there are very few commonalities between a dog&rsquo;s sleep and a bat&rsquo;s sleep. So instead of trying to account for each individual animal&rsquo;s sleeping habits, you would make the &ldquo;sleep&rdquo; method abstract. Now the code won&rsquo;t even compile until each animal that inherits from &ldquo;Mammal&rdquo; has a method called &ldquo;sleep&rdquo;, using the &ldquo;override&rdquo; keyword to replace the abstract one (e.g. &ldquo;public override sleep(args) {}&rdquo; ). Now even though all mammals sleep, each individual mammal can sleep in its own way. After this, you may be wondering, &ldquo;Why even bother putting that method in the parent class? Each inheritor is going to have its own version anyway.&rdquo; You really do want to have that abstract class, not to prevent syntax errors, but to prevent human memory errors. You may know intellectually that all mammals sleep, but without a mechanism forcing you to write a &ldquo;sleep&rdquo; method for each mammal, it is all too easy to forget to do so. You may not even realize your mistake until you get a phone call from the client in the middle of the night. By refusing to compile until each abstract method is implemented in every inheriting class, the C# compiler is doing you a favor: it&rsquo;s helping you remember the obvious.</p>
+
+<p>Abstract classes help you improve your code not only through what they can do, but also through what they can&rsquo;t. They can hold common features for many classes to inherit, without accidentally becoming objects themselves. They can also force you to write unique implementations of a common method, preventing human errors of forgetfulness. When you set up a class hierarchy, seriously consider whether you need a normal class to inherit from, or whether an abstract class will do. It may end up making the difference between a solid or buggy program.</p>
+
+<p>Now, if only we had something to write the rest of our code for us&hellip;</p>
 </div>
 
 
@@ -98,6 +108,40 @@ But if any class can have inheritance, why not just use a regular class? The ans
 </div>
 
 
+
+<div class="author-info">
+	<div class="information">
+	    <img src="https://secure.gravatar.com/avatar/f5203a0532598243c6cc04296a19491e?s=120" heigh="120" width="120" />
+	    <h4>Logan Turner</h4>
+	    <p></p>
+	</div>
+	<div class="more-posts">
+		<strong>More Posts by Logan Turner</strong>
+		<ul>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		</ul>
+	</div>
+</div>
 </article>
 
 	<div class="share">
