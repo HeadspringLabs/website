@@ -146,38 +146,32 @@ events:
 # ----------------------- #
 #   Open Source Projects  #
 # ----------------------- #
-current_open_source_projects: [automapper, enumeration, formo, fixie, mvccontrib, tarantino, naak]
+current_open_source_projects: [automapper, enumeration, formo, fixie, tarantino, naak]
 open_source_projects:
   automapper:
     name: AutoMapper
-    description: A convention-based object-object mapper. AutoMapper uses a fluent configuration API to define an object-object mapping strategy. AutoMapper uses a convention-based matching algorithm to match up source to destination values. Currently, AutoMapper is geared towards model projection scenarios to flatten complex object models to DTOs and other simple objects, whose design is better suited for serialization, communication, messaging, or simply an anti-corruption layer between the domain and application layer.
+    description: A convention-based object-object mapper. AutoMapper uses a fluent configuration API to define an object-object mapping strategy. AutoMapper uses a convention-based matching algorithm to match up source to destination values. Currently, AutoMapper is geared towards model projection scenarios to flatten complex object models to DTOs and other simple objects, whose design is better suited for serialization, communication, messaging, or simply an anti-corruption layer between the domain and application layer.<hr />Add this library to your project via NuGet with <code>Install-Package AutoMapper</code>
     image_url: https://secure.gravatar.com/avatar/ef7c786d532e8bf9b1a57e507ff7aaa4?s=200
     github: AutoMapper/AutoMapper
     web: http://automapper.org
     featured: true
   formo:
     name: Formo
-    description: Formo lets you use your configuration file as a dynamic object.
+    description: Formo lets you use your configuration file as a dynamic object. You can also strongly type your configuration variables and avoid repetitive casting code as well as configure with defaults up front and add in configured values after your project is already in production.<hr />Add this library to your project via NuGet with <code>Install-Package Formo</code>
     image_url: https://raw.github.com/ChrisMissal/Formo/master/img/formo_200_sq.png
     github: ChrisMissal/Formo
     web: http://chrismissal.com/Formo
     featured: true
   fixie:
     name: Fixie
-    description: Conventional Testing for .NET 
+    description: Fixie is a .NET convention-based test framework similar to NUnit and xUnit, but with an emphasis on low-ceremony defaults and flexible customization. Fixie gives you the ability to customize your tests in such a way that the framework is never in your way.<hr />Add this library to your project via NuGet with <code>Install-Package Fixie</code>
     image_url: https://raw.github.com/plioi/fixie/master/img/fixie_256.png
     github: plioi/Fixie
     web: http://plioi.github.io/fixie
     featured: true
-  mvccontrib:
-    name: MvcContrib
-    description: Better tools for a better framework. MVC Contrib is a collection of assemblies which add additional functionality to Microsoft’s ASP.NET MVC Framework. Microsoft’s approach to the Model-View-Controller pattern is already impressive, but MVC Contrib furthermore fills in some of the gaps.
-    image_url: https://raw.github.com/HeadspringLabs/assets/1876184c73bc37185846eb1d58a3dc93b8413e4d/logos/mvccontrib/logo_200_sq.png
-    github: 
-    web: http://mvccontrib.org
   enumeration:
     name: Enumeration
-    description: A utility class. Common uses include Java-like enumerations, dispatch table, flyweight, and drop-down list items/select options. No third-party dependencies.
+    description: A utility class. Common uses include Java-like enumerations, dispatch table, flyweight, and drop-down list items/select options. No third-party dependencies.<hr />Add this library to your project via NuGet with <code>Install-Package Enumeration</code>
     image_url: https://secure.gravatar.com/avatar/c607008323c47242a7769f2348392d77?s=200
     github: HeadspringLabs/Enumeration
     web: 
