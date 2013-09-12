@@ -62,12 +62,6 @@
 	GitHub: knunery
 
 
-	Headspringer: Logan Turner
-	From: Austin, TX
-	Twitter: @_loganturner
-	GitHub: loganturner
-
-
 	Headspringer: Mahendra Mavani
 	From: Austin, TX
 	Twitter: @mahendramavani
@@ -140,12 +134,6 @@
 	GitHub: greenmako
 
 
-	Headspringer: Joe Southern
-	From: Houston, TX
-	Twitter: @JosephSouthern
-	GitHub: JosephSouthern
-
-
 	Headspringer: Glenn Burnside
 	From: Austin, TX
 	Twitter: @glennburnside
@@ -200,7 +188,7 @@
 	
 
 
-	Headspringer: Ashis Patel
+	Headspringer: Ashish Patel
 	
 	
 	

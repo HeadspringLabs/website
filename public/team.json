@@ -80,14 +80,6 @@
     "gravatar": "29a6abc71855afdb60312a6013772834",
     "location": "Austin, TX"
   },{
-    "id": "logan",
-    "coderwall": "",
-    "twitter": "_loganturner",
-    "github": "loganturner",
-    "name": "Logan Turner",
-    "gravatar": "f5203a0532598243c6cc04296a19491e",
-    "location": "Austin, TX"
-  },{
     "id": "mahendra",
     "coderwall": "mdmavani",
     "twitter": "mahendramavani",
@@ -184,14 +176,6 @@
     "gravatar": "2d1bae20bede2034fc49040be45e56cc",
     "location": "Austin, TX"
   },{
-    "id": "joes",
-    "coderwall": "josephsouthern",
-    "twitter": "JosephSouthern",
-    "github": "JosephSouthern",
-    "name": "Joe Southern",
-    "gravatar": "2092b3debd6e03385cc0dfe35180b950",
-    "location": "Houston, TX"
-  },{
     "id": "glenn",
     "coderwall": "gbheadspring",
     "twitter": "glennburnside",
@@ -205,7 +189,7 @@
     "twitter": "",
     "github": "",
     "name": "David Savage",
-    "gravatar": "",
+    "gravatar": "d36814463fa0e4139cc50544318b20e1",
     "location": "Houston, TX"
   },{
     "id": "jeff",
@@ -221,7 +205,7 @@
     "twitter": "heebnerd",
     "github": "",
     "name": "Ben Heebner",
-    "gravatar": "",
+    "gravatar": "81d5c7c19037acf02939991bd6fbdbaf",
     "location": "Austin, TX"
   },{
     "id": "patrickd",
@@ -237,7 +221,7 @@
     "twitter": "",
     "github": "",
     "name": "Evan Brooks",
-    "gravatar": "",
+    "gravatar": "9d51b708dca527b5dd8eabc07cf79d5f",
     "location": "Austin, TX"
   },{
     "id": "ecleamus",
@@ -268,7 +252,7 @@
     "coderwall": "aspatelvt",
     "twitter": "",
     "github": "",
-    "name": "Ashis Patel",
+    "name": "Ashish Patel",
     "gravatar": "",
     "location": ""
   },{
@@ -277,7 +261,7 @@
     "twitter": "",
     "github": "",
     "name": "Ben Tillman",
-    "gravatar": "",
+    "gravatar": "6a95fb1fb28a76cd89912d2ad3b6781e",
     "location": "Austin, TX"
   },{
     "id": "benf",
@@ -285,7 +269,7 @@
     "twitter": "",
     "github": "dataplex",
     "name": "Ben Floyd",
-    "gravatar": "",
+    "gravatar": "0ea7f88a65c2fc0ba49d0e1dd6e0e0e3",
     "location": "Houston, TX"
   },{
     "id": "bishwas",
@@ -296,5 +280,5 @@
     "gravatar": "",
     "location": "Houston, TX"
   }],
-  "updated": "2013-09-09 17:12:21 -0500"
+  "updated": "2013-09-12 14:34:22 -0500"
 }

@@ -192,7 +192,7 @@ open_source_projects:
 # ----------------------- #
 #    Author Information   #
 # ----------------------- #
-current_authors: [alonso, anne, cedric, chris, deran, jimmy, justinm, justin, kevin, kyle, logan, mahendra, nolan, patrick, sharon, tim, patrickm, pedro, joes, wayne, terrance, michael, brian, joes, glenn, david, jeff, benh, patrickd, evan, ecleamus, liz, eduardo, ashish, ben, benf, bishwas]
+current_authors: [alonso, anne, cedric, chris, deran, jimmy, justinm, justin, kevin, kyle, mahendra, nolan, patrick, sharon, tim, patrickm, pedro, joes, wayne, terrance, michael, brian, glenn, david, jeff, benh, patrickd, evan, ecleamus, liz, eduardo, ashish, ben, benf, bishwas]
 authors:
   alonso:
     key: alonso
@@ -404,7 +404,7 @@ authors:
   david:
     key: david
     name: David Savage
-    gravatar: 
+    gravatar: d36814463fa0e4139cc50544318b20e1
     twitter: 
     github: 
     coderwall: davidsavagejr
@@ -420,7 +420,7 @@ authors:
   benh:
     key: benh
     name: Ben Heebner
-    gravatar: 
+    gravatar: 81d5c7c19037acf02939991bd6fbdbaf
     twitter: heebnerd
     github: 
     coderwall: 
@@ -436,7 +436,7 @@ authors:
   evan:
     key: evan
     name: Evan Brooks
-    gravatar: 
+    gravatar: 9d51b708dca527b5dd8eabc07cf79d5f
     twitter: 
     github: 
     coderwall: ebrooks11
@@ -467,7 +467,7 @@ authors:
     location: Houston, TX
   ashish:
     key: ashish
-    name: Ashis Patel
+    name: Ashish Patel
     gravatar: 
     twitter: 
     github: 
@@ -476,7 +476,7 @@ authors:
   ben:
     key: ben
     name: Ben Tillman
-    gravatar: 
+    gravatar: 6a95fb1fb28a76cd89912d2ad3b6781e
     twitter: 
     github: 
     coderwall: bptillman
@@ -484,7 +484,7 @@ authors:
   benf:
     key: benf
     name: Ben Floyd
-    gravatar: 
+    gravatar: 0ea7f88a65c2fc0ba49d0e1dd6e0e0e3
     twitter: 
     github: dataplex
     coderwall: dataplex

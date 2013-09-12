@@ -95,6 +95,27 @@
             $("#home").show();
         }
 
+        function loadTeamAndCreateLinks(){
+           var request = $.ajax({
+                url: "/team.json",
+                dataType: "json",
+               
+            });
+           request.done(function(data){
+                $.each(data.members, function(i,member){
+                         var locationIndex = 0;
+                          member.type = "member";
+                         d3Data.allMembers.push(member)
+                        
+                         var currentMemberIndex =i+2;
+                        if (member.location.toLowerCase().match(/houston/i)) { locationIndex = 1; }
+                         d3Data.links.push({ "source": locationIndex, "target": currentMemberIndex, "value": 3, "type": "member" });
+                    });
+                     loadD3();
+                });
+           
+         }
+
         function onRenderComplete(force, callback) {
             //When force.alpha() reaches 0, the simulation is complete.
             function pollSimulationUntilComplete() {
@@ -111,17 +132,17 @@
 
         function loadD3() {
             force = d3.layout.force()
-                             .nodes(d3Data.allMembers)
-                             .links(d3Data.links)
-                             .size([width, height])
-                             .linkDistance(function (d) { if (d.type === 'home') { return 250 } else if (d.type === 'badge') { return 10; }; return 175; })
-                             .charge(-900)
-                             .on("tick", tick)
-                             .start();
+                      .nodes(d3Data.allMembers)
+                      .links(d3Data.links)
+                      .size([width, height])
+                      .linkDistance(function (d) { if (d.type === 'home') { return 250 } else if (d.type === 'badge') { return 10; }; return 175; })
+                      .charge(-900)
+                      .on("tick", tick)
+                      .start();
 
             svg = d3.select(".team").append("svg")
-                                    .attr("width", width)
-                                    .attr("height", height);
+                    .attr("width", width)
+                    .attr("height", height);
 
             // Define arrow head markers, one for each type of arrow.
             svg.append("svg:defs")
@@ -130,7 +151,7 @@
                .enter().append("svg:marker")
                .attr("id", String)
                .attr("viewBox", "0 -5 10 10")
-               .attr("stroke", "0F416D")
+               .attr("stroke", "#0F416D")
                .attr("fill", "#0F416D")
                .attr("refX", 15)
                .attr("refY", -1.5)
@@ -140,14 +161,25 @@
                .append("svg:path")
                .attr("d", "M0,-5L10,0L0,5");
 
+            //clipping path
+            var clipPath = svg.append("svg:clipPath")
+                              .attr("id","clipCircle")
+                              .append("svg:circle")
+                              .style("stroke","#0F416D")
+                              .style("fill","#0F416D")
+                              .attr("cx", 40)
+                              .attr("cy", 40)
+                              .attr("r","35")
+                              .attr("width", 300)
+                              .attr("height", 45);
+
             //Draw edges.
             var path = svg.append("svg:g")
                           .selectAll("path")
                           .data(force.links())
                           .enter()
                           .append("svg:path")
-                          .attr("class", function (d) { return "link " + d.type; })
-                          .attr("marker-end", function (d) { return "url(#" + d.type + ")"; });
+                          .attr("class", function (d) { return "link " + d.type; });
 
             var teamMember = svg.selectAll(".teamMember")
                                 .data(d3Data.allMembers)
@@ -157,19 +189,34 @@
                                 .call(force.drag);
 
             teamMember.append("image")
-                           .attr("xlink:href", "/images/logos/headspring.png")
-                           .attr("x", -8)
-                           .attr("y", -8)
-                           .attr("width", 20)
-                           .attr("height", 21);
+                      .attr("xlink:href", function(d){
+                        if(d.type == "home"){
+                          return "/images/logos/headspring.png";
+                        } else {
+                          return d.gravatar ? "http://www.gravatar.com/avatar/" + d.gravatar + "?size=85" : "/images/logos/headspring.png";
+                        }
+                      })
+                      .attr("class","avatar")
+                      .attr("x", -8)
+                      .attr("y", -8)
+                      .attr("transform", function (d) { if (d.type != "home") { return "translate(-45,-45)"; } })
+                      .attr("z-index",99999)
+                      .attr("width", function(d){if(d.type == "home"){ return 40 } return 85 })
+                      .attr("height", function(d){if(d.type == "home"){ return 40 } return 85 })
+                      .attr("clip-path", function(d){
+                        if(d.type != "home"){
+                          return d.gravatar ? "url(#clipCircle)" : '';
+                        }
+                      });
 
             teamMember.append("text")
-                            .attr("dx", 12)
-                            .attr("dy", ".35em")
-                            .append("a")
-                            .text(function (d) { return d.name; })
-                            .attr("class", function (d) { return "link " + d.type })
-                            .attr("xlink:href", function (d) { if (d.username == undefined) return ''; return "https://coderwall.com/" + d.username; })
+                      .attr("dx", 0)
+                      .attr("dy", 90)
+                      .attr("transform", "translate(-45,-45)")
+                      .append("a")
+                      .text(function (d) { return d.name; })
+                      .attr("class", function (d) { return "link " + d.type })
+                      .attr("xlink:href", function (d) { if (d.coderwall == undefined) return ''; return "https://coderwall.com/" + d.coderwall; })
 
             onRenderComplete(force, showRenderedVisualization);
 
@@ -204,44 +251,11 @@
             d3Data.links.push({ "source": 1, "target": 0, "value": 9, "type": "home" });
         }
 
-        var loadUser = (function () {
-            var loader = function (response) {
-                var currentMember = response.data;
-                var locationIndex = 0;
-                d3Data.loadedMemberCounter++;
-
-                currentMember.type = "member";
-
-                d3Data.allMembers.push(currentMember);
-
-                var currentMemberIndex = d3Data.allMembers.length - 1;
-
-                if (currentMember.location.toLowerCase().match(/houston/i)) { locationIndex = 1; }
-
-                d3Data.links.push({ "source": locationIndex, "target": currentMemberIndex, "value": 3, "type": "member" });
-
-                if (d3Data.showBadges) {
-                    loadBadgesNodes(currentMember.badges, currentMemberIndex);
-                }
-
-                if (d3Data.loadedMemberCounter == d3Data.memberCount - 1) {
-                    loadD3();
-                }
-
-            };
-            return loader;
-        })();
-
-        var loadTeam = function (response) {
+          $(function () {
             tempLoadOfLocationNodes();
-            d3Data.memberCount = response.data.team_members.length;
-            d3.select("body").data(response.data.team_members)
-              .enter().append("script")
-                .attr("src", function (d) { return "http://www.coderwall.com/" + d.username + ".json?callback=loadUser"; });
-        }
+            loadTeamAndCreateLinks();
+          });
     </script>
-    <script type="text/javascript" src="https://coderwall.com/team/headspring.json?callback=loadTeam"></script>
-
 </div></div>
 </article>
 

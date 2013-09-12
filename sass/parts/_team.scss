@@ -1,4 +1,11 @@
 #team-page {
+    .avatar {
+         border-radius: 50%;
+         -moz-border-radius: 50%;
+         -webkit-border-radius: 50%;
+         border: 1px solid gold;
+    }
+
     .teamMember {
         stroke: #000;
         stroke-width: 1px;
@@ -49,7 +56,7 @@
         padding: .075em .075em 0;
         -webkit-mask-image: url(/images/logos/b.png);
         -webkit-transform: rotate(-3deg);
-        -moz-mask-image: url(b.png);
+        -moz-mask-image: url(/images/logos/b.png);
         -moz-transform: rotate(-3deg);
         -o-mask-image: url(/images/logos/b.png);
         -o-transform: rotate(-3deg);
