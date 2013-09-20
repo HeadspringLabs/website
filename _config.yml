@@ -192,7 +192,7 @@ open_source_projects:
 # ----------------------- #
 #    Author Information   #
 # ----------------------- #
-current_authors: [alonso, anne, cedric, chris, deran, jimmy, justinm, justin, kevin, kyle, mahendra, nolan, patrick, sharon, tim, patrickm, pedro, joes, wayne, terrance, michael, brian, glenn, david, jeff, benh, patrickd, evan, ecleamus, liz, eduardo, ashish, ben, benf, bishwas]
+current_authors: [alonso, anne, cedric, chris, deran, jimmy, justinm, justin, kevin, kyle, mahendra, nolan, patrick, sharon, tim, patrickm, pedro, joes, wayne, terrance, michael, brian, glenn, david, jeff, benh, patrickd, evan, ecleamus, liz, eduardo, ashish, ben, benf, bishwas, patricka]
 authors:
   alonso:
     key: alonso
@@ -505,3 +505,12 @@ authors:
     github: mojojojo
     coderwall: mojojojo
     location: Houston, TX
+  patricka:
+    key: patricka
+    name: Patrick Abbs
+    gravatar: 94cac1ab2dd44f3dcee5e640082af054
+    twitter: patrickabbs
+    github: patrickabbs
+    coderwall: patrickabbs
+    location: Austin, TX
+    feed: http://patrickabbs.wordpress.com/feed/
