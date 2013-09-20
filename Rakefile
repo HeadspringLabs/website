@@ -1,6 +1,9 @@
 require "rubygems"
 require "bundler/setup"
 require "stringex"
+require "yaml"
+require "rss"
+require "open-uri"
 
 ## -- Rsync Deploy config -- ##
 # Be sure your public key is listed in your server's ~/.ssh/authorized_keys file
@@ -428,6 +431,48 @@ task :convert_tags, :dir do |t, args|
       end
     end
   end
+end
+
+desc "Build developer blog feed page"
+task :build_bloggers do
+  file_name = "#{public_dir}/bloggers/index.html"
+  content = File.read(file_name)
+  config = YAML.load_file('_config.yml')
+  section_title = ""
+  blogger_page_text = ""
+  items = []
+
+  config['current_authors'].each do |key|
+    feed = config['authors'][key]['feed']
+    next if feed == nil
+    name = config['authors'][key]['name']
+    open(feed) do |rss|
+      feed = RSS::Parser.parse(rss)
+      feed.items.each do |item|
+        items.push([name,item])
+      end
+    end
+  end
+
+  blogger_page_text += "<section>"
+
+  items.sort! { |a, b| b[1].pubDate <=> a[1].pubDate }
+  for item in items.take(25)
+    name = item[0]
+    entry = item[1]
+    date = entry.pubDate.strftime("%b %-d")
+    print_month = section_title != entry.pubDate.strftime("%B")
+    if print_month
+      section_title = entry.pubDate.strftime("%B")
+      blogger_page_text += "</section><section class=\"archives\"><h1 class=\"year\">#{section_title}</h1>"
+    end
+
+    blogger_page_text += "<article><h2 class=\"title\"><a href=\"#{entry.link}\">#{entry.title}</a></h2><div class=\"meta\"><div class=\"date\">#{date}</div><div class=\"tags\">#{name}</div></div></article>"
+  end
+  blogger_page_text += "</section>"
+
+  text = content.gsub(/\<\!\-\- \[blog content\] \-\-\>/, blogger_page_text)
+  File.open(file_name, "w") { |f| f.puts text }
 end
 
 def ok_failed(condition)

@@ -202,6 +202,7 @@ authors:
     github: alonsorobles
     coderwall: alonsorobles
     location: Austin, TX
+    feed: http://alonsorobles.com/feed/
   anne:
     key: anne
     name: Anne Epstein
@@ -227,6 +228,7 @@ authors:
     coderwall: ChrisMissal
     description: Chris started as a Senior Consultant with Headspring in Feb 2012. He loves C# and JavaScript and likes to bowl with the Headspring Hurwitzes.
     location: Austin, TX
+    feed: http://feeds.feedburner.com/ChrisMissalsBlog
   deran:
     key: deran
     name: Deran Schilling
@@ -235,6 +237,7 @@ authors:
     github: derans
     coderwall: derans
     location: Houston, TX
+    #feed: http://feeds.feedburner.com/derans
   jimmy:
     key: jimmy
     name: Jimmy Bogard
@@ -329,6 +332,7 @@ authors:
     github: timgthomas
     coderwall: TimGThomas
     location: Austin, TX
+    feed: http://feeds.feedburner.com/timgthomas
   patrickm:
     key: patrickm
     name: Patrick McVeety-Mill
@@ -345,6 +349,7 @@ authors:
     github: pedroreys
     coderwall: pedroreys
     location: Austin, TX
+    feed: http://feeds2.feedburner.com/pedroreys
   joes:
     key: joes
     name: Joe Southern
@@ -401,6 +406,7 @@ authors:
     github: gbheadspring
     coderwall: gbheadspring
     location: Austin, TX
+    feed: http://glennburnside.com/rss
   david:
     key: david
     name: David Savage
@@ -409,6 +415,7 @@ authors:
     github: 
     coderwall: davidsavagejr
     location: Houston, TX
+    feed: http://libertycode.org/rss
   jeff:
     key: jeff
     name: Jeff Atkinson
@@ -465,6 +472,7 @@ authors:
     github: 
     coderwall: lalopong
     location: Houston, TX
+    feed: http://edramos.net/?feed=rss2
   ashish:
     key: ashish
     name: Ashish Patel
