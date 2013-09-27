@@ -345,7 +345,7 @@ authors:
     github: loudandabrasive
     coderwall: pmcvm
     location: Austin, TX
-    feed: http://www.loudandabrasive.com/feed/
+    #feed: http://www.loudandabrasive.com/feed/
   pedro:
     key: pedro
     name: Pedro Reys
