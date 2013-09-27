@@ -211,6 +211,7 @@ authors:
     github: ajepst
     coderwall: ajepst
     location: Austin, TX
+    feed: http://feeds.feedburner.com/AnneEpstein
   cedric:
     key: cedric
     name: Cedric Yao
@@ -285,6 +286,7 @@ authors:
     github: knunery
     coderwall: knunery
     location: Austin, TX
+    feed: http://www.polyglotprogrammer.com/feeds/posts/default?alt=rss
   logan:
     key: logan
     name: Logan Turner
@@ -316,6 +318,7 @@ authors:
     github: plioi
     coderwall: plioi
     location: Austin, TX
+    feed: http://lostechies.com/patricklioi/feed/
   sharon:
     key: sharon
     name: Sharon Cichelli
@@ -324,6 +327,7 @@ authors:
     github: scichelli
     coderwall: scichelli
     location: Austin, TX
+    feed: http://feeds.feedburner.com/lostechies/gwc
   tim:
     key: tim
     name: Tim G. Thomas
@@ -341,6 +345,7 @@ authors:
     github: loudandabrasive
     coderwall: pmcvm
     location: Austin, TX
+    feed: http://www.loudandabrasive.com/feed/
   pedro:
     key: pedro
     name: Pedro Reys
@@ -464,6 +469,7 @@ authors:
     github: 
     coderwall: lizdykes
     location: Austin, TX
+    feed: http://lizdykes.com/blog/?feed=rss2
   eduardo:
     key: eduardo
     name: Eduardo Ramos

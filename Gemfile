@@ -18,3 +18,4 @@ end
 
 gem 'sinatra', '~> 1.4.2'
 gem 'rack-jekyll'
+gem 'stringex', '~> 1.4.0'
