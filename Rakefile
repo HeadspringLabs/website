@@ -437,6 +437,7 @@ desc "Build developer blog feed page"
 task :build_bloggers do
   file_name = "#{public_dir}/bloggers/index.html"
   content = File.read(file_name)
+  puts "[build_bloggers]: reading #{file_name} (#{content.length} bytes)" unless content.length < 1
   config = YAML.load_file('_config.yml')
   section_title = ""
   blogger_page_text = ""
@@ -446,6 +447,7 @@ task :build_bloggers do
     feed = config['authors'][key]['feed']
     next if feed == nil
     name = config['authors'][key]['name']
+    puts "[build_bloggers]: #{name} - #{feed}"
     open(feed) do |rss|
       feed = RSS::Parser.parse(rss)
       feed.items.each do |item|
@@ -472,6 +474,7 @@ task :build_bloggers do
   blogger_page_text += "</section>"
 
   text = content.gsub(/(\<\!\-\-guts\-\-\>)(.*)(\<\!\-\-\/guts\-\-\>)/im, "<!--guts-->" + blogger_page_text + "<!--/guts-->")
+  puts "[build_bloggers]: writing #{blogger_page_text.length} bytes to guts of #{file_name}"
   File.open(file_name, "w") { |f| f.puts text }
 end
 
