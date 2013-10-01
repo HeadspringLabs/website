@@ -7,4 +7,4 @@ sharing: true
 footer: true
 ---
 
-<!-- [blog content] -->
+<!--guts--><!--/guts-->

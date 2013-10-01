@@ -471,7 +471,7 @@ task :build_bloggers do
   end
   blogger_page_text += "</section>"
 
-  text = content.gsub(/\<\!\-\- \[blog content\] \-\-\>/, blogger_page_text)
+  text = content.gsub(/(\<\!\-\-guts\-\-\>)(.*)(\<\!\-\-\/guts\-\-\>)/im, "<!--guts-->" + blogger_page_text + "<!--/guts-->")
   File.open(file_name, "w") { |f| f.puts text }
 end
 
