@@ -451,9 +451,13 @@ task :build_bloggers do
     name = config['authors'][key]['name']
     puts "[build_bloggers]: #{name} - #{feed}"
     open(feed) do |rss|
-      feed = RSS::Parser.parse(rss)
-      feed.items.each do |item|
-        items.push([name,item])
+      begin
+        feed = RSS::Parser.parse(rss)
+        feed.items.each do |item|
+          items.push([name,item]) 
+        end
+      rescue Exception => e
+        puts "\e[31m#{e.message}\e[0m"
       end
     end
   end

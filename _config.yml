@@ -286,7 +286,7 @@ authors:
     github: knunery
     coderwall: knunery
     location: Austin, TX
-    feed: http://www.polyglotprogrammer.com/feeds/posts/default?alt=rss
+    feed: http://www.polyglotprogrammer.com/rss/
   logan:
     key: logan
     name: Logan Turner
