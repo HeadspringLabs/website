@@ -192,7 +192,7 @@ open_source_projects:
 # ----------------------- #
 #    Author Information   #
 # ----------------------- #
-current_authors: [alonso, anne, cedric, chris, deran, jimmy, justinm, justin, kevin, kyle, mahendra, nolan, patrick, sharon, tim, patrickm, pedro, joes, wayne, terrance, michael, brian, glenn, david, jeff, benh, patrickd, evan, ecleamus, liz, eduardo, ashish, ben, benf, bishwas, patricka]
+current_authors: [alonso, anne, cedric, chris, deran, jimmy, justinm, justin, kevin, kyle, mahendra, nolan, patrick, sharon, tim, patrickm, pedro, joes, wayne, terrance, michael, brian, glenn, david, jeff, benh, patrickd, evan, ecleamus, liz, eduardo, ashish, ben, benf, patricka]
 authors:
   alonso:
     key: alonso
@@ -502,14 +502,6 @@ authors:
     twitter: 
     github: dataplex
     coderwall: dataplex
-    location: Houston, TX
-  bishwas:
-    key: bishwas
-    name: Bishwas Gautam
-    gravatar: 
-    twitter: 
-    github: mojojojo
-    coderwall: mojojojo
     location: Houston, TX
   patricka:
     key: patricka
