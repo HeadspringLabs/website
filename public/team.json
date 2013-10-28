@@ -272,14 +272,6 @@
     "gravatar": "0ea7f88a65c2fc0ba49d0e1dd6e0e0e3",
     "location": "Houston, TX"
   },{
-    "id": "bishwas",
-    "coderwall": "mojojojo",
-    "twitter": "",
-    "github": "mojojojo",
-    "name": "Bishwas Gautam",
-    "gravatar": "",
-    "location": "Houston, TX"
-  },{
     "id": "patricka",
     "coderwall": "patrickabbs",
     "twitter": "patrickabbs",
@@ -288,5 +280,5 @@
     "gravatar": "94cac1ab2dd44f3dcee5e640082af054",
     "location": "Austin, TX"
   }],
-  "updated": "2013-10-25 11:01:03 -0500"
+  "updated": "2013-10-28 11:34:24 -0500"
 }

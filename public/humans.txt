@@ -206,12 +206,6 @@
 	GitHub: dataplex
 
 
-	Headspringer: Bishwas Gautam
-	From: Houston, TX
-	
-	GitHub: mojojojo
-
-
 	Headspringer: Patrick Abbs
 	From: Austin, TX
 	Twitter: @patrickabbs
