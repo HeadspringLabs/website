@@ -6,7 +6,7 @@ HipChat - All of the developers actively communicate via HipChat.  If you are ru
 ##Source Control
 Git has proven out to be the winner in version control.  Excellent Git support is provided by Github and BitBucket.
 
-Github - 
+Github - One great advantage that GitHub adds to the mix is some features on top of Git. The ability to comment on lines and review code within pull requests gives us a flexible workflow, the ability to share knowledge, and most importantly a tool for getting things done.
 
 BitBucket - BitBucket has  a more competitive pricing structure than Github so we often use them for client work.
 
