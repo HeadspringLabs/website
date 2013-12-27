@@ -24,9 +24,11 @@ PetaPoco - When you need a complex query to hydrate a collection of objects as q
 
 ##Database Tools
 
-Roundhouse - We manage our database migration scripts using Roundhouse.
+RoundhousE - We manage our database migration scripts using RoundhousE.
 
 NHibernate Profiler - NHibernate profiler helps ensure you are not abusing NHibernate so it helps reduce surprises in production.
+
+ExpressProfiler - A barebones, show-me-the-SQL tool for SQL Server.  An open source, free alternative to NH Profiler or the tooling built into SQL Server.  http://expressprofiler.codeplex.com/
 
 ##Databases
 
