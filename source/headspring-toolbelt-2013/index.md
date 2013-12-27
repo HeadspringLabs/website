@@ -30,6 +30,8 @@ NHibernate Profiler - NHibernate profiler helps ensure you are not abusing NHibe
 
 ExpressProfiler - A barebones, show-me-the-SQL tool for SQL Server.  An open source, free alternative to NH Profiler or the tooling built into SQL Server.  http://expressprofiler.codeplex.com/
 
+Visual Studio Database Project - Begining with Visual Studio 2010 The database project provides a way to manage all aspects of a SQL server database.  The artifacts are all stored in files that allow the database to be versioned in source control.  Artifacts such as tables, views, procedures, and functions are defined in their current state.  This is the main difference when compared to RoundhousE which stores sequentual modification scripts that have to be applied in a specific order.  The deployment uses VSDBCMB.exe to generate a differential script that will synchronize any database target.  Then end result will update the target database to match the Database Project definitions for all objects.  A Pre and Post deployment script section is provided to customize how data can be updated.  This uses SQLCMD to execute TSQL scripts.
+
 ##Databases
 
 SQL Server - 
