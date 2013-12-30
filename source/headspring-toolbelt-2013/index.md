@@ -60,9 +60,11 @@ NUnit - NUnit has evolved with the times and kept up as a good starting point fo
 
 XUnit - XUnit is becoming the preferred testing framework of many new projects.  XUnit has more flexibility and some plugins not found with NUnit.
 
-Autofac - We use Autofac with XUnit to automatically populate test method parameters.  The auto population of test parameters saves you from lots of object setup code when creating tests.
+AutoFixture - We use AutoFixture with XUnit to automatically populate test method parameters.  The auto population of test parameters saves you from lots of object setup code when creating tests.
 
 Visual Studio - Load testing and automated web performance testing can be done in a snap using Visual Studio's web testing tools.  You need the Premium version of Visual Studio 2012 to do these tests.
+
+FakeItEasy - A dead simple to use "mocking/stubbing" library where you just make "fakes".  Where we would of used RhinoMocks or Moq in the past we now use FakeItEasy.
 
 ##Logging
 
