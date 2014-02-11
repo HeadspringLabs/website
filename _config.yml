@@ -131,7 +131,7 @@ communities:
 # ----------------------- #
 #    Headspring Events    #
 # ----------------------- #
-current_events: [ctxgivecamp, houstontechfest, austincodecamp]
+current_events: [ctxgivecamp, houstongivecamp, houstontechfest, austincodecamp]
 events:
   ctxgivecamp:
     url: http://ctxgivecamp.org/
