@@ -1,18 +1,18 @@
 Here is the toolset that we consider the "happy path" at Headspring.  We get to choose the majority of tools on most projects and we are extremely efficient when we get to run with tools of our choosing.  
 
 ##Communication
-HipChat - All of the developers actively communicate via HipChat.  If you are running into a challenging problem this is a great place to bounce ideas off other developers.  We create chat rooms for each project so we can easily update other team members of our status or current blocking issue.
+[HipChat](https://www.hipchat.com/) - All of the developers actively communicate via HipChat.  If you are running into a challenging problem this is a great place to bounce ideas off other developers.  We create chat rooms for each project so we can easily update other team members of our status or current blocking issue.
 
 ##Source Control
 Git has proven out to be the winner in version control.  Excellent Git support is provided by Github and BitBucket.
 
-Github - One great advantage that GitHub adds to the mix is some features on top of Git. The ability to comment on lines and review code within pull requests gives us a flexible workflow, the ability to share knowledge, and most importantly a tool for getting things done.
+[Github](https://github.com/) - One great advantage that GitHub adds to the mix is some features on top of Git. The ability to comment on lines and review code within pull requests gives us a flexible workflow, the ability to share knowledge, and most importantly a tool for getting things done.
 
-BitBucket - BitBucket has  a more competitive pricing structure than Github so we often use them for client work.
+[BitBucket](https://bitbucket.org) - BitBucket has  a more competitive pricing structure than Github so we often use them for client work.
 
 ##Project Management
 
-Github Issues - Github issues, pull requests, and code reviews has worked wonderfully on our client projects.
+[Github Issues](https://github.com/blog/411-github-issue-tracker) - Github issues, pull requests, and code reviews has worked wonderfully on our client projects.
 
 JIRA - On larger projects with heavier documentation processes we use JIRA to manage tasks.
 
@@ -20,11 +20,11 @@ JIRA - On larger projects with heavier documentation processes we use JIRA to ma
 
 NHibernate - Headspring was an early proponent of NHibernate and continues to use NHibernate successfully on many projects.  NHibernate offers mapping to custom types (like our Enumeration class), global filtering for Multitenant databases, 2nd level caching out of the box, which makes it still one of the most powerful free ORMs out there.
 
-PetaPoco - When you need a complex query to hydrate a collection of objects as quickly as possible this micro ORM is what we use.
+[PetaPoco](https://github.com/toptensoftware/petapoco) - When you need a complex query to hydrate a collection of objects as quickly as possible this micro ORM is what we use.  When we don't need the advanced features in NHibernate we will use PetaPoco to implement our data access.
 
 ##Database Tools
 
-RoundhousE - We manage our database migration scripts using RoundhousE.
+[RoundhousE](https://github.com/chucknorris/roundhouse) - We manage our database migration scripts using RoundhousE.
 
 NHibernate Profiler - NHibernate profiler helps ensure you are not abusing NHibernate so it helps reduce surprises in production.
 
@@ -60,17 +60,19 @@ NUnit - NUnit has evolved with the times and kept up as a good starting point fo
 
 XUnit - XUnit is becoming the preferred testing framework of many new projects.  XUnit has more flexibility and some plugins not found with NUnit.
 
-Autofac - We use Autofac with XUnit to automatically populate test method parameters.  The auto population of test parameters saves you from lots of object setup code when creating tests.
+AutoFixture - We use AutoFixture with XUnit to automatically populate test method parameters.  The auto population of test parameters saves you from lots of object setup code when creating tests.
 
 Visual Studio - Load testing and automated web performance testing can be done in a snap using Visual Studio's web testing tools.  You need the Premium version of Visual Studio 2012 to do these tests.
+
+[FakeItEasy](https://github.com/FakeItEasy/FakeItEasy) - A dead simple to use "mocking/stubbing" library where you just make "fakes".  Where we would of used RhinoMocks or Moq in the past we now use FakeItEasy.
 
 ##Logging
 
 Elmah - 
 
-Log4Net - This is the long running workhorse for doing logging for most .NET development.
+[Log4Net](http://logging.apache.org/log4net/) - This is the long running workhorse for doing logging for most .NET development.
 
-NLog - NLog is comparable to Log4Net.  Some developers prefer NLog over Log4Net because it is easier to setup and manage the logging configuration files.
+[NLog](http://nlog-project.org/) - NLog is a wonderful logging tool that is comparable to Log4Net.  Some developers prefer NLog over Log4Net because it is easier to setup and manage the logging configuration files.
 
 ##Website Monitoring
 
@@ -98,11 +100,12 @@ Foundation -
 
 ##Excel File Manipulation
 
-GemBox - 
+[GemBox.Spreadsheet](http://www.gemboxsoftware.com/spreadsheet/overview) - GemBox.Spreadsheet makes working with Excel files enjoyable.  You can use a [free version](http://www.gemboxsoftware.com/spreadsheet/free-version) if you have 150 or fewer rows in your spreadsheet.  
 
 ##.NET Libraries
-Automapper - 
-Enumeration - 
+[Automapper](http://automapper.org/) - Automapper is great at reducing the need for repetitive mapping code when moving data from your domain entities to your view models.
+
+[Enumeration](https://github.com/HeadspringLabs/Enumeration) - The built in enums in .NET are often not flexible enough for business applications.  The Enumeration class is a more flexible enum implementation that can handle the extra metadata you often need with a fixed value.
 
 
 
