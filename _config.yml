@@ -136,6 +136,9 @@ events:
   ctxgivecamp:
     url: http://ctxgivecamp.org/
     name: Central Texas GiveCamp
+  houstongivecamp:
+    url: http://houstongivecamp.org/
+    name: Houston GiveCamp
   houstontechfest:
     url: http://www.houstontechfest.org/
     name: Houston Tech Fest
